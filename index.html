@@ -8,7 +8,6 @@
   <meta property="og:title" content="A7 Laundry | Stop Wasting Your Weekends on Laundry — Orlando, FL">
   <meta property="og:description" content="Fill a bag. Leave it at your door. Get it back fresh in 24h. Plans from $1.99/day with free pickup & delivery. Buy 1 bag, get 1 FREE. No contracts.">
   <meta property="og:type" content="website">
-  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
@@ -361,6 +360,8 @@
     .sub-stripe-container stripe-buy-button{width:100%}
     .sub-stripe-fallback{display:block;width:100%;padding:18px;border:none;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .3s;font-family:inherit;text-align:center;text-decoration:none;background:var(--accent);color:#fff}
     .sub-stripe-fallback:hover{background:var(--accent-dark);color:#fff;transform:translateY(-2px)}
+    .sub-wa-alt{display:block;text-align:center;margin-top:10px;font-size:13px;color:var(--green);font-weight:700;text-decoration:none;padding:12px;border:2px solid var(--green);border-radius:50px;transition:all .3s}
+    .sub-wa-alt:hover{background:var(--green);color:#fff}
     .sub-terms{font-size:10px;color:var(--gray-400);line-height:1.6;text-align:center;padding:0 8px 24px}
     @media(max-width:768px){
       .sub-modal{max-height:95vh}
@@ -1806,7 +1807,7 @@
       bags: '1 bag',
       pieces: '~40-50 pcs',
       gradient: 'linear-gradient(135deg, #1b3054, #2a4a7a)',
-      stripeId: 'STRIPE_ESSENTIALS_BUYBUTTON_ID'
+      paymentLink: 'https://buy.stripe.com/test_eVq6oH1dRf1U78n2Qa8AE00'
     },
     family: {
       name: 'Family',
@@ -1814,7 +1815,7 @@
       bags: '2 bags',
       pieces: '~80-100 pcs',
       gradient: 'linear-gradient(135deg, #122240, #1b3054)',
-      stripeId: 'STRIPE_FAMILY_BUYBUTTON_ID'
+      paymentLink: 'https://buy.stripe.com/test_bJeaEXaOr5rkfET8au8AE01'
     },
     premium: {
       name: 'Premium',
@@ -1822,7 +1823,7 @@
       bags: '4 bags',
       pieces: '~160-200 pcs',
       gradient: 'linear-gradient(135deg, #1b3054, #c0392b)',
-      stripeId: 'STRIPE_PREMIUM_BUYBUTTON_ID'
+      paymentLink: 'https://buy.stripe.com/test_00w7sL5u7bPI9gvaiC8AE02'
     }
   };
 
@@ -1847,25 +1848,30 @@
       promoTerms.style.display = '';
     }
 
-    // Stripe Buy Button (or fallback)
+    // Stripe Payment Link + WhatsApp alternative
     const container = document.getElementById('subStripeContainer');
-    const publishableKey = 'STRIPE_PUBLISHABLE_KEY';
-    const buyButtonId = plan.stripeId;
-    if (publishableKey !== 'STRIPE_PUBLISHABLE_KEY' && buyButtonId.indexOf('STRIPE_') !== 0) {
-      container.innerHTML = '<stripe-buy-button buy-button-id="' + buyButtonId + '" publishable-key="' + publishableKey + '"></stripe-buy-button>';
-    } else {
-      var btnLabel = {
-        en: 'Subscribe Now — ' + plan.name + ' →',
-        pt: 'Assinar Agora — ' + plan.name + ' →',
-        es: 'Suscribirse Ahora — ' + plan.name + ' →'
-      };
-      container.innerHTML = '<a href="https://wa.me/14077878590?text=' + encodeURIComponent('Hi! I want to subscribe to the ' + plan.name + ' plan!') + '" class="sub-stripe-fallback" target="_blank">' +
+    var btnLabel = {
+      en: 'Subscribe Now — ' + plan.name + ' →',
+      pt: 'Assinar Agora — ' + plan.name + ' →',
+      es: 'Suscribirse Ahora — ' + plan.name + ' →'
+    };
+    var waLabel = {
+      en: 'Or subscribe via WhatsApp',
+      pt: 'Ou assine pelo WhatsApp',
+      es: 'O suscríbete por WhatsApp'
+    };
+    container.innerHTML =
+      '<a href="' + plan.paymentLink + '" class="sub-stripe-fallback" target="_blank">' +
         '<span data-lang="en">' + btnLabel.en + '</span>' +
         '<span data-lang="pt">' + btnLabel.pt + '</span>' +
         '<span data-lang="es">' + btnLabel.es + '</span>' +
-        '</a>';
-      setLang(currentLang);
-    }
+      '</a>' +
+      '<a href="https://wa.me/14077878590?text=' + encodeURIComponent('Hi! I want to subscribe to the ' + plan.name + ' plan!') + '" class="sub-wa-alt" target="_blank">' +
+        '<span data-lang="en">' + waLabel.en + '</span>' +
+        '<span data-lang="pt">' + waLabel.pt + '</span>' +
+        '<span data-lang="es">' + waLabel.es + '</span>' +
+      '</a>';
+    setLang(currentLang);
 
     document.getElementById('subOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
