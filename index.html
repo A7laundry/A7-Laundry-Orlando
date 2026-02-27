@@ -312,7 +312,7 @@
     .sticky-cta-bar .sticky-btn:hover{background:var(--accent-dark);color:#fff;transform:scale(1.02)}
 
     /* === SOCIAL PROOF TOAST === */
-    .proof-toast{position:fixed;bottom:90px;left:20px;z-index:996;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:16px 20px;box-shadow:var(--shadow-xl);max-width:320px;display:flex;align-items:center;gap:12px;transform:translateX(-120%);transition:transform .5s cubic-bezier(.4,0,.2,1);opacity:0;color:var(--gray-700)}
+    .proof-toast{position:fixed;bottom:90px;right:20px;z-index:996;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:16px 20px;box-shadow:var(--shadow-xl);max-width:320px;display:flex;align-items:center;gap:12px;transform:translateX(120%);transition:transform .5s cubic-bezier(.4,0,.2,1);opacity:0;color:var(--gray-700)}
     .proof-toast.show{transform:translateX(0);opacity:1}
     .proof-toast-avatar{width:36px;height:36px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;flex-shrink:0}
     .proof-toast-text{font-size:12px;color:var(--gray-600);line-height:1.4}
@@ -382,6 +382,15 @@
     .compare-table .cg{color:var(--green);font-weight:700}
     .compare-table .cr{color:var(--red);font-weight:700}
 
+    /* === LIFESTYLE IMAGE BANNERS === */
+    .lifestyle-banner{position:relative;overflow:hidden}
+    .lifestyle-banner img{width:100%;height:500px;object-fit:cover;display:block}
+    .lifestyle-banner .banner-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(27,48,84,.75) 0%,rgba(27,48,84,.4) 50%,rgba(27,48,84,.75) 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
+    .lifestyle-banner .banner-text{max-width:700px}
+    .lifestyle-banner .banner-text h2{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);color:#fff;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:16px}
+    .lifestyle-banner .banner-text p{font-size:16px;color:rgba(255,255,255,.85);max-width:520px;margin:0 auto;line-height:1.7}
+    .lifestyle-banner .banner-highlight{color:var(--gold-light)}
+
     /* === SCROLL REVEAL (handled by GSAP) === */
     .reveal{opacity:0;transform:translateY(40px)}
     .reveal.visible{opacity:1;transform:translateY(0)}
@@ -403,7 +412,7 @@
       .wa-fab{bottom:80px;width:52px;height:52px}
       .wa-fab svg{width:24px;height:24px}
       .live-viewers{bottom:140px;font-size:11px;padding:8px 12px}
-      .proof-toast{bottom:160px;left:10px;right:10px;max-width:none}
+      .proof-toast{bottom:160px;right:10px;left:auto;max-width:320px}
       .lang-sw button{padding:8px 14px;font-size:12px;min-height:44px}
       .area-badge{padding:12px 20px;font-size:12px;min-height:44px;display:inline-flex;align-items:center}
       .faq-q{padding:24px 0;min-height:56px}
@@ -411,6 +420,8 @@
       .compare-table th,.compare-table td{padding:10px 8px}
       .final-cta{padding:100px 20px}
       .section-title{font-size:clamp(28px,7vw,44px)}
+      .lifestyle-banner img{height:360px}
+      .lifestyle-banner .banner-text h2{font-size:clamp(24px,7vw,36px)}
       .problem-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
       .step-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
       .plan-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
@@ -614,6 +625,25 @@
   </div>
 </section>
 
+<!-- Lifestyle Banner: What Would You Do? -->
+<div class="lifestyle-banner reveal">
+  <img src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=1600&q=80" alt="Happy family enjoying time together outdoors at sunset" loading="lazy">
+  <div class="banner-overlay">
+    <div class="banner-text">
+      <h2>
+        <span data-lang="en">What Would You Do<br>With <span class="banner-highlight">5 Extra Hours</span><br>Every Week?</span>
+        <span data-lang="pt">O Que Você Faria<br>Com <span class="banner-highlight">5 Horas Extras</span><br>Toda Semana?</span>
+        <span data-lang="es">¿Qué Harías<br>Con <span class="banner-highlight">5 Horas Extra</span><br>Cada Semana?</span>
+      </h2>
+      <p>
+        <span data-lang="en">Park days. Date nights. Family dinners. Lazy Sunday mornings. The things you actually want to spend your time on.</span>
+        <span data-lang="pt">Dias no parque. Noites a dois. Jantares em família. Domingos preguiçosos. As coisas em que você realmente quer gastar seu tempo.</span>
+        <span data-lang="es">Días en el parque. Noches de cita. Cenas familiares. Domingos tranquilos. Las cosas en las que realmente quieres pasar tu tiempo.</span>
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- ===================== HOW IT WORKS ===================== -->
 <section class="how-it-works reveal" id="how-it-works">
   <div class="container text-center">
@@ -678,6 +708,25 @@
     </div>
   </div>
 </section>
+
+<!-- Lifestyle Banner: Hotel-Fresh Results -->
+<div class="lifestyle-banner reveal">
+  <img src="https://images.unsplash.com/photo-1534973098198-6b2de48816b7?w=1600&q=80" alt="Perfectly folded fresh white towels and linens" loading="lazy">
+  <div class="banner-overlay">
+    <div class="banner-text">
+      <h2>
+        <span data-lang="en">Hotel-Fresh Clothes.<br><span class="banner-highlight">Every Single Week.</span></span>
+        <span data-lang="pt">Roupas Cheirando a Hotel.<br><span class="banner-highlight">Toda Semana.</span></span>
+        <span data-lang="es">Ropa Fresca de Hotel.<br><span class="banner-highlight">Cada Semana.</span></span>
+      </h2>
+      <p>
+        <span data-lang="en">Professionally washed, expertly folded, delivered to your door. Your clothes have never looked — or smelled — this good.</span>
+        <span data-lang="pt">Lavadas profissionalmente, dobradas com perfeição, entregues na sua porta. Suas roupas nunca ficaram — ou cheiraram — tão bem.</span>
+        <span data-lang="es">Lavada profesionalmente, doblada expertamente, entregada en tu puerta. Tu ropa nunca se vio — ni olió — tan bien.</span>
+      </p>
+    </div>
+  </div>
+</div>
 
 <!-- ===================== PRICING ===================== -->
 <section class="pricing reveal" id="pricing">
@@ -1052,6 +1101,25 @@
     </div>
   </div>
 </section>
+
+<!-- Lifestyle Banner: Weekend Freedom -->
+<div class="lifestyle-banner reveal">
+  <img src="https://images.unsplash.com/photo-1517013826874-ae10195100e3?w=1600&q=80" alt="Woman relaxing comfortably on couch enjoying free time" loading="lazy">
+  <div class="banner-overlay">
+    <div class="banner-text">
+      <h2>
+        <span data-lang="en">Your Weekends.<br><span class="banner-highlight">Yours Again.</span></span>
+        <span data-lang="pt">Seus Fins de Semana.<br><span class="banner-highlight">De Volta Pra Você.</span></span>
+        <span data-lang="es">Tus Fines de Semana.<br><span class="banner-highlight">Tuyos Otra Vez.</span></span>
+      </h2>
+      <p>
+        <span data-lang="en">2,000+ Orlando families already made the switch. Zero regrets. Zero laundry. Just more time for what matters.</span>
+        <span data-lang="pt">Mais de 2.000 famílias em Orlando já fizeram a troca. Zero arrependimentos. Zero lavanderia. Apenas mais tempo para o que importa.</span>
+        <span data-lang="es">Más de 2,000 familias en Orlando ya hicieron el cambio. Cero arrepentimientos. Cero lavandería. Solo más tiempo para lo que importa.</span>
+      </p>
+    </div>
+  </div>
+</div>
 
 <!-- ===================== COMPARISON TABLE ===================== -->
 <section class="comparison reveal">
@@ -1730,8 +1798,9 @@
     }
   });
 
-  // === Scroll Reveal Animations ===
+  // === Scroll Reveal Animations (fallback when GSAP unavailable) ===
   (function(){
+    if(typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined') return;
     const els=document.querySelectorAll('.reveal');
     const obs=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
@@ -1948,6 +2017,22 @@
     gsap.to('.hero-bg img',{
       y:150,ease:'none',
       scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}
+    });
+
+    // Lifestyle banner parallax + reveals
+    document.querySelectorAll('.lifestyle-banner').forEach(function(banner){
+      var img=banner.querySelector('img');
+      if(img){
+        gsap.fromTo(img,{y:-30},{y:30,ease:'none',
+          scrollTrigger:{trigger:banner,start:'top bottom',end:'bottom top',scrub:true}
+        });
+      }
+      var text=banner.querySelector('.banner-text');
+      if(text){
+        gsap.from(text,{opacity:0,y:50,duration:1.2,ease:'power3.out',
+          scrollTrigger:{trigger:banner,start:'top 75%'}
+        });
+      }
     });
   })();
 </script>
