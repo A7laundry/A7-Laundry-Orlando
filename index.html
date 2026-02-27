@@ -11,9 +11,8 @@
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     /* ==========================================
        A7 LAUNDRY — WARM PROFESSIONAL DESIGN
@@ -391,9 +390,8 @@
     .lifestyle-banner .banner-text p{font-size:16px;color:rgba(255,255,255,.85);max-width:520px;margin:0 auto;line-height:1.7}
     .lifestyle-banner .banner-highlight{color:var(--gold-light)}
 
-    /* === SCROLL REVEAL (handled by GSAP) === */
-    .reveal{opacity:0;transform:translateY(40px)}
-    .reveal.visible{opacity:1;transform:translateY(0)}
+    /* === SCROLL REVEAL (GSAP enhances, content visible by default) === */
+    .reveal{opacity:1;transform:none}
 
     /* === MOBILE RESPONSIVE OVERRIDES === */
     @media(max-width:768px){
@@ -486,7 +484,7 @@
 <!-- ===================== HERO ===================== -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1920&q=80" alt="Fresh clean white laundry" loading="eager">
+    <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1400&q=75" alt="Fresh clean white laundry" loading="eager" decoding="async" fetchpriority="high">
   </div>
   <div class="container">
     <div class="hero-content">
@@ -627,7 +625,7 @@
 
 <!-- Lifestyle Banner: What Would You Do? -->
 <div class="lifestyle-banner reveal">
-  <img src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=1600&q=80" alt="Happy family enjoying time together outdoors at sunset" loading="lazy">
+  <img src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=1200&q=70" alt="Happy family enjoying time together outdoors at sunset" loading="lazy" decoding="async">
   <div class="banner-overlay">
     <div class="banner-text">
       <h2>
@@ -711,7 +709,7 @@
 
 <!-- Lifestyle Banner: Hotel-Fresh Results -->
 <div class="lifestyle-banner reveal">
-  <img src="https://images.unsplash.com/photo-1534973098198-6b2de48816b7?w=1600&q=80" alt="Perfectly folded fresh white towels and linens" loading="lazy">
+  <img src="https://images.unsplash.com/photo-1534973098198-6b2de48816b7?w=1200&q=70" alt="Perfectly folded fresh white towels and linens" loading="lazy" decoding="async">
   <div class="banner-overlay">
     <div class="banner-text">
       <h2>
@@ -1104,7 +1102,7 @@
 
 <!-- Lifestyle Banner: Weekend Freedom -->
 <div class="lifestyle-banner reveal">
-  <img src="https://images.unsplash.com/photo-1517013826874-ae10195100e3?w=1600&q=80" alt="Woman relaxing comfortably on couch enjoying free time" loading="lazy">
+  <img src="https://images.unsplash.com/photo-1517013826874-ae10195100e3?w=1200&q=70" alt="Woman relaxing comfortably on couch enjoying free time" loading="lazy" decoding="async">
   <div class="banner-overlay">
     <div class="banner-text">
       <h2>
@@ -1798,20 +1796,7 @@
     }
   });
 
-  // === Scroll Reveal Animations (fallback when GSAP unavailable) ===
-  (function(){
-    if(typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined') return;
-    const els=document.querySelectorAll('.reveal');
-    const obs=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    },{threshold:0.15});
-    els.forEach(el=>obs.observe(el));
-  })();
+  // === Scroll Reveal: content visible by default, GSAP enhances if available ===
 
   // === Subscription Modal ===
   const planData = {
@@ -1942,12 +1927,18 @@
     checkScroll();
   })();
 
-  // === GSAP ScrollTrigger Animations ===
-  (function(){
+  // === Load GSAP async (non-blocking) ===
+  function initGSAP(){
     if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero text entrance
+    // Helper: skip elements already in viewport to avoid flash
+    function isBelowFold(el){
+      var r=el.getBoundingClientRect();
+      return r.top>=window.innerHeight;
+    }
+
+    // Hero text entrance (always animate — hero is always in view on load)
     gsap.from('.hero-badge',{opacity:0,y:30,duration:1,delay:.3,ease:'power3.out'});
     gsap.from('.hero h1',{opacity:0,y:60,duration:1.2,delay:.5,ease:'power3.out'});
     gsap.from('.hero-sub',{opacity:0,y:40,duration:1,delay:.8,ease:'power3.out'});
@@ -1955,85 +1946,68 @@
     gsap.from('.hero-trust',{opacity:0,y:20,duration:1,delay:1.2,ease:'power3.out'});
     gsap.from('.hero-stat',{opacity:0,y:30,duration:.8,delay:1.4,stagger:.15,ease:'power3.out'});
 
-    // Section reveals
+    // Section reveals — only animate sections below the fold
     document.querySelectorAll('.reveal').forEach(function(el){
-      gsap.fromTo(el,
-        {opacity:0,y:60},
-        {opacity:1,y:0,duration:1,ease:'power3.out',
-          scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}
-        }
-      );
-    });
-
-    // Problem cards stagger
-    gsap.from('.problem-card',{
-      opacity:0,y:50,duration:.8,stagger:.15,ease:'power3.out',
-      scrollTrigger:{trigger:'.problem-grid',start:'top 80%'}
-    });
-
-    // Step cards stagger
-    gsap.from('.step-card',{
-      opacity:0,y:50,duration:.8,stagger:.15,ease:'power3.out',
-      scrollTrigger:{trigger:'.steps-grid',start:'top 80%'}
-    });
-
-    // Plan cards stagger
-    gsap.from('.plan-card',{
-      opacity:0,y:50,duration:.8,stagger:.12,ease:'power3.out',
-      scrollTrigger:{trigger:'.plans-grid',start:'top 80%'}
-    });
-
-    // Review cards stagger
-    gsap.from('.review-card',{
-      opacity:0,y:50,duration:.8,stagger:.15,ease:'power3.out',
-      scrollTrigger:{trigger:'.reviews-grid',start:'top 80%'}
-    });
-
-    // Service cards stagger
-    gsap.from('.service-card',{
-      opacity:0,y:40,duration:.7,stagger:.1,ease:'power3.out',
-      scrollTrigger:{trigger:'.services-grid',start:'top 80%'}
-    });
-
-    // Section titles parallax
-    document.querySelectorAll('.section-title').forEach(function(title){
-      gsap.from(title,{
-        opacity:0,y:40,duration:1,ease:'power3.out',
-        scrollTrigger:{trigger:title,start:'top 85%'}
+      if(!isBelowFold(el)) return;
+      gsap.set(el,{opacity:0,y:50});
+      ScrollTrigger.create({
+        trigger:el,start:'top 85%',once:true,
+        onEnter:function(){gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power3.out'});}
       });
     });
 
-    // Final CTA dramatic entrance
-    gsap.from('.final-cta h2',{
-      opacity:0,y:80,duration:1.2,ease:'power3.out',
-      scrollTrigger:{trigger:'.final-cta',start:'top 70%'}
-    });
-    gsap.from('.final-cta p',{
-      opacity:0,y:40,duration:1,delay:.3,ease:'power3.out',
-      scrollTrigger:{trigger:'.final-cta',start:'top 70%'}
+    // Card staggers — only if trigger is below fold
+    var staggers=[
+      {sel:'.problem-card',trig:'.problem-grid'},
+      {sel:'.step-card',trig:'.steps-grid'},
+      {sel:'.plan-card',trig:'.plans-grid'},
+      {sel:'.review-card',trig:'.reviews-grid'},
+      {sel:'.service-card',trig:'.services-grid'}
+    ];
+    staggers.forEach(function(s){
+      var trigger=document.querySelector(s.trig);
+      if(!trigger||!isBelowFold(trigger)) return;
+      gsap.from(s.sel,{
+        opacity:0,y:40,duration:.7,stagger:.12,ease:'power3.out',
+        scrollTrigger:{trigger:s.trig,start:'top 82%'}
+      });
     });
 
-    // Hero parallax on scroll
+    // Hero parallax
     gsap.to('.hero-bg img',{
-      y:150,ease:'none',
+      y:120,ease:'none',
       scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}
     });
 
-    // Lifestyle banner parallax + reveals
+    // Lifestyle banner parallax + text reveal
     document.querySelectorAll('.lifestyle-banner').forEach(function(banner){
       var img=banner.querySelector('img');
       if(img){
-        gsap.fromTo(img,{y:-30},{y:30,ease:'none',
+        gsap.fromTo(img,{y:-20},{y:20,ease:'none',
           scrollTrigger:{trigger:banner,start:'top bottom',end:'bottom top',scrub:true}
         });
       }
       var text=banner.querySelector('.banner-text');
-      if(text){
-        gsap.from(text,{opacity:0,y:50,duration:1.2,ease:'power3.out',
+      if(text&&isBelowFold(banner)){
+        gsap.from(text,{opacity:0,y:40,duration:1,ease:'power3.out',
           scrollTrigger:{trigger:banner,start:'top 75%'}
         });
       }
     });
+  }
+
+  // Load GSAP scripts dynamically (non-blocking)
+  (function(){
+    var loaded=0;
+    function onLoad(){loaded++;if(loaded===2)initGSAP();}
+    var g=document.createElement('script');
+    g.src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+    g.onload=onLoad;g.onerror=function(){};
+    document.body.appendChild(g);
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+    s.onload=onLoad;s.onerror=function(){};
+    document.body.appendChild(s);
   })();
 </script>
 </body>
