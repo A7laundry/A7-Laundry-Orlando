@@ -21,11 +21,13 @@ Laundry subscription service + specialty cleaning — Orlando, FL.
 
 ## Subscription Plans
 
-| Plan | Price | Bags/mo | Turnaround | Target |
-|------|-------|---------|------------|--------|
-| Essentials | $59.90/mo | 1 XL (~15 lbs) | 48h | Singles, couples, students |
-| Family | $109.90/mo | 3 XL (~45 lbs) | 24h | Families |
-| Premium | $179.90/mo | 5 XL (~75 lbs) + dry cleaning | Same-day | Pros, hosts |
+**Retail price:** $3.20/lb | **Bag:** 25 lbs (~40-50 pieces) | **Dimensions:** 30"x40" (76x102cm)
+
+| Plan | Price | Bags/mo | Total lbs | Turnaround | Target |
+|------|-------|---------|-----------|------------|--------|
+| Essentials | $59.90/mo | 1 XL | 25 lbs | 48h | Singles, couples, guests |
+| Family | $109.90/mo | 2 XL | 50 lbs | 24h | Families |
+| Premium | $179.90/mo | 4 XL + dry cleaning | 100 lbs | Same-day | Pros, hosts |
 
 ---
 
