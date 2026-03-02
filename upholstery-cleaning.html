@@ -8,6 +8,14 @@
   <meta property="og:title" content="A7 Cleaning Services | FREE Scotchgard With Upholstery Cleaning">
   <meta property="og:description" content="Your sofa has 12x more germs than a toilet seat. Professional upholstery cleaning + FREE Scotchgard protection.">
   <meta property="og:type" content="website">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PM7QGX6L');</script>
+  <!-- End Google Tag Manager -->
+  <script>function gtag(){dataLayer.push(arguments);}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
@@ -52,6 +60,14 @@
     .lang-sw{position:fixed;top:50px;right:16px;z-index:998;display:flex;gap:4px}
     .lang-sw button{background:rgba(255,255,255,.85);border:1px solid var(--gray-200);padding:4px 10px;border-radius:50px;font-size:11px;font-weight:600;cursor:pointer;transition:.2s;color:var(--gray-700);backdrop-filter:blur(8px)}
     .lang-sw button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+    /* === MULTILINGUAL === */
+    [data-lang]{display:none}
+    .lang-active-en [data-lang="en"],.lang-active-pt [data-lang="pt"],.lang-active-es [data-lang="es"]{display:inline}
+    .lang-active-en .lang-block[data-lang="en"],.lang-active-pt .lang-block[data-lang="pt"],.lang-active-es .lang-block[data-lang="es"]{display:block}
+    .lang-active-en .lang-flex[data-lang="en"],.lang-active-pt .lang-flex[data-lang="pt"],.lang-active-es .lang-flex[data-lang="es"]{display:flex}
+    .lang-active-en .lang-iflex[data-lang="en"],.lang-active-pt .lang-iflex[data-lang="pt"],.lang-active-es .lang-iflex[data-lang="es"]{display:inline-flex}
+    .lang-active-en .lang-grid[data-lang="en"],.lang-active-pt .lang-grid[data-lang="pt"],.lang-active-es .lang-grid[data-lang="es"]{display:grid}
 
     /* === LIVE VIEWERS === */
     .live-viewers{position:fixed;bottom:90px;left:16px;z-index:998;background:rgba(10,6,24,.9);color:#fff;padding:8px 14px;border-radius:50px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);opacity:0;animation:fadeInUp .5s .5s forwards}
@@ -108,6 +124,9 @@
     .hero-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s}
     .hero-cta:hover::before{left:100%}
     .hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(124,58,237,.45);background:var(--accent-dark)}
+    .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .hero-cta-wa{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:14px 32px;border-radius:50px;font-size:14px;font-weight:700;text-decoration:none;transition:all .3s;border:2px solid rgba(37,211,102,.4);animation:fadeInUp .8s .6s both}
+    .hero-cta-wa:hover{background:rgba(37,211,102,.1);border-color:#25d366;transform:translateY(-2px)}
     .hero-trust{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:28px;color:rgba(255,255,255,.6);font-size:12px;animation:fadeInUp .8s .6s both;flex-wrap:wrap}
     .hero-trust span{display:flex;align-items:center;gap:5px}
     @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -164,6 +183,8 @@
     .value{padding:80px 0;background:#fff;text-align:center}
     .value-card{max-width:600px;margin:0 auto;background:var(--off-white);border:2px solid var(--gray-200);border-radius:var(--radius-xl);padding:40px 32px;position:relative;overflow:hidden}
     .value-card::before{content:'BEST VALUE';position:absolute;top:20px;right:-30px;background:var(--accent);color:#fff;padding:4px 40px;font-size:11px;font-weight:800;letter-spacing:1px;transform:rotate(45deg)}
+    .lang-active-pt .value-card::before{content:'MELHOR VALOR'}
+    .lang-active-es .value-card::before{content:'MEJOR VALOR'}
     .value-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--gray-200);text-align:left}
     .value-item:last-of-type{border-bottom:none}
     .value-item .vi-check{color:var(--accent);font-weight:700;margin-right:10px}
@@ -259,6 +280,8 @@
     .final-cta p{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:28px}
     .final-btn{display:inline-flex;align-items:center;gap:10px;background:#25d366;color:#fff;padding:18px 44px;border-radius:60px;font-size:17px;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 8px 24px rgba(37,211,102,.3)}
     .final-btn:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(37,211,102,.4)}
+    .final-cta-wa{display:inline-flex;align-items:center;gap:8px;color:#25d366;font-size:14px;font-weight:600;text-decoration:none;margin-top:16px;transition:.3s}
+    .final-cta-wa:hover{color:#1da851;transform:translateY(-1px)}
 
     /* === FOOTER === */
     .footer{background:var(--gray-900);padding:40px 0;text-align:center;color:rgba(255,255,255,.4);font-size:13px}
@@ -294,6 +317,27 @@
     .services-nav a{color:rgba(255,255,255,.5);font-size:12px;font-weight:600;text-decoration:none;transition:.2s;display:flex;align-items:center;gap:4px}
     .services-nav a:hover,.services-nav a.active{color:#f59e0b}
 
+    /* === HAMBURGER MENU === */
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:6px;z-index:1001}
+    .hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    @media(max-width:768px){.hamburger{display:flex}}
+    .mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;opacity:0;visibility:hidden;transition:all .3s}
+    .mobile-menu-overlay.open{opacity:1;visibility:visible}
+    .mobile-menu{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--bg-dark);z-index:1000;padding:80px 24px 32px;overflow-y:auto;transition:right .3s ease;display:flex;flex-direction:column;gap:8px}
+    .mobile-menu.open{right:0}
+    .mobile-menu a{display:block;color:rgba(255,255,255,.85);text-decoration:none;font-size:15px;font-weight:600;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);transition:.2s}
+    .mobile-menu a:hover{color:#fff}
+    .mobile-menu .menu-section-label{font-size:11px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1.5px;margin-top:16px;padding-bottom:4px}
+    .mobile-menu .menu-phone{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:16px;padding:14px 0;border-bottom:none}
+    .mobile-menu .menu-phone svg{width:18px;height:18px;fill:none;stroke:var(--accent-light);stroke-width:2}
+    .mobile-menu .menu-cta{display:block;background:var(--accent);color:#fff;text-align:center;padding:14px;border-radius:50px;font-weight:800;font-size:14px;margin-top:12px;border-bottom:none}
+    .mobile-menu .menu-lang{display:flex;gap:6px;margin-top:16px}
+    .mobile-menu .menu-lang button{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;cursor:pointer;transition:.2s}
+    .mobile-menu .menu-lang button.active{background:var(--accent);color:#fff}
+
     /* === RESPONSIVE === */
     @media(max-width:768px){
       .hero{min-height:auto;padding:80px 0 60px}
@@ -309,24 +353,52 @@
     }
     @media(max-width:480px){
       .hero h1{font-size:clamp(28px,8vw,38px)}
-      .hero-cta{padding:16px 32px;font-size:15px}
+      .hero-cta,.hero-cta-wa{padding:14px 28px;font-size:14px;width:100%;justify-content:center}
       .pain-grid{grid-template-columns:1fr}
       .reviews-grid{grid-template-columns:1fr}
       .zip-form{flex-direction:column;align-items:center}
       .lang-sw{top:46px;right:10px}
+      .phone-text{display:none}
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":["LocalBusiness","ProfessionalService"],
+        "@id":"https://www.a7laundryorlando.com/#business",
+        "name":"A7 Cleaning Services",
+        "telephone":"+1-407-670-8839",
+        "address":{"@type":"PostalAddress","streetAddress":"10097 Tuller Loop","addressLocality":"Winter Garden","addressRegion":"FL","postalCode":"34787","addressCountry":"US"},
+        "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"527","bestRating":"5","worstRating":"1"},
+        "areaServed":[{"@type":"City","name":"Orlando"},{"@type":"City","name":"Kissimmee"},{"@type":"City","name":"Winter Park"},{"@type":"City","name":"Winter Garden"},{"@type":"City","name":"Lake Nona"},{"@type":"City","name":"Celebration"},{"@type":"City","name":"Altamonte Springs"},{"@type":"City","name":"Windermere"},{"@type":"City","name":"Oviedo"},{"@type":"City","name":"Davenport"}]
+      },
+      {
+        "@type":"Service",
+        "name":"Professional Upholstery Cleaning",
+        "description":"Professional upholstery cleaning in Orlando. FREE Scotchgard protection with every cleaning.",
+        "provider":{"@id":"https://www.a7laundryorlando.com/#business"},
+        "serviceType":"Upholstery Cleaning",
+        "offers":{"@type":"Offer","priceCurrency":"USD","price":"89.00"}
+      }
+    ]
+  }
+  </script>
 </head>
-<body>
+<body class="lang-active-en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM7QGX6L" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
   <!-- SCROLL PROGRESS -->
   <div class="scroll-progress" id="scrollBar"></div>
 
   <!-- LANGUAGE SWITCHER -->
-  <div class="lang-sw"><button class="active">EN</button><button>PT</button><button>ES</button></div>
+  <div class="lang-sw"><button class="active" onclick="setLanguage('en')">EN</button><button onclick="setLanguage('pt')">PT</button><button onclick="setLanguage('es')">ES</button></div>
 
   <!-- LIVE VIEWERS -->
-  <div class="live-viewers"><span class="live-dot"></span> 🔥 <span id="liveViewers">18</span> people viewing this page</div>
+  <div class="live-viewers"><span class="live-dot"></span> 🔥 <span id="liveViewers">18</span> <span data-lang="en">people viewing this page</span><span data-lang="pt">pessoas vendo esta página</span><span data-lang="es">personas viendo esta página</span></div>
 
   <!-- HEADER WITH LOGO -->
   <header class="site-header">
@@ -334,24 +406,59 @@
       <a href="index.html" style="text-decoration:none"><img src="a7-logo.jpg" alt="A7 Laundry" class="logo-img"></a>
       <div style="display:flex;align-items:center;gap:12px">
         <a href="index.html#pricing" style="color:var(--gray-200);text-decoration:none;font-size:13px;font-weight:600;transition:.3s"><span data-lang="en">Plans</span><span data-lang="pt">Planos</span><span data-lang="es">Planes</span></a>
-        <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!" class="header-cta">Get FREE Scotchgard</a>
+        <a href="tel:+14076708839" style="color:var(--accent-light);text-decoration:none;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px;white-space:nowrap">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span class="phone-text">(407) 670-8839</span>
+        </a>
+        <a href="tel:+14076708839" class="header-cta"><span data-lang="en">Call Now</span><span data-lang="pt">Ligue Agora</span><span data-lang="es">Llama Ahora</span></a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Menu -->
+  <div class="mobile-menu-overlay" id="menuOverlay"></div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="tel:+14076708839" class="menu-phone">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (407) 670-8839
+    </a>
+    <div class="menu-section-label"><span data-lang="en">Navigation</span><span data-lang="pt">Navegacao</span><span data-lang="es">Navegacion</span></div>
+    <a href="index.html"><span data-lang="en">← Back to A7 Laundry</span><span data-lang="pt">← Voltar para A7 Laundry</span><span data-lang="es">← Volver a A7 Laundry</span></a>
+    <a href="index.html#pricing"><span data-lang="en">Subscription Plans</span><span data-lang="pt">Planos de Assinatura</span><span data-lang="es">Planes de Suscripcion</span></a>
+    <div class="menu-section-label"><span data-lang="en">Services</span><span data-lang="pt">Servicos</span><span data-lang="es">Servicios</span></div>
+    <a href="carpet-cleaning.html">🏠 <span data-lang="en">Carpet Cleaning</span><span data-lang="pt">Limpeza de Carpete</span><span data-lang="es">Limpieza de Alfombra</span></a>
+    <a href="upholstery-cleaning.html" style="color:var(--accent-light)">🛋️ <span data-lang="en">Upholstery Cleaning</span><span data-lang="pt">Limpeza de Estofados</span><span data-lang="es">Limpieza de Tapiceria</span></a>
+    <a href="shoe-cleaning.html">👟 <span data-lang="en">Shoe Cleaning</span><span data-lang="pt">Limpeza de Tenis</span><span data-lang="es">Limpieza de Zapatillas</span></a>
+    <a href="vacation-rental.html">🌴 Vacation Rental</a>
+    <div class="menu-lang" id="menuLangSwitcher">
+      <button class="active" onclick="setLanguage('en')">EN</button>
+      <button onclick="setLanguage('pt')">PT</button>
+      <button onclick="setLanguage('es')">ES</button>
+    </div>
+    <a href="tel:+14076708839" class="menu-cta">
+      <span data-lang="en">📞 Call (407) 670-8839</span><span data-lang="pt">📞 Ligue (407) 670-8839</span><span data-lang="es">📞 Llama (407) 670-8839</span>
+    </a>
+  </nav>
+
   <!-- SERVICES NAV -->
   <nav class="services-nav">
     <div class="services-nav-inner">
-      <a href="carpet-cleaning.html">🏠 Carpet</a>
-      <a href="upholstery-cleaning.html" class="active">🛋️ Upholstery</a>
-      <a href="shoe-cleaning.html">👟 Shoes</a>
-      <a href="vacation-rental.html">🌴 Vacation Rental</a>
+      <a href="carpet-cleaning.html">🏠 <span data-lang="en">Carpet</span><span data-lang="pt">Tapete</span><span data-lang="es">Alfombra</span></a>
+      <a href="upholstery-cleaning.html" class="active">🛋️ <span data-lang="en">Upholstery</span><span data-lang="pt">Estofados</span><span data-lang="es">Tapicería</span></a>
+      <a href="shoe-cleaning.html">👟 <span data-lang="en">Shoes</span><span data-lang="pt">Calçados</span><span data-lang="es">Calzado</span></a>
+      <a href="vacation-rental.html">🌴 <span data-lang="en">Vacation Rental</span><span data-lang="pt">Aluguel Temporada</span><span data-lang="es">Alquiler Vacacional</span></a>
     </div>
   </nav>
 
   <!-- URGENCY BAR -->
   <div class="urgency-bar">
-    <span>⏰ LIMITED: Only <strong id="spotsLeft">6</strong> Scotchgard packages left — Offer expires in <span class="cd" id="countdown">23:59:59</span></span>
+    <span>⏰ <span data-lang="en">LIMITED: Only <strong id="spotsLeft">6</strong> Scotchgard packages left — Offer expires in</span><span data-lang="pt">LIMITADO: Apenas <strong id="spotsLeftPt">6</strong> pacotes Scotchgard restantes — Oferta expira em</span><span data-lang="es">LIMITADO: Solo quedan <strong id="spotsLeftEs">6</strong> paquetes Scotchgard — Oferta expira en</span> <span class="cd" id="countdown">23:59:59</span></span>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div style="background:rgba(10,6,24,.98);padding:8px 20px;font-size:12px">
+    <div class="container"><a href="index.html" style="color:var(--gray-500);text-decoration:none">Home</a> <span style="color:var(--gray-500);margin:0 6px">/</span> <span style="color:var(--accent-light)"><span data-lang="en">Upholstery Cleaning</span><span data-lang="pt">Limpeza de Estofados</span><span data-lang="es">Limpieza de Tapiceria</span></span></div>
   </div>
 
   <!-- ===== HERO ===== -->
@@ -363,22 +470,28 @@
     <div class="particle p1"></div><div class="particle p2"></div><div class="particle p3"></div><div class="particle p4"></div><div class="particle p5"></div>
     <div class="particle p6"></div><div class="particle p7"></div><div class="particle p8"></div><div class="particle p9"></div><div class="particle p10"></div>
     <div class="container">
-      <div class="hero-badge"><span class="dot"></span> Orlando's Trusted Upholstery Experts</div>
-      <h1>Your Sofa Has <span class="highlight">12x More Germs</span><br>Than a Toilet Seat.</h1>
-      <p class="hero-sub">Every time you sit down, you're pressing into a cocktail of bacteria, dust mites, and allergens. We eliminate 99.9% — plus FREE Scotchgard protection ($50 value).</p>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!" class="hero-cta">
-        Get FREE Scotchgard Protection →
-      </a>
+      <div class="hero-badge"><span class="dot"></span> <span data-lang="en">Orlando's Trusted Upholstery Experts</span><span data-lang="pt">Especialistas em Estofados de Orlando</span><span data-lang="es">Expertos en Tapicería de Orlando</span></div>
+      <h1><span data-lang="en">Your Sofa Has <span class="highlight">12x More Germs</span><br>Than a Toilet Seat.</span><span data-lang="pt">Seu Sofá Tem <span class="highlight">12x Mais Germes</span><br>Que um Vaso Sanitário.</span><span data-lang="es">Tu Sofá Tiene <span class="highlight">12x Más Gérmenes</span><br>Que un Inodoro.</span></h1>
+      <p class="hero-sub"><span data-lang="en">Every time you sit down, you're pressing into a cocktail of bacteria, dust mites, and allergens. We eliminate 99.9% — plus FREE Scotchgard protection ($50 value).</span><span data-lang="pt">Cada vez que você senta, está pressionando um coquetel de bactérias, ácaros e alérgenos. Eliminamos 99,9% — mais proteção Scotchgard GRÁTIS (valor $50).</span><span data-lang="es">Cada vez que te sientas, presionas un cóctel de bacterias, ácaros y alérgenos. Eliminamos el 99,9% — más protección Scotchgard GRATIS (valor $50).</span></p>
+      <div class="hero-ctas">
+        <a href="tel:+14076708839" class="hero-cta">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span data-lang="en">Call Now (407) 670-8839</span><span data-lang="pt">Ligue Agora (407) 670-8839</span><span data-lang="es">Llama Ahora (407) 670-8839</span>
+        </a>
+        <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!" class="hero-cta-wa" data-wa-link>
+          <span data-lang="en">💬 WhatsApp</span><span data-lang="pt">💬 WhatsApp</span><span data-lang="es">💬 WhatsApp</span>
+        </a>
+      </div>
       <div class="hero-trust">
-        <span>✓ 1,500+ Sofas Cleaned</span>
-        <span>✓ 4.9★ Google Rating</span>
-        <span>✓ Fabric-Safe Products</span>
+        <span>✓ <span data-lang="en">1,500+ Sofas Cleaned</span><span data-lang="pt">1.500+ Sofás Limpos</span><span data-lang="es">1.500+ Sofás Limpiados</span></span>
+        <span>✓ <span data-lang="en">4.9★ Google Rating</span><span data-lang="pt">4.9★ Avaliação Google</span><span data-lang="es">4.9★ Calificación Google</span></span>
+        <span>✓ <span data-lang="en">Fabric-Safe Products</span><span data-lang="pt">Produtos Seguros para Tecidos</span><span data-lang="es">Productos Seguros para Telas</span></span>
       </div>
     </div>
     <div class="marquee">
       <div class="marquee-inner">
-        <span>★ All Fabric Types</span><span>★ Leather Specialist</span><span>★ Pet Hair Removal</span><span>★ Stain Protection</span><span>★ Same-Day Service</span><span>★ Licensed & Insured</span>
-        <span>★ All Fabric Types</span><span>★ Leather Specialist</span><span>★ Pet Hair Removal</span><span>★ Stain Protection</span><span>★ Same-Day Service</span><span>★ Licensed & Insured</span>
+        <span>★ <span data-lang="en">All Fabric Types</span><span data-lang="pt">Todos os Tecidos</span><span data-lang="es">Todo Tipo de Telas</span></span><span>★ <span data-lang="en">Leather Specialist</span><span data-lang="pt">Especialista em Couro</span><span data-lang="es">Especialista en Cuero</span></span><span>★ <span data-lang="en">Pet Hair Removal</span><span data-lang="pt">Remoção de Pelos de Pet</span><span data-lang="es">Remoción de Pelo de Mascota</span></span><span>★ <span data-lang="en">Stain Protection</span><span data-lang="pt">Proteção contra Manchas</span><span data-lang="es">Protección contra Manchas</span></span><span>★ <span data-lang="en">Same-Day Service</span><span data-lang="pt">Serviço no Mesmo Dia</span><span data-lang="es">Servicio el Mismo Día</span></span><span>★ <span data-lang="en">Licensed & Insured</span><span data-lang="pt">Licenciado e Segurado</span><span data-lang="es">Licenciado y Asegurado</span></span>
+        <span>★ <span data-lang="en">All Fabric Types</span><span data-lang="pt">Todos os Tecidos</span><span data-lang="es">Todo Tipo de Telas</span></span><span>★ <span data-lang="en">Leather Specialist</span><span data-lang="pt">Especialista em Couro</span><span data-lang="es">Especialista en Cuero</span></span><span>★ <span data-lang="en">Pet Hair Removal</span><span data-lang="pt">Remoção de Pelos de Pet</span><span data-lang="es">Remoción de Pelo de Mascota</span></span><span>★ <span data-lang="en">Stain Protection</span><span data-lang="pt">Proteção contra Manchas</span><span data-lang="es">Protección contra Manchas</span></span><span>★ <span data-lang="en">Same-Day Service</span><span data-lang="pt">Serviço no Mesmo Dia</span><span data-lang="es">Servicio el Mismo Día</span></span><span>★ <span data-lang="en">Licensed & Insured</span><span data-lang="pt">Licenciado e Segurado</span><span data-lang="es">Licenciado y Asegurado</span></span>
       </div>
     </div>
   </section>
@@ -387,10 +500,10 @@
   <section class="stats-bar">
     <div class="container">
       <div class="stats-grid">
-        <div class="stat-item"><div class="stat-num" data-target="1500" data-suffix="+">0</div><div class="stat-label">Sofas Cleaned</div></div>
-        <div class="stat-item"><div class="stat-num" data-target="4.9" data-decimal="true">0</div><div class="stat-label">Google Rating</div></div>
-        <div class="stat-item"><div class="stat-num" data-target="99.9" data-decimal="true" data-suffix="%">0</div><div class="stat-label">Germs Eliminated</div></div>
-        <div class="stat-item"><div class="stat-num" data-target="50" data-prefix="$">0</div><div class="stat-label">FREE Scotchgard Value</div></div>
+        <div class="stat-item"><div class="stat-num" data-target="1500" data-suffix="+">0</div><div class="stat-label"><span data-lang="en">Sofas Cleaned</span><span data-lang="pt">Sofás Limpos</span><span data-lang="es">Sofás Limpiados</span></div></div>
+        <div class="stat-item"><div class="stat-num" data-target="4.9" data-decimal="true">0</div><div class="stat-label"><span data-lang="en">Google Rating</span><span data-lang="pt">Avaliação Google</span><span data-lang="es">Calificación Google</span></div></div>
+        <div class="stat-item"><div class="stat-num" data-target="99.9" data-decimal="true" data-suffix="%">0</div><div class="stat-label"><span data-lang="en">Germs Eliminated</span><span data-lang="pt">Germes Eliminados</span><span data-lang="es">Gérmenes Eliminados</span></div></div>
+        <div class="stat-item"><div class="stat-num" data-target="50" data-prefix="$">0</div><div class="stat-label"><span data-lang="en">FREE Scotchgard Value</span><span data-lang="pt">Valor Scotchgard GRÁTIS</span><span data-lang="es">Valor Scotchgard GRATIS</span></div></div>
       </div>
     </div>
   </section>
@@ -398,14 +511,14 @@
   <!-- ===== PAIN ===== -->
   <section class="pain">
     <div class="container">
-      <span class="section-tag">THE PROBLEM</span>
-      <h2 class="section-title">What's Really Living in<br><strong>Your Furniture</strong></h2>
-      <p class="section-sub">You can't see them, but millions of contaminants call your upholstery home.</p>
+      <span class="section-tag"><span data-lang="en">THE PROBLEM</span><span data-lang="pt">O PROBLEMA</span><span data-lang="es">EL PROBLEMA</span></span>
+      <h2 class="section-title"><span data-lang="en">What's Really Living in<br><strong>Your Furniture</strong></span><span data-lang="pt">O Que Realmente Vive nos<br><strong>Seus Estofados</strong></span><span data-lang="es">Lo Que Realmente Vive en<br><strong>Tus Muebles</strong></span></h2>
+      <p class="section-sub"><span data-lang="en">You can't see them, but millions of contaminants call your upholstery home.</span><span data-lang="pt">Você não pode vê-los, mas milhões de contaminantes vivem nos seus estofados.</span><span data-lang="es">No puedes verlos, pero millones de contaminantes viven en tu tapicería.</span></p>
       <div class="pain-grid">
-        <div class="pain-card"><div class="icon">🦠</div><h3>Invisible Germ Colony</h3><p>Your sofa harbors 12x more bacteria than a toilet seat. Every guest who sits down picks them up — and leaves new ones behind.</p></div>
-        <div class="pain-card"><div class="icon">🤧</div><h3>Allergy Nightmare</h3><p>Dust mites thrive in upholstery fabric. Their droppings trigger asthma, sneezing, and itchy eyes. Your "comfy" couch is making you sick.</p></div>
-        <div class="pain-card"><div class="icon">🐾</div><h3>Pet Embedded Deep</h3><p>Pet hair, dander, and oils work deep into fabric fibers. Surface vacuuming doesn't touch what's underneath — the source of that lingering smell.</p></div>
-        <div class="pain-card"><div class="icon">☕</div><h3>Stains Set Permanently</h3><p>Every day an untreated spill sits, it bonds deeper with the fabric. What's an easy fix today becomes a permanent stain tomorrow.</p></div>
+        <div class="pain-card"><div class="icon">🦠</div><h3><span data-lang="en">Invisible Germ Colony</span><span data-lang="pt">Colônia Invisível de Germes</span><span data-lang="es">Colonia Invisible de Gérmenes</span></h3><p><span data-lang="en">Your sofa harbors 12x more bacteria than a toilet seat. Every guest who sits down picks them up — and leaves new ones behind.</span><span data-lang="pt">Seu sofá abriga 12x mais bactérias que um vaso sanitário. Cada pessoa que senta pega essas bactérias — e deixa novas.</span><span data-lang="es">Tu sofá alberga 12x más bacterias que un inodoro. Cada persona que se sienta las recoge — y deja nuevas.</span></p></div>
+        <div class="pain-card"><div class="icon">🤧</div><h3><span data-lang="en">Allergy Nightmare</span><span data-lang="pt">Pesadelo Alérgico</span><span data-lang="es">Pesadilla Alérgica</span></h3><p><span data-lang="en">Dust mites thrive in upholstery fabric. Their droppings trigger asthma, sneezing, and itchy eyes. Your "comfy" couch is making you sick.</span><span data-lang="pt">Ácaros prosperam em tecidos de estofados. Seus resíduos causam asma, espirros e olhos irritados. Seu sofá "confortável" está te deixando doente.</span><span data-lang="es">Los ácaros prosperan en telas de tapicería. Sus residuos causan asma, estornudos y ojos irritados. Tu sofá "cómodo" te está enfermando.</span></p></div>
+        <div class="pain-card"><div class="icon">🐾</div><h3><span data-lang="en">Pet Embedded Deep</span><span data-lang="pt">Pelos de Pet Incrustados</span><span data-lang="es">Pelo de Mascota Incrustado</span></h3><p><span data-lang="en">Pet hair, dander, and oils work deep into fabric fibers. Surface vacuuming doesn't touch what's underneath — the source of that lingering smell.</span><span data-lang="pt">Pelos, caspa e óleos de pets penetram profundamente nas fibras do tecido. Aspirar a superfície não alcança o que está por baixo — a fonte daquele cheiro persistente.</span><span data-lang="es">Pelo, caspa y aceites de mascotas penetran profundamente en las fibras. Aspirar la superficie no alcanza lo que está debajo — la fuente de ese olor persistente.</span></p></div>
+        <div class="pain-card"><div class="icon">☕</div><h3><span data-lang="en">Stains Set Permanently</span><span data-lang="pt">Manchas Ficam Permanentes</span><span data-lang="es">Las Manchas Se Fijan</span></h3><p><span data-lang="en">Every day an untreated spill sits, it bonds deeper with the fabric. What's an easy fix today becomes a permanent stain tomorrow.</span><span data-lang="pt">Cada dia que um derramamento não tratado fica, ele se liga mais ao tecido. O que é fácil de resolver hoje se torna uma mancha permanente amanhã.</span><span data-lang="es">Cada día que un derrame no tratado permanece, se adhiere más a la tela. Lo que es fácil de arreglar hoy se convierte en una mancha permanente mañana.</span></p></div>
       </div>
     </div>
   </section>
@@ -417,17 +530,17 @@
         <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=85&auto=format" alt="Elegant living room with clean sofa" style="width:100%;height:100%;object-fit:cover;transition:transform 8s ease;display:block" loading="lazy" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
       </div>
       <div style="display:flex;flex-direction:column;justify-content:center;padding:60px 48px;background:var(--bg-dark)">
-        <span class="section-tag" style="background:rgba(255,255,255,.08);color:var(--accent-light);align-self:flex-start">LUXURY CARE</span>
-        <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:800;color:#fff;margin:16px 0;line-height:1.2">"Our Furniture Looks Brand New Again"</h2>
-        <p style="font-size:16px;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:24px">Your sofa is where life happens — movie nights, cuddles, naps. Don't let it become a breeding ground for bacteria. Our professional cleaning <strong style="color:var(--accent-light)">eliminates 99.9% of germs</strong> and adds Scotchgard protection for lasting freshness.</p>
+        <span class="section-tag" style="background:rgba(255,255,255,.08);color:var(--accent-light);align-self:flex-start"><span data-lang="en">LUXURY CARE</span><span data-lang="pt">CUIDADO PREMIUM</span><span data-lang="es">CUIDADO DE LUJO</span></span>
+        <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:800;color:#fff;margin:16px 0;line-height:1.2"><span data-lang="en">"Our Furniture Looks Brand New Again"</span><span data-lang="pt">"Nossos Móveis Parecem Novos de Novo"</span><span data-lang="es">"Nuestros Muebles Lucen Como Nuevos"</span></h2>
+        <p style="font-size:16px;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:24px"><span data-lang="en">Your sofa is where life happens — movie nights, cuddles, naps. Don't let it become a breeding ground for bacteria. Our professional cleaning <strong style="color:var(--accent-light)">eliminates 99.9% of germs</strong> and adds Scotchgard protection for lasting freshness.</span><span data-lang="pt">Seu sofá é onde a vida acontece — noites de filme, abraços, sonecas. Não deixe ele virar um criadouro de bactérias. Nossa limpeza profissional <strong style="color:var(--accent-light)">elimina 99,9% dos germes</strong> e adiciona proteção Scotchgard para frescor duradouro.</span><span data-lang="es">Tu sofá es donde sucede la vida — noches de películas, abrazos, siestas. No dejes que se convierta en un criadero de bacterias. Nuestra limpieza profesional <strong style="color:var(--accent-light)">elimina el 99,9% de los gérmenes</strong> y agrega protección Scotchgard para frescura duradera.</span></p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px;text-align:center">
             <div style="font-size:32px;font-weight:900;color:var(--accent-light)">1,500+</div>
-            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px">Sofas Cleaned</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px"><span data-lang="en">Sofas Cleaned</span><span data-lang="pt">Sofás Limpos</span><span data-lang="es">Sofás Limpiados</span></div>
           </div>
           <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px;text-align:center">
             <div style="font-size:32px;font-weight:900;color:var(--accent-light)">$50</div>
-            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px">FREE Scotchgard</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px"><span data-lang="en">FREE Scotchgard</span><span data-lang="pt">Scotchgard GRÁTIS</span><span data-lang="es">Scotchgard GRATIS</span></div>
           </div>
         </div>
       </div>
@@ -437,34 +550,34 @@
   <!-- ===== BRIDGE ===== -->
   <section class="bridge">
     <div class="container">
-      <p>What if your furniture looked and smelled like <em>the day you bought it</em>? What if guests complimented <em>how fresh everything feels</em>? What if one cleaning could <em>protect your investment</em> for months to come?</p>
+      <p><span data-lang="en">What if your furniture looked and smelled like <em>the day you bought it</em>? What if guests complimented <em>how fresh everything feels</em>? What if one cleaning could <em>protect your investment</em> for months to come?</span><span data-lang="pt">E se seus móveis parecessem e cheirassem como <em>no dia em que você comprou</em>? E se as visitas elogiassem <em>como tudo parece fresco</em>? E se uma limpeza pudesse <em>proteger seu investimento</em> por meses?</span><span data-lang="es">¿Y si tus muebles lucieran y olieran como <em>el día que los compraste</em>? ¿Y si los invitados elogiaran <em>lo fresco que se siente todo</em>? ¿Y si una limpieza pudiera <em>proteger tu inversión</em> por meses?</span></p>
     </div>
   </section>
 
   <!-- ===== HOW IT WORKS ===== -->
   <section class="how">
     <div class="container">
-      <span class="section-tag">HOW IT WORKS</span>
-      <h2 class="section-title">Professional Care in<br>3 Simple Steps</h2>
-      <p class="section-sub">We treat every piece like it's our own. Gentle yet powerful results.</p>
+      <span class="section-tag"><span data-lang="en">HOW IT WORKS</span><span data-lang="pt">COMO FUNCIONA</span><span data-lang="es">CÓMO FUNCIONA</span></span>
+      <h2 class="section-title"><span data-lang="en">Professional Care in<br>3 Simple Steps</span><span data-lang="pt">Cuidado Profissional em<br>3 Passos Simples</span><span data-lang="es">Cuidado Profesional en<br>3 Pasos Simples</span></h2>
+      <p class="section-sub"><span data-lang="en">We treat every piece like it's our own. Gentle yet powerful results.</span><span data-lang="pt">Tratamos cada peça como se fosse nossa. Resultados delicados e poderosos.</span><span data-lang="es">Tratamos cada pieza como si fuera nuestra. Resultados suaves pero poderosos.</span></p>
       <div class="steps">
         <div class="step">
           <img class="step-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&q=80&auto=format" alt="Fabric inspection" loading="lazy">
           <div class="step-num">1</div>
-          <h3>Fabric Analysis</h3>
-          <p>We test your fabric type and identify stains. Each material gets a custom cleaning approach for best results.</p>
+          <h3><span data-lang="en">Fabric Analysis</span><span data-lang="pt">Análise do Tecido</span><span data-lang="es">Análisis de Tela</span></h3>
+          <p><span data-lang="en">We test your fabric type and identify stains. Each material gets a custom cleaning approach for best results.</span><span data-lang="pt">Testamos o tipo de tecido e identificamos manchas. Cada material recebe uma abordagem personalizada para os melhores resultados.</span><span data-lang="es">Probamos el tipo de tela e identificamos manchas. Cada material recibe un enfoque personalizado para los mejores resultados.</span></p>
         </div>
         <div class="step">
           <img class="step-img" src="https://images.unsplash.com/photo-1527515637462-cee1395c1e6f?w=500&q=80&auto=format" alt="Deep cleaning upholstery" loading="lazy">
           <div class="step-num">2</div>
-          <h3>Deep Extraction</h3>
-          <p>Hot water extraction removes dirt, allergens, and bacteria from deep within the fabric fibers. 99.9% elimination rate.</p>
+          <h3><span data-lang="en">Deep Extraction</span><span data-lang="pt">Extração Profunda</span><span data-lang="es">Extracción Profunda</span></h3>
+          <p><span data-lang="en">Hot water extraction removes dirt, allergens, and bacteria from deep within the fabric fibers. 99.9% elimination rate.</span><span data-lang="pt">A extração com água quente remove sujeira, alérgenos e bactérias das fibras do tecido. Taxa de eliminação de 99,9%.</span><span data-lang="es">La extracción con agua caliente elimina suciedad, alérgenos y bacterias de las fibras de la tela. Tasa de eliminación del 99,9%.</span></p>
         </div>
         <div class="step">
           <img class="step-img" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&q=80&auto=format" alt="Protected furniture" loading="lazy">
           <div class="step-num">3</div>
-          <h3>Scotchgard Shield</h3>
-          <p>We apply professional-grade Scotchgard protection. Spills bead up instead of soaking in. Stays clean 3x longer.</p>
+          <h3><span data-lang="en">Scotchgard Shield</span><span data-lang="pt">Proteção Scotchgard</span><span data-lang="es">Protección Scotchgard</span></h3>
+          <p><span data-lang="en">We apply professional-grade Scotchgard protection. Spills bead up instead of soaking in. Stays clean 3x longer.</span><span data-lang="pt">Aplicamos proteção Scotchgard profissional. Derramamentos formam gotas em vez de absorver. Fica limpo 3x mais tempo.</span><span data-lang="es">Aplicamos protección Scotchgard profesional. Los derrames forman gotas en vez de absorberse. Se mantiene limpio 3x más tiempo.</span></p>
         </div>
       </div>
     </div>
@@ -473,22 +586,22 @@
   <!-- ===== VALUE STACK ===== -->
   <section class="value" id="pricing">
     <div class="container">
-      <span class="section-tag">INVESTMENT</span>
-      <h2 class="section-title">Everything Included in<br>Your Upholstery Cleaning</h2>
-      <p class="section-sub">Complete care package — no hidden fees, no surprises.</p>
+      <span class="section-tag"><span data-lang="en">INVESTMENT</span><span data-lang="pt">INVESTIMENTO</span><span data-lang="es">INVERSIÓN</span></span>
+      <h2 class="section-title"><span data-lang="en">Everything Included in<br>Your Upholstery Cleaning</span><span data-lang="pt">Tudo Incluído na<br>Sua Limpeza de Estofados</span><span data-lang="es">Todo Incluido en<br>Tu Limpieza de Tapicería</span></h2>
+      <p class="section-sub"><span data-lang="en">Complete care package — no hidden fees, no surprises.</span><span data-lang="pt">Pacote completo — sem taxas ocultas, sem surpresas.</span><span data-lang="es">Paquete completo — sin cargos ocultos, sin sorpresas.</span></p>
       <div class="value-card">
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Fabric type analysis & testing</span><span class="vi-price">$30</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Pre-treatment of stains & high-use areas</span><span class="vi-price">$40</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Hot water extraction deep clean</span><span class="vi-price">$120</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Deodorizer & sanitizer application</span><span class="vi-price">$35</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Scotchgard fabric protection</span><span class="vi-price">$50</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Speed-dry service</span><span class="vi-price">$25</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Fabric type analysis & testing</span><span data-lang="pt">Análise e teste do tipo de tecido</span><span data-lang="es">Análisis y prueba del tipo de tela</span></span><span class="vi-price">$30</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Pre-treatment of stains & high-use areas</span><span data-lang="pt">Pré-tratamento de manchas e áreas de uso intenso</span><span data-lang="es">Pre-tratamiento de manchas y áreas de alto uso</span></span><span class="vi-price">$40</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Hot water extraction deep clean</span><span data-lang="pt">Limpeza profunda com extração a água quente</span><span data-lang="es">Limpieza profunda con extracción de agua caliente</span></span><span class="vi-price">$120</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Deodorizer & sanitizer application</span><span data-lang="pt">Aplicação de desodorizante e sanitizante</span><span data-lang="es">Aplicación de desodorizante y sanitizante</span></span><span class="vi-price">$35</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Scotchgard fabric protection</span><span data-lang="pt">Proteção Scotchgard para tecidos</span><span data-lang="es">Protección Scotchgard para telas</span></span><span class="vi-price">$50</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Speed-dry service</span><span data-lang="pt">Serviço de secagem rápida</span><span data-lang="es">Servicio de secado rápido</span></span><span class="vi-price">$25</span></div>
         <div class="value-total">
-          <div class="vt-old">Total Value: $300</div>
-          <div class="vt-new"><small>$</small>149<small>/sofa</small></div>
-          <div class="vt-free">🛡️ FREE Scotchgard Protection ($50 value)</div>
+          <div class="vt-old"><span data-lang="en">Total Value: $300</span><span data-lang="pt">Valor Total: $300</span><span data-lang="es">Valor Total: $300</span></div>
+          <div class="vt-new"><small>$</small>149<small>/<span data-lang="en">sofa</span><span data-lang="pt">sofá</span><span data-lang="es">sofá</span></small></div>
+          <div class="vt-free">🛡️ <span data-lang="en">FREE Scotchgard Protection ($50 value)</span><span data-lang="pt">Proteção Scotchgard GRÁTIS (valor $50)</span><span data-lang="es">Protección Scotchgard GRATIS (valor $50)</span></div>
         </div>
-        <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!" class="value-cta">Get FREE Scotchgard →</a>
+        <a href="tel:+14076708839" class="value-cta"><span data-lang="en">📞 Call Now (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora (407) 670-8839</span><span data-lang="es">📞 Llama Ahora (407) 670-8839</span></a>
       </div>
     </div>
   </section>
@@ -496,57 +609,57 @@
   <!-- ===== REVIEWS ===== -->
   <section class="reviews">
     <div class="container">
-      <span class="section-tag">HAPPY CUSTOMERS</span>
-      <h2 class="section-title">1,500+ Orlando Homes Trust A7</h2>
-      <p class="section-sub">Real reviews from real homeowners about their upholstery cleaning.</p>
+      <span class="section-tag"><span data-lang="en">HAPPY CUSTOMERS</span><span data-lang="pt">CLIENTES FELIZES</span><span data-lang="es">CLIENTES FELICES</span></span>
+      <h2 class="section-title"><span data-lang="en">1,500+ Orlando Homes Trust A7</span><span data-lang="pt">1.500+ Lares em Orlando Confiam na A7</span><span data-lang="es">1.500+ Hogares en Orlando Confían en A7</span></h2>
+      <p class="section-sub"><span data-lang="en">Real reviews from real homeowners about their upholstery cleaning.</span><span data-lang="pt">Avaliações reais de proprietários sobre a limpeza de estofados.</span><span data-lang="es">Reseñas reales de propietarios sobre la limpieza de tapicería.</span></p>
       <div class="reviews-grid">
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"Our sectional looked 10 years younger! The Scotchgard protection was the best decision — a spill last week just wiped right off."</blockquote>
+          <blockquote><span data-lang="en">"Our sectional looked 10 years younger! The Scotchgard protection was the best decision — a spill last week just wiped right off."</span><span data-lang="pt">"Nosso sofá de canto pareceu 10 anos mais novo! A proteção Scotchgard foi a melhor decisão — um derramamento semana passada saiu com um pano."</span><span data-lang="es">"¡Nuestro seccional lució 10 años más joven! La protección Scotchgard fue la mejor decisión — un derrame la semana pasada se limpió fácilmente."</span></blockquote>
           <div class="review-author"><div class="review-avatar">LM</div><div><div class="review-name">Lisa M.</div><div class="review-loc">Winter Garden, FL</div></div></div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"We have 3 dogs and the sofa was embarrassing. A7 made it look brand new. The pet odor is completely gone!"</blockquote>
+          <blockquote><span data-lang="en">"We have 3 dogs and the sofa was embarrassing. A7 made it look brand new. The pet odor is completely gone!"</span><span data-lang="pt">"Temos 3 cachorros e o sofá era vergonhoso. A A7 deixou como novo. O cheiro de pet sumiu completamente!"</span><span data-lang="es">"Tenemos 3 perros y el sofá era vergonzoso. A7 lo dejó como nuevo. ¡El olor a mascota desapareció por completo!"</span></blockquote>
           <div class="review-author"><div class="review-avatar">TJ</div><div><div class="review-name">Tom J.</div><div class="review-loc">Lake Mary, FL</div></div></div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"I was about to buy a new couch for $2,000. A7 cleaned it for $149 and it looks better than new. Saved me a fortune!"</blockquote>
+          <blockquote><span data-lang="en">"I was about to buy a new couch for $2,000. A7 cleaned it for $149 and it looks better than new. Saved me a fortune!"</span><span data-lang="pt">"Eu ia comprar um sofá novo por $2.000. A A7 limpou por $149 e ficou melhor que novo. Economizei uma fortuna!"</span><span data-lang="es">"Estaba a punto de comprar un sofá nuevo por $2.000. A7 lo limpió por $149 y se ve mejor que nuevo. ¡Me ahorré una fortuna!"</span></blockquote>
           <div class="review-author"><div class="review-avatar">SC</div><div><div class="review-name">Sandra C.</div><div class="review-loc">Oviedo, FL</div></div></div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"Professional, on time, and incredible results. My dining chairs look amazing and the fabric is protected for months."</blockquote>
+          <blockquote><span data-lang="en">"Professional, on time, and incredible results. My dining chairs look amazing and the fabric is protected for months."</span><span data-lang="pt">"Profissional, pontual e resultados incríveis. Minhas cadeiras de jantar ficaram incríveis e o tecido está protegido por meses."</span><span data-lang="es">"Profesional, puntual y resultados increíbles. Mis sillas de comedor lucen increíbles y la tela está protegida por meses."</span></blockquote>
           <div class="review-author"><div class="review-avatar">NK</div><div><div class="review-name">Nicole K.</div><div class="review-loc">Dr. Phillips, FL</div></div></div>
         </div>
       </div>
-      <div class="google-badge"><span class="gb-stars">★★★★★</span> 4.9 on Google · 73 reviews</div>
+      <div class="google-badge"><span class="gb-stars">★★★★★</span> 4.9 <span data-lang="en">on Google · 73 reviews</span><span data-lang="pt">no Google · 73 avaliações</span><span data-lang="es">en Google · 73 reseñas</span></div>
     </div>
   </section>
 
   <!-- ===== BEFORE / AFTER ===== -->
   <section class="compare">
     <div class="container">
-      <span class="section-tag">THE DIFFERENCE</span>
-      <h2 class="section-title">WITHOUT vs WITH A7 Cleaning</h2>
-      <p class="section-sub">See what professional upholstery care really means.</p>
+      <span class="section-tag"><span data-lang="en">THE DIFFERENCE</span><span data-lang="pt">A DIFERENÇA</span><span data-lang="es">LA DIFERENCIA</span></span>
+      <h2 class="section-title"><span data-lang="en">WITHOUT vs WITH A7 Cleaning</span><span data-lang="pt">SEM vs COM Limpeza A7</span><span data-lang="es">SIN vs CON Limpieza A7</span></h2>
+      <p class="section-sub"><span data-lang="en">See what professional upholstery care really means.</span><span data-lang="pt">Veja o que o cuidado profissional de estofados realmente significa.</span><span data-lang="es">Descubre lo que realmente significa el cuidado profesional de tapicería.</span></p>
       <div class="compare-grid">
         <div class="compare-col bad">
-          <h3>❌ WITHOUT Professional Cleaning</h3>
-          <div class="compare-item"><span class="ci">✗</span> 12x more bacteria than a toilet seat</div>
-          <div class="compare-item"><span class="ci">✗</span> Stains get deeper and more permanent</div>
-          <div class="compare-item"><span class="ci">✗</span> Pet odors embedded in fabric</div>
-          <div class="compare-item"><span class="ci">✗</span> Allergens trigger respiratory issues</div>
-          <div class="compare-item"><span class="ci">✗</span> Furniture looks worn and dated</div>
+          <h3><span data-lang="en">❌ WITHOUT Professional Cleaning</span><span data-lang="pt">❌ SEM Limpeza Profissional</span><span data-lang="es">❌ SIN Limpieza Profesional</span></h3>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">12x more bacteria than a toilet seat</span><span data-lang="pt">12x mais bactérias que um vaso sanitário</span><span data-lang="es">12x más bacterias que un inodoro</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Stains get deeper and more permanent</span><span data-lang="pt">Manchas ficam mais profundas e permanentes</span><span data-lang="es">Las manchas se profundizan y se hacen permanentes</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Pet odors embedded in fabric</span><span data-lang="pt">Odores de pets incrustados no tecido</span><span data-lang="es">Olores de mascotas incrustados en la tela</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Allergens trigger respiratory issues</span><span data-lang="pt">Alérgenos causam problemas respiratórios</span><span data-lang="es">Los alérgenos causan problemas respiratorios</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Furniture looks worn and dated</span><span data-lang="pt">Móveis parecem desgastados e ultrapassados</span><span data-lang="es">Los muebles lucen desgastados y anticuados</span></div>
         </div>
         <div class="compare-col good">
-          <h3>✓ WITH A7 + Scotchgard</h3>
-          <div class="compare-item"><span class="ci">✓</span> 99.9% bacteria and germs eliminated</div>
-          <div class="compare-item"><span class="ci">✓</span> Stains removed & protected against</div>
-          <div class="compare-item"><span class="ci">✓</span> Fresh, odor-free furniture</div>
-          <div class="compare-item"><span class="ci">✓</span> Allergen-free safe environment</div>
-          <div class="compare-item"><span class="ci">✓</span> Furniture looks and feels brand new</div>
+          <h3><span data-lang="en">✓ WITH A7 + Scotchgard</span><span data-lang="pt">✓ COM A7 + Scotchgard</span><span data-lang="es">✓ CON A7 + Scotchgard</span></h3>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">99.9% bacteria and germs eliminated</span><span data-lang="pt">99,9% das bactérias e germes eliminados</span><span data-lang="es">99,9% de bacterias y gérmenes eliminados</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Stains removed & protected against</span><span data-lang="pt">Manchas removidas e proteção aplicada</span><span data-lang="es">Manchas eliminadas y protección aplicada</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Fresh, odor-free furniture</span><span data-lang="pt">Móveis frescos e sem odor</span><span data-lang="es">Muebles frescos y sin olor</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Allergen-free safe environment</span><span data-lang="pt">Ambiente seguro e livre de alérgenos</span><span data-lang="es">Ambiente seguro y libre de alérgenos</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Furniture looks and feels brand new</span><span data-lang="pt">Móveis parecem e se sentem novos</span><span data-lang="es">Los muebles lucen y se sienten como nuevos</span></div>
         </div>
       </div>
     </div>
@@ -555,27 +668,27 @@
   <!-- ===== VISUAL GALLERY ===== -->
   <section style="padding:80px 0;background:var(--off-white);text-align:center">
     <div class="container">
-      <span class="section-tag">REAL RESULTS</span>
-      <h2 class="section-title">See the <strong>A7 Difference</strong></h2>
-      <p class="section-sub">Real upholstery transformations from Orlando homes.</p>
+      <span class="section-tag"><span data-lang="en">REAL RESULTS</span><span data-lang="pt">RESULTADOS REAIS</span><span data-lang="es">RESULTADOS REALES</span></span>
+      <h2 class="section-title"><span data-lang="en">See the <strong>A7 Difference</strong></span><span data-lang="pt">Veja a <strong>Diferença A7</strong></span><span data-lang="es">Mira la <strong>Diferencia A7</strong></span></h2>
+      <p class="section-sub"><span data-lang="en">Real upholstery transformations from Orlando homes.</span><span data-lang="pt">Transformações reais de estofados em lares de Orlando.</span><span data-lang="es">Transformaciones reales de tapicería en hogares de Orlando.</span></p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto">
         <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;transition:transform .3s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
           <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&auto=format" alt="Sofa before cleaning" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,6,24,.8) 100%)"></div>
-          <span style="position:absolute;top:12px;left:12px;background:rgba(239,68,68,.9);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px">BEFORE</span>
-          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700">Sectional Sofa</div><div style="font-size:12px;color:rgba(255,255,255,.6)">3 years of daily use</div></div>
+          <span style="position:absolute;top:12px;left:12px;background:rgba(239,68,68,.9);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px"><span data-lang="en">BEFORE</span><span data-lang="pt">ANTES</span><span data-lang="es">ANTES</span></span>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700"><span data-lang="en">Sectional Sofa</span><span data-lang="pt">Sofá de Canto</span><span data-lang="es">Sofá Seccional</span></div><div style="font-size:12px;color:rgba(255,255,255,.6)"><span data-lang="en">3 years of daily use</span><span data-lang="pt">3 anos de uso diário</span><span data-lang="es">3 años de uso diario</span></div></div>
         </div>
         <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;transition:transform .3s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
           <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80&auto=format" alt="Sofa after cleaning" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,6,24,.8) 100%)"></div>
-          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px">AFTER</span>
-          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700">Like New Again</div><div style="font-size:12px;color:rgba(255,255,255,.6)">Scotchgard protected</div></div>
+          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px"><span data-lang="en">AFTER</span><span data-lang="pt">DEPOIS</span><span data-lang="es">DESPUÉS</span></span>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700"><span data-lang="en">Like New Again</span><span data-lang="pt">Como Novo de Novo</span><span data-lang="es">Como Nuevo Otra Vez</span></div><div style="font-size:12px;color:rgba(255,255,255,.6)"><span data-lang="en">Scotchgard protected</span><span data-lang="pt">Protegido com Scotchgard</span><span data-lang="es">Protegido con Scotchgard</span></div></div>
         </div>
         <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;transition:transform .3s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
           <img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80&auto=format" alt="Pet on clean sofa" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,6,24,.8) 100%)"></div>
-          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px">RESULT</span>
-          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700">Pet-Safe &amp; Fresh</div><div style="font-size:12px;color:rgba(255,255,255,.6)">Family approved</div></div>
+          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px"><span data-lang="en">RESULT</span><span data-lang="pt">RESULTADO</span><span data-lang="es">RESULTADO</span></span>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700"><span data-lang="en">Pet-Safe &amp; Fresh</span><span data-lang="pt">Seguro para Pets e Fresco</span><span data-lang="es">Seguro para Mascotas y Fresco</span></div><div style="font-size:12px;color:rgba(255,255,255,.6)"><span data-lang="en">Family approved</span><span data-lang="pt">Aprovado pela família</span><span data-lang="es">Aprobado por la familia</span></div></div>
         </div>
       </div>
     </div>
@@ -585,19 +698,19 @@
   <section class="guarantee">
     <div class="container">
       <div class="guarantee-icon">🛡️</div>
-      <h2>Not Satisfied? We Re-Clean for FREE.</h2>
-      <p class="section-sub">We stand behind every cleaning. 30-day satisfaction guarantee on all upholstery services.</p>
+      <h2><span data-lang="en">Not Satisfied? We Re-Clean for FREE.</span><span data-lang="pt">Não Satisfeito? Limpamos de Novo GRÁTIS.</span><span data-lang="es">¿No Satisfecho? Limpiamos de Nuevo GRATIS.</span></h2>
+      <p class="section-sub"><span data-lang="en">We stand behind every cleaning. 30-day satisfaction guarantee on all upholstery services.</span><span data-lang="pt">Garantimos cada limpeza. Garantia de satisfação de 30 dias em todos os serviços de estofados.</span><span data-lang="es">Respaldamos cada limpieza. Garantía de satisfacción de 30 días en todos los servicios de tapicería.</span></p>
       <div class="guarantee-terms">
-        <h4>Scotchgard Promotion Terms</h4>
+        <h4><span data-lang="en">Scotchgard Promotion Terms</span><span data-lang="pt">Termos da Promoção Scotchgard</span><span data-lang="es">Términos de la Promoción Scotchgard</span></h4>
         <ul>
-          <li>FREE Scotchgard with any upholstery cleaning service</li>
-          <li>Professional-grade 3M Scotchgard applied</li>
-          <li>Protection lasts 6-12 months</li>
-          <li>Valid for sofas, sectionals, loveseats, chairs</li>
-          <li>One free application per furniture piece cleaned</li>
-          <li>Not combinable with other promotions</li>
-          <li>30-day satisfaction guarantee on all work</li>
-          <li>Licensed, bonded & fully insured</li>
+          <li><span data-lang="en">FREE Scotchgard with any upholstery cleaning service</span><span data-lang="pt">Scotchgard GRÁTIS com qualquer serviço de limpeza de estofados</span><span data-lang="es">Scotchgard GRATIS con cualquier servicio de limpieza de tapicería</span></li>
+          <li><span data-lang="en">Professional-grade 3M Scotchgard applied</span><span data-lang="pt">Scotchgard 3M de grau profissional aplicado</span><span data-lang="es">Scotchgard 3M de grado profesional aplicado</span></li>
+          <li><span data-lang="en">Protection lasts 6-12 months</span><span data-lang="pt">Proteção dura de 6 a 12 meses</span><span data-lang="es">La protección dura de 6 a 12 meses</span></li>
+          <li><span data-lang="en">Valid for sofas, sectionals, loveseats, chairs</span><span data-lang="pt">Válido para sofás, sofás de canto, namoradeiras, poltronas</span><span data-lang="es">Válido para sofás, seccionales, loveseat, sillas</span></li>
+          <li><span data-lang="en">One free application per furniture piece cleaned</span><span data-lang="pt">Uma aplicação gratuita por peça de mobília limpa</span><span data-lang="es">Una aplicación gratuita por pieza de mueble limpiada</span></li>
+          <li><span data-lang="en">Not combinable with other promotions</span><span data-lang="pt">Não combinável com outras promoções</span><span data-lang="es">No combinable con otras promociones</span></li>
+          <li><span data-lang="en">30-day satisfaction guarantee on all work</span><span data-lang="pt">Garantia de satisfação de 30 dias em todos os trabalhos</span><span data-lang="es">Garantía de satisfacción de 30 días en todos los trabajos</span></li>
+          <li><span data-lang="en">Licensed, bonded & fully insured</span><span data-lang="pt">Licenciado, com fiança e totalmente segurado</span><span data-lang="es">Licenciado, con fianza y totalmente asegurado</span></li>
         </ul>
       </div>
     </div>
@@ -606,41 +719,41 @@
   <!-- ===== FAQ ===== -->
   <section class="faq">
     <div class="container">
-      <span class="section-tag">FAQ</span>
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <p class="section-sub">Everything you need to know about our upholstery cleaning.</p>
+      <span class="section-tag"><span data-lang="en">FAQ</span><span data-lang="pt">PERGUNTAS FREQUENTES</span><span data-lang="es">PREGUNTAS FRECUENTES</span></span>
+      <h2 class="section-title"><span data-lang="en">Frequently Asked Questions</span><span data-lang="pt">Perguntas Frequentes</span><span data-lang="es">Preguntas Frecuentes</span></h2>
+      <p class="section-sub"><span data-lang="en">Everything you need to know about our upholstery cleaning.</span><span data-lang="pt">Tudo que você precisa saber sobre nossa limpeza de estofados.</span><span data-lang="es">Todo lo que necesitas saber sobre nuestra limpieza de tapicería.</span></p>
       <div class="faq-list">
         <div class="faq-item active">
-          <div class="faq-q" onclick="toggleFaq(this)">What types of upholstery do you clean?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">We clean all types including cotton, linen, polyester, microfiber, velvet, chenille, and leather. Each fabric type gets a customized cleaning approach for optimal results without damage.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">What types of upholstery do you clean?</span><span data-lang="pt">Que tipos de estofados vocês limpam?</span><span data-lang="es">¿Qué tipos de tapicería limpian?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">We clean all types including cotton, linen, polyester, microfiber, velvet, chenille, and leather. Each fabric type gets a customized cleaning approach for optimal results without damage.</span><span data-lang="pt">Limpamos todos os tipos incluindo algodão, linho, poliéster, microfibra, veludo, chenille e couro. Cada tipo de tecido recebe uma abordagem personalizada para resultados ideais sem danos.</span><span data-lang="es">Limpiamos todo tipo incluyendo algodón, lino, poliéster, microfibra, terciopelo, chenilla y cuero. Cada tipo de tela recibe un enfoque personalizado para resultados óptimos sin daños.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">How long does upholstery cleaning take?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">A standard sofa takes 30-45 minutes. A full living room set (sofa + loveseat + chair) typically takes 1.5-2 hours. Drying time is 2-4 hours depending on fabric type.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">How long does upholstery cleaning take?</span><span data-lang="pt">Quanto tempo leva a limpeza de estofados?</span><span data-lang="es">¿Cuánto tiempo toma la limpieza de tapicería?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">A standard sofa takes 30-45 minutes. A full living room set (sofa + loveseat + chair) typically takes 1.5-2 hours. Drying time is 2-4 hours depending on fabric type.</span><span data-lang="pt">Um sofá padrão leva 30-45 minutos. Um conjunto de sala completo (sofá + namoradeira + poltrona) geralmente leva 1,5-2 horas. O tempo de secagem é de 2-4 horas dependendo do tipo de tecido.</span><span data-lang="es">Un sofá estándar toma 30-45 minutos. Un juego de sala completo (sofá + loveseat + sillón) generalmente toma 1,5-2 horas. El tiempo de secado es de 2-4 horas dependiendo del tipo de tela.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">What is Scotchgard protection?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">Scotchgard is a professional-grade fabric protector by 3M. It creates an invisible barrier that repels liquids and prevents stains from setting. Spills bead up on the surface instead of soaking into the fabric, giving you time to blot them away.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">What is Scotchgard protection?</span><span data-lang="pt">O que é a proteção Scotchgard?</span><span data-lang="es">¿Qué es la protección Scotchgard?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">Scotchgard is a professional-grade fabric protector by 3M. It creates an invisible barrier that repels liquids and prevents stains from setting. Spills bead up on the surface instead of soaking into the fabric, giving you time to blot them away.</span><span data-lang="pt">Scotchgard é um protetor de tecidos profissional da 3M. Ele cria uma barreira invisível que repele líquidos e previne que manchas se fixem. Derramamentos formam gotas na superfície em vez de absorver no tecido, dando tempo para você limpar.</span><span data-lang="es">Scotchgard es un protector de telas profesional de 3M. Crea una barrera invisible que repele líquidos y previene que las manchas se fijen. Los derrames forman gotas en la superficie en vez de absorberse en la tela, dándote tiempo para limpiar.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Is it safe for homes with pets?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">Absolutely! Our cleaning solutions are non-toxic and pet-safe. We specialize in removing pet hair, dander, and odors. Pets can return to the furniture once it's dry (2-4 hours).</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">Is it safe for homes with pets?</span><span data-lang="pt">É seguro para casas com pets?</span><span data-lang="es">¿Es seguro para hogares con mascotas?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">Absolutely! Our cleaning solutions are non-toxic and pet-safe. We specialize in removing pet hair, dander, and odors. Pets can return to the furniture once it's dry (2-4 hours).</span><span data-lang="pt">Com certeza! Nossas soluções de limpeza são não tóxicas e seguras para pets. Somos especialistas em remover pelos, caspa e odores de pets. Os pets podem voltar ao móvel após a secagem (2-4 horas).</span><span data-lang="es">¡Por supuesto! Nuestras soluciones de limpieza son no tóxicas y seguras para mascotas. Nos especializamos en eliminar pelo, caspa y olores de mascotas. Las mascotas pueden volver al mueble una vez seco (2-4 horas).</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Can you remove old stains?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">We successfully remove most stains including food, drinks, pet accidents, and body oils. Very old or set-in stains may lighten significantly even if not fully removed. We'll assess honestly before starting.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">Can you remove old stains?</span><span data-lang="pt">Vocês conseguem remover manchas antigas?</span><span data-lang="es">¿Pueden quitar manchas viejas?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">We successfully remove most stains including food, drinks, pet accidents, and body oils. Very old or set-in stains may lighten significantly even if not fully removed. We'll assess honestly before starting.</span><span data-lang="pt">Removemos com sucesso a maioria das manchas incluindo comida, bebidas, acidentes de pets e óleos corporais. Manchas muito antigas podem clarear significativamente mesmo se não forem totalmente removidas. Avaliaremos honestamente antes de começar.</span><span data-lang="es">Eliminamos con éxito la mayoría de las manchas incluyendo comida, bebidas, accidentes de mascotas y aceites corporales. Las manchas muy viejas pueden aclararse significativamente aunque no se eliminen completamente. Evaluaremos honestamente antes de comenzar.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Do you clean at my home or take furniture away?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">All cleaning is done on-site at your home. Our mobile equipment is professional-grade. No need to move heavy furniture — we come to you and clean everything in place.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">Do you clean at my home or take furniture away?</span><span data-lang="pt">Vocês limpam na minha casa ou levam os móveis?</span><span data-lang="es">¿Limpian en mi casa o se llevan los muebles?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">All cleaning is done on-site at your home. Our mobile equipment is professional-grade. No need to move heavy furniture — we come to you and clean everything in place.</span><span data-lang="pt">Toda a limpeza é feita na sua casa. Nosso equipamento móvel é de grau profissional. Não precisa mover móveis pesados — nós vamos até você e limpamos tudo no lugar.</span><span data-lang="es">Toda la limpieza se hace en tu casa. Nuestro equipo móvil es de grado profesional. No necesitas mover muebles pesados — vamos hasta ti y limpiamos todo en el lugar.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">How often should I have upholstery cleaned?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">We recommend every 12-18 months for most homes. With pets or kids, every 6-12 months. Regular professional cleaning extends furniture life by 5-7 years and maintains a healthy home environment.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">How often should I have upholstery cleaned?</span><span data-lang="pt">Com que frequência devo limpar os estofados?</span><span data-lang="es">¿Con qué frecuencia debo limpiar la tapicería?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">We recommend every 12-18 months for most homes. With pets or kids, every 6-12 months. Regular professional cleaning extends furniture life by 5-7 years and maintains a healthy home environment.</span><span data-lang="pt">Recomendamos a cada 12-18 meses para a maioria dos lares. Com pets ou crianças, a cada 6-12 meses. Limpeza profissional regular estende a vida dos móveis em 5-7 anos e mantém um ambiente doméstico saudável.</span><span data-lang="es">Recomendamos cada 12-18 meses para la mayoría de los hogares. Con mascotas o niños, cada 6-12 meses. La limpieza profesional regular extiende la vida de los muebles 5-7 años y mantiene un ambiente hogareño saludable.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">What areas do you service?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">We service the entire Orlando metro area including Winter Park, Winter Garden, Lake Mary, Oviedo, Dr. Phillips, Windermere, Kissimmee, and surrounding communities. Use our ZIP checker to verify.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">What areas do you service?</span><span data-lang="pt">Quais áreas vocês atendem?</span><span data-lang="es">¿Qué áreas atienden?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">We service the entire Orlando metro area including Winter Park, Winter Garden, Lake Mary, Oviedo, Dr. Phillips, Windermere, Kissimmee, and surrounding communities. Use our ZIP checker to verify.</span><span data-lang="pt">Atendemos toda a região metropolitana de Orlando incluindo Winter Park, Winter Garden, Lake Mary, Oviedo, Dr. Phillips, Windermere, Kissimmee e comunidades vizinhas. Use nosso verificador de CEP para confirmar.</span><span data-lang="es">Atendemos toda el área metropolitana de Orlando incluyendo Winter Park, Winter Garden, Lake Mary, Oviedo, Dr. Phillips, Windermere, Kissimmee y comunidades cercanas. Usa nuestro verificador de ZIP para confirmar.</span></div></div>
         </div>
       </div>
     </div>
@@ -649,11 +762,11 @@
   <!-- ===== ZIP CHECKER ===== -->
   <section class="zip" id="zip-check">
     <div class="container">
-      <span class="section-tag">SERVICE AREA</span>
-      <h2 class="section-title">Check If We Service Your Area</h2>
+      <span class="section-tag"><span data-lang="en">SERVICE AREA</span><span data-lang="pt">ÁREA DE ATENDIMENTO</span><span data-lang="es">ÁREA DE SERVICIO</span></span>
+      <h2 class="section-title"><span data-lang="en">Check If We Service Your Area</span><span data-lang="pt">Verifique se Atendemos Sua Região</span><span data-lang="es">Verifica si Atendemos Tu Área</span></h2>
       <div class="zip-form">
-        <input type="text" id="zipInput" placeholder="Enter ZIP" maxlength="5" inputmode="numeric">
-        <button onclick="checkZip()">Check Availability</button>
+        <input type="text" id="zipInput" placeholder="Enter ZIP" maxlength="5" inputmode="numeric" data-ph-en="Enter ZIP" data-ph-pt="Digite o CEP" data-ph-es="Ingresa ZIP">
+        <button onclick="checkZip()"><span data-lang="en">Check Availability</span><span data-lang="pt">Verificar Disponibilidade</span><span data-lang="es">Verificar Disponibilidad</span></button>
       </div>
       <div class="zip-result" id="zipResult"></div>
     </div>
@@ -662,18 +775,18 @@
   <!-- ===== MEMBERSHIP ===== -->
   <section class="membership">
     <div class="container">
-      <span class="section-tag">SAVE MORE</span>
-      <h2 class="section-title">A7 Members Save 25%<br>on Every Cleaning</h2>
+      <span class="section-tag"><span data-lang="en">SAVE MORE</span><span data-lang="pt">ECONOMIZE MAIS</span><span data-lang="es">AHORRA MÁS</span></span>
+      <h2 class="section-title"><span data-lang="en">A7 Members Save 25%<br>on Every Cleaning</span><span data-lang="pt">Membros A7 Economizam 25%<br>em Toda Limpeza</span><span data-lang="es">Miembros A7 Ahorran 25%<br>en Cada Limpieza</span></h2>
       <div class="member-card">
-        <h3>A7 Upholstery Membership</h3>
-        <p>Keep your furniture protected all year with our membership program.</p>
+        <h3><span data-lang="en">A7 Upholstery Membership</span><span data-lang="pt">Membros A7 Estofados</span><span data-lang="es">Membresía A7 Tapicería</span></h3>
+        <p><span data-lang="en">Keep your furniture protected all year with our membership program.</span><span data-lang="pt">Mantenha seus móveis protegidos o ano todo com nosso programa de membros.</span><span data-lang="es">Mantén tus muebles protegidos todo el año con nuestro programa de membresía.</span></p>
         <div class="member-perks">
-          <div class="member-perk"><span class="mp-i">✓</span> Annual deep clean included</div>
-          <div class="member-perk"><span class="mp-i">✓</span> Priority scheduling</div>
-          <div class="member-perk"><span class="mp-i">✓</span> 25% off all services</div>
-          <div class="member-perk"><span class="mp-i">✓</span> Free Scotchgard reapply</div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">Annual deep clean included</span><span data-lang="pt">Limpeza profunda anual incluída</span><span data-lang="es">Limpieza profunda anual incluida</span></div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">Priority scheduling</span><span data-lang="pt">Agendamento prioritário</span><span data-lang="es">Agenda prioritaria</span></div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">25% off all services</span><span data-lang="pt">25% de desconto em todos os serviços</span><span data-lang="es">25% de descuento en todos los servicios</span></div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">Free Scotchgard reapply</span><span data-lang="pt">Reaplicação Scotchgard grátis</span><span data-lang="es">Reaplicación Scotchgard gratis</span></div>
         </div>
-        <button onclick="document.getElementById('memberModal').classList.add('show')" class="member-cta" style="border:none;cursor:pointer;font-family:inherit">View Membership Plans →</button>
+        <button onclick="document.getElementById('memberModal').classList.add('show')" class="member-cta" style="border:none;cursor:pointer;font-family:inherit"><span data-lang="en">View Membership Plans →</span><span data-lang="pt">Ver Planos de Membros →</span><span data-lang="es">Ver Planes de Membresía →</span></button>
       </div>
     </div>
   </section>
@@ -712,60 +825,60 @@
     <div class="modal-box" style="background:var(--off-white);border-radius:24px;max-width:980px;width:95%;max-height:90vh;overflow-y:auto;padding:48px 36px;position:relative">
       <button onclick="document.getElementById('memberModal').classList.remove('show')" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--gray-500);line-height:1">&times;</button>
       <div style="text-align:center;margin-bottom:12px">
-        <span class="section-tag">MEMBERSHIP PLANS</span>
-        <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:800;color:var(--gray-900);margin:12px 0 8px">Upholstery Care Plans</h2>
-        <p style="font-size:15px;color:var(--gray-500);max-width:500px;margin:0 auto 24px">Professional upholstery care on a schedule. Cancel anytime.</p>
+        <span class="section-tag"><span data-lang="en">MEMBERSHIP PLANS</span><span data-lang="pt">PLANOS DE MEMBROS</span><span data-lang="es">PLANES DE MEMBRESÍA</span></span>
+        <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:800;color:var(--gray-900);margin:12px 0 8px"><span data-lang="en">Upholstery Care Plans</span><span data-lang="pt">Planos de Cuidado de Estofados</span><span data-lang="es">Planes de Cuidado de Tapicería</span></h2>
+        <p style="font-size:15px;color:var(--gray-500);max-width:500px;margin:0 auto 24px"><span data-lang="en">Professional upholstery care on a schedule. Cancel anytime.</span><span data-lang="pt">Cuidado profissional de estofados programado. Cancele quando quiser.</span><span data-lang="es">Cuidado profesional de tapicería programado. Cancela cuando quieras.</span></p>
       </div>
       <div class="plan-toggle">
-        <button class="active" onclick="togglePlan(this,'monthly')">Monthly</button>
-        <button onclick="togglePlan(this,'annual')">Annual <span class="save-badge">Save 2 months</span></button>
+        <button class="active" onclick="togglePlan(this,'monthly')"><span data-lang="en">Monthly</span><span data-lang="pt">Mensal</span><span data-lang="es">Mensual</span></button>
+        <button onclick="togglePlan(this,'annual')"><span data-lang="en">Annual</span><span data-lang="pt">Anual</span><span data-lang="es">Anual</span> <span class="save-badge"><span data-lang="en">Save 2 months</span><span data-lang="pt">Economize 2 meses</span><span data-lang="es">Ahorra 2 meses</span></span></button>
       </div>
       <div class="plans-grid">
         <div class="plan-card">
-          <h4>Essential</h4>
-          <div class="plan-price" data-monthly="69" data-annual="690"><small>$</small>69<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$690/year — save $138">Billed monthly</div>
+          <h4><span data-lang="en">Essential</span><span data-lang="pt">Essencial</span><span data-lang="es">Esencial</span></h4>
+          <div class="plan-price" data-monthly="69" data-annual="690"><small>$</small>69<small>/<span data-lang="en">mo</span><span data-lang="pt">mês</span><span data-lang="es">mes</span></small></div>
+          <div class="plan-period" data-monthly-en="Billed monthly" data-monthly-pt="Cobrado mensalmente" data-monthly-es="Cobrado mensualmente" data-annual-en="$690/year — save $138" data-annual-pt="$690/ano — economize $138" data-annual-es="$690/año — ahorra $138" data-monthly="Billed monthly" data-annual="$690/year — save $138"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Cobrado mensualmente</span></div>
           <ul class="plan-features">
-            <li><span class="pf-check">✓</span> 1 piece biannual (2x/year)</li>
-            <li><span class="pf-check">✓</span> Fabric analysis included</li>
-            <li><span class="pf-check">✓</span> Hot water extraction</li>
-            <li><span class="pf-check">✓</span> Deodorizer application</li>
-            <li><span class="pf-check">✓</span> Priority scheduling</li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">1 piece biannual (2x/year)</span><span data-lang="pt">1 peça semestral (2x/ano)</span><span data-lang="es">1 pieza semestral (2x/año)</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Fabric analysis included</span><span data-lang="pt">Análise de tecido incluída</span><span data-lang="es">Análisis de tela incluido</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Hot water extraction</span><span data-lang="pt">Extração com água quente</span><span data-lang="es">Extracción con agua caliente</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Deodorizer application</span><span data-lang="pt">Aplicação de desodorizante</span><span data-lang="es">Aplicación de desodorizante</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Priority scheduling</span><span data-lang="pt">Agendamento prioritário</span><span data-lang="es">Agenda prioritaria</span></li>
           </ul>
-          <a href="#stripe-uphol-essential" class="plan-btn outline">Subscribe Now</a>
+          <a href="#stripe-uphol-essential" class="plan-btn outline"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
         </div>
         <div class="plan-card popular">
-          <div class="popular-badge">MOST POPULAR</div>
-          <h4>Living Room</h4>
-          <div class="plan-price" data-monthly="129" data-annual="1290"><small>$</small>129<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$1,290/year — save $258">Billed monthly</div>
+          <div class="popular-badge"><span data-lang="en">MOST POPULAR</span><span data-lang="pt">MAIS POPULAR</span><span data-lang="es">MÁS POPULAR</span></div>
+          <h4><span data-lang="en">Living Room</span><span data-lang="pt">Sala de Estar</span><span data-lang="es">Sala de Estar</span></h4>
+          <div class="plan-price" data-monthly="129" data-annual="1290"><small>$</small>129<small>/<span data-lang="en">mo</span><span data-lang="pt">mês</span><span data-lang="es">mes</span></small></div>
+          <div class="plan-period" data-monthly-en="Billed monthly" data-monthly-pt="Cobrado mensalmente" data-monthly-es="Cobrado mensualmente" data-annual-en="$1,290/year — save $258" data-annual-pt="$1.290/ano — economize $258" data-annual-es="$1.290/año — ahorra $258" data-monthly="Billed monthly" data-annual="$1,290/year — save $258"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Cobrado mensualmente</span></div>
           <ul class="plan-features">
-            <li><span class="pf-check">✓</span> Sofa + loveseat biannual (2x/year)</li>
-            <li><span class="pf-check">✓</span> Scotchgard protection included</li>
-            <li><span class="pf-check">✓</span> Hot water extraction</li>
-            <li><span class="pf-check">✓</span> Full deodorizer + sanitizer</li>
-            <li><span class="pf-check">✓</span> Priority scheduling</li>
-            <li><span class="pf-check">✓</span> Spot treatment between cleans</li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Sofa + loveseat biannual (2x/year)</span><span data-lang="pt">Sofá + namoradeira semestral (2x/ano)</span><span data-lang="es">Sofá + loveseat semestral (2x/año)</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Scotchgard protection included</span><span data-lang="pt">Proteção Scotchgard incluída</span><span data-lang="es">Protección Scotchgard incluida</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Hot water extraction</span><span data-lang="pt">Extração com água quente</span><span data-lang="es">Extracción con agua caliente</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Full deodorizer + sanitizer</span><span data-lang="pt">Desodorizante + sanitizante completo</span><span data-lang="es">Desodorizante + sanitizante completo</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Priority scheduling</span><span data-lang="pt">Agendamento prioritário</span><span data-lang="es">Agenda prioritaria</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Spot treatment between cleans</span><span data-lang="pt">Tratamento pontual entre limpezas</span><span data-lang="es">Tratamiento puntual entre limpiezas</span></li>
           </ul>
-          <a href="#stripe-uphol-livingroom" class="plan-btn primary">Subscribe Now</a>
+          <a href="#stripe-uphol-livingroom" class="plan-btn primary"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
         </div>
         <div class="plan-card">
           <h4>Premium</h4>
-          <div class="plan-price" data-monthly="199" data-annual="1990"><small>$</small>199<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$1,990/year — save $398">Billed monthly</div>
+          <div class="plan-price" data-monthly="199" data-annual="1990"><small>$</small>199<small>/<span data-lang="en">mo</span><span data-lang="pt">mês</span><span data-lang="es">mes</span></small></div>
+          <div class="plan-period" data-monthly-en="Billed monthly" data-monthly-pt="Cobrado mensalmente" data-monthly-es="Cobrado mensualmente" data-annual-en="$1,990/year — save $398" data-annual-pt="$1.990/ano — economize $398" data-annual-es="$1.990/año — ahorra $398" data-monthly="Billed monthly" data-annual="$1,990/year — save $398"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Cobrado mensualmente</span></div>
           <ul class="plan-features">
-            <li><span class="pf-check">✓</span> All furniture biannual (2x/year)</li>
-            <li><span class="pf-check">✓</span> Quarterly Scotchgard reapply</li>
-            <li><span class="pf-check">✓</span> Hot water extraction</li>
-            <li><span class="pf-check">✓</span> Full deodorizer + sanitizer</li>
-            <li><span class="pf-check">✓</span> Priority scheduling</li>
-            <li><span class="pf-check">✓</span> Dedicated cleaning team</li>
-            <li><span class="pf-check">✓</span> Leather conditioning included</li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">All furniture biannual (2x/year)</span><span data-lang="pt">Todos os móveis semestral (2x/ano)</span><span data-lang="es">Todos los muebles semestral (2x/año)</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Quarterly Scotchgard reapply</span><span data-lang="pt">Reaplicação Scotchgard trimestral</span><span data-lang="es">Reaplicación Scotchgard trimestral</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Hot water extraction</span><span data-lang="pt">Extração com água quente</span><span data-lang="es">Extracción con agua caliente</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Full deodorizer + sanitizer</span><span data-lang="pt">Desodorizante + sanitizante completo</span><span data-lang="es">Desodorizante + sanitizante completo</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Priority scheduling</span><span data-lang="pt">Agendamento prioritário</span><span data-lang="es">Agenda prioritaria</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Dedicated cleaning team</span><span data-lang="pt">Equipe de limpeza dedicada</span><span data-lang="es">Equipo de limpieza dedicado</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Leather conditioning included</span><span data-lang="pt">Condicionamento de couro incluído</span><span data-lang="es">Acondicionamiento de cuero incluido</span></li>
           </ul>
-          <a href="#stripe-uphol-premium" class="plan-btn outline">Subscribe Now</a>
+          <a href="#stripe-uphol-premium" class="plan-btn outline"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
         </div>
       </div>
-      <p style="text-align:center;font-size:12px;color:var(--gray-500);margin-top:24px">All plans include 30-day satisfaction guarantee. Cancel anytime. Stripe secure checkout.</p>
+      <p style="text-align:center;font-size:12px;color:var(--gray-500);margin-top:24px"><span data-lang="en">All plans include 30-day satisfaction guarantee. Cancel anytime. Stripe secure checkout.</span><span data-lang="pt">Todos os planos incluem garantia de satisfação de 30 dias. Cancele quando quiser. Checkout seguro via Stripe.</span><span data-lang="es">Todos los planes incluyen garantía de satisfacción de 30 días. Cancela cuando quieras. Pago seguro vía Stripe.</span></p>
     </div>
   </div>
 
@@ -774,14 +887,14 @@
     <img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=1600&q=85&auto=format" alt="Modern living room" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,6,24,.85) 0%,rgba(124,58,237,.3) 50%,rgba(10,6,24,.9) 100%)"></div>
     <div class="container" style="position:relative;z-index:2;text-align:center;padding:80px 20px">
-      <h2 style="font-size:clamp(28px,4.5vw,44px);font-weight:800;color:#fff;margin-bottom:20px;line-height:1.15">Clean Furniture. <span style="color:var(--accent-light)">Protected Fabric.</span><br>Beautiful Home.</h2>
+      <h2 style="font-size:clamp(28px,4.5vw,44px);font-weight:800;color:#fff;margin-bottom:20px;line-height:1.15"><span data-lang="en">Clean Furniture. <span style="color:var(--accent-light)">Protected Fabric.</span><br>Beautiful Home.</span><span data-lang="pt">Móveis Limpos. <span style="color:var(--accent-light)">Tecido Protegido.</span><br>Casa Linda.</span><span data-lang="es">Muebles Limpios. <span style="color:var(--accent-light)">Tela Protegida.</span><br>Hogar Hermoso.</span></h2>
       <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:32px;margin-bottom:32px">
-        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);border-radius:50%;font-size:18px">🛡️</span> FREE Scotchgard</div>
-        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);border-radius:50%;font-size:18px">🌿</span> Fabric-Safe Products</div>
-        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);border-radius:50%;font-size:18px">⚡</span> Same-Day Available</div>
+        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);border-radius:50%;font-size:18px">🛡️</span> <span data-lang="en">FREE Scotchgard</span><span data-lang="pt">Scotchgard GRÁTIS</span><span data-lang="es">Scotchgard GRATIS</span></div>
+        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);border-radius:50%;font-size:18px">🌿</span> <span data-lang="en">Fabric-Safe Products</span><span data-lang="pt">Produtos Seguros para Tecidos</span><span data-lang="es">Productos Seguros para Telas</span></div>
+        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);border-radius:50%;font-size:18px">⚡</span> <span data-lang="en">Same-Day Available</span><span data-lang="pt">Disponível no Mesmo Dia</span><span data-lang="es">Disponible el Mismo Día</span></div>
       </div>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!" style="display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;padding:18px 44px;border-radius:60px;font-size:17px;font-weight:800;text-decoration:none;transition:.3s;box-shadow:0 8px 32px var(--accent-glow)">
-        Get FREE Scotchgard Protection →
+      <a href="tel:+14076708839" style="display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;padding:18px 44px;border-radius:60px;font-size:17px;font-weight:800;text-decoration:none;transition:.3s;box-shadow:0 8px 32px var(--accent-glow)">
+        <span data-lang="en">📞 Call Now (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora (407) 670-8839</span><span data-lang="es">📞 Llama Ahora (407) 670-8839</span>
       </a>
     </div>
   </section>
@@ -789,12 +902,46 @@
   <!-- ===== FINAL CTA ===== -->
   <section class="final-cta">
     <div class="container">
-      <h2>Your Furniture Deserves Better.<br>Your Family Deserves Better.</h2>
-      <p>Get professional upholstery cleaning + FREE Scotchgard protection ($50 value). Limited availability.</p>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!" class="final-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Get FREE Scotchgard Today
+      <h2><span data-lang="en">Your Furniture Deserves Better.<br>Your Family Deserves Better.</span><span data-lang="pt">Seus Móveis Merecem Mais.<br>Sua Família Merece Mais.</span><span data-lang="es">Tus Muebles Merecen Más.<br>Tu Familia Merece Más.</span></h2>
+      <p><span data-lang="en">Get professional upholstery cleaning + FREE Scotchgard protection ($50 value). Limited availability.</span><span data-lang="pt">Limpeza profissional de estofados + proteção Scotchgard GRÁTIS (valor $50). Vagas limitadas.</span><span data-lang="es">Limpieza profesional de tapicería + protección Scotchgard GRATIS (valor $50). Disponibilidad limitada.</span></p>
+      <a href="tel:+14076708839" class="final-btn" style="background:var(--accent);color:#fff">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span data-lang="en">Call Now (407) 670-8839</span><span data-lang="pt">Ligue Agora (407) 670-8839</span><span data-lang="es">Llama Ahora (407) 670-8839</span>
       </a>
+      <br>
+      <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!" class="final-cta-wa" data-wa-link>
+        <span data-lang="en">Or chat on WhatsApp →</span><span data-lang="pt">Ou converse no WhatsApp →</span><span data-lang="es">O chatea por WhatsApp →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Cross-Sell Services -->
+  <section style="padding:60px 0;background:var(--off-white);text-align:center">
+    <div class="container">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-dark);margin-bottom:12px"><span data-lang="en">More A7 Services</span><span data-lang="pt">Mais Servicos A7</span><span data-lang="es">Mas Servicios A7</span></p>
+      <h2 style="font-size:clamp(24px,3.5vw,32px);font-weight:800;color:var(--gray-900);margin-bottom:32px"><span data-lang="en">We Clean More Than Upholstery</span><span data-lang="pt">Limpamos Muito Mais</span><span data-lang="es">Limpiamos Mucho Mas</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto">
+        <a href="carpet-cleaning.html" style="display:block;background:#fff;border:1px solid var(--gray-200);border-radius:16px;padding:28px 20px;text-decoration:none;transition:all .3s">
+          <div style="font-size:36px;margin-bottom:12px">🏠</div>
+          <h3 style="font-size:16px;font-weight:800;color:var(--gray-900);margin-bottom:4px"><span data-lang="en">Carpet Cleaning</span><span data-lang="pt">Limpeza de Carpete</span><span data-lang="es">Limpieza de Alfombra</span></h3>
+          <p style="font-size:13px;color:var(--gray-500)"><span data-lang="en">From $45/room. Deep extraction.</span><span data-lang="pt">A partir de $45/quarto. Extracao profunda.</span><span data-lang="es">Desde $45/habitacion. Extraccion profunda.</span></p>
+        </a>
+        <a href="shoe-cleaning.html" style="display:block;background:#fff;border:1px solid var(--gray-200);border-radius:16px;padding:28px 20px;text-decoration:none;transition:all .3s">
+          <div style="font-size:36px;margin-bottom:12px">👟</div>
+          <h3 style="font-size:16px;font-weight:800;color:var(--gray-900);margin-bottom:4px"><span data-lang="en">Shoe Cleaning</span><span data-lang="pt">Limpeza de Tenis</span><span data-lang="es">Limpieza de Zapatillas</span></h3>
+          <p style="font-size:13px;color:var(--gray-500)"><span data-lang="en">Buy 2 Get 1 FREE. From $35.</span><span data-lang="pt">Compre 2 Ganhe 1 GRATIS. A partir de $35.</span><span data-lang="es">Compra 2 Lleva 1 GRATIS. Desde $35.</span></p>
+        </a>
+        <a href="vacation-rental.html" style="display:block;background:#fff;border:1px solid var(--gray-200);border-radius:16px;padding:28px 20px;text-decoration:none;transition:all .3s">
+          <div style="font-size:36px;margin-bottom:12px">🌴</div>
+          <h3 style="font-size:16px;font-weight:800;color:var(--gray-900);margin-bottom:4px">Vacation Rental</h3>
+          <p style="font-size:13px;color:var(--gray-500)"><span data-lang="en">1st cleaning FREE.</span><span data-lang="pt">1a limpeza GRATIS.</span><span data-lang="es">1a limpieza GRATIS.</span></p>
+        </a>
+        <a href="index.html#pricing" style="display:block;background:#fff;border:1px solid var(--gray-200);border-radius:16px;padding:28px 20px;text-decoration:none;transition:all .3s">
+          <div style="font-size:36px;margin-bottom:12px">👕</div>
+          <h3 style="font-size:16px;font-weight:800;color:var(--gray-900);margin-bottom:4px"><span data-lang="en">Laundry Subscription</span><span data-lang="pt">Assinatura de Lavanderia</span><span data-lang="es">Suscripcion de Lavanderia</span></h3>
+          <p style="font-size:13px;color:var(--gray-500)"><span data-lang="en">From $1.99/day. Buy 1 Get 1 FREE.</span><span data-lang="pt">A partir de $1.99/dia. Compre 1 Ganhe 1 GRATIS.</span><span data-lang="es">Desde $1.99/dia. Compra 1 Lleva 1 GRATIS.</span></p>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -802,8 +949,15 @@
   <footer class="footer">
     <div class="container">
       <img src="a7-logo.jpg" alt="A7 Cleaning Service Premium" style="height:50px;width:auto;margin-bottom:10px;display:block;background:#fff;border-radius:8px;padding:4px;">
-      <p>Professional Upholstery Cleaning — Orlando, FL</p>
-      <p style="margin-top:6px"><a href="https://wa.me/14077878590">WhatsApp (407) 787-8590</a></p>
+      <p><span data-lang="en">Professional Upholstery Cleaning — Orlando, FL</span><span data-lang="pt">Limpeza Profissional de Estofados — Orlando, FL</span><span data-lang="es">Limpieza Profesional de Tapicería — Orlando, FL</span></p>
+      <p style="margin-top:8px;font-size:12px">
+        <a href="carpet-cleaning.html" style="color:var(--accent-light);text-decoration:none;margin:0 6px"><span data-lang="en">Carpet</span><span data-lang="pt">Carpete</span><span data-lang="es">Alfombra</span></a> <span style="opacity:.3">|</span>
+        <a href="upholstery-cleaning.html" style="color:var(--accent-light);text-decoration:none;margin:0 6px"><span data-lang="en">Upholstery</span><span data-lang="pt">Estofados</span><span data-lang="es">Tapiceria</span></a> <span style="opacity:.3">|</span>
+        <a href="shoe-cleaning.html" style="color:var(--accent-light);text-decoration:none;margin:0 6px"><span data-lang="en">Shoes</span><span data-lang="pt">Tenis</span><span data-lang="es">Zapatillas</span></a> <span style="opacity:.3">|</span>
+        <a href="vacation-rental.html" style="color:var(--accent-light);text-decoration:none;margin:0 6px">Vacation Rental</a>
+      </p>
+      <p style="margin-top:6px"><a href="https://wa.me/14076708839">WhatsApp (407) 670-8839</a></p>
+      <p style="margin-bottom:8px"><a href="tel:+14076708839" style="color:var(--accent-light);text-decoration:none;margin-right:12px">📞 (407) 670-8839</a> <span style="opacity:.3">|</span> <a href="https://wa.me/14076708839" style="color:#25d366;text-decoration:none;margin-left:12px" data-wa-link>💬 WhatsApp</a></p>
       <p class="dev">Developed by A7x Systems IA · © 2026 A7 Cleaning Services</p>
     </div>
   </footer>
@@ -811,46 +965,59 @@
   <!-- TOAST -->
   <div class="toast" id="toast">
     <div class="toast-avatar" id="toastAv">L</div>
-    <div><strong id="toastName">Lisa M.</strong> just booked upholstery cleaning<br><span class="t-time" id="toastTime">3 min ago</span></div>
+    <div><strong id="toastName">Lisa M.</strong> <span id="toastMsg"><span data-lang="en">just booked upholstery cleaning</span><span data-lang="pt">acabou de agendar limpeza de estofados</span><span data-lang="es">acaba de reservar limpieza de tapicería</span></span><br><span class="t-time" id="toastTime">3 min ago</span></div>
   </div>
 
   <!-- STICKY MOBILE CTA -->
   <div class="sticky-cta">
-    <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20upholstery%20cleaning%20with%20FREE%20Scotchgard!">🛡️ Get FREE Scotchgard Protection</a>
+    <a href="tel:+14076708839"><span data-lang="en">📞 Call Now — (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora — (407) 670-8839</span><span data-lang="es">📞 Llama Ahora — (407) 670-8839</span></a>
   </div>
 
   <!-- EXIT POPUP -->
   <div class="exit-popup" id="exitPopup">
     <div class="exit-box">
-      <h3>Wait! Your FREE Scotchgard<br>Is About to Expire 🛡️</h3>
-      <p>Don't miss your $50 FREE Scotchgard fabric protection. Limited packages available this month.</p>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20almost%20left%20but%20I%20want%20FREE%20Scotchgard!" class="exit-cta">
+      <h3><span data-lang="en">Wait! Your FREE Scotchgard<br>Is About to Expire 🛡️</span><span data-lang="pt">Espere! Seu Scotchgard GRÁTIS<br>Está Prestes a Expirar 🛡️</span><span data-lang="es">¡Espera! Tu Scotchgard GRATIS<br>Está a Punto de Expirar 🛡️</span></h3>
+      <p><span data-lang="en">Don't miss your $50 FREE Scotchgard fabric protection. Limited packages available this month.</span><span data-lang="pt">Não perca sua proteção Scotchgard GRÁTIS de $50 para tecidos. Pacotes limitados disponíveis este mês.</span><span data-lang="es">No pierdas tu protección Scotchgard GRATIS de $50 para telas. Paquetes limitados disponibles este mes.</span></p>
+      <a href="https://wa.me/14076708839?text=Hi!%20I%20almost%20left%20but%20I%20want%20FREE%20Scotchgard!" class="exit-cta" data-wa-link>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Claim FREE Scotchgard Now
+        <span data-lang="en">Claim FREE Scotchgard Now</span><span data-lang="pt">Garanta Scotchgard GRÁTIS Agora</span><span data-lang="es">Reclama Scotchgard GRATIS Ahora</span>
       </a>
-      <button class="exit-dismiss" id="exitDismiss">No thanks, I don't want free protection</button>
+      <button class="exit-dismiss" id="exitDismiss"><span data-lang="en">No thanks, I don't want free protection</span><span data-lang="pt">Não obrigado, não quero proteção grátis</span><span data-lang="es">No gracias, no quiero protección gratis</span></button>
     </div>
   </div>
 
   <script>
+  function trackEvent(a,c,l){if(typeof gtag==='function')gtag('event',a,{event_category:c,event_label:l});}
+  document.addEventListener('click',function(e){
+    var tel=e.target.closest('a[href^="tel:"]');if(tel)trackEvent('phone_call','engagement','upholstery');
+    var wa=e.target.closest('[data-wa-link]');if(wa)trackEvent('whatsapp_click','engagement','upholstery');
+  });
+  (function(){var sd={25:false,50:false,75:false,100:false};window.addEventListener('scroll',function(){var p=Math.round((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100);[25,50,75,100].forEach(function(d){if(p>=d&&!sd[d]){sd[d]=true;trackEvent('scroll_depth','engagement',d+'%');}});},{passive:true});})();
   (function(){
     /* === MEMBERSHIP MODAL TOGGLE === */
     window.togglePlan = function(btn, type){
       btn.parentElement.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
+      var lang = (document.body.className.match(/lang-active-(\w+)/) || [])[1] || 'en';
+      var unitLabels = {
+        annual: {en:'yr', pt:'ano', es:'año'},
+        monthly: {en:'mo', pt:'mês', es:'mes'}
+      };
+      var unit = (unitLabels[type] && unitLabels[type][lang]) || unitLabels[type].en;
       document.querySelectorAll('.plan-price').forEach(function(el){
         var val = el.dataset[type];
         if (val) {
           if (type === 'annual') {
-            el.innerHTML = '<small>$</small>' + parseInt(val).toLocaleString() + '<small>/yr</small>';
+            el.innerHTML = '<small>$</small>' + parseInt(val).toLocaleString() + '<small>/' + unit + '</small>';
           } else {
-            el.innerHTML = '<small>$</small>' + val + '<small>/mo</small>';
+            el.innerHTML = '<small>$</small>' + val + '<small>/' + unit + '</small>';
           }
         }
       });
       document.querySelectorAll('.plan-period').forEach(function(el){
-        var text = el.dataset[type];
-        if (text) el.textContent = text;
+        var key = type + '-' + lang;
+        var text = el.getAttribute('data-' + key) || el.dataset[type];
+        if (text) el.innerHTML = '<span data-lang="' + lang + '" style="display:inline">' + text + '</span>';
       });
     };
 
@@ -884,13 +1051,18 @@
     /* === SPOTS LEFT === */
     var spots = sessionStorage.getItem('a7uphol_spots');
     if (!spots) { spots = 6; sessionStorage.setItem('a7uphol_spots', spots); }
-    document.getElementById('spotsLeft').textContent = spots;
+    function updateSpotsUI(s){
+      var el = document.getElementById('spotsLeft'); if(el) el.textContent = s;
+      var elPt = document.getElementById('spotsLeftPt'); if(elPt) elPt.textContent = s;
+      var elEs = document.getElementById('spotsLeftEs'); if(elEs) elEs.textContent = s;
+    }
+    updateSpotsUI(spots);
     setInterval(function(){
       var s = parseInt(sessionStorage.getItem('a7uphol_spots'));
       if (s > 2 && Math.random() < .12) {
         s--;
         sessionStorage.setItem('a7uphol_spots', s);
-        document.getElementById('spotsLeft').textContent = s;
+        updateSpotsUI(s);
       }
     }, 50000);
 
@@ -948,29 +1120,33 @@
       var valid = (num >= 32801 && num <= 32899) || (num >= 34701 && num <= 34799) ||
                   (num >= 34741 && num <= 34786) || num === 33896 || num === 33897 ||
                   num === 33848 || (num >= 32701 && num <= 32799);
-      result.textContent = valid
-        ? '🎉 Great news! We service your area. Book your FREE Scotchgard today!'
-        : '⚠️ We don\'t service this area yet. Text us to join the waitlist!';
+      var lang = (document.body.className.match(/lang-active-(\w+)/) || [])[1] || 'en';
+      var msgs = {
+        yes: {en:'🎉 Great news! We service your area. Book your FREE Scotchgard today!', pt:'🎉 Ótima notícia! Atendemos sua região. Agende seu Scotchgard GRÁTIS hoje!', es:'🎉 ¡Excelente! Atendemos tu área. ¡Reserva tu Scotchgard GRATIS hoy!'},
+        no: {en:'⚠️ We don\'t service this area yet. Text us to join the waitlist!', pt:'⚠️ Ainda não atendemos essa área. Nos envie mensagem para entrar na lista de espera!', es:'⚠️ Aún no atendemos esta área. ¡Envíanos un mensaje para unirte a la lista de espera!'}
+      };
+      result.textContent = valid ? (msgs.yes[lang] || msgs.yes.en) : (msgs.no[lang] || msgs.no.en);
       result.className = 'zip-result ' + (valid ? 'yes' : 'no');
     };
 
     /* === TOASTS === */
     var toasts = [
-      {name:'Lisa M.', init:'LM', time:'3 min ago'},
-      {name:'Tom J.', init:'TJ', time:'5 min ago'},
-      {name:'Sandra C.', init:'SC', time:'9 min ago'},
-      {name:'Nicole K.', init:'NK', time:'12 min ago'},
-      {name:'James P.', init:'JP', time:'16 min ago'},
-      {name:'Maria R.', init:'MR', time:'20 min ago'},
-      {name:'David W.', init:'DW', time:'24 min ago'}
+      {name:'Lisa M.', init:'LM', time:{en:'3 min ago',pt:'3 min atrás',es:'hace 3 min'}},
+      {name:'Tom J.', init:'TJ', time:{en:'5 min ago',pt:'5 min atrás',es:'hace 5 min'}},
+      {name:'Sandra C.', init:'SC', time:{en:'9 min ago',pt:'9 min atrás',es:'hace 9 min'}},
+      {name:'Nicole K.', init:'NK', time:{en:'12 min ago',pt:'12 min atrás',es:'hace 12 min'}},
+      {name:'James P.', init:'JP', time:{en:'16 min ago',pt:'16 min atrás',es:'hace 16 min'}},
+      {name:'Maria R.', init:'MR', time:{en:'20 min ago',pt:'20 min atrás',es:'hace 20 min'}},
+      {name:'David W.', init:'DW', time:{en:'24 min ago',pt:'24 min atrás',es:'hace 24 min'}}
     ];
     var ti = 0;
     function showToast(){
       var t = document.getElementById('toast');
       var d = toasts[ti % toasts.length];
+      var lang = (document.body.className.match(/lang-active-(\w+)/) || [])[1] || 'en';
       document.getElementById('toastAv').textContent = d.init;
       document.getElementById('toastName').textContent = d.name;
-      document.getElementById('toastTime').textContent = d.time;
+      document.getElementById('toastTime').textContent = d.time[lang] || d.time.en;
       t.classList.add('show');
       setTimeout(function(){ t.classList.remove('show'); }, 4000);
       ti++;
@@ -979,6 +1155,16 @@
       showToast();
       setInterval(showToast, 25000 + Math.random() * 15000);
     }, 8000);
+
+    /* === HAMBURGER MENU === */
+    (function(){
+      var btn=document.getElementById('hamburgerBtn'),menu=document.getElementById('mobileMenu'),overlay=document.getElementById('menuOverlay');
+      if(!btn||!menu||!overlay)return;
+      function toggle(){var o=menu.classList.contains('open');menu.classList.toggle('open');overlay.classList.toggle('open');btn.classList.toggle('open');btn.setAttribute('aria-expanded',!o);document.body.style.overflow=o?'':'hidden';}
+      function close(){menu.classList.remove('open');overlay.classList.remove('open');btn.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+      btn.addEventListener('click',toggle);overlay.addEventListener('click',close);
+      menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+    })();
 
     /* === EXIT INTENT === */
     var exitPopup = document.getElementById('exitPopup');
@@ -1028,6 +1214,34 @@
         if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
       });
     });
+
+    /* === LANGUAGE SWITCHER === */
+    window.setLanguage = function(lang){
+      document.body.className = document.body.className.replace(/lang-active-\w+/, 'lang-active-' + lang);
+      localStorage.setItem('a7_lang', lang);
+      document.querySelectorAll('.lang-sw button, #menuLangSwitcher button').forEach(function(b){
+        b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang);
+      });
+      document.querySelectorAll('[data-wa-link]').forEach(function(el){
+        var msgs = {
+          en: 'Hi! I want to book upholstery cleaning with FREE Scotchgard!',
+          pt: 'Oi! Quero agendar limpeza de estofados com Scotchgard GRÁTIS!',
+          es: '¡Hola! Quiero agendar limpieza de tapicería con Scotchgard GRATIS!'
+        };
+        el.href = 'https://wa.me/14076708839?text=' + encodeURIComponent(msgs[lang] || msgs.en);
+      });
+      /* Update ZIP input placeholder */
+      var zipInput = document.getElementById('zipInput');
+      if (zipInput) {
+        var phKey = 'data-ph-' + lang;
+        zipInput.placeholder = zipInput.getAttribute(phKey) || zipInput.getAttribute('data-ph-en') || 'Enter ZIP';
+      }
+    };
+    /* Restore saved language */
+    (function(){
+      var saved = localStorage.getItem('a7_lang');
+      if (saved && saved !== 'en') setLanguage(saved);
+    })();
   })();
   </script>
 </body>

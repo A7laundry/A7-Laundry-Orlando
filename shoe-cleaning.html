@@ -8,6 +8,38 @@
   <meta property="og:title" content="A7 Cleaning Services | Buy 2 Get 1 FREE Shoe Cleaning">
   <meta property="og:description" content="Your $200 sneakers look like $20 fakes. Professional shoe restoration — Buy 2 Get 1 FREE.">
   <meta property="og:type" content="website">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PM7QGX6L');</script>
+  <!-- End Google Tag Manager -->
+  <script>function gtag(){dataLayer.push(arguments);}</script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":["LocalBusiness","ProfessionalService"],
+        "@id":"https://www.a7laundryorlando.com/#business",
+        "name":"A7 Cleaning Services",
+        "telephone":"+1-407-670-8839",
+        "address":{"@type":"PostalAddress","streetAddress":"10097 Tuller Loop","addressLocality":"Winter Garden","addressRegion":"FL","postalCode":"34787","addressCountry":"US"},
+        "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"527","bestRating":"5","worstRating":"1"},
+        "areaServed":[{"@type":"City","name":"Orlando"},{"@type":"City","name":"Kissimmee"},{"@type":"City","name":"Winter Park"},{"@type":"City","name":"Winter Garden"},{"@type":"City","name":"Lake Nona"},{"@type":"City","name":"Celebration"},{"@type":"City","name":"Altamonte Springs"},{"@type":"City","name":"Windermere"},{"@type":"City","name":"Oviedo"},{"@type":"City","name":"Davenport"}]
+      },
+      {
+        "@type":"Service",
+        "name":"Professional Shoe Cleaning",
+        "description":"Professional sneaker and shoe cleaning and restoration in Orlando. Buy 2 Get 1 FREE.",
+        "provider":{"@id":"https://www.a7laundryorlando.com/#business"},
+        "serviceType":"Shoe Cleaning",
+        "offers":{"@type":"Offer","priceCurrency":"USD","price":"35.00"}
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
@@ -52,6 +84,14 @@
     .lang-sw{position:fixed;top:50px;right:16px;z-index:998;display:flex;gap:4px}
     .lang-sw button{background:rgba(255,255,255,.85);border:1px solid #e5e5e5;padding:4px 10px;border-radius:50px;font-size:11px;font-weight:600;cursor:pointer;transition:.2s;color:var(--gray-700);backdrop-filter:blur(8px)}
     .lang-sw button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+    /* === MULTILINGUAL === */
+    [data-lang]{display:none}
+    .lang-active-en [data-lang="en"],.lang-active-pt [data-lang="pt"],.lang-active-es [data-lang="es"]{display:inline}
+    .lang-active-en .lang-block[data-lang="en"],.lang-active-pt .lang-block[data-lang="pt"],.lang-active-es .lang-block[data-lang="es"]{display:block}
+    .lang-active-en .lang-flex[data-lang="en"],.lang-active-pt .lang-flex[data-lang="pt"],.lang-active-es .lang-flex[data-lang="es"]{display:flex}
+    .lang-active-en .lang-iflex[data-lang="en"],.lang-active-pt .lang-iflex[data-lang="pt"],.lang-active-es .lang-iflex[data-lang="es"]{display:inline-flex}
+    .lang-active-en .lang-grid[data-lang="en"],.lang-active-pt .lang-grid[data-lang="pt"],.lang-active-es .lang-grid[data-lang="es"]{display:grid}
 
     /* === LIVE VIEWERS === */
     .live-viewers{position:fixed;bottom:90px;left:16px;z-index:998;background:rgba(10,6,24,.9);color:#fff;padding:8px 14px;border-radius:50px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);opacity:0;animation:fadeInUp .5s .5s forwards}
@@ -108,6 +148,9 @@
     .hero-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s}
     .hero-cta:hover::before{left:100%}
     .hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(239,68,68,.45);background:var(--accent-dark)}
+    .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .hero-cta-wa{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:14px 32px;border-radius:50px;font-size:14px;font-weight:700;text-decoration:none;transition:all .3s;border:2px solid rgba(37,211,102,.4);animation:fadeInUp .8s .6s both}
+    .hero-cta-wa:hover{background:rgba(37,211,102,.1);border-color:#25d366;transform:translateY(-2px)}
     .hero-trust{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:28px;color:rgba(255,255,255,.6);font-size:12px;animation:fadeInUp .8s .6s both;flex-wrap:wrap}
     .hero-trust span{display:flex;align-items:center;gap:5px}
     @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -164,6 +207,8 @@
     .value{padding:80px 0;background:#fff;text-align:center}
     .value-card{max-width:600px;margin:0 auto;background:var(--off-white);border:2px solid #fecaca;border-radius:var(--radius-xl);padding:40px 32px;position:relative;overflow:hidden}
     .value-card::before{content:'BEST DEAL';position:absolute;top:20px;right:-30px;background:var(--accent);color:#fff;padding:4px 40px;font-size:11px;font-weight:800;letter-spacing:1px;transform:rotate(45deg)}
+    .lang-active-pt .value-card::before{content:'MELHOR OFERTA'}
+    .lang-active-es .value-card::before{content:'MEJOR OFERTA'}
     .value-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #fecaca;text-align:left}
     .value-item:last-of-type{border-bottom:none}
     .value-item .vi-check{color:var(--accent);font-weight:700;margin-right:10px}
@@ -269,6 +314,8 @@
     .final-cta p{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:28px}
     .final-btn{display:inline-flex;align-items:center;gap:10px;background:#25d366;color:#fff;padding:18px 44px;border-radius:60px;font-size:17px;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 8px 24px rgba(37,211,102,.3)}
     .final-btn:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(37,211,102,.4)}
+    .final-cta-wa{display:inline-flex;align-items:center;gap:8px;color:#25d366;font-size:14px;font-weight:600;text-decoration:none;margin-top:16px;transition:.3s}
+    .final-cta-wa:hover{color:#1da851;transform:translateY(-1px)}
 
     /* === FOOTER === */
     .footer{background:var(--gray-900);padding:40px 0;text-align:center;color:rgba(255,255,255,.4);font-size:13px}
@@ -304,6 +351,27 @@
     .services-nav a{color:rgba(255,255,255,.5);font-size:12px;font-weight:600;text-decoration:none;transition:.2s;display:flex;align-items:center;gap:4px}
     .services-nav a:hover,.services-nav a.active{color:#f59e0b}
 
+    /* === HAMBURGER MENU === */
+    .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:6px;z-index:1001}
+    .hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    @media(max-width:768px){.hamburger{display:flex}}
+    .mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;opacity:0;visibility:hidden;transition:all .3s}
+    .mobile-menu-overlay.open{opacity:1;visibility:visible}
+    .mobile-menu{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--bg-dark);z-index:1000;padding:80px 24px 32px;overflow-y:auto;transition:right .3s ease;display:flex;flex-direction:column;gap:8px}
+    .mobile-menu.open{right:0}
+    .mobile-menu a{display:block;color:rgba(255,255,255,.85);text-decoration:none;font-size:15px;font-weight:600;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);transition:.2s}
+    .mobile-menu a:hover{color:#fff}
+    .mobile-menu .menu-section-label{font-size:11px;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1.5px;margin-top:16px;padding-bottom:4px}
+    .mobile-menu .menu-phone{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:16px;padding:14px 0;border-bottom:none}
+    .mobile-menu .menu-phone svg{width:18px;height:18px;fill:none;stroke:var(--accent-light);stroke-width:2}
+    .mobile-menu .menu-cta{display:block;background:var(--accent);color:#fff;text-align:center;padding:14px;border-radius:50px;font-weight:800;font-size:14px;margin-top:12px;border-bottom:none}
+    .mobile-menu .menu-lang{display:flex;gap:6px;margin-top:16px}
+    .mobile-menu .menu-lang button{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;cursor:pointer;transition:.2s}
+    .mobile-menu .menu-lang button.active{background:var(--accent);color:#fff}
+
     /* === RESPONSIVE === */
     @media(max-width:768px){
       .lifestyle>div{grid-template-columns:1fr !important}
@@ -320,25 +388,29 @@
     }
     @media(max-width:480px){
       .hero h1{font-size:clamp(28px,8vw,38px)}
-      .hero-cta{padding:16px 32px;font-size:15px}
+      .hero-cta,.hero-cta-wa{padding:14px 28px;font-size:14px;width:100%;justify-content:center}
       .pain-grid{grid-template-columns:1fr}
       .reviews-grid{grid-template-columns:1fr}
       .zip-form{flex-direction:column;align-items:center}
       .lang-sw{top:46px;right:10px}
       .pricing-grid{grid-template-columns:1fr 1fr}
+      .phone-text{display:none}
     }
   </style>
 </head>
-<body>
+<body class="lang-active-en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM7QGX6L" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
   <!-- SCROLL PROGRESS -->
   <div class="scroll-progress" id="scrollBar"></div>
 
   <!-- LANGUAGE SWITCHER -->
-  <div class="lang-sw"><button class="active">EN</button><button>PT</button><button>ES</button></div>
+  <div class="lang-sw"><button class="active" onclick="setLanguage('en')">EN</button><button onclick="setLanguage('pt')">PT</button><button onclick="setLanguage('es')">ES</button></div>
 
   <!-- LIVE VIEWERS -->
-  <div class="live-viewers"><span class="live-dot"></span> 🔥 <span id="liveViewers">24</span> people viewing this page</div>
+  <div class="live-viewers"><span class="live-dot"></span> 🔥 <span id="liveViewers">24</span> <span data-lang="en">people viewing this page</span><span data-lang="pt">pessoas vendo esta página</span><span data-lang="es">personas viendo esta página</span></div>
 
   <!-- HEADER WITH LOGO -->
   <header class="site-header">
@@ -346,25 +418,79 @@
       <a href="index.html" style="text-decoration:none"><img src="a7-logo.jpg" alt="A7 Laundry" class="logo-img"></a>
       <div style="display:flex;align-items:center;gap:12px">
         <a href="index.html#pricing" style="color:var(--gray-200);text-decoration:none;font-size:13px;font-weight:600;transition:.3s"><span data-lang="en">Plans</span><span data-lang="pt">Planos</span><span data-lang="es">Planes</span></a>
-        <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!" class="header-cta">Buy 2 Get 1 FREE</a>
+        <a href="tel:+14076708839" style="color:var(--accent-light);text-decoration:none;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px;white-space:nowrap">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span class="phone-text">(407) 670-8839</span>
+        </a>
+        <a href="tel:+14076708839" class="header-cta"><span data-lang="en">Call Now</span><span data-lang="pt">Ligue Agora</span><span data-lang="es">Llama Ahora</span></a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="menuOverlay"></div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="tel:+14076708839" class="menu-phone">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (407) 670-8839
+    </a>
+    <div class="menu-section-label">
+      <span data-lang="en">Navigation</span>
+      <span data-lang="pt">Navegação</span>
+      <span data-lang="es">Navegación</span>
+    </div>
+    <a href="#pricing"><span data-lang="en">Pricing</span><span data-lang="pt">Preços</span><span data-lang="es">Precios</span></a>
+    <a href="#zip-check"><span data-lang="en">Service Area</span><span data-lang="pt">Área de Atendimento</span><span data-lang="es">Área de Servicio</span></a>
+    <div class="menu-section-label">
+      <span data-lang="en">Our Services</span>
+      <span data-lang="pt">Nossos Serviços</span>
+      <span data-lang="es">Nuestros Servicios</span>
+    </div>
+    <a href="shoe-cleaning.html" style="color:var(--accent-light)">👟 <span data-lang="en">Shoe Cleaning</span><span data-lang="pt">Limpeza de Tênis</span><span data-lang="es">Limpieza de Zapatillas</span></a>
+    <a href="carpet-cleaning.html">🏠 <span data-lang="en">Carpet Cleaning</span><span data-lang="pt">Limpeza de Carpete</span><span data-lang="es">Limpieza de Alfombra</span></a>
+    <a href="upholstery-cleaning.html">🛋️ <span data-lang="en">Upholstery</span><span data-lang="pt">Estofados</span><span data-lang="es">Tapicería</span></a>
+    <a href="vacation-rental.html">🌴 <span data-lang="en">Vacation Rental</span><span data-lang="pt">Aluguel Temporada</span><span data-lang="es">Alquiler Vacacional</span></a>
+    <a href="index.html">← <span data-lang="en">Back to A7 Laundry</span><span data-lang="pt">Voltar para A7 Laundry</span><span data-lang="es">Volver a A7 Laundry</span></a>
+    <div class="menu-lang" id="menuLangSwitcher">
+      <button class="active" onclick="setLanguage('en')">EN</button>
+      <button onclick="setLanguage('pt')">PT</button>
+      <button onclick="setLanguage('es')">ES</button>
+    </div>
+    <a href="tel:+14076708839" class="menu-cta">
+      <span data-lang="en">📞 Call (407) 670-8839</span>
+      <span data-lang="pt">📞 Ligue (407) 670-8839</span>
+      <span data-lang="es">📞 Llama (407) 670-8839</span>
+    </a>
+  </nav>
+
   <!-- SERVICES NAV -->
   <nav class="services-nav">
     <div class="services-nav-inner">
-      <a href="carpet-cleaning.html">🏠 Carpet</a>
-      <a href="upholstery-cleaning.html">🛋️ Upholstery</a>
-      <a href="shoe-cleaning.html" class="active">👟 Shoes</a>
-      <a href="vacation-rental.html">🌴 Vacation Rental</a>
+      <a href="carpet-cleaning.html">🏠 <span data-lang="en">Carpet</span><span data-lang="pt">Tapete</span><span data-lang="es">Alfombra</span></a>
+      <a href="upholstery-cleaning.html">🛋️ <span data-lang="en">Upholstery</span><span data-lang="pt">Estofado</span><span data-lang="es">Tapicería</span></a>
+      <a href="shoe-cleaning.html" class="active">👟 <span data-lang="en">Shoes</span><span data-lang="pt">Tênis</span><span data-lang="es">Zapatos</span></a>
+      <a href="vacation-rental.html">🌴 <span data-lang="en">Vacation Rental</span><span data-lang="pt">Aluguel Temporada</span><span data-lang="es">Alquiler Vacacional</span></a>
     </div>
   </nav>
 
   <!-- URGENCY BAR -->
   <div class="urgency-bar">
-    <span>⏰ LIMITED: Buy 2 Get 1 FREE — Only <strong id="spotsLeft">11</strong> slots left — Expires in <span class="cd" id="countdown">23:59:59</span></span>
+    <span>⏰ <span data-lang="en">LIMITED: Buy 2 Get 1 FREE — Only <strong id="spotsLeft">11</strong> slots left — Expires in</span><span data-lang="pt">LIMITADO: Compre 2 Ganhe 1 GRÁTIS — Apenas <strong id="spotsLeftPt" class="spots-left">11</strong> vagas restantes — Expira em</span><span data-lang="es">LIMITADO: Compra 2 Lleva 1 GRATIS — Solo <strong id="spotsLeftEs" class="spots-left">11</strong> lugares restantes — Expira en</span> <span class="cd" id="countdown">23:59:59</span></span>
   </div>
+
+  <!-- BREADCRUMB -->
+  <nav style="background:var(--off-white);padding:10px 20px;font-size:12px;color:var(--gray-500);border-bottom:1px solid #fecaca">
+    <div class="container" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+      <a href="index.html" style="color:var(--accent-dark);text-decoration:none;font-weight:600"><span data-lang="en">A7 Laundry</span><span data-lang="pt">A7 Lavanderia</span><span data-lang="es">A7 Lavandería</span></a>
+      <span style="opacity:.4">›</span>
+      <a href="index.html#services" style="color:var(--accent-dark);text-decoration:none;font-weight:600"><span data-lang="en">Services</span><span data-lang="pt">Serviços</span><span data-lang="es">Servicios</span></a>
+      <span style="opacity:.4">›</span>
+      <span style="font-weight:600;color:var(--gray-700)"><span data-lang="en">Shoe Cleaning</span><span data-lang="pt">Limpeza de Tênis</span><span data-lang="es">Limpieza de Zapatillas</span></span>
+    </div>
+  </nav>
 
   <!-- ===== HERO ===== -->
   <section class="hero">
@@ -375,16 +501,22 @@
     <div class="particle p1"></div><div class="particle p2"></div><div class="particle p3"></div><div class="particle p4"></div><div class="particle p5"></div>
     <div class="particle p6"></div><div class="particle p7"></div><div class="particle p8"></div><div class="particle p9"></div><div class="particle p10"></div>
     <div class="container">
-      <div class="hero-badge"><span class="dot"></span> Orlando's Premium Sneaker Cleaners</div>
-      <h1>Your $200 Sneakers<br>Look Like <span class="highlight">$20 Fakes.</span></h1>
-      <p class="hero-sub">Dirt, stains, and yellowing are destroying your investment. Our professional restoration brings them back to factory-fresh. Buy 2, get 1 <strong>FREE.</strong></p>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!" class="hero-cta">
-        Buy 2 Get 1 FREE →
-      </a>
+      <div class="hero-badge"><span class="dot"></span> <span data-lang="en">Orlando's Premium Sneaker Cleaners</span><span data-lang="pt">Limpeza Premium de Tênis em Orlando</span><span data-lang="es">Limpieza Premium de Zapatillas en Orlando</span></div>
+      <h1><span data-lang="en">Your $200 Sneakers<br>Look Like <span class="highlight">$20 Fakes.</span></span><span data-lang="pt">Seus Tênis de $200<br>Parecem <span class="highlight">Falsificações de $20.</span></span><span data-lang="es">Tus Zapatillas de $200<br>Parecen <span class="highlight">Falsificaciones de $20.</span></span></h1>
+      <p class="hero-sub"><span data-lang="en">Dirt, stains, and yellowing are destroying your investment. Our professional restoration brings them back to factory-fresh. Buy 2, get 1 <strong>FREE.</strong></span><span data-lang="pt">Sujeira, manchas e amarelamento estão destruindo seu investimento. Nossa restauração profissional os deixa como novos. Compre 2, ganhe 1 <strong>GRÁTIS.</strong></span><span data-lang="es">Suciedad, manchas y amarillamiento están destruyendo tu inversión. Nuestra restauración profesional los devuelve como nuevos. Compra 2, lleva 1 <strong>GRATIS.</strong></span></p>
+      <div class="hero-ctas">
+        <a href="tel:+14076708839" class="hero-cta">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span data-lang="en">Call Now (407) 670-8839</span><span data-lang="pt">Ligue Agora (407) 670-8839</span><span data-lang="es">Llama Ahora (407) 670-8839</span>
+        </a>
+        <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!" class="hero-cta-wa" data-wa-link>
+          <span data-lang="en">💬 WhatsApp</span><span data-lang="pt">💬 WhatsApp</span><span data-lang="es">💬 WhatsApp</span>
+        </a>
+      </div>
       <div class="hero-trust">
-        <span>✓ 3,000+ Pairs Restored</span>
-        <span>✓ 4.9★ Google Rating</span>
-        <span>✓ All Brands Welcome</span>
+        <span><span data-lang="en">✓ 3,000+ Pairs Restored</span><span data-lang="pt">✓ 3.000+ Pares Restaurados</span><span data-lang="es">✓ 3,000+ Pares Restaurados</span></span>
+        <span><span data-lang="en">✓ 4.9★ Google Rating</span><span data-lang="pt">✓ 4.9★ Avaliação Google</span><span data-lang="es">✓ 4.9★ Calificación Google</span></span>
+        <span><span data-lang="en">✓ All Brands Welcome</span><span data-lang="pt">✓ Todas as Marcas</span><span data-lang="es">✓ Todas las Marcas</span></span>
       </div>
     </div>
     <div class="marquee">
@@ -399,10 +531,10 @@
   <section class="stats-bar">
     <div class="container">
       <div class="stats-grid">
-        <div class="stat-item"><div class="stat-num" data-target="3000" data-suffix="+">0</div><div class="stat-label">Pairs Restored</div></div>
-        <div class="stat-item"><div class="stat-num" data-target="4.9" data-decimal="true">0</div><div class="stat-label">Google Rating</div></div>
-        <div class="stat-item"><div class="stat-num" data-target="48" data-suffix="hr">0</div><div class="stat-label">Turnaround Time</div></div>
-        <div class="stat-item"><div class="stat-num" data-target="100" data-suffix="%">0</div><div class="stat-label">Satisfaction Rate</div></div>
+        <div class="stat-item"><div class="stat-num" data-target="3000" data-suffix="+">0</div><div class="stat-label"><span data-lang="en">Pairs Restored</span><span data-lang="pt">Pares Restaurados</span><span data-lang="es">Pares Restaurados</span></div></div>
+        <div class="stat-item"><div class="stat-num" data-target="4.9" data-decimal="true">0</div><div class="stat-label"><span data-lang="en">Google Rating</span><span data-lang="pt">Avaliação Google</span><span data-lang="es">Calificación Google</span></div></div>
+        <div class="stat-item"><div class="stat-num" data-target="48" data-suffix="hr">0</div><div class="stat-label"><span data-lang="en">Turnaround Time</span><span data-lang="pt">Tempo de Entrega</span><span data-lang="es">Tiempo de Entrega</span></div></div>
+        <div class="stat-item"><div class="stat-num" data-target="100" data-suffix="%">0</div><div class="stat-label"><span data-lang="en">Satisfaction Rate</span><span data-lang="pt">Taxa de Satisfação</span><span data-lang="es">Tasa de Satisfacción</span></div></div>
       </div>
     </div>
   </section>
@@ -410,14 +542,14 @@
   <!-- ===== PAIN ===== -->
   <section class="pain">
     <div class="container">
-      <span class="section-tag">THE PROBLEM</span>
-      <h2 class="section-title">Your Sneakers Are Losing Value<br><strong>Every Day You Wait</strong></h2>
-      <p class="section-sub">Dirt, stains, and neglect are turning your premium kicks into beat-up beaters.</p>
+      <span class="section-tag"><span data-lang="en">THE PROBLEM</span><span data-lang="pt">O PROBLEMA</span><span data-lang="es">EL PROBLEMA</span></span>
+      <h2 class="section-title"><span data-lang="en">Your Sneakers Are Losing Value<br><strong>Every Day You Wait</strong></span><span data-lang="pt">Seus Tênis Estão Perdendo Valor<br><strong>A Cada Dia Que Você Espera</strong></span><span data-lang="es">Tus Zapatillas Están Perdiendo Valor<br><strong>Cada Día Que Esperas</strong></span></h2>
+      <p class="section-sub"><span data-lang="en">Dirt, stains, and neglect are turning your premium kicks into beat-up beaters.</span><span data-lang="pt">Sujeira, manchas e descuido estão transformando seus tênis premium em sapatos surrados.</span><span data-lang="es">Suciedad, manchas y descuido están convirtiendo tus zapatillas premium en zapatos desgastados.</span></p>
       <div class="pain-grid">
-        <div class="pain-card"><div class="icon">💸</div><h3>Money Down the Drain</h3><p>You paid $150-$300 for premium sneakers. Dirty shoes lose 40-60% of their resale value. That's $100+ you're throwing away.</p></div>
-        <div class="pain-card"><div class="icon">👀</div><h3>First Impressions Ruined</h3><p>People notice your shoes first. Dirty, yellowed sneakers scream "I don't care." Clean kicks command respect instantly.</p></div>
-        <div class="pain-card"><div class="icon">🧴</div><h3>DIY Disasters</h3><p>Washing machines destroy shape. Wrong products cause discoloration. That YouTube hack? It ruined more shoes than it saved.</p></div>
-        <div class="pain-card"><div class="icon">📦</div><h3>Closet Full of "Maybe"</h3><p>You've got 5+ pairs you stopped wearing because they look "too beat." One cleaning brings them all back to rotation.</p></div>
+        <div class="pain-card"><div class="icon">💸</div><h3><span data-lang="en">Money Down the Drain</span><span data-lang="pt">Dinheiro Jogado Fora</span><span data-lang="es">Dinero Tirado a la Basura</span></h3><p><span data-lang="en">You paid $150-$300 for premium sneakers. Dirty shoes lose 40-60% of their resale value. That's $100+ you're throwing away.</span><span data-lang="pt">Você pagou $150-$300 em tênis premium. Tênis sujos perdem 40-60% do valor de revenda. São $100+ que você está jogando fora.</span><span data-lang="es">Pagaste $150-$300 por zapatillas premium. Zapatos sucios pierden 40-60% de su valor de reventa. Son $100+ que estás tirando.</span></p></div>
+        <div class="pain-card"><div class="icon">👀</div><h3><span data-lang="en">First Impressions Ruined</span><span data-lang="pt">Primeira Impressão Arruinada</span><span data-lang="es">Primera Impresión Arruinada</span></h3><p><span data-lang="en">People notice your shoes first. Dirty, yellowed sneakers scream "I don't care." Clean kicks command respect instantly.</span><span data-lang="pt">As pessoas notam seus sapatos primeiro. Tênis sujos e amarelados gritam "não me importo." Tênis limpos impõem respeito instantaneamente.</span><span data-lang="es">La gente nota tus zapatos primero. Zapatillas sucias y amarillentas gritan "no me importa." Zapatillas limpias imponen respeto al instante.</span></p></div>
+        <div class="pain-card"><div class="icon">🧴</div><h3><span data-lang="en">DIY Disasters</span><span data-lang="pt">Desastres Caseiros</span><span data-lang="es">Desastres Caseros</span></h3><p><span data-lang="en">Washing machines destroy shape. Wrong products cause discoloration. That YouTube hack? It ruined more shoes than it saved.</span><span data-lang="pt">Máquinas de lavar destroem a forma. Produtos errados causam descoloração. Aquele truque do YouTube? Arruinou mais tênis do que salvou.</span><span data-lang="es">Las lavadoras destruyen la forma. Productos incorrectos causan decoloración. ¿Ese truco de YouTube? Arruinó más zapatos de los que salvó.</span></p></div>
+        <div class="pain-card"><div class="icon">📦</div><h3><span data-lang="en">Closet Full of "Maybe"</span><span data-lang="pt">Armário Cheio de "Talvez"</span><span data-lang="es">Armario Lleno de "Quizás"</span></h3><p><span data-lang="en">You've got 5+ pairs you stopped wearing because they look "too beat." One cleaning brings them all back to rotation.</span><span data-lang="pt">Você tem 5+ pares que parou de usar porque parecem "muito surrados." Uma limpeza traz todos de volta ao rodízio.</span><span data-lang="es">Tienes 5+ pares que dejaste de usar porque se ven "muy gastados." Una limpieza los devuelve todos a la rotación.</span></p></div>
       </div>
     </div>
   </section>
@@ -429,17 +561,17 @@
         <img src="https://images.unsplash.com/photo-1556906781-9a412961c28c?w=900&q=85&auto=format" alt="Premium sneaker collection" style="width:100%;height:100%;object-fit:cover;transition:transform 8s ease;display:block" loading="lazy" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
       </div>
       <div style="display:flex;flex-direction:column;justify-content:center;padding:60px 48px;background:var(--bg-dark)">
-        <span class="section-tag" style="background:rgba(255,255,255,.08);color:var(--accent-light);align-self:flex-start">SNEAKER EXPERTS</span>
-        <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:800;color:#fff;margin:16px 0;line-height:1.2">"My Jordans Look Better Than When I Bought Them"</h2>
-        <p style="font-size:16px;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:24px">Orlando's sneakerheads trust A7 with their most prized kicks. From $50 Air Forces to $500 Yeezys — we treat every pair like a grail. <strong style="color:var(--accent-light)">Professional hand-cleaning</strong> that restores your investment.</p>
+        <span class="section-tag" style="background:rgba(255,255,255,.08);color:var(--accent-light);align-self:flex-start"><span data-lang="en">SNEAKER EXPERTS</span><span data-lang="pt">ESPECIALISTAS EM TÊNIS</span><span data-lang="es">EXPERTOS EN ZAPATILLAS</span></span>
+        <h2 style="font-size:clamp(26px,3.5vw,38px);font-weight:800;color:#fff;margin:16px 0;line-height:1.2"><span data-lang="en">"My Jordans Look Better Than When I Bought Them"</span><span data-lang="pt">"Meus Jordans Estão Melhores Do Que Quando Comprei"</span><span data-lang="es">"Mis Jordans Se Ven Mejor Que Cuando Los Compré"</span></h2>
+        <p style="font-size:16px;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:24px"><span data-lang="en">Orlando's sneakerheads trust A7 with their most prized kicks. From $50 Air Forces to $500 Yeezys — we treat every pair like a grail. <strong style="color:var(--accent-light)">Professional hand-cleaning</strong> that restores your investment.</span><span data-lang="pt">Os colecionadores de tênis de Orlando confiam na A7 com seus pares mais valiosos. De Air Forces de $50 a Yeezys de $500 — tratamos cada par como uma preciosidade. <strong style="color:var(--accent-light)">Limpeza profissional à mão</strong> que restaura seu investimento.</span><span data-lang="es">Los coleccionistas de zapatillas de Orlando confían en A7 con sus pares más preciados. Desde Air Forces de $50 hasta Yeezys de $500 — tratamos cada par como una joya. <strong style="color:var(--accent-light)">Limpieza profesional a mano</strong> que restaura tu inversión.</span></p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px;text-align:center">
             <div style="font-size:32px;font-weight:900;color:var(--accent-light)">3,000+</div>
-            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px">Pairs Restored</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px"><span data-lang="en">Pairs Restored</span><span data-lang="pt">Pares Restaurados</span><span data-lang="es">Pares Restaurados</span></div>
           </div>
           <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px;text-align:center">
             <div style="font-size:32px;font-weight:900;color:var(--accent-light)">48hr</div>
-            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px">Turnaround</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px"><span data-lang="en">Turnaround</span><span data-lang="pt">Prazo de Entrega</span><span data-lang="es">Tiempo de Entrega</span></div>
           </div>
         </div>
       </div>
@@ -449,34 +581,34 @@
   <!-- ===== BRIDGE ===== -->
   <section class="bridge">
     <div class="container">
-      <p>What if every pair in your closet looked <em>fresh out of the box</em>? What if your $200 Jordans turned heads <em>like they did day one</em>? What if you could wear your favorites again <em>without embarrassment</em>?</p>
+      <p><span data-lang="en">What if every pair in your closet looked <em>fresh out of the box</em>? What if your $200 Jordans turned heads <em>like they did day one</em>? What if you could wear your favorites again <em>without embarrassment</em>?</span><span data-lang="pt">E se cada par no seu armário parecesse <em>recém-saído da caixa</em>? E se seus Jordans de $200 chamassem atenção <em>como no primeiro dia</em>? E se você pudesse usar seus favoritos de novo <em>sem vergonha</em>?</span><span data-lang="es">¿Y si cada par en tu armario se viera <em>recién sacado de la caja</em>? ¿Y si tus Jordans de $200 llamaran la atención <em>como el primer día</em>? ¿Y si pudieras usar tus favoritos de nuevo <em>sin vergüenza</em>?</span></p>
     </div>
   </section>
 
   <!-- ===== HOW IT WORKS ===== -->
   <section class="how">
     <div class="container">
-      <span class="section-tag">HOW IT WORKS</span>
-      <h2 class="section-title">From Beat to Heat<br>in 3 Simple Steps</h2>
-      <p class="section-sub">Professional restoration that treats your kicks with respect.</p>
+      <span class="section-tag"><span data-lang="en">HOW IT WORKS</span><span data-lang="pt">COMO FUNCIONA</span><span data-lang="es">CÓMO FUNCIONA</span></span>
+      <h2 class="section-title"><span data-lang="en">From Beat to Heat<br>in 3 Simple Steps</span><span data-lang="pt">De Surrado a Novo<br>em 3 Passos Simples</span><span data-lang="es">De Gastado a Nuevo<br>en 3 Simples Pasos</span></h2>
+      <p class="section-sub"><span data-lang="en">Professional restoration that treats your kicks with respect.</span><span data-lang="pt">Restauração profissional que trata seus tênis com respeito.</span><span data-lang="es">Restauración profesional que trata tus zapatillas con respeto.</span></p>
       <div class="steps">
         <div class="step">
           <img class="step-img" src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=500&q=80&auto=format" alt="Shoe assessment" loading="lazy">
           <div class="step-num">1</div>
-          <h3>Drop Off or Ship</h3>
-          <p>Bring your kicks to us or use our convenient pickup service. We assess each pair and identify the best treatment plan.</p>
+          <h3><span data-lang="en">Drop Off or Ship</span><span data-lang="pt">Entregue ou Envie</span><span data-lang="es">Entrega o Envía</span></h3>
+          <p><span data-lang="en">Bring your kicks to us or use our convenient pickup service. We assess each pair and identify the best treatment plan.</span><span data-lang="pt">Traga seus tênis até nós ou use nosso serviço de coleta. Avaliamos cada par e identificamos o melhor plano de tratamento.</span><span data-lang="es">Trae tus zapatillas o usa nuestro servicio de recogida. Evaluamos cada par e identificamos el mejor plan de tratamiento.</span></p>
         </div>
         <div class="step">
           <img class="step-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&q=80&auto=format" alt="Professional shoe cleaning" loading="lazy">
           <div class="step-num">2</div>
-          <h3>Expert Restoration</h3>
-          <p>Hand-cleaned with premium products. Deep stain removal, sole whitening, deodorizing, and shape restoration.</p>
+          <h3><span data-lang="en">Expert Restoration</span><span data-lang="pt">Restauração Especializada</span><span data-lang="es">Restauración Experta</span></h3>
+          <p><span data-lang="en">Hand-cleaned with premium products. Deep stain removal, sole whitening, deodorizing, and shape restoration.</span><span data-lang="pt">Limpeza à mão com produtos premium. Remoção profunda de manchas, clareamento de sola, desodorização e restauração da forma.</span><span data-lang="es">Limpieza a mano con productos premium. Eliminación profunda de manchas, blanqueamiento de suela, desodorización y restauración de forma.</span></p>
         </div>
         <div class="step">
           <img class="step-img" src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80&auto=format" alt="Restored sneakers" loading="lazy">
           <div class="step-num">3</div>
-          <h3>Factory Fresh</h3>
-          <p>Your kicks come back looking box-fresh. Protected, deodorized, and ready to turn heads again. 48-hour turnaround.</p>
+          <h3><span data-lang="en">Factory Fresh</span><span data-lang="pt">Como de Fábrica</span><span data-lang="es">Como de Fábrica</span></h3>
+          <p><span data-lang="en">Your kicks come back looking box-fresh. Protected, deodorized, and ready to turn heads again. 48-hour turnaround.</span><span data-lang="pt">Seus tênis voltam parecendo novos na caixa. Protegidos, desodorizados e prontos para chamar atenção de novo. Prazo de 48 horas.</span><span data-lang="es">Tus zapatillas regresan como nuevas. Protegidas, desodorizadas y listas para llamar la atención. Entrega en 48 horas.</span></p>
         </div>
       </div>
     </div>
@@ -485,43 +617,43 @@
   <!-- ===== PRICING ===== -->
   <section class="value" id="pricing">
     <div class="container">
-      <span class="section-tag">PRICING</span>
-      <h2 class="section-title">Simple, Transparent Pricing</h2>
-      <p class="section-sub">No hidden fees. Pick your service level.</p>
+      <span class="section-tag"><span data-lang="en">PRICING</span><span data-lang="pt">PREÇOS</span><span data-lang="es">PRECIOS</span></span>
+      <h2 class="section-title"><span data-lang="en">Simple, Transparent Pricing</span><span data-lang="pt">Preços Simples e Transparentes</span><span data-lang="es">Precios Simples y Transparentes</span></h2>
+      <p class="section-sub"><span data-lang="en">No hidden fees. Pick your service level.</span><span data-lang="pt">Sem taxas ocultas. Escolha seu nível de serviço.</span><span data-lang="es">Sin cargos ocultos. Elige tu nivel de servicio.</span></p>
       <div class="pricing-grid">
         <div class="pricing-card">
           <div class="pc-icon">👟</div>
-          <div class="pc-type">Basic Clean</div>
+          <div class="pc-type"><span data-lang="en">Basic Clean</span><span data-lang="pt">Limpeza Básica</span><span data-lang="es">Limpieza Básica</span></div>
           <div class="pc-price"><small>$</small>35</div>
-          <div class="pc-note">Surface clean + deodorize</div>
+          <div class="pc-note"><span data-lang="en">Surface clean + deodorize</span><span data-lang="pt">Limpeza superficial + desodorização</span><span data-lang="es">Limpieza superficial + desodorización</span></div>
         </div>
         <div class="pricing-card">
           <div class="pc-icon">✨</div>
-          <div class="pc-type">Deep Clean</div>
+          <div class="pc-type"><span data-lang="en">Deep Clean</span><span data-lang="pt">Limpeza Profunda</span><span data-lang="es">Limpieza Profunda</span></div>
           <div class="pc-price"><small>$</small>55</div>
-          <div class="pc-note">Deep clean + sole whitening</div>
+          <div class="pc-note"><span data-lang="en">Deep clean + sole whitening</span><span data-lang="pt">Limpeza profunda + clareamento de sola</span><span data-lang="es">Limpieza profunda + blanqueamiento de suela</span></div>
         </div>
         <div class="pricing-card">
           <div class="pc-icon">🔥</div>
-          <div class="pc-type">Full Restoration</div>
+          <div class="pc-type"><span data-lang="en">Full Restoration</span><span data-lang="pt">Restauração Completa</span><span data-lang="es">Restauración Completa</span></div>
           <div class="pc-price"><small>$</small>85</div>
-          <div class="pc-note">Complete restore + protection</div>
+          <div class="pc-note"><span data-lang="en">Complete restore + protection</span><span data-lang="pt">Restauração completa + proteção</span><span data-lang="es">Restauración completa + protección</span></div>
         </div>
       </div>
 
       <div class="value-card">
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Hand cleaning with premium products</span><span class="vi-price">$20</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Deep stain & dirt removal</span><span class="vi-price">$25</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Sole & midsole whitening</span><span class="vi-price">$15</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Deodorizing treatment</span><span class="vi-price">$10</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Shape restoration & relacing</span><span class="vi-price">$10</span></div>
-        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text">Crep Protect spray coating</span><span class="vi-price">$15</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Hand cleaning with premium products</span><span data-lang="pt">Limpeza à mão com produtos premium</span><span data-lang="es">Limpieza a mano con productos premium</span></span><span class="vi-price">$20</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Deep stain & dirt removal</span><span data-lang="pt">Remoção profunda de manchas e sujeira</span><span data-lang="es">Eliminación profunda de manchas y suciedad</span></span><span class="vi-price">$25</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Sole & midsole whitening</span><span data-lang="pt">Clareamento de sola e entressola</span><span data-lang="es">Blanqueamiento de suela y entresuela</span></span><span class="vi-price">$15</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Deodorizing treatment</span><span data-lang="pt">Tratamento de desodorização</span><span data-lang="es">Tratamiento de desodorización</span></span><span class="vi-price">$10</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Shape restoration & relacing</span><span data-lang="pt">Restauração de forma e troca de cadarços</span><span data-lang="es">Restauración de forma y cambio de cordones</span></span><span class="vi-price">$10</span></div>
+        <div class="value-item"><span class="vi-check">✓</span><span class="vi-text"><span data-lang="en">Crep Protect spray coating</span><span data-lang="pt">Revestimento spray Crep Protect</span><span data-lang="es">Recubrimiento spray Crep Protect</span></span><span class="vi-price">$15</span></div>
         <div class="value-total">
-          <div class="vt-old">Total Value: $95/pair</div>
-          <div class="vt-new"><small>$</small>55<small>/pair</small></div>
-          <div class="vt-free">🎁 Buy 2 Get 1 FREE — Save $55!</div>
+          <div class="vt-old"><span data-lang="en">Total Value: $95/pair</span><span data-lang="pt">Valor Total: $95/par</span><span data-lang="es">Valor Total: $95/par</span></div>
+          <div class="vt-new"><small>$</small>55<small>/<span data-lang="en">pair</span><span data-lang="pt">par</span><span data-lang="es">par</span></small></div>
+          <div class="vt-free"><span data-lang="en">🎁 Buy 2 Get 1 FREE — Save $55!</span><span data-lang="pt">🎁 Compre 2 Ganhe 1 GRÁTIS — Economize $55!</span><span data-lang="es">🎁 Compra 2 Lleva 1 GRATIS — ¡Ahorra $55!</span></div>
         </div>
-        <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!" class="value-cta">Claim Buy 2 Get 1 FREE →</a>
+        <a href="tel:+14076708839" class="value-cta"><span data-lang="en">📞 Call Now (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora (407) 670-8839</span><span data-lang="es">📞 Llama Ahora (407) 670-8839</span></a>
       </div>
     </div>
   </section>
@@ -529,57 +661,57 @@
   <!-- ===== REVIEWS ===== -->
   <section class="reviews">
     <div class="container">
-      <span class="section-tag">HAPPY SNEAKERHEADS</span>
-      <h2 class="section-title">3,000+ Pairs Restored to Glory</h2>
-      <p class="section-sub">Sneakerheads and everyday wearers trust A7 with their kicks.</p>
+      <span class="section-tag"><span data-lang="en">HAPPY SNEAKERHEADS</span><span data-lang="pt">CLIENTES SATISFEITOS</span><span data-lang="es">CLIENTES SATISFECHOS</span></span>
+      <h2 class="section-title"><span data-lang="en">3,000+ Pairs Restored to Glory</span><span data-lang="pt">3.000+ Pares Restaurados com Glória</span><span data-lang="es">3,000+ Pares Restaurados a su Gloria</span></h2>
+      <p class="section-sub"><span data-lang="en">Sneakerheads and everyday wearers trust A7 with their kicks.</span><span data-lang="pt">Colecionadores e usuários do dia a dia confiam na A7 com seus tênis.</span><span data-lang="es">Coleccionistas y usuarios diarios confían en A7 con sus zapatillas.</span></p>
       <div class="reviews-grid">
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"Sent my beat-up Jordan 1s thinking they were done. Got them back looking DS. Absolutely insane transformation!"</blockquote>
+          <blockquote><span data-lang="en">"Sent my beat-up Jordan 1s thinking they were done. Got them back looking DS. Absolutely insane transformation!"</span><span data-lang="pt">"Mandei meus Jordan 1 surrados achando que não tinham mais jeito. Voltaram parecendo novos. Transformação absolutamente incrível!"</span><span data-lang="es">"Envié mis Jordan 1 desgastados pensando que ya no tenían arreglo. Los recibí como nuevos. ¡Transformación absolutamente increíble!"</span></blockquote>
           <div class="review-author"><div class="review-avatar">MR</div><div><div class="review-name">Marcus R.</div><div class="review-loc">Orlando, FL</div></div></div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"I brought 6 pairs for the Buy 2 Get 1 deal. Got 2 pairs free. All came back perfect. Best value in Orlando."</blockquote>
+          <blockquote><span data-lang="en">"I brought 6 pairs for the Buy 2 Get 1 deal. Got 2 pairs free. All came back perfect. Best value in Orlando."</span><span data-lang="pt">"Trouxe 6 pares para a promoção Compre 2 Ganhe 1. Ganhei 2 pares grátis. Todos voltaram perfeitos. Melhor custo-benefício de Orlando."</span><span data-lang="es">"Traje 6 pares para la promoción Compra 2 Lleva 1. Obtuve 2 pares gratis. Todos volvieron perfectos. Mejor valor en Orlando."</span></blockquote>
           <div class="review-author"><div class="review-avatar">AT</div><div><div class="review-name">Ashley T.</div><div class="review-loc">Winter Park, FL</div></div></div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"My white Air Forces were gray. Now they're white again. The sole whitening alone was worth it. Coming back monthly."</blockquote>
+          <blockquote><span data-lang="en">"My white Air Forces were gray. Now they're white again. The sole whitening alone was worth it. Coming back monthly."</span><span data-lang="pt">"Meus Air Force brancos estavam cinzas. Agora estão brancos de novo. Só o clareamento da sola já valeu. Vou voltar todo mês."</span><span data-lang="es">"Mis Air Force blancos estaban grises. Ahora están blancos de nuevo. Solo el blanqueamiento de suela valió la pena. Volveré cada mes."</span></blockquote>
           <div class="review-author"><div class="review-avatar">JL</div><div><div class="review-name">Justin L.</div><div class="review-loc">UCF Area, FL</div></div></div>
         </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <blockquote>"I was nervous about my Yeezys but A7 handled them with care. They look better than when I unboxed them honestly."</blockquote>
+          <blockquote><span data-lang="en">"I was nervous about my Yeezys but A7 handled them with care. They look better than when I unboxed them honestly."</span><span data-lang="pt">"Estava nervoso com meus Yeezys, mas a A7 cuidou deles com carinho. Honestamente, estão melhores do que quando abri a caixa."</span><span data-lang="es">"Estaba nervioso por mis Yeezys pero A7 los trató con cuidado. Honestamente se ven mejor que cuando los desempaqueté."</span></blockquote>
           <div class="review-author"><div class="review-avatar">KP</div><div><div class="review-name">Kayla P.</div><div class="review-loc">Lake Nona, FL</div></div></div>
         </div>
       </div>
-      <div class="google-badge"><span class="gb-stars">★★★★★</span> 4.9 on Google · 112 reviews</div>
+      <div class="google-badge"><span class="gb-stars">★★★★★</span> <span data-lang="en">4.9 on Google · 112 reviews</span><span data-lang="pt">4.9 no Google · 112 avaliações</span><span data-lang="es">4.9 en Google · 112 reseñas</span></div>
     </div>
   </section>
 
   <!-- ===== BEFORE / AFTER ===== -->
   <section class="compare">
     <div class="container">
-      <span class="section-tag">THE TRANSFORMATION</span>
-      <h2 class="section-title">Before vs After A7 Restoration</h2>
-      <p class="section-sub">The difference professional cleaning makes.</p>
+      <span class="section-tag"><span data-lang="en">THE TRANSFORMATION</span><span data-lang="pt">A TRANSFORMAÇÃO</span><span data-lang="es">LA TRANSFORMACIÓN</span></span>
+      <h2 class="section-title"><span data-lang="en">Before vs After A7 Restoration</span><span data-lang="pt">Antes vs Depois da Restauração A7</span><span data-lang="es">Antes vs Después de la Restauración A7</span></h2>
+      <p class="section-sub"><span data-lang="en">The difference professional cleaning makes.</span><span data-lang="pt">A diferença que a limpeza profissional faz.</span><span data-lang="es">La diferencia que hace la limpieza profesional.</span></p>
       <div class="compare-grid">
         <div class="compare-col bad">
-          <h3>❌ Dirty Kicks</h3>
-          <div class="compare-item"><span class="ci">✗</span> Stained, yellowed soles</div>
-          <div class="compare-item"><span class="ci">✗</span> Embedded dirt in fabric/leather</div>
-          <div class="compare-item"><span class="ci">✗</span> Bad odor nobody talks about</div>
-          <div class="compare-item"><span class="ci">✗</span> 40-60% resale value lost</div>
-          <div class="compare-item"><span class="ci">✗</span> Embarrassing to wear in public</div>
+          <h3><span data-lang="en">❌ Dirty Kicks</span><span data-lang="pt">❌ Tênis Sujos</span><span data-lang="es">❌ Zapatillas Sucias</span></h3>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Stained, yellowed soles</span><span data-lang="pt">Solas manchadas e amareladas</span><span data-lang="es">Suelas manchadas y amarillentas</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Embedded dirt in fabric/leather</span><span data-lang="pt">Sujeira incrustada no tecido/couro</span><span data-lang="es">Suciedad incrustada en tela/cuero</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Bad odor nobody talks about</span><span data-lang="pt">Mau cheiro que ninguém comenta</span><span data-lang="es">Mal olor del que nadie habla</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">40-60% resale value lost</span><span data-lang="pt">40-60% do valor de revenda perdido</span><span data-lang="es">40-60% del valor de reventa perdido</span></div>
+          <div class="compare-item"><span class="ci">✗</span> <span data-lang="en">Embarrassing to wear in public</span><span data-lang="pt">Vergonha de usar em público</span><span data-lang="es">Vergüenza de usar en público</span></div>
         </div>
         <div class="compare-col good">
-          <h3>✓ A7 Restored</h3>
-          <div class="compare-item"><span class="ci">✓</span> Bright white soles, factory finish</div>
-          <div class="compare-item"><span class="ci">✓</span> Deep-cleaned materials look new</div>
-          <div class="compare-item"><span class="ci">✓</span> Fresh, deodorized, and protected</div>
-          <div class="compare-item"><span class="ci">✓</span> Resale value fully restored</div>
-          <div class="compare-item"><span class="ci">✓</span> Confidence with every step</div>
+          <h3><span data-lang="en">✓ A7 Restored</span><span data-lang="pt">✓ Restaurado pela A7</span><span data-lang="es">✓ Restaurado por A7</span></h3>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Bright white soles, factory finish</span><span data-lang="pt">Solas brancas brilhantes, acabamento de fábrica</span><span data-lang="es">Suelas blancas brillantes, acabado de fábrica</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Deep-cleaned materials look new</span><span data-lang="pt">Materiais com limpeza profunda parecem novos</span><span data-lang="es">Materiales con limpieza profunda lucen nuevos</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Fresh, deodorized, and protected</span><span data-lang="pt">Frescos, desodorizados e protegidos</span><span data-lang="es">Frescos, desodorizados y protegidos</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Resale value fully restored</span><span data-lang="pt">Valor de revenda totalmente restaurado</span><span data-lang="es">Valor de reventa completamente restaurado</span></div>
+          <div class="compare-item"><span class="ci">✓</span> <span data-lang="en">Confidence with every step</span><span data-lang="pt">Confiança a cada passo</span><span data-lang="es">Confianza en cada paso</span></div>
         </div>
       </div>
     </div>
@@ -588,27 +720,27 @@
   <!-- ===== VISUAL GALLERY ===== -->
   <section style="padding:80px 0;background:var(--off-white);text-align:center">
     <div class="container">
-      <span class="section-tag">REAL RESULTS</span>
-      <h2 class="section-title">See the <strong>A7 Difference</strong></h2>
-      <p class="section-sub">Real sneaker transformations. No filters, no tricks.</p>
+      <span class="section-tag"><span data-lang="en">REAL RESULTS</span><span data-lang="pt">RESULTADOS REAIS</span><span data-lang="es">RESULTADOS REALES</span></span>
+      <h2 class="section-title"><span data-lang="en">See the <strong>A7 Difference</strong></span><span data-lang="pt">Veja a <strong>Diferença A7</strong></span><span data-lang="es">Mira la <strong>Diferencia A7</strong></span></h2>
+      <p class="section-sub"><span data-lang="en">Real sneaker transformations. No filters, no tricks.</span><span data-lang="pt">Transformações reais de tênis. Sem filtros, sem truques.</span><span data-lang="es">Transformaciones reales de zapatillas. Sin filtros, sin trucos.</span></p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto">
         <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;transition:transform .3s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
           <img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&q=80&auto=format" alt="Dirty sneakers before" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,6,24,.8) 100%)"></div>
-          <span style="position:absolute;top:12px;left:12px;background:rgba(239,68,68,.9);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px">BEFORE</span>
-          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700">Jordan 1 Retro</div><div style="font-size:12px;color:rgba(255,255,255,.6)">6 months of daily wear</div></div>
+          <span style="position:absolute;top:12px;left:12px;background:rgba(239,68,68,.9);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px"><span data-lang="en">BEFORE</span><span data-lang="pt">ANTES</span><span data-lang="es">ANTES</span></span>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700">Jordan 1 Retro</div><div style="font-size:12px;color:rgba(255,255,255,.6)"><span data-lang="en">6 months of daily wear</span><span data-lang="pt">6 meses de uso diário</span><span data-lang="es">6 meses de uso diario</span></div></div>
         </div>
         <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;transition:transform .3s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
           <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&q=80&auto=format" alt="Clean sneakers after" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,6,24,.8) 100%)"></div>
-          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px">AFTER</span>
-          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700">Factory Fresh Again</div><div style="font-size:12px;color:rgba(255,255,255,.6)">Full restoration + protection</div></div>
+          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px"><span data-lang="en">AFTER</span><span data-lang="pt">DEPOIS</span><span data-lang="es">DESPUÉS</span></span>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700"><span data-lang="en">Factory Fresh Again</span><span data-lang="pt">Como Novo de Fábrica</span><span data-lang="es">Como Nuevo de Fábrica</span></div><div style="font-size:12px;color:rgba(255,255,255,.6)"><span data-lang="en">Full restoration + protection</span><span data-lang="pt">Restauração completa + proteção</span><span data-lang="es">Restauración completa + protección</span></div></div>
         </div>
         <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;transition:transform .3s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
           <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80&auto=format" alt="Sneaker collection" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,6,24,.8) 100%)"></div>
-          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px">RESULT</span>
-          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700">Back in Rotation</div><div style="font-size:12px;color:rgba(255,255,255,.6)">Ready to turn heads</div></div>
+          <span style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1px"><span data-lang="en">RESULT</span><span data-lang="pt">RESULTADO</span><span data-lang="es">RESULTADO</span></span>
+          <div style="position:absolute;bottom:16px;left:16px;right:16px;color:#fff;text-align:left"><div style="font-size:15px;font-weight:700"><span data-lang="en">Back in Rotation</span><span data-lang="pt">De Volta ao Rodízio</span><span data-lang="es">De Vuelta a la Rotación</span></div><div style="font-size:12px;color:rgba(255,255,255,.6)"><span data-lang="en">Ready to turn heads</span><span data-lang="pt">Pronto para chamar atenção</span><span data-lang="es">Listo para llamar la atención</span></div></div>
         </div>
       </div>
     </div>
@@ -618,19 +750,19 @@
   <section class="guarantee">
     <div class="container">
       <div class="guarantee-icon">🛡️</div>
-      <h2>Not Happy? We'll Re-Clean for FREE.</h2>
-      <p class="section-sub">Every pair is treated with care. If you're not 100% satisfied, we'll redo it at no charge.</p>
+      <h2><span data-lang="en">Not Happy? We'll Re-Clean for FREE.</span><span data-lang="pt">Não Ficou Satisfeito? Limpamos de Novo GRÁTIS.</span><span data-lang="es">¿No Estás Satisfecho? Lo Limpiamos de Nuevo GRATIS.</span></h2>
+      <p class="section-sub"><span data-lang="en">Every pair is treated with care. If you're not 100% satisfied, we'll redo it at no charge.</span><span data-lang="pt">Cada par é tratado com cuidado. Se não ficar 100% satisfeito, refazemos sem custo.</span><span data-lang="es">Cada par es tratado con cuidado. Si no estás 100% satisfecho, lo rehacemos sin cargo.</span></p>
       <div class="guarantee-terms">
-        <h4>Buy 2 Get 1 FREE Terms</h4>
+        <h4><span data-lang="en">Buy 2 Get 1 FREE Terms</span><span data-lang="pt">Termos Compre 2 Ganhe 1 GRÁTIS</span><span data-lang="es">Términos Compra 2 Lleva 1 GRATIS</span></h4>
         <ul>
-          <li>Free pair must be equal or lesser value service</li>
-          <li>All 3 pairs must be submitted together</li>
-          <li>Valid for Basic, Deep Clean, or Full Restoration</li>
-          <li>48-hour standard turnaround</li>
-          <li>Express 24hr service available (+$15/pair)</li>
-          <li>Not combinable with other promotions</li>
-          <li>30-day satisfaction guarantee on all work</li>
-          <li>We photograph before & after for your records</li>
+          <li><span data-lang="en">Free pair must be equal or lesser value service</span><span data-lang="pt">Par grátis deve ser serviço de igual ou menor valor</span><span data-lang="es">Par gratis debe ser servicio de igual o menor valor</span></li>
+          <li><span data-lang="en">All 3 pairs must be submitted together</span><span data-lang="pt">Todos os 3 pares devem ser entregues juntos</span><span data-lang="es">Los 3 pares deben entregarse juntos</span></li>
+          <li><span data-lang="en">Valid for Basic, Deep Clean, or Full Restoration</span><span data-lang="pt">Válido para Básica, Profunda ou Restauração Completa</span><span data-lang="es">Válido para Básica, Profunda o Restauración Completa</span></li>
+          <li><span data-lang="en">48-hour standard turnaround</span><span data-lang="pt">Prazo padrão de 48 horas</span><span data-lang="es">Plazo estándar de 48 horas</span></li>
+          <li><span data-lang="en">Express 24hr service available (+$15/pair)</span><span data-lang="pt">Serviço expresso 24h disponível (+$15/par)</span><span data-lang="es">Servicio expreso 24h disponible (+$15/par)</span></li>
+          <li><span data-lang="en">Not combinable with other promotions</span><span data-lang="pt">Não acumulável com outras promoções</span><span data-lang="es">No acumulable con otras promociones</span></li>
+          <li><span data-lang="en">30-day satisfaction guarantee on all work</span><span data-lang="pt">Garantia de satisfação de 30 dias em todos os serviços</span><span data-lang="es">Garantía de satisfacción de 30 días en todos los servicios</span></li>
+          <li><span data-lang="en">We photograph before & after for your records</span><span data-lang="pt">Fotografamos antes e depois para seu registro</span><span data-lang="es">Fotografiamos antes y después para tu registro</span></li>
         </ul>
       </div>
     </div>
@@ -640,40 +772,40 @@
   <section class="faq">
     <div class="container">
       <span class="section-tag">FAQ</span>
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <p class="section-sub">Got questions? We've got answers.</p>
+      <h2 class="section-title"><span data-lang="en">Frequently Asked Questions</span><span data-lang="pt">Perguntas Frequentes</span><span data-lang="es">Preguntas Frecuentes</span></h2>
+      <p class="section-sub"><span data-lang="en">Got questions? We've got answers.</span><span data-lang="pt">Tem perguntas? Temos respostas.</span><span data-lang="es">¿Tienes preguntas? Tenemos respuestas.</span></p>
       <div class="faq-list">
         <div class="faq-item active">
-          <div class="faq-q" onclick="toggleFaq(this)">What types of shoes do you clean?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">We clean all types: sneakers, running shoes, dress shoes, boots, sandals, and luxury footwear. We handle Nike, Jordan, Adidas, New Balance, Yeezy, Gucci, Louis Vuitton, and every brand in between.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">What types of shoes do you clean?</span><span data-lang="pt">Que tipos de calçados vocês limpam?</span><span data-lang="es">¿Qué tipos de calzado limpian?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">We clean all types: sneakers, running shoes, dress shoes, boots, sandals, and luxury footwear. We handle Nike, Jordan, Adidas, New Balance, Yeezy, Gucci, Louis Vuitton, and every brand in between.</span><span data-lang="pt">Limpamos todos os tipos: tênis, tênis de corrida, sapatos sociais, botas, sandálias e calçados de luxo. Trabalhamos com Nike, Jordan, Adidas, New Balance, Yeezy, Gucci, Louis Vuitton e todas as marcas.</span><span data-lang="es">Limpiamos todos los tipos: zapatillas, zapatillas para correr, zapatos de vestir, botas, sandalias y calzado de lujo. Trabajamos con Nike, Jordan, Adidas, New Balance, Yeezy, Gucci, Louis Vuitton y todas las marcas.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">How long does cleaning take?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">Standard turnaround is 48 hours. Express 24-hour service is available for an additional $15 per pair. We'll text you when your kicks are ready for pickup.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">How long does cleaning take?</span><span data-lang="pt">Quanto tempo leva a limpeza?</span><span data-lang="es">¿Cuánto tiempo toma la limpieza?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">Standard turnaround is 48 hours. Express 24-hour service is available for an additional $15 per pair. We'll text you when your kicks are ready for pickup.</span><span data-lang="pt">O prazo padrão é de 48 horas. Serviço expresso de 24 horas disponível por $15 adicionais por par. Enviaremos mensagem quando seus tênis estiverem prontos.</span><span data-lang="es">El plazo estándar es de 48 horas. El servicio expreso de 24 horas está disponible por $15 adicionales por par. Te enviaremos un mensaje cuando tus zapatillas estén listas.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Can you fix yellowed soles?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">Yes! Our sole whitening treatment reverses oxidation and yellowing. Results depend on the severity — mild yellowing comes out 90-100%, heavy oxidation improves 60-80%. We'll assess and set expectations upfront.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">Can you fix yellowed soles?</span><span data-lang="pt">Vocês conseguem clarear solas amareladas?</span><span data-lang="es">¿Pueden arreglar suelas amarillentas?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">Yes! Our sole whitening treatment reverses oxidation and yellowing. Results depend on the severity — mild yellowing comes out 90-100%, heavy oxidation improves 60-80%. We'll assess and set expectations upfront.</span><span data-lang="pt">Sim! Nosso tratamento de clareamento de sola reverte a oxidação e o amarelamento. Os resultados dependem da gravidade — amarelamento leve sai 90-100%, oxidação pesada melhora 60-80%. Avaliamos e definimos expectativas antecipadamente.</span><span data-lang="es">¡Sí! Nuestro tratamiento de blanqueamiento de suela revierte la oxidación y el amarillamiento. Los resultados dependen de la gravedad — amarillamiento leve sale 90-100%, oxidación pesada mejora 60-80%. Evaluamos y definimos expectativas por adelantado.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">What about suede and nubuck shoes?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">Absolutely! We specialize in delicate materials. Suede and nubuck require specific techniques and products. We clean, restore nap texture, and apply protective coating to keep them looking fresh longer.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">What about suede and nubuck shoes?</span><span data-lang="pt">E quanto a sapatos de camurça e nobuck?</span><span data-lang="es">¿Qué pasa con zapatos de gamuza y nubuck?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">Absolutely! We specialize in delicate materials. Suede and nubuck require specific techniques and products. We clean, restore nap texture, and apply protective coating to keep them looking fresh longer.</span><span data-lang="pt">Com certeza! Somos especialistas em materiais delicados. Camurça e nobuck exigem técnicas e produtos específicos. Limpamos, restauramos a textura e aplicamos revestimento protetor para mantê-los bonitos por mais tempo.</span><span data-lang="es">¡Por supuesto! Nos especializamos en materiales delicados. Gamuza y nubuck requieren técnicas y productos específicos. Limpiamos, restauramos la textura y aplicamos recubrimiento protector para que se vean bien más tiempo.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Do you remove creases?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">We can reduce creasing significantly through our de-creasing service (available with Full Restoration). We use professional shoe trees and heat treatment. Deep toe-box creases won't fully disappear but will improve noticeably.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">Do you remove creases?</span><span data-lang="pt">Vocês removem vincos?</span><span data-lang="es">¿Eliminan las arrugas?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">We can reduce creasing significantly through our de-creasing service (available with Full Restoration). We use professional shoe trees and heat treatment. Deep toe-box creases won't fully disappear but will improve noticeably.</span><span data-lang="pt">Podemos reduzir vincos significativamente com nosso serviço de remoção de vincos (disponível com Restauração Completa). Usamos formas profissionais e tratamento térmico. Vincos profundos na biqueira não desaparecem totalmente, mas melhoram visivelmente.</span><span data-lang="es">Podemos reducir arrugas significativamente con nuestro servicio de eliminación de arrugas (disponible con Restauración Completa). Usamos hormas profesionales y tratamiento térmico. Las arrugas profundas en la puntera no desaparecen totalmente pero mejoran notablemente.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">How does the Buy 2 Get 1 FREE work?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">Bring in 3 pairs at once. The cheapest service is free. For example: 2 Deep Cleans ($55 each) + 1 Basic Clean ($35) = you pay $110 instead of $145. You save $35! Works with any combination.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">How does the Buy 2 Get 1 FREE work?</span><span data-lang="pt">Como funciona o Compre 2 Ganhe 1 GRÁTIS?</span><span data-lang="es">¿Cómo funciona el Compra 2 Lleva 1 GRATIS?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">Bring in 3 pairs at once. The cheapest service is free. For example: 2 Deep Cleans ($55 each) + 1 Basic Clean ($35) = you pay $110 instead of $145. You save $35! Works with any combination.</span><span data-lang="pt">Traga 3 pares de uma vez. O serviço mais barato é grátis. Por exemplo: 2 Limpezas Profundas ($55 cada) + 1 Limpeza Básica ($35) = você paga $110 em vez de $145. Economia de $35! Funciona com qualquer combinação.</span><span data-lang="es">Trae 3 pares a la vez. El servicio más barato es gratis. Por ejemplo: 2 Limpiezas Profundas ($55 cada una) + 1 Limpieza Básica ($35) = pagas $110 en vez de $145. ¡Ahorras $35! Funciona con cualquier combinación.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">Do you offer pickup service?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">Yes! We offer free pickup and delivery in the Orlando metro area for orders of 3+ pairs. For 1-2 pairs, drop-off is available at our location. Text us to schedule a convenient time.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">Do you offer pickup service?</span><span data-lang="pt">Vocês oferecem serviço de coleta?</span><span data-lang="es">¿Ofrecen servicio de recogida?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">Yes! We offer free pickup and delivery in the Orlando metro area for orders of 3+ pairs. For 1-2 pairs, drop-off is available at our location. Text us to schedule a convenient time.</span><span data-lang="pt">Sim! Oferecemos coleta e entrega gratuitas na região metropolitana de Orlando para pedidos de 3+ pares. Para 1-2 pares, a entrega pode ser feita em nosso local. Envie mensagem para agendar um horário conveniente.</span><span data-lang="es">¡Sí! Ofrecemos recogida y entrega gratuitas en el área metropolitana de Orlando para pedidos de 3+ pares. Para 1-2 pares, la entrega se puede hacer en nuestra ubicación. Envíanos un mensaje para programar un horario conveniente.</span></div></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q" onclick="toggleFaq(this)">What if a stain doesn't come out?<span class="faq-toggle">+</span></div>
-          <div class="faq-a"><div class="faq-a-inner">We're upfront about what we can and can't do. Some stains (permanent dye, chemical burns) may not fully remove. We'll assess your shoes before starting and let you know what to expect. If we can't improve it, we won't charge for that treatment.</div></div>
+          <div class="faq-q" onclick="toggleFaq(this)"><span data-lang="en">What if a stain doesn't come out?</span><span data-lang="pt">E se uma mancha não sair?</span><span data-lang="es">¿Qué pasa si una mancha no sale?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a"><div class="faq-a-inner"><span data-lang="en">We're upfront about what we can and can't do. Some stains (permanent dye, chemical burns) may not fully remove. We'll assess your shoes before starting and let you know what to expect. If we can't improve it, we won't charge for that treatment.</span><span data-lang="pt">Somos transparentes sobre o que podemos e não podemos fazer. Algumas manchas (tintura permanente, queimaduras químicas) podem não sair completamente. Avaliamos seus sapatos antes de começar e informamos o que esperar. Se não pudermos melhorar, não cobramos pelo tratamento.</span><span data-lang="es">Somos transparentes sobre lo que podemos y no podemos hacer. Algunas manchas (tinte permanente, quemaduras químicas) pueden no salir completamente. Evaluamos tus zapatos antes de empezar y te informamos qué esperar. Si no podemos mejorarlo, no cobramos por ese tratamiento.</span></div></div>
         </div>
       </div>
     </div>
@@ -682,11 +814,11 @@
   <!-- ===== ZIP CHECKER ===== -->
   <section class="zip" id="zip-check">
     <div class="container">
-      <span class="section-tag">SERVICE AREA</span>
-      <h2 class="section-title">Check If We Offer Pickup In Your Area</h2>
+      <span class="section-tag"><span data-lang="en">SERVICE AREA</span><span data-lang="pt">ÁREA DE ATENDIMENTO</span><span data-lang="es">ÁREA DE SERVICIO</span></span>
+      <h2 class="section-title"><span data-lang="en">Check If We Offer Pickup In Your Area</span><span data-lang="pt">Verifique Se Oferecemos Coleta Na Sua Área</span><span data-lang="es">Verifica Si Ofrecemos Recogida En Tu Área</span></h2>
       <div class="zip-form">
-        <input type="text" id="zipInput" placeholder="Enter ZIP" maxlength="5" inputmode="numeric">
-        <button onclick="checkZip()">Check Availability</button>
+        <input type="text" id="zipInput" placeholder="Enter ZIP" maxlength="5" inputmode="numeric" data-placeholder-en="Enter ZIP" data-placeholder-pt="Digite o CEP" data-placeholder-es="Ingresa ZIP">
+        <button onclick="checkZip()"><span data-lang="en">Check Availability</span><span data-lang="pt">Verificar Disponibilidade</span><span data-lang="es">Verificar Disponibilidad</span></button>
       </div>
       <div class="zip-result" id="zipResult"></div>
     </div>
@@ -695,18 +827,18 @@
   <!-- ===== MEMBERSHIP ===== -->
   <section class="membership">
     <div class="container">
-      <span class="section-tag">SNEAKER CLUB</span>
-      <h2 class="section-title">A7 Members Save 25%<br>on Every Pair</h2>
+      <span class="section-tag"><span data-lang="en">SNEAKER CLUB</span><span data-lang="pt">CLUBE DO TÊNIS</span><span data-lang="es">CLUB DE ZAPATILLAS</span></span>
+      <h2 class="section-title"><span data-lang="en">A7 Members Save 25%<br>on Every Pair</span><span data-lang="pt">Membros A7 Economizam 25%<br>em Cada Par</span><span data-lang="es">Miembros A7 Ahorran 25%<br>en Cada Par</span></h2>
       <div class="member-card">
         <h3>A7 Sneaker Club</h3>
-        <p>Keep your whole rotation fresh with our monthly membership.</p>
+        <p><span data-lang="en">Keep your whole rotation fresh with our monthly membership.</span><span data-lang="pt">Mantenha todo seu rodízio de tênis limpo com nossa assinatura mensal.</span><span data-lang="es">Mantén toda tu rotación de zapatillas fresca con nuestra membresía mensual.</span></p>
         <div class="member-perks">
-          <div class="member-perk"><span class="mp-i">✓</span> 2 free cleans/month</div>
-          <div class="member-perk"><span class="mp-i">✓</span> 25% off all services</div>
-          <div class="member-perk"><span class="mp-i">✓</span> Priority 24hr turnaround</div>
-          <div class="member-perk"><span class="mp-i">✓</span> Free pickup & delivery</div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">2 free cleans/month</span><span data-lang="pt">2 limpezas grátis/mês</span><span data-lang="es">2 limpiezas gratis/mes</span></div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">25% off all services</span><span data-lang="pt">25% de desconto em todos os serviços</span><span data-lang="es">25% de descuento en todos los servicios</span></div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">Priority 24hr turnaround</span><span data-lang="pt">Prioridade 24h de prazo</span><span data-lang="es">Prioridad plazo de 24h</span></div>
+          <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">Free pickup & delivery</span><span data-lang="pt">Coleta e entrega grátis</span><span data-lang="es">Recogida y entrega gratis</span></div>
         </div>
-        <button onclick="document.getElementById('memberModal').classList.add('show')" class="member-cta" style="border:none;cursor:pointer;font-family:inherit">View Membership Plans →</button>
+        <button onclick="document.getElementById('memberModal').classList.add('show')" class="member-cta" style="border:none;cursor:pointer;font-family:inherit"><span data-lang="en">View Membership Plans →</span><span data-lang="pt">Ver Planos de Assinatura →</span><span data-lang="es">Ver Planes de Membresía →</span></button>
       </div>
     </div>
   </section>
@@ -745,58 +877,58 @@
     <div class="modal-box" style="background:var(--off-white);border-radius:24px;max-width:980px;width:95%;max-height:90vh;overflow-y:auto;padding:48px 36px;position:relative">
       <button onclick="document.getElementById('memberModal').classList.remove('show')" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--gray-500);line-height:1">&times;</button>
       <div style="text-align:center;margin-bottom:12px">
-        <span class="section-tag">SNEAKER CLUB PLANS</span>
-        <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:800;color:var(--gray-900);margin:12px 0 8px">Shoe Cleaning Plans</h2>
-        <p style="font-size:15px;color:var(--gray-500);max-width:500px;margin:0 auto 24px">Keep your whole rotation fresh. Cancel anytime.</p>
+        <span class="section-tag"><span data-lang="en">SNEAKER CLUB PLANS</span><span data-lang="pt">PLANOS DO CLUBE DO TÊNIS</span><span data-lang="es">PLANES DEL CLUB DE ZAPATILLAS</span></span>
+        <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:800;color:var(--gray-900);margin:12px 0 8px"><span data-lang="en">Shoe Cleaning Plans</span><span data-lang="pt">Planos de Limpeza de Tênis</span><span data-lang="es">Planes de Limpieza de Zapatillas</span></h2>
+        <p style="font-size:15px;color:var(--gray-500);max-width:500px;margin:0 auto 24px"><span data-lang="en">Keep your whole rotation fresh. Cancel anytime.</span><span data-lang="pt">Mantenha todo seu rodízio limpo. Cancele quando quiser.</span><span data-lang="es">Mantén toda tu rotación fresca. Cancela cuando quieras.</span></p>
       </div>
       <div class="plan-toggle">
-        <button class="active" onclick="togglePlan(this,'monthly')">Monthly</button>
-        <button onclick="togglePlan(this,'annual')">Annual <span class="save-badge">Save 2 months</span></button>
+        <button class="active" onclick="togglePlan(this,'monthly')"><span data-lang="en">Monthly</span><span data-lang="pt">Mensal</span><span data-lang="es">Mensual</span></button>
+        <button onclick="togglePlan(this,'annual')"><span data-lang="en">Annual</span><span data-lang="pt">Anual</span><span data-lang="es">Anual</span> <span class="save-badge"><span data-lang="en">Save 2 months</span><span data-lang="pt">Economize 2 meses</span><span data-lang="es">Ahorra 2 meses</span></span></button>
       </div>
       <div class="plans-grid">
         <div class="plan-card">
           <h4>Starter</h4>
           <div class="plan-price" data-monthly="29" data-annual="290"><small>$</small>29<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$290/year — save $58">Billed monthly</div>
+          <div class="plan-period" data-monthly-en="Billed monthly" data-monthly-pt="Cobrado mensalmente" data-monthly-es="Cobro mensual" data-annual-en="$290/year — save $58" data-annual-pt="$290/ano — economize $58" data-annual-es="$290/año — ahorra $58" data-monthly="Billed monthly" data-annual="$290/year — save $58"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Cobro mensual</span></div>
           <ul class="plan-features">
-            <li><span class="pf-check">✓</span> 2 pairs/month basic clean</li>
-            <li><span class="pf-check">✓</span> Surface cleaning</li>
-            <li><span class="pf-check">✓</span> Deodorizing treatment</li>
-            <li><span class="pf-check">✓</span> 48hr turnaround</li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">2 pairs/month basic clean</span><span data-lang="pt">2 pares/mês limpeza básica</span><span data-lang="es">2 pares/mes limpieza básica</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Surface cleaning</span><span data-lang="pt">Limpeza superficial</span><span data-lang="es">Limpieza superficial</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Deodorizing treatment</span><span data-lang="pt">Tratamento de desodorização</span><span data-lang="es">Tratamiento de desodorización</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">48hr turnaround</span><span data-lang="pt">Prazo de 48h</span><span data-lang="es">Plazo de 48h</span></li>
           </ul>
-          <a href="#stripe-shoe-starter" class="plan-btn outline">Subscribe Now</a>
+          <a href="#stripe-shoe-starter" class="plan-btn outline"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
         </div>
         <div class="plan-card popular">
-          <div class="popular-badge">MOST POPULAR</div>
+          <div class="popular-badge"><span data-lang="en">MOST POPULAR</span><span data-lang="pt">MAIS POPULAR</span><span data-lang="es">MÁS POPULAR</span></div>
           <h4>Sneakerhead</h4>
           <div class="plan-price" data-monthly="49" data-annual="490"><small>$</small>49<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$490/year — save $98">Billed monthly</div>
+          <div class="plan-period" data-monthly-en="Billed monthly" data-monthly-pt="Cobrado mensalmente" data-monthly-es="Cobro mensual" data-annual-en="$490/year — save $98" data-annual-pt="$490/ano — economize $98" data-annual-es="$490/año — ahorra $98" data-monthly="Billed monthly" data-annual="$490/year — save $98"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Cobro mensual</span></div>
           <ul class="plan-features">
-            <li><span class="pf-check">✓</span> 4 pairs/month deep clean</li>
-            <li><span class="pf-check">✓</span> Stain removal + sole whitening</li>
-            <li><span class="pf-check">✓</span> Deodorizing + protection spray</li>
-            <li><span class="pf-check">✓</span> Priority 24hr turnaround</li>
-            <li><span class="pf-check">✓</span> Free pickup &amp; delivery</li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">4 pairs/month deep clean</span><span data-lang="pt">4 pares/mês limpeza profunda</span><span data-lang="es">4 pares/mes limpieza profunda</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Stain removal + sole whitening</span><span data-lang="pt">Remoção de manchas + clareamento de sola</span><span data-lang="es">Eliminación de manchas + blanqueamiento de suela</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Deodorizing + protection spray</span><span data-lang="pt">Desodorização + spray protetor</span><span data-lang="es">Desodorización + spray protector</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Priority 24hr turnaround</span><span data-lang="pt">Prioridade prazo de 24h</span><span data-lang="es">Prioridad plazo de 24h</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Free pickup &amp; delivery</span><span data-lang="pt">Coleta e entrega grátis</span><span data-lang="es">Recogida y entrega gratis</span></li>
           </ul>
-          <a href="#stripe-shoe-sneakerhead" class="plan-btn primary">Subscribe Now</a>
+          <a href="#stripe-shoe-sneakerhead" class="plan-btn primary"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
         </div>
         <div class="plan-card">
           <h4>Collector</h4>
           <div class="plan-price" data-monthly="89" data-annual="890"><small>$</small>89<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$890/year — save $178">Billed monthly</div>
+          <div class="plan-period" data-monthly-en="Billed monthly" data-monthly-pt="Cobrado mensalmente" data-monthly-es="Cobro mensual" data-annual-en="$890/year — save $178" data-annual-pt="$890/ano — economize $178" data-annual-es="$890/año — ahorra $178" data-monthly="Billed monthly" data-annual="$890/year — save $178"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Cobro mensual</span></div>
           <ul class="plan-features">
-            <li><span class="pf-check">✓</span> 8 pairs/month full restoration</li>
-            <li><span class="pf-check">✓</span> Complete stain + sole restoration</li>
-            <li><span class="pf-check">✓</span> De-crease treatment included</li>
-            <li><span class="pf-check">✓</span> Crep Protect coating</li>
-            <li><span class="pf-check">✓</span> Priority 24hr turnaround</li>
-            <li><span class="pf-check">✓</span> Free pickup &amp; delivery</li>
-            <li><span class="pf-check">✓</span> Before/after photo report</li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">8 pairs/month full restoration</span><span data-lang="pt">8 pares/mês restauração completa</span><span data-lang="es">8 pares/mes restauración completa</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Complete stain + sole restoration</span><span data-lang="pt">Restauração completa de manchas + sola</span><span data-lang="es">Restauración completa de manchas + suela</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">De-crease treatment included</span><span data-lang="pt">Tratamento anti-vincos incluído</span><span data-lang="es">Tratamiento anti-arrugas incluido</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Crep Protect coating</span><span data-lang="pt">Revestimento Crep Protect</span><span data-lang="es">Recubrimiento Crep Protect</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Priority 24hr turnaround</span><span data-lang="pt">Prioridade prazo de 24h</span><span data-lang="es">Prioridad plazo de 24h</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Free pickup &amp; delivery</span><span data-lang="pt">Coleta e entrega grátis</span><span data-lang="es">Recogida y entrega gratis</span></li>
+            <li><span class="pf-check">✓</span> <span data-lang="en">Before/after photo report</span><span data-lang="pt">Relatório fotográfico antes/depois</span><span data-lang="es">Reporte fotográfico antes/después</span></li>
           </ul>
-          <a href="#stripe-shoe-collector" class="plan-btn outline">Subscribe Now</a>
+          <a href="#stripe-shoe-collector" class="plan-btn outline"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
         </div>
       </div>
-      <p style="text-align:center;font-size:12px;color:var(--gray-500);margin-top:24px">All plans include 30-day satisfaction guarantee. Cancel anytime. Stripe secure checkout.</p>
+      <p style="text-align:center;font-size:12px;color:var(--gray-500);margin-top:24px"><span data-lang="en">All plans include 30-day satisfaction guarantee. Cancel anytime. Stripe secure checkout.</span><span data-lang="pt">Todos os planos incluem garantia de satisfação de 30 dias. Cancele quando quiser. Checkout seguro via Stripe.</span><span data-lang="es">Todos los planes incluyen garantía de satisfacción de 30 días. Cancela cuando quieras. Pago seguro con Stripe.</span></p>
     </div>
   </div>
 
@@ -805,14 +937,14 @@
     <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1600&q=85&auto=format" alt="Premium sneakers" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,6,24,.88) 0%,rgba(239,68,68,.25) 50%,rgba(10,6,24,.92) 100%)"></div>
     <div class="container" style="position:relative;z-index:2;text-align:center;padding:80px 20px">
-      <h2 style="font-size:clamp(28px,4.5vw,44px);font-weight:800;color:#fff;margin-bottom:20px;line-height:1.15">Clean Kicks. <span style="color:var(--accent-light)">Fresh Style.</span><br>Confidence Restored.</h2>
+      <h2 style="font-size:clamp(28px,4.5vw,44px);font-weight:800;color:#fff;margin-bottom:20px;line-height:1.15"><span data-lang="en">Clean Kicks. <span style="color:var(--accent-light)">Fresh Style.</span><br>Confidence Restored.</span><span data-lang="pt">Tênis Limpos. <span style="color:var(--accent-light)">Estilo Novo.</span><br>Confiança Restaurada.</span><span data-lang="es">Zapatillas Limpias. <span style="color:var(--accent-light)">Estilo Fresco.</span><br>Confianza Restaurada.</span></h2>
       <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:32px;margin-bottom:32px">
-        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);border-radius:50%;font-size:18px">👟</span> All Brands Welcome</div>
-        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);border-radius:50%;font-size:18px">✨</span> Hand-Cleaned Only</div>
-        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);border-radius:50%;font-size:18px">⚡</span> 48hr Turnaround</div>
+        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);border-radius:50%;font-size:18px">👟</span> <span data-lang="en">All Brands Welcome</span><span data-lang="pt">Todas as Marcas</span><span data-lang="es">Todas las Marcas</span></div>
+        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);border-radius:50%;font-size:18px">✨</span> <span data-lang="en">Hand-Cleaned Only</span><span data-lang="pt">Limpeza Apenas à Mão</span><span data-lang="es">Limpieza Solo a Mano</span></div>
+        <div style="display:flex;align-items:center;gap:10px;color:#fff;font-size:15px;font-weight:600"><span style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);border-radius:50%;font-size:18px">⚡</span> <span data-lang="en">48hr Turnaround</span><span data-lang="pt">Prazo de 48h</span><span data-lang="es">Plazo de 48h</span></div>
       </div>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!" style="display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;padding:18px 44px;border-radius:60px;font-size:17px;font-weight:800;text-decoration:none;transition:.3s;box-shadow:0 8px 32px var(--accent-glow)">
-        Buy 2 Get 1 FREE →
+      <a href="tel:+14076708839" style="display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;padding:18px 44px;border-radius:60px;font-size:17px;font-weight:800;text-decoration:none;transition:.3s;box-shadow:0 8px 32px var(--accent-glow)">
+        <span data-lang="en">📞 Call Now (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora (407) 670-8839</span><span data-lang="es">📞 Llama Ahora (407) 670-8839</span>
       </a>
     </div>
   </section>
@@ -820,12 +952,47 @@
   <!-- ===== FINAL CTA ===== -->
   <section class="final-cta">
     <div class="container">
-      <h2>Stop Wearing Dirty Kicks.<br>Start Turning Heads Again.</h2>
-      <p>Buy 2 Get 1 FREE. Professional shoe cleaning starting at $35. Your sneakers deserve better.</p>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!" class="final-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Get Buy 2 Get 1 FREE
+      <h2><span data-lang="en">Stop Wearing Dirty Kicks.<br>Start Turning Heads Again.</span><span data-lang="pt">Pare de Usar Tênis Sujos.<br>Volte a Chamar Atenção.</span><span data-lang="es">Deja de Usar Zapatillas Sucias.<br>Vuelve a Llamar la Atención.</span></h2>
+      <p><span data-lang="en">Buy 2 Get 1 FREE. Professional shoe cleaning starting at $35. Your sneakers deserve better.</span><span data-lang="pt">Compre 2 Ganhe 1 GRÁTIS. Limpeza profissional de tênis a partir de $35. Seus tênis merecem mais.</span><span data-lang="es">Compra 2 Lleva 1 GRATIS. Limpieza profesional de zapatillas desde $35. Tus zapatillas merecen más.</span></p>
+      <a href="tel:+14076708839" class="final-btn" style="background:var(--accent);color:#fff">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span data-lang="en">Call Now (407) 670-8839</span><span data-lang="pt">Ligue Agora (407) 670-8839</span><span data-lang="es">Llama Ahora (407) 670-8839</span>
       </a>
+      <br>
+      <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!" class="final-cta-wa" data-wa-link>
+        <span data-lang="en">Or chat on WhatsApp →</span><span data-lang="pt">Ou converse no WhatsApp →</span><span data-lang="es">O chatea por WhatsApp →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== CROSS-SELL ===== -->
+  <section style="padding:60px 0;background:var(--off-white);text-align:center">
+    <div class="container">
+      <span class="section-tag"><span data-lang="en">MORE SERVICES</span><span data-lang="pt">MAIS SERVIÇOS</span><span data-lang="es">MÁS SERVICIOS</span></span>
+      <h2 class="section-title"><span data-lang="en">Explore Our Other <strong>Cleaning Services</strong></span><span data-lang="pt">Conheça Nossos Outros <strong>Serviços de Limpeza</strong></span><span data-lang="es">Conoce Nuestros Otros <strong>Servicios de Limpieza</strong></span></h2>
+      <p class="section-sub"><span data-lang="en">Complete care for your home and wardrobe.</span><span data-lang="pt">Cuidado completo para sua casa e guarda-roupa.</span><span data-lang="es">Cuidado completo para tu hogar y guardarropa.</span></p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:960px;margin:0 auto">
+        <a href="carpet-cleaning.html" style="background:#fff;border:1px solid #fecaca;border-radius:var(--radius-lg);padding:28px 20px;text-decoration:none;transition:.3s;display:block" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(239,68,68,.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="font-size:36px;margin-bottom:10px">🏠</div>
+          <div style="font-size:16px;font-weight:700;color:var(--gray-900);margin-bottom:4px"><span data-lang="en">Carpet Cleaning</span><span data-lang="pt">Limpeza de Carpete</span><span data-lang="es">Limpieza de Alfombra</span></div>
+          <div style="font-size:13px;color:var(--gray-500)"><span data-lang="en">Buy 1 Get 1 FREE</span><span data-lang="pt">Compre 1 Ganhe 1 GRÁTIS</span><span data-lang="es">Compra 1 Lleva 1 GRATIS</span></div>
+        </a>
+        <a href="upholstery-cleaning.html" style="background:#fff;border:1px solid #fecaca;border-radius:var(--radius-lg);padding:28px 20px;text-decoration:none;transition:.3s;display:block" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(239,68,68,.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="font-size:36px;margin-bottom:10px">🛋️</div>
+          <div style="font-size:16px;font-weight:700;color:var(--gray-900);margin-bottom:4px"><span data-lang="en">Upholstery Cleaning</span><span data-lang="pt">Limpeza de Estofados</span><span data-lang="es">Limpieza de Tapicería</span></div>
+          <div style="font-size:13px;color:var(--gray-500)"><span data-lang="en">Professional deep clean</span><span data-lang="pt">Limpeza profunda profissional</span><span data-lang="es">Limpieza profunda profesional</span></div>
+        </a>
+        <a href="vacation-rental.html" style="background:#fff;border:1px solid #fecaca;border-radius:var(--radius-lg);padding:28px 20px;text-decoration:none;transition:.3s;display:block" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(239,68,68,.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="font-size:36px;margin-bottom:10px">🌴</div>
+          <div style="font-size:16px;font-weight:700;color:var(--gray-900);margin-bottom:4px"><span data-lang="en">Vacation Rental</span><span data-lang="pt">Aluguel Temporada</span><span data-lang="es">Alquiler Vacacional</span></div>
+          <div style="font-size:13px;color:var(--gray-500)"><span data-lang="en">Airbnb & rental turnover</span><span data-lang="pt">Airbnb e rotatividade</span><span data-lang="es">Airbnb y rotación</span></div>
+        </a>
+        <a href="index.html#pricing" style="background:#fff;border:1px solid #fecaca;border-radius:var(--radius-lg);padding:28px 20px;text-decoration:none;transition:.3s;display:block" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(239,68,68,.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="font-size:36px;margin-bottom:10px">👕</div>
+          <div style="font-size:16px;font-weight:700;color:var(--gray-900);margin-bottom:4px"><span data-lang="en">Laundry Subscription</span><span data-lang="pt">Assinatura Lavanderia</span><span data-lang="es">Suscripción Lavandería</span></div>
+          <div style="font-size:13px;color:var(--gray-500)"><span data-lang="en">Weekly wash & fold plans</span><span data-lang="pt">Planos semanais de lavagem</span><span data-lang="es">Planes semanales de lavado</span></div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -833,8 +1000,16 @@
   <footer class="footer">
     <div class="container">
       <img src="a7-logo.jpg" alt="A7 Cleaning Service Premium" style="height:50px;width:auto;margin-bottom:10px;display:block;background:#fff;border-radius:8px;padding:4px;">
-      <p>Professional Shoe & Sneaker Cleaning — Orlando, FL</p>
-      <p style="margin-top:6px"><a href="https://wa.me/14077878590">WhatsApp (407) 787-8590</a></p>
+      <p><span data-lang="en">Professional Shoe & Sneaker Cleaning — Orlando, FL</span><span data-lang="pt">Limpeza Profissional de Tênis e Calçados — Orlando, FL</span><span data-lang="es">Limpieza Profesional de Zapatos y Zapatillas — Orlando, FL</span></p>
+      <p style="margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;font-size:12px">
+        <a href="index.html" style="color:rgba(255,255,255,.6);text-decoration:none"><span data-lang="en">Laundry</span><span data-lang="pt">Lavanderia</span><span data-lang="es">Lavandería</span></a>
+        <a href="carpet-cleaning.html" style="color:rgba(255,255,255,.6);text-decoration:none"><span data-lang="en">Carpet</span><span data-lang="pt">Carpete</span><span data-lang="es">Alfombra</span></a>
+        <a href="upholstery-cleaning.html" style="color:rgba(255,255,255,.6);text-decoration:none"><span data-lang="en">Upholstery</span><span data-lang="pt">Estofados</span><span data-lang="es">Tapicería</span></a>
+        <a href="shoe-cleaning.html" style="color:var(--accent-light);text-decoration:none;font-weight:700"><span data-lang="en">Shoes</span><span data-lang="pt">Tênis</span><span data-lang="es">Zapatillas</span></a>
+        <a href="vacation-rental.html" style="color:rgba(255,255,255,.6);text-decoration:none"><span data-lang="en">Vacation Rental</span><span data-lang="pt">Aluguel Temporada</span><span data-lang="es">Alquiler Vacacional</span></a>
+      </p>
+      <p style="margin-top:6px"><a href="https://wa.me/14076708839">WhatsApp (407) 670-8839</a></p>
+      <p style="margin-bottom:8px"><a href="tel:+14076708839" style="color:var(--accent-light);text-decoration:none;margin-right:12px">📞 (407) 670-8839</a> <span style="opacity:.3">|</span> <a href="https://wa.me/14076708839" style="color:#25d366;text-decoration:none;margin-left:12px" data-wa-link>💬 WhatsApp</a></p>
       <p class="dev">Developed by A7x Systems IA · © 2026 A7 Cleaning Services</p>
     </div>
   </footer>
@@ -842,46 +1017,61 @@
   <!-- TOAST -->
   <div class="toast" id="toast">
     <div class="toast-avatar" id="toastAv">M</div>
-    <div><strong id="toastName">Marcus R.</strong> just dropped off 3 pairs<br><span class="t-time" id="toastTime">2 min ago</span></div>
+    <div><strong id="toastName">Marcus R.</strong> <span id="toastMsg">just dropped off 3 pairs</span><br><span class="t-time" id="toastTime">2 min ago</span></div>
   </div>
 
   <!-- STICKY MOBILE CTA -->
   <div class="sticky-cta">
-    <a href="https://wa.me/14077878590?text=Hi!%20I%20want%20shoe%20cleaning%20—%20Buy%202%20Get%201%20FREE!">🎁 Buy 2 Get 1 FREE</a>
+    <a href="tel:+14076708839"><span data-lang="en">📞 Call Now — (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora — (407) 670-8839</span><span data-lang="es">📞 Llama Ahora — (407) 670-8839</span></a>
   </div>
 
   <!-- EXIT POPUP -->
   <div class="exit-popup" id="exitPopup">
     <div class="exit-box">
-      <h3>Wait! Your FREE Pair<br>Is Walking Away 👟</h3>
-      <p>Don't miss your Buy 2 Get 1 FREE deal. Bring in 3 pairs, pay for only 2. Limited spots this week.</p>
-      <a href="https://wa.me/14077878590?text=Hi!%20I%20almost%20left%20but%20I%20want%20the%20Buy%202%20Get%201%20deal!" class="exit-cta">
+      <h3><span data-lang="en">Wait! Your FREE Pair<br>Is Walking Away 👟</span><span data-lang="pt">Espere! Seu Par GRÁTIS<br>Está Indo Embora 👟</span><span data-lang="es">¡Espera! Tu Par GRATIS<br>Se Está Yendo 👟</span></h3>
+      <p><span data-lang="en">Don't miss your Buy 2 Get 1 FREE deal. Bring in 3 pairs, pay for only 2. Limited spots this week.</span><span data-lang="pt">Não perca a promoção Compre 2 Ganhe 1 GRÁTIS. Traga 3 pares, pague apenas 2. Vagas limitadas esta semana.</span><span data-lang="es">No te pierdas la promoción Compra 2 Lleva 1 GRATIS. Trae 3 pares, paga solo 2. Lugares limitados esta semana.</span></p>
+      <a href="https://wa.me/14076708839?text=Hi!%20I%20almost%20left%20but%20I%20want%20the%20Buy%202%20Get%201%20deal!" class="exit-cta" data-wa-link>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Claim Buy 2 Get 1 FREE
+        <span data-lang="en">Claim Buy 2 Get 1 FREE</span><span data-lang="pt">Garanta Compre 2 Ganhe 1 GRÁTIS</span><span data-lang="es">Reclama Compra 2 Lleva 1 GRATIS</span>
       </a>
-      <button class="exit-dismiss" id="exitDismiss">No thanks, I'll pay full price</button>
+      <button class="exit-dismiss" id="exitDismiss"><span data-lang="en">No thanks, I'll pay full price</span><span data-lang="pt">Não obrigado, prefiro pagar preço cheio</span><span data-lang="es">No gracias, prefiero pagar precio completo</span></button>
     </div>
   </div>
 
   <script>
+  function trackEvent(a,c,l){if(typeof gtag==='function')gtag('event',a,{event_category:c,event_label:l});}
+  document.addEventListener('click',function(e){
+    var tel=e.target.closest('a[href^="tel:"]');if(tel)trackEvent('phone_call','engagement','shoe');
+    var wa=e.target.closest('[data-wa-link]');if(wa)trackEvent('whatsapp_click','engagement','shoe');
+  });
+  (function(){var sd={25:false,50:false,75:false,100:false};window.addEventListener('scroll',function(){var p=Math.round((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100);[25,50,75,100].forEach(function(d){if(p>=d&&!sd[d]){sd[d]=true;trackEvent('scroll_depth','engagement',d+'%');}});},{passive:true});})();
+
   (function(){
     /* === MEMBERSHIP MODAL TOGGLE === */
     window.togglePlan = function(btn, type){
       btn.parentElement.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
+      var suffix = type === 'annual' ? '/yr' : '/mo';
       document.querySelectorAll('.plan-price').forEach(function(el){
         var val = el.dataset[type];
         if (val) {
-          if (type === 'annual') {
-            el.innerHTML = '<small>$</small>' + parseInt(val).toLocaleString() + '<small>/yr</small>';
-          } else {
-            el.innerHTML = '<small>$</small>' + val + '<small>/mo</small>';
-          }
+          el.innerHTML = '<small>$</small>' + (type === 'annual' ? parseInt(val).toLocaleString() : val) + '<small>' + suffix + '</small>';
         }
       });
       document.querySelectorAll('.plan-period').forEach(function(el){
-        var text = el.dataset[type];
-        if (text) el.textContent = text;
+        var langs = ['en','pt','es'];
+        var hasLangData = el.dataset[type + 'En'];
+        if (hasLangData) {
+          var html = '';
+          langs.forEach(function(l){
+            var text = el.dataset[type + l.charAt(0).toUpperCase() + l.slice(1)] || el.dataset[type];
+            html += '<span data-lang="' + l + '">' + text + '</span>';
+          });
+          el.innerHTML = html;
+        } else {
+          var text = el.dataset[type];
+          if (text) el.textContent = text;
+        }
       });
     };
 
@@ -913,15 +1103,22 @@
     updateCountdown();
 
     /* === SPOTS LEFT === */
+    function updateAllSpots(val){
+      document.getElementById('spotsLeft').textContent = val;
+      var ptEl = document.getElementById('spotsLeftPt');
+      var esEl = document.getElementById('spotsLeftEs');
+      if (ptEl) ptEl.textContent = val;
+      if (esEl) esEl.textContent = val;
+    }
     var spots = sessionStorage.getItem('a7shoe_spots');
     if (!spots) { spots = 11; sessionStorage.setItem('a7shoe_spots', spots); }
-    document.getElementById('spotsLeft').textContent = spots;
+    updateAllSpots(spots);
     setInterval(function(){
       var s = parseInt(sessionStorage.getItem('a7shoe_spots'));
       if (s > 3 && Math.random() < .12) {
         s--;
         sessionStorage.setItem('a7shoe_spots', s);
-        document.getElementById('spotsLeft').textContent = s;
+        updateAllSpots(s);
       }
     }, 40000);
 
@@ -979,29 +1176,45 @@
       var valid = (num >= 32801 && num <= 32899) || (num >= 34701 && num <= 34799) ||
                   (num >= 34741 && num <= 34786) || num === 33896 || num === 33897 ||
                   num === 33848 || (num >= 32701 && num <= 32799);
+      var lang = getCurrentLang();
+      var msgs = {
+        yes: {
+          en: 'We offer free pickup in your area for 3+ pairs! Text us to schedule.',
+          pt: 'Oferecemos coleta gratuita na sua área para 3+ pares! Envie mensagem para agendar.',
+          es: 'Ofrecemos recogida gratuita en tu área para 3+ pares! Envíanos un mensaje para programar.'
+        },
+        no: {
+          en: 'We don\'t offer pickup in your area yet \u2014 but you can drop off anytime!',
+          pt: 'Ainda não oferecemos coleta na sua área \u2014 mas você pode entregar a qualquer momento!',
+          es: 'Aún no ofrecemos recogida en tu área \u2014 pero puedes dejarlo cuando quieras!'
+        }
+      };
       result.textContent = valid
-        ? '🎉 We offer free pickup in your area for 3+ pairs! Text us to schedule.'
-        : '⚠️ We don\'t offer pickup in your area yet — but you can drop off anytime!';
+        ? '\uD83C\uDF89 ' + (msgs.yes[lang] || msgs.yes.en)
+        : '\u26A0\uFE0F ' + (msgs.no[lang] || msgs.no.en);
       result.className = 'zip-result ' + (valid ? 'yes' : 'no');
     };
 
     /* === TOASTS === */
     var toasts = [
-      {name:'Marcus R.', init:'MR', time:'2 min ago'},
-      {name:'Ashley T.', init:'AT', time:'5 min ago'},
-      {name:'Justin L.', init:'JL', time:'9 min ago'},
-      {name:'Kayla P.', init:'KP', time:'12 min ago'},
-      {name:'Brandon W.', init:'BW', time:'16 min ago'},
-      {name:'Sofia M.', init:'SM', time:'20 min ago'},
-      {name:'Tyler K.', init:'TK', time:'24 min ago'}
+      {name:'Marcus R.', init:'MR', time:{en:'2 min ago',pt:'2 min atrás',es:'hace 2 min'}, msg:{en:'just dropped off 3 pairs',pt:'acabou de entregar 3 pares',es:'acaba de dejar 3 pares'}},
+      {name:'Ashley T.', init:'AT', time:{en:'5 min ago',pt:'5 min atrás',es:'hace 5 min'}, msg:{en:'just dropped off 6 pairs',pt:'acabou de entregar 6 pares',es:'acaba de dejar 6 pares'}},
+      {name:'Justin L.', init:'JL', time:{en:'9 min ago',pt:'9 min atrás',es:'hace 9 min'}, msg:{en:'just picked up restored kicks',pt:'acabou de buscar tênis restaurados',es:'acaba de recoger zapatillas restauradas'}},
+      {name:'Kayla P.', init:'KP', time:{en:'12 min ago',pt:'12 min atrás',es:'hace 12 min'}, msg:{en:'just booked a deep clean',pt:'acabou de agendar limpeza profunda',es:'acaba de reservar limpieza profunda'}},
+      {name:'Brandon W.', init:'BW', time:{en:'16 min ago',pt:'16 min atrás',es:'hace 16 min'}, msg:{en:'just dropped off 3 pairs',pt:'acabou de entregar 3 pares',es:'acaba de dejar 3 pares'}},
+      {name:'Sofia M.', init:'SM', time:{en:'20 min ago',pt:'20 min atrás',es:'hace 20 min'}, msg:{en:'just joined Sneaker Club',pt:'acabou de assinar o Clube do Tênis',es:'se unió al Club de Zapatillas'}},
+      {name:'Tyler K.', init:'TK', time:{en:'24 min ago',pt:'24 min atrás',es:'hace 24 min'}, msg:{en:'just dropped off 4 pairs',pt:'acabou de entregar 4 pares',es:'acaba de dejar 4 pares'}}
     ];
     var ti = 0;
+    function getCurrentLang(){ return (document.body.className.match(/lang-active-(\w+)/) || [,'en'])[1]; }
     function showToast(){
       var t = document.getElementById('toast');
       var d = toasts[ti % toasts.length];
+      var lang = getCurrentLang();
       document.getElementById('toastAv').textContent = d.init;
       document.getElementById('toastName').textContent = d.name;
-      document.getElementById('toastTime').textContent = d.time;
+      document.getElementById('toastMsg').textContent = d.msg[lang] || d.msg.en;
+      document.getElementById('toastTime').textContent = d.time[lang] || d.time.en;
       t.classList.add('show');
       setTimeout(function(){ t.classList.remove('show'); }, 4000);
       ti++;
@@ -1059,6 +1272,80 @@
         if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
       });
     });
+
+    /* === SPOTS LEFT SYNC === */
+    function syncSpots(){
+      var val = sessionStorage.getItem('a7shoe_spots') || '11';
+      var ptEl = document.getElementById('spotsLeftPt');
+      var esEl = document.getElementById('spotsLeftEs');
+      if (ptEl) ptEl.textContent = val;
+      if (esEl) esEl.textContent = val;
+    }
+    syncSpots();
+    setInterval(syncSpots, 5000);
+
+    /* === HAMBURGER MENU === */
+    (function(){
+      var btn=document.getElementById('hamburgerBtn');
+      var menu=document.getElementById('mobileMenu');
+      var overlay=document.getElementById('menuOverlay');
+      if(!btn||!menu||!overlay) return;
+      function toggleMenu(){
+        var isOpen=menu.classList.contains('open');
+        menu.classList.toggle('open');
+        overlay.classList.toggle('open');
+        btn.classList.toggle('open');
+        btn.setAttribute('aria-expanded',!isOpen);
+        document.body.style.overflow=isOpen?'':'hidden';
+      }
+      function closeMenu(){
+        menu.classList.remove('open');
+        overlay.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        document.body.style.overflow='';
+      }
+      btn.addEventListener('click',toggleMenu);
+      overlay.addEventListener('click',closeMenu);
+      menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
+      var menuLangBtns=document.querySelectorAll('#menuLangSwitcher button');
+      menuLangBtns.forEach(function(b){
+        b.addEventListener('click',function(){
+          closeMenu();
+        });
+      });
+    })();
+  })();
+
+  /* === LANGUAGE SWITCHER === */
+  window.setLanguage = function(lang){
+    document.body.className = document.body.className.replace(/lang-active-\w+/, 'lang-active-' + lang);
+    localStorage.setItem('a7_lang', lang);
+    document.querySelectorAll('.lang-sw button').forEach(function(b){
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang);
+    });
+    document.querySelectorAll('#menuLangSwitcher button').forEach(function(b){
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang);
+    });
+    document.querySelectorAll('[data-wa-link]').forEach(function(el){
+      var msgs = {
+        en: 'Hi! I saw the Buy 2 Get 1 FREE shoe cleaning offer!',
+        pt: 'Oi! Vi a promoção Compre 2 Ganhe 1 GRÁTIS de limpeza de tênis!',
+        es: '¡Hola! Vi la promoción Compra 2 Lleva 1 GRATIS de limpieza de zapatos!'
+      };
+      el.href = 'https://wa.me/14076708839?text=' + encodeURIComponent(msgs[lang] || msgs.en);
+    });
+    /* Update ZIP placeholder */
+    var zipInput = document.getElementById('zipInput');
+    if (zipInput) {
+      var ph = zipInput.getAttribute('data-placeholder-' + lang);
+      if (ph) zipInput.placeholder = ph;
+    }
+  };
+  /* Restore saved language */
+  (function(){
+    var saved = localStorage.getItem('a7_lang');
+    if (saved && saved !== 'en') setLanguage(saved);
   })();
   </script>
 </body>
