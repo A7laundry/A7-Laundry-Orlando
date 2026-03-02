@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#1b3054">
+  <meta name="theme-color" content="#0a0f1a">
   <title>A7 Laundry | Laundry Subscription Plans — Orlando, FL</title>
   <meta name="description" content="Stop wasting 5+ hours/week on laundry. Orlando's #1 laundry subscription: fill a bag, leave it at your door, get it back fresh in 24h. Plans from $1.99/day. Buy 1 bag, get 1 FREE. No contracts.">
   <meta property="og:title" content="A7 Laundry | Stop Wasting Your Weekends on Laundry — Orlando, FL">
@@ -74,53 +74,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* ==========================================
-       A7 LAUNDRY — WARM PROFESSIONAL DESIGN
-       Navy + Crimson + Gold on Cream
-       Inspired by premium service brands
+       A7 LAUNDRY — NIKE-INSPIRED DARK MODE
+       Dark + Electric Blue accent
+       Awwwards 2026 aesthetic
        ========================================== */
     :root {
-      --primary: #1b3054;
-      --primary-dark: #122240;
-      --primary-light: #2a4a7a;
-      --primary-glow: rgba(27,48,84,.2);
-      --accent: #c0392b;
-      --accent-dark: #a5311f;
-      --accent-light: #e74c3c;
+      --base-dark: #0a0f1a;
+      --surface: #111827;
+      --surface-light: #1a2332;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #3b82f6;
+      --primary-glow: rgba(37,99,235,.3);
+      --gradient-blue: linear-gradient(135deg, #1d4ed8, #3b82f6);
       --gold: #d4a017;
-      --gold-dark: #b8860b;
       --gold-light: #f0c040;
-      --gradient-brand: linear-gradient(135deg, #1b3054 0%, #2a4a7a 100%);
-      --gradient-main: linear-gradient(135deg, #1b3054 0%, #2a4a7a 100%);
-      --gradient-accent: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
       --white: #ffffff;
-      --cream: #faf6ef;
-      --cream-dark: #f0e8d8;
-      --off-white: #f5f0e8;
-      --gray-50: #f8f5f0;
-      --gray-100: #ede8e0;
-      --gray-200: #d9d0c4;
-      --gray-300: #bfb5a8;
-      --gray-400: #9a8f82;
-      --gray-500: #7a6f62;
-      --gray-600: #5c5248;
-      --gray-700: #3e362e;
-      --gray-800: #2c2420;
-      --gray-900: #1a1410;
-      --bg-dark: #1b3054;
-      --bg-card: rgba(27,48,84,.04);
-      --green: #27ae60;
-      --red: #c0392b;
-      --shadow-sm: 0 1px 2px rgba(27,48,84,.04), 0 2px 8px rgba(27,48,84,.06);
-      --shadow-md: 0 2px 4px rgba(27,48,84,.04), 0 6px 24px rgba(27,48,84,.08);
-      --shadow-lg: 0 4px 8px rgba(27,48,84,.04), 0 12px 40px rgba(27,48,84,.1);
-      --shadow-xl: 0 8px 16px rgba(27,48,84,.06), 0 20px 60px rgba(27,48,84,.12);
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 20px;
-      --radius-xl: 28px;
+      --light-section: #f8fafc;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      --green: #22c55e;
+      --red: #ef4444;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.1), 0 2px 8px rgba(0,0,0,.08);
+      --shadow-md: 0 2px 4px rgba(0,0,0,.1), 0 6px 24px rgba(0,0,0,.12);
+      --shadow-lg: 0 4px 8px rgba(0,0,0,.1), 0 12px 40px rgba(0,0,0,.15);
+      --shadow-xl: 0 8px 16px rgba(0,0,0,.12), 0 20px 60px rgba(0,0,0,.18);
+      --radius: 4px;
       /* z-index scale */
       --z-header: 200;
       --z-lang-sw: 250;
@@ -136,37 +126,46 @@
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--gray-900);background:var(--cream);overflow-x:hidden;line-height:1.7}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--gray-900);background:var(--base-dark);overflow-x:hidden;line-height:1.7}
     .container{max-width:1100px;margin:0 auto;padding:0 32px}
     .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+    /* Section theme utilities */
+    .section-dark{background:var(--base-dark);color:#fff}
+    .section-dark .section-tag{background:rgba(37,99,235,.15);color:var(--primary-light)}
+    .section-dark .section-title{color:#fff}
+    .section-dark .section-sub{color:rgba(255,255,255,.6)}
+    .section-light{background:var(--light-section);color:var(--gray-900)}
+    .section-light .section-tag{background:rgba(37,99,235,.08);color:var(--primary)}
+    .section-light .section-title{color:var(--gray-900)}
+    .section-light .section-sub{color:var(--gray-500)}
 
     /* === SCROLL PROGRESS === */
-    #progressBar{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--gradient-accent);z-index:9999;transition:width .1s linear}
+    #progressBar{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--gradient-blue);z-index:9999;transition:width .1s linear}
 
     /* === LANG SWITCHER === */
-    .lang-sw{position:fixed;top:14px;right:20px;z-index:var(--z-lang-sw);display:flex;gap:2px;background:rgba(27,48,84,.85);border-radius:24px;padding:3px;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1)}
-    .lang-sw button{background:transparent;border:none;color:rgba(255,255,255,.7);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;transition:.2s}
-    .lang-sw button.active{background:var(--gold);color:var(--gray-900)}
+    .lang-sw{position:fixed;top:14px;right:20px;z-index:var(--z-lang-sw);display:flex;gap:2px;background:rgba(17,24,39,.9);border-radius:24px;padding:3px;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08)}
+    .lang-sw button{background:transparent;border:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;transition:.2s}
+    .lang-sw button.active{background:var(--primary);color:#fff}
 
     /* === LIVE VIEWERS === */
-    .live-viewers{position:fixed;bottom:90px;left:16px;z-index:var(--z-live-viewers);background:var(--white);color:var(--gray-700);padding:10px 16px;border-radius:50px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;backdrop-filter:blur(8px);border:1px solid var(--gray-200);box-shadow:var(--shadow-md);opacity:0;animation:fadeInUp .5s 2s forwards}
+    .live-viewers{position:fixed;bottom:90px;left:16px;z-index:var(--z-live-viewers);background:var(--surface);color:rgba(255,255,255,.7);padding:10px 16px;border-radius:50px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.06);box-shadow:var(--shadow-md);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+    .live-viewers.visible{opacity:1;visibility:visible}
     .live-dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:blink 1.5s infinite}
     @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
     /* === HEADER === */
     .site-header{position:fixed;top:0;left:0;right:0;z-index:var(--z-header);background:transparent;backdrop-filter:blur(0);padding:14px 0;transition:all .4s ease}
-    .site-header.scrolled{background:var(--primary);backdrop-filter:blur(12px);padding:8px 0;box-shadow:0 2px 20px rgba(0,0,0,.15)}
+    .site-header.scrolled{background:rgba(10,15,26,.95);backdrop-filter:blur(20px);padding:8px 0;box-shadow:0 2px 20px rgba(0,0,0,.3)}
     .site-header .container{display:flex;align-items:center;justify-content:space-between}
     .site-header .logo-img{height:44px;width:auto;display:block;filter:brightness(0) invert(1);transition:filter .4s}
     .site-header.scrolled .logo-img{filter:brightness(0) invert(1)}
     .header-nav{display:flex;align-items:center;gap:28px}
     .header-nav a{color:rgba(255,255,255,.8);text-decoration:none;font-size:13px;font-weight:600;transition:.3s}
     .header-nav a:hover{color:#fff}
-    .site-header.scrolled .header-nav a{color:rgba(255,255,255,.75)}
+    .site-header.scrolled .header-nav a{color:rgba(255,255,255,.65)}
     .site-header.scrolled .header-nav a:hover{color:#fff}
-    .header-cta{background:var(--accent);color:#fff;border:none;padding:11px 26px;border-radius:50px;font-weight:800;font-size:13px;cursor:pointer;transition:.3s;text-decoration:none;white-space:nowrap}
-    .header-cta:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:0 4px 16px rgba(192,57,43,.3)}
+    .header-cta{background:var(--primary);color:#fff;border:none;padding:11px 26px;border-radius:var(--radius);font-weight:800;font-size:13px;cursor:pointer;transition:.3s;text-decoration:none;white-space:nowrap}
+    .header-cta:hover{background:var(--primary-light);transform:translateY(-1px);box-shadow:0 4px 16px var(--primary-glow)}
     .header-phone{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.85);text-decoration:none;font-size:13px;font-weight:700;transition:.3s;white-space:nowrap}
     .header-phone:hover{color:#fff}
     .header-phone svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
@@ -181,138 +180,118 @@
     @media(max-width:768px){.hamburger{display:flex}}
     .mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:var(--z-menu-overlay);opacity:0;visibility:hidden;transition:all .3s}
     .mobile-menu-overlay.open{opacity:1;visibility:visible}
-    .mobile-menu{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--primary-dark);z-index:var(--z-mobile-menu);padding:80px 24px 32px;overflow-y:auto;transition:right .3s ease;display:flex;flex-direction:column;gap:8px}
+    .mobile-menu{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--surface);z-index:var(--z-mobile-menu);padding:80px 24px 32px;overflow-y:auto;transition:right .3s ease;display:flex;flex-direction:column;gap:8px}
     .mobile-menu.open{right:0}
-    .mobile-menu a{display:block;color:rgba(255,255,255,.85);text-decoration:none;font-size:15px;font-weight:600;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);transition:.2s}
+    .mobile-menu a{display:block;color:rgba(255,255,255,.85);text-decoration:none;font-size:15px;font-weight:600;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:.2s}
     .mobile-menu a:hover{color:#fff}
-    .mobile-menu .menu-section-label{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-top:16px;padding-bottom:4px}
+    .mobile-menu .menu-section-label{font-size:11px;font-weight:700;color:var(--primary-light);text-transform:uppercase;letter-spacing:1.5px;margin-top:16px;padding-bottom:4px}
     .mobile-menu .menu-phone{display:flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:16px;padding:14px 0;border-bottom:none}
-    .mobile-menu .menu-phone svg{width:18px;height:18px;fill:none;stroke:var(--gold-light);stroke-width:2}
-    .mobile-menu .menu-cta{display:block;background:var(--accent);color:#fff;text-align:center;padding:14px;border-radius:50px;font-weight:800;font-size:14px;margin-top:12px;border-bottom:none}
+    .mobile-menu .menu-phone svg{width:18px;height:18px;fill:none;stroke:var(--primary-light);stroke-width:2}
+    .mobile-menu .menu-cta{display:block;background:var(--primary);color:#fff;text-align:center;padding:14px;border-radius:var(--radius);font-weight:800;font-size:14px;margin-top:12px;border-bottom:none}
     .mobile-menu .menu-lang{display:flex;gap:6px;margin-top:16px}
-    .mobile-menu .menu-lang button{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;cursor:pointer;transition:.2s}
-    .mobile-menu .menu-lang button.active{background:var(--gold);color:var(--gray-900)}
-
-    /* === URGENCY BAR === */
-    .urgency-bar{background:var(--accent);color:#fff;text-align:center;padding:11px 20px;font-size:13px;font-weight:700;position:relative;overflow:hidden;letter-spacing:.3px}
-    .urgency-bar::before{content:'';position:absolute;top:0;left:-100%;width:200%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);animation:shimmer 3s infinite}
-    @keyframes shimmer{0%{transform:translateX(-50%)}100%{transform:translateX(50%)}}
-    .urgency-bar span{position:relative;z-index:1}
+    .mobile-menu .menu-lang button{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.6);font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;cursor:pointer;transition:.2s}
+    .mobile-menu .menu-lang button.active{background:var(--primary);color:#fff}
 
     /* === HERO === */
-    .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(135deg, #1b3054 0%, #122240 50%, #1b3054 100%);padding:0}
+    .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--base-dark);padding:0}
     .hero::before,.hero::after{display:none}
-    .hero-content{position:relative;z-index:2;text-align:center;max-width:880px;margin:0 auto;padding:140px 32px 100px}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.3);color:var(--gold-light);padding:8px 20px;border-radius:50px;font-size:12px;font-weight:700;margin-bottom:32px;backdrop-filter:blur(4px)}
-    .hero-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite}
-    .hero h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(36px,6.5vw,76px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:24px;letter-spacing:-1px}
-    .hero h1 .highlight{color:var(--gold-light);-webkit-text-fill-color:var(--gold-light);background:none}
-    .hero-sub{font-size:clamp(15px,1.8vw,18px);color:rgba(255,255,255,.8);max-width:560px;margin:0 auto 40px;line-height:1.8}
+    .hero-content{position:relative;z-index:2;text-align:left;max-width:880px;padding:160px 32px 100px}
+    .hero h1{font-size:clamp(48px,12vw,140px);font-weight:800;color:#fff;line-height:.95;margin-bottom:24px;letter-spacing:-3px}
+    .hero-sub{font-size:clamp(15px,1.8vw,18px);color:rgba(255,255,255,.6);max-width:560px;margin:0 0 40px;line-height:1.8}
     .hero-sub strong{color:#fff;font-weight:700}
-    .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-    .hero-cta-primary{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:18px 44px;border-radius:50px;font-size:16px;font-weight:800;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
-    .hero-cta-primary:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(192,57,43,.4)}
-    .hero-cta-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:18px 44px;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:all .3s;border:2px solid rgba(255,255,255,.25)}
-    .hero-cta-secondary:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);transform:translateY(-2px)}
-    .hero-trust{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
-    .hero-trust-item{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:13px;font-weight:600}
-    .hero-trust-item .num{color:var(--gold-light);font-weight:800}
-    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:540px;margin:50px auto 0;padding-top:50px;border-top:1px solid rgba(255,255,255,.1)}
-    .hero-stat{text-align:center}
-    .hero-stat .val{font-size:clamp(28px,3.5vw,42px);font-weight:800;color:#fff;font-family:'Playfair Display',serif;letter-spacing:-1px}
-    .hero-stat .val span{color:var(--gold-light);-webkit-text-fill-color:var(--gold-light)}
-    .hero-stat .lbl{font-size:12px;color:rgba(255,255,255,.65);margin-top:6px;font-weight:500}
+    .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+    .hero-cta-primary{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:18px 48px;border-radius:var(--radius);font-size:16px;font-weight:800;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
+    .hero-cta-primary:hover{background:var(--primary-light);transform:translateY(-2px);box-shadow:0 0 20px var(--primary-glow)}
+    .hero-cta-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:18px 48px;border-radius:var(--radius);font-size:16px;font-weight:700;text-decoration:none;transition:all .3s;border:1px solid rgba(255,255,255,.2)}
+    .hero-cta-secondary:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.4);transform:translateY(-2px)}
+    .hero-trust{display:flex;align-items:center;gap:28px;flex-wrap:wrap;color:rgba(255,255,255,.5);font-size:13px;font-weight:600}
+
+    /* === TRUST STRIP === */
+    .trust-strip{background:var(--light-section);padding:60px 0}
+    .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+    .trust-item .trust-val{font-size:clamp(32px,5vw,56px);font-weight:900;color:var(--primary);letter-spacing:-2px;line-height:1}
+    .trust-item .trust-label{font-size:13px;color:var(--gray-500);margin-top:8px;font-weight:500}
+    @media(max-width:768px){.trust-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
 
     /* === SECTION COMMON === */
     section{padding:120px 0}
-    .section-tag{display:inline-block;background:rgba(27,48,84,.08);color:var(--primary);font-size:12px;font-weight:700;padding:6px 18px;border-radius:50px;margin-bottom:16px;letter-spacing:.5px;text-transform:uppercase}
-    .section-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.15;margin-bottom:20px;letter-spacing:-.5px;color:var(--gray-900)}
+    .section-tag{display:inline-block;background:rgba(37,99,235,.08);color:var(--primary);font-size:12px;font-weight:700;padding:6px 18px;border-radius:50px;margin-bottom:16px;letter-spacing:.5px;text-transform:uppercase}
+    .section-title{font-size:clamp(32px,5vw,64px);font-weight:800;line-height:1.1;margin-bottom:20px;letter-spacing:-1px;color:var(--gray-900)}
     .section-sub{font-size:16px;color:var(--gray-500);max-width:580px;line-height:1.8}
     .text-center{text-align:center}
     .mx-auto{margin-left:auto;margin-right:auto}
 
     /* === PROBLEM SECTION === */
-    .problem{background:var(--white)}
     .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
-    .problem-card{background:var(--cream);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:44px 32px;text-align:center;transition:all .3s ease}
-    .problem-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--primary)}
-    .problem-card:hover h3,.problem-card:hover p{color:var(--gray-900)}
-    .problem-card:hover .stat{color:var(--accent)}
+    .problem-card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:44px 32px;text-align:center;transition:all .3s ease}
+    .problem-card:hover{transform:translateY(-6px);box-shadow:0 0 30px rgba(37,99,235,.1);border-color:var(--primary)}
+    .problem-card:hover h3{color:#fff}
+    .problem-card:hover .stat{color:var(--primary-light)}
     .problem-icon{font-size:44px;margin-bottom:16px}
-    .problem-card h3{font-size:17px;font-weight:800;margin-bottom:8px;color:var(--gray-900);transition:color .3s}
-    .problem-card p{font-size:14px;color:var(--gray-500);line-height:1.7;transition:color .3s}
-    .problem-card .stat{font-size:40px;font-weight:900;color:var(--primary);font-family:'Playfair Display',serif;margin:10px 0;transition:color .3s}
+    .problem-card h3{font-size:17px;font-weight:800;margin-bottom:8px;color:rgba(255,255,255,.9);transition:color .3s}
+    .problem-card p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;transition:color .3s}
+    .problem-card .stat{font-size:40px;font-weight:900;color:var(--primary);margin:10px 0;transition:color .3s;letter-spacing:-2px}
     @media(max-width:768px){.problem-grid{grid-template-columns:1fr}}
 
     /* === HOW IT WORKS === */
-    .how-it-works{background:var(--cream)}
-    .how-it-works .section-tag{background:rgba(27,48,84,.08);color:var(--primary)}
-    .how-it-works .section-title{color:var(--gray-900)}
-    .how-it-works .section-sub{color:var(--gray-500)}
     .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
-    .step-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:48px 32px;text-align:center;position:relative;transition:all .3s ease}
+    .step-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:48px 32px;text-align:center;position:relative;transition:all .3s ease}
     .step-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--primary)}
-    .step-num{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:36px;height:36px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;border:3px solid var(--cream)}
+    .step-num{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:36px;height:36px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;border:3px solid var(--light-section)}
     .step-icon{font-size:52px;margin:12px 0 20px}
     .step-card h3{font-size:17px;font-weight:800;margin-bottom:10px;color:var(--gray-900)}
     .step-card p{font-size:14px;color:var(--gray-500);line-height:1.7}
     @media(max-width:768px){.steps-grid{grid-template-columns:1fr}}
 
     /* === VALUE STACK === */
-    .value-stack{max-width:700px;margin:0 auto 56px;background:var(--white);border:2px solid var(--primary);border-radius:var(--radius-xl);padding:44px 40px;text-align:left}
-    .value-stack h3{font-family:'Playfair Display',Georgia,serif;font-size:20px;font-weight:700;margin-bottom:24px;text-align:center;color:var(--primary)}
-    .value-stack-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--gray-100);font-size:15px}
+    .value-stack{max-width:700px;margin:0 auto 56px;background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:44px 40px;text-align:left}
+    .value-stack h3{font-size:20px;font-weight:800;margin-bottom:24px;text-align:center;color:#fff}
+    .value-stack-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:15px}
     .value-stack-row:last-of-type{border-bottom:none}
-    .value-stack-row .item{color:var(--gray-600);font-weight:500}
-    .value-stack-row .val{font-weight:800;color:var(--gray-900);font-family:'Playfair Display',serif}
-    .value-stack-total{margin-top:20px;padding-top:20px;border-top:2px solid var(--gray-200);display:flex;justify-content:space-between;align-items:center}
-    .value-stack-total .total-label{font-size:15px;font-weight:700;color:var(--gray-700)}
-    .value-stack-total .total-val{font-size:30px;font-weight:900;color:var(--red);text-decoration:line-through;font-family:'Playfair Display',serif}
-    .value-stack-pay{text-align:center;margin-top:20px;padding:24px;background:var(--primary);color:#fff;border-radius:var(--radius-md)}
+    .value-stack-row .item{color:rgba(255,255,255,.5);font-weight:500}
+    .value-stack-row .val{font-weight:800;color:#fff}
+    .value-stack-total{margin-top:20px;padding-top:20px;border-top:2px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center}
+    .value-stack-total .total-label{font-size:15px;font-weight:700;color:rgba(255,255,255,.7)}
+    .value-stack-total .total-val{font-size:30px;font-weight:900;color:var(--red);text-decoration:line-through}
+    .value-stack-pay{text-align:center;margin-top:20px;padding:24px;background:var(--primary);color:#fff;border-radius:var(--radius)}
     .value-stack-pay .you-pay-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.8);margin-bottom:6px}
-    .value-stack-pay .you-pay-price{font-size:48px;font-weight:900;color:#fff;font-family:'Playfair Display',serif;letter-spacing:-2px}
+    .value-stack-pay .you-pay-price{font-size:48px;font-weight:900;color:#fff;letter-spacing:-2px}
     .value-stack-pay .you-pay-price small{font-size:16px;font-weight:600;color:rgba(255,255,255,.7)}
-    .value-stack-pay .savings-note{font-size:13px;color:var(--gold-light);font-weight:700;margin-top:6px}
+    .value-stack-pay .savings-note{font-size:13px;color:rgba(255,255,255,.7);font-weight:700;margin-top:6px}
 
     /* === RISK REVERSAL === */
-    .risk-reversal{font-size:11px;color:var(--gray-400);margin-top:8px;font-weight:500;text-align:center}
+    .risk-reversal{font-size:11px;color:rgba(255,255,255,.4);margin-top:8px;font-weight:500;text-align:center}
     .risk-reversal strong{color:var(--green)}
 
     /* === PRICING === */
-    .pricing{background:var(--white)}
-    .pricing-toggle{display:flex;background:var(--cream);border:1px solid var(--gray-200);border-radius:50px;padding:4px;gap:0;margin:0 auto 48px;width:fit-content}
-    .pricing-toggle button{padding:12px 32px;border:none;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:.3s;font-family:inherit;background:transparent;color:var(--gray-500)}
-    .pricing-toggle button.active{background:var(--primary);color:#fff}
-    .pricing-toggle .save-badge{display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:6px;vertical-align:middle}
     .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto}
-    .plan-card{background:var(--white);border:2px solid var(--gray-200);border-radius:var(--radius-lg);padding:44px 32px;text-align:center;position:relative;transition:all .4s ease}
-    .plan-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--primary)}
-    .plan-card.popular{background:var(--white);border-color:var(--primary);transform:scale(1.03);box-shadow:var(--shadow-lg)}
-    .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:8px 20px;border-radius:50px;white-space:nowrap;letter-spacing:2px;text-transform:uppercase}
-    .plan-card h4{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:var(--primary);margin-bottom:4px;transition:color .4s}
-    .plan-card .plan-desc{font-size:13px;color:var(--gray-500);margin-bottom:16px;transition:color .4s}
-    .plan-price{font-family:'Playfair Display',serif;font-size:48px;font-weight:800;color:var(--primary);letter-spacing:-3px;margin:12px 0 4px;transition:color .4s}
-    .plan-price small{font-size:16px;font-weight:600;color:var(--gray-400)}
-    .plan-period{font-size:12px;color:var(--gray-400);margin-bottom:24px;transition:color .4s}
+    .plan-card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:44px 32px;text-align:center;position:relative;transition:all .4s ease}
+    .plan-card:hover{transform:translateY(-6px);box-shadow:0 0 30px rgba(37,99,235,.1);border-color:var(--primary)}
+    .plan-card.popular{background:var(--surface);border-color:var(--primary);transform:scale(1.03);box-shadow:0 0 40px rgba(37,99,235,.15)}
+    .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;font-size:10px;font-weight:800;padding:8px 20px;border-radius:50px;white-space:nowrap;letter-spacing:2px;text-transform:uppercase}
+    .plan-card h4{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;transition:color .4s}
+    .plan-card .plan-desc{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;transition:color .4s}
+    .plan-price{font-size:48px;font-weight:800;color:#fff;letter-spacing:-3px;margin:12px 0 4px;transition:color .4s}
+    .plan-price small{font-size:16px;font-weight:600;color:rgba(255,255,255,.4)}
+    .plan-period{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:24px;transition:color .4s}
     .plan-features{list-style:none;text-align:left;margin-bottom:32px}
-    .plan-features li{padding:10px 0;font-size:13px;color:var(--gray-600);display:flex;align-items:flex-start;gap:10px;border-bottom:1px solid var(--gray-100)}
+    .plan-features li{padding:10px 0;font-size:13px;color:rgba(255,255,255,.6);display:flex;align-items:flex-start;gap:10px;border-bottom:1px solid rgba(255,255,255,.06)}
     .plan-features li:last-child{border-bottom:none}
     .plan-features .check{color:var(--green);font-weight:700;flex-shrink:0}
-    .plan-features .x{color:var(--gray-300);font-weight:700;flex-shrink:0}
-    .plan-cta{display:block;width:100%;padding:16px;border:none;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .3s;text-decoration:none;text-align:center;font-family:inherit}
-    .plan-cta-primary{background:var(--accent);color:#fff}
-    .plan-cta-primary:hover{background:var(--accent-dark);color:#fff;box-shadow:0 8px 30px rgba(192,57,43,.3);transform:translateY(-2px)}
-    .plan-cta-outline{background:transparent;color:var(--primary);border:2px solid var(--primary)}
-    .plan-cta-outline:hover{background:var(--primary);color:#fff;transform:translateY(-2px)}
-    .plan-addon{margin-top:12px;font-size:11px;color:var(--gray-400)}
+    .plan-features .x{color:var(--gray-400);font-weight:700;flex-shrink:0}
+    .plan-cta{display:block;width:100%;padding:16px;border:none;border-radius:var(--radius);font-size:14px;font-weight:800;cursor:pointer;transition:all .3s;text-decoration:none;text-align:center;font-family:inherit}
+    .plan-cta-primary{background:var(--primary);color:#fff}
+    .plan-cta-primary:hover{background:var(--primary-light);color:#fff;box-shadow:0 0 20px var(--primary-glow);transform:translateY(-2px)}
+    .plan-cta-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.2)}
+    .plan-cta-outline:hover{background:var(--primary);color:#fff;border-color:var(--primary);transform:translateY(-2px)}
+    .plan-addon{margin-top:12px;font-size:11px;color:rgba(255,255,255,.3)}
     @media(max-width:768px){.plans-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}.plan-card.popular{transform:none}}
 
     /* === SERVICES HUB === */
-    .services-hub{background:var(--cream)}
     .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px;max-width:800px;margin-left:auto;margin-right:auto}
-    .service-card{display:flex;align-items:center;gap:20px;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px 28px;text-decoration:none;color:inherit;transition:all .4s ease}
+    .service-card{display:flex;align-items:center;gap:20px;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:32px 28px;text-decoration:none;color:inherit;transition:all .4s ease}
     .service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--primary)}
-    .service-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+    .service-icon{width:48px;height:48px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
     .service-icon.carpet{background:rgba(245,158,11,.1)}
     .service-icon.shoe{background:rgba(239,68,68,.1)}
     .service-icon.upholstery{background:rgba(124,58,237,.1)}
@@ -324,30 +303,26 @@
     @media(max-width:768px){.services-grid{grid-template-columns:1fr}}
 
     /* === SOCIAL PROOF === */
-    .social-proof{background:var(--primary);color:#fff}
-    .social-proof .section-tag{background:rgba(255,255,255,.1);color:var(--gold-light)}
-    .social-proof .section-title{color:#fff}
     .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:64px}
-    .review-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:44px 36px;transition:all .4s ease}
-    .review-card:hover{background:rgba(255,255,255,.12);transform:translateY(-4px)}
-    .review-stars{color:var(--accent);font-size:14px;margin-bottom:16px;letter-spacing:3px}
-    .review-text{font-size:15px;color:rgba(255,255,255,.78);line-height:1.8;margin-bottom:20px;font-style:italic}
-    .review-author{font-size:13px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:1px}
-    .review-role{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+    .review-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:44px 36px;transition:all .4s ease}
+    .review-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--primary)}
+    .review-stars{color:var(--gold);font-size:14px;margin-bottom:16px;letter-spacing:3px}
+    .review-text{font-size:15px;color:var(--gray-600);line-height:1.8;margin-bottom:20px;font-style:italic}
+    .review-author{font-size:13px;font-weight:800;color:var(--gray-900);text-transform:uppercase;letter-spacing:1px}
+    .review-role{font-size:11px;color:var(--gray-400);margin-top:4px}
     @media(max-width:768px){.reviews-grid{grid-template-columns:1fr}}
 
     /* === GUARANTEE === */
-    .guarantee{background:var(--cream);text-align:center}
-    .guarantee-box{max-width:700px;margin:0 auto;background:var(--white);border:2px solid var(--primary);border-radius:var(--radius-xl);padding:64px 48px}
+    .guarantee{text-align:center}
+    .guarantee-box{max-width:700px;margin:0 auto;background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:64px 48px}
     .guarantee-icon{font-size:64px;margin-bottom:24px}
-    .guarantee-box h2{font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,36px);font-weight:800;margin-bottom:16px;color:var(--gray-900)}
-    .guarantee-box p{font-size:15px;color:var(--gray-500);line-height:1.8;max-width:500px;margin:0 auto}
+    .guarantee-box h2{font-size:clamp(24px,3vw,36px);font-weight:800;margin-bottom:16px;color:#fff}
+    .guarantee-box p{font-size:15px;color:rgba(255,255,255,.5);line-height:1.8;max-width:500px;margin:0 auto}
     .guarantee-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:32px;text-align:left;max-width:420px;margin-left:auto;margin-right:auto}
-    .guarantee-list li{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--gray-700);font-weight:500}
+    .guarantee-list li{display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,.7);font-weight:500}
     .guarantee-list .check{color:var(--green);font-weight:700;font-size:16px}
 
     /* === FAQ === */
-    .faq{background:var(--white)}
     .faq-list{max-width:720px;margin:48px auto 0}
     .faq-item{border-bottom:1px solid var(--gray-200)}
     .faq-q{width:100%;padding:24px 0;background:none;border:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:inherit;font-size:15px;font-weight:700;color:var(--gray-900);text-align:left;gap:16px;transition:color .3s}
@@ -358,34 +333,26 @@
     .faq-a p{padding:0 0 24px;font-size:14px;color:var(--gray-500);line-height:1.8}
 
     /* === SERVICE AREA === */
-    .service-area{background:var(--cream)}
     .area-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:40px;max-width:700px;margin-left:auto;margin-right:auto}
-    .area-badge{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:50px;padding:10px 24px;font-size:12px;font-weight:700;color:var(--gray-600);transition:all .3s}
-    .area-badge:hover{border-color:var(--primary);color:var(--primary);background:var(--white)}
-
-    /* === URGENCY CLOSE === */
-    .urgency-close{background:var(--white);padding:100px 0;text-align:center}
-    .urgency-close-inner{max-width:640px;margin:0 auto}
-    .urgency-close h2{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--gray-900);margin-bottom:24px;line-height:1.1;letter-spacing:-1px}
-    .urgency-close p{font-size:16px;color:var(--gray-500);line-height:1.8;margin-bottom:16px}
-    .urgency-close .pain-text{font-size:15px;color:var(--gray-400);font-style:italic;line-height:1.8;margin-bottom:32px}
-    .urgency-close .escape-text{font-size:18px;color:var(--primary);font-weight:800;margin-bottom:8px}
+    .area-badge{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:50px;padding:10px 24px;font-size:12px;font-weight:700;color:rgba(255,255,255,.6);transition:all .3s}
+    .area-badge:hover{border-color:var(--primary);color:var(--primary-light);background:var(--surface-light)}
 
     /* === FINAL CTA === */
-    .final-cta{background:var(--primary);text-align:center;padding:120px 20px;position:relative;overflow:hidden}
-    .final-cta::before{content:'';position:absolute;top:50%;left:50%;width:800px;height:800px;background:radial-gradient(circle,rgba(86,54,209,.08),transparent 70%);border-radius:50%;transform:translate(-50%,-50%)}
+    .final-cta{background:var(--base-dark);text-align:center;padding:120px 20px;position:relative;overflow:hidden}
+    .final-cta::before{content:'';position:absolute;top:50%;left:50%;width:800px;height:800px;background:radial-gradient(circle,rgba(37,99,235,.12),transparent 70%);border-radius:50%;transform:translate(-50%,-50%)}
     .final-cta-content{position:relative;z-index:2}
-    .final-cta h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:800;color:#fff;margin-bottom:24px;letter-spacing:-1px;line-height:.95}
-    .final-cta p{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:48px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.8}
+    .final-cta h2{font-size:clamp(36px,6vw,72px);font-weight:800;color:#fff;margin-bottom:24px;letter-spacing:-2px;line-height:.95}
+    .final-cta p{font-size:16px;color:rgba(255,255,255,.5);margin-bottom:48px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.8}
     .final-cta .hero-cta-primary{font-size:16px;padding:18px 48px}
 
     /* === WHATSAPP FAB === */
-    .wa-fab{position:fixed;bottom:24px;right:24px;z-index:var(--z-wa-fab);width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;animation:fadeInUp .5s 2s forwards;opacity:0}
+    .wa-fab{position:fixed;bottom:24px;right:24px;z-index:var(--z-wa-fab);width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;animation:fabFadeIn .5s 2s forwards;opacity:0}
+    @keyframes fabFadeIn{to{opacity:1}}
     .wa-fab:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.5)}
     .wa-fab svg{width:28px;height:28px;fill:#fff}
 
     /* === FOOTER === */
-    .footer{background:var(--primary);border-top:none;padding:48px 0;text-align:center;color:rgba(255,255,255,.5);font-size:12px;letter-spacing:.5px}
+    .footer{background:var(--surface);border-top:1px solid rgba(255,255,255,.06);padding:48px 0;text-align:center;color:rgba(255,255,255,.4);font-size:12px;letter-spacing:.5px}
     .footer a{color:rgba(255,255,255,.7);text-decoration:none;transition:.3s;font-weight:600;font-size:13px}
     .footer a:hover{color:#fff}
     .footer-links{display:flex;justify-content:center;gap:28px;margin-bottom:20px;flex-wrap:wrap}
@@ -396,73 +363,71 @@
 
     /* === HERO BG IMAGE === */
     .hero-bg{position:absolute;inset:0;z-index:0}
-    .hero-bg img{width:100%;height:100%;object-fit:cover;animation:heroZoom 30s ease-in-out infinite alternate;filter:brightness(.35)}
-    @keyframes heroZoom{0%{transform:scale(1)}100%{transform:scale(1.1)}}
-    .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,48,84,.6) 0%,rgba(27,48,84,.3) 40%,rgba(27,48,84,.2) 60%,rgba(27,48,84,.95) 100%)}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.25)}
+    .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,26,.5) 0%,rgba(10,15,26,.2) 40%,rgba(10,15,26,.2) 60%,rgba(10,15,26,.95) 100%)}
 
     /* === STICKY BOTTOM CTA === */
-    .sticky-cta-bar{position:fixed;bottom:0;left:0;right:0;z-index:var(--z-sticky-cta);background:rgba(27,48,84,.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06);padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:20px;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);pointer-events:none}
+    .sticky-cta-bar{position:fixed;bottom:0;left:0;right:0;z-index:var(--z-sticky-cta);background:rgba(17,24,39,.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06);padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:20px;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);pointer-events:none}
     .sticky-cta-bar.visible{transform:translateY(0);pointer-events:auto}
     @supports(padding-bottom:env(safe-area-inset-bottom)){.sticky-cta-bar{padding-bottom:calc(14px + env(safe-area-inset-bottom))}}
-    .sticky-cta-bar .sticky-text{color:rgba(255,255,255,.7);font-size:12px;font-weight:600;white-space:nowrap}
+    .sticky-cta-bar .sticky-text{color:rgba(255,255,255,.6);font-size:12px;font-weight:600;white-space:nowrap}
     .sticky-cta-bar .sticky-text strong{color:#fff}
-    .sticky-cta-bar .sticky-btn{background:var(--accent);color:#fff;padding:14px 32px;border-radius:50px;font-weight:800;font-size:12px;text-decoration:none;white-space:nowrap;transition:all .3s;flex-shrink:0}
-    .sticky-cta-bar .sticky-btn:hover{background:var(--accent-dark);color:#fff;transform:scale(1.02)}
+    .sticky-cta-bar .sticky-btn{background:var(--primary);color:#fff;padding:14px 32px;border-radius:var(--radius);font-weight:800;font-size:12px;text-decoration:none;white-space:nowrap;transition:all .3s;flex-shrink:0}
+    .sticky-cta-bar .sticky-btn:hover{background:var(--primary-light);color:#fff;transform:scale(1.02)}
 
     /* === SOCIAL PROOF TOAST === */
-    .proof-toast{position:fixed;bottom:90px;right:20px;z-index:var(--z-proof-toast);background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:16px 20px;box-shadow:var(--shadow-xl);max-width:320px;display:flex;align-items:center;gap:12px;transform:translateX(120%);transition:transform .5s cubic-bezier(.4,0,.2,1);opacity:0;color:var(--gray-700)}
+    .proof-toast{position:fixed;bottom:90px;right:20px;z-index:var(--z-proof-toast);background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-xl);max-width:320px;display:flex;align-items:center;gap:12px;transform:translateX(120%);transition:transform .5s cubic-bezier(.4,0,.2,1);opacity:0;color:rgba(255,255,255,.7)}
     .proof-toast.show{transform:translateX(0);opacity:1}
     .proof-toast-avatar{width:36px;height:36px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;flex-shrink:0}
-    .proof-toast-text{font-size:12px;color:var(--gray-600);line-height:1.4}
-    .proof-toast-text strong{color:var(--gray-900);font-weight:700}
-    .proof-toast-text .proof-time{color:var(--gray-400);font-size:11px}
-    .proof-toast-close{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:14px;line-height:1}
+    .proof-toast-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4}
+    .proof-toast-text strong{color:#fff;font-weight:700}
+    .proof-toast-text .proof-time{color:rgba(255,255,255,.3);font-size:11px}
+    .proof-toast-close{position:absolute;top:6px;right:8px;background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:14px;line-height:1}
 
     /* === EXIT INTENT POPUP === */
-    .exit-overlay{position:fixed;inset:0;background:rgba(27,48,84,.8);z-index:var(--z-exit-overlay);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+    .exit-overlay{position:fixed;inset:0;background:rgba(10,15,26,.9);z-index:var(--z-exit-overlay);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
     .exit-overlay.active{display:flex}
-    .exit-modal{background:#fff;border-radius:var(--radius-xl);padding:56px 44px;max-width:480px;width:100%;text-align:center;position:relative;animation:scaleIn .3s ease}
+    .exit-modal{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:56px 44px;max-width:480px;width:100%;text-align:center;position:relative;animation:scaleIn .3s ease}
     @keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
-    .exit-modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:var(--gray-400);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:0;transition:.3s}
-    .exit-modal-close:hover{color:var(--gray-900)}
-    .exit-modal h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;margin-bottom:16px;color:var(--gray-900)}
-    .exit-modal p{font-size:15px;color:var(--gray-500);line-height:1.7;margin-bottom:24px}
-    .exit-modal .exit-offer{background:var(--accent);color:#fff;font-size:18px;font-weight:800;padding:20px;border-radius:var(--radius-md);margin-bottom:24px}
-    .exit-modal .exit-cta{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:18px 36px;border-radius:50px;font-size:14px;font-weight:800;text-decoration:none;transition:all .3s;border:none;cursor:pointer;width:100%;justify-content:center}
-    .exit-modal .exit-cta:hover{background:var(--accent);color:#fff}
-    .exit-modal .exit-skip{display:block;margin-top:16px;font-size:12px;color:var(--gray-400);cursor:pointer;background:none;border:none;font-family:inherit}
+    .exit-modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;color:rgba(255,255,255,.4);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:0;transition:.3s}
+    .exit-modal-close:hover{color:#fff}
+    .exit-modal h2{font-size:32px;font-weight:800;margin-bottom:16px;color:#fff}
+    .exit-modal p{font-size:15px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:24px}
+    .exit-modal .exit-offer{background:var(--primary);color:#fff;font-size:18px;font-weight:800;padding:20px;border-radius:var(--radius);margin-bottom:24px}
+    .exit-modal .exit-cta{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;padding:18px 36px;border-radius:var(--radius);font-size:14px;font-weight:800;text-decoration:none;transition:all .3s;border:none;cursor:pointer;width:100%;justify-content:center}
+    .exit-modal .exit-cta:hover{background:var(--primary-light);color:#fff;box-shadow:0 0 20px var(--primary-glow)}
+    .exit-modal .exit-skip{display:block;margin-top:16px;font-size:12px;color:rgba(255,255,255,.3);cursor:pointer;background:none;border:none;font-family:inherit}
 
     /* === SUBSCRIPTION MODAL === */
-    .sub-overlay{position:fixed;inset:0;background:rgba(27,48,84,.8);z-index:var(--z-sub-overlay);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+    .sub-overlay{position:fixed;inset:0;background:rgba(10,15,26,.9);z-index:var(--z-sub-overlay);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
     .sub-overlay.active{display:flex}
-    .sub-modal{background:#fff;border-radius:var(--radius-xl);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:scaleIn .3s ease}
-    .sub-modal-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);border:none;font-size:22px;color:var(--gray-600);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:0;transition:.3s;z-index:2}
-    .sub-modal-close:hover{color:var(--gray-900)}
+    .sub-modal{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:scaleIn .3s ease}
+    .sub-modal-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.1);border:none;font-size:22px;color:rgba(255,255,255,.6);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:0;transition:.3s;z-index:2}
+    .sub-modal-close:hover{color:#fff}
     .sub-modal-header{padding:36px 28px 24px;text-align:center;border-radius:0;color:#fff;position:relative}
-    .sub-modal-header h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;margin-bottom:8px}
-    .sub-modal-header .sub-price{font-size:48px;font-weight:800;letter-spacing:-2px;font-family:'Playfair Display',serif}
+    .sub-modal-header h2{font-size:24px;font-weight:800;margin-bottom:8px}
+    .sub-modal-header .sub-price{font-size:48px;font-weight:900;letter-spacing:-2px}
     .sub-modal-header .sub-price small{font-size:16px;font-weight:600;opacity:.6}
     .sub-modal-specs{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
     .sub-modal-specs span{background:rgba(255,255,255,.15);padding:4px 14px;border-radius:50px;font-size:11px;font-weight:700}
     .sub-modal-body{padding:28px}
-    .sub-promo-banner{background:var(--accent);color:#fff;text-align:center;padding:16px 20px;border-radius:var(--radius-md);margin-bottom:20px;font-weight:800;font-size:13px;position:relative;overflow:hidden}
-    .sub-promo-banner::before{content:'';position:absolute;top:0;left:-100%;width:200%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);animation:shimmer 4s infinite}
+    .sub-promo-banner{background:var(--primary);color:#fff;text-align:center;padding:16px 20px;border-radius:var(--radius);margin-bottom:20px;font-weight:800;font-size:13px;position:relative;overflow:hidden}
     .sub-promo-banner span{position:relative;z-index:1}
     .sub-items-section{margin-bottom:20px}
     .sub-items-title{font-size:12px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:6px}
     .sub-items-title.included{color:var(--green)}
     .sub-items-title.excluded{color:var(--red)}
-    .sub-items-list{font-size:13px;color:var(--gray-500);line-height:1.8;padding-left:4px}
-    .sub-persuasion{background:var(--cream);border-radius:var(--radius-md);padding:20px;margin-bottom:20px;text-align:center}
-    .sub-persuasion p{font-size:13px;color:var(--gray-600);line-height:1.6}
-    .sub-persuasion strong{color:var(--gray-900)}
+    .sub-items-list{font-size:13px;color:rgba(255,255,255,.5);line-height:1.8;padding-left:4px}
+    .sub-persuasion{background:var(--surface-light);border-radius:var(--radius);padding:20px;margin-bottom:20px;text-align:center}
+    .sub-persuasion p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+    .sub-persuasion strong{color:#fff}
     .sub-stripe-container{margin-bottom:16px}
     .sub-stripe-container stripe-buy-button{width:100%}
-    .sub-stripe-fallback{display:block;width:100%;padding:18px;border:none;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .3s;font-family:inherit;text-align:center;text-decoration:none;background:var(--accent);color:#fff}
-    .sub-stripe-fallback:hover{background:var(--accent-dark);color:#fff;transform:translateY(-2px)}
-    .sub-wa-alt{display:block;text-align:center;margin-top:10px;font-size:13px;color:var(--green);font-weight:700;text-decoration:none;padding:12px;border:2px solid var(--green);border-radius:50px;transition:all .3s}
+    .sub-stripe-fallback{display:block;width:100%;padding:18px;border:none;border-radius:var(--radius);font-size:14px;font-weight:800;cursor:pointer;transition:all .3s;font-family:inherit;text-align:center;text-decoration:none;background:var(--primary);color:#fff}
+    .sub-stripe-fallback:hover{background:var(--primary-light);color:#fff;transform:translateY(-2px);box-shadow:0 0 20px var(--primary-glow)}
+    .sub-wa-alt{display:block;text-align:center;margin-top:10px;font-size:13px;color:var(--green);font-weight:700;text-decoration:none;padding:12px;border:1px solid var(--green);border-radius:var(--radius);transition:all .3s}
     .sub-wa-alt:hover{background:var(--green);color:#fff}
-    .sub-terms{font-size:10px;color:var(--gray-400);line-height:1.6;text-align:center;padding:0 8px 24px}
+    .sub-terms{font-size:10px;color:rgba(255,255,255,.3);line-height:1.6;text-align:center;padding:0 8px 24px}
     @media(max-width:768px){
       .sub-modal{max-height:95vh}
       .sub-modal-header{padding:28px 20px 16px}
@@ -472,45 +437,34 @@
     }
 
     /* === COMPARISON TABLE === */
-    .comparison{background:var(--cream);padding:100px 0}
+    .comparison{padding:100px 0}
     .compare-table{width:100%;max-width:800px;margin:48px auto 0;border-collapse:collapse;font-size:13px}
-    .compare-table th{padding:16px;text-align:left;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);border-bottom:2px solid var(--gray-200)}
+    .compare-table th{padding:16px;text-align:left;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.1)}
     .compare-table th:first-child{width:40%}
-    .compare-table th.hl{background:var(--primary);color:#fff;border-bottom-color:var(--primary);border-radius:8px 8px 0 0}
-    .compare-table td{padding:14px 16px;border-bottom:1px solid var(--gray-200);color:var(--gray-600)}
-    .compare-table td.hl{background:rgba(27,48,84,.03);font-weight:700;color:var(--gray-900)}
+    .compare-table th.hl{background:var(--primary);color:#fff;border-bottom-color:var(--primary);border-radius:4px 4px 0 0}
+    .compare-table td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.5)}
+    .compare-table td.hl{background:rgba(37,99,235,.05);font-weight:700;color:#fff}
     .compare-table .cg{color:var(--green);font-weight:700}
     .compare-table .cr{color:var(--red);font-weight:700}
 
-    /* === LIFESTYLE IMAGE BANNERS === */
-    .lifestyle-banner{position:relative;overflow:hidden}
-    .lifestyle-banner img{width:100%;height:500px;object-fit:cover;display:block}
-    .lifestyle-banner .banner-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(27,48,84,.75) 0%,rgba(27,48,84,.4) 50%,rgba(27,48,84,.75) 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
-    .lifestyle-banner .banner-text{max-width:700px}
-    .lifestyle-banner .banner-text h2{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);color:#fff;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:16px}
-    .lifestyle-banner .banner-text p{font-size:16px;color:rgba(255,255,255,.85);max-width:520px;margin:0 auto;line-height:1.7}
-    .lifestyle-banner .banner-highlight{color:var(--gold-light)}
-
     /* === STICKY CALL BUTTON === */
-    .sticky-call-btn{background:var(--green);color:#fff;padding:14px 24px;border-radius:50px;font-weight:800;font-size:12px;text-decoration:none;white-space:nowrap;transition:all .3s;flex-shrink:0;display:inline-flex;align-items:center;gap:6px}
-    .sticky-call-btn:hover{background:#219a52;color:#fff;transform:scale(1.02)}
+    .sticky-call-btn{background:var(--green);color:#fff;padding:14px 24px;border-radius:var(--radius);font-weight:800;font-size:12px;text-decoration:none;white-space:nowrap;transition:all .3s;flex-shrink:0;display:inline-flex;align-items:center;gap:6px}
+    .sticky-call-btn:hover{background:#16a34a;color:#fff;transform:scale(1.02)}
     .sticky-call-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
     @media(max-width:768px){.sticky-cta-bar .sticky-call-btn{width:48%;text-align:center;padding:16px 8px;font-size:13px;justify-content:center}.sticky-cta-bar .sticky-btn{width:48%}}
 
-    /* === EMAIL CAPTURE === */
-    .email-capture{background:var(--primary);position:relative;overflow:hidden;padding:80px 0}
-    .email-capture::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;background:radial-gradient(circle,rgba(212,160,23,.12),transparent 70%);border-radius:50%;transform:translate(-50%,-50%)}
-    .email-capture-inner{position:relative;z-index:2;text-align:center;max-width:560px;margin:0 auto}
-    .email-capture h2{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,40px);font-weight:800;color:#fff;margin-bottom:12px}
-    .email-capture p{font-size:15px;color:rgba(255,255,255,.7);margin-bottom:28px;line-height:1.7}
+    /* === EMAIL CAPTURE (inline in final CTA) === */
+    .email-capture-inline{margin-top:48px;padding-top:48px;border-top:1px solid rgba(255,255,255,.08)}
+    .email-capture-inline h3{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px}
+    .email-capture-inline p{font-size:14px;color:rgba(255,255,255,.4);margin-bottom:20px}
     .email-form{display:flex;gap:10px;max-width:460px;margin:0 auto}
-    .email-form input{flex:1;padding:16px 20px;border:2px solid rgba(255,255,255,.15);border-radius:50px;background:rgba(255,255,255,.08);color:#fff;font-size:15px;font-family:inherit;outline:none;transition:.3s}
-    .email-form input::placeholder{color:rgba(255,255,255,.4)}
-    .email-form input:focus{border-color:var(--gold)}
-    .email-form button{background:var(--gold);color:var(--gray-900);border:none;padding:16px 28px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:.3s;white-space:nowrap;font-family:inherit}
-    .email-form button:hover{background:var(--gold-light);transform:translateY(-1px)}
-    .email-success{display:none;color:var(--gold-light);font-size:16px;font-weight:700}
-    .email-terms{font-size:11px;color:rgba(255,255,255,.4);margin-top:12px}
+    .email-form input{flex:1;padding:16px 20px;border:1px solid rgba(255,255,255,.15);border-radius:var(--radius);background:rgba(255,255,255,.05);color:#fff;font-size:15px;font-family:inherit;outline:none;transition:.3s}
+    .email-form input::placeholder{color:rgba(255,255,255,.3)}
+    .email-form input:focus{border-color:var(--primary)}
+    .email-form button{background:var(--primary);color:#fff;border:none;padding:16px 28px;border-radius:var(--radius);font-size:14px;font-weight:800;cursor:pointer;transition:.3s;white-space:nowrap;font-family:inherit}
+    .email-form button:hover{background:var(--primary-light);transform:translateY(-1px);box-shadow:0 0 16px var(--primary-glow)}
+    .email-success{display:none;color:var(--primary-light);font-size:16px;font-weight:700}
+    .email-terms{font-size:11px;color:rgba(255,255,255,.3);margin-top:12px}
     @media(max-width:480px){.email-form{flex-direction:column}.email-form button{width:100%}}
 
     /* === SCROLL REVEAL (GSAP enhances, content visible by default) === */
@@ -522,11 +476,8 @@
       section{padding:80px 0}
       .hero{min-height:100vh;padding:0}
       .hero-content{padding:120px 20px 80px}
-      .hero h1{font-size:clamp(36px,10vw,52px);letter-spacing:-2px}
+      .hero h1{font-size:clamp(48px,14vw,72px);letter-spacing:-2px}
       .hero-sub{font-size:15px;margin-bottom:32px}
-      .hero-badge{margin-bottom:24px}
-      .hero-stats{margin-top:40px;padding-top:40px;gap:16px}
-      .hero-stat .val{font-size:28px}
       .hero-cta-primary,.hero-cta-secondary{padding:16px 28px;font-size:13px;width:100%;justify-content:center}
       .sticky-cta-bar .sticky-text{display:none}
       .sticky-cta-bar .sticky-btn{width:100%;text-align:center;padding:16px;font-size:14px}
@@ -542,13 +493,8 @@
       .compare-table th,.compare-table td{padding:10px 8px}
       .final-cta{padding:100px 20px}
       .section-title{font-size:clamp(28px,7vw,44px)}
-      .lifestyle-banner img{height:360px}
-      .lifestyle-banner .banner-text h2{font-size:clamp(24px,7vw,36px)}
-      .problem-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
-      .step-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
-      .plan-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
-      .service-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
-      .review-card:active{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+      .problem-card:active,.step-card:active,.plan-card:active,.service-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
+      .review-card:active{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--primary)}
       .area-badge:active{background:var(--primary);color:#fff;border-color:var(--primary)}
     }
     @media(max-width:380px){
@@ -653,15 +599,6 @@
   </a>
 </nav>
 
-<!-- Urgency Bar -->
-<div class="urgency-bar">
-  <span>
-    <span data-lang="en">🚀 This Week Only: Buy 1 Bag, Get 1 FREE + free pickup & delivery — Ends in <span id="countdown" style="font-variant-numeric:tabular-nums;"></span></span>
-    <span data-lang="pt">🚀 Só Esta Semana: Compre 1 Bag, Ganhe 1 GRÁTIS + coleta e entrega grátis — Termina em <span id="countdownPt" style="font-variant-numeric:tabular-nums;"></span></span>
-    <span data-lang="es">🚀 Solo Esta Semana: Compra 1 Bolsa, Lleva 1 GRATIS + recogida y entrega gratis — Termina en <span id="countdownEs" style="font-variant-numeric:tabular-nums;"></span></span>
-  </span>
-</div>
-
 <!-- ===================== HERO ===================== -->
 <section class="hero">
   <div class="hero-bg">
@@ -669,75 +606,71 @@
   </div>
   <div class="container">
     <div class="hero-content">
-      <div class="hero-badge"><span class="dot"></span>
-        <span data-lang="en">Trusted by 2,000+ Orlando Families & Guests</span>
-        <span data-lang="pt">Mais de 2.000 Famílias e Visitantes em Orlando Confiam em Nós</span>
-        <span data-lang="es">Más de 2,000 Familias y Visitantes en Orlando Confían en Nosotros</span>
-      </div>
       <h1>
-        <span data-lang="en">Stop Wasting Your Weekends<br>on Laundry.<br><span class="highlight">We'll Handle Every Load.</span></span>
-        <span data-lang="pt">Pare de Perder Seus Fins de Semana<br>com Lavanderia.<br><span class="highlight">Nós Cuidamos de Tudo.</span></span>
-        <span data-lang="es">Deja de Perder Tus Fines de Semana<br>con la Lavandería.<br><span class="highlight">Nosotros Nos Encargamos.</span></span>
+        <span data-lang="en">Never Do<br>Laundry Again.</span>
+        <span data-lang="pt">Nunca Mais<br>Lave Roupa.</span>
+        <span data-lang="es">Nunca Más<br>Laves Ropa.</span>
       </h1>
       <p class="hero-sub">
-        <span data-lang="en">Just fill a bag and leave it at your door. In 24 hours, your clothes come back <strong>washed, folded, and smelling incredible</strong> — starting at just <strong>$59.90/mo</strong> with free pickup & delivery. No contracts. Cancel anytime.</span>
-        <span data-lang="pt">Encha a bag e deixe na porta. Em 24 horas, suas roupas voltam <strong>lavadas, dobradas e com cheiro incrível</strong> — a partir de apenas <strong>$59.90/mês</strong> com coleta e entrega grátis. Sem contrato. Cancele quando quiser.</span>
-        <span data-lang="es">Llena una bolsa y déjala en tu puerta. En 24 horas, tu ropa regresa <strong>lavada, doblada y con un aroma increíble</strong> — desde solo <strong>$59.90/mes</strong> con recogida y entrega gratis. Sin contratos. Cancela cuando quieras.</span>
+        <span data-lang="en">From <strong>$1.99/day</strong>. Free pickup. <strong>Buy 1 get 1 FREE</strong> — ends in <span id="countdown" style="font-variant-numeric:tabular-nums;"></span></span>
+        <span data-lang="pt">A partir de <strong>$1.99/dia</strong>. Coleta grátis. <strong>Compre 1 ganhe 1 GRÁTIS</strong> — termina em <span id="countdownPt" style="font-variant-numeric:tabular-nums;"></span></span>
+        <span data-lang="es">Desde <strong>$1.99/día</strong>. Recogida gratis. <strong>Compra 1 lleva 1 GRATIS</strong> — termina en <span id="countdownEs" style="font-variant-numeric:tabular-nums;"></span></span>
       </p>
       <div class="hero-ctas">
         <a href="tel:+14076708839" class="hero-cta-primary">
-          <span data-lang="en">📞 Call Now (407) 670-8839</span>
-          <span data-lang="pt">📞 Ligue Agora (407) 670-8839</span>
-          <span data-lang="es">📞 Llama Ahora (407) 670-8839</span>
+          <span data-lang="en">Call (407) 670-8839</span>
+          <span data-lang="pt">Ligue (407) 670-8839</span>
+          <span data-lang="es">Llama (407) 670-8839</span>
         </a>
         <a href="#pricing" class="hero-cta-secondary">
           <span data-lang="en">View Plans</span>
           <span data-lang="pt">Ver Planos</span>
           <span data-lang="es">Ver Planes</span>
         </a>
-        <a href="https://wa.me/14076708839?text=Hi!%20I'm%20interested%20in%20A7%20Laundry%20subscription%20plans!" class="hero-cta-secondary" data-wa-link style="border-color:rgba(37,211,102,.4);color:#25d366">
-          <span data-lang="en">💬 WhatsApp</span>
-          <span data-lang="pt">💬 WhatsApp</span>
-          <span data-lang="es">💬 WhatsApp</span>
-        </a>
       </div>
       <div class="hero-trust">
-        <div class="hero-trust-item">⭐ <span class="num">4.9</span>/5 Google Rating</div>
-        <div class="hero-trust-item">✅ <span class="num">2,000+</span>
-          <span data-lang="en">Families Served</span>
-          <span data-lang="pt">Famílias Atendidas</span>
-          <span data-lang="es">Familias Atendidas</span>
-        </div>
-        <div class="hero-trust-item">🚚
-          <span data-lang="en">Free Pickup & Delivery</span>
-          <span data-lang="pt">Coleta e Entrega Grátis</span>
-          <span data-lang="es">Recogida y Entrega Gratis</span>
+        <span data-lang="en">4.9 Rating · 2,000+ Families · Free Delivery</span>
+        <span data-lang="pt">4.9 Avaliação · 2.000+ Famílias · Entrega Grátis</span>
+        <span data-lang="es">4.9 Calificación · 2,000+ Familias · Entrega Gratis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TRUST STRIP ===================== -->
+<section class="trust-strip">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-val" data-count="240">240<span style="font-size:.6em">h</span></div>
+        <div class="trust-label">
+          <span data-lang="en">saved per year</span>
+          <span data-lang="pt">economizadas por ano</span>
+          <span data-lang="es">ahorradas por año</span>
         </div>
       </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="val">240<span>h</span></div>
-          <div class="lbl">
-            <span data-lang="en">you'll get back each year</span>
-            <span data-lang="pt">que você recupera por ano</span>
-            <span data-lang="es">que recuperas cada año</span>
-          </div>
+      <div class="trust-item">
+        <div class="trust-val">$1.99</div>
+        <div class="trust-label">
+          <span data-lang="en">per day</span>
+          <span data-lang="pt">por dia</span>
+          <span data-lang="es">por día</span>
         </div>
-        <div class="hero-stat">
-          <div class="val">$1<span>.99</span></div>
-          <div class="lbl">
-            <span data-lang="en">per day to never fold again</span>
-            <span data-lang="pt">por dia para nunca dobrar de novo</span>
-            <span data-lang="es">por día para nunca doblar otra vez</span>
-          </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-val" data-count="2000">2,000+</div>
+        <div class="trust-label">
+          <span data-lang="en">families served</span>
+          <span data-lang="pt">famílias atendidas</span>
+          <span data-lang="es">familias atendidas</span>
         </div>
-        <div class="hero-stat">
-          <div class="val">0</div>
-          <div class="lbl">
-            <span data-lang="en">contracts or commitments</span>
-            <span data-lang="pt">contratos ou compromissos</span>
-            <span data-lang="es">contratos ni compromisos</span>
-          </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-val">0</div>
+        <div class="trust-label">
+          <span data-lang="en">contracts</span>
+          <span data-lang="pt">contratos</span>
+          <span data-lang="es">contratos</span>
         </div>
       </div>
     </div>
@@ -745,7 +678,7 @@
 </section>
 
 <!-- ===================== PROBLEM ===================== -->
-<section class="problem reveal">
+<section class="problem section-dark reveal">
   <div class="container text-center">
     <span class="section-tag">
       <span data-lang="en">Sound Familiar?</span>
@@ -809,27 +742,8 @@
   </div>
 </section>
 
-<!-- Lifestyle Banner: What Would You Do? -->
-<div class="lifestyle-banner reveal">
-  <img src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=1200&q=70" alt="Happy family enjoying time together outdoors at sunset" loading="lazy" decoding="async" width="1200" height="800">
-  <div class="banner-overlay">
-    <div class="banner-text">
-      <h2>
-        <span data-lang="en">What Would You Do<br>With <span class="banner-highlight">5 Extra Hours</span><br>Every Week?</span>
-        <span data-lang="pt">O Que Você Faria<br>Com <span class="banner-highlight">5 Horas Extras</span><br>Toda Semana?</span>
-        <span data-lang="es">¿Qué Harías<br>Con <span class="banner-highlight">5 Horas Extra</span><br>Cada Semana?</span>
-      </h2>
-      <p>
-        <span data-lang="en">Park days. Date nights. Family dinners. Lazy Sunday mornings. The things you actually want to spend your time on.</span>
-        <span data-lang="pt">Dias no parque. Noites a dois. Jantares em família. Domingos preguiçosos. As coisas em que você realmente quer gastar seu tempo.</span>
-        <span data-lang="es">Días en el parque. Noches de cita. Cenas familiares. Domingos tranquilos. Las cosas en las que realmente quieres pasar tu tiempo.</span>
-      </p>
-    </div>
-  </div>
-</div>
-
 <!-- ===================== HOW IT WORKS ===================== -->
-<section class="how-it-works reveal" id="how-it-works">
+<section class="how-it-works section-light reveal" id="how-it-works">
   <div class="container text-center">
     <span class="section-tag">
       <span data-lang="en">How It Works</span>
@@ -893,27 +807,8 @@
   </div>
 </section>
 
-<!-- Lifestyle Banner: Hotel-Fresh Results -->
-<div class="lifestyle-banner reveal">
-  <img src="https://images.unsplash.com/photo-1534973098198-6b2de48816b7?w=1200&q=70" alt="Perfectly folded fresh white towels and linens" loading="lazy" decoding="async" width="1200" height="800">
-  <div class="banner-overlay">
-    <div class="banner-text">
-      <h2>
-        <span data-lang="en">Hotel-Fresh Clothes.<br><span class="banner-highlight">Every Single Week.</span></span>
-        <span data-lang="pt">Roupas Cheirando a Hotel.<br><span class="banner-highlight">Toda Semana.</span></span>
-        <span data-lang="es">Ropa Fresca de Hotel.<br><span class="banner-highlight">Cada Semana.</span></span>
-      </h2>
-      <p>
-        <span data-lang="en">Professionally washed, expertly folded, delivered to your door. Your clothes have never looked — or smelled — this good.</span>
-        <span data-lang="pt">Lavadas profissionalmente, dobradas com perfeição, entregues na sua porta. Suas roupas nunca ficaram — ou cheiraram — tão bem.</span>
-        <span data-lang="es">Lavada profesionalmente, doblada expertamente, entregada en tu puerta. Tu ropa nunca se vio — ni olió — tan bien.</span>
-      </p>
-    </div>
-  </div>
-</div>
-
 <!-- ===================== PRICING ===================== -->
-<section class="pricing reveal" id="pricing">
+<section class="pricing section-dark reveal" id="pricing">
   <div class="container text-center">
     <span class="section-tag">
       <span data-lang="en">What You're Really Getting</span>
@@ -1199,114 +1094,68 @@
   </div>
 </section>
 
-<!-- ===================== SERVICES HUB ===================== -->
-<section class="services-hub reveal" id="services">
+<!-- ===================== SOCIAL PROOF ===================== -->
+<section class="social-proof section-light reveal">
   <div class="container text-center">
     <span class="section-tag">
-      <span data-lang="en">Specialty Services</span>
-      <span data-lang="pt">Serviços Especializados</span>
-      <span data-lang="es">Servicios Especializados</span>
+      <span data-lang="en">Real Stories, Real People</span>
+      <span data-lang="pt">Histórias Reais, Pessoas Reais</span>
+      <span data-lang="es">Historias Reales, Personas Reales</span>
     </span>
     <h2 class="section-title">
-      <span data-lang="en">More Than Just Laundry.<br><strong>We Clean Everything.</strong></span>
-      <span data-lang="pt">Mais Que Apenas Lavanderia.<br><strong>Limpamos Tudo.</strong></span>
-      <span data-lang="es">Más Que Solo Lavandería.<br><strong>Limpiamos Todo.</strong></span>
+      <span data-lang="en">They Were Skeptical Too.<br><strong>Then They Tried It.</strong></span>
+      <span data-lang="pt">Eles Também Tinham Dúvidas.<br><strong>Então Experimentaram.</strong></span>
+      <span data-lang="es">Ellos También Dudaban.<br><strong>Entonces Lo Probaron.</strong></span>
     </h2>
-    <p class="section-sub mx-auto">
-      <span data-lang="en">A7 members get exclusive discounts on all specialty cleaning services.</span>
-      <span data-lang="pt">Membros A7 têm descontos exclusivos em todos os serviços especializados.</span>
-      <span data-lang="es">Los miembros A7 obtienen descuentos exclusivos en todos los servicios especializados.</span>
-    </p>
-    <div class="services-grid" style="margin-top:40px">
-      <a href="carpet-cleaning.html" class="service-card">
-        <div class="service-icon carpet">🏠</div>
-        <div>
-          <h3>
-            <span data-lang="en">Carpet Cleaning</span>
-            <span data-lang="pt">Limpeza de Carpete</span>
-            <span data-lang="es">Limpieza de Alfombra</span>
-          </h3>
-          <p>
-            <span data-lang="en">Hot-water extraction. 1st room FREE. From $45/room.</span>
-            <span data-lang="pt">Extração com água quente. 1º quarto GRÁTIS. A partir de $45/quarto.</span>
-            <span data-lang="es">Extracción con agua caliente. 1ª habitación GRATIS. Desde $45/hab.</span>
-          </p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">
+          <span data-lang="en">"Before A7, every Sunday was the same: I'd stare at the laundry pile with dread while my kids begged me to take them to the park. I always chose the laundry. Now? I leave a bag at the door on Friday, and by Saturday morning it's back — perfectly folded and smelling amazing. Last Sunday, I took my kids to the park for the first time in months. My 6-year-old said, 'Mom, you're fun again.' I almost cried."</span>
+          <span data-lang="pt">"Antes da A7, todo domingo era igual: eu encarava a pilha de roupa com pavor enquanto meus filhos imploravam para ir ao parque. Eu sempre escolhia a roupa. Agora? Deixo a bag na porta na sexta, e no sábado de manhã está de volta — perfeitamente dobrada e cheirando incrível. No último domingo, levei meus filhos ao parque pela primeira vez em meses. Meu filho de 6 anos disse: 'Mãe, você voltou a ser legal.' Quase chorei."</span>
+          <span data-lang="es">"Antes de A7, cada domingo era igual: miraba la pila de ropa con pavor mientras mis hijos me rogaban ir al parque. Siempre elegía la ropa. ¿Ahora? Dejo la bolsa en la puerta el viernes, y el sábado por la mañana está de vuelta — perfectamente doblada y con un aroma increíble. El domingo pasado, llevé a mis hijos al parque por primera vez en meses. Mi hijo de 6 años dijo: 'Mami, eres divertida otra vez.' Casi lloré."</span>
+        </p>
+        <div class="review-author">Sarah M.</div>
+        <div class="review-role">
+          <span data-lang="en">Working Mom of 2 · Lake Nona · Family Plan</span>
+          <span data-lang="pt">Mãe Trabalhadora de 2 · Lake Nona · Plano Family</span>
+          <span data-lang="es">Mamá Trabajadora de 2 · Lake Nona · Plan Family</span>
         </div>
-        <span class="service-arrow">→</span>
-      </a>
-      <a href="shoe-cleaning.html" class="service-card">
-        <div class="service-icon shoe">👟</div>
-        <div>
-          <h3>
-            <span data-lang="en">Shoe Cleaning</span>
-            <span data-lang="pt">Limpeza de Tênis</span>
-            <span data-lang="es">Limpieza de Zapatillas</span>
-          </h3>
-          <p>
-            <span data-lang="en">Professional sneaker restoration. Buy 2 Get 1 FREE. From $35.</span>
-            <span data-lang="pt">Restauração profissional de tênis. Compre 2 Ganhe 1 GRÁTIS. A partir de $35.</span>
-            <span data-lang="es">Restauración profesional. Compra 2 y Lleva 1 GRATIS. Desde $35.</span>
-          </p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">
+          <span data-lang="en">"I manage 3 Airbnbs in Kissimmee. Before A7, I was spending 4 hours between every guest turnover just doing linens — and still getting complaints about 'musty pillowcases.' I was stressed, behind schedule, and my reviews dropped to 4.2 stars. Within 2 weeks of switching to A7's Premium plan, guests started commenting 'the sheets smell like a luxury hotel.' My reviews climbed to 4.9. That one change probably made me an extra $400/month in bookings."</span>
+          <span data-lang="pt">"Eu gerencio 3 Airbnbs em Kissimmee. Antes da A7, eu gastava 4 horas entre cada turnover de hóspede só com roupas de cama — e ainda recebia reclamações sobre 'fronhas com cheiro de mofo.' Eu estava estressado, atrasado, e minhas avaliações caíram para 4.2. Em 2 semanas com o plano Premium da A7, hóspedes começaram a comentar 'os lençóis cheiram como hotel de luxo.' Minhas avaliações subiram para 4.9. Só essa mudança provavelmente me rendeu $400/mês a mais em reservas."</span>
+          <span data-lang="es">"Manejo 3 Airbnbs en Kissimmee. Antes de A7, pasaba 4 horas entre cada turnover de huéspedes solo lavando sábanas — y aún recibía quejas de 'fundas con olor a humedad.' Estaba estresado, retrasado, y mis reseñas bajaron a 4.2. A las 2 semanas con el plan Premium de A7, los huéspedes empezaron a comentar 'las sábanas huelen a hotel de lujo.' Mis reseñas subieron a 4.9. Ese solo cambio probablemente me generó $400/mes extra en reservas."</span>
+        </p>
+        <div class="review-author">Carlos R.</div>
+        <div class="review-role">
+          <span data-lang="en">Airbnb Superhost · Kissimmee · Premium Plan</span>
+          <span data-lang="pt">Airbnb Superhost · Kissimmee · Plano Premium</span>
+          <span data-lang="es">Airbnb Superhost · Kissimmee · Plan Premium</span>
         </div>
-        <span class="service-arrow">→</span>
-      </a>
-      <a href="upholstery-cleaning.html" class="service-card">
-        <div class="service-icon upholstery">🛋️</div>
-        <div>
-          <h3>
-            <span data-lang="en">Upholstery Cleaning</span>
-            <span data-lang="pt">Limpeza de Estofados</span>
-            <span data-lang="es">Limpieza de Tapicería</span>
-          </h3>
-          <p>
-            <span data-lang="en">Deep clean + FREE Scotchgard protection ($50 value).</span>
-            <span data-lang="pt">Limpeza profunda + Scotchgard GRÁTIS (valor $50).</span>
-            <span data-lang="es">Limpieza profunda + Scotchgard GRATIS (valor $50).</span>
-          </p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">
+          <span data-lang="en">"I'll be honest — I thought this was a luxury I couldn't afford. Then I did the math. Between detergent, the laundromat, gas to drive there, and the 6 hours I was losing every weekend? I was already spending MORE than the Family plan. Now our family of 4 has clean clothes all month, and I haven't touched a washing machine since October. My husband says it's the best $109 we spend. He's right."</span>
+          <span data-lang="pt">"Vou ser honesta — achei que era um luxo que eu não podia pagar. Aí fiz as contas. Entre detergente, lavanderia, gasolina para ir lá, e as 6 horas que eu perdia todo fim de semana? Eu já gastava MAIS do que o plano Family. Agora nossa família de 4 tem roupas limpas o mês todo, e eu não toquei numa máquina de lavar desde outubro. Meu marido diz que é o melhor investimento de $109 que fazemos. Ele tem razão."</span>
+          <span data-lang="es">"Seré honesta — pensé que era un lujo que no podía pagar. Luego hice las cuentas. Entre detergente, la lavandería, gasolina para ir, y las 6 horas que perdía cada fin de semana? Ya gastaba MÁS que el plan Family. Ahora nuestra familia de 4 tiene ropa limpia todo el mes, y no he tocado una lavadora desde octubre. Mi esposo dice que son los mejores $109 que gastamos. Tiene razón."</span>
+        </p>
+        <div class="review-author">Jessica T.</div>
+        <div class="review-role">
+          <span data-lang="en">Mom of 2 · Winter Park · Family Plan</span>
+          <span data-lang="pt">Mãe de 2 · Winter Park · Plano Family</span>
+          <span data-lang="es">Mamá de 2 · Winter Park · Plan Family</span>
         </div>
-        <span class="service-arrow">→</span>
-      </a>
-      <a href="vacation-rental.html" class="service-card">
-        <div class="service-icon vacation">🏡</div>
-        <div>
-          <h3>
-            <span data-lang="en">Vacation Rental Turnover</span>
-            <span data-lang="pt">Limpeza de Vacation Rental</span>
-            <span data-lang="es">Limpieza de Alquiler Vacacional</span>
-          </h3>
-          <p>
-            <span data-lang="en">Professional turnover cleaning. 1st clean FREE. Same-day available.</span>
-            <span data-lang="pt">Limpeza profissional de turnover. 1ª limpeza GRÁTIS. Mesmo dia disponível.</span>
-            <span data-lang="es">Limpieza profesional de turnover. 1ª limpieza GRATIS. Disponible el mismo día.</span>
-          </p>
-        </div>
-        <span class="service-arrow">→</span>
-      </a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Lifestyle Banner: Weekend Freedom -->
-<div class="lifestyle-banner reveal">
-  <img src="https://images.unsplash.com/photo-1517013826874-ae10195100e3?w=1200&q=70" alt="Woman relaxing comfortably on couch enjoying free time" loading="lazy" decoding="async" width="1200" height="800">
-  <div class="banner-overlay">
-    <div class="banner-text">
-      <h2>
-        <span data-lang="en">Your Weekends.<br><span class="banner-highlight">Yours Again.</span></span>
-        <span data-lang="pt">Seus Fins de Semana.<br><span class="banner-highlight">De Volta Pra Você.</span></span>
-        <span data-lang="es">Tus Fines de Semana.<br><span class="banner-highlight">Tuyos Otra Vez.</span></span>
-      </h2>
-      <p>
-        <span data-lang="en">2,000+ Orlando families already made the switch. Zero regrets. Zero laundry. Just more time for what matters.</span>
-        <span data-lang="pt">Mais de 2.000 famílias em Orlando já fizeram a troca. Zero arrependimentos. Zero lavanderia. Apenas mais tempo para o que importa.</span>
-        <span data-lang="es">Más de 2,000 familias en Orlando ya hicieron el cambio. Cero arrepentimientos. Cero lavandería. Solo más tiempo para lo que importa.</span>
-      </p>
-    </div>
-  </div>
-</div>
-
 <!-- ===================== COMPARISON TABLE ===================== -->
-<section class="comparison reveal">
+<section class="comparison section-dark reveal">
   <div class="container text-center">
     <span class="section-tag">
       <span data-lang="en">Why A7?</span>
@@ -1375,68 +1224,63 @@
   </div>
 </section>
 
-<!-- ===================== SOCIAL PROOF ===================== -->
-<section class="social-proof reveal">
+<!-- ===================== SERVICES HUB ===================== -->
+<section class="services-hub section-light reveal" id="services">
   <div class="container text-center">
     <span class="section-tag">
-      <span data-lang="en">Real Stories, Real People</span>
-      <span data-lang="pt">Histórias Reais, Pessoas Reais</span>
-      <span data-lang="es">Historias Reales, Personas Reales</span>
+      <span data-lang="en">Specialty Services</span>
+      <span data-lang="pt">Serviços Especializados</span>
+      <span data-lang="es">Servicios Especializados</span>
     </span>
     <h2 class="section-title">
-      <span data-lang="en">They Were Skeptical Too.<br><strong>Then They Tried It.</strong></span>
-      <span data-lang="pt">Eles Também Tinham Dúvidas.<br><strong>Então Experimentaram.</strong></span>
-      <span data-lang="es">Ellos También Dudaban.<br><strong>Entonces Lo Probaron.</strong></span>
+      <span data-lang="en">More Than Just Laundry.<br><strong>We Clean Everything.</strong></span>
+      <span data-lang="pt">Mais Que Apenas Lavanderia.<br><strong>Limpamos Tudo.</strong></span>
+      <span data-lang="es">Más Que Solo Lavandería.<br><strong>Limpiamos Todo.</strong></span>
     </h2>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">
-          <span data-lang="en">"Before A7, every Sunday was the same: I'd stare at the laundry pile with dread while my kids begged me to take them to the park. I always chose the laundry. Now? I leave a bag at the door on Friday, and by Saturday morning it's back — perfectly folded and smelling amazing. Last Sunday, I took my kids to the park for the first time in months. My 6-year-old said, 'Mom, you're fun again.' I almost cried."</span>
-          <span data-lang="pt">"Antes da A7, todo domingo era igual: eu encarava a pilha de roupa com pavor enquanto meus filhos imploravam para ir ao parque. Eu sempre escolhia a roupa. Agora? Deixo a bag na porta na sexta, e no sábado de manhã está de volta — perfeitamente dobrada e cheirando incrível. No último domingo, levei meus filhos ao parque pela primeira vez em meses. Meu filho de 6 anos disse: 'Mãe, você voltou a ser legal.' Quase chorei."</span>
-          <span data-lang="es">"Antes de A7, cada domingo era igual: miraba la pila de ropa con pavor mientras mis hijos me rogaban ir al parque. Siempre elegía la ropa. ¿Ahora? Dejo la bolsa en la puerta el viernes, y el sábado por la mañana está de vuelta — perfectamente doblada y con un aroma increíble. El domingo pasado, llevé a mis hijos al parque por primera vez en meses. Mi hijo de 6 años dijo: 'Mami, eres divertida otra vez.' Casi lloré."</span>
-        </p>
-        <div class="review-author">Sarah M.</div>
-        <div class="review-role">
-          <span data-lang="en">Working Mom of 2 · Lake Nona · Family Plan</span>
-          <span data-lang="pt">Mãe Trabalhadora de 2 · Lake Nona · Plano Family</span>
-          <span data-lang="es">Mamá Trabajadora de 2 · Lake Nona · Plan Family</span>
+    <p class="section-sub mx-auto">
+      <span data-lang="en">A7 members get exclusive discounts on all specialty cleaning services.</span>
+      <span data-lang="pt">Membros A7 têm descontos exclusivos em todos os serviços especializados.</span>
+      <span data-lang="es">Los miembros A7 obtienen descuentos exclusivos en todos los servicios especializados.</span>
+    </p>
+    <div class="services-grid" style="margin-top:40px">
+      <a href="carpet-cleaning.html" class="service-card">
+        <div class="service-icon carpet">🏠</div>
+        <div>
+          <h3><span data-lang="en">Carpet Cleaning</span><span data-lang="pt">Limpeza de Carpete</span><span data-lang="es">Limpieza de Alfombra</span></h3>
+          <p><span data-lang="en">Hot-water extraction. 1st room FREE. From $45/room.</span><span data-lang="pt">Extração com água quente. 1º quarto GRÁTIS. A partir de $45/quarto.</span><span data-lang="es">Extracción con agua caliente. 1ª habitación GRATIS. Desde $45/hab.</span></p>
         </div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">
-          <span data-lang="en">"I manage 3 Airbnbs in Kissimmee. Before A7, I was spending 4 hours between every guest turnover just doing linens — and still getting complaints about 'musty pillowcases.' I was stressed, behind schedule, and my reviews dropped to 4.2 stars. Within 2 weeks of switching to A7's Premium plan, guests started commenting 'the sheets smell like a luxury hotel.' My reviews climbed to 4.9. That one change probably made me an extra $400/month in bookings."</span>
-          <span data-lang="pt">"Eu gerencio 3 Airbnbs em Kissimmee. Antes da A7, eu gastava 4 horas entre cada turnover de hóspede só com roupas de cama — e ainda recebia reclamações sobre 'fronhas com cheiro de mofo.' Eu estava estressado, atrasado, e minhas avaliações caíram para 4.2. Em 2 semanas com o plano Premium da A7, hóspedes começaram a comentar 'os lençóis cheiram como hotel de luxo.' Minhas avaliações subiram para 4.9. Só essa mudança provavelmente me rendeu $400/mês a mais em reservas."</span>
-          <span data-lang="es">"Manejo 3 Airbnbs en Kissimmee. Antes de A7, pasaba 4 horas entre cada turnover de huéspedes solo lavando sábanas — y aún recibía quejas de 'fundas con olor a humedad.' Estaba estresado, retrasado, y mis reseñas bajaron a 4.2. A las 2 semanas con el plan Premium de A7, los huéspedes empezaron a comentar 'las sábanas huelen a hotel de lujo.' Mis reseñas subieron a 4.9. Ese solo cambio probablemente me generó $400/mes extra en reservas."</span>
-        </p>
-        <div class="review-author">Carlos R.</div>
-        <div class="review-role">
-          <span data-lang="en">Airbnb Superhost · Kissimmee · Premium Plan</span>
-          <span data-lang="pt">Airbnb Superhost · Kissimmee · Plano Premium</span>
-          <span data-lang="es">Airbnb Superhost · Kissimmee · Plan Premium</span>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="shoe-cleaning.html" class="service-card">
+        <div class="service-icon shoe">👟</div>
+        <div>
+          <h3><span data-lang="en">Shoe Cleaning</span><span data-lang="pt">Limpeza de Tênis</span><span data-lang="es">Limpieza de Zapatillas</span></h3>
+          <p><span data-lang="en">Professional sneaker restoration. Buy 2 Get 1 FREE. From $35.</span><span data-lang="pt">Restauração profissional de tênis. Compre 2 Ganhe 1 GRÁTIS. A partir de $35.</span><span data-lang="es">Restauración profesional. Compra 2 y Lleva 1 GRATIS. Desde $35.</span></p>
         </div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">
-          <span data-lang="en">"I'll be honest — I thought this was a luxury I couldn't afford. Then I did the math. Between detergent, the laundromat, gas to drive there, and the 6 hours I was losing every weekend? I was already spending MORE than the Family plan. Now our family of 4 has clean clothes all month, and I haven't touched a washing machine since October. My husband says it's the best $109 we spend. He's right."</span>
-          <span data-lang="pt">"Vou ser honesta — achei que era um luxo que eu não podia pagar. Aí fiz as contas. Entre detergente, lavanderia, gasolina para ir lá, e as 6 horas que eu perdia todo fim de semana? Eu já gastava MAIS do que o plano Family. Agora nossa família de 4 tem roupas limpas o mês todo, e eu não toquei numa máquina de lavar desde outubro. Meu marido diz que é o melhor investimento de $109 que fazemos. Ele tem razão."</span>
-          <span data-lang="es">"Seré honesta — pensé que era un lujo que no podía pagar. Luego hice las cuentas. Entre detergente, la lavandería, gasolina para ir, y las 6 horas que perdía cada fin de semana? Ya gastaba MÁS que el plan Family. Ahora nuestra familia de 4 tiene ropa limpia todo el mes, y no he tocado una lavadora desde octubre. Mi esposo dice que son los mejores $109 que gastamos. Tiene razón."</span>
-        </p>
-        <div class="review-author">Jessica T.</div>
-        <div class="review-role">
-          <span data-lang="en">Mom of 2 · Winter Park · Family Plan</span>
-          <span data-lang="pt">Mãe de 2 · Winter Park · Plano Family</span>
-          <span data-lang="es">Mamá de 2 · Winter Park · Plan Family</span>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="upholstery-cleaning.html" class="service-card">
+        <div class="service-icon upholstery">🛋️</div>
+        <div>
+          <h3><span data-lang="en">Upholstery Cleaning</span><span data-lang="pt">Limpeza de Estofados</span><span data-lang="es">Limpieza de Tapicería</span></h3>
+          <p><span data-lang="en">Deep clean + FREE Scotchgard protection ($50 value).</span><span data-lang="pt">Limpeza profunda + Scotchgard GRÁTIS (valor $50).</span><span data-lang="es">Limpieza profunda + Scotchgard GRATIS (valor $50).</span></p>
         </div>
-      </div>
+        <span class="service-arrow">→</span>
+      </a>
+      <a href="vacation-rental.html" class="service-card">
+        <div class="service-icon vacation">🏡</div>
+        <div>
+          <h3><span data-lang="en">Vacation Rental Turnover</span><span data-lang="pt">Limpeza de Vacation Rental</span><span data-lang="es">Limpieza de Alquiler Vacacional</span></h3>
+          <p><span data-lang="en">Professional turnover cleaning. 1st clean FREE. Same-day available.</span><span data-lang="pt">Limpeza profissional de turnover. 1ª limpeza GRÁTIS. Mesmo dia disponível.</span><span data-lang="es">Limpieza profesional de turnover. 1ª limpieza GRATIS. Disponible el mismo día.</span></p>
+        </div>
+        <span class="service-arrow">→</span>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- ===================== GUARANTEE ===================== -->
-<section class="guarantee">
+<section class="guarantee section-dark">
   <div class="container">
     <div class="guarantee-box">
       <div class="guarantee-icon">🛡️</div>
@@ -1482,7 +1326,7 @@
 </section>
 
 <!-- ===================== FAQ ===================== -->
-<section class="faq" id="faq">
+<section class="faq section-light" id="faq">
   <div class="container text-center">
     <span class="section-tag">FAQ</span>
     <h2 class="section-title">
@@ -1568,7 +1412,7 @@
 </section>
 
 <!-- ===================== SERVICE AREA ===================== -->
-<section class="service-area">
+<section class="service-area section-dark">
   <div class="container text-center">
     <span class="section-tag">
       <span data-lang="en">Service Area</span>
@@ -1594,39 +1438,11 @@
       <span class="area-badge">Davenport</span>
       <span class="area-badge">Winter Garden</span>
     </div>
-    <p style="margin-top:20px;font-size:14px;color:var(--gray-500)">
+    <p style="margin-top:20px;font-size:14px;color:rgba(255,255,255,.45)">
       <span data-lang="en">Not sure if we serve your area? Text us your zip code on WhatsApp!</span>
       <span data-lang="pt">Não tem certeza se atendemos sua área? Mande seu CEP no WhatsApp!</span>
       <span data-lang="es">¿No estás seguro si cubrimos tu área? ¡Envíanos tu código postal por WhatsApp!</span>
     </p>
-  </div>
-</section>
-
-<!-- ===================== URGENCY CLOSE ===================== -->
-<section class="urgency-close">
-  <div class="container">
-    <div class="urgency-close-inner">
-      <h2>
-        <span data-lang="en">What Happens If You Don't Act Today?</span>
-        <span data-lang="pt">O Que Acontece Se Você Não Agir Hoje?</span>
-        <span data-lang="es">¿Qué Pasa Si No Actúas Hoy?</span>
-      </h2>
-      <p>
-        <span data-lang="en">Nothing changes. That's the honest answer.</span>
-        <span data-lang="pt">Nada muda. Essa é a resposta honesta.</span>
-        <span data-lang="es">Nada cambia. Esa es la respuesta honesta.</span>
-      </p>
-      <p class="pain-text">
-        <span data-lang="en">Tomorrow morning you'll wake up, look at that same pile of laundry, feel that same sinking feeling. You'll spend another Sunday hunched over the washing machine. Another weekend lost. Another week of re-wearing clothes you don't feel great in. Another month of telling yourself "I'll figure out a better system."</span>
-        <span data-lang="pt">Amanhã de manhã você vai acordar, olhar para aquela mesma pilha de roupa, sentir aquele mesmo aperto. Vai passar mais um domingo curvado sobre a máquina de lavar. Mais um fim de semana perdido. Mais uma semana vestindo roupas que não te fazem sentir bem. Mais um mês se dizendo "vou encontrar um jeito melhor."</span>
-        <span data-lang="es">Mañana por la mañana te despertarás, mirarás esa misma pila de ropa, sentirás ese mismo peso. Pasarás otro domingo encorvado sobre la lavadora. Otro fin de semana perdido. Otra semana repitiendo ropa con la que no te sientes bien. Otro mes diciéndote "voy a encontrar una mejor solución."</span>
-      </p>
-      <p class="escape-text">
-        <span data-lang="en">Or — you could send one WhatsApp message right now and make laundry someone else's problem. Permanently.</span>
-        <span data-lang="pt">Ou — você pode mandar uma mensagem no WhatsApp agora e tornar a lavanderia problema de outra pessoa. Permanentemente.</span>
-        <span data-lang="es">O — puedes enviar un mensaje de WhatsApp ahora mismo y hacer que la lavandería sea problema de otro. Permanentemente.</span>
-      </p>
-    </div>
   </div>
 </section>
 
@@ -1648,27 +1464,22 @@
       <span data-lang="pt">Compre 1 Ganhe 1 GRÁTIS — Assine Agora →</span>
       <span data-lang="es">Compra 1 Lleva 1 GRATIS — Suscríbete Ahora →</span>
     </a>
-    <p style="margin-top:16px;font-size:13px;color:var(--gray-500)">
+    <p style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.3)">
       <span data-lang="en">First purchase only. Cancel anytime. 30-day guarantee.</span>
       <span data-lang="pt">Apenas na primeira compra. Cancele quando quiser. Garantia de 30 dias.</span>
       <span data-lang="es">Solo en la primera compra. Cancela cuando quieras. Garantía de 30 días.</span>
     </p>
-  </div>
-</section>
-
-<!-- ===================== EMAIL CAPTURE ===================== -->
-<section class="email-capture" id="emailCapture">
-  <div class="container">
-    <div class="email-capture-inner">
-      <h2>
+    <!-- Email capture merged here -->
+    <div class="email-capture-inline" id="emailCapture">
+      <h3>
         <span data-lang="en">Get 15% Off Your First Order</span>
         <span data-lang="pt">Ganhe 15% de Desconto no Primeiro Pedido</span>
         <span data-lang="es">Obtén 15% de Descuento en Tu Primer Pedido</span>
-      </h2>
+      </h3>
       <p>
-        <span data-lang="en">Join 2,000+ Orlando families. Enter your email and we'll send you an exclusive discount code.</span>
-        <span data-lang="pt">Junte-se a mais de 2.000 famílias em Orlando. Insira seu email e enviaremos um código de desconto exclusivo.</span>
-        <span data-lang="es">Únete a más de 2,000 familias en Orlando. Ingresa tu email y te enviaremos un código de descuento exclusivo.</span>
+        <span data-lang="en">Join 2,000+ Orlando families. Enter your email for an exclusive discount code.</span>
+        <span data-lang="pt">Junte-se a 2.000+ famílias em Orlando. Insira seu email para um código de desconto exclusivo.</span>
+        <span data-lang="es">Únete a 2,000+ familias en Orlando. Ingresa tu email para un código de descuento exclusivo.</span>
       </p>
       <div id="emailFormWrap">
         <form class="email-form" id="emailForm" onsubmit="return handleEmailCapture(event)">
@@ -1686,9 +1497,9 @@
         </p>
       </div>
       <div class="email-success" id="emailSuccess">
-        <span data-lang="en">🎉 Check your inbox! Your 15% discount code is on the way.</span>
-        <span data-lang="pt">🎉 Verifique sua caixa de entrada! Seu código de 15% está a caminho.</span>
-        <span data-lang="es">🎉 ¡Revisa tu bandeja! Tu código de 15% está en camino.</span>
+        <span data-lang="en">Check your inbox! Your 15% discount code is on the way.</span>
+        <span data-lang="pt">Verifique sua caixa de entrada! Seu código de 15% está a caminho.</span>
+        <span data-lang="es">Revisa tu bandeja! Tu código de 15% está en camino.</span>
       </div>
     </div>
   </div>
@@ -1801,7 +1612,7 @@
 <div class="sub-overlay" id="subOverlay">
   <div class="sub-modal">
     <button class="sub-modal-close" onclick="closeSubModal()">&times;</button>
-    <div class="sub-modal-header" id="subModalHeader" style="background:var(--gradient-main)">
+    <div class="sub-modal-header" id="subModalHeader" style="background:var(--gradient-blue)">
       <h2 id="subPlanName">Plan</h2>
       <div class="sub-price" id="subPrice"><small>$</small>59<small>.90</small></div>
       <div>
@@ -1973,12 +1784,21 @@
     if(saved&&saved!=='en') setLang(saved);
   })();
 
-  // === Live Viewers ===
-  function updateViewers(){
-    const base=Math.floor(Math.random()*8)+10;
-    document.querySelectorAll('[id^="viewerCount"]').forEach(el=>{el.textContent=base;});
-  }
-  setInterval(updateViewers,5000);
+  // === Live Viewers (30s first, 10s visible, every 2.5min) ===
+  (function(){
+    const el=document.querySelector('.live-viewers');
+    if(!el) return;
+    function updateViewers(){
+      const base=Math.floor(Math.random()*8)+10;
+      document.querySelectorAll('[id^="viewerCount"]').forEach(function(e){e.textContent=base;});
+    }
+    function showViewers(){
+      updateViewers();
+      el.classList.add('visible');
+      setTimeout(function(){el.classList.remove('visible');},10000);
+    }
+    setTimeout(function(){showViewers();setInterval(showViewers,150000);},30000);
+  })();
 
   // === FAQ Accordion ===
   document.querySelectorAll('.faq-q').forEach(btn=>{
@@ -2083,26 +1903,23 @@
         timeEl.textContent=mins+' minute'+(mins>1?'s':'')+' ago';
       }
       toast.classList.add('show');
-      setTimeout(()=>{toast.classList.remove('show');},5000);
+      setTimeout(()=>{toast.classList.remove('show');},8000);
       idx++;
     }
-    setTimeout(showToast,15000);
-    setInterval(showToast,35000);
+    setTimeout(showToast,120000);
+    setInterval(showToast,180000);
   })();
 
-  // === Exit Intent Popup ===
-  let exitShown=false;
+  // === Popup: 29s timer (replaces exit intent) ===
   function closeExitPopup(){
     document.getElementById('exitOverlay').classList.remove('active');
     sessionStorage.setItem('a7_exit_shown','1');
   }
-  document.addEventListener('mouseout',function(e){
-    if(exitShown||sessionStorage.getItem('a7_exit_shown')) return;
-    if(e.clientY<=0&&e.relatedTarget===null){
-      exitShown=true;
+  setTimeout(function(){
+    if(!sessionStorage.getItem('a7_exit_shown')){
       document.getElementById('exitOverlay').classList.add('active');
     }
-  });
+  },29000);
 
   // === Scroll Reveal: content visible by default, GSAP enhances if available ===
 
@@ -2113,7 +1930,7 @@
       priceHtml: '<small>$</small>59<small>.90</small>',
       bags: '1 bag',
       pieces: '~40-50 pcs',
-      gradient: 'linear-gradient(135deg, #1b3054, #2a4a7a)',
+      gradient: 'linear-gradient(135deg, #0a0f1a, #111827)',
       paymentLink: 'https://buy.stripe.com/test_eVq6oH1dRf1U78n2Qa8AE00'
     },
     family: {
@@ -2121,7 +1938,7 @@
       priceHtml: '<small>$</small>109<small>.90</small>',
       bags: '2 bags',
       pieces: '~80-100 pcs',
-      gradient: 'linear-gradient(135deg, #122240, #1b3054)',
+      gradient: 'linear-gradient(135deg, #111827, #1a2332)',
       paymentLink: 'https://buy.stripe.com/test_bJeaEXaOr5rkfET8au8AE01'
     },
     premium: {
@@ -2129,7 +1946,7 @@
       priceHtml: '<small>$</small>179<small>.90</small>',
       bags: '4 bags',
       pieces: '~160-200 pcs',
-      gradient: 'linear-gradient(135deg, #1b3054, #c0392b)',
+      gradient: 'linear-gradient(135deg, #0a0f1a, #2563eb)',
       paymentLink: 'https://buy.stripe.com/test_00w7sL5u7bPI9gvaiC8AE02'
     }
   };
@@ -2199,31 +2016,7 @@
     }
   });
 
-  // === Animated Number Counters ===
-  (function(){
-    const counters=document.querySelectorAll('.hero-stat .val');
-    const obs=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(!entry.isIntersecting) return;
-        const el=entry.target;
-        if(el.dataset.animated) return;
-        el.dataset.animated='true';
-        const text=el.textContent;
-        const match=text.match(/^(\d+)/);
-        if(!match) return;
-        const target=parseInt(match[1]);
-        const suffix=text.replace(match[1],'');
-        let current=0;
-        const step=Math.ceil(target/40);
-        const interval=setInterval(()=>{
-          current+=step;
-          if(current>=target){current=target;clearInterval(interval);}
-          el.innerHTML=current+suffix;
-        },30);
-      });
-    },{threshold:0.5});
-    counters.forEach(c=>obs.observe(c));
-  })();
+  // === Animated Number Counters (handled by GSAP trust strip count-up) ===
 
   // === Header Scroll Behavior (transparent → solid) ===
   (function(){
@@ -2253,13 +2046,30 @@
 
     // Hero text entrance — skip if GSAP loaded too late (user already saw content)
     if(performance.now()<2000){
-      gsap.from('.hero-badge',{opacity:0,y:30,duration:1,delay:.3,ease:'power3.out'});
-      gsap.from('.hero h1',{opacity:0,y:60,duration:1.2,delay:.5,ease:'power3.out'});
-      gsap.from('.hero-sub',{opacity:0,y:40,duration:1,delay:.8,ease:'power3.out'});
-      gsap.from('.hero-ctas',{opacity:0,y:30,duration:1,delay:1,ease:'power3.out'});
-      gsap.from('.hero-trust',{opacity:0,y:20,duration:1,delay:1.2,ease:'power3.out'});
-      gsap.from('.hero-stat',{opacity:0,y:30,duration:.8,delay:1.4,stagger:.15,ease:'power3.out'});
+      gsap.from('.hero h1',{opacity:0,y:80,duration:1.2,delay:.2,ease:'power4.out'});
+      gsap.from('.hero-sub',{opacity:0,y:40,duration:1,delay:.5,ease:'power4.out'});
+      gsap.from('.hero-ctas',{opacity:0,y:30,duration:.8,delay:.7,ease:'power4.out'});
+      gsap.from('.hero-trust',{opacity:0,y:20,duration:.8,delay:.9,ease:'power4.out'});
     }
+
+    // Trust strip count-up
+    document.querySelectorAll('.trust-val[data-count]').forEach(function(el){
+      if(!isBelowFold(el.closest('.trust-strip'))) return;
+      var target=parseInt(el.dataset.count);
+      if(!target) return;
+      var suffix=el.textContent.replace(String(target),'').replace(/,/g,'');
+      ScrollTrigger.create({
+        trigger:el,start:'top 85%',once:true,
+        onEnter:function(){
+          gsap.from(el,{textContent:0,duration:1.5,ease:'power2.out',snap:{textContent:1},
+            onUpdate:function(){
+              var v=Math.round(parseFloat(el.textContent));
+              el.textContent=v>=1000?v.toLocaleString()+suffix:v+suffix;
+            }
+          });
+        }
+      });
+    });
 
     // Section reveals — only animate sections below the fold
     document.querySelectorAll('.reveal').forEach(function(el){
@@ -2288,26 +2098,10 @@
       });
     });
 
-    // Hero parallax
-    gsap.to('.hero-bg img',{
-      y:120,ease:'none',
+    // Hero parallax (subtle, Nike-style)
+    gsap.fromTo('.hero-bg img',{y:-50},{
+      y:50,ease:'none',
       scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}
-    });
-
-    // Lifestyle banner parallax + text reveal
-    document.querySelectorAll('.lifestyle-banner').forEach(function(banner){
-      var img=banner.querySelector('img');
-      if(img){
-        gsap.fromTo(img,{y:-20},{y:20,ease:'none',
-          scrollTrigger:{trigger:banner,start:'top bottom',end:'bottom top',scrub:true}
-        });
-      }
-      var text=banner.querySelector('.banner-text');
-      if(text&&isBelowFold(banner)){
-        gsap.from(text,{opacity:0,y:40,duration:1,ease:'power3.out',
-          scrollTrigger:{trigger:banner,start:'top 75%'}
-        });
-      }
     });
   }
 
