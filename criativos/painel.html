@@ -4,76 +4,525 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A7 Laundry — Painel de Criativos</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:'Inter',sans-serif;background:#f0f2f5;min-height:100vh;color:#0a0f1a}
 
-  /* Header */
-  .panel-header{background:#fff;border-bottom:1px solid rgba(0,0,0,.06);padding:24px 40px;display:flex;align-items:center;gap:24px;position:sticky;top:0;z-index:50}
+  /* ===== HEADER ===== */
+  .panel-header{background:#fff;border-bottom:1px solid rgba(0,0,0,.06);padding:24px 40px;display:flex;align-items:center;gap:24px;position:sticky;top:0;z-index:50;flex-wrap:wrap}
   .panel-header img{height:32px}
   .panel-header h1{font-size:18px;font-weight:800}
   .panel-header h1 span{color:#2563eb}
   .panel-header .meta{margin-left:auto;font-size:12px;color:rgba(0,0,0,.35);text-align:right}
   .panel-header .meta strong{color:#0a0f1a}
 
-  /* Section */
-  .panel-section{padding:48px 40px}
-  .panel-section:nth-child(odd){background:#fff}
-  .panel-section:nth-child(even){background:#f8fafc}
-  .section-head{display:flex;align-items:center;gap:16px;margin-bottom:32px}
-  .section-head h2{font-size:24px;font-weight:800}
-  .section-head .sys-badge{padding:6px 14px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:1px}
-  .sys-dark{background:#0a0f1a;color:#fff}
-  .sys-clean{background:#e0f2fe;color:#2563eb}
-  .section-head .sys-link{margin-left:auto;padding:10px 24px;background:#2563eb;color:#fff;border-radius:4px;text-decoration:none;font-size:13px;font-weight:700;transition:.2s}
-  .section-head .sys-link:hover{background:#1d4ed8}
-  .section-desc{font-size:14px;color:rgba(0,0,0,.4);margin-bottom:32px;max-width:600px}
+  /* ===== COUPONS ===== */
+  .coupons-section{padding:32px 40px;background:#fff;border-bottom:1px solid rgba(0,0,0,.04)}
+  .coupons{display:flex;gap:20px;flex-wrap:wrap}
+  .coupon-card{padding:20px 32px;border-radius:8px;border:2px dashed #2563eb;background:rgba(37,99,235,.03);display:flex;align-items:center;gap:16px}
+  .coupon-card h3{font-size:22px;font-weight:800;letter-spacing:3px;color:#2563eb}
+  .coupon-card p{font-size:13px;color:rgba(0,0,0,.45)}
 
-  /* Grid */
-  .creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
-  .card{border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,.06);transition:.3s;cursor:default;background:#fff}
-  .card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.08);border-color:rgba(37,99,235,.2)}
-  .card-preview{width:100%;aspect-ratio:1;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
-  .card-preview.story{aspect-ratio:9/16}
-  .card-preview.gmb{aspect-ratio:4/3}
-  .card-preview-inner{width:100%;height:100%;position:relative}
-  .card-info{padding:14px 16px}
-  .card-info h4{font-size:13px;font-weight:700;margin-bottom:2px}
-  .card-info p{font-size:11px;color:rgba(0,0,0,.4)}
-  .card-badges{display:flex;gap:6px;margin-top:8px}
-  .card-badges span{padding:3px 8px;border-radius:3px;font-size:9px;font-weight:700}
-  .type-feed{background:#e0f2fe;color:#2563eb}
-  .type-story{background:#f3e8ff;color:#a855f7}
-  .type-gmb{background:#dcfce7;color:#16a34a}
-  .size-tag{background:#f1f5f9;color:rgba(0,0,0,.4)}
+  /* ===== FORMAT SECTION ===== */
+  .format-section{padding:40px 40px 48px;border-bottom:1px solid rgba(0,0,0,.04)}
+  .format-section:nth-child(odd){background:#fff}
+  .format-section:nth-child(even){background:#f8fafc}
+  .format-title{font-size:20px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .format-title .count{font-size:13px;font-weight:600;color:rgba(0,0,0,.35)}
+  .format-desc{font-size:13px;color:rgba(0,0,0,.35);margin-bottom:32px}
 
-  /* Coupon section */
-  .coupons{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:48px;max-width:600px}
-  .coupon-card{padding:24px;border-radius:8px;border:2px dashed;text-align:center}
-  .coupon-card h3{font-size:28px;font-weight:800;letter-spacing:4px;margin-bottom:8px}
-  .coupon-card p{font-size:13px}
-  .coupon-blue{border-color:#2563eb;background:rgba(37,99,235,.03)}
-  .coupon-blue h3{color:#2563eb}
-  .coupon-blue p{color:rgba(0,0,0,.45)}
+  /* ===== SYSTEM ROW ===== */
+  .system-row{display:flex;gap:20px;margin-bottom:28px;align-items:flex-start}
+  .system-row:last-child{margin-bottom:0}
+  .system-label{width:100px;flex-shrink:0;padding-top:8px}
+  .system-label .badge{display:inline-block;padding:6px 14px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;white-space:nowrap}
+  .system-label a{display:block;margin-top:8px;font-size:10px;color:#2563eb;text-decoration:none;font-weight:600}
+  .system-label a:hover{text-decoration:underline}
 
-  /* Mini previews */
-  .mini-dark{background:#0a0f1a;color:#fff;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
-  .mini-dark h5{font-size:16px;font-weight:800;letter-spacing:-1px;line-height:1}
-  .mini-dark .accent{color:#2563eb}
-  .mini-dark small{font-size:9px;color:rgba(255,255,255,.3)}
-  .mini-dark .glow{position:absolute;width:120px;height:120px;background:#2563eb;border-radius:50%;filter:blur(60px);opacity:.15}
+  /* System badges — 14 systems */
+  .badge-dark{background:#0a0f1a;color:#fff}
+  .badge-clean{background:#e0f2fe;color:#2563eb}
+  .badge-impact{background:rgba(245,158,11,.12);color:#f59e0b}
+  .badge-lifestyle{background:rgba(16,185,129,.12);color:#10b981}
+  .badge-gradient{background:rgba(139,92,246,.12);color:#8b5cf6}
+  .badge-minimal{background:rgba(100,116,139,.12);color:#64748b}
+  .badge-neon{background:rgba(244,63,94,.12);color:#f43f5e}
+  .badge-split{background:rgba(14,165,233,.12);color:#0ea5e9}
+  .badge-retro{background:rgba(217,119,6,.12);color:#d97706}
+  .badge-glass{background:rgba(99,102,241,.12);color:#6366f1}
+  .badge-boldtype{background:rgba(220,38,38,.12);color:#dc2626}
+  .badge-duotone{background:rgba(8,145,178,.12);color:#0891b2}
+  .badge-editorial{background:rgba(120,113,108,.12);color:#78716c}
+  .badge-social{background:rgba(109,40,217,.12);color:#6d28d9}
 
-  .mini-clean{background:#fff;color:#0a0f1a;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;position:relative}
-  .mini-clean h5{font-size:16px;font-weight:800;letter-spacing:-1px;line-height:1}
-  .mini-clean .accent{color:#2563eb}
-  .mini-clean small{font-size:9px;color:rgba(0,0,0,.25)}
-  .mini-clean .blob{position:absolute;width:100px;height:100px;background:#93c5fd;border-radius:50%;filter:blur(60px);opacity:.2}
-  .mini-clean .strip{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2563eb,#60a5fa)}
+  /* ===== THUMB GRID ===== */
+  .thumb-grid{display:flex;gap:16px;flex:1;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  .thumb-grid::-webkit-scrollbar{height:4px}
+  .thumb-grid::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:2px}
 
-  /* Footer */
+  /* ===== PANEL THUMB ===== */
+  .panel-thumb{border-radius:6px;overflow:hidden;border:2px solid transparent;transition:.3s;cursor:pointer;background:#e8ecf1;position:relative;flex-shrink:0}
+  .panel-thumb:hover{border-color:#2563eb;transform:scale(1.08);z-index:10;box-shadow:0 8px 32px rgba(37,99,235,.15)}
+  .panel-thumb .thumb-inner{overflow:hidden;position:relative}
+  .panel-thumb .creative{transform-origin:top left}
+  .panel-thumb .thumb-label{padding:8px 10px;background:#fff;font-size:10px;font-weight:700;color:rgba(0,0,0,.5);text-align:center;border-top:1px solid rgba(0,0,0,.04)}
+
+  /* Feed thumbs */
+  .panel-thumb.feed-thumb{width:180px}
+  .panel-thumb.feed-thumb .thumb-inner{width:180px;height:180px}
+  .panel-thumb.feed-thumb .size-feed{transform:scale(calc(180/1080))}
+
+  /* Story thumbs */
+  .panel-thumb.story-thumb{width:90px}
+  .panel-thumb.story-thumb .thumb-inner{width:90px;height:160px}
+  .panel-thumb.story-thumb .size-story{transform:scale(calc(90/1080))}
+
+  /* GMB thumbs */
+  .panel-thumb.gmb-thumb{width:240px}
+  .panel-thumb.gmb-thumb .thumb-inner{width:240px;height:180px}
+  .panel-thumb.gmb-thumb .size-gmb{transform:scale(calc(240/1200))}
+
+  /* ======================================================= */
+  /*  CREATIVE CSS — all 14 systems                          */
+  /* ======================================================= */
+
+  /* Base sizes */
+  .creative{position:relative;overflow:hidden;font-family:'Inter',sans-serif}
+  .creative *{box-sizing:border-box}
+  .size-feed{width:1080px;height:1080px}
+  .size-story{width:1080px;height:1920px}
+  .size-gmb{width:1200px;height:900px}
+
+  /* === SHARED LAYOUT (all systems) === */
+  .c-content{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;padding:80px}
+  .c-logo{max-width:160px;height:auto;margin-bottom:auto}
+  .c-logo-sm{max-width:120px;height:auto}
+  .c-cta{display:inline-flex;align-items:center;gap:12px;padding:24px 48px;background:#2563eb;color:#fff;border-radius:4px;font-weight:800;font-size:24px}
+  .c-coupon{display:inline-block;padding:20px 40px;border:2px dashed #2563eb;border-radius:4px;font-size:36px;font-weight:800;letter-spacing:6px;color:#2563eb;background:rgba(37,99,235,.08)}
+  .c-divider{width:60px;height:3px;background:#2563eb;margin:20px 0}
+  .c-footer{margin-top:auto;display:flex;align-items:center;justify-content:space-between}
+  .c-num{font-size:200px;font-weight:900;line-height:1;color:#2563eb;opacity:.08;position:absolute}
+  .c-step{display:flex;align-items:flex-start;gap:24px;margin-bottom:32px}
+  .c-step-num{width:56px;height:56px;border-radius:4px;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0}
+
+  /* === 1. DARK NIKE SYSTEM === */
+  .sys-dark .c-logo{filter:brightness(0) invert(1)}
+  .sys-dark .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff}
+  .sys-dark .c-sub{color:rgba(255,255,255,.6);line-height:1.5}
+  .sys-dark .c-badge{display:inline-block;padding:10px 24px;background:rgba(37,99,235,.15);color:#3b82f6;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-dark .c-stars{color:#d4a017;font-size:36px;letter-spacing:4px}
+  .sys-dark .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.4)}
+  .sys-dark .c-footer-phone{font-size:20px;font-weight:700;color:#2563eb}
+  .sys-dark .c-cta-outline{background:transparent;border:2px solid rgba(255,255,255,.2)}
+  .sys-dark .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.8);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #2563eb}
+  .sys-dark .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .sys-dark .c-step-text p{font-size:20px;color:rgba(255,255,255,.5)}
+  .sys-dark .glow-circle{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3}
+  .sys-dark .glow-blue{background:#2563eb}
+  .sys-dark .glow-cyan{background:#06b6d4}
+  .sys-dark .coupon-card{background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.2);border-radius:4px;padding:40px;text-align:center}
+  .sys-dark .photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,26,.85) 0%,rgba(10,15,26,.95) 100%);z-index:1}
+
+  /* === 2. CLEAN LAUNDRY SYSTEM === */
+  .sys-clean .c-logo-dark{filter:none}
+  .sys-clean .c-logo-white{filter:brightness(0) invert(1)}
+  .sys-clean .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#0a0f1a}
+  .sys-clean .c-hook-white{color:#fff}
+  .sys-clean .c-sub{color:rgba(0,0,0,.45);line-height:1.5}
+  .sys-clean .c-sub-white{color:rgba(255,255,255,.6)}
+  .sys-clean .c-badge{display:inline-block;padding:10px 24px;background:#e0f2fe;color:#2563eb;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-clean .c-badge-dark{background:rgba(37,99,235,.15);color:#3b82f6}
+  .sys-clean .c-stars{color:#f59e0b;font-size:36px;letter-spacing:4px}
+  .sys-clean .c-cta-white{background:#fff;color:#2563eb}
+  .sys-clean .c-cta-outline-dark{background:transparent;border:2px solid rgba(0,0,0,.1);color:#0a0f1a}
+  .sys-clean .c-cta-outline-white{background:transparent;border:2px solid rgba(255,255,255,.25);color:#fff}
+  .sys-clean .c-coupon-white{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.08)}
+  .sys-clean .c-url{font-size:20px;font-weight:600;color:rgba(0,0,0,.25)}
+  .sys-clean .c-url-white{color:rgba(255,255,255,.3)}
+  .sys-clean .c-phone{font-size:20px;font-weight:700;color:#2563eb}
+  .sys-clean .c-phone-white{color:rgba(255,255,255,.6)}
+  .sys-clean .c-quote{font-size:28px;font-weight:500;color:rgba(0,0,0,.65);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #2563eb}
+  .sys-clean .c-step-text h4{font-size:28px;font-weight:800;color:#0a0f1a;margin-bottom:4px}
+  .sys-clean .c-step-text p{font-size:20px;color:rgba(0,0,0,.4)}
+  .sys-clean .c-num-dark{color:#0a0f1a}
+  .sys-clean .blob{position:absolute;border-radius:50%;filter:blur(140px);opacity:.35}
+  .sys-clean .blob-blue{background:#93c5fd}
+  .sys-clean .blob-cyan{background:#67e8f9}
+  .sys-clean .blob-violet{background:#c4b5fd}
+  .sys-clean .blob-rose{background:#fda4af}
+  .sys-clean .accent-strip{position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#2563eb,#3b82f6,#60a5fa);z-index:5}
+  .sys-clean .photo-half{position:absolute;top:0;right:0;width:45%;height:100%;z-index:0}
+  .sys-clean .photo-half img{width:100%;height:100%;object-fit:cover}
+  .sys-clean .photo-half-fade{position:absolute;inset:0;background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,0) 100%);z-index:1}
+
+  /* === 3. IMPACT SYSTEM === */
+  .sys-impact .c-logo{filter:brightness(0) invert(1)}
+  .sys-impact .c-hook{font-weight:900;line-height:.88;letter-spacing:-4px;color:#fff;text-transform:uppercase}
+  .sys-impact .c-sub{color:rgba(255,255,255,.6);line-height:1.5}
+  .sys-impact .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.4)}
+  .sys-impact .c-footer-phone{font-size:20px;font-weight:700;color:#2563eb}
+  .sys-impact .c-cta{font-weight:900;text-transform:uppercase;letter-spacing:1px}
+  .sys-impact .c-cta-amber{background:#f59e0b;color:#0a0f1a}
+  .sys-impact .c-cta-green{background:#10b981;color:#fff}
+  .sys-impact .c-cta-red{background:#ef4444;color:#fff}
+  .sys-impact .c-cta-blue{background:#2563eb;color:#fff}
+  .sys-impact .accent-amber{color:#f59e0b}
+  .sys-impact .accent-green{color:#10b981}
+  .sys-impact .accent-red{color:#ef4444}
+  .sys-impact .accent-blue{color:#2563eb}
+  .sys-impact .bg-amber{background:#f59e0b}
+  .sys-impact .bg-green{background:#10b981}
+  .sys-impact .bg-red{background:#ef4444}
+  .sys-impact .bg-blue{background:#2563eb}
+  .sys-impact .scarcity-badge{display:inline-block;padding:12px 28px;border-radius:4px;font-size:18px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+  .sys-impact .price-old{text-decoration:line-through;opacity:.4}
+  .sys-impact .price-new{font-weight:900}
+  .sys-impact .diag-bar{position:absolute;width:200%;height:80px;transform:rotate(-5deg);z-index:1;opacity:.12}
+  .sys-impact .glow-circle{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3}
+  .sys-impact .countdown-box{display:flex;gap:16px;align-items:center}
+  .sys-impact .countdown-unit{text-align:center;padding:20px 28px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:4px}
+  .sys-impact .countdown-unit .num{font-size:48px;font-weight:900;line-height:1}
+  .sys-impact .countdown-unit .label{font-size:14px;color:rgba(255,255,255,.4);margin-top:4px}
+
+  /* === 4. LIFESTYLE SYSTEM === */
+  .sys-lifestyle .photo-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center}
+  .sys-lifestyle .photo-overlay-feed{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,15,26,.4) 0%,rgba(10,15,26,.92) 100%)}
+  .sys-lifestyle .photo-overlay-story{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,15,26,0) 0%,rgba(10,15,26,.35) 30%,rgba(10,15,26,.92) 55%,rgba(10,15,26,.98) 100%)}
+  .sys-lifestyle .photo-overlay-gmb{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(10,15,26,.95) 0%,rgba(10,15,26,.85) 55%,rgba(10,15,26,0) 100%)}
+  .sys-lifestyle .logo-watermark,.sys-lifestyle .logo-watermark-story{position:absolute;max-width:100px;opacity:.12;z-index:3;filter:brightness(0) invert(1)}
+  .sys-lifestyle .logo-watermark{bottom:40px;right:40px}
+  .sys-lifestyle .logo-watermark-story{top:60px;right:60px;opacity:.25}
+  .sys-lifestyle .c-logo{filter:brightness(0) invert(1)}
+  .sys-lifestyle .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+  .sys-lifestyle .c-sub{color:rgba(255,255,255,.7);line-height:1.5;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+  .sys-lifestyle .c-cta{background:#10b981}
+  .sys-lifestyle .c-cta-outline{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:2px solid rgba(255,255,255,.25);color:#fff}
+  .sys-lifestyle .c-badge{display:inline-block;padding:10px 24px;background:rgba(16,185,129,.15);color:#10b981;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-lifestyle .c-coupon{border-color:#10b981;color:#10b981;background:rgba(16,185,129,.08)}
+  .sys-lifestyle .c-coupon-white{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.08)}
+  .sys-lifestyle .c-stars{color:#f59e0b;font-size:36px;letter-spacing:4px;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+  .sys-lifestyle .c-divider{background:#10b981}
+  .sys-lifestyle .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.4)}
+  .sys-lifestyle .c-footer-phone{font-size:20px;font-weight:700;color:#10b981}
+  .sys-lifestyle .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.8);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #10b981;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+  .sys-lifestyle .c-step-num{background:#10b981}
+  .sys-lifestyle .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+  .sys-lifestyle .c-step-text p{font-size:20px;color:rgba(255,255,255,.5)}
+
+  /* === 5. GRADIENT SYSTEM === */
+  .sys-gradient .c-logo{filter:brightness(0) invert(1)}
+  .sys-gradient .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff}
+  .sys-gradient .c-sub{color:rgba(255,255,255,.7);line-height:1.5}
+  .sys-gradient .c-cta{background:#fff;color:#8b5cf6}
+  .sys-gradient .c-cta-outline{background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);color:#fff}
+  .sys-gradient .c-badge{display:inline-block;padding:10px 24px;background:rgba(255,255,255,.15);color:#fff;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-gradient .c-coupon{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.1)}
+  .sys-gradient .c-stars{color:#fbbf24;font-size:36px;letter-spacing:4px}
+  .sys-gradient .c-divider{background:rgba(255,255,255,.3)}
+  .sys-gradient .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.4)}
+  .sys-gradient .c-footer-phone{font-size:20px;font-weight:700;color:rgba(255,255,255,.7)}
+  .sys-gradient .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.8);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid rgba(255,255,255,.3)}
+  .sys-gradient .c-step-num{background:rgba(255,255,255,.2);color:#fff}
+  .sys-gradient .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .sys-gradient .c-step-text p{font-size:20px;color:rgba(255,255,255,.5)}
+
+  /* === 6. MINIMAL SYSTEM === */
+  .sys-minimal .c-logo{filter:none}
+  .sys-minimal .c-hook{font-weight:600;line-height:.95;letter-spacing:-2px;color:#0f172a}
+  .sys-minimal .c-sub{color:rgba(0,0,0,.35);line-height:1.5;font-weight:400;letter-spacing:.5px}
+  .sys-minimal .c-cta{background:transparent;color:#0f172a;border:1px solid rgba(0,0,0,.12);font-weight:600;font-size:22px}
+  .sys-minimal .c-cta-accent{background:transparent;color:#64748b;border:1px solid #64748b}
+  .sys-minimal .c-badge{display:inline-block;padding:8px 20px;background:transparent;color:#64748b;border:1px solid rgba(0,0,0,.08);border-radius:4px;font-size:16px;font-weight:500}
+  .sys-minimal .c-coupon{border:1px dashed rgba(0,0,0,.15);color:#0f172a;background:transparent;font-weight:600}
+  .sys-minimal .c-stars{color:#94a3b8;font-size:32px;letter-spacing:4px}
+  .sys-minimal .c-divider{width:40px;height:1px;background:rgba(0,0,0,.1)}
+  .sys-minimal .c-footer-url{font-size:18px;font-weight:400;color:rgba(0,0,0,.2)}
+  .sys-minimal .c-footer-phone{font-size:18px;font-weight:500;color:rgba(0,0,0,.4)}
+  .sys-minimal .c-quote{font-size:26px;font-weight:400;color:rgba(0,0,0,.45);line-height:1.5;font-style:italic;padding-left:32px;border-left:1px solid rgba(0,0,0,.1)}
+  .sys-minimal .c-step-num{background:transparent;border:1px solid rgba(0,0,0,.1);color:#64748b}
+  .sys-minimal .c-step-text h4{font-size:26px;font-weight:600;color:#0f172a;margin-bottom:4px}
+  .sys-minimal .c-step-text p{font-size:20px;color:rgba(0,0,0,.3);font-weight:400}
+
+  /* === 7. NEON SYSTEM === */
+  .sys-neon .c-logo{filter:brightness(0) invert(1)}
+  .sys-neon .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff;text-shadow:0 0 40px rgba(244,63,94,.5),0 0 80px rgba(244,63,94,.2)}
+  .sys-neon .c-sub{color:rgba(255,255,255,.5);line-height:1.5}
+  .sys-neon .c-cta{background:transparent;color:#f43f5e;border:2px solid #f43f5e;box-shadow:0 0 20px rgba(244,63,94,.3)}
+  .sys-neon .c-cta-filled{background:#f43f5e;color:#fff;box-shadow:0 0 20px rgba(244,63,94,.4)}
+  .sys-neon .c-badge{display:inline-block;padding:10px 24px;background:transparent;color:#f43f5e;border:1px solid #f43f5e;border-radius:4px;font-size:18px;font-weight:700;box-shadow:0 0 10px rgba(244,63,94,.2)}
+  .sys-neon .c-coupon{border:2px dashed #f43f5e;color:#f43f5e;background:transparent;box-shadow:0 0 20px rgba(244,63,94,.15)}
+  .sys-neon .c-stars{color:#fbbf24;font-size:36px;letter-spacing:4px;text-shadow:0 0 20px rgba(251,191,36,.5)}
+  .sys-neon .c-divider{background:#f43f5e;box-shadow:0 0 10px rgba(244,63,94,.5)}
+  .sys-neon .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.25)}
+  .sys-neon .c-footer-phone{font-size:20px;font-weight:700;color:#f43f5e;text-shadow:0 0 10px rgba(244,63,94,.3)}
+  .sys-neon .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.7);line-height:1.5;font-style:italic;padding-left:32px;border-left:2px solid #f43f5e}
+  .sys-neon .c-step-num{background:transparent;border:2px solid #f43f5e;color:#f43f5e;box-shadow:0 0 15px rgba(244,63,94,.2)}
+  .sys-neon .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .sys-neon .c-step-text p{font-size:20px;color:rgba(255,255,255,.4)}
+  .sys-neon .glow-circle{position:absolute;border-radius:50%;filter:blur(120px);opacity:.25}
+
+  /* === 8. SPLIT SYSTEM === */
+  .sys-split .c-logo{filter:brightness(0) invert(1)}
+  .sys-split .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff}
+  .sys-split .c-sub{color:rgba(255,255,255,.6);line-height:1.5}
+  .sys-split .c-cta{background:#0ea5e9;color:#fff}
+  .sys-split .c-cta-outline{background:transparent;border:2px solid rgba(255,255,255,.25);color:#fff}
+  .sys-split .c-badge{display:inline-block;padding:10px 24px;background:rgba(14,165,233,.15);color:#0ea5e9;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-split .c-coupon{border-color:#0ea5e9;color:#0ea5e9;background:rgba(14,165,233,.08)}
+  .sys-split .c-stars{color:#fbbf24;font-size:36px;letter-spacing:4px}
+  .sys-split .c-divider{background:#0ea5e9}
+  .sys-split .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.35)}
+  .sys-split .c-footer-phone{font-size:20px;font-weight:700;color:#0ea5e9}
+  .sys-split .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.7);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #0ea5e9}
+  .sys-split .c-step-num{background:#0ea5e9}
+  .sys-split .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .sys-split .c-step-text p{font-size:20px;color:rgba(255,255,255,.5)}
+  .sys-split .split-photo{position:absolute;z-index:0}
+  .sys-split .split-photo img{width:100%;height:100%;object-fit:cover}
+  .sys-split .split-photo.right{top:0;right:0;width:50%;height:100%}
+  .sys-split .split-photo.top{top:0;left:0;width:100%;height:45%}
+  .sys-split .split-photo.gmb-right{top:0;right:0;width:45%;height:100%}
+
+  /* === 9. RETRO SYSTEM === */
+  .sys-retro .creative{border-radius:12px}
+  .sys-retro .c-logo-dark{filter:none}
+  .sys-retro .c-logo-light{filter:brightness(0) invert(1)}
+  .sys-retro .c-hook{font-weight:800;line-height:.92;letter-spacing:-2px;color:#451a03}
+  .sys-retro .c-hook-cream{color:#fef3c7}
+  .sys-retro .c-sub{color:rgba(69,26,3,.5);line-height:1.5}
+  .sys-retro .c-sub-cream{color:rgba(254,243,199,.6)}
+  .sys-retro .c-cta{background:#d97706;color:#fff;border-radius:12px}
+  .sys-retro .c-cta-outline{background:transparent;border:2px solid rgba(69,26,3,.15);color:#451a03;border-radius:12px}
+  .sys-retro .c-cta-cream{background:#fef3c7;color:#451a03;border-radius:12px}
+  .sys-retro .c-badge{display:inline-block;padding:10px 24px;background:rgba(217,119,6,.12);color:#d97706;border-radius:12px;font-size:18px;font-weight:700}
+  .sys-retro .c-badge-dark{background:rgba(217,119,6,.2);color:#f59e0b;border-radius:12px}
+  .sys-retro .c-coupon{border:2px dashed #d97706;color:#d97706;background:rgba(217,119,6,.06);border-radius:12px}
+  .sys-retro .c-coupon-cream{border-color:rgba(254,243,199,.4);color:#fef3c7;background:rgba(254,243,199,.08);border-radius:12px}
+  .sys-retro .c-stars{color:#f59e0b;font-size:36px;letter-spacing:4px}
+  .sys-retro .c-divider{background:#d97706;border-radius:2px}
+  .sys-retro .c-footer-url{font-size:20px;font-weight:600;color:rgba(69,26,3,.3)}
+  .sys-retro .c-footer-url-cream{color:rgba(254,243,199,.35)}
+  .sys-retro .c-footer-phone{font-size:20px;font-weight:700;color:#d97706}
+  .sys-retro .c-footer-phone-cream{color:rgba(254,243,199,.6)}
+  .sys-retro .c-quote{font-size:28px;font-weight:500;color:rgba(69,26,3,.55);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #d97706}
+  .sys-retro .c-step-num{background:#d97706;border-radius:12px}
+  .sys-retro .c-step-text h4{font-size:28px;font-weight:800;color:#451a03;margin-bottom:4px}
+  .sys-retro .c-step-text p{font-size:20px;color:rgba(69,26,3,.4)}
+  .sys-retro .grain::after{content:'';position:absolute;inset:0;z-index:3;opacity:.04;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
+
+  /* === 10. GLASS SYSTEM === */
+  .sys-glass .c-logo{filter:brightness(0) invert(1)}
+  .sys-glass .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff}
+  .sys-glass .c-sub{color:rgba(255,255,255,.6);line-height:1.5}
+  .sys-glass .c-cta{background:rgba(255,255,255,.15);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.2);color:#fff}
+  .sys-glass .c-cta-solid{background:#6366f1;color:#fff}
+  .sys-glass .c-badge{display:inline-block;padding:10px 24px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-glass .c-coupon{background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:2px dashed rgba(255,255,255,.25);color:#fff}
+  .sys-glass .c-stars{color:#fbbf24;font-size:36px;letter-spacing:4px}
+  .sys-glass .c-divider{background:rgba(255,255,255,.2)}
+  .sys-glass .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.3)}
+  .sys-glass .c-footer-phone{font-size:20px;font-weight:700;color:rgba(255,255,255,.6)}
+  .sys-glass .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.75);line-height:1.5;font-style:italic;padding-left:32px;border-left:2px solid rgba(255,255,255,.2)}
+  .sys-glass .c-step-num{background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff}
+  .sys-glass .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .sys-glass .c-step-text p{font-size:20px;color:rgba(255,255,255,.45)}
+  .sys-glass .glass-card{background:rgba(255,255,255,.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:40px}
+
+  /* === 11. BOLD TYPE SYSTEM === */
+  .sys-boldtype .c-logo{filter:brightness(0) invert(1)}
+  .sys-boldtype .c-logo-dark{filter:none}
+  .sys-boldtype .c-hook{font-weight:900;line-height:.85;letter-spacing:-5px;color:#fff}
+  .sys-boldtype .c-hook-dark{color:#0a0f1a}
+  .sys-boldtype .c-hook-red{color:#dc2626}
+  .sys-boldtype .c-sub{color:rgba(255,255,255,.5);line-height:1.5}
+  .sys-boldtype .c-sub-dark{color:rgba(0,0,0,.4)}
+  .sys-boldtype .c-cta{background:#dc2626;color:#fff;font-weight:900}
+  .sys-boldtype .c-cta-white{background:#fff;color:#dc2626}
+  .sys-boldtype .c-cta-outline{background:transparent;border:2px solid rgba(255,255,255,.2);color:#fff}
+  .sys-boldtype .c-badge{display:inline-block;padding:10px 24px;background:#dc2626;color:#fff;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-boldtype .c-badge-outline{background:transparent;border:2px solid #dc2626;color:#dc2626}
+  .sys-boldtype .c-coupon{border:3px dashed #dc2626;color:#dc2626;background:rgba(220,38,38,.06)}
+  .sys-boldtype .c-coupon-white{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.06)}
+  .sys-boldtype .c-stars{color:#dc2626;font-size:36px;letter-spacing:4px}
+  .sys-boldtype .c-divider{background:#dc2626;height:4px}
+  .sys-boldtype .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.3)}
+  .sys-boldtype .c-footer-url-dark{color:rgba(0,0,0,.2)}
+  .sys-boldtype .c-footer-phone{font-size:20px;font-weight:700;color:#dc2626}
+  .sys-boldtype .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.7);line-height:1.5;font-style:italic;padding-left:32px;border-left:4px solid #dc2626}
+  .sys-boldtype .c-step-num{background:#dc2626;color:#fff}
+  .sys-boldtype .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .sys-boldtype .c-step-text p{font-size:20px;color:rgba(255,255,255,.4)}
+
+  /* === 12. DUOTONE SYSTEM === */
+  .sys-duotone .duotone-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center}
+  .sys-duotone .duotone-overlay{position:absolute;inset:0;z-index:1;background:#0891b2;mix-blend-mode:color;opacity:.7}
+  .sys-duotone .duotone-darken{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(8,51,68,.3) 0%,rgba(8,51,68,.85) 100%)}
+  .sys-duotone .duotone-darken-gmb{position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(8,51,68,.9) 0%,rgba(8,51,68,.7) 55%,rgba(8,51,68,.3) 100%)}
+  .sys-duotone .duotone-darken-story{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(8,51,68,0) 0%,rgba(8,51,68,.3) 25%,rgba(8,51,68,.85) 50%,rgba(8,51,68,.95) 100%)}
+  .sys-duotone .logo-watermark{position:absolute;bottom:40px;right:40px;max-width:100px;opacity:.12;z-index:4;filter:brightness(0) invert(1)}
+  .sys-duotone .c-logo{filter:brightness(0) invert(1)}
+  .sys-duotone .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+  .sys-duotone .c-sub{color:rgba(255,255,255,.7);line-height:1.5;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+  .sys-duotone .c-cta{background:#0891b2;color:#fff}
+  .sys-duotone .c-cta-outline{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.25);color:#fff}
+  .sys-duotone .c-badge{display:inline-block;padding:10px 24px;background:rgba(8,145,178,.2);color:#22d3ee;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-duotone .c-coupon{border-color:#0891b2;color:#22d3ee;background:rgba(8,145,178,.1)}
+  .sys-duotone .c-coupon-white{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.08)}
+  .sys-duotone .c-stars{color:#fbbf24;font-size:36px;letter-spacing:4px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+  .sys-duotone .c-divider{background:#0891b2}
+  .sys-duotone .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.35)}
+  .sys-duotone .c-footer-phone{font-size:20px;font-weight:700;color:#22d3ee}
+  .sys-duotone .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.8);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #0891b2}
+  .sys-duotone .c-step-num{background:#0891b2}
+  .sys-duotone .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+  .sys-duotone .c-step-text p{font-size:20px;color:rgba(255,255,255,.5)}
+
+  /* === 13. EDITORIAL SYSTEM === */
+  .sys-editorial .c-logo{filter:none}
+  .sys-editorial .c-logo-light{filter:brightness(0) invert(1)}
+  .sys-editorial .c-hook{font-family:'Playfair Display',serif;font-weight:700;line-height:1.05;letter-spacing:-1px;color:#1c1917}
+  .sys-editorial .c-hook-light{color:#fafaf9}
+  .sys-editorial .c-hook-italic{font-style:italic}
+  .sys-editorial .c-sub{color:rgba(28,25,23,.45);line-height:1.5;font-weight:400;letter-spacing:.5px}
+  .sys-editorial .c-sub-light{color:rgba(250,250,249,.5)}
+  .sys-editorial .c-cta{background:#1c1917;color:#fafaf9;font-weight:600;font-size:20px;letter-spacing:1px;text-transform:uppercase}
+  .sys-editorial .c-cta-outline{background:transparent;border:1px solid rgba(28,25,23,.2);color:#1c1917}
+  .sys-editorial .c-cta-light{background:#fafaf9;color:#1c1917}
+  .sys-editorial .c-badge{display:inline-block;padding:0 0 4px;background:transparent;color:#78716c;font-size:14px;font-weight:500;letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid #78716c;border-radius:0}
+  .sys-editorial .c-coupon{border:1px solid rgba(28,25,23,.2);color:#1c1917;background:transparent;letter-spacing:4px}
+  .sys-editorial .c-coupon-light{border-color:rgba(250,250,249,.3);color:#fafaf9}
+  .sys-editorial .c-stars{color:#78716c;font-size:28px;letter-spacing:6px}
+  .sys-editorial .c-divider{width:40px;height:1px;background:rgba(28,25,23,.15)}
+  .sys-editorial .c-divider-light{background:rgba(250,250,249,.2)}
+  .sys-editorial .c-footer-url{font-size:16px;font-weight:400;color:rgba(28,25,23,.2);letter-spacing:2px;text-transform:uppercase}
+  .sys-editorial .c-footer-url-light{color:rgba(250,250,249,.25)}
+  .sys-editorial .c-footer-phone{font-size:18px;font-weight:500;color:#78716c}
+  .sys-editorial .c-footer-phone-light{color:rgba(250,250,249,.5)}
+  .sys-editorial .c-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;color:rgba(28,25,23,.6);line-height:1.5;padding-left:32px;border-left:1px solid rgba(28,25,23,.15)}
+  .sys-editorial .c-step-num{background:transparent;border:1px solid rgba(28,25,23,.15);color:#78716c;font-family:'Playfair Display',serif;font-weight:700}
+  .sys-editorial .c-step-text h4{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#1c1917;margin-bottom:4px}
+  .sys-editorial .c-step-text p{font-size:20px;color:rgba(28,25,23,.35);font-weight:400}
+  .sys-editorial .editorial-line{width:100%;height:1px;background:rgba(28,25,23,.08);margin:24px 0}
+  .sys-editorial .editorial-line-light{background:rgba(250,250,249,.1)}
+
+  /* === 14. SOCIAL NATIVE SYSTEM === */
+  .sys-social .c-logo{filter:brightness(0) invert(1)}
+  .sys-social .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff}
+  .sys-social .c-sub{color:rgba(255,255,255,.6);line-height:1.5}
+  .sys-social .c-cta{background:#6d28d9;color:#fff}
+  .sys-social .c-cta-outline{background:transparent;border:2px solid rgba(255,255,255,.2);color:#fff}
+  .sys-social .c-badge{display:inline-block;padding:10px 24px;background:rgba(109,40,217,.15);color:#a78bfa;border-radius:4px;font-size:18px;font-weight:700}
+  .sys-social .c-coupon{border-color:#6d28d9;color:#a78bfa;background:rgba(109,40,217,.08)}
+  .sys-social .c-coupon-white{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.06)}
+  .sys-social .c-stars{color:#fbbf24;font-size:36px;letter-spacing:4px}
+  .sys-social .c-divider{background:#6d28d9}
+  .sys-social .c-footer-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.3)}
+  .sys-social .c-footer-phone{font-size:20px;font-weight:700;color:#a78bfa}
+  .sys-social .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.7);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #6d28d9}
+  .sys-social .c-step-num{background:#6d28d9}
+  .sys-social .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .sys-social .c-step-text p{font-size:20px;color:rgba(255,255,255,.45)}
+  /* Social Native UI elements */
+  .sys-social .ig-header{display:flex;align-items:center;gap:12px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .sys-social .ig-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#6d28d9,#a855f7,#ec4899);padding:3px;display:flex;align-items:center;justify-content:center}
+  .sys-social .ig-avatar-inner{width:100%;height:100%;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center}
+  .sys-social .ig-avatar-inner img{width:80%;height:80%;object-fit:contain;filter:brightness(0) invert(1)}
+  .sys-social .ig-username{font-size:18px;font-weight:700;color:#fff}
+  .sys-social .ig-dots{margin-left:auto;color:rgba(255,255,255,.4);font-size:24px;letter-spacing:2px}
+  .sys-social .ig-actions{display:flex;align-items:center;gap:20px;padding:20px 28px;border-top:1px solid rgba(255,255,255,.06)}
+  .sys-social .ig-action{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.6);font-size:16px;font-weight:600}
+  .sys-social .ig-action svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2}
+  .sys-social .ig-action-heart svg{fill:#ef4444;stroke:#ef4444}
+  .sys-social .ig-likes{padding:4px 28px;font-size:16px;font-weight:700;color:#fff}
+  .sys-social .ig-bookmark{margin-left:auto}
+  .sys-social .story-ring{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#6d28d9,#a855f7,#ec4899,#f59e0b);padding:4px;margin:0 auto}
+  .sys-social .story-ring-inner{width:100%;height:100%;border-radius:50%;background:#0a0f1a;display:flex;align-items:center;justify-content:center;padding:8px}
+  .sys-social .story-ring-inner img{width:80%;height:80%;object-fit:contain;filter:brightness(0) invert(1)}
+  .sys-social .gbiz-header{display:flex;align-items:center;gap:12px;padding:20px 24px}
+  .sys-social .gbiz-avatar{width:44px;height:44px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center}
+  .sys-social .gbiz-avatar img{width:70%;height:70%;object-fit:contain;filter:brightness(0) invert(1)}
+  .sys-social .gbiz-name{font-size:16px;font-weight:700;color:#1c1917}
+  .sys-social .gbiz-stars{color:#f59e0b;font-size:14px;margin-left:8px}
+
+  /* ===== LIGHTBOX ===== */
+  .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(10,15,26,.92);backdrop-filter:blur(20px);display:none;flex-direction:column;align-items:center;justify-content:center}
+  .lightbox.active{display:flex}
+  .lb-bar{position:absolute;top:0;left:0;right:0;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;z-index:10}
+  .lb-info{font-size:13px;font-weight:600;color:rgba(255,255,255,.6)}
+  .lb-info strong{color:#fff}
+  .lb-close{width:40px;height:40px;border-radius:4px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;font-family:inherit}
+  .lb-close:hover{background:rgba(255,255,255,.15)}
+  .lb-frame{position:relative;transform-origin:center center}
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:4px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;font-family:inherit;z-index:10}
+  .lb-nav:hover{background:rgba(255,255,255,.15)}
+  .lb-prev{left:24px}
+  .lb-next{right:24px}
+
+  /* ===== LIGHTBOX CAPTION ===== */
+  .lb-caption{position:absolute;bottom:0;left:0;right:0;background:rgba(10,15,26,.95);border-top:1px solid rgba(255,255,255,.06);padding:20px 32px;max-height:200px;overflow-y:auto;z-index:10}
+  .lb-caption .caption-row{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .lb-caption .caption-label{font-size:10px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px}
+  .lb-caption .copy-btn{padding:3px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:3px;color:rgba(255,255,255,.4);font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+  .lb-caption .copy-btn:hover{background:rgba(37,99,235,.15);color:#2563eb;border-color:rgba(37,99,235,.3)}
+  .lb-caption .caption-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:12px}
+  .lb-caption .caption-tags{font-size:11px;color:rgba(37,99,235,.4);word-break:break-all}
+
+  /* ===== FOOTER ===== */
   .panel-footer{padding:32px 40px;text-align:center;font-size:12px;color:rgba(0,0,0,.3);background:#fff;border-top:1px solid rgba(0,0,0,.04)}
   .panel-footer a{color:#2563eb;text-decoration:none;font-weight:600}
+
+  /* ===== MOBILE RESPONSIVE ===== */
+  @media(max-width:768px){
+    .panel-header{padding:16px 20px;gap:12px}
+    .panel-header img{height:24px}
+    .panel-header h1{font-size:14px}
+    .panel-header .meta{font-size:10px;margin-left:0;text-align:left;width:100%}
+    .coupons-section{padding:20px}
+    .coupons{gap:12px}
+    .coupon-card{padding:14px 20px;flex:1;min-width:0}
+    .coupon-card h3{font-size:16px;letter-spacing:2px}
+    .coupon-card p{font-size:11px}
+    .format-section{padding:24px 16px 32px}
+    .format-title{font-size:16px;gap:8px}
+    .format-title .count{font-size:11px}
+    .format-desc{font-size:11px;margin-bottom:20px}
+    .system-row{flex-direction:column;gap:12px;margin-bottom:24px}
+    .system-label{width:auto;padding-top:0;display:flex;align-items:center;gap:12px}
+    .system-label a{margin-top:0}
+    .thumb-grid{gap:10px}
+    .panel-thumb.feed-thumb{width:120px}
+    .panel-thumb.feed-thumb .thumb-inner{width:120px;height:120px}
+    .panel-thumb.feed-thumb .size-feed{transform:scale(calc(120/1080))}
+    .panel-thumb.story-thumb{width:60px}
+    .panel-thumb.story-thumb .thumb-inner{width:60px;height:107px}
+    .panel-thumb.story-thumb .size-story{transform:scale(calc(60/1080))}
+    .panel-thumb.gmb-thumb{width:160px}
+    .panel-thumb.gmb-thumb .thumb-inner{width:160px;height:120px}
+    .panel-thumb.gmb-thumb .size-gmb{transform:scale(calc(160/1200))}
+    .panel-thumb .thumb-label{font-size:8px;padding:6px 4px}
+    .panel-thumb:hover{transform:none;box-shadow:none}
+    .panel-footer{padding:24px 20px;font-size:11px}
+    /* Lightbox mobile */
+    .lb-bar{padding:12px 16px}
+    .lb-info{font-size:11px}
+    .lb-nav{width:36px;height:36px;font-size:16px}
+    .lb-prev{left:8px}
+    .lb-next{right:8px}
+    .lb-caption{padding:16px;max-height:180px}
+    .lb-caption .caption-text{font-size:11px}
+  }
+  @media(max-width:480px){
+    .panel-thumb.feed-thumb{width:100px}
+    .panel-thumb.feed-thumb .thumb-inner{width:100px;height:100px}
+    .panel-thumb.feed-thumb .size-feed{transform:scale(calc(100/1080))}
+    .panel-thumb.story-thumb{width:50px}
+    .panel-thumb.story-thumb .thumb-inner{width:50px;height:89px}
+    .panel-thumb.story-thumb .size-story{transform:scale(calc(50/1080))}
+    .panel-thumb.gmb-thumb{width:130px}
+    .panel-thumb.gmb-thumb .thumb-inner{width:130px;height:98px}
+    .panel-thumb.gmb-thumb .size-gmb{transform:scale(calc(130/1200))}
+  }
 </style>
 </head>
 <body>
@@ -83,124 +532,345 @@
   <img src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
   <h1>Painel de <span>Criativos</span></h1>
   <div class="meta">
-    <strong>24 peças</strong> · 2 sistemas · 2 cupons<br>
-    Meta Ads · Google Ads · Instagram · GMN
+    <strong>168 pecas</strong> · 14 sistemas · 2 cupons<br>
+    Meta Ads · Google Ads · Instagram · GMB
   </div>
 </div>
 
 <!-- ===== CUPONS ===== -->
-<div class="panel-section">
-  <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">Cupons Ativos</h2>
+<div class="coupons-section">
   <div class="coupons">
-    <div class="coupon-card coupon-blue">
+    <div class="coupon-card">
       <h3>FIRSTBAG</h3>
       <p>Buy 1 Bag, Get 1 <strong>FREE</strong></p>
     </div>
-    <div class="coupon-card coupon-blue">
+    <div class="coupon-card">
       <h3>SAVE20</h3>
-      <p><strong>20% OFF</strong> no primeiro mês</p>
+      <p><strong>20% OFF</strong> no primeiro mes</p>
     </div>
   </div>
 </div>
 
-<!-- ===== SISTEMA 1: DARK NIKE ===== -->
-<div class="panel-section">
-  <div class="section-head">
-    <h2>Dark Nike System</h2>
-    <span class="sys-badge sys-dark">DARK MODE</span>
-    <a href="index.html" class="sys-link">Abrir Deck Completo →</a>
-  </div>
-  <p class="section-desc">Design system dark mode Nike-inspired. Base #0a0f1a, azul elétrico #2563eb, tipografia massiva Inter 800, glow effects. Ideal para público premium e impacto visual forte.</p>
-  <div class="creative-grid" id="gridDark"></div>
+<!-- ===== FEED 1080x1080 ===== -->
+<div class="format-section">
+  <h2 class="format-title">Feed 1080x1080 <span class="count">84 pecas (6 x 14 sistemas)</span></h2>
+  <p class="format-desc">Meta Ads, Instagram Feed, Facebook Feed</p>
+  <div class="system-row" id="feedDark"></div>
+  <div class="system-row" id="feedClean"></div>
+  <div class="system-row" id="feedImpact"></div>
+  <div class="system-row" id="feedLifestyle"></div>
+  <div class="system-row" id="feedGradient"></div>
+  <div class="system-row" id="feedMinimal"></div>
+  <div class="system-row" id="feedNeon"></div>
+  <div class="system-row" id="feedSplit"></div>
+  <div class="system-row" id="feedRetro"></div>
+  <div class="system-row" id="feedGlass"></div>
+  <div class="system-row" id="feedBoldtype"></div>
+  <div class="system-row" id="feedDuotone"></div>
+  <div class="system-row" id="feedEditorial"></div>
+  <div class="system-row" id="feedSocial"></div>
 </div>
 
-<!-- ===== SISTEMA 2: CLEAN LAUNDRY ===== -->
-<div class="panel-section">
-  <div class="section-head">
-    <h2>Clean Laundry System</h2>
-    <span class="sys-badge sys-clean">LIGHT / CLEAN</span>
-    <a href="clean.html" class="sys-link">Abrir Deck Completo →</a>
+<!-- ===== STORIES 1080x1920 ===== -->
+<div class="format-section">
+  <h2 class="format-title">Stories 1080x1920 <span class="count">56 pecas (4 x 14 sistemas)</span></h2>
+  <p class="format-desc">Instagram Stories, Facebook Stories, Reels</p>
+  <div class="system-row" id="storyDark"></div>
+  <div class="system-row" id="storyClean"></div>
+  <div class="system-row" id="storyImpact"></div>
+  <div class="system-row" id="storyLifestyle"></div>
+  <div class="system-row" id="storyGradient"></div>
+  <div class="system-row" id="storyMinimal"></div>
+  <div class="system-row" id="storyNeon"></div>
+  <div class="system-row" id="storySplit"></div>
+  <div class="system-row" id="storyRetro"></div>
+  <div class="system-row" id="storyGlass"></div>
+  <div class="system-row" id="storyBoldtype"></div>
+  <div class="system-row" id="storyDuotone"></div>
+  <div class="system-row" id="storyEditorial"></div>
+  <div class="system-row" id="storySocial"></div>
+</div>
+
+<!-- ===== GMB 1200x900 ===== -->
+<div class="format-section">
+  <h2 class="format-title">GMB 1200x900 <span class="count">28 pecas (2 x 14 sistemas)</span></h2>
+  <p class="format-desc">Google Meu Negocio, Google Maps</p>
+  <div class="system-row" id="gmbDark"></div>
+  <div class="system-row" id="gmbClean"></div>
+  <div class="system-row" id="gmbImpact"></div>
+  <div class="system-row" id="gmbLifestyle"></div>
+  <div class="system-row" id="gmbGradient"></div>
+  <div class="system-row" id="gmbMinimal"></div>
+  <div class="system-row" id="gmbNeon"></div>
+  <div class="system-row" id="gmbSplit"></div>
+  <div class="system-row" id="gmbRetro"></div>
+  <div class="system-row" id="gmbGlass"></div>
+  <div class="system-row" id="gmbBoldtype"></div>
+  <div class="system-row" id="gmbDuotone"></div>
+  <div class="system-row" id="gmbEditorial"></div>
+  <div class="system-row" id="gmbSocial"></div>
+</div>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-bar">
+    <span class="lb-info" id="lbInfo"></span>
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
   </div>
-  <p class="section-desc">Design system light/clean. Fundo branco #fff, blobs suaves, azul #2563eb como acento, sombras leves. Ideal para confiança, clareza e público familiar.</p>
-  <div class="creative-grid" id="gridClean"></div>
+  <button class="lb-nav lb-prev" onclick="navLightbox(-1)">←</button>
+  <button class="lb-nav lb-next" onclick="navLightbox(1)">→</button>
+  <div class="lb-frame" id="lbFrame"></div>
+  <div class="lb-caption" id="lbCaption"></div>
 </div>
 
 <!-- ===== FOOTER ===== -->
 <div class="panel-footer">
   A7 Laundry Orlando · <a href="https://a7laundry.com">a7laundry.com</a> · (407) 670-8839<br>
-  24 criativos · Feed 1080×1080 · Stories 1080×1920 · GMB 1200×900
+  168 criativos · Feed 1080x1080 · Stories 1080x1920 · GMB 1200x900 · 14 sistemas
 </div>
 
 <script>
-  const items = [
-    { num:'01', name:'Hero Brand', type:'Feed', size:'1080×1080', hookDark:'Never Do Laundry Again.', hookClean:'Never Do Laundry Again.', aspect:'' },
-    { num:'02', name:'Pain Point', type:'Feed', size:'1080×1080', hookDark:'240 hrs/yr', hookClean:'240 hrs/yr', aspect:'' },
-    { num:'03', name:'Coupon FIRSTBAG', type:'Feed', size:'1080×1080', hookDark:'Buy 1 Get 1 FREE', hookClean:'Buy 1 Get 1 FREE', aspect:'' },
-    { num:'04', name:'Social Proof', type:'Feed', size:'1080×1080', hookDark:'4.9★ · 2,000+ Families', hookClean:'4.9★ · 2,000+ Families', aspect:'' },
-    { num:'05', name:'Coupon SAVE20', type:'Feed', size:'1080×1080', hookDark:'20% OFF', hookClean:'20% OFF', aspect:'' },
-    { num:'06', name:'How It Works', type:'Feed', size:'1080×1080', hookDark:'3 Steps to Freedom', hookClean:'3 Steps to Freedom', aspect:'' },
-    { num:'07', name:'STOP', type:'Story', size:'1080×1920', hookDark:'STOP.', hookClean:'STOP.', aspect:'story' },
-    { num:'08', name:'Coupon FIRSTBAG', type:'Story', size:'1080×1920', hookDark:'FREE BAG', hookClean:'FREE BAG', aspect:'story' },
-    { num:'09', name:'Pricing', type:'Story', size:'1080×1920', hookDark:'$1.99/day', hookClean:'$1.99/day', aspect:'story' },
-    { num:'10', name:'Coupon SAVE20', type:'Story', size:'1080×1920', hookDark:'20%', hookClean:'20%', aspect:'story' },
-    { num:'11', name:'Brand Overview', type:'GMB', size:'1200×900', hookDark:"Orlando's #1", hookClean:"Orlando's #1", aspect:'gmb' },
-    { num:'12', name:'Free Delivery', type:'GMB', size:'1200×900', hookDark:'We Come To You.', hookClean:'We Come To You.', aspect:'gmb' },
+// ===== CAPTION DATA =====
+const captionsDC = [
+  { primary:"Never do laundry again. From $1.99/day, we pick up, wash, fold and deliver to your door in 24h. Orlando's #1 laundry subscription. No contracts. Buy 1 bag get 1 FREE with code FIRSTBAG.", headline:"Never Do Laundry Again | From $1.99/day" },
+  { primary:"240 hours a year. That's how much time the average person spends on laundry. What would you do with 10 extra days? We handle everything — pickup, wash, fold, deliver. Plans from $1.99/day.", headline:"240 Hours/Year — We'll Give Them Back" },
+  { primary:"Buy 1 bag, get 1 FREE. Use code FIRSTBAG at checkout. Limited time offer — no contracts, cancel anytime. Free pickup & delivery in Orlando.", headline:"Buy 1 Bag Get 1 FREE | Code: FIRSTBAG" },
+  { primary:"4.9-star rating. 2,000+ Orlando families trust A7 Laundry. 'I was already spending MORE than the Family plan' — Sarah M., Orlando. Join them today.", headline:"4.9 Stars | 2,000+ Families Trust Us" },
+  { primary:"20% OFF your first month. Any plan. Use code SAVE20. No contracts, no catch. Free pickup & delivery in Orlando.", headline:"20% OFF First Month | Code: SAVE20" },
+  { primary:"3 steps to laundry freedom: 1) Fill the bag 2) Leave at your door 3) Fresh in 24h. It's that simple. Plans from $1.99/day.", headline:"3 Steps to Freedom | Laundry Made Simple" },
+  { primary:"Stop wasting your weekends on laundry. Let us handle it — from $1.99/day. Free pickup & delivery. No contracts.", headline:"Stop Wasting Weekends | $1.99/day" },
+  { primary:"Buy 1 bag, get 1 FREE. Use code FIRSTBAG. No contracts, cancel anytime. Free pickup & delivery in Orlando.", headline:"FREE BAG — Buy 1 Get 1 | Code FIRSTBAG" },
+  { primary:"Your daily coffee costs more than our laundry service. Plans from $1.99/day. Free pickup & delivery.", headline:"Less Than Your Coffee | $1.99/day" },
+  { primary:"20% OFF your first month. Any plan. Use code SAVE20. No contracts. Free pickup & delivery in Orlando.", headline:"20% OFF Any Plan | Code SAVE20" },
+  { primary:"Orlando's #1 laundry subscription. Wash & fold, dry cleaning, free delivery. Plans from $59.90/mo. 4.9 stars, 2,000+ families.", headline:"Orlando's #1 Laundry | 4.9 Stars" },
+  { primary:"Free pickup & delivery in Orlando, Kissimmee, Winter Park, Dr. Phillips, Lake Nona. Plans from $59.90/mo. No contracts.", headline:"Free Delivery Across Orlando" },
+];
+
+const captionsImpact = [
+  { primary:"Your washing machine is stealing your life. 240 hours a year on laundry. That's 10 full days. Gone. We'll give them back. Plans from $1.99/day.", headline:"Reclaim 240 Hours of Your Life" },
+  { primary:"You're spending $120+/month on laundry. We do it all for $59.90. The math doesn't lie. Free pickup & delivery.", headline:"Was $120 → Now $59.90/mo" },
+  { primary:"Buy 1 bag, get 1 FREE. Code FIRSTBAG. Only available for the first 47 new members this month. No contracts.", headline:"Buy 1 Get 1 FREE — Only 47 Spots Left" },
+  { primary:"2,847 Orlando families never touch laundry again. 4.9-star rating. Join them today. Plans from $1.99/day.", headline:"Join 2,847+ Orlando Families" },
+  { primary:"20% OFF your first month. Code SAVE20. This offer expires tonight. No contracts. Free pickup & delivery.", headline:"20% OFF — Expires Tonight" },
+  { primary:"You're losing $2,400/year doing your own laundry. Time + supplies + energy + stress. Plans start at $59.90/month.", headline:"Stop Losing $2,400/Year" },
+  { primary:"WAIT. You're still doing your own laundry? 240 hours a year — gone. Plans from $1.99/day. Break the cycle.", headline:"Break The Laundry Cycle" },
+  { primary:"FREE BAG — ending soon. Buy 1 bag, get 1 FREE with code FIRSTBAG. Limited spots. Claim yours before time runs out.", headline:"Claim Your Free Bag" },
+  { primary:"Costs less than Netflix. From $1.99/day — free pickup, wash, fold & delivery. No contracts.", headline:"Less Than Netflix" },
+  { primary:"LAST CHANCE: 20% OFF. Code SAVE20 before midnight. Any plan. No contracts.", headline:"Last Chance: 20% OFF" },
+  { primary:"Orlando's most trusted laundry. 4.9 stars, 2,847+ families. Free pickup & delivery. Plans from $59.90/mo.", headline:"Orlando's Most Trusted" },
+  { primary:"Free delivery. Zero effort. Limited spots available. Plans from $59.90/mo. Orlando, Kissimmee, Winter Park.", headline:"Free Delivery, Zero Effort" },
+];
+
+const hashtags = "#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #LaundrySubscription #NeverDoLaundryAgain #FreeLaundryPickup #OrlandoFL";
+
+// Creative names per slot
+const slotNames = [
+  '01 Hero','02 Pain Point','03 BOGO','04 Social Proof','05 20% OFF','06 How It Works',
+  '07 Stop','08 BOGO Story','09 Pricing','10 20% OFF Story',
+  '11 Brand GMB','12 Delivery GMB'
+];
+
+// Flat list of all creatives for lightbox navigation
+const allCreatives = [];
+
+async function loadDeck(file) {
+  const resp = await fetch(file);
+  const html = await resp.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const templates = [];
+  for (let i = 0; i < 12; i++) {
+    const tpl = doc.getElementById('tpl-' + i);
+    templates.push(tpl ? tpl.innerHTML : '');
+  }
+  return templates;
+}
+
+async function init() {
+  const [
+    darkTpls, cleanTpls, impactTpls, lifestyleTpls,
+    gradientTpls, minimalTpls, neonTpls, splitTpls,
+    retroTpls, glassTpls, boldtypeTpls, duotoneTpls,
+    editorialTpls, socialTpls
+  ] = await Promise.all([
+    loadDeck('index.html'),
+    loadDeck('clean.html'),
+    loadDeck('impact.html'),
+    loadDeck('lifestyle.html'),
+    loadDeck('gradient.html'),
+    loadDeck('minimal.html'),
+    loadDeck('neon.html'),
+    loadDeck('split.html'),
+    loadDeck('retro.html'),
+    loadDeck('glass.html'),
+    loadDeck('boldtype.html'),
+    loadDeck('duotone.html'),
+    loadDeck('editorial.html'),
+    loadDeck('social.html'),
+  ]);
+
+  const systems = [
+    { key:'dark', label:'Dark Nike', badge:'badge-dark', link:'index.html', tpls:darkTpls, captions:captionsDC },
+    { key:'clean', label:'Clean', badge:'badge-clean', link:'clean.html', tpls:cleanTpls, captions:captionsDC },
+    { key:'impact', label:'Impact', badge:'badge-impact', link:'impact.html', tpls:impactTpls, captions:captionsImpact },
+    { key:'lifestyle', label:'Lifestyle', badge:'badge-lifestyle', link:'lifestyle.html', tpls:lifestyleTpls, captions:captionsDC },
+    { key:'gradient', label:'Gradient', badge:'badge-gradient', link:'gradient.html', tpls:gradientTpls, captions:captionsDC },
+    { key:'minimal', label:'Minimal', badge:'badge-minimal', link:'minimal.html', tpls:minimalTpls, captions:captionsDC },
+    { key:'neon', label:'Neon', badge:'badge-neon', link:'neon.html', tpls:neonTpls, captions:captionsDC },
+    { key:'split', label:'Split', badge:'badge-split', link:'split.html', tpls:splitTpls, captions:captionsDC },
+    { key:'retro', label:'Retro', badge:'badge-retro', link:'retro.html', tpls:retroTpls, captions:captionsDC },
+    { key:'glass', label:'Glass', badge:'badge-glass', link:'glass.html', tpls:glassTpls, captions:captionsDC },
+    { key:'boldtype', label:'Bold Type', badge:'badge-boldtype', link:'boldtype.html', tpls:boldtypeTpls, captions:captionsDC },
+    { key:'duotone', label:'Duotone', badge:'badge-duotone', link:'duotone.html', tpls:duotoneTpls, captions:captionsDC },
+    { key:'editorial', label:'Editorial', badge:'badge-editorial', link:'editorial.html', tpls:editorialTpls, captions:captionsImpact },
+    { key:'social', label:'Social', badge:'badge-social', link:'social.html', tpls:socialTpls, captions:captionsImpact },
   ];
 
-  const typeClass = t => t === 'Feed' ? 'type-feed' : t === 'Story' ? 'type-story' : 'type-gmb';
+  const formats = [
+    { name:'feed', slots:[0,1,2,3,4,5], thumbClass:'feed-thumb',
+      rowIds:['feedDark','feedClean','feedImpact','feedLifestyle','feedGradient','feedMinimal','feedNeon','feedSplit','feedRetro','feedGlass','feedBoldtype','feedDuotone','feedEditorial','feedSocial'],
+      size:{w:1080,h:1080}, type:'Feed', sizeLabel:'1080x1080' },
+    { name:'story', slots:[6,7,8,9], thumbClass:'story-thumb',
+      rowIds:['storyDark','storyClean','storyImpact','storyLifestyle','storyGradient','storyMinimal','storyNeon','storySplit','storyRetro','storyGlass','storyBoldtype','storyDuotone','storyEditorial','storySocial'],
+      size:{w:1080,h:1920}, type:'Story', sizeLabel:'1080x1920' },
+    { name:'gmb', slots:[10,11], thumbClass:'gmb-thumb',
+      rowIds:['gmbDark','gmbClean','gmbImpact','gmbLifestyle','gmbGradient','gmbMinimal','gmbNeon','gmbSplit','gmbRetro','gmbGlass','gmbBoldtype','gmbDuotone','gmbEditorial','gmbSocial'],
+      size:{w:1200,h:900}, type:'GMB', sizeLabel:'1200x900' },
+  ];
 
-  // Dark cards
-  const gridDark = document.getElementById('gridDark');
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="card-preview ${item.aspect}">
-        <div class="card-preview-inner mini-dark">
-          <div class="glow" style="top:20%;right:10%"></div>
-          <small>A7 LAUNDRY</small>
-          <h5>${item.hookDark.includes('FREE') ? item.hookDark.replace('FREE','<span class="accent">FREE</span>') : item.hookDark.includes('Freedom') ? item.hookDark.replace('Freedom','<span class="accent">Freedom</span>') : item.hookDark.includes('%') ? '<span class="accent">' + item.hookDark + '</span>' : item.hookDark}</h5>
-          <small style="color:#2563eb;font-weight:600">a7laundry.com</small>
-        </div>
-      </div>
-      <div class="card-info">
-        <h4>${item.num}. ${item.name}</h4>
-        <p>${item.hookDark}</p>
-        <div class="card-badges">
-          <span class="${typeClass(item.type)}">${item.type}</span>
-          <span class="size-tag">${item.size}</span>
-        </div>
-      </div>
-    `;
-    gridDark.appendChild(card);
-  });
+  formats.forEach(fmt => {
+    systems.forEach((sys, sysIdx) => {
+      const row = document.getElementById(fmt.rowIds[sysIdx]);
+      if (!row) return;
 
-  // Clean cards
-  const gridClean = document.getElementById('gridClean');
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="card-preview ${item.aspect}">
-        <div class="card-preview-inner mini-clean">
-          <div class="strip"></div>
-          <div class="blob" style="top:15%;right:5%"></div>
-          <small>A7 LAUNDRY</small>
-          <h5>${item.hookClean.includes('FREE') ? item.hookClean.replace('FREE','<span class="accent">FREE</span>') : item.hookClean.includes('Freedom') ? item.hookClean.replace('Freedom','<span class="accent">Freedom</span>') : item.hookClean.includes('%') ? '<span class="accent">' + item.hookClean + '</span>' : item.hookClean}</h5>
-          <small style="color:#2563eb;font-weight:600">a7laundry.com</small>
-        </div>
-      </div>
-      <div class="card-info">
-        <h4>${item.num}. ${item.name}</h4>
-        <p>${item.hookClean}</p>
-        <div class="card-badges">
-          <span class="${typeClass(item.type)}">${item.type}</span>
-          <span class="size-tag">${item.size}</span>
-        </div>
-      </div>
-    `;
-    gridClean.appendChild(card);
+      // System label
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'system-label';
+      labelDiv.innerHTML = `<span class="badge ${sys.badge}">${sys.label.toUpperCase()}</span><a href="${sys.link}">Abrir Deck →</a>`;
+      row.appendChild(labelDiv);
+
+      // Thumb grid
+      const grid = document.createElement('div');
+      grid.className = 'thumb-grid';
+
+      fmt.slots.forEach(slot => {
+        const globalIdx = allCreatives.length;
+        allCreatives.push({
+          system: sys.label,
+          systemKey: sys.key,
+          slot,
+          name: slotNames[slot],
+          type: fmt.type,
+          size: fmt.size,
+          sizeLabel: fmt.sizeLabel,
+          html: sys.tpls[slot],
+          caption: sys.captions[slot],
+        });
+
+        const thumb = document.createElement('div');
+        thumb.className = `panel-thumb ${fmt.thumbClass}`;
+        thumb.onclick = () => openLightbox(globalIdx);
+        thumb.innerHTML = `
+          <div class="thumb-inner"><div class="sys-${sys.key}">${sys.tpls[slot]}</div></div>
+          <div class="thumb-label">${slotNames[slot]}</div>
+        `;
+        grid.appendChild(thumb);
+      });
+
+      row.appendChild(grid);
+    });
   });
+}
+
+// ===== LIGHTBOX =====
+let currentLbIndex = -1;
+
+function openLightbox(index) {
+  currentLbIndex = index;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+  currentLbIndex = -1;
+}
+
+function navLightbox(dir) {
+  currentLbIndex = (currentLbIndex + dir + allCreatives.length) % allCreatives.length;
+  renderLightbox();
+}
+
+function renderLightbox() {
+  const c = allCreatives[currentLbIndex];
+  const frame = document.getElementById('lbFrame');
+  const info = document.getElementById('lbInfo');
+  const caption = document.getElementById('lbCaption');
+
+  frame.innerHTML = `<div class="sys-${c.systemKey}">${c.html}</div>`;
+  info.innerHTML = `<strong>${c.system}</strong> · ${c.type} ${c.sizeLabel} · ${c.name} · ${currentLbIndex + 1}/${allCreatives.length}`;
+
+  // Scale creative
+  const vw = window.innerWidth - 120;
+  const vh = window.innerHeight - 260;
+  const scaleX = vw / c.size.w;
+  const scaleY = vh / c.size.h;
+  const scale = Math.min(scaleX, scaleY, 1);
+  frame.style.transform = `scale(${scale})`;
+  frame.style.width = c.size.w + 'px';
+  frame.style.height = c.size.h + 'px';
+  frame.style.transformOrigin = 'center center';
+
+  // Caption
+  const cap = c.caption;
+  caption.innerHTML = `
+    <div class="caption-row"><span class="caption-label">Primary Text</span><button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+    <p class="caption-text">${cap.primary}</p>
+    <div class="caption-row"><span class="caption-label">Headline</span><button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+    <p class="caption-text">${cap.headline}</p>
+    <div class="caption-row"><span class="caption-label">Hashtags</span><button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+    <p class="caption-tags">${hashtags}</p>
+  `;
+}
+
+// Keyboard nav
+document.addEventListener('keydown', (e) => {
+  if (currentLbIndex === -1) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') navLightbox(1);
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+});
+
+// Close lightbox on backdrop click
+document.getElementById('lightbox').addEventListener('click', (e) => {
+  if (e.target.id === 'lightbox') closeLightbox();
+});
+
+// Touch swipe for mobile lightbox
+let touchStartX = 0;
+document.getElementById('lightbox').addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, {passive: true});
+document.getElementById('lightbox').addEventListener('touchend', (e) => {
+  const diff = e.changedTouches[0].screenX - touchStartX;
+  if (Math.abs(diff) > 50) {
+    navLightbox(diff > 0 ? -1 : 1);
+  }
+}, {passive: true});
+
+function copyText(btn) {
+  const text = btn.closest('.caption-row').nextElementSibling.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.color = '#10b981';
+    setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 2000);
+  });
+}
+
+// Initialize
+init();
 </script>
 </body>
 </html>

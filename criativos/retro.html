@@ -3,53 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A7 Laundry — Clean Laundry System (12 Ads)</title>
+<title>A7 Laundry — Retro System (12 Ads)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Inter',sans-serif;background:#f0f4f8;color:#0a0f1a;min-height:100vh}
+  body{font-family:'Inter',sans-serif;background:#fef3c7;color:#451a03;min-height:100vh}
 
   /* ===== VIEWER UI ===== */
-  .ui-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.06);padding:16px 32px;display:flex;align-items:center;gap:20px}
-  .ui-bar h1{font-size:14px;font-weight:700;white-space:nowrap;color:#0a0f1a}
-  .ui-bar h1 span{color:#2563eb}
+  .ui-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,243,199,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(69,26,3,.08);padding:16px 32px;display:flex;align-items:center;gap:20px}
+  .ui-bar h1{font-size:14px;font-weight:700;white-space:nowrap;color:#451a03}
+  .ui-bar h1 span{color:#d97706}
   .ui-tabs{display:flex;gap:6px;overflow-x:auto;flex:1;padding:4px 0}
   .ui-tabs::-webkit-scrollbar{display:none}
-  .ui-tab{padding:8px 16px;border-radius:4px;border:1px solid rgba(0,0,0,.08);background:#fff;color:rgba(0,0,0,.4);font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;font-family:inherit}
-  .ui-tab:hover{border-color:rgba(0,0,0,.15);color:#0a0f1a}
-  .ui-tab.active{background:#2563eb;border-color:#2563eb;color:#fff}
+  .ui-tab{padding:8px 16px;border-radius:12px;border:1px solid rgba(69,26,3,.1);background:#fffbeb;color:rgba(69,26,3,.4);font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;font-family:inherit}
+  .ui-tab:hover{border-color:rgba(69,26,3,.2);color:#451a03}
+  .ui-tab.active{background:#d97706;border-color:#d97706;color:#fff}
   .ui-tab .tab-type{font-size:9px;opacity:.6;display:block;margin-top:2px}
-  .ui-info{font-size:11px;color:rgba(0,0,0,.35);white-space:nowrap}
-  .ui-export{padding:10px 20px;background:#2563eb;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
-  .ui-export:hover{background:#1d4ed8}
-  .ui-label{padding:4px 10px;background:#e0f2fe;color:#2563eb;border-radius:4px;font-size:10px;font-weight:700;white-space:nowrap}
+  .ui-info{font-size:11px;color:rgba(69,26,3,.35);white-space:nowrap}
+  .ui-export{padding:10px 20px;background:#d97706;color:#fff;border:none;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
+  .ui-export:hover{background:#b45309}
+  .ui-label{padding:4px 10px;background:rgba(217,119,6,.12);color:#d97706;border-radius:12px;font-size:10px;font-weight:700;white-space:nowrap}
 
   /* ===== GALLERY ===== */
   .gallery{padding:100px 32px 60px;max-width:1400px;margin:0 auto}
-  .gallery-title{font-size:32px;font-weight:800;margin-bottom:8px;color:#0a0f1a}
-  .gallery-sub{font-size:14px;color:rgba(0,0,0,.4);margin-bottom:40px}
+  .gallery-title{font-size:32px;font-weight:800;margin-bottom:8px;color:#451a03}
+  .gallery-sub{font-size:14px;color:rgba(69,26,3,.4);margin-bottom:40px}
   .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
-  .gallery-card{cursor:pointer;border:1px solid rgba(0,0,0,.06);border-radius:8px;overflow:hidden;transition:.3s;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-  .gallery-card:hover{border-color:#2563eb;transform:translateY(-4px);box-shadow:0 12px 40px rgba(37,99,235,.12)}
+  .gallery-card{cursor:pointer;border:1px solid rgba(180,120,40,.1);border-radius:12px;overflow:hidden;transition:.3s;background:#fffbeb;box-shadow:0 1px 3px rgba(69,26,3,.04)}
+  .gallery-card:hover{border-color:#d97706;transform:translateY(-4px);box-shadow:0 12px 40px rgba(217,119,6,.12)}
   .gallery-thumb{width:100%;aspect-ratio:1;overflow:hidden;position:relative}
   .gallery-thumb.story{aspect-ratio:9/16}
   .gallery-thumb.gmb{aspect-ratio:4/3}
   .gallery-card-info{padding:16px}
-  .gallery-card-info h3{font-size:13px;font-weight:700;margin-bottom:4px;color:#0a0f1a}
-  .gallery-card-info p{font-size:11px;color:rgba(0,0,0,.4)}
-  .gallery-card-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:9px;font-weight:700;margin-top:8px}
-  .badge-feed{background:#e0f2fe;color:#2563eb}
-  .badge-story{background:#f3e8ff;color:#a855f7}
-  .badge-gmb{background:#dcfce7;color:#16a34a}
+  .gallery-card-info h3{font-size:13px;font-weight:700;margin-bottom:4px;color:#451a03}
+  .gallery-card-info p{font-size:11px;color:rgba(69,26,3,.4)}
+  .gallery-card-badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:9px;font-weight:700;margin-top:8px}
+  .badge-feed{background:rgba(217,119,6,.12);color:#d97706}
+  .badge-story{background:rgba(168,85,247,.12);color:#a855f7}
+  .badge-gmb{background:rgba(34,197,94,.12);color:#16a34a}
 
   /* ===== SINGLE VIEW ===== */
-  .single-view{display:none;padding:100px 32px 60px;min-height:100vh;align-items:center;justify-content:center;background:#e8ecf1}
+  .single-view{display:none;padding:100px 32px 60px;min-height:100vh;align-items:center;justify-content:center;background:#fef3c7}
   .single-view.active{display:flex;flex-direction:column;gap:32px}
-  .creative-frame{position:relative;box-shadow:0 8px 60px rgba(0,0,0,.12);border-radius:4px;overflow:hidden}
+  .creative-frame{position:relative;box-shadow:0 8px 60px rgba(69,26,3,.12);border-radius:12px;overflow:hidden}
   .gallery.hidden{display:none}
 
   /* ===== CREATIVE BASE ===== */
-  .creative{position:relative;overflow:hidden;font-family:'Inter',sans-serif}
+  .creative{position:relative;overflow:hidden;font-family:'Inter',sans-serif;border-radius:12px}
   .creative *{box-sizing:border-box}
   .size-feed{width:1080px;height:1080px}
   .size-story{width:1080px;height:1920px}
@@ -59,96 +59,82 @@
   .gallery-thumb.story .size-story{transform:scale(calc(280/1080))}
   .gallery-thumb.gmb .size-gmb{transform:scale(calc(280/1200))}
 
-  /* ===== CLEAN LAUNDRY DESIGN TOKENS ===== */
+  /* ===== RETRO DESIGN TOKENS ===== */
   .c-content{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;padding:80px}
   .c-logo{max-width:160px;height:auto;margin-bottom:auto}
   .c-logo-sm{max-width:120px;height:auto}
   .c-logo-dark{filter:none}
-  .c-logo-white{filter:brightness(0) invert(1)}
+  .c-logo-light{filter:brightness(0) invert(1)}
 
-  /* Clean system: bold type on white */
-  .c-hook{font-weight:800;line-height:.92;letter-spacing:-3px;color:#0a0f1a}
-  .c-hook-white{color:#fff}
-  .c-sub{color:rgba(0,0,0,.45);line-height:1.5}
-  .c-sub-white{color:rgba(255,255,255,.6)}
+  /* Typography */
+  .c-hook{color:#451a03;font-weight:800;line-height:.92;letter-spacing:-2px}
+  .c-hook-cream{color:#fef3c7}
+  .c-sub{color:rgba(69,26,3,.5);line-height:1.5}
+  .c-sub-cream{color:rgba(254,243,199,.6)}
 
   /* Buttons */
-  .c-cta{display:inline-flex;align-items:center;gap:12px;padding:24px 48px;background:#2563eb;color:#fff;border-radius:4px;font-weight:800;font-size:24px}
-  .c-cta-white{background:#fff;color:#2563eb}
-  .c-cta-outline-dark{background:transparent;border:2px solid rgba(0,0,0,.1);color:#0a0f1a}
-  .c-cta-outline-white{background:transparent;border:2px solid rgba(255,255,255,.25);color:#fff}
-
-  /* Coupon */
-  .c-coupon{display:inline-block;padding:20px 40px;border:2px dashed #2563eb;border-radius:4px;font-size:36px;font-weight:800;letter-spacing:6px;color:#2563eb;background:rgba(37,99,235,.04)}
-  .c-coupon-white{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.08)}
+  .c-cta{display:inline-flex;align-items:center;gap:12px;padding:24px 48px;background:#d97706;color:#fff;border-radius:12px;font-weight:800;font-size:24px}
+  .c-cta-outline{background:transparent;border:2px solid rgba(69,26,3,.15);color:#451a03;border-radius:12px}
+  .c-cta-cream{background:#fef3c7;color:#451a03;border-radius:12px}
 
   /* Badge */
-  .c-badge{display:inline-block;padding:10px 24px;background:#e0f2fe;color:#2563eb;border-radius:4px;font-size:18px;font-weight:700}
-  .c-badge-dark{background:rgba(37,99,235,.15);color:#3b82f6}
+  .c-badge{display:inline-block;padding:10px 24px;background:rgba(217,119,6,.12);color:#d97706;border-radius:12px;font-size:18px;font-weight:700}
+  .c-badge-dark{background:rgba(217,119,6,.2);color:#f59e0b;border-radius:12px}
+
+  /* Coupon */
+  .c-coupon{display:inline-block;padding:20px 40px;border:2px dashed #d97706;color:#d97706;background:rgba(217,119,6,.06);border-radius:12px;font-size:36px;font-weight:800;letter-spacing:6px}
+  .c-coupon-cream{border-color:rgba(254,243,199,.4);color:#fef3c7;background:rgba(254,243,199,.08);border-radius:12px}
 
   /* Stars */
   .c-stars{color:#f59e0b;font-size:36px;letter-spacing:4px}
 
   /* Divider */
-  .c-divider{width:60px;height:3px;background:#2563eb;margin:20px 0}
+  .c-divider{width:60px;height:3px;background:#d97706;border-radius:2px;margin:20px 0}
 
   /* Footer */
   .c-footer{margin-top:auto;display:flex;align-items:center;justify-content:space-between}
-  .c-url{font-size:20px;font-weight:600;color:rgba(0,0,0,.25)}
-  .c-url-white{color:rgba(255,255,255,.3)}
-  .c-phone{font-size:20px;font-weight:700;color:#2563eb}
-  .c-phone-white{color:rgba(255,255,255,.6)}
+  .c-url{font-size:20px;font-weight:600;color:rgba(69,26,3,.3)}
+  .c-url-cream{color:rgba(254,243,199,.35)}
+  .c-phone{font-size:20px;font-weight:700;color:#d97706}
+  .c-phone-cream{color:rgba(254,243,199,.6)}
 
-  /* Soft blobs */
-  .blob{position:absolute;border-radius:50%;filter:blur(140px);opacity:.35}
-  .blob-blue{background:#93c5fd}
-  .blob-cyan{background:#67e8f9}
-  .blob-violet{background:#c4b5fd}
-  .blob-rose{background:#fda4af}
-
-  /* Big watermark number */
-  .c-num{font-size:200px;font-weight:900;line-height:1;color:#2563eb;opacity:.05;position:absolute}
-  .c-num-dark{color:#0a0f1a}
+  /* Number watermark */
+  .c-num{font-size:200px;font-weight:900;line-height:1;color:#d97706;opacity:.06;position:absolute}
 
   /* Steps */
   .c-step{display:flex;align-items:flex-start;gap:24px;margin-bottom:32px}
-  .c-step-num{width:56px;height:56px;border-radius:4px;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0}
-  .c-step-text h4{font-size:28px;font-weight:800;color:#0a0f1a;margin-bottom:4px}
-  .c-step-text p{font-size:20px;color:rgba(0,0,0,.4)}
+  .c-step-num{width:56px;height:56px;border-radius:12px;background:#d97706;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0}
+  .c-step-text h4{font-size:28px;font-weight:800;color:#451a03;margin-bottom:4px}
+  .c-step-text p{font-size:20px;color:rgba(69,26,3,.4)}
 
   /* Quote */
-  .c-quote{font-size:28px;font-weight:500;color:rgba(0,0,0,.65);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #2563eb}
+  .c-quote{font-size:28px;font-weight:500;color:rgba(69,26,3,.55);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #d97706}
 
-  /* Accent strip (top bar on some creatives) */
-  .accent-strip{position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#2563eb,#3b82f6,#60a5fa);z-index:5}
+  /* Grain texture */
+  .grain::after{content:'';position:absolute;inset:0;z-index:3;opacity:.04;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
 
   /* Toast */
-  .export-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(0,0,0,.08);padding:16px 32px;border-radius:8px;font-size:13px;color:rgba(0,0,0,.5);z-index:200;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+  .export-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#fffbeb;border:1px solid rgba(69,26,3,.08);padding:16px 32px;border-radius:12px;font-size:13px;color:rgba(69,26,3,.5);z-index:200;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(69,26,3,.08)}
   .export-toast.show{display:block}
-  .export-toast kbd{background:#f1f5f9;padding:2px 8px;border-radius:3px;font-size:12px;color:#0a0f1a;border:1px solid rgba(0,0,0,.08)}
-
-  /* Photo section helpers */
-  .photo-half{position:absolute;top:0;right:0;width:45%;height:100%;z-index:0}
-  .photo-half img{width:100%;height:100%;object-fit:cover}
-  .photo-half-fade{position:absolute;inset:0;background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,0) 100%);z-index:1}
+  .export-toast kbd{background:#fef3c7;padding:2px 8px;border-radius:6px;font-size:12px;color:#451a03;border:1px solid rgba(69,26,3,.1)}
 
   /* ===== CAPTIONS ===== */
-  .creative-caption{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:4px;padding:24px;margin-top:16px;max-width:700px;width:100%;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .creative-caption{background:#fffbeb;border:1px solid rgba(180,120,40,.1);border-radius:12px;padding:24px;margin-top:16px;max-width:700px;width:100%;box-shadow:0 1px 3px rgba(69,26,3,.04)}
   .caption-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-  .caption-label{font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px}
-  .copy-btn{padding:4px 12px;background:#f1f5f9;border:1px solid rgba(0,0,0,.08);border-radius:3px;color:rgba(0,0,0,.4);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
-  .copy-btn:hover{background:#e0f2fe;color:#2563eb;border-color:rgba(37,99,235,.2)}
-  .caption-text{font-size:13px;color:rgba(0,0,0,.55);line-height:1.6;margin-bottom:16px}
+  .caption-label{font-size:11px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:1px}
+  .copy-btn{padding:4px 12px;background:#fef3c7;border:1px solid rgba(69,26,3,.08);border-radius:6px;color:rgba(69,26,3,.4);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+  .copy-btn:hover{background:rgba(217,119,6,.12);color:#d97706;border-color:rgba(217,119,6,.3)}
+  .caption-text{font-size:13px;color:rgba(69,26,3,.55);line-height:1.6;margin-bottom:16px}
   .caption-text:last-child{margin-bottom:0}
-  .caption-tags{font-size:12px;color:rgba(37,99,235,.45);margin-bottom:0;word-break:break-all}
+  .caption-tags{font-size:12px;color:rgba(217,119,6,.5);margin-bottom:0;word-break:break-all}
 </style>
 </head>
 <body>
 
 <!-- ===== TOP BAR ===== -->
 <div class="ui-bar">
-  <h1>A7 <span>Clean System</span></h1>
-  <span class="ui-label">CLEAN LAUNDRY</span>
+  <h1>A7 <span>Retro System</span></h1>
+  <span class="ui-label">RETRO</span>
   <div class="ui-tabs">
     <button class="ui-tab active" onclick="showGallery()">All 12</button>
     <button class="ui-tab" data-index="0">01 Hero<span class="tab-type">Feed</span></button>
@@ -170,9 +156,9 @@
 
 <!-- ===== GALLERY ===== -->
 <div class="gallery" id="gallery">
-  <h2 class="gallery-title">Clean Laundry System</h2>
-  <p class="gallery-sub">Variacao light/clean — Meta Ads · Google Ads · Instagram · Google Meu Negocio</p>
-  <p class="gallery-sub" style="margin-top:-30px;margin-bottom:30px">Cupons: <strong style="color:#2563eb">FIRSTBAG</strong> (Buy 1 Get 1 FREE) · <strong style="color:#2563eb">SAVE20</strong> (20% OFF 1o mes)</p>
+  <h2 class="gallery-title">Retro System</h2>
+  <p class="gallery-sub">Vintage warmth — Meta Ads · Google Ads · Instagram · Google Meu Negocio</p>
+  <p class="gallery-sub" style="margin-top:-30px;margin-bottom:30px">Cupons: <strong style="color:#d97706">FIRSTBAG</strong> (Buy 1 Get 1 FREE) · <strong style="color:#d97706">SAVE20</strong> (20% OFF 1o mes)</p>
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
@@ -191,67 +177,60 @@
 <!--                     12 CREATIVE TEMPLATES                        -->
 <!-- ================================================================ -->
 
-<!-- ==================== FEED 01: HERO — CLEAN WHITE ==================== -->
+<!-- ==================== FEED 01: HERO — CREAM ==================== -->
 <template id="tpl-0">
-<div class="creative size-feed" style="background:#ffffff">
-  <div class="accent-strip"></div>
-  <div class="blob blob-blue" style="width:500px;height:500px;right:-150px;top:-100px"></div>
-  <div class="blob blob-cyan" style="width:300px;height:300px;left:-80px;bottom:100px;opacity:.2"></div>
+<div class="creative size-feed grain" style="background:#fef3c7">
   <div class="c-content">
     <img src="../A7 LAUNDRY-05.png" class="c-logo c-logo-dark" alt="A7 Laundry">
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
       <div class="c-badge" style="margin-bottom:32px;align-self:flex-start">Orlando's #1 Laundry Subscription</div>
       <h2 class="c-hook" style="font-size:108px;margin-bottom:24px">Never Do<br>Laundry Again.</h2>
-      <p class="c-sub" style="font-size:28px;margin-bottom:48px">From <strong style="color:#0a0f1a">$1.99/day</strong>. Free pickup & delivery. No contracts.</p>
+      <p class="c-sub" style="font-size:28px;margin-bottom:48px">From <strong style="color:#451a03">$1.99/day</strong>. Free pickup & delivery. No contracts.</p>
       <div style="display:flex;gap:16px">
         <div class="c-cta">Call (407) 670-8839</div>
-        <div class="c-cta c-cta-outline-dark">View Plans →</div>
+        <div class="c-cta c-cta-outline">View Plans →</div>
       </div>
     </div>
     <div class="c-footer">
       <span class="c-url">a7laundry.com</span>
-      <span style="font-size:18px;color:rgba(0,0,0,.25)">★ 4.9 · 2,000+ Families</span>
+      <span style="font-size:18px;color:rgba(69,26,3,.25)">★ 4.9 · 2,000+ Families</span>
     </div>
   </div>
 </div>
 </template>
 
-<!-- ==================== FEED 02: PAIN POINT — CLEAN ==================== -->
+<!-- ==================== FEED 02: PAIN POINT — DARK BROWN ==================== -->
 <template id="tpl-1">
-<div class="creative size-feed" style="background:#f8fafc">
-  <div class="c-num c-num-dark" style="right:-20px;top:50%;transform:translateY(-50%);font-size:320px;opacity:.03">240</div>
-  <div class="blob blob-blue" style="width:400px;height:400px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.15"></div>
+<div class="creative size-feed grain" style="background:#451a03">
+  <div class="c-num" style="right:-20px;top:50%;transform:translateY(-50%);font-size:320px;opacity:.06;color:#d97706">240</div>
   <div class="c-content">
-    <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-dark" alt="A7 Laundry">
+    <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-light" alt="A7 Laundry">
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
-      <p style="font-size:24px;margin-bottom:16px;color:#2563eb;font-weight:700">The average American spends</p>
-      <h2 class="c-hook" style="font-size:140px;margin-bottom:16px">240<span style="font-size:60px;opacity:.3">hrs/yr</span></h2>
-      <h3 style="font-size:48px;font-weight:800;color:#0a0f1a;margin-bottom:12px">doing laundry.</h3>
+      <p style="font-size:24px;margin-bottom:16px;color:#d97706;font-weight:700">The average American spends</p>
+      <h2 class="c-hook c-hook-cream" style="font-size:140px;margin-bottom:16px">240<span style="font-size:60px;opacity:.4">hrs/yr</span></h2>
+      <h3 style="font-size:48px;font-weight:800;color:#fef3c7;margin-bottom:12px">doing laundry.</h3>
       <div class="c-divider"></div>
-      <p class="c-sub" style="font-size:32px;margin-top:16px">We'll give them back.</p>
-      <p style="font-size:24px;color:#2563eb;font-weight:700;margin-top:40px">Plans from $1.99/day →</p>
+      <p class="c-sub-cream" style="font-size:32px;margin-top:16px">We'll give them back.</p>
+      <p style="font-size:24px;color:#d97706;font-weight:700;margin-top:40px">Plans from $1.99/day →</p>
     </div>
     <div class="c-footer">
-      <span class="c-url">a7laundry.com</span>
-      <span class="c-phone">(407) 670-8839</span>
+      <span class="c-url-cream">a7laundry.com</span>
+      <span class="c-phone-cream">(407) 670-8839</span>
     </div>
   </div>
 </div>
 </template>
 
-<!-- ==================== FEED 03: COUPON FIRSTBAG — CLEAN ==================== -->
+<!-- ==================== FEED 03: COUPON FIRSTBAG — CREAM ==================== -->
 <template id="tpl-2">
-<div class="creative size-feed" style="background:#ffffff">
-  <div class="accent-strip"></div>
-  <div class="blob blob-blue" style="width:700px;height:700px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.15"></div>
-  <div class="blob blob-violet" style="width:300px;height:300px;right:-50px;bottom:-50px;opacity:.15"></div>
+<div class="creative size-feed grain" style="background:#fef3c7">
   <div class="c-content" style="align-items:center;text-align:center;justify-content:center">
     <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-dark" alt="A7 Laundry" style="position:absolute;top:80px;left:80px">
     <div class="c-badge" style="margin-bottom:40px;font-size:22px;padding:14px 32px">LIMITED TIME OFFER</div>
-    <h2 class="c-hook" style="font-size:88px;margin-bottom:16px">Buy 1 Bag,<br>Get 1 <span style="color:#2563eb">FREE</span></h2>
+    <h2 class="c-hook" style="font-size:88px;margin-bottom:16px">Buy 1 Bag,<br>Get 1 <span style="color:#d97706">FREE</span></h2>
     <p class="c-sub" style="font-size:26px;margin-bottom:48px">Your first month of laundry freedom</p>
     <div class="c-coupon" style="margin-bottom:40px">FIRSTBAG</div>
-    <p style="font-size:20px;color:rgba(0,0,0,.3)">No contracts · Cancel anytime · Free delivery</p>
+    <p style="font-size:20px;color:rgba(69,26,3,.3)">No contracts · Cancel anytime · Free delivery</p>
     <div class="c-footer" style="position:absolute;bottom:80px;left:80px;right:80px">
       <span class="c-url">a7laundry.com</span>
       <span class="c-phone">(407) 670-8839</span>
@@ -260,73 +239,71 @@
 </div>
 </template>
 
-<!-- ==================== FEED 04: SOCIAL PROOF — CLEAN ==================== -->
+<!-- ==================== FEED 04: SOCIAL PROOF — LIGHT CREAM ==================== -->
 <template id="tpl-3">
-<div class="creative size-feed" style="background:#fff">
-  <div class="blob blob-cyan" style="width:350px;height:350px;right:-80px;bottom:-80px;opacity:.2"></div>
+<div class="creative size-feed grain" style="background:#fffbeb">
   <div class="c-content">
     <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-dark" alt="A7 Laundry">
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
       <div class="c-stars" style="margin-bottom:16px">★★★★★</div>
       <h2 class="c-hook" style="font-size:72px;margin-bottom:40px">4.9 Rating</h2>
-      <div class="c-quote" style="margin-bottom:40px;color:rgba(0,0,0,.55)">
+      <div class="c-quote" style="margin-bottom:40px">
         "I was already spending MORE than the Family plan on detergent, gas, and laundromat fees. Now our family of 4 has clean clothes all month."
       </div>
-      <p style="font-size:22px;font-weight:700;color:#0a0f1a;margin-bottom:4px">— Sarah M.</p>
+      <p style="font-size:22px;font-weight:700;color:#451a03;margin-bottom:4px">— Sarah M.</p>
       <p class="c-sub" style="font-size:18px">Orlando, FL · Family Plan member</p>
       <div style="margin-top:40px;display:flex;gap:32px;align-items:center">
         <div>
-          <p style="font-size:48px;font-weight:800;color:#2563eb">2,000+</p>
+          <p style="font-size:48px;font-weight:800;color:#d97706">2,000+</p>
           <p class="c-sub" style="font-size:16px">Orlando families</p>
         </div>
-        <div style="width:1px;height:48px;background:rgba(0,0,0,.08)"></div>
+        <div style="width:1px;height:48px;background:rgba(69,26,3,.08)"></div>
         <div>
-          <p style="font-size:48px;font-weight:800;color:#2563eb">24h</p>
+          <p style="font-size:48px;font-weight:800;color:#d97706">24h</p>
           <p class="c-sub" style="font-size:16px">Turnaround</p>
         </div>
-        <div style="width:1px;height:48px;background:rgba(0,0,0,.08)"></div>
+        <div style="width:1px;height:48px;background:rgba(69,26,3,.08)"></div>
         <div>
-          <p style="font-size:48px;font-weight:800;color:#2563eb">$0</p>
+          <p style="font-size:48px;font-weight:800;color:#d97706">$0</p>
           <p class="c-sub" style="font-size:16px">Delivery fee</p>
         </div>
       </div>
     </div>
     <div class="c-footer">
       <span class="c-url">a7laundry.com</span>
-      <span style="font-size:18px;color:rgba(0,0,0,.2)">Join 2,000+ families →</span>
+      <span style="font-size:18px;color:rgba(69,26,3,.25)">Join 2,000+ families →</span>
     </div>
   </div>
 </div>
 </template>
 
-<!-- ==================== FEED 05: COUPON SAVE20 — BLUE ACCENT ==================== -->
+<!-- ==================== FEED 05: COUPON SAVE20 — AMBER FULL ==================== -->
 <template id="tpl-4">
-<div class="creative size-feed" style="background:linear-gradient(135deg,#2563eb 0%,#3b82f6 50%,#60a5fa 100%)">
-  <div class="c-num" style="right:-40px;top:-60px;font-size:400px;opacity:.08;color:#fff">%</div>
+<div class="creative size-feed grain" style="background:#d97706">
+  <div class="c-num" style="right:-40px;top:-60px;font-size:400px;opacity:.1;color:#fff">%</div>
   <div class="c-content" style="align-items:center;text-align:center;justify-content:center">
-    <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-white" alt="A7 Laundry" style="position:absolute;top:80px;left:80px">
-    <h2 class="c-hook c-hook-white" style="font-size:200px;margin-bottom:0">20<span style="font-size:100px">%</span></h2>
+    <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-light" alt="A7 Laundry" style="position:absolute;top:80px;left:80px">
+    <h2 style="font-weight:800;line-height:.92;letter-spacing:-2px;color:#fff;font-size:200px;margin-bottom:0">20<span style="font-size:100px">%</span></h2>
     <h3 style="font-size:56px;font-weight:800;color:rgba(255,255,255,.9);margin-bottom:16px">OFF YOUR FIRST MONTH</h3>
-    <p class="c-sub-white" style="font-size:24px;margin-bottom:48px">Any plan · Cancel anytime · Free pickup & delivery</p>
-    <div class="c-coupon c-coupon-white" style="margin-bottom:40px">SAVE20</div>
-    <div class="c-cta c-cta-white" style="font-size:22px">Claim Offer → a7laundry.com</div>
+    <p style="font-size:24px;margin-bottom:48px;color:rgba(255,255,255,.65)">Any plan · Cancel anytime · Free pickup & delivery</p>
+    <div class="c-coupon-cream" style="display:inline-block;padding:20px 40px;border:2px dashed rgba(254,243,199,.4);font-size:36px;font-weight:800;letter-spacing:6px;margin-bottom:40px">SAVE20</div>
+    <div class="c-cta c-cta-cream" style="font-size:22px;padding:24px 48px">Claim Offer → a7laundry.com</div>
     <div class="c-footer" style="position:absolute;bottom:80px;left:80px;right:80px">
-      <span class="c-url-white">a7laundry.com</span>
-      <span class="c-phone-white">(407) 670-8839</span>
+      <span class="c-url-cream">a7laundry.com</span>
+      <span class="c-phone-cream">(407) 670-8839</span>
     </div>
   </div>
 </div>
 </template>
 
-<!-- ==================== FEED 06: HOW IT WORKS — CLEAN ==================== -->
+<!-- ==================== FEED 06: HOW IT WORKS — CREAM ==================== -->
 <template id="tpl-5">
-<div class="creative size-feed" style="background:#f8fafc">
-  <div class="blob blob-blue" style="width:300px;height:300px;right:40px;top:180px;opacity:.12"></div>
+<div class="creative size-feed grain" style="background:#fef3c7">
   <div class="c-content">
     <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-dark" alt="A7 Laundry">
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
       <div class="c-badge" style="margin-bottom:24px;align-self:flex-start">How It Works</div>
-      <h2 class="c-hook" style="font-size:72px;margin-bottom:56px">3 Steps to<br><span style="color:#2563eb">Freedom.</span></h2>
+      <h2 class="c-hook" style="font-size:72px;margin-bottom:56px">3 Steps to<br><span style="color:#d97706">Freedom.</span></h2>
       <div class="c-step">
         <div class="c-step-num">1</div>
         <div class="c-step-text">
@@ -358,43 +335,37 @@
 </div>
 </template>
 
-<!-- ==================== STORY 07: STOP — CLEAN ==================== -->
+<!-- ==================== STORY 07: STOP — DARK BROWN ==================== -->
 <template id="tpl-6">
-<div class="creative size-story" style="background:#ffffff">
-  <div class="accent-strip"></div>
-  <div class="blob blob-blue" style="width:600px;height:600px;left:50%;top:25%;transform:translate(-50%,-50%);opacity:.2"></div>
-  <div class="blob blob-rose" style="width:300px;height:300px;right:-50px;bottom:20%;opacity:.15"></div>
+<div class="creative size-story grain" style="background:#451a03">
   <div class="c-content" style="padding:120px 80px;justify-content:center;text-align:center;align-items:center">
-    <img src="../A7 LAUNDRY-05.png" class="c-logo-dark" alt="A7 Laundry" style="position:absolute;top:100px;left:50%;transform:translateX(-50%);max-width:130px">
-    <h2 class="c-hook" style="font-size:140px;margin-bottom:40px;letter-spacing:-5px">STOP.</h2>
-    <p style="font-size:44px;font-weight:700;color:rgba(0,0,0,.5);line-height:1.3;margin-bottom:60px">Wasting your weekends<br>on laundry.</p>
+    <img src="../A7 LAUNDRY-05.png" class="c-logo-light" alt="A7 Laundry" style="position:absolute;top:100px;left:50%;transform:translateX(-50%);max-width:130px">
+    <h2 class="c-hook c-hook-cream" style="font-size:140px;margin-bottom:40px;letter-spacing:-5px">STOP.</h2>
+    <p style="font-size:44px;font-weight:700;color:rgba(254,243,199,.5);line-height:1.3;margin-bottom:60px">Wasting your weekends<br>on laundry.</p>
     <div class="c-divider" style="margin:0 auto 60px"></div>
-    <p style="font-size:32px;color:rgba(0,0,0,.35);margin-bottom:80px">Let us handle it.<br>From <strong style="color:#0a0f1a">$1.99/day</strong>.</p>
+    <p style="font-size:32px;color:rgba(254,243,199,.4);margin-bottom:80px">Let us handle it.<br>From <strong style="color:#fef3c7">$1.99/day</strong>.</p>
     <div class="c-cta" style="font-size:28px;padding:28px 56px">Learn More →</div>
     <div style="position:absolute;bottom:100px;left:50%;transform:translateX(-50%)">
-      <p class="c-url" style="font-size:18px">a7laundry.com</p>
+      <p class="c-url-cream" style="font-size:18px">a7laundry.com</p>
     </div>
   </div>
 </div>
 </template>
 
-<!-- ==================== STORY 08: COUPON FIRSTBAG — CLEAN ==================== -->
+<!-- ==================== STORY 08: COUPON FIRSTBAG — CREAM ==================== -->
 <template id="tpl-7">
-<div class="creative size-story" style="background:#fff">
-  <div class="accent-strip"></div>
-  <div class="blob blob-blue" style="width:600px;height:600px;left:50%;top:35%;transform:translate(-50%,-50%);opacity:.18"></div>
-  <div class="blob blob-violet" style="width:400px;height:400px;right:-100px;bottom:15%;opacity:.12"></div>
+<div class="creative size-story grain" style="background:#fef3c7">
   <div class="c-content" style="padding:120px 80px;align-items:center;text-align:center">
     <img src="../A7 LAUNDRY-05.png" class="c-logo-dark" alt="A7 Laundry" style="margin-bottom:60px;max-width:130px">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
       <div class="c-badge" style="font-size:24px;padding:16px 36px;margin-bottom:48px">LIMITED TIME</div>
       <h2 class="c-hook" style="font-size:100px;margin-bottom:20px">FREE<br>BAG</h2>
-      <p style="font-size:36px;color:rgba(0,0,0,.4);margin-bottom:60px;line-height:1.4">Buy 1 bag,<br>get your 2nd <strong style="color:#0a0f1a">FREE</strong></p>
-      <div style="background:rgba(37,99,235,.04);border:1px solid rgba(37,99,235,.15);border-radius:4px;padding:48px 64px;margin-bottom:48px">
-        <p style="font-size:18px;color:rgba(0,0,0,.3);margin-bottom:12px">USE CODE</p>
-        <p style="font-size:56px;font-weight:800;color:#2563eb;letter-spacing:8px">FIRSTBAG</p>
+      <p style="font-size:36px;color:rgba(69,26,3,.4);margin-bottom:60px;line-height:1.4">Buy 1 bag,<br>get your 2nd <strong style="color:#451a03">FREE</strong></p>
+      <div style="background:rgba(217,119,6,.06);border:1px solid rgba(217,119,6,.2);border-radius:12px;padding:48px 64px;margin-bottom:48px">
+        <p style="font-size:18px;color:rgba(69,26,3,.35);margin-bottom:12px">USE CODE</p>
+        <p style="font-size:56px;font-weight:800;color:#d97706;letter-spacing:8px">FIRSTBAG</p>
       </div>
-      <p style="font-size:22px;color:rgba(0,0,0,.25)">No contracts · Cancel anytime</p>
+      <p style="font-size:22px;color:rgba(69,26,3,.25)">No contracts · Cancel anytime</p>
     </div>
     <div class="c-cta" style="font-size:28px;padding:28px 80px;margin-top:40px">Claim Now →</div>
     <p class="c-url" style="font-size:18px;margin-top:24px">(407) 670-8839 · a7laundry.com</p>
@@ -402,66 +373,63 @@
 </div>
 </template>
 
-<!-- ==================== STORY 09: PRICING — CLEAN ==================== -->
+<!-- ==================== STORY 09: PRICING — DARK BROWN ==================== -->
 <template id="tpl-8">
-<div class="creative size-story" style="background:#f8fafc">
-  <div class="blob blob-blue" style="width:500px;height:500px;left:50%;top:25%;transform:translateX(-50%);opacity:.12"></div>
+<div class="creative size-story grain" style="background:#451a03">
   <div class="c-content" style="padding:120px 80px;align-items:center;text-align:center">
-    <img src="../A7 LAUNDRY-05.png" class="c-logo-dark" alt="A7 Laundry" style="max-width:130px">
+    <img src="../A7 LAUNDRY-05.png" class="c-logo-light" alt="A7 Laundry" style="max-width:130px">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
-      <p style="font-size:28px;color:rgba(0,0,0,.35);margin-bottom:24px">Your daily coffee costs more than</p>
-      <h2 class="c-hook" style="font-size:180px;margin-bottom:0;letter-spacing:-8px"><span style="font-size:80px;opacity:.35">$</span>1.99</h2>
-      <p style="font-size:36px;font-weight:700;color:rgba(0,0,0,.3);margin-bottom:60px">/day</p>
+      <p style="font-size:28px;color:rgba(254,243,199,.4);margin-bottom:24px">Your daily coffee costs more than</p>
+      <h2 class="c-hook c-hook-cream" style="font-size:180px;margin-bottom:0;letter-spacing:-8px"><span style="font-size:80px;opacity:.4">$</span>1.99</h2>
+      <p style="font-size:36px;font-weight:700;color:rgba(254,243,199,.45);margin-bottom:60px">/day</p>
       <div class="c-divider" style="margin:0 auto 48px"></div>
       <div style="display:flex;flex-direction:column;gap:20px;width:100%;max-width:600px">
-        <div style="display:flex;justify-content:space-between;padding:24px 32px;background:#fff;border-radius:4px;border:1px solid rgba(0,0,0,.06);box-shadow:0 1px 3px rgba(0,0,0,.04)">
-          <span style="font-size:24px;font-weight:700;color:#0a0f1a">Essentials</span>
-          <span style="font-size:24px;font-weight:800;color:#2563eb">$59.90/mo</span>
+        <div style="display:flex;justify-content:space-between;padding:24px 32px;background:rgba(254,243,199,.05);border-radius:12px;border:1px solid rgba(254,243,199,.08)">
+          <span style="font-size:24px;font-weight:700;color:#fef3c7">Essentials</span>
+          <span style="font-size:24px;font-weight:800;color:#d97706">$59.90/mo</span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:24px 32px;background:#fff;border-radius:4px;border:2px solid #2563eb;box-shadow:0 4px 16px rgba(37,99,235,.1)">
-          <span style="font-size:24px;font-weight:700;color:#0a0f1a">Family ⭐</span>
-          <span style="font-size:24px;font-weight:800;color:#2563eb">$109.90/mo</span>
+        <div style="display:flex;justify-content:space-between;padding:24px 32px;background:rgba(217,119,6,.12);border-radius:12px;border:2px solid #d97706">
+          <span style="font-size:24px;font-weight:700;color:#fef3c7">Family ⭐</span>
+          <span style="font-size:24px;font-weight:800;color:#d97706">$109.90/mo</span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:24px 32px;background:#fff;border-radius:4px;border:1px solid rgba(0,0,0,.06);box-shadow:0 1px 3px rgba(0,0,0,.04)">
-          <span style="font-size:24px;font-weight:700;color:#0a0f1a">Premium</span>
-          <span style="font-size:24px;font-weight:800;color:#2563eb">$179.90/mo</span>
+        <div style="display:flex;justify-content:space-between;padding:24px 32px;background:rgba(254,243,199,.05);border-radius:12px;border:1px solid rgba(254,243,199,.08)">
+          <span style="font-size:24px;font-weight:700;color:#fef3c7">Premium</span>
+          <span style="font-size:24px;font-weight:800;color:#d97706">$179.90/mo</span>
         </div>
       </div>
-      <p style="font-size:20px;color:rgba(0,0,0,.25);margin-top:32px">Free pickup · Free delivery · Cancel anytime</p>
+      <p style="font-size:20px;color:rgba(254,243,199,.3);margin-top:32px">Free pickup · Free delivery · Cancel anytime</p>
     </div>
     <div class="c-cta" style="font-size:28px;padding:28px 80px">Start Free →</div>
-    <p class="c-url" style="font-size:18px;margin-top:24px">a7laundry.com</p>
+    <p class="c-url-cream" style="font-size:18px;margin-top:24px">a7laundry.com</p>
   </div>
 </div>
 </template>
 
-<!-- ==================== STORY 10: COUPON SAVE20 — BLUE FULL ==================== -->
+<!-- ==================== STORY 10: COUPON SAVE20 — AMBER FULL ==================== -->
 <template id="tpl-9">
-<div class="creative size-story" style="background:linear-gradient(180deg,#2563eb 0%,#1d4ed8 100%)">
-  <div class="c-num" style="left:50%;top:15%;transform:translateX(-50%);font-size:500px;opacity:.06;color:#fff">%</div>
+<div class="creative size-story grain" style="background:#d97706">
+  <div class="c-num" style="left:50%;top:15%;transform:translateX(-50%);font-size:500px;opacity:.08;color:#fff">%</div>
   <div class="c-content" style="padding:120px 80px;align-items:center;text-align:center">
-    <img src="../A7 LAUNDRY-05.png" class="c-logo-white" alt="A7 Laundry" style="max-width:130px">
+    <img src="../A7 LAUNDRY-05.png" class="c-logo-light" alt="A7 Laundry" style="max-width:130px">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
-      <h2 class="c-hook c-hook-white" style="font-size:240px;margin-bottom:0;letter-spacing:-10px">20<span style="font-size:120px">%</span></h2>
+      <h2 style="font-weight:800;line-height:.92;letter-spacing:-10px;color:#fff;font-size:240px;margin-bottom:0">20<span style="font-size:120px">%</span></h2>
       <h3 style="font-size:56px;font-weight:800;color:rgba(255,255,255,.85);margin-bottom:20px">OFF</h3>
-      <p style="font-size:32px;color:rgba(255,255,255,.5);margin-bottom:60px;line-height:1.4">Your first month of<br>clean laundry delivered</p>
-      <div class="c-coupon c-coupon-white" style="padding:40px 80px;margin-bottom:40px">
-        <p style="font-size:18px;color:rgba(255,255,255,.4);margin-bottom:8px;letter-spacing:0">USE CODE</p>
+      <p style="font-size:32px;color:rgba(255,255,255,.55);margin-bottom:60px;line-height:1.4">Your first month of<br>clean laundry delivered</p>
+      <div style="background:rgba(254,243,199,.08);border:2px dashed rgba(254,243,199,.4);border-radius:12px;padding:40px 80px;margin-bottom:40px">
+        <p style="font-size:18px;color:rgba(255,255,255,.5);margin-bottom:8px">USE CODE</p>
         <p style="font-size:64px;font-weight:800;color:#fff;letter-spacing:8px;margin:0">SAVE20</p>
       </div>
-      <p style="font-size:22px;color:rgba(255,255,255,.35)">Valid on any plan · No contracts</p>
+      <p style="font-size:22px;color:rgba(255,255,255,.4)">Valid on any plan · No contracts</p>
     </div>
-    <div class="c-cta c-cta-white" style="font-size:28px;padding:28px 80px">Claim Now →</div>
-    <p style="font-size:18px;color:rgba(255,255,255,.35);margin-top:24px">a7laundry.com · (407) 670-8839</p>
+    <div class="c-cta c-cta-cream" style="font-size:28px;padding:28px 80px">Claim Now →</div>
+    <p style="font-size:18px;color:rgba(255,255,255,.4);margin-top:24px">a7laundry.com · (407) 670-8839</p>
   </div>
 </div>
 </template>
 
-<!-- ==================== GMB 11: BRAND — CLEAN ==================== -->
+<!-- ==================== GMB 11: BRAND — CREAM ==================== -->
 <template id="tpl-10">
-<div class="creative size-gmb" style="background:#ffffff">
-  <div class="accent-strip"></div>
-  <div class="blob blob-blue" style="width:400px;height:400px;right:-100px;top:-100px;opacity:.12"></div>
+<div class="creative size-gmb grain" style="background:#fef3c7">
   <div class="c-content" style="padding:64px 80px;flex-direction:row;gap:80px">
     <div style="flex:1.2;display:flex;flex-direction:column;justify-content:center">
       <img src="../A7 LAUNDRY-05.png" class="c-logo-dark" alt="A7 Laundry" style="margin-bottom:40px;max-width:140px">
@@ -471,52 +439,50 @@
       <div class="c-cta" style="font-size:18px;padding:18px 36px;align-self:flex-start">(407) 670-8839</div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;gap:16px;justify-content:center">
-      <div style="padding:24px;background:#f8fafc;border:1px solid rgba(0,0,0,.06);border-radius:4px">
-        <p style="font-size:14px;color:#2563eb;font-weight:700;margin-bottom:4px">WASH & FOLD</p>
-        <p style="font-size:16px;color:rgba(0,0,0,.45)">Subscription bags · From $59.90/mo</p>
+      <div style="padding:24px;background:#fffbeb;border:1px solid rgba(69,26,3,.06);border-radius:12px">
+        <p style="font-size:14px;color:#d97706;font-weight:700;margin-bottom:4px">WASH & FOLD</p>
+        <p style="font-size:16px;color:rgba(69,26,3,.45)">Subscription bags · From $59.90/mo</p>
       </div>
-      <div style="padding:24px;background:#f8fafc;border:1px solid rgba(0,0,0,.06);border-radius:4px">
-        <p style="font-size:14px;color:#2563eb;font-weight:700;margin-bottom:4px">DRY CLEANING</p>
-        <p style="font-size:16px;color:rgba(0,0,0,.45)">Premium care · Included in Premium plan</p>
+      <div style="padding:24px;background:#fffbeb;border:1px solid rgba(69,26,3,.06);border-radius:12px">
+        <p style="font-size:14px;color:#d97706;font-weight:700;margin-bottom:4px">DRY CLEANING</p>
+        <p style="font-size:16px;color:rgba(69,26,3,.45)">Premium care · Included in Premium plan</p>
       </div>
-      <div style="padding:24px;background:#f8fafc;border:1px solid rgba(0,0,0,.06);border-radius:4px">
-        <p style="font-size:14px;color:#2563eb;font-weight:700;margin-bottom:4px">FREE DELIVERY</p>
-        <p style="font-size:16px;color:rgba(0,0,0,.45)">Pickup & delivery at your door</p>
+      <div style="padding:24px;background:#fffbeb;border:1px solid rgba(69,26,3,.06);border-radius:12px">
+        <p style="font-size:14px;color:#d97706;font-weight:700;margin-bottom:4px">FREE DELIVERY</p>
+        <p style="font-size:16px;color:rgba(69,26,3,.45)">Pickup & delivery at your door</p>
       </div>
-      <div style="padding:24px;background:#e0f2fe;border:1px solid rgba(37,99,235,.1);border-radius:4px">
-        <p style="font-size:14px;font-weight:700;color:#2563eb;margin-bottom:4px">★ 4.9 RATING</p>
-        <p style="font-size:16px;color:rgba(0,0,0,.45)">2,000+ Orlando families trust us</p>
+      <div style="padding:24px;background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.15);border-radius:12px">
+        <p style="font-size:14px;font-weight:700;color:#d97706;margin-bottom:4px">★ 4.9 RATING</p>
+        <p style="font-size:16px;color:rgba(69,26,3,.45)">2,000+ Orlando families trust us</p>
       </div>
     </div>
   </div>
 </div>
 </template>
 
-<!-- ==================== GMB 12: FREE DELIVERY — CLEAN ==================== -->
+<!-- ==================== GMB 12: FREE DELIVERY — DARK BROWN ==================== -->
 <template id="tpl-11">
-<div class="creative size-gmb" style="background:#f8fafc">
-  <div class="accent-strip"></div>
-  <div class="blob blob-blue" style="width:400px;height:400px;left:50%;bottom:-100px;transform:translateX(-50%);opacity:.12"></div>
+<div class="creative size-gmb grain" style="background:#451a03">
   <div class="c-content" style="padding:64px 80px;align-items:center;text-align:center">
     <div style="display:flex;align-items:center;gap:24px;margin-bottom:auto">
-      <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-dark" alt="A7 Laundry" style="margin-bottom:0;max-width:140px">
-      <div style="width:1px;height:28px;background:rgba(0,0,0,.1)"></div>
-      <span style="font-size:16px;color:rgba(0,0,0,.35);font-weight:600">Orlando, FL</span>
+      <img src="../A7 LAUNDRY-05.png" class="c-logo-sm c-logo-light" alt="A7 Laundry" style="margin-bottom:0;max-width:140px">
+      <div style="width:1px;height:28px;background:rgba(254,243,199,.15)"></div>
+      <span style="font-size:16px;color:rgba(254,243,199,.4);font-weight:600">Orlando, FL</span>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
-      <div class="c-badge" style="margin-bottom:32px;font-size:16px">FREE PICKUP & DELIVERY</div>
-      <h2 class="c-hook" style="font-size:64px;margin-bottom:32px">We Come<br>To You.</h2>
+      <div class="c-badge-dark" style="display:inline-block;padding:10px 24px;margin-bottom:32px;font-size:16px;font-weight:700;border-radius:12px">FREE PICKUP & DELIVERY</div>
+      <h2 class="c-hook c-hook-cream" style="font-size:64px;margin-bottom:32px">We Come<br>To You.</h2>
       <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:40px;max-width:700px">
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Orlando</span>
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Kissimmee</span>
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Winter Park</span>
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Dr. Phillips</span>
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Lake Nona</span>
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Windermere</span>
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Celebration</span>
-        <span style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:16px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Davenport</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Orlando</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Kissimmee</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Winter Park</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Dr. Phillips</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Lake Nona</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Windermere</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Celebration</span>
+        <span style="padding:10px 20px;background:rgba(254,243,199,.05);border:1px solid rgba(254,243,199,.1);border-radius:12px;font-size:16px;color:rgba(254,243,199,.5);font-weight:600">Davenport</span>
       </div>
-      <p style="font-size:22px;color:rgba(0,0,0,.35);margin-bottom:32px">Plans from <strong style="color:#0a0f1a">$59.90/mo</strong> · No contracts</p>
+      <p style="font-size:22px;color:rgba(254,243,199,.4);margin-bottom:32px">Plans from <strong style="color:#fef3c7">$59.90/mo</strong> · No contracts</p>
       <div class="c-cta" style="font-size:20px;padding:20px 48px">(407) 670-8839 · Get Started</div>
     </div>
   </div>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A7 Laundry — Social Native System (12 Ads)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#0a0f1a;color:#fff;min-height:100vh}
+
+  /* ===== VIEWER UI ===== */
+  .ui-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:16px 32px;display:flex;align-items:center;gap:20px}
+  .ui-bar h1{font-size:14px;font-weight:700;white-space:nowrap}
+  .ui-bar h1 span{color:#6d28d9}
+  .ui-tabs{display:flex;gap:6px;overflow-x:auto;flex:1;padding:4px 0}
+  .ui-tabs::-webkit-scrollbar{display:none}
+  .ui-tab{padding:8px 16px;border-radius:4px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;font-family:inherit}
+  .ui-tab:hover{border-color:rgba(255,255,255,.2);color:#fff}
+  .ui-tab.active{background:#6d28d9;border-color:#6d28d9;color:#fff}
+  .ui-tab .tab-type{font-size:9px;opacity:.6;display:block;margin-top:2px}
+  .ui-info{font-size:11px;color:rgba(255,255,255,.4);white-space:nowrap}
+  .ui-export{padding:10px 20px;background:#6d28d9;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s}
+  .ui-export:hover{background:#5b21b6}
+  .ui-label{padding:4px 10px;background:rgba(109,40,217,.15);color:#a78bfa;border-radius:4px;font-size:10px;font-weight:700;white-space:nowrap}
+
+  /* ===== GALLERY ===== */
+  .gallery{padding:100px 32px 60px;max-width:1400px;margin:0 auto}
+  .gallery-title{font-size:32px;font-weight:800;margin-bottom:8px}
+  .gallery-sub{font-size:14px;color:rgba(255,255,255,.4);margin-bottom:40px}
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+  .gallery-card{cursor:pointer;border:1px solid rgba(255,255,255,.06);border-radius:4px;overflow:hidden;transition:.3s;background:#111827}
+  .gallery-card:hover{border-color:#6d28d9;transform:translateY(-4px);box-shadow:0 0 30px rgba(109,40,217,.15)}
+  .gallery-thumb{width:100%;aspect-ratio:1;overflow:hidden;position:relative}
+  .gallery-thumb.story{aspect-ratio:9/16}
+  .gallery-thumb.gmb{aspect-ratio:4/3}
+  .gallery-card-info{padding:16px}
+  .gallery-card-info h3{font-size:13px;font-weight:700;margin-bottom:4px}
+  .gallery-card-info p{font-size:11px;color:rgba(255,255,255,.4)}
+  .gallery-card-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:9px;font-weight:700;margin-top:8px}
+  .badge-feed{background:rgba(109,40,217,.15);color:#a78bfa}
+  .badge-story{background:rgba(236,72,153,.15);color:#ec4899}
+  .badge-gmb{background:rgba(34,197,94,.15);color:#22c55e}
+
+  /* ===== SINGLE VIEW ===== */
+  .single-view{display:none;padding:100px 32px 60px;min-height:100vh;align-items:center;justify-content:center}
+  .single-view.active{display:flex;flex-direction:column;gap:32px}
+  .creative-frame{position:relative;box-shadow:0 0 60px rgba(0,0,0,.5)}
+  .gallery.hidden{display:none}
+
+  /* ===== CREATIVE BASE ===== */
+  .creative{position:relative;overflow:hidden;font-family:'Inter',sans-serif}
+  .creative *{box-sizing:border-box}
+  .size-feed{width:1080px;height:1080px}
+  .size-story{width:1080px;height:1920px}
+  .size-gmb{width:1200px;height:900px}
+  .gallery-thumb .creative{transform-origin:top left}
+  .gallery-thumb .size-feed{transform:scale(calc(280/1080))}
+  .gallery-thumb.story .size-story{transform:scale(calc(280/1080))}
+  .gallery-thumb.gmb .size-gmb{transform:scale(calc(280/1200))}
+
+  /* ===== SOCIAL NATIVE DESIGN TOKENS ===== */
+  .c-content{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;padding:80px}
+  .c-logo{max-width:160px;height:auto;filter:brightness(0) invert(1);margin-bottom:auto}
+  .c-logo-sm{max-width:120px;height:auto}
+  .c-hook{color:#fff;font-weight:800;line-height:.92;letter-spacing:-3px}
+  .c-sub{color:rgba(255,255,255,.6);line-height:1.5}
+  .c-cta{display:inline-flex;align-items:center;gap:12px;padding:24px 48px;background:#6d28d9;color:#fff;border-radius:4px;font-weight:800;font-size:24px}
+  .c-cta-outline{background:transparent;border:2px solid rgba(255,255,255,.2);color:#fff}
+  .c-badge{display:inline-block;padding:10px 24px;background:rgba(109,40,217,.15);color:#a78bfa;border-radius:4px;font-size:18px;font-weight:700}
+  .c-coupon{display:inline-block;padding:20px 40px;border:2px dashed #6d28d9;border-radius:4px;font-size:36px;font-weight:800;letter-spacing:6px;color:#a78bfa;background:rgba(109,40,217,.08)}
+  .c-coupon-white{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.06)}
+  .c-stars{color:#fbbf24;font-size:36px;letter-spacing:4px}
+  .c-divider{width:60px;height:3px;background:#6d28d9;margin:20px 0}
+  .c-footer{margin-top:auto;display:flex;align-items:center;justify-content:space-between}
+  .c-url{font-size:20px;font-weight:600;color:rgba(255,255,255,.3)}
+  .c-phone{font-size:20px;font-weight:700;color:#a78bfa}
+  .c-num{font-size:200px;font-weight:900;line-height:1;color:#6d28d9;opacity:.08;position:absolute}
+  .c-quote{font-size:28px;font-weight:500;color:rgba(255,255,255,.7);line-height:1.5;font-style:italic;padding-left:32px;border-left:3px solid #6d28d9}
+  .c-step{display:flex;align-items:flex-start;gap:24px;margin-bottom:32px}
+  .c-step-num{width:56px;height:56px;border-radius:4px;background:#6d28d9;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0}
+  .c-step-text h4{font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+  .c-step-text p{font-size:20px;color:rgba(255,255,255,.45)}
+
+  /* Glow */
+  .glow-circle{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3}
+  .glow-purple{background:#6d28d9}
+  .glow-pink{background:#ec4899}
+
+  /* ===== INSTAGRAM-STYLE POST HEADER ===== */
+  .ig-header{display:flex;align-items:center;gap:12px;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .ig-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#6d28d9,#a855f7,#ec4899);padding:3px;display:flex;align-items:center;justify-content:center}
+  .ig-avatar-inner{width:100%;height:100%;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center}
+  .ig-avatar-inner img{width:80%;height:80%;object-fit:contain;filter:brightness(0) invert(1)}
+  .ig-username{font-size:18px;font-weight:700;color:#fff}
+  .ig-verified{color:#6d28d9;font-size:16px;margin-left:4px}
+  .ig-dots{margin-left:auto;color:rgba(255,255,255,.4);font-size:24px;letter-spacing:2px}
+
+  /* ===== INSTAGRAM-STYLE ACTION BAR ===== */
+  .ig-actions{display:flex;align-items:center;gap:20px;padding:20px 28px;border-top:1px solid rgba(255,255,255,.06)}
+  .ig-action{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.6);font-size:16px;font-weight:600}
+  .ig-action svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2}
+  .ig-action-heart svg{fill:#ef4444;stroke:#ef4444}
+  .ig-likes{padding:4px 28px;font-size:16px;font-weight:700;color:#fff}
+  .ig-bookmark{margin-left:auto}
+
+  /* ===== STORY GRADIENT BORDER ===== */
+  .story-ring{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#6d28d9,#a855f7,#ec4899,#f59e0b);padding:4px;margin:0 auto}
+  .story-ring-inner{width:100%;height:100%;border-radius:50%;background:#0a0f1a;display:flex;align-items:center;justify-content:center;padding:8px}
+  .story-ring-inner img{width:80%;height:80%;object-fit:contain;filter:brightness(0) invert(1)}
+
+  /* ===== GOOGLE POST STYLE FOR GMB ===== */
+  .gbiz-card{background:#fff;border-radius:12px;overflow:hidden}
+  .gbiz-header{display:flex;align-items:center;gap:12px;padding:20px 24px}
+  .gbiz-avatar{width:44px;height:44px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center}
+  .gbiz-avatar img{width:70%;height:70%;object-fit:contain;filter:brightness(0) invert(1)}
+  .gbiz-name{font-size:16px;font-weight:700;color:#1c1917}
+  .gbiz-stars{color:#f59e0b;font-size:14px;margin-left:8px}
+
+  /* Toast */
+  .export-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#111827;border:1px solid rgba(255,255,255,.1);padding:16px 32px;border-radius:4px;font-size:13px;color:rgba(255,255,255,.6);z-index:200;display:none;white-space:nowrap}
+  .export-toast.show{display:block}
+  .export-toast kbd{background:rgba(255,255,255,.1);padding:2px 8px;border-radius:3px;font-size:12px;color:#fff}
+
+  /* ===== CAPTIONS ===== */
+  .creative-caption{background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:4px;padding:24px;margin-top:16px;max-width:700px;width:100%}
+  .caption-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .caption-label{font-size:11px;font-weight:700;color:#6d28d9;text-transform:uppercase;letter-spacing:1px}
+  .copy-btn{padding:4px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:3px;color:rgba(255,255,255,.5);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+  .copy-btn:hover{background:rgba(109,40,217,.15);color:#a78bfa;border-color:rgba(109,40,217,.3)}
+  .caption-text{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:16px}
+  .caption-text:last-child{margin-bottom:0}
+  .caption-tags{font-size:12px;color:rgba(109,40,217,.5);margin-bottom:0;word-break:break-all}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="ui-bar">
+  <h1>A7 <span>Social Native System</span></h1>
+  <span class="ui-label">SOCIAL NATIVE</span>
+  <div class="ui-tabs">
+    <button class="ui-tab active" onclick="showGallery()">All 12</button>
+    <button class="ui-tab" data-index="0">01 Hero<span class="tab-type">Feed</span></button>
+    <button class="ui-tab" data-index="1">02 Pain<span class="tab-type">Feed</span></button>
+    <button class="ui-tab" data-index="2">03 BOGO<span class="tab-type">Feed</span></button>
+    <button class="ui-tab" data-index="3">04 Proof<span class="tab-type">Feed</span></button>
+    <button class="ui-tab" data-index="4">05 20%OFF<span class="tab-type">Feed</span></button>
+    <button class="ui-tab" data-index="5">06 Steps<span class="tab-type">Feed</span></button>
+    <button class="ui-tab" data-index="6">07 Stop<span class="tab-type">Story</span></button>
+    <button class="ui-tab" data-index="7">08 BOGO<span class="tab-type">Story</span></button>
+    <button class="ui-tab" data-index="8">09 Price<span class="tab-type">Story</span></button>
+    <button class="ui-tab" data-index="9">10 20%OFF<span class="tab-type">Story</span></button>
+    <button class="ui-tab" data-index="10">11 Brand<span class="tab-type">GMB</span></button>
+    <button class="ui-tab" data-index="11">12 Delivery<span class="tab-type">GMB</span></button>
+  </div>
+  <span class="ui-info" id="sizeInfo">12 creatives</span>
+  <button class="ui-export" onclick="exportTip()">Export ↓</button>
+</div>
+
+<!-- ===== GALLERY ===== -->
+<div class="gallery" id="gallery">
+  <h2 class="gallery-title">Social Native System</h2>
+  <p class="gallery-sub">Organic social media simulation — Meta Ads · Google Ads · Instagram · Google Meu Negocio</p>
+  <p class="gallery-sub" style="margin-top:-30px;margin-bottom:30px">Cupons: <strong style="color:#a78bfa">FIRSTBAG</strong> (Buy 1 Get 1 FREE) · <strong style="color:#a78bfa">SAVE20</strong> (20% OFF 1o mes)</p>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</div>
+
+<!-- ===== SINGLE VIEW ===== -->
+<div class="single-view" id="singleView">
+  <div class="creative-frame" id="creativeFrame"></div>
+  <div class="creative-caption" id="singleCaption" style="display:none"></div>
+</div>
+
+<!-- ===== EXPORT TOAST ===== -->
+<div class="export-toast" id="exportToast">
+  Para exportar: <kbd>Cmd+Shift+4</kbd> (Mac) ou <kbd>Win+Shift+S</kbd> (Win) → selecione a area do criativo. Ou use DevTools → <kbd>Cmd+Shift+P</kbd> → "Screenshot node"
+</div>
+
+<!-- ================================================================ -->
+<!--               12 SOCIAL NATIVE CREATIVE TEMPLATES                 -->
+<!-- ================================================================ -->
+
+<!-- ==================== FEED 01: HERO — IG POST ==================== -->
+<template id="tpl-0">
+<div class="creative size-feed" style="background:#0a0f1a">
+  <div class="ig-header">
+    <div class="ig-avatar"><div class="ig-avatar-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <div><span class="ig-username">a7laundry</span><span class="ig-verified"> ✓</span><br><span style="font-size:13px;color:rgba(255,255,255,.35)">Sponsored</span></div>
+    <span class="ig-dots">···</span>
+  </div>
+  <div style="position:relative;width:100%;height:calc(100% - 48px - 80px - 40px - 50px);overflow:hidden">
+    <div class="glow-circle glow-purple" style="width:500px;height:500px;right:-150px;top:-80px"></div>
+    <div class="glow-circle glow-pink" style="width:300px;height:300px;left:-80px;bottom:50px;opacity:.15"></div>
+    <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;padding:48px 40px">
+      <div class="c-badge" style="margin-bottom:24px;align-self:flex-start">Orlando's #1 Laundry Subscription</div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <h2 class="c-hook" style="font-size:88px;margin-bottom:20px">Never Do<br>Laundry Again.</h2>
+        <p class="c-sub" style="font-size:24px;margin-bottom:36px">From <strong style="color:#fff">$1.99/day</strong>. Free pickup & delivery. No contracts.</p>
+        <div style="display:flex;gap:12px">
+          <div class="c-cta" style="font-size:20px;padding:20px 36px">Call (407) 670-8839</div>
+          <div class="c-cta c-cta-outline" style="font-size:20px;padding:20px 36px">View Plans →</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span class="c-url" style="font-size:16px">a7laundry.com</span>
+        <span style="font-size:14px;color:rgba(255,255,255,.25)">★ 4.9 · 2,000+ Families</span>
+      </div>
+    </div>
+  </div>
+  <div class="ig-likes">1,247 likes</div>
+  <div class="ig-actions">
+    <span class="ig-action ig-action-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 89</span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+    <span class="ig-action ig-bookmark" style="margin-left:auto"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+  </div>
+</div>
+</template>
+
+<!-- ==================== FEED 02: PAIN POINT — IG POST ==================== -->
+<template id="tpl-1">
+<div class="creative size-feed" style="background:#0a0f1a">
+  <div class="ig-header">
+    <div class="ig-avatar"><div class="ig-avatar-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <div><span class="ig-username">a7laundry</span><span class="ig-verified"> ✓</span><br><span style="font-size:13px;color:rgba(255,255,255,.35)">Sponsored</span></div>
+    <span class="ig-dots">···</span>
+  </div>
+  <div style="position:relative;width:100%;height:calc(100% - 48px - 80px - 40px - 50px);overflow:hidden">
+    <div class="c-num" style="right:-20px;top:50%;transform:translateY(-50%);font-size:280px;color:#a78bfa">240</div>
+    <div class="glow-circle glow-purple" style="width:400px;height:400px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.15"></div>
+    <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;padding:48px 40px;justify-content:center">
+      <p style="font-size:20px;margin-bottom:12px;color:#a78bfa;font-weight:700">The average American spends</p>
+      <h2 class="c-hook" style="font-size:120px;margin-bottom:12px">240<span style="font-size:50px;opacity:.5">hrs/yr</span></h2>
+      <h3 style="font-size:40px;font-weight:800;color:#fff;margin-bottom:12px">doing laundry.</h3>
+      <div class="c-divider"></div>
+      <p class="c-sub" style="font-size:28px;margin-top:12px">We'll give them back.</p>
+      <p style="font-size:20px;color:#a78bfa;font-weight:700;margin-top:32px">Plans from $1.99/day →</p>
+    </div>
+  </div>
+  <div class="ig-likes">2,034 likes</div>
+  <div class="ig-actions">
+    <span class="ig-action ig-action-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 156</span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+    <span class="ig-action ig-bookmark" style="margin-left:auto"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+  </div>
+</div>
+</template>
+
+<!-- ==================== FEED 03: COUPON FIRSTBAG — IG POST ==================== -->
+<template id="tpl-2">
+<div class="creative size-feed" style="background:#0a0f1a">
+  <div class="ig-header">
+    <div class="ig-avatar"><div class="ig-avatar-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <div><span class="ig-username">a7laundry</span><span class="ig-verified"> ✓</span><br><span style="font-size:13px;color:rgba(255,255,255,.35)">Sponsored</span></div>
+    <span class="ig-dots">···</span>
+  </div>
+  <div style="position:relative;width:100%;height:calc(100% - 48px - 80px - 40px - 50px);overflow:hidden">
+    <div class="glow-circle glow-purple" style="width:700px;height:700px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.2"></div>
+    <div class="glow-circle glow-pink" style="width:300px;height:300px;right:-50px;bottom:-50px;opacity:.12"></div>
+    <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;padding:48px 40px">
+      <div class="c-badge" style="margin-bottom:32px;font-size:20px;padding:12px 28px">LIMITED TIME OFFER</div>
+      <h2 class="c-hook" style="font-size:76px;margin-bottom:12px">Buy 1 Bag,<br>Get 1 <span style="color:#a78bfa">FREE</span></h2>
+      <p class="c-sub" style="font-size:22px;margin-bottom:36px">Your first month of laundry freedom</p>
+      <div class="c-coupon" style="margin-bottom:32px">FIRSTBAG</div>
+      <p style="font-size:17px;color:rgba(255,255,255,.3)">No contracts · Cancel anytime · Free delivery</p>
+    </div>
+  </div>
+  <div class="ig-likes">3,412 likes</div>
+  <div class="ig-actions">
+    <span class="ig-action ig-action-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 247</span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+    <span class="ig-action ig-bookmark" style="margin-left:auto"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+  </div>
+</div>
+</template>
+
+<!-- ==================== FEED 04: SOCIAL PROOF — IG POST ==================== -->
+<template id="tpl-3">
+<div class="creative size-feed" style="background:#0a0f1a">
+  <div class="ig-header">
+    <div class="ig-avatar"><div class="ig-avatar-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <div><span class="ig-username">a7laundry</span><span class="ig-verified"> ✓</span><br><span style="font-size:13px;color:rgba(255,255,255,.35)">Sponsored</span></div>
+    <span class="ig-dots">···</span>
+  </div>
+  <div style="position:relative;width:100%;height:calc(100% - 48px - 80px - 40px - 50px);overflow:hidden">
+    <div class="glow-circle glow-purple" style="width:350px;height:350px;right:-80px;bottom:-80px;opacity:.15"></div>
+    <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;padding:48px 40px;justify-content:center">
+      <div class="c-stars" style="margin-bottom:12px;color:#fbbf24">★★★★★</div>
+      <h2 class="c-hook" style="font-size:60px;margin-bottom:28px">4.9 Rating</h2>
+      <div class="c-quote" style="margin-bottom:28px;font-size:24px">
+        "I was already spending MORE than the Family plan on detergent, gas, and laundromat fees. Now our family of 4 has clean clothes all month."
+      </div>
+      <p style="font-size:18px;font-weight:700;color:#fff;margin-bottom:4px">— Sarah M.</p>
+      <p class="c-sub" style="font-size:15px">Orlando, FL · Family Plan member</p>
+      <div style="margin-top:28px;display:flex;gap:28px;align-items:center">
+        <div>
+          <p style="font-size:38px;font-weight:800;color:#a78bfa">2,000+</p>
+          <p class="c-sub" style="font-size:13px">Orlando families</p>
+        </div>
+        <div style="width:1px;height:40px;background:rgba(255,255,255,.1)"></div>
+        <div>
+          <p style="font-size:38px;font-weight:800;color:#a78bfa">24h</p>
+          <p class="c-sub" style="font-size:13px">Turnaround</p>
+        </div>
+        <div style="width:1px;height:40px;background:rgba(255,255,255,.1)"></div>
+        <div>
+          <p style="font-size:38px;font-weight:800;color:#a78bfa">$0</p>
+          <p class="c-sub" style="font-size:13px">Delivery fee</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ig-likes">1,892 likes</div>
+  <div class="ig-actions">
+    <span class="ig-action ig-action-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 134</span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+    <span class="ig-action ig-bookmark" style="margin-left:auto"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+  </div>
+</div>
+</template>
+
+<!-- ==================== FEED 05: COUPON SAVE20 — IG POST ==================== -->
+<template id="tpl-4">
+<div class="creative size-feed" style="background:#0a0f1a">
+  <div class="ig-header">
+    <div class="ig-avatar"><div class="ig-avatar-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <div><span class="ig-username">a7laundry</span><span class="ig-verified"> ✓</span><br><span style="font-size:13px;color:rgba(255,255,255,.35)">Sponsored</span></div>
+    <span class="ig-dots">···</span>
+  </div>
+  <div style="position:relative;width:100%;height:calc(100% - 48px - 80px - 40px - 50px);overflow:hidden;background:linear-gradient(135deg,#0a0f1a 0%,#2e1065 100%)">
+    <div class="c-num" style="right:-30px;top:-40px;font-size:350px;opacity:.06;color:#a78bfa">%</div>
+    <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;padding:48px 40px">
+      <h2 class="c-hook" style="font-size:160px;margin-bottom:0">20<span style="font-size:80px">%</span></h2>
+      <h3 style="font-size:44px;font-weight:800;color:rgba(255,255,255,.9);margin-bottom:12px">OFF YOUR FIRST MONTH</h3>
+      <p class="c-sub" style="font-size:20px;margin-bottom:36px">Any plan · Cancel anytime · Free pickup & delivery</p>
+      <div class="c-coupon-white" style="display:inline-block;padding:18px 36px;border:2px dashed rgba(255,255,255,.3);border-radius:4px;font-size:32px;font-weight:800;letter-spacing:6px;color:#fff;background:rgba(255,255,255,.06);margin-bottom:28px">SAVE20</div>
+      <div class="c-cta" style="font-size:18px;padding:18px 36px">Claim Offer → a7laundry.com</div>
+    </div>
+  </div>
+  <div class="ig-likes">4,567 likes</div>
+  <div class="ig-actions">
+    <span class="ig-action ig-action-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 312</span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+    <span class="ig-action ig-bookmark" style="margin-left:auto"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+  </div>
+</div>
+</template>
+
+<!-- ==================== FEED 06: HOW IT WORKS — IG POST ==================== -->
+<template id="tpl-5">
+<div class="creative size-feed" style="background:#0a0f1a">
+  <div class="ig-header">
+    <div class="ig-avatar"><div class="ig-avatar-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <div><span class="ig-username">a7laundry</span><span class="ig-verified"> ✓</span><br><span style="font-size:13px;color:rgba(255,255,255,.35)">Sponsored</span></div>
+    <span class="ig-dots">···</span>
+  </div>
+  <div style="position:relative;width:100%;height:calc(100% - 48px - 80px - 40px - 50px);overflow:hidden">
+    <div class="glow-circle glow-purple" style="width:250px;height:250px;right:40px;top:120px;opacity:.12"></div>
+    <div style="position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;padding:48px 40px;justify-content:center">
+      <div class="c-badge" style="margin-bottom:20px;align-self:flex-start">How It Works</div>
+      <h2 class="c-hook" style="font-size:60px;margin-bottom:40px">3 Steps to<br><span style="color:#a78bfa">Freedom.</span></h2>
+      <div class="c-step">
+        <div class="c-step-num">1</div>
+        <div class="c-step-text">
+          <h4>Fill The Bag</h4>
+          <p>Toss everything in — we sort for you</p>
+        </div>
+      </div>
+      <div class="c-step">
+        <div class="c-step-num">2</div>
+        <div class="c-step-text">
+          <h4>Leave At Your Door</h4>
+          <p>Free pickup at your schedule</p>
+        </div>
+      </div>
+      <div class="c-step">
+        <div class="c-step-num">3</div>
+        <div class="c-step-text">
+          <h4>Fresh In 24h</h4>
+          <p>Washed, folded, delivered back</p>
+        </div>
+      </div>
+      <div class="c-cta" style="align-self:flex-start;margin-top:16px;font-size:18px;padding:18px 36px">Start Free Today →</div>
+    </div>
+  </div>
+  <div class="ig-likes">987 likes</div>
+  <div class="ig-actions">
+    <span class="ig-action ig-action-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 73</span>
+    <span class="ig-action"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+    <span class="ig-action ig-bookmark" style="margin-left:auto"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+  </div>
+</div>
+</template>
+
+<!-- ==================== STORY 07: STOP — STORY RING ==================== -->
+<template id="tpl-6">
+<div class="creative size-story" style="background:#0a0f1a">
+  <div class="glow-circle glow-purple" style="width:500px;height:500px;left:50%;top:30%;transform:translate(-50%,-50%);opacity:.2"></div>
+  <div style="position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:5">
+    <div class="story-ring"><div class="story-ring-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <p style="text-align:center;font-size:16px;color:rgba(255,255,255,.5);margin-top:12px">a7laundry</p>
+  </div>
+  <div class="c-content" style="padding:250px 80px 120px;justify-content:center;text-align:center;align-items:center">
+    <h2 class="c-hook" style="font-size:130px;margin-bottom:40px;letter-spacing:-5px">STOP.</h2>
+    <p style="font-size:40px;font-weight:700;color:rgba(255,255,255,.7);line-height:1.3;margin-bottom:60px">Wasting your weekends<br>on laundry.</p>
+    <div class="c-divider" style="margin:0 auto 60px"></div>
+    <p style="font-size:30px;color:rgba(255,255,255,.5);margin-bottom:80px">Let us handle it.<br>From <strong style="color:#fff">$1.99/day</strong>.</p>
+    <div class="c-cta" style="font-size:24px;padding:28px 56px">Learn More →</div>
+    <div style="position:absolute;bottom:100px;left:50%;transform:translateX(-50%)">
+      <p style="font-size:16px;color:rgba(255,255,255,.3)">a7laundry.com</p>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- ==================== STORY 08: COUPON FIRSTBAG — STORY RING ==================== -->
+<template id="tpl-7">
+<div class="creative size-story" style="background:#0a0f1a">
+  <div class="glow-circle glow-purple" style="width:600px;height:600px;left:50%;top:40%;transform:translate(-50%,-50%);opacity:.18"></div>
+  <div class="glow-circle glow-pink" style="width:300px;height:300px;right:-50px;bottom:20%;opacity:.1"></div>
+  <div style="position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:5">
+    <div class="story-ring"><div class="story-ring-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <p style="text-align:center;font-size:16px;color:rgba(255,255,255,.5);margin-top:12px">a7laundry</p>
+  </div>
+  <div class="c-content" style="padding:250px 80px 120px;justify-content:center;text-align:center;align-items:center">
+    <div class="c-badge" style="font-size:22px;padding:14px 32px;margin-bottom:48px">LIMITED TIME</div>
+    <h2 class="c-hook" style="font-size:96px;margin-bottom:20px">FREE<br>BAG</h2>
+    <p style="font-size:32px;color:rgba(255,255,255,.6);margin-bottom:60px;line-height:1.4">Buy 1 bag,<br>get your 2nd <strong style="color:#fff">FREE</strong></p>
+    <div style="background:rgba(109,40,217,.08);border:1px solid rgba(109,40,217,.25);border-radius:4px;padding:48px 64px;margin-bottom:48px">
+      <p style="font-size:16px;color:rgba(255,255,255,.4);margin-bottom:12px">USE CODE</p>
+      <p style="font-size:52px;font-weight:800;color:#a78bfa;letter-spacing:8px">FIRSTBAG</p>
+    </div>
+    <p style="font-size:20px;color:rgba(255,255,255,.3)">No contracts · Cancel anytime</p>
+    <div class="c-cta" style="font-size:24px;padding:28px 80px;margin-top:40px">Claim Now →</div>
+    <p style="font-size:16px;color:rgba(255,255,255,.3);margin-top:24px">a7laundry.com · (407) 670-8839</p>
+  </div>
+</div>
+</template>
+
+<!-- ==================== STORY 09: PRICING — STORY RING ==================== -->
+<template id="tpl-8">
+<div class="creative size-story" style="background:#0a0f1a">
+  <div class="glow-circle glow-purple" style="width:400px;height:400px;left:50%;bottom:30%;transform:translateX(-50%);opacity:.12"></div>
+  <div style="position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:5">
+    <div class="story-ring"><div class="story-ring-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <p style="text-align:center;font-size:16px;color:rgba(255,255,255,.5);margin-top:12px">a7laundry</p>
+  </div>
+  <div class="c-content" style="padding:250px 80px 120px;justify-content:center;text-align:center;align-items:center">
+    <p style="font-size:26px;color:rgba(255,255,255,.4);margin-bottom:24px">Your daily coffee costs more than</p>
+    <h2 class="c-hook" style="font-size:170px;margin-bottom:0;letter-spacing:-8px"><span style="font-size:70px;opacity:.5">$</span>1.99</h2>
+    <p style="font-size:34px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:60px">/day</p>
+    <div class="c-divider" style="margin:0 auto 48px"></div>
+    <div style="display:flex;flex-direction:column;gap:20px;width:100%;max-width:600px">
+      <div style="display:flex;justify-content:space-between;padding:24px 32px;background:rgba(255,255,255,.03);border-radius:4px;border:1px solid rgba(255,255,255,.06)">
+        <span style="font-size:22px;font-weight:700;color:#fff">Essentials</span>
+        <span style="font-size:22px;font-weight:800;color:#a78bfa">$59.90/mo</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:24px 32px;background:rgba(109,40,217,.08);border-radius:4px;border:1px solid rgba(109,40,217,.2)">
+        <span style="font-size:22px;font-weight:700;color:#fff">Family ⭐</span>
+        <span style="font-size:22px;font-weight:800;color:#a78bfa">$109.90/mo</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:24px 32px;background:rgba(255,255,255,.03);border-radius:4px;border:1px solid rgba(255,255,255,.06)">
+        <span style="font-size:22px;font-weight:700;color:#fff">Premium</span>
+        <span style="font-size:22px;font-weight:800;color:#a78bfa">$179.90/mo</span>
+      </div>
+    </div>
+    <p style="font-size:18px;color:rgba(255,255,255,.3);margin-top:32px">Free pickup · Free delivery · Cancel anytime</p>
+    <div class="c-cta" style="font-size:24px;padding:28px 80px;margin-top:32px">Start Free →</div>
+    <p style="font-size:16px;color:rgba(255,255,255,.3);margin-top:24px">a7laundry.com</p>
+  </div>
+</div>
+</template>
+
+<!-- ==================== STORY 10: COUPON SAVE20 — STORY RING ==================== -->
+<template id="tpl-9">
+<div class="creative size-story" style="background:#0a0f1a">
+  <div class="c-num" style="left:50%;top:15%;transform:translateX(-50%);font-size:500px;opacity:.04;color:#a78bfa">%</div>
+  <div style="position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:5">
+    <div class="story-ring"><div class="story-ring-inner"><img src="../A7 LAUNDRY-05.png" alt="A7"></div></div>
+    <p style="text-align:center;font-size:16px;color:rgba(255,255,255,.5);margin-top:12px">a7laundry</p>
+  </div>
+  <div class="c-content" style="padding:250px 80px 120px;justify-content:center;text-align:center;align-items:center">
+    <h2 class="c-hook" style="font-size:220px;margin-bottom:0;letter-spacing:-10px">20<span style="font-size:110px">%</span></h2>
+    <h3 style="font-size:52px;font-weight:800;color:rgba(255,255,255,.8);margin-bottom:20px">OFF</h3>
+    <p style="font-size:30px;color:rgba(255,255,255,.5);margin-bottom:60px;line-height:1.4">Your first month of<br>clean laundry delivered</p>
+    <div style="background:rgba(255,255,255,.06);border:2px dashed rgba(255,255,255,.2);border-radius:4px;padding:40px 80px;margin-bottom:40px">
+      <p style="font-size:16px;color:rgba(255,255,255,.4);margin-bottom:8px">USE CODE</p>
+      <p style="font-size:60px;font-weight:800;color:#fff;letter-spacing:8px">SAVE20</p>
+    </div>
+    <p style="font-size:20px;color:rgba(255,255,255,.3)">Valid on any plan · No contracts</p>
+    <div class="c-cta" style="font-size:24px;padding:28px 80px;margin-top:32px">Claim Now →</div>
+    <p style="font-size:16px;color:rgba(255,255,255,.3);margin-top:24px">a7laundry.com · (407) 670-8839</p>
+  </div>
+</div>
+</template>
+
+<!-- ==================== GMB 11: BRAND OVERVIEW — GOOGLE POST ==================== -->
+<template id="tpl-10">
+<div class="creative size-gmb" style="background:#0a0f1a;display:flex;align-items:center;justify-content:center;padding:60px">
+  <div style="background:#fff;border-radius:16px;width:100%;height:100%;overflow:hidden;display:flex;flex-direction:column">
+    <div class="gbiz-header">
+      <div class="gbiz-avatar"><img src="../A7 LAUNDRY-05.png" alt="A7"></div>
+      <div>
+        <span class="gbiz-name">A7 Laundry Orlando</span><br>
+        <span class="gbiz-stars">★★★★★</span><span style="font-size:13px;color:rgba(0,0,0,.35);margin-left:4px">4.9 (2,000+)</span>
+      </div>
+    </div>
+    <div style="flex:1;position:relative;padding:32px;background:#f8fafc;display:flex;flex-direction:row;gap:40px">
+      <div style="flex:1.2;display:flex;flex-direction:column;justify-content:center">
+        <h2 style="font-size:40px;font-weight:800;color:#1c1917;line-height:1.1;margin-bottom:16px;letter-spacing:-1px">Orlando's #1<br>Laundry<br>Subscription</h2>
+        <div style="width:40px;height:3px;background:#6d28d9;margin-bottom:20px"></div>
+        <p style="font-size:16px;color:rgba(28,25,23,.45);margin-bottom:24px;line-height:1.6">Fill a bag. Leave at your door.<br>Get it back fresh in 24h.</p>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#6d28d9;color:#fff;border-radius:4px;font-weight:800;font-size:16px;align-self:flex-start">(407) 670-8839</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center">
+        <div style="padding:18px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:8px">
+          <p style="font-size:12px;color:#6d28d9;font-weight:700;margin-bottom:2px">WASH & FOLD</p>
+          <p style="font-size:14px;color:rgba(0,0,0,.45)">Subscription bags · From $59.90/mo</p>
+        </div>
+        <div style="padding:18px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:8px">
+          <p style="font-size:12px;color:#6d28d9;font-weight:700;margin-bottom:2px">DRY CLEANING</p>
+          <p style="font-size:14px;color:rgba(0,0,0,.45)">Premium care · Included in Premium plan</p>
+        </div>
+        <div style="padding:18px 20px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:8px">
+          <p style="font-size:12px;color:#6d28d9;font-weight:700;margin-bottom:2px">FREE DELIVERY</p>
+          <p style="font-size:14px;color:rgba(0,0,0,.45)">Pickup & delivery at your door</p>
+        </div>
+        <div style="padding:18px 20px;background:rgba(109,40,217,.06);border:1px solid rgba(109,40,217,.12);border-radius:8px">
+          <p style="font-size:12px;font-weight:700;color:#6d28d9;margin-bottom:2px">★ 4.9 RATING</p>
+          <p style="font-size:14px;color:rgba(0,0,0,.45)">2,000+ Orlando families trust us</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- ==================== GMB 12: FREE DELIVERY — GOOGLE POST ==================== -->
+<template id="tpl-11">
+<div class="creative size-gmb" style="background:#0a0f1a;display:flex;align-items:center;justify-content:center;padding:60px">
+  <div style="background:#fff;border-radius:16px;width:100%;height:100%;overflow:hidden;display:flex;flex-direction:column">
+    <div class="gbiz-header">
+      <div class="gbiz-avatar"><img src="../A7 LAUNDRY-05.png" alt="A7"></div>
+      <div>
+        <span class="gbiz-name">A7 Laundry Orlando</span><br>
+        <span class="gbiz-stars">★★★★★</span><span style="font-size:13px;color:rgba(0,0,0,.35);margin-left:4px">4.9 (2,000+)</span>
+      </div>
+    </div>
+    <div style="flex:1;position:relative;padding:32px 40px;background:#f8fafc;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center">
+      <div style="display:inline-block;padding:8px 20px;background:rgba(109,40,217,.08);color:#6d28d9;border-radius:4px;font-size:14px;font-weight:700;margin-bottom:24px">FREE PICKUP & DELIVERY</div>
+      <h2 style="font-size:48px;font-weight:800;color:#1c1917;line-height:1.1;margin-bottom:24px;letter-spacing:-1px">We Come<br>To You.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px;max-width:600px">
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Orlando</span>
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Kissimmee</span>
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Winter Park</span>
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Dr. Phillips</span>
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Lake Nona</span>
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Windermere</span>
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Celebration</span>
+        <span style="padding:8px 16px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:4px;font-size:14px;color:rgba(0,0,0,.5);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.03)">Davenport</span>
+      </div>
+      <p style="font-size:18px;color:rgba(0,0,0,.35);margin-bottom:24px">Plans from <strong style="color:#1c1917">$59.90/mo</strong> · No contracts</p>
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:16px 36px;background:#6d28d9;color:#fff;border-radius:4px;font-weight:800;font-size:18px">(407) 670-8839 · Get Started</div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- ===== JS ===== -->
+<script>
+  const creatives = [
+    { id:0, name:'Hero Brand', type:'Feed', size:'1080×1080', w:1080, h:1080, hook:'"Never Do Laundry Again"' },
+    { id:1, name:'Pain Point — 240h', type:'Feed', size:'1080×1080', w:1080, h:1080, hook:'"240 hrs/yr doing laundry"' },
+    { id:2, name:'Coupon FIRSTBAG', type:'Feed', size:'1080×1080', w:1080, h:1080, hook:'"Buy 1 Get 1 FREE"' },
+    { id:3, name:'Social Proof', type:'Feed', size:'1080×1080', w:1080, h:1080, hook:'"4.9 Rating · 2,000+ Families"' },
+    { id:4, name:'Coupon SAVE20', type:'Feed', size:'1080×1080', w:1080, h:1080, hook:'"20% OFF First Month"' },
+    { id:5, name:'How It Works', type:'Feed', size:'1080×1080', w:1080, h:1080, hook:'"3 Steps to Freedom"' },
+    { id:6, name:'STOP', type:'Story', size:'1080×1920', w:1080, h:1920, hook:'"Stop wasting weekends"' },
+    { id:7, name:'Coupon FIRSTBAG', type:'Story', size:'1080×1920', w:1080, h:1920, hook:'"Free Bag — BOGO"' },
+    { id:8, name:'Pricing Reveal', type:'Story', size:'1080×1920', w:1080, h:1920, hook:'"Less than your coffee"' },
+    { id:9, name:'Coupon SAVE20', type:'Story', size:'1080×1920', w:1080, h:1920, hook:'"20% OFF"' },
+    { id:10, name:'Brand Overview', type:'GMB', size:'1200×900', w:1200, h:900, hook:'"Orlando\'s #1 Subscription"' },
+    { id:11, name:'Free Delivery', type:'GMB', size:'1200×900', w:1200, h:900, hook:'"We Come To You"' },
+  ];
+
+  // ===== CAPTIONS DATA (Impact tone) =====
+  const captions = [
+    { primary:"Your washing machine is stealing your life. 240 hours a year on laundry. That's 10 full days. Gone. We'll give them back. Plans from $1.99/day.", headline:"Reclaim 240 Hours of Your Life", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #LaundrySubscription #NeverDoLaundryAgain #FreeLaundryPickup #OrlandoFL" },
+    { primary:"You're spending $120+/month on laundry. We do it all for $59.90. The math doesn't lie. Free pickup & delivery.", headline:"Was $120 → Now $59.90/mo", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #LaundrySubscription #NeverDoLaundryAgain #FreeLaundryPickup #OrlandoFL" },
+    { primary:"Buy 1 bag, get 1 FREE. Code FIRSTBAG. Only available for the first 47 new members this month. No contracts.", headline:"Buy 1 Get 1 FREE — Only 47 Spots Left", hashtags:"#A7Laundry #OrlandoLaundry #BOGO #FreeLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #LaundrySubscription #OrlandoFL" },
+    { primary:"2,847 Orlando families never touch laundry again. 4.9-star rating. Join them today. Plans from $1.99/day.", headline:"Join 2,847+ Orlando Families", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #CustomerReview #SocialProof #NeverDoLaundryAgain #OrlandoFL" },
+    { primary:"20% OFF your first month. Code SAVE20. This offer expires tonight. No contracts. Free pickup & delivery.", headline:"20% OFF — Expires Tonight", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Discount #LaundrySubscription #NeverDoLaundryAgain #FreeLaundryPickup #OrlandoFL" },
+    { primary:"You're losing $2,400/year doing your own laundry. Time + supplies + energy + stress. Plans start at $59.90/month.", headline:"Stop Losing $2,400/Year", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #LaundrySubscription #NeverDoLaundryAgain #OrlandoFL" },
+    { primary:"WAIT. You're still doing your own laundry? 240 hours a year — gone. Plans from $1.99/day. Break the cycle.", headline:"Break The Laundry Cycle", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #LaundrySubscription #NeverDoLaundryAgain #OrlandoFL" },
+    { primary:"FREE BAG — ending soon. Buy 1 bag, get 1 FREE with code FIRSTBAG. Limited spots. Claim yours before time runs out.", headline:"Claim Your Free Bag", hashtags:"#A7Laundry #OrlandoLaundry #BOGO #FreeLaundry #LaundryService #Orlando #Kissimmee #WinterPark #LaundrySubscription #OrlandoFL" },
+    { primary:"Costs less than Netflix. From $1.99/day — free pickup, wash, fold & delivery. No contracts.", headline:"Less Than Netflix", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #LaundrySubscription #NeverDoLaundryAgain #OrlandoFL" },
+    { primary:"LAST CHANCE: 20% OFF. Code SAVE20 before midnight. Any plan. No contracts.", headline:"Last Chance: 20% OFF", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Discount #LaundrySubscription #NeverDoLaundryAgain #FreeLaundryPickup #OrlandoFL" },
+    { primary:"Orlando's most trusted laundry. 4.9 stars, 2,847+ families. Free pickup & delivery. Plans from $59.90/mo.", headline:"Orlando's Most Trusted", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #LaundrySubscription #NeverDoLaundryAgain #OrlandoFL #LocalBusiness" },
+    { primary:"Free delivery. Zero effort. Limited spots available. Plans from $59.90/mo. Orlando, Kissimmee, Winter Park.", headline:"Free Delivery, Zero Effort", hashtags:"#A7Laundry #OrlandoLaundry #LaundryService #WashAndFold #Orlando #Kissimmee #WinterPark #FreeDelivery #LaundrySubscription #NeverDoLaundryAgain #OrlandoFL" },
+  ];
+
+  const galleryGrid = document.getElementById('galleryGrid');
+  const gallery = document.getElementById('gallery');
+  const singleView = document.getElementById('singleView');
+  const creativeFrame = document.getElementById('creativeFrame');
+  const singleCaption = document.getElementById('singleCaption');
+  const sizeInfo = document.getElementById('sizeInfo');
+  const tabs = document.querySelectorAll('.ui-tab[data-index]');
+
+  creatives.forEach((c, i) => {
+    const thumbClass = c.type === 'Story' ? 'story' : c.type === 'GMB' ? 'gmb' : '';
+    const badgeClass = c.type === 'Feed' ? 'badge-feed' : c.type === 'Story' ? 'badge-story' : 'badge-gmb';
+    const tpl = document.getElementById('tpl-' + i);
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+    card.onclick = () => showSingle(i);
+    card.innerHTML = `
+      <div class="gallery-thumb ${thumbClass}">${tpl.innerHTML}</div>
+      <div class="gallery-card-info">
+        <h3>${String(i+1).padStart(2,'0')}. ${c.name}</h3>
+        <p>${c.hook} · ${c.size}</p>
+        <span class="gallery-card-badge ${badgeClass}">${c.type}</span>
+      </div>
+    `;
+    galleryGrid.appendChild(card);
+  });
+
+  function showGallery() {
+    gallery.classList.remove('hidden');
+    singleView.classList.remove('active');
+    singleCaption.style.display = 'none';
+    sizeInfo.textContent = '12 creatives';
+    tabs.forEach(t => t.classList.remove('active'));
+    document.querySelector('.ui-tab:not([data-index])').classList.add('active');
+  }
+
+  function showSingle(index) {
+    const c = creatives[index];
+    const cap = captions[index];
+    const tpl = document.getElementById('tpl-' + index);
+    gallery.classList.add('hidden');
+    singleView.classList.add('active');
+    creativeFrame.innerHTML = tpl.innerHTML;
+    sizeInfo.textContent = `${c.type} · ${c.size} · ${c.name}`;
+    const vw = window.innerWidth - 64;
+    const vh = window.innerHeight - 280;
+    const scaleX = vw / c.w;
+    const scaleY = vh / c.h;
+    const scale = Math.min(scaleX, scaleY, 1);
+    creativeFrame.style.transform = `scale(${scale})`;
+    creativeFrame.style.width = c.w + 'px';
+    creativeFrame.style.height = c.h + 'px';
+
+    // Show caption
+    singleCaption.style.display = 'block';
+    singleCaption.innerHTML = `
+      <div class="caption-row"><span class="caption-label">Primary Text</span><button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+      <p class="caption-text">${cap.primary}</p>
+      <div class="caption-row"><span class="caption-label">Headline</span><button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+      <p class="caption-text">${cap.headline}</p>
+      <div class="caption-row"><span class="caption-label">Hashtags</span><button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+      <p class="caption-tags">${cap.hashtags}</p>
+    `;
+
+    tabs.forEach(t => t.classList.remove('active'));
+    document.querySelector('.ui-tab:not([data-index])').classList.remove('active');
+    if (tabs[index]) tabs[index].classList.add('active');
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => showSingle(parseInt(tab.dataset.index)));
+  });
+
+  let currentIndex = -1;
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { showGallery(); currentIndex = -1; }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { currentIndex = Math.min(currentIndex + 1, 11); showSingle(currentIndex); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { currentIndex = Math.max(currentIndex - 1, 0); showSingle(currentIndex); }
+  });
+
+  function exportTip() {
+    const toast = document.getElementById('exportToast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+  }
+
+  function copyText(btn) {
+    const text = btn.closest('.caption-row').nextElementSibling.textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.style.color = '#10b981';
+      setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
