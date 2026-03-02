@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A7 Laundry — Painel de Criativos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#f0f2f5;min-height:100vh;color:#0a0f1a}
+
+  /* Header */
+  .panel-header{background:#fff;border-bottom:1px solid rgba(0,0,0,.06);padding:24px 40px;display:flex;align-items:center;gap:24px;position:sticky;top:0;z-index:50}
+  .panel-header img{height:32px}
+  .panel-header h1{font-size:18px;font-weight:800}
+  .panel-header h1 span{color:#2563eb}
+  .panel-header .meta{margin-left:auto;font-size:12px;color:rgba(0,0,0,.35);text-align:right}
+  .panel-header .meta strong{color:#0a0f1a}
+
+  /* Section */
+  .panel-section{padding:48px 40px}
+  .panel-section:nth-child(odd){background:#fff}
+  .panel-section:nth-child(even){background:#f8fafc}
+  .section-head{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+  .section-head h2{font-size:24px;font-weight:800}
+  .section-head .sys-badge{padding:6px 14px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:1px}
+  .sys-dark{background:#0a0f1a;color:#fff}
+  .sys-clean{background:#e0f2fe;color:#2563eb}
+  .section-head .sys-link{margin-left:auto;padding:10px 24px;background:#2563eb;color:#fff;border-radius:4px;text-decoration:none;font-size:13px;font-weight:700;transition:.2s}
+  .section-head .sys-link:hover{background:#1d4ed8}
+  .section-desc{font-size:14px;color:rgba(0,0,0,.4);margin-bottom:32px;max-width:600px}
+
+  /* Grid */
+  .creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+  .card{border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,.06);transition:.3s;cursor:default;background:#fff}
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.08);border-color:rgba(37,99,235,.2)}
+  .card-preview{width:100%;aspect-ratio:1;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
+  .card-preview.story{aspect-ratio:9/16}
+  .card-preview.gmb{aspect-ratio:4/3}
+  .card-preview-inner{width:100%;height:100%;position:relative}
+  .card-info{padding:14px 16px}
+  .card-info h4{font-size:13px;font-weight:700;margin-bottom:2px}
+  .card-info p{font-size:11px;color:rgba(0,0,0,.4)}
+  .card-badges{display:flex;gap:6px;margin-top:8px}
+  .card-badges span{padding:3px 8px;border-radius:3px;font-size:9px;font-weight:700}
+  .type-feed{background:#e0f2fe;color:#2563eb}
+  .type-story{background:#f3e8ff;color:#a855f7}
+  .type-gmb{background:#dcfce7;color:#16a34a}
+  .size-tag{background:#f1f5f9;color:rgba(0,0,0,.4)}
+
+  /* Coupon section */
+  .coupons{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:48px;max-width:600px}
+  .coupon-card{padding:24px;border-radius:8px;border:2px dashed;text-align:center}
+  .coupon-card h3{font-size:28px;font-weight:800;letter-spacing:4px;margin-bottom:8px}
+  .coupon-card p{font-size:13px}
+  .coupon-blue{border-color:#2563eb;background:rgba(37,99,235,.03)}
+  .coupon-blue h3{color:#2563eb}
+  .coupon-blue p{color:rgba(0,0,0,.45)}
+
+  /* Mini previews */
+  .mini-dark{background:#0a0f1a;color:#fff;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+  .mini-dark h5{font-size:16px;font-weight:800;letter-spacing:-1px;line-height:1}
+  .mini-dark .accent{color:#2563eb}
+  .mini-dark small{font-size:9px;color:rgba(255,255,255,.3)}
+  .mini-dark .glow{position:absolute;width:120px;height:120px;background:#2563eb;border-radius:50%;filter:blur(60px);opacity:.15}
+
+  .mini-clean{background:#fff;color:#0a0f1a;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;position:relative}
+  .mini-clean h5{font-size:16px;font-weight:800;letter-spacing:-1px;line-height:1}
+  .mini-clean .accent{color:#2563eb}
+  .mini-clean small{font-size:9px;color:rgba(0,0,0,.25)}
+  .mini-clean .blob{position:absolute;width:100px;height:100px;background:#93c5fd;border-radius:50%;filter:blur(60px);opacity:.2}
+  .mini-clean .strip{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2563eb,#60a5fa)}
+
+  /* Footer */
+  .panel-footer{padding:32px 40px;text-align:center;font-size:12px;color:rgba(0,0,0,.3);background:#fff;border-top:1px solid rgba(0,0,0,.04)}
+  .panel-footer a{color:#2563eb;text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="panel-header">
+  <img src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+  <h1>Painel de <span>Criativos</span></h1>
+  <div class="meta">
+    <strong>24 peças</strong> · 2 sistemas · 2 cupons<br>
+    Meta Ads · Google Ads · Instagram · GMN
+  </div>
+</div>
+
+<!-- ===== CUPONS ===== -->
+<div class="panel-section">
+  <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">Cupons Ativos</h2>
+  <div class="coupons">
+    <div class="coupon-card coupon-blue">
+      <h3>FIRSTBAG</h3>
+      <p>Buy 1 Bag, Get 1 <strong>FREE</strong></p>
+    </div>
+    <div class="coupon-card coupon-blue">
+      <h3>SAVE20</h3>
+      <p><strong>20% OFF</strong> no primeiro mês</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SISTEMA 1: DARK NIKE ===== -->
+<div class="panel-section">
+  <div class="section-head">
+    <h2>Dark Nike System</h2>
+    <span class="sys-badge sys-dark">DARK MODE</span>
+    <a href="index.html" class="sys-link">Abrir Deck Completo →</a>
+  </div>
+  <p class="section-desc">Design system dark mode Nike-inspired. Base #0a0f1a, azul elétrico #2563eb, tipografia massiva Inter 800, glow effects. Ideal para público premium e impacto visual forte.</p>
+  <div class="creative-grid" id="gridDark"></div>
+</div>
+
+<!-- ===== SISTEMA 2: CLEAN LAUNDRY ===== -->
+<div class="panel-section">
+  <div class="section-head">
+    <h2>Clean Laundry System</h2>
+    <span class="sys-badge sys-clean">LIGHT / CLEAN</span>
+    <a href="clean.html" class="sys-link">Abrir Deck Completo →</a>
+  </div>
+  <p class="section-desc">Design system light/clean. Fundo branco #fff, blobs suaves, azul #2563eb como acento, sombras leves. Ideal para confiança, clareza e público familiar.</p>
+  <div class="creative-grid" id="gridClean"></div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="panel-footer">
+  A7 Laundry Orlando · <a href="https://a7laundry.com">a7laundry.com</a> · (407) 670-8839<br>
+  24 criativos · Feed 1080×1080 · Stories 1080×1920 · GMB 1200×900
+</div>
+
+<script>
+  const items = [
+    { num:'01', name:'Hero Brand', type:'Feed', size:'1080×1080', hookDark:'Never Do Laundry Again.', hookClean:'Never Do Laundry Again.', aspect:'' },
+    { num:'02', name:'Pain Point', type:'Feed', size:'1080×1080', hookDark:'240 hrs/yr', hookClean:'240 hrs/yr', aspect:'' },
+    { num:'03', name:'Coupon FIRSTBAG', type:'Feed', size:'1080×1080', hookDark:'Buy 1 Get 1 FREE', hookClean:'Buy 1 Get 1 FREE', aspect:'' },
+    { num:'04', name:'Social Proof', type:'Feed', size:'1080×1080', hookDark:'4.9★ · 2,000+ Families', hookClean:'4.9★ · 2,000+ Families', aspect:'' },
+    { num:'05', name:'Coupon SAVE20', type:'Feed', size:'1080×1080', hookDark:'20% OFF', hookClean:'20% OFF', aspect:'' },
+    { num:'06', name:'How It Works', type:'Feed', size:'1080×1080', hookDark:'3 Steps to Freedom', hookClean:'3 Steps to Freedom', aspect:'' },
+    { num:'07', name:'STOP', type:'Story', size:'1080×1920', hookDark:'STOP.', hookClean:'STOP.', aspect:'story' },
+    { num:'08', name:'Coupon FIRSTBAG', type:'Story', size:'1080×1920', hookDark:'FREE BAG', hookClean:'FREE BAG', aspect:'story' },
+    { num:'09', name:'Pricing', type:'Story', size:'1080×1920', hookDark:'$1.99/day', hookClean:'$1.99/day', aspect:'story' },
+    { num:'10', name:'Coupon SAVE20', type:'Story', size:'1080×1920', hookDark:'20%', hookClean:'20%', aspect:'story' },
+    { num:'11', name:'Brand Overview', type:'GMB', size:'1200×900', hookDark:"Orlando's #1", hookClean:"Orlando's #1", aspect:'gmb' },
+    { num:'12', name:'Free Delivery', type:'GMB', size:'1200×900', hookDark:'We Come To You.', hookClean:'We Come To You.', aspect:'gmb' },
+  ];
+
+  const typeClass = t => t === 'Feed' ? 'type-feed' : t === 'Story' ? 'type-story' : 'type-gmb';
+
+  // Dark cards
+  const gridDark = document.getElementById('gridDark');
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-preview ${item.aspect}">
+        <div class="card-preview-inner mini-dark">
+          <div class="glow" style="top:20%;right:10%"></div>
+          <small>A7 LAUNDRY</small>
+          <h5>${item.hookDark.includes('FREE') ? item.hookDark.replace('FREE','<span class="accent">FREE</span>') : item.hookDark.includes('Freedom') ? item.hookDark.replace('Freedom','<span class="accent">Freedom</span>') : item.hookDark.includes('%') ? '<span class="accent">' + item.hookDark + '</span>' : item.hookDark}</h5>
+          <small style="color:#2563eb;font-weight:600">a7laundry.com</small>
+        </div>
+      </div>
+      <div class="card-info">
+        <h4>${item.num}. ${item.name}</h4>
+        <p>${item.hookDark}</p>
+        <div class="card-badges">
+          <span class="${typeClass(item.type)}">${item.type}</span>
+          <span class="size-tag">${item.size}</span>
+        </div>
+      </div>
+    `;
+    gridDark.appendChild(card);
+  });
+
+  // Clean cards
+  const gridClean = document.getElementById('gridClean');
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-preview ${item.aspect}">
+        <div class="card-preview-inner mini-clean">
+          <div class="strip"></div>
+          <div class="blob" style="top:15%;right:5%"></div>
+          <small>A7 LAUNDRY</small>
+          <h5>${item.hookClean.includes('FREE') ? item.hookClean.replace('FREE','<span class="accent">FREE</span>') : item.hookClean.includes('Freedom') ? item.hookClean.replace('Freedom','<span class="accent">Freedom</span>') : item.hookClean.includes('%') ? '<span class="accent">' + item.hookClean + '</span>' : item.hookClean}</h5>
+          <small style="color:#2563eb;font-weight:600">a7laundry.com</small>
+        </div>
+      </div>
+      <div class="card-info">
+        <h4>${item.num}. ${item.name}</h4>
+        <p>${item.hookClean}</p>
+        <div class="card-badges">
+          <span class="${typeClass(item.type)}">${item.type}</span>
+          <span class="size-tag">${item.size}</span>
+        </div>
+      </div>
+    `;
+    gridClean.appendChild(card);
+  });
+</script>
+</body>
+</html>
