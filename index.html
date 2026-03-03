@@ -9,6 +9,15 @@
   <meta property="og:title" content="A7 Laundry | Stop Wasting Your Weekends on Laundry — Orlando, FL">
   <meta property="og:description" content="Fill a bag. Leave it at your door. Get it back fresh in 24h. Plans from $1.99/day with free pickup & delivery. Buy 1 bag, get 1 FREE. No contracts.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://a7laundry.vercel.app/A7%20LAUNDRY-05.png">
+  <meta property="og:image:width" content="2205">
+  <meta property="og:image:height" content="392">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A7 Laundry | Stop Wasting Your Weekends on Laundry — Orlando, FL">
+  <meta name="twitter:description" content="Fill a bag. Leave it at your door. Get it back fresh in 24h. Plans from $1.99/day with free pickup & delivery. Buy 1 bag, get 1 FREE. No contracts.">
+  <meta name="twitter:image" content="https://a7laundry.vercel.app/A7%20LAUNDRY-05.png">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://a7laundry.vercel.app/">
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -25,15 +34,15 @@
     "@graph":[
       {
         "@type":["LocalBusiness","LaundryService"],
-        "@id":"https://www.a7laundryorlando.com/#business",
+        "@id":"https://a7laundry.vercel.app/#business",
         "name":"A7 Laundry",
         "alternateName":"A7 Laundry Orlando",
         "description":"Orlando's #1 laundry subscription service. Fill a bag, leave it at your door, get it back fresh in 24h. Plans from $1.99/day with free pickup & delivery.",
-        "url":"https://www.a7laundryorlando.com",
+        "url":"https://a7laundry.vercel.app",
         "telephone":"+1-407-670-8839",
         "priceRange":"$$",
-        "image":"https://www.a7laundryorlando.com/A7 LAUNDRY-05.png",
-        "logo":"https://www.a7laundryorlando.com/A7 LAUNDRY-05.png",
+        "image":"https://a7laundry.vercel.app/A7%20LAUNDRY-05.png",
+        "logo":"https://a7laundry.vercel.app/A7%20LAUNDRY-05.png",
         "address":{"@type":"PostalAddress","streetAddress":"10097 Tuller Loop","addressLocality":"Winter Garden","addressRegion":"FL","postalCode":"34787","addressCountry":"US"},
         "geo":{"@type":"GeoCoordinates","latitude":"28.5383","longitude":"-81.3792"},
         "areaServed":[
@@ -74,6 +83,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* ==========================================
@@ -129,6 +139,8 @@
     body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--gray-900);background:var(--base-dark);overflow-x:hidden;line-height:1.7}
     .container{max-width:1100px;margin:0 auto;padding:0 32px}
     .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+    .skip-link{position:absolute;top:-40px;left:0;background:var(--primary);color:#fff;padding:8px 16px;z-index:10000;font-weight:700;font-size:14px;transition:top .2s}
+    .skip-link:focus{top:0}
     /* Section theme utilities */
     .section-dark{background:var(--base-dark);color:#fff}
     .section-dark .section-tag{background:rgba(37,99,235,.15);color:var(--primary-light)}
@@ -194,7 +206,8 @@
 
     /* === HERO === */
     .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--base-dark);padding:0}
-    .hero::before,.hero::after{display:none}
+    .tabular-nums{font-variant-numeric:tabular-nums}
+    .hero-cta-primary:focus-visible,.hero-cta-secondary:focus-visible,.header-cta:focus-visible,.sticky-btn:focus-visible,.sticky-call-btn:focus-visible,.exit-cta:focus-visible,.sub-stripe-fallback:focus-visible,.faq-q:focus-visible{outline:2px solid var(--primary-light);outline-offset:2px}
     .hero-content{position:relative;z-index:2;text-align:left;max-width:880px;padding:160px 32px 100px}
     .hero h1{font-size:clamp(48px,12vw,140px);font-weight:800;color:#fff;line-height:.95;margin-bottom:24px;letter-spacing:-3px}
     .hero-sub{font-size:clamp(15px,1.8vw,18px);color:rgba(255,255,255,.6);max-width:560px;margin:0 0 40px;line-height:1.8}
@@ -379,7 +392,7 @@
     .proof-toast{position:fixed;bottom:90px;right:20px;z-index:var(--z-proof-toast);background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-xl);max-width:320px;display:flex;align-items:center;gap:12px;transform:translateX(120%);transition:transform .5s cubic-bezier(.4,0,.2,1);opacity:0;color:rgba(255,255,255,.7)}
     .proof-toast.show{transform:translateX(0);opacity:1}
     .proof-toast-avatar{width:36px;height:36px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;flex-shrink:0}
-    .proof-toast-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4}
+    .proof-toast-text{font-size:12px;color:rgba(255,255,255,.75);line-height:1.4}
     .proof-toast-text strong{color:#fff;font-weight:700}
     .proof-toast-text .proof-time{color:rgba(255,255,255,.3);font-size:11px}
     .proof-toast-close{position:absolute;top:6px;right:8px;background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:14px;line-height:1}
@@ -503,6 +516,7 @@
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM7QGX6L" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
@@ -511,10 +525,10 @@
 <div id="progressBar"></div>
 
 <!-- Language Switcher -->
-<div class="lang-sw">
-  <button class="active" onclick="setLang('en')">EN</button>
-  <button onclick="setLang('pt')">PT</button>
-  <button onclick="setLang('es')">ES</button>
+<div class="lang-sw" role="group" aria-label="Language">
+  <button class="active" onclick="setLang('en')" aria-label="English">EN</button>
+  <button onclick="setLang('pt')" aria-label="Português">PT</button>
+  <button onclick="setLang('es')" aria-label="Español">ES</button>
 </div>
 
 <!-- Live Viewers -->
@@ -600,9 +614,10 @@
 </nav>
 
 <!-- ===================== HERO ===================== -->
+<main id="main-content">
 <section class="hero">
   <div class="hero-bg">
-    <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1400&q=75" alt="Fresh clean white laundry" loading="eager" decoding="async" fetchpriority="high" width="1400" height="933">
+    <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1400&q=75" srcset="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=700&q=75 700w, https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1400&q=75 1400w" sizes="100vw" alt="Fresh clean white laundry" loading="eager" decoding="async" fetchpriority="high" width="1400" height="933">
   </div>
   <div class="container">
     <div class="hero-content">
@@ -612,9 +627,9 @@
         <span data-lang="es">Nunca Más<br>Laves Ropa.</span>
       </h1>
       <p class="hero-sub">
-        <span data-lang="en">From <strong>$1.99/day</strong>. Free pickup. <strong>Buy 1 get 1 FREE</strong> — ends in <span id="countdown" style="font-variant-numeric:tabular-nums;"></span></span>
-        <span data-lang="pt">A partir de <strong>$1.99/dia</strong>. Coleta grátis. <strong>Compre 1 ganhe 1 GRÁTIS</strong> — termina em <span id="countdownPt" style="font-variant-numeric:tabular-nums;"></span></span>
-        <span data-lang="es">Desde <strong>$1.99/día</strong>. Recogida gratis. <strong>Compra 1 lleva 1 GRATIS</strong> — termina en <span id="countdownEs" style="font-variant-numeric:tabular-nums;"></span></span>
+        <span data-lang="en">From <strong>$1.99/day</strong>. Free pickup. <strong>Buy 1 get 1 FREE</strong> — ends in <span id="countdown" class="tabular-nums"></span></span>
+        <span data-lang="pt">A partir de <strong>$1.99/dia</strong>. Coleta grátis. <strong>Compre 1 ganhe 1 GRÁTIS</strong> — termina em <span id="countdownPt" class="tabular-nums"></span></span>
+        <span data-lang="es">Desde <strong>$1.99/día</strong>. Recogida gratis. <strong>Compra 1 lleva 1 GRATIS</strong> — termina en <span id="countdownEs" class="tabular-nums"></span></span>
       </p>
       <div class="hero-ctas">
         <a href="tel:+14076708839" class="hero-cta-primary">
@@ -1483,6 +1498,7 @@
       </p>
       <div id="emailFormWrap">
         <form class="email-form" id="emailForm" onsubmit="return handleEmailCapture(event)">
+          <label for="emailInput" class="sr-only">Email address</label>
           <input type="email" id="emailInput" required placeholder="your@email.com">
           <button type="submit">
             <span data-lang="en">Get 15% Off</span>
@@ -1504,6 +1520,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- WhatsApp FAB -->
 <a href="https://wa.me/14076708839?text=Hi!%20I'm%20interested%20in%20A7%20Laundry%20subscription%20plans!" class="wa-fab" aria-label="Chat on WhatsApp" data-wa-link>
@@ -1578,7 +1596,7 @@
 <!-- Exit Intent Popup -->
 <div class="exit-overlay" id="exitOverlay">
   <div class="exit-modal">
-    <button class="exit-modal-close" onclick="closeExitPopup()">&times;</button>
+    <button class="exit-modal-close" onclick="closeExitPopup()" aria-label="Close popup">&times;</button>
     <div style="font-size:48px;margin-bottom:16px;">👋</div>
     <h2>
       <span data-lang="en">Wait! Don't Leave Dirty Laundry Behind</span>
@@ -1610,8 +1628,8 @@
 
 <!-- Subscription Modal -->
 <div class="sub-overlay" id="subOverlay">
-  <div class="sub-modal">
-    <button class="sub-modal-close" onclick="closeSubModal()">&times;</button>
+  <div class="sub-modal" role="dialog" aria-labelledby="subPlanName">
+    <button class="sub-modal-close" onclick="closeSubModal()" aria-label="Close subscription modal">&times;</button>
     <div class="sub-modal-header" id="subModalHeader" style="background:var(--gradient-blue)">
       <h2 id="subPlanName">Plan</h2>
       <div class="sub-price" id="subPrice"><small>$</small>59<small>.90</small></div>
@@ -1747,8 +1765,8 @@
   // === Email Capture ===
   function handleEmailCapture(e){
     e.preventDefault();
-    var email=document.getElementById('emailInput').value;
-    if(!email) return false;
+    var email=document.getElementById('emailInput').value.trim();
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return false;
     var leads=JSON.parse(localStorage.getItem('a7_leads')||'[]');
     leads.push({email:email,date:new Date().toISOString()});
     localStorage.setItem('a7_leads',JSON.stringify(leads));
@@ -1802,16 +1820,19 @@
 
   // === FAQ Accordion ===
   document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.setAttribute('aria-expanded','false');
     btn.addEventListener('click',()=>{
       const item=btn.parentElement;
       const answer=item.querySelector('.faq-a');
       const isOpen=item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(i=>{
         i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded','false');
         i.querySelector('.faq-a').style.maxHeight=null;
       });
       if(!isOpen){
         item.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
         answer.style.maxHeight=answer.scrollHeight+'px';
       }
     });

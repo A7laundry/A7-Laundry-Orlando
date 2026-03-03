@@ -8,6 +8,15 @@
   <meta property="og:title" content="A7 Cleaning Services | FREE First Turnover Cleaning">
   <meta property="og:description" content="One bad review about dirty linens kills your booking rate. Get professional turnover cleaning — first clean FREE.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://a7laundry.vercel.app/A7%20LAUNDRY-05.png">
+  <meta property="og:image:width" content="2205">
+  <meta property="og:image:height" content="392">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A7 Cleaning Services | FREE First Turnover Cleaning">
+  <meta name="twitter:description" content="One bad review about dirty linens kills your booking rate. Get professional turnover cleaning — first clean FREE.">
+  <meta name="twitter:image" content="https://a7laundry.vercel.app/A7%20LAUNDRY-05.png">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://a7laundry.vercel.app/vacation-rental.html">
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -16,6 +25,7 @@
   })(window,document,'script','dataLayer','GTM-PM7QGX6L');</script>
   <!-- End Google Tag Manager -->
   <script>function gtag(){dataLayer.push(arguments);}</script>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
@@ -481,33 +491,56 @@
     .lang-active-en .lang-flex[data-lang="en"],.lang-active-pt .lang-flex[data-lang="pt"],.lang-active-es .lang-flex[data-lang="es"]{display:flex}
     .lang-active-en .lang-iflex[data-lang="en"],.lang-active-pt .lang-iflex[data-lang="pt"],.lang-active-es .lang-iflex[data-lang="es"]{display:inline-flex}
     .lang-active-en .lang-grid[data-lang="en"],.lang-active-pt .lang-grid[data-lang="pt"],.lang-active-es .lang-grid[data-lang="es"]{display:grid}
+
+    /* === SKIP LINK === */
+    .skip-link{position:absolute;top:-40px;left:0;background:#059669;color:#fff;padding:8px 16px;z-index:10000;font-weight:700;font-size:14px;transition:top .2s;text-decoration:none}
+    .skip-link:focus{top:0}
+
+    /* === FOCUS VISIBLE === */
+    :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
   </style>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@graph":[
       {
-        "@type":["LocalBusiness","ProfessionalService"],
-        "@id":"https://www.a7laundryorlando.com/#business",
-        "name":"A7 Cleaning Services",
+        "@type":["LocalBusiness","DryCleaningOrLaundry"],
+        "@id":"https://a7laundry.vercel.app/vacation-rental.html#business",
+        "name":"A7 Laundry — Vacation Rental Laundry",
+        "alternateName":"A7 Laundry Orlando",
+        "description":"Professional laundry service for vacation rental hosts in Orlando. Sheets, towels, and linens cleaned and delivered for your Airbnb or VRBO property.",
+        "url":"https://a7laundry.vercel.app/vacation-rental.html",
         "telephone":"+1-407-670-8839",
+        "priceRange":"$$",
+        "image":"https://a7laundry.vercel.app/A7%20LAUNDRY-05.png",
+        "logo":"https://a7laundry.vercel.app/A7%20LAUNDRY-05.png",
         "address":{"@type":"PostalAddress","streetAddress":"10097 Tuller Loop","addressLocality":"Winter Garden","addressRegion":"FL","postalCode":"34787","addressCountry":"US"},
-        "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"527","bestRating":"5","worstRating":"1"},
-        "areaServed":[{"@type":"City","name":"Orlando"},{"@type":"City","name":"Kissimmee"},{"@type":"City","name":"Winter Park"},{"@type":"City","name":"Winter Garden"},{"@type":"City","name":"Lake Nona"},{"@type":"City","name":"Celebration"},{"@type":"City","name":"Altamonte Springs"},{"@type":"City","name":"Windermere"},{"@type":"City","name":"Oviedo"},{"@type":"City","name":"Davenport"}]
+        "geo":{"@type":"GeoCoordinates","latitude":"28.5383","longitude":"-81.3792"},
+        "openingHoursSpecification":[
+          {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"07:00","closes":"19:00"},
+          {"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"08:00","closes":"17:00"}
+        ],
+        "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"527","bestRating":"5","worstRating":"1"}
       },
       {
-        "@type":"Service",
-        "name":"Vacation Rental Turnover Cleaning",
-        "description":"Professional vacation rental turnover cleaning in Orlando. 500+ properties serviced. Same-day available.",
-        "provider":{"@id":"https://www.a7laundryorlando.com/#business"},
-        "serviceType":"Vacation Rental Cleaning",
-        "offers":{"@type":"Offer","priceCurrency":"USD","price":"99.00"}
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"What areas do you service?","acceptedAnswer":{"@type":"Answer","text":"We cover the entire Orlando metro area including Kissimmee, Davenport, Clermont, Winter Garden, Lake Buena Vista, Champions Gate, and all surrounding communities popular with vacation rental properties. If you are within 45 minutes of downtown Orlando, we likely service your area."}},
+          {"@type":"Question","name":"How much does a turnover cleaning cost?","acceptedAnswer":{"@type":"Answer","text":"Our turnover cleaning starts at $149, depending on property size and specific requirements. Your first cleaning is completely free - no obligation. We also offer membership plans that save you 25% on every clean."}},
+          {"@type":"Question","name":"What is included in a turnover clean?","acceptedAnswer":{"@type":"Answer","text":"Every turnover includes: deep cleaning of all rooms, bathroom and kitchen sanitization, fresh linen and towel service, bed making, trash removal, restocking essentials check, and a photo verification report sent directly to you."}},
+          {"@type":"Question","name":"How do I schedule a cleaning?","acceptedAnswer":{"@type":"Answer","text":"Simply text us on WhatsApp with your property address and checkout schedule. We offer same-day availability and can be at your property within 1 hour of guest checkout. Many hosts share their calendar with us so we can plan ahead automatically."}},
+          {"@type":"Question","name":"Do I need to provide cleaning supplies?","acceptedAnswer":{"@type":"Answer","text":"No. Our team brings all professional-grade cleaning supplies and equipment. We use eco-friendly, hospitality-standard products that are tough on germs but safe for guests, including children and pets."}},
+          {"@type":"Question","name":"How does access work? Do I need to be present?","acceptedAnswer":{"@type":"Answer","text":"You do not need to be present. We work with lockboxes, smart locks, keypads, and key handoffs. Most of our hosts are remote and manage everything via text. We handle the access, you handle the bookings."}},
+          {"@type":"Question","name":"What is your cancellation policy?","acceptedAnswer":{"@type":"Answer","text":"You can cancel or reschedule a cleaning with at least 4 hours notice at no charge. Cancellations with less than 4 hours notice may incur a $25 trip fee."}},
+          {"@type":"Question","name":"Are you licensed and insured?","acceptedAnswer":{"@type":"Answer","text":"Yes. A7 Cleaning Services is fully licensed and insured in the state of Florida. We carry general liability insurance and all team members are background-checked."}}
+        ]
       }
     ]
   }
   </script>
 </head>
 <body class="lang-active-en">
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM7QGX6L" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
@@ -516,10 +549,10 @@
 <div id="progressBar"></div>
 
 <!-- 2. LANGUAGE SWITCHER -->
-<div class="lang-switch">
-  <button class="active" onclick="setLanguage('en')">EN</button>
-  <button onclick="setLanguage('pt')">PT</button>
-  <button onclick="setLanguage('es')">ES</button>
+<div class="lang-switch" role="group" aria-label="Language">
+  <button class="active" onclick="setLanguage('en')" aria-label="English">EN</button>
+  <button onclick="setLanguage('pt')" aria-label="Portugues">PT</button>
+  <button onclick="setLanguage('es')" aria-label="Espanol">ES</button>
 </div>
 
 <!-- 3. LIVE VIEWERS -->
@@ -559,10 +592,10 @@
   <a href="shoe-cleaning.html">&#x1F45F; <span data-lang="en">Shoe Cleaning</span><span data-lang="pt">Limpeza de Tenis</span><span data-lang="es">Limpieza de Zapatillas</span></a>
   <a href="upholstery-cleaning.html">&#x1F6CB;&#xFE0F; <span data-lang="en">Upholstery</span><span data-lang="pt">Estofados</span><span data-lang="es">Tapiceria</span></a>
   <a href="vacation-rental.html" style="color:var(--accent-light)">&#x1F334; Vacation Rental</a>
-  <div class="menu-lang" id="menuLangSwitcher">
-    <button class="active" onclick="setLanguage('en')">EN</button>
-    <button onclick="setLanguage('pt')">PT</button>
-    <button onclick="setLanguage('es')">ES</button>
+  <div class="menu-lang" id="menuLangSwitcher" role="group" aria-label="Language">
+    <button class="active" onclick="setLanguage('en')" aria-label="English">EN</button>
+    <button onclick="setLanguage('pt')" aria-label="Portugues">PT</button>
+    <button onclick="setLanguage('es')" aria-label="Espanol">ES</button>
   </div>
   <a href="tel:+14076708839" class="menu-cta">
     <span data-lang="en">&#x1F4DE; Call (407) 670-8839</span><span data-lang="pt">&#x1F4DE; Ligue (407) 670-8839</span><span data-lang="es">&#x1F4DE; Llama (407) 670-8839</span>
@@ -578,6 +611,8 @@
     <a href="vacation-rental.html" class="active">🌴 Vacation Rental</a>
   </div>
 </nav>
+
+<main id="main-content">
 
 <!-- 4. URGENCY BAR -->
 <div class="urgency-bar">
@@ -606,7 +641,7 @@
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span data-lang="en">Call Now (407) 670-8839</span><span data-lang="pt">Ligue Agora (407) 670-8839</span><span data-lang="es">Llama Ahora (407) 670-8839</span>
       </a>
-      <a href="https://wa.me/14076708839?text=Hi!%20I'm%20interested%20in%20vacation%20rental%20cleaning%20services." class="hero-cta-wa" data-wa-link>
+      <a href="https://wa.me/14076708839?text=Hi!%20I'm%20interested%20in%20vacation%20rental%20cleaning%20services." class="hero-cta-wa" data-wa-link rel="noopener noreferrer">
         <span data-lang="en">💬 WhatsApp</span><span data-lang="pt">💬 WhatsApp</span><span data-lang="es">💬 WhatsApp</span>
       </a>
     </div>
@@ -1076,7 +1111,7 @@
       <span data-lang="en">Call Now (407) 670-8839</span><span data-lang="pt">Ligue Agora (407) 670-8839</span><span data-lang="es">Llama Ahora (407) 670-8839</span>
     </a>
     <br>
-    <a href="https://wa.me/14076708839?text=Hi!%20I'm%20interested%20in%20vacation%20rental%20cleaning%20services." class="final-cta-wa" data-wa-link>
+    <a href="https://wa.me/14076708839?text=Hi!%20I'm%20interested%20in%20vacation%20rental%20cleaning%20services." class="final-cta-wa" data-wa-link rel="noopener noreferrer">
       <span data-lang="en">Or chat on WhatsApp &rarr;</span><span data-lang="pt">Ou converse no WhatsApp &rarr;</span><span data-lang="es">O chatea por WhatsApp &rarr;</span>
     </a>
   </div>
@@ -1112,12 +1147,14 @@
   </div>
 </section>
 
+</main>
+
 <!-- 18. FOOTER -->
 <footer class="footer">
-  <img src="a7-logo.jpg" alt="A7 Cleaning Service Premium" style="height:50px;width:auto;margin-bottom:10px;display:block;background:#fff;border-radius:8px;padding:4px;">
+  <img src="a7-logo.jpg" alt="A7 Cleaning Service Premium" style="height:50px;width:auto;margin-bottom:10px;display:block;background:#fff;border-radius:8px;padding:4px;" loading="lazy">
   <p><span data-lang="en">Professional Vacation Rental Cleaning &mdash; Orlando, FL</span><span data-lang="pt">Limpeza Profissional de Vacation Rental &mdash; Orlando, FL</span><span data-lang="es">Limpieza Profesional de Alquiler Vacacional &mdash; Orlando, FL</span></p>
   <p style="margin-top:10px;margin-bottom:10px;font-size:12px"><a href="carpet-cleaning.html" style="color:var(--gray-500);text-decoration:none;margin:0 8px"><span data-lang="en">Carpet</span><span data-lang="pt">Carpete</span><span data-lang="es">Alfombra</span></a><span style="opacity:.3">|</span><a href="upholstery-cleaning.html" style="color:var(--gray-500);text-decoration:none;margin:0 8px"><span data-lang="en">Upholstery</span><span data-lang="pt">Estofados</span><span data-lang="es">Tapizado</span></a><span style="opacity:.3">|</span><a href="shoe-cleaning.html" style="color:var(--gray-500);text-decoration:none;margin:0 8px"><span data-lang="en">Shoes</span><span data-lang="pt">Cal&ccedil;ados</span><span data-lang="es">Zapatos</span></a><span style="opacity:.3">|</span><a href="index.html#pricing" style="color:var(--gray-500);text-decoration:none;margin:0 8px"><span data-lang="en">Laundry Plans</span><span data-lang="pt">Planos Lavanderia</span><span data-lang="es">Planes Lavanderia</span></a></p>
-  <p style="margin-bottom:8px"><a href="tel:+14076708839" style="color:var(--accent-light);text-decoration:none;margin-right:12px">&#x1F4DE; (407) 670-8839</a> <span style="opacity:.3">|</span> <a href="https://wa.me/14076708839" style="color:#25d366;text-decoration:none;margin-left:12px" data-wa-link>&#x1F4AC; WhatsApp</a></p>
+  <p style="margin-bottom:8px"><a href="tel:+14076708839" style="color:var(--accent-light);text-decoration:none;margin-right:12px">&#x1F4DE; (407) 670-8839</a> <span style="opacity:.3">|</span> <a href="https://wa.me/14076708839" style="color:#25d366;text-decoration:none;margin-left:12px" data-wa-link rel="noopener noreferrer">&#x1F4AC; WhatsApp</a></p>
   <p style="margin-top:12px;">Developed by A7x Systems IA</p>
   <p>&copy; 2026 A7 Cleaning Services. <span data-lang="en">All rights reserved.</span><span data-lang="pt">Todos os direitos reservados.</span><span data-lang="es">Todos los derechos reservados.</span></p>
 </footer>
@@ -1138,7 +1175,7 @@
   <div class="exit-box">
     <h2><span data-lang="en">Wait! Don't Miss Your FREE Cleaning!</span><span data-lang="pt">Espere! N&atilde;o Perca Sua Limpeza GR&Aacute;TIS!</span><span data-lang="es">&iexcl;Espera! &iexcl;No Pierdas Tu Limpieza GRATIS!</span></h2>
     <p><span data-lang="en">Your first vacation rental turnover is on us. No credit card, no commitment &mdash; just a spotless property.</span><span data-lang="pt">Seu primeiro turnover de vacation rental &eacute; por nossa conta. Sem cart&atilde;o, sem compromisso &mdash; apenas uma propriedade impec&aacute;vel.</span><span data-lang="es">Tu primer turnover de alquiler vacacional va por nuestra cuenta. Sin tarjeta, sin compromiso &mdash; solo una propiedad impecable.</span></p>
-    <a href="https://wa.me/14076708839?text=Hi!%20I%20almost%20left%20but%20I'm%20interested%20in%20the%20free%20cleaning%20offer." class="btn-primary" data-wa-link><span data-lang="en">Claim My FREE Cleaning &rarr;</span><span data-lang="pt">Quero Minha Limpeza GR&Aacute;TIS &rarr;</span><span data-lang="es">Quiero Mi Limpieza GRATIS &rarr;</span></a>
+    <a href="https://wa.me/14076708839?text=Hi!%20I%20almost%20left%20but%20I'm%20interested%20in%20the%20free%20cleaning%20offer." class="btn-primary" data-wa-link rel="noopener noreferrer"><span data-lang="en">Claim My FREE Cleaning &rarr;</span><span data-lang="pt">Quero Minha Limpeza GR&Aacute;TIS &rarr;</span><span data-lang="es">Quiero Mi Limpieza GRATIS &rarr;</span></a>
     <button class="exit-close" id="exitClose"><span data-lang="en">No thanks, I'll handle turnovers myself</span><span data-lang="pt">N&atilde;o obrigado, eu mesmo cuido dos turnovers</span><span data-lang="es">No gracias, yo me encargo de los turnovers</span></button>
   </div>
 </div>
@@ -1325,17 +1362,20 @@
   /* ===== 14. FAQ ACCORDION ===== */
   var faqQuestions = document.querySelectorAll('.faq-q');
   faqQuestions.forEach(function(q){
+    q.setAttribute('aria-expanded', 'false');
     q.addEventListener('click', function(){
       var answer = q.nextElementSibling;
       var isOpen = q.classList.contains('open');
       // Close all
       faqQuestions.forEach(function(oq){
         oq.classList.remove('open');
+        oq.setAttribute('aria-expanded', 'false');
         oq.nextElementSibling.style.maxHeight = null;
       });
       // Toggle current
       if (!isOpen) {
         q.classList.add('open');
+        q.setAttribute('aria-expanded', 'true');
         answer.style.maxHeight = answer.scrollHeight + 'px';
       }
     });
@@ -1370,9 +1410,9 @@
     if (isOrlandoZip(zip)) {
       zipResult.style.color = var_accent_light();
       var yesMsg = {
-        en:'\u2714 Great news! We service your area! <a href="https://wa.me/14076708839?text=Hi!%20I%20checked%20ZIP%20' + zip + '%20and%20I\'m%20interested%20in%20cleaning%20services." style="color:var(--accent-light);font-weight:700;margin-left:8px;">Book Now &rarr;</a>',
-        pt:'\u2714 \u00D3tima not\u00EDcia! Atendemos sua \u00E1rea! <a href="https://wa.me/14076708839?text=Oi!%20Verifiquei%20o%20CEP%20' + zip + '%20e%20tenho%20interesse%20nos%20servi\u00E7os%20de%20limpeza." style="color:var(--accent-light);font-weight:700;margin-left:8px;">Agendar Agora &rarr;</a>',
-        es:'\u2714 \u00A1Buenas noticias! \u00A1Cubrimos tu \u00E1rea! <a href="https://wa.me/14076708839?text=\u00A1Hola!%20Verifiqu\u00E9%20el%20ZIP%20' + zip + '%20y%20estoy%20interesado%20en%20servicios%20de%20limpieza." style="color:var(--accent-light);font-weight:700;margin-left:8px;">Reservar Ahora &rarr;</a>'
+        en:'\u2714 Great news! We service your area! <a href="https://wa.me/14076708839?text=Hi!%20I%20checked%20ZIP%20' + zip + '%20and%20I\'m%20interested%20in%20cleaning%20services." style="color:var(--accent-light);font-weight:700;margin-left:8px;" rel="noopener noreferrer">Book Now &rarr;</a>',
+        pt:'\u2714 \u00D3tima not\u00EDcia! Atendemos sua \u00E1rea! <a href="https://wa.me/14076708839?text=Oi!%20Verifiquei%20o%20CEP%20' + zip + '%20e%20tenho%20interesse%20nos%20servi\u00E7os%20de%20limpeza." style="color:var(--accent-light);font-weight:700;margin-left:8px;" rel="noopener noreferrer">Agendar Agora &rarr;</a>',
+        es:'\u2714 \u00A1Buenas noticias! \u00A1Cubrimos tu \u00E1rea! <a href="https://wa.me/14076708839?text=\u00A1Hola!%20Verifiqu\u00E9%20el%20ZIP%20' + zip + '%20y%20estoy%20interesado%20en%20servicios%20de%20limpieza." style="color:var(--accent-light);font-weight:700;margin-left:8px;" rel="noopener noreferrer">Reservar Ahora &rarr;</a>'
       };
       zipResult.innerHTML = yesMsg[lang] || yesMsg.en;
     } else {
