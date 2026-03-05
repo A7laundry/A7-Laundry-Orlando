@@ -3,933 +3,818 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>A7 Laundry Orlando — Command Center</title>
+<title>A7 Laundry — Command Center</title>
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0f1a;--surface:#111827;--surface-2:#1a2332;--surface-3:#1e293b;
-  --primary:#2563eb;--primary-dark:#1d4ed8;--primary-light:#3b82f6;
-  --green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#7c3aed;--teal:#059669;
-  --white:#fff;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;
-  --gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;
-  --radius:6px;
+  --bg:#05080f;--surface:#0c1220;--surface-2:#111b2e;--surface-3:#182340;
+  --primary:#2563eb;--primary-dark:#1d4ed8;--primary-light:#3b82f6;--primary-glow:rgba(37,99,235,.15);
+  --green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--teal:#14b8a6;--pink:#ec4899;
+  --white:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;
+  --gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;
+  --radius:8px;--radius-lg:16px;--radius-xl:24px;
+  --shadow-glow:0 0 60px rgba(37,99,235,.08);
+  --transition:.3s cubic-bezier(.4,0,.2,1);
 }
-body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
-a{color:var(--primary-light);text-decoration:none}
-a:hover{text-decoration:underline}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--primary-light);text-decoration:none;transition:var(--transition)}
+a:hover{color:var(--white)}
+
+/* Animated background */
+.bg-grid{position:fixed;inset:0;background-image:
+  linear-gradient(rgba(37,99,235,.03) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(37,99,235,.03) 1px,transparent 1px);
+  background-size:60px 60px;pointer-events:none;z-index:0}
+.bg-glow{position:fixed;width:800px;height:800px;border-radius:50%;filter:blur(200px);opacity:.15;pointer-events:none;z-index:0}
+.bg-glow-1{top:-200px;right:-200px;background:var(--primary)}
+.bg-glow-2{bottom:-300px;left:-200px;background:var(--purple)}
 
 /* Layout */
-.container{max-width:1400px;margin:0 auto;padding:0 24px}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-@media(max-width:1024px){.grid-3,.grid-4,.grid-5{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr}}
+.app{position:relative;z-index:1}
+.container{max-width:1440px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.container{padding:0 16px}}
 
-/* Header */
-.cc-header{padding:32px 0 24px;border-bottom:1px solid rgba(255,255,255,.06)}
-.cc-header h1{font-size:28px;font-weight:800;letter-spacing:-.5px}
-.cc-header h1 span{color:var(--primary)}
-.cc-header p{color:var(--gray-400);font-size:14px;margin-top:4px}
-.cc-meta{display:flex;gap:24px;margin-top:16px;flex-wrap:wrap}
-.cc-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gray-300);background:var(--surface);padding:6px 14px;border-radius:20px}
-.cc-meta-item .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* Sidebar + Main */
+.layout{display:flex;min-height:100vh}
+.sidebar{width:280px;background:var(--surface);border-right:1px solid rgba(255,255,255,.06);padding:24px 0;position:fixed;top:0;bottom:0;left:0;z-index:100;display:flex;flex-direction:column;transition:var(--transition)}
+.sidebar-logo{padding:0 24px;margin-bottom:32px;display:flex;align-items:center;gap:12px}
+.sidebar-logo img{height:32px}
+.sidebar-logo h2{font-size:16px;font-weight:800;letter-spacing:-.3px}
+.sidebar-logo h2 span{color:var(--primary)}
 
-/* Tabs */
-.tabs{display:flex;gap:4px;margin:32px 0 24px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:0;overflow-x:auto}
-.tab{padding:12px 20px;font-size:14px;font-weight:600;color:var(--gray-400);cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
-.tab:hover{color:var(--gray-200)}
-.tab.active{color:var(--primary-light);border-bottom-color:var(--primary)}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
+.nav-section{padding:0 12px;margin-bottom:24px}
+.nav-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-600);padding:0 12px;margin-bottom:8px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:var(--radius);font-size:14px;font-weight:500;color:var(--gray-400);cursor:pointer;transition:var(--transition);position:relative}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.04)}
+.nav-item.active{color:var(--white);background:var(--primary-glow)}
+.nav-item.active::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--primary);border-radius:0 3px 3px 0}
+.nav-item .nav-icon{width:20px;text-align:center;font-size:15px;flex-shrink:0}
+.nav-badge{margin-left:auto;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(37,99,235,.15);color:var(--primary-light)}
+.nav-badge.green{background:rgba(34,197,94,.15);color:var(--green)}
+.nav-badge.amber{background:rgba(245,158,11,.15);color:var(--amber)}
+.nav-badge.red{background:rgba(239,68,68,.15);color:var(--red)}
+
+.sidebar-footer{margin-top:auto;padding:16px 24px;border-top:1px solid rgba(255,255,255,.06)}
+.sidebar-footer a{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gray-500);transition:var(--transition)}
+.sidebar-footer a:hover{color:var(--primary-light)}
+
+.main{margin-left:280px;flex:1;padding:32px 40px;min-height:100vh}
+@media(max-width:1024px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:24px 16px}
+  .mobile-toggle{display:flex!important}
+}
+
+/* Mobile toggle */
+.mobile-toggle{display:none;position:fixed;top:16px;left:16px;z-index:200;width:44px;height:44px;border-radius:var(--radius);background:var(--surface);border:1px solid rgba(255,255,255,.1);align-items:center;justify-content:center;font-size:20px;cursor:pointer;color:var(--white)}
+
+/* Page Header */
+.page-header{margin-bottom:40px}
+.page-header h1{font-size:clamp(28px,4vw,40px);font-weight:900;letter-spacing:-1px;line-height:1.1}
+.page-header h1 span{background:linear-gradient(135deg,var(--primary),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-header p{color:var(--gray-400);font-size:15px;margin-top:8px;max-width:600px}
+
+/* Tab panels */
+.panel{display:none}
+.panel.active{display:block}
+
+/* Grid system */
+.g{display:grid;gap:20px}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+.g-5{grid-template-columns:repeat(5,1fr)}
+@media(max-width:1200px){.g-4,.g-5{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.g-3,.g-4,.g-5{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.g-2,.g-3,.g-4,.g-5{grid-template-columns:1fr}}
+
+/* Stat Cards */
+.stat-card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-lg);padding:28px;position:relative;overflow:hidden;transition:var(--transition)}
+.stat-card:hover{border-color:rgba(37,99,235,.2);box-shadow:var(--shadow-glow);transform:translateY(-2px)}
+.stat-card .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.stat-card .stat-value{font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1}
+.stat-card .stat-label{font-size:13px;color:var(--gray-400);margin-top:6px;font-weight:500}
+.stat-card .stat-change{font-size:12px;font-weight:700;margin-top:10px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px}
+.stat-card .stat-change.up{background:rgba(34,197,94,.1);color:var(--green)}
+.stat-card .stat-change.down{background:rgba(239,68,68,.1);color:var(--red)}
+.stat-card .stat-glow{position:absolute;width:200px;height:200px;border-radius:50%;filter:blur(80px);opacity:.08;top:-50px;right:-50px}
 
 /* Cards */
-.card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:24px;transition:.2s}
-.card:hover{border-color:rgba(37,99,235,.3)}
+.card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-lg);padding:24px;transition:var(--transition)}
+.card:hover{border-color:rgba(255,255,255,.1)}
 .card h3{font-size:16px;font-weight:700;margin-bottom:12px}
-.card h4{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-400);margin-bottom:8px}
+.card h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-500);margin-bottom:8px}
 .card p{font-size:14px;color:var(--gray-300);line-height:1.7}
 
+/* Featured Card */
+.featured-card{background:linear-gradient(135deg,var(--surface-2),var(--surface));border:1px solid rgba(37,99,235,.2);border-radius:var(--radius-xl);padding:40px;position:relative;overflow:hidden}
+.featured-card::before{content:"";position:absolute;top:0;right:0;width:400px;height:400px;background:radial-gradient(circle,rgba(37,99,235,.1),transparent 70%);pointer-events:none}
+.featured-card h2{font-size:28px;font-weight:900;margin-bottom:8px;letter-spacing:-.5px}
+.featured-card p{color:var(--gray-300);font-size:15px;max-width:500px}
+
 /* Section headers */
-.section{margin:40px 0}
-.section-title{font-size:20px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.section-title .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.section{margin:48px 0}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.section-title{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px;letter-spacing:-.3px}
+.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
 
-/* Score cards */
-.score-card{text-align:center;padding:20px}
-.score-value{font-size:40px;font-weight:900;line-height:1}
-.score-label{font-size:12px;color:var(--gray-400);margin-top:8px;text-transform:uppercase;letter-spacing:.5px}
-.score-bar{height:4px;border-radius:2px;background:var(--surface-3);margin-top:12px;overflow:hidden}
-.score-bar-fill{height:100%;border-radius:2px;transition:.6s}
+/* Progress bars */
+.progress{height:8px;border-radius:4px;background:var(--surface-3);overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;transition:.8s cubic-bezier(.4,0,.2,1)}
 
-/* Status badges */
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
 .badge-green{background:rgba(34,197,94,.12);color:var(--green)}
 .badge-amber{background:rgba(245,158,11,.12);color:var(--amber)}
 .badge-red{background:rgba(239,68,68,.12);color:var(--red)}
 .badge-blue{background:rgba(37,99,235,.12);color:var(--primary-light)}
-.badge-purple{background:rgba(124,58,237,.12);color:var(--purple)}
+.badge-purple{background:rgba(139,92,246,.12);color:var(--purple)}
+.badge-teal{background:rgba(20,184,166,.12);color:var(--teal)}
+.badge-pink{background:rgba(236,72,153,.12);color:var(--pink)}
 
 /* Tables */
-.table-wrap{overflow-x:auto}
+.table-wrap{overflow-x:auto;border-radius:var(--radius-lg);border:1px solid rgba(255,255,255,.06)}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:10px 14px;color:var(--gray-400);font-weight:600;border-bottom:1px solid rgba(255,255,255,.08);text-transform:uppercase;font-size:11px;letter-spacing:.5px}
-td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--gray-300)}
+thead{background:var(--surface-2)}
+th{text-align:left;padding:14px 18px;color:var(--gray-400);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+td{padding:14px 18px;border-top:1px solid rgba(255,255,255,.04);color:var(--gray-300)}
 tr:hover td{background:rgba(255,255,255,.02)}
 
-/* Lists */
-.check-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.check-list li{font-size:13px;color:var(--gray-300);display:flex;align-items:flex-start;gap:8px}
-.check-list li::before{content:"";flex-shrink:0;width:18px;height:18px;border-radius:50%;margin-top:2px}
-.check-list li.ok::before{background:rgba(34,197,94,.15);box-shadow:inset 0 0 0 2px var(--green)}
-.check-list li.warn::before{background:rgba(245,158,11,.15);box-shadow:inset 0 0 0 2px var(--amber)}
-.check-list li.fail::before{background:rgba(239,68,68,.15);box-shadow:inset 0 0 0 2px var(--red)}
-
-/* Roadmap timeline */
-.timeline{position:relative;padding-left:32px}
-.timeline::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--primary),var(--purple),var(--teal))}
-.timeline-item{position:relative;margin-bottom:28px}
-.timeline-item::before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;border:2px solid var(--primary);background:var(--bg)}
-.timeline-item.done::before{background:var(--green);border-color:var(--green)}
-.timeline-item.active::before{background:var(--primary);border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.3)}
-.timeline-item.pending::before{background:var(--surface-3);border-color:var(--gray-600)}
-.timeline-phase{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:4px}
-.timeline-title{font-size:15px;font-weight:700;margin-bottom:4px}
-.timeline-desc{font-size:13px;color:var(--gray-400)}
-.timeline-tasks{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-
-/* Branding swatches */
-.swatch-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
-.swatch{width:48px;height:48px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--white);border:1px solid rgba(255,255,255,.1)}
-.swatch-lg{width:80px;height:80px;border-radius:8px;font-size:11px}
-
-/* Page map */
-.page-card{border-left:3px solid var(--primary);padding-left:16px}
-.page-card .page-name{font-weight:700;font-size:15px;margin-bottom:4px}
-.page-card .page-url{font-size:12px;color:var(--gray-500);font-family:monospace}
-.page-card .page-offer{font-size:13px;color:var(--amber);margin-top:6px;font-weight:600}
-.page-card .page-stats{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
-.page-card .page-stat{font-size:12px;color:var(--gray-400)}
+/* Timeline */
+.timeline{position:relative;padding-left:36px}
+.timeline::before{content:"";position:absolute;left:13px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--primary),var(--purple),var(--teal))}
+.tl-item{position:relative;margin-bottom:32px}
+.tl-item::before{content:"";position:absolute;left:-27px;top:6px;width:14px;height:14px;border-radius:50%;border:2px solid var(--primary);background:var(--bg)}
+.tl-item.done::before{background:var(--green);border-color:var(--green)}
+.tl-item.active::before{background:var(--primary);border-color:var(--primary);box-shadow:0 0 0 6px rgba(37,99,235,.2)}
+.tl-item.pending::before{background:var(--surface-3);border-color:var(--gray-600)}
+.tl-phase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-500);margin-bottom:4px}
+.tl-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.tl-desc{font-size:13px;color:var(--gray-400);line-height:1.6}
+.tl-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 
 /* Funnel */
-.funnel{display:flex;flex-direction:column;gap:4px;max-width:600px;margin:0 auto}
-.funnel-step{padding:14px 20px;text-align:center;font-weight:600;font-size:14px;clip-path:polygon(0 0,100% 0,95% 100%,5% 100%);transition:.2s}
-.funnel-step:first-child{clip-path:polygon(0 0,100% 0,95% 100%,5% 100%)}
-.funnel-step:last-child{clip-path:polygon(5% 0,95% 0,100% 100%,0 100%)}
+.funnel{display:flex;flex-direction:column;gap:4px;max-width:700px;margin:0 auto}
+.funnel-step{padding:18px 24px;text-align:center;font-weight:700;font-size:15px;border-radius:var(--radius);display:flex;justify-content:space-between;align-items:center;transition:var(--transition)}
+.funnel-step:hover{transform:scaleX(1.02)}
+.funnel-step .f-label{text-align:left}
+.funnel-step .f-value{font-size:13px;opacity:.7}
 
-/* Priority matrix */
-.priority-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px}
-.p-critical{background:#7f1d1d;color:#fca5a5}
-.p-high{background:#78350f;color:#fcd34d}
-.p-medium{background:#1e3a5f;color:#93c5fd}
-.p-low{background:#14532d;color:#86efac}
+/* Swatches */
+.swatch-row{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+.swatch{width:56px;height:56px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--white);border:1px solid rgba(255,255,255,.1);transition:var(--transition)}
+.swatch:hover{transform:scale(1.1)}
+.swatch-lg{width:88px;height:88px;border-radius:12px;font-size:11px;flex-direction:column;gap:4px}
 
-/* Copy review */
-.copy-block{background:var(--surface-2);border-radius:var(--radius);padding:16px;margin:8px 0;border-left:3px solid var(--primary)}
-.copy-block.issue{border-left-color:var(--amber)}
-.copy-block.good{border-left-color:var(--green)}
-.copy-original{font-size:13px;color:var(--gray-300);font-style:italic}
-.copy-suggestion{font-size:13px;color:var(--green);margin-top:6px}
-.copy-note{font-size:12px;color:var(--gray-500);margin-top:4px}
+/* Creative Gallery */
+.creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.creative-card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition);cursor:pointer}
+.creative-card:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.creative-card .creative-preview{height:180px;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:900;letter-spacing:-2px;position:relative;overflow:hidden}
+.creative-card .creative-info{padding:16px}
+.creative-card .creative-name{font-size:14px;font-weight:700;margin-bottom:4px}
+.creative-card .creative-meta{font-size:12px;color:var(--gray-500);display:flex;gap:12px}
+
+/* Campaign cards */
+.campaign-card{background:var(--surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-lg);padding:28px;position:relative;overflow:hidden}
+.campaign-card .campaign-platform{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.campaign-card .platform-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.campaign-card h3{font-size:18px;font-weight:800}
+.campaign-card .campaign-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.campaign-card .metric{text-align:center}
+.campaign-card .metric .m-val{font-size:20px;font-weight:800}
+.campaign-card .metric .m-label{font-size:11px;color:var(--gray-500);text-transform:uppercase}
+
+/* Milestone tracker */
+.milestone-bar{display:flex;gap:2px;margin:24px 0}
+.milestone-segment{height:8px;border-radius:4px;flex:1;transition:var(--transition)}
+.milestone-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500)}
+
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--gray-300);padding:12px 16px;border-radius:var(--radius);background:var(--surface);border:1px solid rgba(255,255,255,.04);transition:var(--transition)}
+.check-item:hover{border-color:rgba(255,255,255,.08)}
+.check-item .check-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
+.check-item .check-icon.done{background:rgba(34,197,94,.15);color:var(--green)}
+.check-item .check-icon.pending{background:var(--surface-3);color:var(--gray-600)}
+.check-item .check-icon.action{background:rgba(245,158,11,.15);color:var(--amber)}
+
+/* Subscriber goal */
+.goal-ring{width:200px;height:200px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0 auto}
+.goal-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.goal-ring .goal-val{font-size:48px;font-weight:900;letter-spacing:-2px}
+.goal-ring .goal-label{font-size:13px;color:var(--gray-400)}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.animate{animation:fadeUp .6s ease both}
+.animate-delay-1{animation-delay:.1s}
+.animate-delay-2{animation-delay:.2s}
+.animate-delay-3{animation-delay:.3s}
+.animate-delay-4{animation-delay:.4s}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s infinite}
 </style>
 </head>
 <body>
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
 
-<div class="container">
+<div class="app">
 
-<!-- HEADER -->
-<header class="cc-header">
-  <h1>A7 Laundry <span>Command Center</span></h1>
-  <p>Full Project Audit — Roadmap, Branding & Onboarding Dashboard</p>
-  <div class="cc-meta">
-    <span class="cc-meta-item"><span class="dot" style="background:var(--green)"></span> 6 Pages Live</span>
-    <span class="cc-meta-item"><span class="dot" style="background:var(--primary)"></span> 3 Languages (EN/PT/ES)</span>
-    <span class="cc-meta-item"><span class="dot" style="background:var(--amber)"></span> 14 Ad Creative Systems</span>
-    <span class="cc-meta-item"><span class="dot" style="background:var(--purple)"></span> 2 Campaign LPs</span>
-    <span class="cc-meta-item"><span class="dot" style="background:var(--teal)"></span> Orlando Metro Market</span>
+<!-- Mobile Toggle -->
+<button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">|||</button>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <img src="A7 LAUNDRY-05.png" alt="A7" style="height:28px">
+    <h2>Command <span>Center</span></h2>
   </div>
-</header>
 
-<!-- TABS -->
-<div class="tabs">
-  <div class="tab active" onclick="showTab('overview')">Overview</div>
-  <div class="tab" onclick="showTab('copy-review')">Copy & Market Fit</div>
-  <div class="tab" onclick="showTab('branding')">Branding System</div>
-  <div class="tab" onclick="showTab('pages')">Page Map</div>
-  <div class="tab" onclick="showTab('issues')">Issues & Fixes</div>
-  <div class="tab" onclick="showTab('roadmap')">Roadmap</div>
-  <div class="tab" onclick="showTab('onboarding')">Onboarding Flow</div>
+  <nav class="nav-section">
+    <div class="nav-section-title">Dashboard</div>
+    <div class="nav-item active" onclick="showPanel('overview')">
+      <span class="nav-icon">||</span> Overview
+      <span class="nav-badge green"><span class="live-dot"></span></span>
+    </div>
+    <div class="nav-item" onclick="showPanel('growth')">
+      <span class="nav-icon">^</span> Growth Strategy
+      <span class="nav-badge">200</span>
+    </div>
+  </nav>
+
+  <nav class="nav-section">
+    <div class="nav-section-title">Marketing</div>
+    <div class="nav-item" onclick="showPanel('campaigns')">
+      <span class="nav-icon">>></span> Campaigns
+      <span class="nav-badge amber">3</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('creatives')">
+      <span class="nav-icon">#</span> Criativos
+      <span class="nav-badge">168</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('copy')">
+      <span class="nav-icon">T</span> Copy & Market Fit
+    </div>
+  </nav>
+
+  <nav class="nav-section">
+    <div class="nav-section-title">Operations</div>
+    <div class="nav-item" onclick="showPanel('pages')">
+      <span class="nav-icon">[=]</span> Page Map
+      <span class="nav-badge green">7</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('branding')">
+      <span class="nav-icon">*</span> Brand System
+    </div>
+    <div class="nav-item" onclick="showPanel('issues')">
+      <span class="nav-icon">!</span> Issues & Fixes
+      <span class="nav-badge green">13/15</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('roadmap')">
+      <span class="nav-icon">~</span> Roadmap
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="https://a7laundry.com" target="_blank">[ext] a7laundry.com</a>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+
+<!-- ============================================ -->
+<!-- PANEL: OVERVIEW -->
+<!-- ============================================ -->
+<div class="panel active" id="overview">
+  <div class="page-header animate">
+    <h1>Welcome to <span>A7 Command Center</span></h1>
+    <p>Full business intelligence dashboard for A7 Laundry Orlando. Strategy, marketing, branding and growth — all in one place.</p>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="g g-5" style="margin-bottom:32px">
+    <div class="stat-card animate animate-delay-1">
+      <div class="stat-icon" style="background:var(--primary-glow);color:var(--primary)">$</div>
+      <div class="stat-value">$59.90</div>
+      <div class="stat-label">Entry Plan</div>
+      <div class="stat-change up">Competitive</div>
+      <div class="stat-glow" style="background:var(--primary)"></div>
+    </div>
+    <div class="stat-card animate animate-delay-2">
+      <div class="stat-icon" style="background:rgba(34,197,94,.15);color:var(--green)">^</div>
+      <div class="stat-value">2.94M</div>
+      <div class="stat-label">Metro Population</div>
+      <div class="stat-change up">+2.7% growth</div>
+      <div class="stat-glow" style="background:var(--green)"></div>
+    </div>
+    <div class="stat-card animate animate-delay-3">
+      <div class="stat-icon" style="background:rgba(139,92,246,.15);color:var(--purple)">#</div>
+      <div class="stat-value">168</div>
+      <div class="stat-label">Ad Creatives</div>
+      <div class="stat-change up">14 systems</div>
+      <div class="stat-glow" style="background:var(--purple)"></div>
+    </div>
+    <div class="stat-card animate animate-delay-4">
+      <div class="stat-icon" style="background:rgba(20,184,166,.15);color:var(--teal)">[=]</div>
+      <div class="stat-value">7</div>
+      <div class="stat-label">Pages Live</div>
+      <div class="stat-change up">3 languages</div>
+      <div class="stat-glow" style="background:var(--teal)"></div>
+    </div>
+    <div class="stat-card animate animate-delay-4">
+      <div class="stat-icon" style="background:rgba(236,72,153,.15);color:var(--pink)">0</div>
+      <div class="stat-value">0</div>
+      <div class="stat-label">Competitors</div>
+      <div class="stat-change up">Blue ocean</div>
+      <div class="stat-glow" style="background:var(--pink)"></div>
+    </div>
+  </div>
+
+  <!-- Featured: Growth Target -->
+  <div class="featured-card animate" style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px">
+        <span class="badge badge-blue" style="margin-bottom:12px">MISSION</span>
+        <h2>First 200 Subscribers</h2>
+        <p style="margin-top:8px">Target: reach 200 active subscribers within the first 90 days of launch. $15K+ MRR milestone that proves product-market fit in the Orlando metro area.</p>
+        <div style="display:flex;gap:16px;margin-top:20px;flex-wrap:wrap">
+          <div><span style="font-size:28px;font-weight:900;color:var(--green)">$22K</span><br><span style="font-size:12px;color:var(--gray-400)">MRR at 200 subs</span></div>
+          <div><span style="font-size:28px;font-weight:900;color:var(--amber)">$264K</span><br><span style="font-size:12px;color:var(--gray-400)">ARR projection</span></div>
+          <div><span style="font-size:28px;font-weight:900;color:var(--purple)">$110</span><br><span style="font-size:12px;color:var(--gray-400)">Avg plan value</span></div>
+        </div>
+      </div>
+      <div class="goal-ring">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="8"/>
+          <circle cx="100" cy="100" r="88" fill="none" stroke="url(#goalGrad)" stroke-width="8" stroke-dasharray="553" stroke-dashoffset="553" stroke-linecap="round" id="goalCircle"/>
+          <defs><linearGradient id="goalGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2563eb"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs>
+        </svg>
+        <div class="goal-val">0</div>
+        <div class="goal-label">of 200 subs</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audit Score -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><span class="section-icon" style="background:rgba(34,197,94,.15);color:var(--green)">A</span> Project Health</div>
+      <span class="badge badge-green">13 of 15 issues fixed</span>
+    </div>
+    <div class="g g-5">
+      <div class="card" style="text-align:center">
+        <h4>Copy Quality</h4>
+        <div style="font-size:32px;font-weight:900;color:var(--green)">A</div>
+        <div class="progress" style="margin-top:12px"><div class="progress-fill" style="width:90%;background:var(--green)"></div></div>
+      </div>
+      <div class="card" style="text-align:center">
+        <h4>SEO & Schema</h4>
+        <div style="font-size:32px;font-weight:900;color:var(--green)">A</div>
+        <div class="progress" style="margin-top:12px"><div class="progress-fill" style="width:88%;background:var(--green)"></div></div>
+      </div>
+      <div class="card" style="text-align:center">
+        <h4>Technical</h4>
+        <div style="font-size:32px;font-weight:900;color:var(--green)">A-</div>
+        <div class="progress" style="margin-top:12px"><div class="progress-fill" style="width:82%;background:var(--green)"></div></div>
+      </div>
+      <div class="card" style="text-align:center">
+        <h4>Compliance</h4>
+        <div style="font-size:32px;font-weight:900;color:var(--green)">A</div>
+        <div class="progress" style="margin-top:12px"><div class="progress-fill" style="width:92%;background:var(--green)"></div></div>
+      </div>
+      <div class="card" style="text-align:center">
+        <h4>Market Fit</h4>
+        <div style="font-size:32px;font-weight:900;color:var(--green)">A</div>
+        <div class="progress" style="margin-top:12px"><div class="progress-fill" style="width:90%;background:var(--green)"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon" style="background:var(--primary-glow);color:var(--primary)">>></span> Quick Links</div>
+    <div class="g g-4">
+      <a href="https://a7laundry.com" target="_blank" class="card" style="text-align:center;cursor:pointer">
+        <div style="font-size:28px;margin-bottom:8px">[=]</div>
+        <h3>Website</h3>
+        <p style="font-size:12px">a7laundry.com</p>
+      </a>
+      <a href="criativos/" class="card" style="text-align:center;cursor:pointer">
+        <div style="font-size:28px;margin-bottom:8px">#</div>
+        <h3>Criativos</h3>
+        <p style="font-size:12px">168 ad pieces</p>
+      </a>
+      <a href="https://dashboard.stripe.com" target="_blank" class="card" style="text-align:center;cursor:pointer">
+        <div style="font-size:28px;margin-bottom:8px">$</div>
+        <h3>Stripe</h3>
+        <p style="font-size:12px">Payments</p>
+      </a>
+      <a href="https://formspree.io" target="_blank" class="card" style="text-align:center;cursor:pointer">
+        <div style="font-size:28px;margin-bottom:8px">@</div>
+        <h3>Formspree</h3>
+        <p style="font-size:12px">Lead capture</p>
+      </a>
+    </div>
+  </div>
 </div>
 
 <!-- ============================================ -->
-<!-- TAB 1: OVERVIEW -->
+<!-- PANEL: GROWTH STRATEGY -->
 <!-- ============================================ -->
-<div class="tab-panel active" id="overview">
+<div class="panel" id="growth">
+  <div class="page-header">
+    <h1><span>Growth Strategy</span></h1>
+    <p>Playbook to reach 200 subscribers in 90 days. Phased approach from launch to referral engine.</p>
+  </div>
 
-  <!-- Score Cards -->
-  <div class="grid-5" style="margin-top:24px">
-    <div class="card score-card">
-      <div class="score-value" style="color:var(--green)">A</div>
-      <div class="score-label">Copy Quality (US)</div>
-      <div class="score-bar"><div class="score-bar-fill" style="width:90%;background:var(--green)"></div></div>
+  <!-- Milestone Tracker -->
+  <div class="card" style="margin-bottom:32px">
+    <h3 style="margin-bottom:16px">Subscriber Milestones</h3>
+    <div class="milestone-bar">
+      <div class="milestone-segment" style="background:var(--primary);flex:1"></div>
+      <div class="milestone-segment" style="background:var(--primary);opacity:.7;flex:1"></div>
+      <div class="milestone-segment" style="background:var(--surface-3);flex:1"></div>
+      <div class="milestone-segment" style="background:var(--surface-3);flex:1"></div>
+      <div class="milestone-segment" style="background:var(--surface-3);flex:1"></div>
     </div>
-    <div class="card score-card">
-      <div class="score-value" style="color:var(--green)">A</div>
-      <div class="score-label">SEO & Schema</div>
-      <div class="score-bar"><div class="score-bar-fill" style="width:88%;background:var(--green)"></div></div>
-    </div>
-    <div class="card score-card">
-      <div class="score-value" style="color:var(--amber)">B+</div>
-      <div class="score-label">Technical</div>
-      <div class="score-bar"><div class="score-bar-fill" style="width:75%;background:var(--amber)"></div></div>
-    </div>
-    <div class="card score-card">
-      <div class="score-value" style="color:var(--amber)">B</div>
-      <div class="score-label">Consistency</div>
-      <div class="score-bar"><div class="score-bar-fill" style="width:68%;background:var(--amber)"></div></div>
-    </div>
-    <div class="card score-card">
-      <div class="score-value" style="color:var(--green)">A-</div>
-      <div class="score-label">Market Fit</div>
-      <div class="score-bar"><div class="score-bar-fill" style="width:85%;background:var(--green)"></div></div>
+    <div class="milestone-labels">
+      <span>0 — Launch</span>
+      <span>25 — Validation</span>
+      <span>50 — Traction</span>
+      <span>100 — Scaling</span>
+      <span>200 — PMF</span>
     </div>
   </div>
 
-  <!-- Key Metrics -->
+  <!-- Phase Cards -->
   <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">$</span> Business Snapshot</div>
-    <div class="grid-4">
+    <div class="section-title"><span class="section-icon" style="background:rgba(37,99,235,.15);color:var(--primary)">1</span> Phase 1: Foundation (Week 1-2)</div>
+    <div class="g g-3">
       <div class="card">
-        <h4>Target Market</h4>
-        <p style="font-size:24px;font-weight:800;color:var(--white)">2.94M</p>
-        <p>Orlando Metro Population (+2.7% growth, #1 in US)</p>
+        <span class="badge badge-blue">SETUP</span>
+        <h3 style="margin-top:12px">Google Business Profile</h3>
+        <p>Claim and optimize GBP listing. Add all services, photos, hours, and service areas. Start collecting reviews.</p>
+        <div style="margin-top:12px"><span class="badge badge-green">Guide ready</span></div>
       </div>
       <div class="card">
-        <h4>Pricing Range</h4>
-        <p style="font-size:24px;font-weight:800;color:var(--white)">$59.90–$179.90</p>
-        <p>3 subscription tiers + 4 specialty services</p>
+        <span class="badge badge-blue">SETUP</span>
+        <h3 style="margin-top:12px">Stripe Production Links</h3>
+        <p>Create 3 live payment links (Essentials $59.90, Family $109.90, Premium $179.90). Replace test URLs on site.</p>
+        <div style="margin-top:12px"><span class="badge badge-amber">Action needed</span></div>
       </div>
       <div class="card">
-        <h4>Service Areas</h4>
-        <p style="font-size:24px;font-weight:800;color:var(--white)">12 Cities</p>
-        <p>Orlando, Kissimmee, Winter Park, Lake Nona, Oviedo...</p>
-      </div>
-      <div class="card">
-        <h4>Competitive Advantage</h4>
-        <p style="font-size:24px;font-weight:800;color:var(--white)">Only Player</p>
-        <p>No national competitor (Tide Cleaners) in Orlando region</p>
+        <span class="badge badge-blue">SETUP</span>
+        <h3 style="margin-top:12px">Analytics Setup</h3>
+        <p>GTM + GA4 already live on all pages. Configure conversion events: plan_click, email_signup, phone_call, whatsapp_click.</p>
+        <div style="margin-top:12px"><span class="badge badge-green">GTM active</span></div>
       </div>
     </div>
   </div>
 
-  <!-- Critical Findings -->
   <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(239,68,68,.15);color:var(--red)">!</span> Critical Findings</div>
-    <div class="grid-3">
-      <div class="card" style="border-left:3px solid var(--red)">
-        <h3>Bag Count Mismatch</h3>
-        <span class="priority-tag p-critical">CRITICAL</span>
-        <p style="margin-top:8px">Strategy doc says Family=3 bags, Premium=5 bags. Site shows Family=2, Premium=4. Pricing value proposition is inconsistent.</p>
-      </div>
-      <div class="card" style="border-left:3px solid var(--red)">
-        <h3>Stripe Links in TEST Mode</h3>
-        <span class="priority-tag p-critical">CRITICAL</span>
-        <p style="margin-top:8px">All 3 subscription payment links use Stripe test environment. Cannot process real payments.</p>
-      </div>
-      <div class="card" style="border-left:3px solid var(--red)">
-        <h3>Email Capture = localStorage Only</h3>
-        <span class="priority-tag p-critical">CRITICAL</span>
-        <p style="margin-top:8px">Email signup form stores leads only in browser localStorage. No backend, no CRM, no email marketing platform connected.</p>
-      </div>
-      <div class="card" style="border-left:3px solid var(--amber)">
-        <h3>Duplicate Carpet Campaign</h3>
-        <span class="priority-tag p-high">HIGH</span>
-        <p style="margin-top:8px">Two nearly identical folders: /carpet-campaign/ and /a7-carpet-campaign/. Only difference: GA4 tracking in the second one.</p>
-      </div>
-      <div class="card" style="border-left:3px solid var(--amber)">
-        <h3>Domain Fragmentation</h3>
-        <span class="priority-tag p-high">HIGH</span>
-        <p style="margin-top:8px">Three different domains referenced: a7laundry.vercel.app (canonical), a7servicepremium.com (carpet campaign), a7laundry.github.io (GH Pages). SEO value splits.</p>
-      </div>
-      <div class="card" style="border-left:3px solid var(--amber)">
-        <h3>Privacy Policy PT/ES Accents</h3>
-        <span class="priority-tag p-high">HIGH</span>
-        <p style="margin-top:8px">Systematic missing accent marks in Portuguese and Spanish privacy policy. "Politica" instead of "Politica". Damages credibility with native speakers.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Strengths -->
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(34,197,94,.15);color:var(--green)">+</span> Strengths</div>
-    <div class="grid-2">
+    <div class="section-title"><span class="section-icon" style="background:rgba(139,92,246,.15);color:var(--purple)">2</span> Phase 2: Seed (Week 2-4) — Target: 25 subs</div>
+    <div class="g g-2">
       <div class="card">
-        <h3>Copy & Messaging</h3>
-        <ul class="check-list">
-          <li class="ok">PAS + Hormozi Value Stack framework applied consistently</li>
-          <li class="ok">Natural, idiomatic American English across all pages</li>
-          <li class="ok">Specific Orlando neighborhoods build local trust</li>
-          <li class="ok">WhatsApp-first CTA strategy (right for FL demographics)</li>
-          <li class="ok">Each service has unique, compelling hero headline</li>
-          <li class="ok">Social proof with real-sounding names + neighborhoods</li>
+        <span class="badge badge-purple">ORGANIC</span>
+        <h3 style="margin-top:12px">Community Seeding</h3>
+        <ul style="margin-top:8px;color:var(--gray-300);font-size:14px;padding-left:20px;display:flex;flex-direction:column;gap:6px">
+          <li>Brazilian community WhatsApp groups (66K+ in Orlando)</li>
+          <li>Nextdoor posts in Winter Garden, Windermere, Lake Nona</li>
+          <li>Facebook local groups: "Orlando Moms", "Winter Garden Neighbors"</li>
+          <li>UCF student housing partnerships</li>
+          <li>Church/community bulletin boards</li>
         </ul>
       </div>
       <div class="card">
-        <h3>Technical & Design</h3>
-        <ul class="check-list">
-          <li class="ok">Nike-inspired dark mode with cohesive design system</li>
-          <li class="ok">Full trilingual support (EN/PT-BR/ES) on all pages</li>
-          <li class="ok">Comprehensive Schema.org markup (LocalBusiness, FAQ)</li>
-          <li class="ok">GSAP animations with graceful degradation</li>
-          <li class="ok">Mobile-first sticky CTAs with safe-area support</li>
-          <li class="ok">14 ad creative systems ready for A/B testing</li>
+        <span class="badge badge-purple">OFFER</span>
+        <h3 style="margin-top:12px">Launch Promotions</h3>
+        <ul style="margin-top:8px;color:var(--gray-300);font-size:14px;padding-left:20px;display:flex;flex-direction:column;gap:6px">
+          <li><strong>FIRSTBAG</strong> — Buy 1 Get 1 FREE (acquisition)</li>
+          <li><strong>SAVE20</strong> — 20% OFF first month (conversion)</li>
+          <li>Free trial bag for first 50 signups (viral loop)</li>
+          <li>Partner discount: gym members, coworking spaces</li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="section-icon" style="background:rgba(245,158,11,.15);color:var(--amber)">3</span> Phase 3: Paid Ads (Week 3-8) — Target: 100 subs</div>
+    <div class="g g-2">
+      <div class="card">
+        <span class="badge badge-amber">META ADS</span>
+        <h3 style="margin-top:12px">Facebook & Instagram</h3>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--gray-300)">
+          <div><strong>Budget:</strong> $30-50/day</div>
+          <div><strong>Audience:</strong> Orlando metro, 25-55, homeowners/renters, household income $50K+</div>
+          <div><strong>Ad Sets:</strong></div>
+          <ul style="padding-left:20px;display:flex;flex-direction:column;gap:4px">
+            <li>Busy professionals (pain: time)</li>
+            <li>Families with kids (pain: volume)</li>
+            <li>Brazilian community (PT-BR creative)</li>
+            <li>Retargeting: site visitors, email list</li>
+          </ul>
+          <div><strong>Creatives:</strong> 168 ready-to-use pieces across 14 style systems</div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="badge badge-amber">GOOGLE ADS</span>
+        <h3 style="margin-top:12px">Search & Local</h3>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--gray-300)">
+          <div><strong>Budget:</strong> $20-40/day</div>
+          <div><strong>Campaign Types:</strong></div>
+          <ul style="padding-left:20px;display:flex;flex-direction:column;gap:4px">
+            <li><strong>Search:</strong> "laundry service Orlando", "wash and fold near me", "laundry pickup delivery"</li>
+            <li><strong>Local:</strong> Google Maps ads for GBP listing</li>
+            <li><strong>Display:</strong> Retargeting banner ads (use criativos)</li>
+          </ul>
+          <div><strong>Landing:</strong> a7laundry.com (main) + carpet campaign LP</div>
+          <div><strong>Extensions:</strong> Call, location, sitelinks, price</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="section-icon" style="background:rgba(20,184,166,.15);color:var(--teal)">4</span> Phase 4: Referral Engine (Week 6-12) — Target: 200 subs</div>
+    <div class="g g-3">
+      <div class="card">
+        <span class="badge badge-teal">REFERRAL</span>
+        <h3 style="margin-top:12px">Give $10, Get $10</h3>
+        <p>Each subscriber gets a unique referral code. Both referrer and friend get $10 credit. Viral coefficient target: 1.3x</p>
+      </div>
+      <div class="card">
+        <span class="badge badge-teal">RETENTION</span>
+        <h3 style="margin-top:12px">Loyalty Perks</h3>
+        <p>3-month loyalty bonus: free bag. 6-month: free dry cleaning item. 12-month: 1 month free. Reduce churn to &lt;5%.</p>
+      </div>
+      <div class="card">
+        <span class="badge badge-teal">B2B</span>
+        <h3 style="margin-top:12px">Airbnb Host Program</h3>
+        <p>15K+ short-term rentals in Orlando. Premium plan with priority same-day service. Partner with property management companies.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unit Economics -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon" style="background:rgba(236,72,153,.15);color:var(--pink)">$</span> Unit Economics</div>
+    <div class="g g-4">
+      <div class="stat-card">
+        <div class="stat-value" style="font-size:28px;color:var(--green)">$110</div>
+        <div class="stat-label">Avg Revenue/Sub</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="font-size:28px;color:var(--amber)">$35-50</div>
+        <div class="stat-label">Target CAC</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="font-size:28px;color:var(--purple)">12+ mo</div>
+        <div class="stat-label">Target LTV</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="font-size:28px;color:var(--teal)">3:1</div>
+        <div class="stat-label">LTV:CAC Ratio</div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ============================================ -->
-<!-- TAB 2: COPY & MARKET FIT -->
+<!-- PANEL: CAMPAIGNS -->
 <!-- ============================================ -->
-<div class="tab-panel" id="copy-review">
+<div class="panel" id="campaigns">
+  <div class="page-header">
+    <h1><span>Campaign Hub</span></h1>
+    <p>Meta Ads, Google Ads, and organic campaign planning. Ready-to-launch with 168 creative assets.</p>
+  </div>
 
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">A</span> Hero Headlines — Market Analysis</div>
-
-    <div class="card" style="margin-bottom:16px">
-      <h3>index.html — Laundry Subscription</h3>
-      <div class="copy-block good">
-        <div class="copy-original">"Never Do Laundry Again."</div>
-        <div class="copy-note">VERDICT: Strong. Bold promise, universally understood. Works for Orlando's busy professional + family demographics. The aspirational tone is appropriate for subscription services.</div>
+  <div class="g g-2" style="margin-bottom:32px">
+    <!-- Meta Ads -->
+    <div class="campaign-card" style="border-left:3px solid #1877f2">
+      <div class="campaign-platform">
+        <div class="platform-icon" style="background:rgba(24,119,242,.15);color:#1877f2">f</div>
+        <div>
+          <h3>Meta Ads</h3>
+          <span class="badge badge-blue">Ready to Launch</span>
+        </div>
       </div>
-      <div class="copy-block good">
-        <div class="copy-original">"From $1.99/day. Free pickup. Buy 1 get 1 FREE — ends in [countdown]"</div>
-        <div class="copy-note">VERDICT: Excellent price anchoring. "$1.99/day" is less than a coffee — powerful relative comparison for budget-conscious Orlando families.</div>
+      <div style="font-size:14px;color:var(--gray-300);margin-top:12px">
+        <p><strong>Objective:</strong> Conversions (sign-up / WhatsApp)</p>
+        <p style="margin-top:8px"><strong>Ad Sets (4 audiences):</strong></p>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+          <div class="check-item" style="padding:8px 12px">
+            <span class="check-icon done" style="width:18px;height:18px;font-size:10px">ok</span>
+            <span>Busy Professionals 25-45 | Orlando Metro | HHI $50K+</span>
+          </div>
+          <div class="check-item" style="padding:8px 12px">
+            <span class="check-icon done" style="width:18px;height:18px;font-size:10px">ok</span>
+            <span>Parents/Families | Kids interests | Orlando suburbs</span>
+          </div>
+          <div class="check-item" style="padding:8px 12px">
+            <span class="check-icon done" style="width:18px;height:18px;font-size:10px">ok</span>
+            <span>Brazilian Community | PT-BR language | Orlando</span>
+          </div>
+          <div class="check-item" style="padding:8px 12px">
+            <span class="check-icon done" style="width:18px;height:18px;font-size:10px">ok</span>
+            <span>Retargeting | Website visitors 30d + Email list</span>
+          </div>
+        </div>
+      </div>
+      <div class="campaign-metrics" style="margin-top:20px">
+        <div class="metric"><div class="m-val" style="color:#1877f2">$30-50</div><div class="m-label">Daily Budget</div></div>
+        <div class="metric"><div class="m-val" style="color:#1877f2">168</div><div class="m-label">Creatives Ready</div></div>
+        <div class="metric"><div class="m-val" style="color:#1877f2">4</div><div class="m-label">Ad Sets</div></div>
       </div>
     </div>
 
-    <div class="card" style="margin-bottom:16px">
-      <h3>carpet-cleaning.html</h3>
-      <div class="copy-block good">
-        <div class="copy-original">"Your Carpet Is a Bacteria Factory"</div>
-        <div class="copy-note">VERDICT: Strong fear-based headline. Health-conscious framing resonates in post-COVID Orlando. The "200,000+ bacteria per square inch" stat adds credibility.</div>
+    <!-- Google Ads -->
+    <div class="campaign-card" style="border-left:3px solid #34a853">
+      <div class="campaign-platform">
+        <div class="platform-icon" style="background:rgba(52,168,83,.15);color:#34a853">G</div>
+        <div>
+          <h3>Google Ads</h3>
+          <span class="badge badge-blue">Ready to Launch</span>
+        </div>
       </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px">
-      <h3>shoe-cleaning.html</h3>
-      <div class="copy-block good">
-        <div class="copy-original">"Your $200 Sneakers Look Like $20 Fakes."</div>
-        <div class="copy-note">VERDICT: Excellent. Speaks directly to sneaker culture. The price contrast ($200 vs $20) creates instant emotional tension. Orlando's young demographic + Disney/Universal employees = sneaker-heavy market.</div>
+      <div style="font-size:14px;color:var(--gray-300);margin-top:12px">
+        <p><strong>Objective:</strong> Leads + Local visits</p>
+        <p style="margin-top:8px"><strong>Campaigns (3 types):</strong></p>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+          <div class="check-item" style="padding:8px 12px">
+            <span class="check-icon done" style="width:18px;height:18px;font-size:10px">ok</span>
+            <span>Search: "laundry service Orlando", "wash fold near me"</span>
+          </div>
+          <div class="check-item" style="padding:8px 12px">
+            <span class="check-icon done" style="width:18px;height:18px;font-size:10px">ok</span>
+            <span>Local: Google Maps ads (requires GBP)</span>
+          </div>
+          <div class="check-item" style="padding:8px 12px">
+            <span class="check-icon done" style="width:18px;height:18px;font-size:10px">ok</span>
+            <span>Display: Retargeting banners (use criativos 1200x628)</span>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px">
-      <h3>upholstery-cleaning.html</h3>
-      <div class="copy-block good">
-        <div class="copy-original">"Your Sofa Has 12x More Germs Than a Toilet Seat"</div>
-        <div class="copy-note">VERDICT: Strong shock value. The "12x toilet seat" comparison is a well-known fact that drives action. Good for family-oriented Orlando market.</div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px">
-      <h3>vacation-rental.html</h3>
-      <div class="copy-block good">
-        <div class="copy-original">"One Bad Review About Dirty Linens Kills Your Booking Rate"</div>
-        <div class="copy-note">VERDICT: Excellent B2B positioning. Orlando has 15K+ Airbnb/VRBO listings. This headline speaks directly to the host's #1 fear: lost revenue from bad reviews. Very market-aware.</div>
+      <div class="campaign-metrics" style="margin-top:20px">
+        <div class="metric"><div class="m-val" style="color:#34a853">$20-40</div><div class="m-label">Daily Budget</div></div>
+        <div class="metric"><div class="m-val" style="color:#34a853">50+</div><div class="m-label">Keywords</div></div>
+        <div class="metric"><div class="m-val" style="color:#34a853">3</div><div class="m-label">Campaign Types</div></div>
       </div>
     </div>
   </div>
 
+  <!-- Keywords -->
   <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(245,158,11,.15);color:var(--amber)">~</span> Copy Issues to Address</div>
-
-    <div class="card" style="margin-bottom:16px">
-      <h3>Problem Section (index.html)</h3>
-      <div class="copy-block issue">
-        <div class="copy-original">"Five hours every week. That's bedtime stories you're missing. Date nights that never happen."</div>
-        <div class="copy-suggestion">Consider: "5+ hours stolen every week. That's bedtime stories missed. Date nights skipped. Weekends wasted."</div>
-        <div class="copy-note">The current version is good but slightly overwritten. Tighter copy converts better in PPC/social ads.</div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px">
-      <h3>Unverified Claims</h3>
-      <div class="copy-block issue">
-        <div class="copy-original">"Orlando's #1 rated carpet & rug cleaning" (carpet campaign meta)</div>
-        <div class="copy-suggestion">Consider: "Orlando's highest-rated carpet cleaning" or "4.9-star rated carpet cleaning in Orlando"</div>
-        <div class="copy-note">"#1" claims require FTC substantiation. "Highest-rated" or specific star rating is safer and equally compelling.</div>
-      </div>
-      <div class="copy-block issue">
-        <div class="copy-original">"since 2013" (carpet campaign)</div>
-        <div class="copy-note">If A7 brand is new but team has experience since 2013, clarify: "Team with 10+ years experience" instead.</div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px">
-      <h3>Portuguese Translation Quality</h3>
-      <div class="copy-block issue">
-        <div class="copy-original">PT: "Drenando Seu Bolso em Silencio"</div>
-        <div class="copy-suggestion">Better: "Drenando Seu Bolso Silenciosamente"</div>
-        <div class="copy-note">Not wrong, but slightly unnatural. Brazilian Portuguese speakers would say it differently.</div>
-      </div>
-      <div class="copy-block issue">
-        <div class="copy-original">Privacy Policy PT/ES: "Politica de Privacidade" (missing all accent marks)</div>
-        <div class="copy-suggestion">Correct: "Politica de Privacidade" with proper UTF-8 accents throughout</div>
-        <div class="copy-note">Systematic issue across entire privacy policy in both PT and ES versions. Damages credibility with 66K+ Brazilian community in Orlando.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Missing Market Opportunities</h3>
-      <div class="copy-block issue">
-        <div class="copy-original">No eco/sustainability messaging anywhere on the site</div>
-        <div class="copy-suggestion">Add: "Eco-friendly detergents. Sustainable packaging. Good for your family, good for Florida."</div>
-        <div class="copy-note">Orlando's health-conscious + family demographic responds well to eco positioning. Currently only mentioned as "Premium eco detergent" in small print.</div>
-      </div>
-      <div class="copy-block issue">
-        <div class="copy-original">No hurricane season / Florida weather angle</div>
-        <div class="copy-suggestion">Add seasonal messaging: "When Florida storms hit, we've got your laundry covered."</div>
-        <div class="copy-note">Local relevance opportunity. Shows the service understands Central Florida life.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(34,197,94,.15);color:var(--green)">$</span> Pricing — Full Comparison</div>
+    <div class="section-title"><span class="section-icon" style="background:rgba(52,168,83,.15);color:#34a853">K</span> Target Keywords</div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr><th>Service</th><th>Offer</th><th>Base Price</th><th>Value Prop</th><th>Market Comparison</th></tr>
-        </thead>
+        <thead><tr><th>Keyword</th><th>Intent</th><th>Est. CPC</th><th>Volume</th><th>Landing Page</th></tr></thead>
         <tbody>
-          <tr>
-            <td style="font-weight:700;color:var(--white)">Essentials Plan</td>
-            <td><span class="badge badge-blue">BOGO First Bag</span></td>
-            <td>$59.90/mo (1 XL bag)</td>
-            <td>$290+ total value</td>
-            <td>HappyNest: $32.95/bag (no subscription)</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;color:var(--white)">Family Plan</td>
-            <td><span class="badge badge-green">Most Popular</span></td>
-            <td>$109.90/mo (3 XL bags)</td>
-            <td>24h turnaround, rollover</td>
-            <td>WashFoldGo: $109/mo (2 bags) — A7 matches</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;color:var(--white)">Premium Plan</td>
-            <td><span class="badge badge-purple">VIP</span></td>
-            <td>$179.90/mo (4 XL + dry clean)</td>
-            <td>Same-day, unlimited pickup</td>
-            <td>No direct competitor at this tier</td>
-          </tr>
-          <tr style="border-top:2px solid rgba(255,255,255,.08)">
-            <td style="font-weight:700;color:var(--amber)">Carpet Cleaning</td>
-            <td><span class="badge badge-amber">1st Room FREE</span></td>
-            <td>$45/room, $65/master</td>
-            <td>3 rooms = $107</td>
-            <td>Stanley Steemer: $49.99/room avg</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;color:var(--red)">Shoe Cleaning</td>
-            <td><span class="badge badge-amber">Buy 2 Get 1</span></td>
-            <td>$35–$85/pair</td>
-            <td>48h turnaround</td>
-            <td>Sneaker cleaning avg: $40-$100/pair</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;color:var(--purple)">Upholstery</td>
-            <td><span class="badge badge-amber">FREE Scotchgard</span></td>
-            <td>$149/sofa</td>
-            <td>$300 total value</td>
-            <td>Competitors: $150-$250/sofa</td>
-          </tr>
-          <tr>
-            <td style="font-weight:700;color:var(--teal)">Vacation Rental</td>
-            <td><span class="badge badge-amber">1st Clean FREE</span></td>
-            <td>$149+/clean</td>
-            <td>Same-day, photo report</td>
-            <td>Turnover services: $100-$200+</td>
-          </tr>
+          <tr><td style="color:var(--white);font-weight:600">laundry service Orlando</td><td><span class="badge badge-green">High</span></td><td>$3-5</td><td>1,900/mo</td><td>a7laundry.com</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">wash and fold near me</td><td><span class="badge badge-green">High</span></td><td>$4-6</td><td>5,400/mo</td><td>a7laundry.com</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">laundry pickup delivery Orlando</td><td><span class="badge badge-green">High</span></td><td>$3-5</td><td>720/mo</td><td>a7laundry.com</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">carpet cleaning Orlando</td><td><span class="badge badge-green">High</span></td><td>$8-15</td><td>2,400/mo</td><td>carpet-cleaning.html</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">laundry subscription service</td><td><span class="badge badge-amber">Med</span></td><td>$2-4</td><td>880/mo</td><td>a7laundry.com</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">vacation rental cleaning Orlando</td><td><span class="badge badge-green">High</span></td><td>$5-8</td><td>590/mo</td><td>vacation-rental.html</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">shoe cleaning service near me</td><td><span class="badge badge-amber">Med</span></td><td>$2-3</td><td>1,300/mo</td><td>shoe-cleaning.html</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">lavanderia Orlando</td><td><span class="badge badge-purple">PT-BR</span></td><td>$1-2</td><td>320/mo</td><td>a7laundry.com</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
+  <!-- Conversion Funnel -->
   <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(124,58,237,.15);color:var(--purple)">T</span> Target Segments (Priority)</div>
-    <div class="grid-3">
-      <div class="card">
-        <span class="badge badge-green">PRIMARY</span>
-        <h3 style="margin-top:8px">Busy Professionals (25-45)</h3>
-        <p>"Get 5 hours of your week back"</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">Dual-income households in Lake Nona, Winter Park, Dr. Phillips. Value time over money.</p>
-      </div>
-      <div class="card">
-        <span class="badge badge-green">PRIMARY</span>
-        <h3 style="margin-top:8px">Families with Children</h3>
-        <p>"Your kids make the mess. We make it disappear."</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">2-4 kids, suburban Orlando. 3-5 loads/week. Family Plan sweet spot.</p>
-      </div>
-      <div class="card">
-        <span class="badge badge-blue">SECONDARY</span>
-        <h3 style="margin-top:8px">Vacation Rental Hosts</h3>
-        <p>"One bad review kills your booking rate"</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">15K+ Airbnb/VRBO listings in Orlando. Need reliable turnover cleaning.</p>
-      </div>
-      <div class="card">
-        <span class="badge badge-blue">SECONDARY</span>
-        <h3 style="margin-top:8px">Brazilian Community</h3>
-        <p>66K+ in Orlando metro. Cultural trust advantage.</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">PT-BR language support critical. WhatsApp-first. Word-of-mouth driven.</p>
-      </div>
-      <div class="card">
-        <span class="badge badge-purple">TERTIARY</span>
-        <h3 style="margin-top:8px">College Students (UCF)</h3>
-        <p>72K students, price-sensitive, viral potential.</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">Essentials Plan at $59.90 = affordable. Social media amplification.</p>
-      </div>
-      <div class="card">
-        <span class="badge badge-purple">TERTIARY</span>
-        <h3 style="margin-top:8px">Hispanic Community</h3>
-        <p>32%+ of Orlando metro. Spanish-speaking families.</p>
-        <p style="margin-top:8px;font-size:12px;color:var(--gray-500)">ES language support active. Family-oriented messaging resonates strongly.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================ -->
-<!-- TAB 3: BRANDING SYSTEM -->
-<!-- ============================================ -->
-<div class="tab-panel" id="branding">
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">C</span> Color System</div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Core Palette (index.html)</h3>
-        <div class="swatch-row">
-          <div class="swatch swatch-lg" style="background:#0a0f1a">#0a0f1a<br>Base Dark</div>
-          <div class="swatch swatch-lg" style="background:#111827">#111827<br>Surface</div>
-          <div class="swatch swatch-lg" style="background:#2563eb">#2563eb<br>Primary</div>
-          <div class="swatch swatch-lg" style="background:#1d4ed8">#1d4ed8<br>Prim Dark</div>
-          <div class="swatch swatch-lg" style="background:#3b82f6">#3b82f6<br>Prim Light</div>
-        </div>
-        <p style="margin-top:12px;font-size:12px;color:var(--gray-500)">Nike-inspired dark mode. Electric blue is the ONLY accent color. Sharp 4px radius. No pills except badges.</p>
-      </div>
-      <div class="card">
-        <h3>Service Accent Colors</h3>
-        <div class="swatch-row">
-          <div class="swatch swatch-lg" style="background:#f59e0b;color:#000">#f59e0b<br>Carpet</div>
-          <div class="swatch swatch-lg" style="background:#ef4444">#ef4444<br>Shoe</div>
-          <div class="swatch swatch-lg" style="background:#7c3aed">#7c3aed<br>Upholstery</div>
-          <div class="swatch swatch-lg" style="background:#059669">#059669<br>Vacation</div>
-          <div class="swatch swatch-lg" style="background:#1b3054">#1b3054<br>Privacy</div>
-        </div>
-        <p style="margin-top:12px;font-size:12px;color:var(--gray-500)">Each service page has a unique accent color. All share the same dark base and Inter typography.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">T</span> Typography</div>
-    <div class="card">
-      <div class="grid-2">
-        <div>
-          <h4>Font Stack</h4>
-          <p style="font-size:48px;font-weight:900;line-height:1.1;letter-spacing:-2px;margin:16px 0">Inter Black 900</p>
-          <p style="font-size:32px;font-weight:800;line-height:1.2;letter-spacing:-1px">Inter Extra Bold 800</p>
-          <p style="font-size:24px;font-weight:700;line-height:1.3">Inter Bold 700</p>
-          <p style="font-size:18px;font-weight:600">Inter SemiBold 600</p>
-          <p style="font-size:16px;font-weight:500">Inter Medium 500</p>
-          <p style="font-size:14px;font-weight:400;color:var(--gray-300)">Inter Regular 400 — Body text</p>
-        </div>
-        <div>
-          <h4>Key Specs</h4>
-          <ul class="check-list">
-            <li class="ok">Font: Inter (Google Fonts) — only font used</li>
-            <li class="ok">Hero h1: clamp(48px, 12vw, 140px) weight 800</li>
-            <li class="ok">Body line-height: 1.7</li>
-            <li class="ok">Headings: negative letter-spacing (tight)</li>
-            <li class="ok">No Playfair Display (removed in redesign)</li>
-          </ul>
-          <h4 style="margin-top:16px">Previous (Removed)</h4>
-          <ul class="check-list">
-            <li class="fail">Playfair Display — removed entirely</li>
-            <li class="fail">Any serif fonts — not used</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">L</span> Logo & Identity</div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Primary Logo</h3>
-        <div style="background:var(--surface-2);padding:24px;border-radius:var(--radius);text-align:center;margin:12px 0">
-          <img src="A7 LAUNDRY-05.png" alt="A7 Laundry Logo" style="max-width:300px;width:100%;height:auto" onerror="this.parentElement.innerHTML='<p style=color:var(--gray-500)>A7 LAUNDRY-05.png</p>'">
-        </div>
-        <p>Blue on transparent. Used across all pages with CSS filter for dark backgrounds: <code style="font-size:12px;background:var(--surface-2);padding:2px 6px;border-radius:3px">filter:brightness(0) invert(1)</code></p>
-      </div>
-      <div class="card">
-        <h3>Brand Voice</h3>
-        <ul class="check-list">
-          <li class="ok"><strong>Tone:</strong> Confident, conversational, benefit-driven</li>
-          <li class="ok"><strong>Framework:</strong> PAS (Problem-Agitation-Solution) + Hormozi Value Stack</li>
-          <li class="ok"><strong>Tagline:</strong> "Your Laundry. Our Care. One Bag at a Time."</li>
-          <li class="ok"><strong>CTA Primary:</strong> Phone call (407) 670-8839</li>
-          <li class="ok"><strong>CTA Secondary:</strong> WhatsApp (same number)</li>
-          <li class="ok"><strong>Guarantee:</strong> "Love It or Keep the Bag" 30-Day</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">Z</span> Z-Index & Component Scale</div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Layer</th><th>Z-Index</th><th>Component</th></tr></thead>
-          <tbody>
-            <tr><td>Base</td><td>200</td><td>Header (fixed)</td></tr>
-            <tr><td></td><td>250</td><td>Language Switcher</td></tr>
-            <tr><td></td><td>300</td><td>Sticky CTA Bar</td></tr>
-            <tr><td></td><td>350</td><td>Proof Toast / Live Viewers</td></tr>
-            <tr><td></td><td>400</td><td>WhatsApp FAB</td></tr>
-            <tr><td>Menu</td><td>500</td><td>Menu Overlay</td></tr>
-            <tr><td></td><td>510</td><td>Mobile Menu</td></tr>
-            <tr><td></td><td>520</td><td>Hamburger Button</td></tr>
-            <tr><td>Modal</td><td>900</td><td>Exit Intent Overlay</td></tr>
-            <tr><td></td><td>910</td><td>Subscription Modal</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(245,158,11,.15);color:var(--amber)">A</span> Ad Creative Systems (14 Systems)</div>
-    <div class="grid-4">
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">BOLD</div>
-        <p style="font-size:12px;font-weight:600">BoldType</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:#f8fafc;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#111">CLEAN</div>
-        <p style="font-size:12px;font-weight:600">Clean</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">DUO</div>
-        <p style="font-size:12px;font-weight:600">Duotone</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:#f5f5dc;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#333">EDIT</div>
-        <p style="font-size:12px;font-weight:600">Editorial</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">GLASS</div>
-        <p style="font-size:12px;font-weight:600">Glass</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f59e0b,#ef4444);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">GRAD</div>
-        <p style="font-size:12px;font-weight:600">Gradient</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#dc2626,#111);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">IMP</div>
-        <p style="font-size:12px;font-weight:600">Impact</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#d4a574,#8b6914);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">LIFE</div>
-        <p style="font-size:12px;font-weight:600">Lifestyle</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:#fff;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#111">MIN</div>
-        <p style="font-size:12px;font-weight:600">Minimal</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:#0a0a0a;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#0ff;text-shadow:0 0 10px #0ff">NEON</div>
-        <p style="font-size:12px;font-weight:600">Neon</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:#f4e9d8;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#8b4513">RET</div>
-        <p style="font-size:12px;font-weight:600">Retro</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:linear-gradient(135deg,#e1306c,#405de6);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">SOC</div>
-        <p style="font-size:12px;font-weight:600">Social</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:linear-gradient(90deg,#111 50%,#f8f8f8 50%);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">SPL</div>
-        <p style="font-size:12px;font-weight:600">Split</p>
-      </div>
-      <div class="card" style="text-align:center;padding:16px">
-        <div style="width:100%;aspect-ratio:1;background:var(--primary);border-radius:4px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px">ALL</div>
-        <p style="font-size:12px;font-weight:600">Painel (Gallery)</p>
-      </div>
-    </div>
-    <p style="font-size:13px;color:var(--gray-400);margin-top:12px">Each system outputs 3 formats: Feed (1080x1080), Story (1080x1920), GMB (4:3). Total: 168 creative pieces across 14 systems.</p>
-  </div>
-</div>
-
-<!-- ============================================ -->
-<!-- TAB 4: PAGE MAP -->
-<!-- ============================================ -->
-<div class="tab-panel" id="pages">
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">M</span> Site Architecture</div>
-
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="card page-card" style="border-left-color:var(--primary)">
-        <div class="page-name">index.html — Laundry Subscription Hub</div>
-        <div class="page-url">a7laundry.vercel.app/</div>
-        <div class="page-offer">BOGO: Buy 1 Bag, Get 1 FREE | Plans from $1.99/day</div>
-        <div class="page-stats">
-          <span class="page-stat">13 sections</span>
-          <span class="page-stat">3 pricing tiers</span>
-          <span class="page-stat">6 FAQs</span>
-          <span class="page-stat">3 testimonials</span>
-          <span class="page-stat">Countdown + GSAP</span>
-        </div>
-      </div>
-
-      <div class="card page-card" style="border-left-color:var(--amber)">
-        <div class="page-name">carpet-cleaning.html — Carpet & Rug Cleaning</div>
-        <div class="page-url">a7laundry.vercel.app/carpet-cleaning.html</div>
-        <div class="page-offer">1st Room FREE with whole-house booking | $45/room</div>
-        <div class="page-stats">
-          <span class="page-stat">14 sections</span>
-          <span class="page-stat">Pet-specific module</span>
-          <span class="page-stat">Zip checker</span>
-          <span class="page-stat">Membership club</span>
-        </div>
-      </div>
-
-      <div class="card page-card" style="border-left-color:var(--red)">
-        <div class="page-name">shoe-cleaning.html — Sneaker & Shoe Restoration</div>
-        <div class="page-url">a7laundry.vercel.app/shoe-cleaning.html</div>
-        <div class="page-offer">Buy 2 Get 1 FREE | From $35/pair</div>
-        <div class="page-stats">
-          <span class="page-stat">16 sections</span>
-          <span class="page-stat">Before/after</span>
-          <span class="page-stat">3 membership tiers</span>
-          <span class="page-stat">8 FAQs</span>
-        </div>
-      </div>
-
-      <div class="card page-card" style="border-left-color:var(--purple)">
-        <div class="page-name">upholstery-cleaning.html — Upholstery Deep Clean</div>
-        <div class="page-url">a7laundry.vercel.app/upholstery-cleaning.html</div>
-        <div class="page-offer">FREE Scotchgard Protection ($50 value) | $149/sofa</div>
-        <div class="page-stats">
-          <span class="page-stat">13 sections</span>
-          <span class="page-stat">Value stack $300 -> $149</span>
-          <span class="page-stat">4 testimonials</span>
-          <span class="page-stat">8 FAQs</span>
-        </div>
-      </div>
-
-      <div class="card page-card" style="border-left-color:var(--teal)">
-        <div class="page-name">vacation-rental.html — Turnover Cleaning</div>
-        <div class="page-url">a7laundry.vercel.app/vacation-rental.html</div>
-        <div class="page-offer">First Cleaning FREE | $149+/clean</div>
-        <div class="page-stats">
-          <span class="page-stat">12 sections</span>
-          <span class="page-stat">Airbnb/VRBO focused</span>
-          <span class="page-stat">Photo verification</span>
-          <span class="page-stat">8 FAQs</span>
-        </div>
-      </div>
-
-      <div class="card page-card" style="border-left-color:var(--gray-600)">
-        <div class="page-name">privacy-policy.html — Privacy Policy</div>
-        <div class="page-url">a7laundry.vercel.app/privacy-policy.html</div>
-        <div class="page-offer">Legal compliance page</div>
-        <div class="page-stats">
-          <span class="page-stat">12 sections</span>
-          <span class="page-stat">EN/PT/ES</span>
-          <span class="page-stat">Last updated: Mar 2, 2026</span>
-        </div>
-      </div>
-
-      <div class="card page-card" style="border-left-color:var(--amber);border-style:dashed">
-        <div class="page-name">a7-carpet-campaign/ — SEO Landing Page</div>
-        <div class="page-url">a7-carpet-campaign/index.html</div>
-        <div class="page-offer"><span class="badge badge-green">FIXED</span> Duplicate removed. Canonical: a7laundry.vercel.app. GA4 active.</div>
-        <div class="page-stats">
-          <span class="page-stat">Canonical: a7laundry.vercel.app</span>
-          <span class="page-stat">Domain consolidated ✓</span>
-        </div>
-      </div>
-
-      <div class="card page-card" style="border-left-color:var(--primary);border-style:dashed">
-        <div class="page-name">criativos/ — Ad Creative Gallery</div>
-        <div class="page-url">criativos/painel.html (master) + 13 system files</div>
-        <div class="page-offer"><span class="badge badge-blue">INTERNAL</span> 14 design systems x 3 formats = 168 creatives</div>
-        <div class="page-stats">
-          <span class="page-stat">Feed (1080x1080)</span>
-          <span class="page-stat">Story (1080x1920)</span>
-          <span class="page-stat">GMB (4:3)</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">F</span> Conversion Funnel</div>
+    <div class="section-title"><span class="section-icon" style="background:rgba(139,92,246,.15);color:var(--purple)">/\</span> Conversion Funnel</div>
     <div class="funnel">
-      <div class="funnel-step" style="background:var(--primary);color:var(--white)">Google / Social Ads / Organic (168 creatives ready)</div>
-      <div class="funnel-step" style="background:var(--primary-dark);color:var(--white)">Landing Page (Hero + Trust Strip + Problem)</div>
-      <div class="funnel-step" style="background:#1e3a5f;color:var(--gray-200)">Value Stack + Pricing Plans (Hormozi method)</div>
-      <div class="funnel-step" style="background:#1a2332;color:var(--gray-300)">Social Proof + Comparison + Guarantee</div>
-      <div class="funnel-step" style="background:var(--surface);color:var(--gray-300)">CTA: Phone Call / WhatsApp / Subscribe Modal</div>
-      <div class="funnel-step" style="background:var(--green);color:var(--white)">Conversion: Stripe Payment or WhatsApp Booking</div>
+      <div class="funnel-step" style="background:linear-gradient(135deg,rgba(37,99,235,.3),rgba(37,99,235,.15))"><span class="f-label">Ad Impression / Search</span><span class="f-value">100%</span></div>
+      <div class="funnel-step" style="background:linear-gradient(135deg,rgba(37,99,235,.25),rgba(37,99,235,.12));margin:0 3%"><span class="f-label">Click / Visit</span><span class="f-value">3-5% CTR</span></div>
+      <div class="funnel-step" style="background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(139,92,246,.12));margin:0 6%"><span class="f-label">Engage (scroll, pricing view)</span><span class="f-value">60% of visitors</span></div>
+      <div class="funnel-step" style="background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(139,92,246,.1));margin:0 9%"><span class="f-label">CTA Click (WhatsApp / Plan)</span><span class="f-value">8-12%</span></div>
+      <div class="funnel-step" style="background:linear-gradient(135deg,rgba(34,197,94,.25),rgba(34,197,94,.12));margin:0 12%"><span class="f-label">Subscriber Conversion</span><span class="f-value">2-4%</span></div>
     </div>
   </div>
 </div>
 
 <!-- ============================================ -->
-<!-- TAB 5: ISSUES & FIXES -->
+<!-- PANEL: CRIATIVOS -->
 <!-- ============================================ -->
-<div class="tab-panel" id="issues">
+<div class="panel" id="creatives">
+  <div class="page-header">
+    <h1><span>Creative Assets</span></h1>
+    <p>14 visual systems, 3 formats each (Feed 1080x1080, Story 1080x1920, GMB 1200x900) = 168 ready-to-use ad pieces.</p>
+  </div>
+
+  <div class="g g-4" style="margin-bottom:32px">
+    <div class="stat-card"><div class="stat-value" style="font-size:28px">14</div><div class="stat-label">Style Systems</div></div>
+    <div class="stat-card"><div class="stat-value" style="font-size:28px">168</div><div class="stat-label">Total Pieces</div></div>
+    <div class="stat-card"><div class="stat-value" style="font-size:28px">3</div><div class="stat-label">Formats</div></div>
+    <div class="stat-card"><div class="stat-value" style="font-size:28px">12</div><div class="stat-label">Hooks/System</div></div>
+  </div>
+
+  <div class="creative-grid">
+    <a href="criativos/minimal.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#0a0f1a,#1a1a2e)"><span style="color:var(--primary)">Aa</span></div>
+      <div class="creative-info"><div class="creative-name">Minimal</div><div class="creative-meta"><span>12 pieces</span><span>Dark + Clean</span></div></div>
+    </a>
+    <a href="criativos/boldtype.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#1a1a2e,#0a0f1a)"><span style="font-weight:900;font-size:56px">B</span></div>
+      <div class="creative-info"><div class="creative-name">Bold Type</div><div class="creative-meta"><span>12 pieces</span><span>Impact Typography</span></div></div>
+    </a>
+    <a href="criativos/neon.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#0a0f1a,#1a0a2e)"><span style="color:#8b5cf6;text-shadow:0 0 20px rgba(139,92,246,.5)">N</span></div>
+      <div class="creative-info"><div class="creative-name">Neon</div><div class="creative-meta"><span>12 pieces</span><span>Glow Effects</span></div></div>
+    </a>
+    <a href="criativos/gradient.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#2563eb,#8b5cf6)"><span>Gr</span></div>
+      <div class="creative-info"><div class="creative-name">Gradient</div><div class="creative-meta"><span>12 pieces</span><span>Vibrant Gradients</span></div></div>
+    </a>
+    <a href="criativos/duotone.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#083344,#164e63)"><span style="color:#22d3ee">Dt</span></div>
+      <div class="creative-info"><div class="creative-name">Duotone</div><div class="creative-meta"><span>12 pieces</span><span>Photo + Color</span></div></div>
+    </a>
+    <a href="criativos/lifestyle.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#0a0f1a,#1a2e1a)"><span style="color:#10b981">Ls</span></div>
+      <div class="creative-info"><div class="creative-name">Lifestyle</div><div class="creative-meta"><span>12 pieces</span><span>Photo Lifestyle</span></div></div>
+    </a>
+    <a href="criativos/retro.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#1c1917,#292524)"><span style="color:#f59e0b">Rt</span></div>
+      <div class="creative-info"><div class="creative-name">Retro</div><div class="creative-meta"><span>12 pieces</span><span>Vintage Feel</span></div></div>
+    </a>
+    <a href="criativos/glass.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#1e1b4b,#312e81)"><span style="opacity:.7">Gl</span></div>
+      <div class="creative-info"><div class="creative-name">Glass</div><div class="creative-meta"><span>12 pieces</span><span>Glassmorphism</span></div></div>
+    </a>
+    <a href="criativos/split.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(90deg,#0a0f1a 50%,#2563eb 50%)"><span>Sp</span></div>
+      <div class="creative-info"><div class="creative-name">Split</div><div class="creative-meta"><span>12 pieces</span><span>Divided Layout</span></div></div>
+    </a>
+    <a href="criativos/editorial.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#fafaf9,#e7e5e4)"><span style="color:#1c1917">Ed</span></div>
+      <div class="creative-info"><div class="creative-name">Editorial</div><div class="creative-meta"><span>12 pieces</span><span>Magazine Style</span></div></div>
+    </a>
+    <a href="criativos/impact.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#0a0f1a,#1a1100)"><span style="color:#ef4444">Im</span></div>
+      <div class="creative-info"><div class="creative-name">Impact</div><div class="creative-meta"><span>12 pieces</span><span>Bold Drama</span></div></div>
+    </a>
+    <a href="criativos/clean.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:#f8fafc"><span style="color:#0a0f1a">Cl</span></div>
+      <div class="creative-info"><div class="creative-name">Clean</div><div class="creative-meta"><span>12 pieces</span><span>Light Minimal</span></div></div>
+    </a>
+    <a href="criativos/social.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,#0a0f1a,#1a0a1e)"><span style="color:var(--pink)">So</span></div>
+      <div class="creative-info"><div class="creative-name">Social</div><div class="creative-meta"><span>12 pieces</span><span>Social Proof</span></div></div>
+    </a>
+    <a href="criativos/painel.html" class="creative-card" style="text-decoration:none;color:inherit">
+      <div class="creative-preview" style="background:linear-gradient(135deg,var(--primary),var(--purple))"><span>All</span></div>
+      <div class="creative-info"><div class="creative-name">Full Gallery</div><div class="creative-meta"><span>168 pieces</span><span>All Systems</span></div></div>
+    </a>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- PANEL: COPY & MARKET FIT -->
+<!-- ============================================ -->
+<div class="panel" id="copy">
+  <div class="page-header">
+    <h1><span>Copy & Market Fit</span></h1>
+    <p>Messaging analysis for Orlando, FL market. Each page reviewed for American English, cultural fit, and conversion psychology.</p>
+  </div>
 
   <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(239,68,68,.15);color:var(--red)">!</span> All Issues (Prioritized)</div>
+    <div class="section-title"><span class="section-icon" style="background:rgba(34,197,94,.15);color:var(--green)">T</span> Target Segments & Messaging</div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr><th>#</th><th>Issue</th><th>Location</th><th>Priority</th><th>Impact</th><th>Fix</th></tr>
-        </thead>
+        <thead><tr><th>Priority</th><th>Segment</th><th>Size</th><th>Headline</th><th>Pain Point</th></tr></thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">Bag count mismatch vs strategy</td>
-            <td>index.html</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Pricing credibility</td>
-            <td>✅ Family=3 bags, Premium=4 bags. Updated.</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td style="color:var(--white);font-weight:600">Stripe links in TEST mode</td>
-            <td>index.html</td>
-            <td><span class="priority-tag p-critical">CRITICAL</span></td>
-            <td>Cannot process payments</td>
-            <td>Replace test URLs with production Stripe payment links.</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">Email capture = localStorage only</td>
-            <td>index.html</td>
-            <td><span class="priority-tag" style="background:#1e3a5f;color:#93c5fd">PARTIAL</span></td>
-            <td>Losing all leads</td>
-            <td>⚡ Formspree webhook added. Replace FORMSPREE_ID placeholder with your form ID.</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">Duplicate carpet campaign folders</td>
-            <td>/a7-carpet-campaign/</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Maintenance burden, SEO split</td>
-            <td>✅ /carpet-campaign/ deleted. Kept a7-carpet-campaign with GA4.</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">Domain fragmentation (3 domains)</td>
-            <td>All pages</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>SEO authority split</td>
-            <td>✅ Consolidated to a7laundry.vercel.app. All refs updated.</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">Privacy policy missing accents (PT/ES)</td>
-            <td>privacy-policy.html</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Credibility with native speakers</td>
-            <td>✅ All PT/ES accents corrected (100+ fixes).</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">GA4 only on a7-carpet-campaign</td>
-            <td>All pages</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Incomplete analytics</td>
-            <td>✅ Duplicate folder removed. GTM present on all main pages.</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">No business hours displayed on site</td>
-            <td>All service pages</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>User trust / expectation setting</td>
-            <td>✅ Hours added to all footers (EN/PT/ES).</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td style="color:var(--white);font-weight:600">Address inconsistency (Orlando vs Winter Garden)</td>
-            <td>Schema.org + privacy</td>
-            <td><span class="priority-tag p-medium">MEDIUM</span></td>
-            <td>Local SEO confusion</td>
-            <td>Standardize: use "Serving Orlando Metro" with Winter Garden HQ address in Schema.</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">"Orlando's #1" claim unsubstantiated</td>
-            <td>All pages + criativos</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>FTC compliance risk</td>
-            <td>✅ Changed to "top-rated" / "4.9-star rated" everywhere.</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">GBP guide has placeholder address</td>
-            <td>GBP-SETUP-GUIDE.md</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Can't set up GBP properly</td>
-            <td>✅ Updated to 10097 Tuller Loop, Winter Garden, FL 34787.</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">Missing Florida breach notification procedures</td>
-            <td>privacy-policy.html</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Legal compliance</td>
-            <td>✅ Fla. Stat. 501.171 breach notification added (EN/PT/ES).</td>
-          </tr>
-          <tr>
-            <td>13</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">No eco/sustainability messaging</td>
-            <td>index.html</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Missed demographic appeal</td>
-            <td>✅ Eco-friendly badge added to trust strip (5th column).</td>
-          </tr>
-          <tr>
-            <td>14</td>
-            <td style="color:var(--white);font-weight:600;text-decoration:line-through;opacity:.6">Contact email only in privacy page</td>
-            <td>All pages</td>
-            <td><span class="priority-tag" style="background:#14532d;color:#86efac">FIXED</span></td>
-            <td>Limited contact options</td>
-            <td>✅ Email + hours added to all page footers (EN/PT/ES).</td>
-          </tr>
-          <tr>
-            <td>15</td>
-            <td style="color:var(--white);font-weight:600">No referral program page</td>
-            <td>Missing</td>
-            <td><span class="priority-tag p-low">LOW</span></td>
-            <td>Growth opportunity</td>
-            <td>Create "Give $10, Get $10" referral landing page (per strategy Phase 6).</td>
-          </tr>
+          <tr><td><span class="badge badge-blue">#1</span></td><td style="color:var(--white);font-weight:600">Busy Professionals</td><td>25-45, $50K+</td><td>"Get 5 Hours of Your Week Back"</td><td>Time poverty</td></tr>
+          <tr><td><span class="badge badge-purple">#2</span></td><td style="color:var(--white);font-weight:600">Families w/ Kids</td><td>2-4 people</td><td>"Your Kids Make the Mess. We Make It Disappear."</td><td>Endless volume</td></tr>
+          <tr><td><span class="badge badge-teal">#3</span></td><td style="color:var(--white);font-weight:600">Vacation Hosts</td><td>15K+ listings</td><td>"Guest-Ready Linens on Every Turnover"</td><td>Turnover speed</td></tr>
+          <tr><td><span class="badge badge-amber">#4</span></td><td style="color:var(--white);font-weight:600">Brazilian Community</td><td>66K+ in Orlando</td><td>"Cuidado Brasileiro Para Seu Lar em Orlando"</td><td>Cultural trust</td></tr>
+          <tr><td><span class="badge badge-pink">#5</span></td><td style="color:var(--white);font-weight:600">College Students</td><td>UCF 72K</td><td>"Laundry Done. More Time for Everything Else."</td><td>Price + convenience</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="section-icon" style="background:var(--primary-glow);color:var(--primary)">V</span> Competitor Pricing</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Competitor</th><th>Model</th><th>Price</th><th>A7 Advantage</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--white);font-weight:600">Poplin</td><td>Per-pound, gig</td><td>$1/lb std</td><td>Quality control + eco products</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">hampr</td><td>App, pay-per-use</td><td>$39/yr + per-load</td><td>Flat monthly, predictable</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">Rinse</td><td>Per-bag subscription</td><td>$1.39/lb</td><td>More services (carpet, shoes)</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">WashFoldGo (Tampa)</td><td>Subscription bags</td><td>$109/2 bags</td><td>$109.90/3 bags — more value</td></tr>
+          <tr><td style="color:var(--white);font-weight:600">HappyNest</td><td>Per-bag flat</td><td>$33-35/bag</td><td>Structured subscription + cross-sell</td></tr>
         </tbody>
       </table>
     </div>
@@ -937,338 +822,261 @@ tr:hover td{background:rgba(255,255,255,.02)}
 </div>
 
 <!-- ============================================ -->
-<!-- TAB 6: ROADMAP -->
+<!-- PANEL: PAGE MAP -->
 <!-- ============================================ -->
-<div class="tab-panel" id="roadmap">
+<div class="panel" id="pages">
+  <div class="page-header">
+    <h1><span>Page Map</span></h1>
+    <p>All 7 live pages + campaign landing pages. Each with trilingual support and dedicated conversion funnels.</p>
+  </div>
 
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(37,99,235,.15);color:var(--primary)">R</span> Development Roadmap</div>
-
-    <div class="timeline">
-
-      <div class="timeline-item done">
-        <div class="timeline-phase">Phase 1 — Foundation (Completed)</div>
-        <div class="timeline-title">Core Site Build</div>
-        <div class="timeline-desc">Nike-inspired dark mode redesign, 5 service pages, trilingual support, GSAP animations, SEO schema markup.</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-green">index.html</span>
-          <span class="badge badge-green">carpet-cleaning</span>
-          <span class="badge badge-green">shoe-cleaning</span>
-          <span class="badge badge-green">upholstery</span>
-          <span class="badge badge-green">vacation-rental</span>
-          <span class="badge badge-green">privacy-policy</span>
-        </div>
+  <div class="g g-2">
+    <div class="card" style="border-left:3px solid var(--primary)">
+      <div style="display:flex;justify-content:space-between;align-items:start"><h3>index.html</h3><span class="badge badge-blue">HUB</span></div>
+      <p style="font-family:monospace;font-size:12px;color:var(--gray-500);margin:4px 0">a7laundry.com</p>
+      <p>Laundry subscription hub. 3 plans, Hormozi value stack, pricing cards, email capture with Formspree.</p>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <span class="badge badge-green">GTM</span><span class="badge badge-blue">Stripe</span><span class="badge badge-purple">Formspree</span>
       </div>
-
-      <div class="timeline-item done">
-        <div class="timeline-phase">Phase 2 — Creative Systems (Completed)</div>
-        <div class="timeline-title">14 Ad Creative Systems</div>
-        <div class="timeline-desc">168 creative pieces across BoldType, Clean, Duotone, Editorial, Glass, Gradient, Impact, Lifestyle, Minimal, Neon, Retro, Social, Split systems + Master Painel.</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-green">14 systems</span>
-          <span class="badge badge-green">3 formats each</span>
-          <span class="badge badge-green">painel gallery</span>
-        </div>
-      </div>
-
-      <div class="timeline-item done">
-        <div class="timeline-phase">Phase 3 — Campaigns (Completed)</div>
-        <div class="timeline-title">Carpet Campaign + GBP Strategy</div>
-        <div class="timeline-desc">SEO landing pages, Google Business Profile setup guide, citation strategy, review management templates.</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-green">SEO landing page</span>
-          <span class="badge badge-green">GBP guide</span>
-          <span class="badge badge-amber">Needs consolidation</span>
-        </div>
-      </div>
-
-      <div class="timeline-item active">
-        <div class="timeline-phase">Phase 4 — Critical Fixes (Current)</div>
-        <div class="timeline-title">Production Readiness</div>
-        <div class="timeline-desc">Fix critical issues blocking real customer acquisition: payment processing, lead capture, data consistency.</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-red">Stripe production links</span>
-          <span class="badge badge-red">Email capture backend</span>
-          <span class="badge badge-red">Bag count decision</span>
-          <span class="badge badge-amber">Domain consolidation</span>
-          <span class="badge badge-amber">Campaign dedup</span>
-          <span class="badge badge-amber">Privacy accents fix</span>
-          <span class="badge badge-amber">GA4 on all pages</span>
-        </div>
-      </div>
-
-      <div class="timeline-item pending">
-        <div class="timeline-phase">Phase 5 — Growth Infrastructure</div>
-        <div class="timeline-title">Email Marketing + CRM + Analytics</div>
-        <div class="timeline-desc">Connect email capture to marketing platform. Set up automated welcome sequence. Deploy full GA4 event tracking. Create UTM strategy for campaigns.</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-blue">Email platform (Brevo/Mailchimp)</span>
-          <span class="badge badge-blue">Welcome email sequence</span>
-          <span class="badge badge-blue">GA4 full deployment</span>
-          <span class="badge badge-blue">UTM strategy</span>
-          <span class="badge badge-blue">Conversion tracking</span>
-        </div>
-      </div>
-
-      <div class="timeline-item pending">
-        <div class="timeline-phase">Phase 6 — Community Acquisition</div>
-        <div class="timeline-title">Brazilian Community + Referral Program</div>
-        <div class="timeline-desc">Create Portuguese-first landing page for 66K+ Brazilian community. Launch "Give $10, Get $10" referral program. Partner with Brazilian businesses in Kissimmee.</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-purple">PT-BR landing page</span>
-          <span class="badge badge-purple">Referral program</span>
-          <span class="badge badge-purple">Community partnerships</span>
-          <span class="badge badge-purple">WhatsApp broadcast</span>
-        </div>
-      </div>
-
-      <div class="timeline-item pending">
-        <div class="timeline-phase">Phase 7 — UCF + Student Market</div>
-        <div class="timeline-title">Student Acquisition Campaign</div>
-        <div class="timeline-desc">Target 72K UCF students with Essentials Plan ($59.90). Social media campaign, dorm partnerships, viral referral mechanics.</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-purple">Student pricing page</span>
-          <span class="badge badge-purple">Instagram/TikTok campaign</span>
-          <span class="badge badge-purple">Campus partnerships</span>
-        </div>
-      </div>
-
-      <div class="timeline-item pending">
-        <div class="timeline-phase">Phase 8 — Scale</div>
-        <div class="timeline-title">Multi-Channel + Automation</div>
-        <div class="timeline-desc">Google Ads with location targeting, retargeting pixels, automated review requests, loyalty program, seasonal campaigns (hurricane season, back-to-school).</div>
-        <div class="timeline-tasks">
-          <span class="badge badge-purple">Google Ads</span>
-          <span class="badge badge-purple">Retargeting</span>
-          <span class="badge badge-purple">Review automation</span>
-          <span class="badge badge-purple">Loyalty program</span>
-          <span class="badge badge-purple">Seasonal campaigns</span>
-        </div>
-      </div>
-
+    </div>
+    <div class="card" style="border-left:3px solid #f59e0b">
+      <div style="display:flex;justify-content:space-between;align-items:start"><h3>carpet-cleaning.html</h3><span class="badge badge-amber">SERVICE</span></div>
+      <p style="font-family:monospace;font-size:12px;color:var(--gray-500);margin:4px 0">a7laundry.com/carpet</p>
+      <p>1st room FREE offer. 4.9-star rated. WhatsApp CTA. Accent: amber.</p>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><span class="badge badge-green">GTM</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #ef4444">
+      <div style="display:flex;justify-content:space-between;align-items:start"><h3>shoe-cleaning.html</h3><span class="badge" style="background:rgba(239,68,68,.12);color:#ef4444">SERVICE</span></div>
+      <p style="font-family:monospace;font-size:12px;color:var(--gray-500);margin:4px 0">a7laundry.com/shoes</p>
+      <p>Buy 2 Get 1 FREE. Sneaker restoration. Accent: red.</p>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><span class="badge badge-green">GTM</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #8b5cf6">
+      <div style="display:flex;justify-content:space-between;align-items:start"><h3>upholstery-cleaning.html</h3><span class="badge badge-purple">SERVICE</span></div>
+      <p style="font-family:monospace;font-size:12px;color:var(--gray-500);margin:4px 0">a7laundry.com/upholstery</p>
+      <p>FREE Scotchgard ($50 value). Accent: purple.</p>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><span class="badge badge-green">GTM</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #14b8a6">
+      <div style="display:flex;justify-content:space-between;align-items:start"><h3>vacation-rental.html</h3><span class="badge badge-teal">SERVICE</span></div>
+      <p style="font-family:monospace;font-size:12px;color:var(--gray-500);margin:4px 0">a7laundry.com/vacation</p>
+      <p>1st cleaning FREE. Airbnb/VRBO hosts. Accent: green.</p>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><span class="badge badge-green">GTM</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gray-500)">
+      <div style="display:flex;justify-content:space-between;align-items:start"><h3>privacy-policy.html</h3><span class="badge" style="background:rgba(255,255,255,.06);color:var(--gray-400)">LEGAL</span></div>
+      <p style="font-family:monospace;font-size:12px;color:var(--gray-500);margin:4px 0">a7laundry.com/privacy-policy.html</p>
+      <p>Trilingual privacy policy. FL breach notification. CCPA-ready.</p>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><span class="badge badge-green">GTM</span><span class="badge badge-green">Accents fixed</span></div>
+    </div>
+    <div class="card" style="border-left:3px solid #f59e0b;border-style:dashed">
+      <div style="display:flex;justify-content:space-between;align-items:start"><h3>a7-carpet-campaign/</h3><span class="badge badge-amber">CAMPAIGN</span></div>
+      <p style="font-family:monospace;font-size:12px;color:var(--gray-500);margin:4px 0">a7laundry.com/carpet-campaign</p>
+      <p>SEO landing page for carpet cleaning. GA4 tracking. GBP setup guide included.</p>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><span class="badge badge-green">GA4</span><span class="badge badge-green">Domain fixed</span></div>
     </div>
   </div>
 </div>
 
 <!-- ============================================ -->
-<!-- TAB 7: ONBOARDING FLOW -->
+<!-- PANEL: BRANDING -->
 <!-- ============================================ -->
-<div class="tab-panel" id="onboarding">
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(34,197,94,.15);color:var(--green)">1</span> Customer Onboarding Journey</div>
-
-    <div class="grid-3">
-      <div class="card" style="border-top:3px solid var(--primary)">
-        <h4>Step 1: Discovery</h4>
-        <h3>First Touch</h3>
-        <p>Customer finds A7 via Google, social ad, or referral. Lands on service page matching their need.</p>
-        <div style="margin-top:12px">
-          <p style="font-size:12px;font-weight:600;color:var(--amber)">Entry Points:</p>
-          <ul class="check-list" style="margin-top:4px">
-            <li class="ok">Google search (SEO pages)</li>
-            <li class="ok">Social ads (168 creatives)</li>
-            <li class="ok">Referral (WhatsApp share)</li>
-            <li class="ok">GBP listing (carpet campaign)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="border-top:3px solid var(--primary)">
-        <h4>Step 2: Engagement</h4>
-        <h3>Value Discovery</h3>
-        <p>Customer scrolls through PAS framework. Sees problem, solution, pricing, social proof, guarantee.</p>
-        <div style="margin-top:12px">
-          <p style="font-size:12px;font-weight:600;color:var(--amber)">Conversion Triggers:</p>
-          <ul class="check-list" style="margin-top:4px">
-            <li class="ok">Hormozi value stack ($290 vs $59.90)</li>
-            <li class="ok">Live viewers (FOMO)</li>
-            <li class="ok">Social proof toasts</li>
-            <li class="ok">30-day guarantee (risk reversal)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="border-top:3px solid var(--green)">
-        <h4>Step 3: Contact</h4>
-        <h3>First Conversation</h3>
-        <p>Customer calls or messages via WhatsApp. Pre-filled messages for each service make it frictionless.</p>
-        <div style="margin-top:12px">
-          <p style="font-size:12px;font-weight:600;color:var(--amber)">Channels (Priority):</p>
-          <ul class="check-list" style="margin-top:4px">
-            <li class="ok">Phone call (primary CTA)</li>
-            <li class="ok">WhatsApp (pre-filled text)</li>
-            <li class="ok">Stripe modal (direct payment)</li>
-            <li class="warn">Email (15% off capture)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="border-top:3px solid var(--green)">
-        <h4>Step 4: Signup</h4>
-        <h3>Plan Selection</h3>
-        <p>Customer selects plan via Stripe modal or WhatsApp conversation. BOGO applied to first purchase.</p>
-        <div style="margin-top:12px">
-          <p style="font-size:12px;font-weight:600;color:var(--amber)">Plans:</p>
-          <ul class="check-list" style="margin-top:4px">
-            <li class="ok">Essentials: $59.90/mo (1 bag)</li>
-            <li class="ok">Family: $109.90/mo (3 bags)</li>
-            <li class="ok">Premium: $179.90/mo (4 bags + dry clean)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="border-top:3px solid var(--teal)">
-        <h4>Step 5: First Service</h4>
-        <h3>XL Bag Delivery</h3>
-        <p>A7 delivers XL bag (30"x40", 25 lbs capacity). Customer fills it, texts/WhatsApps for pickup.</p>
-        <div style="margin-top:12px">
-          <p style="font-size:12px;font-weight:600;color:var(--amber)">Experience:</p>
-          <ul class="check-list" style="margin-top:4px">
-            <li class="ok">Bag delivered to door</li>
-            <li class="ok">No sorting needed</li>
-            <li class="ok">Text or WhatsApp to schedule</li>
-            <li class="ok">Leave at door pickup</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="border-top:3px solid var(--teal)">
-        <h4>Step 6: Retention</h4>
-        <h3>Ongoing Delight</h3>
-        <p>24-48h turnaround. Hotel-quality results. Bag rollover (Family+). Cross-sell specialty services with subscriber discounts.</p>
-        <div style="margin-top:12px">
-          <p style="font-size:12px;font-weight:600;color:var(--amber)">Retention Levers:</p>
-          <ul class="check-list" style="margin-top:4px">
-            <li class="ok">10-25% off specialty services</li>
-            <li class="ok">Bag rollover (Family/Premium)</li>
-            <li class="ok">No contracts (reduces friction)</li>
-            <li class="warn">No loyalty/rewards program (yet)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<div class="panel" id="branding">
+  <div class="page-header">
+    <h1><span>Brand System</span></h1>
+    <p>Visual identity, color palettes, typography, and design patterns across all A7 properties.</p>
   </div>
 
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(245,158,11,.15);color:var(--amber)">W</span> Widget Timing (User Experience)</div>
+  <div class="g g-2">
     <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Widget</th><th>First Appears</th><th>Duration</th><th>Repeat</th><th>Purpose</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Scroll Progress</td>
-              <td>Immediately</td>
-              <td>Always visible</td>
-              <td>Continuous</td>
-              <td>Page orientation</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Live Viewers</td>
-              <td>30 seconds</td>
-              <td>10 seconds</td>
-              <td>Every 2.5 min</td>
-              <td>FOMO / social proof</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Sticky CTA Bar</td>
-              <td>After hero scrolls away</td>
-              <td>Always visible</td>
-              <td>Continuous</td>
-              <td>Persistent conversion</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Social Proof Toast</td>
-              <td>2 minutes</td>
-              <td>8 seconds</td>
-              <td>Every 3 min</td>
-              <td>Momentum / trust</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Exit Popup</td>
-              <td>29 seconds</td>
-              <td>Until dismissed</td>
-              <td>Once per session</td>
-              <td>Last-chance conversion</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">WhatsApp FAB</td>
-              <td>Immediately</td>
-              <td>Always visible</td>
-              <td>Continuous</td>
-              <td>Quick messaging CTA</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Countdown Timer</td>
-              <td>Immediately (hero)</td>
-              <td>72h from first visit</td>
-              <td>Resets every 72h</td>
-              <td>Urgency for BOGO offer</td>
-            </tr>
-          </tbody>
-        </table>
+      <h3>Primary Palette</h3>
+      <div class="swatch-row">
+        <div class="swatch swatch-lg" style="background:#0a0f1a">#0a0f1a<br>Base</div>
+        <div class="swatch swatch-lg" style="background:#111827">#111827<br>Surface</div>
+        <div class="swatch swatch-lg" style="background:#2563eb">#2563eb<br>Primary</div>
+        <div class="swatch swatch-lg" style="background:#1d4ed8">#1d4ed8<br>Primary Dk</div>
       </div>
     </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title"><span class="icon" style="background:rgba(124,58,237,.15);color:var(--purple)">X</span> Cross-Sell Matrix</div>
     <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>If Customer Buys...</th><th>Cross-Sell</th><th>Discount</th><th>Trigger</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Laundry Subscription</td>
-              <td>Carpet cleaning, shoe cleaning, upholstery</td>
-              <td>10-25% (per plan tier)</td>
-              <td>After 2nd delivery</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Carpet Cleaning</td>
-              <td>Upholstery + Laundry subscription</td>
-              <td>Bundle pricing</td>
-              <td>Post-service follow-up</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Shoe Cleaning</td>
-              <td>Sneaker Club membership</td>
-              <td>25% ongoing</td>
-              <td>At pickup/delivery</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--white)">Vacation Rental</td>
-              <td>Carpet + Upholstery deep clean</td>
-              <td>Package pricing</td>
-              <td>Quarterly maintenance</td>
-            </tr>
-          </tbody>
-        </table>
+      <h3>Service Accents</h3>
+      <div class="swatch-row">
+        <div class="swatch swatch-lg" style="background:#f59e0b">#f59e0b<br>Carpet</div>
+        <div class="swatch swatch-lg" style="background:#ef4444">#ef4444<br>Shoes</div>
+        <div class="swatch swatch-lg" style="background:#8b5cf6">#8b5cf6<br>Upholstery</div>
+        <div class="swatch swatch-lg" style="background:#14b8a6">#14b8a6<br>Vacation</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Typography</h3>
+      <div style="margin-top:12px">
+        <p style="font-size:48px;font-weight:900;letter-spacing:-2px;line-height:1">Inter Black 900</p>
+        <p style="font-size:24px;font-weight:700;margin-top:8px">Inter Bold 700</p>
+        <p style="font-size:16px;font-weight:400;color:var(--gray-300);margin-top:8px">Inter Regular 400 — Body copy for readability</p>
+        <p style="font-size:13px;color:var(--gray-500);margin-top:12px">Hero: clamp(48px, 12vw, 140px) | H2: clamp(28px, 5vw, 48px) | Body: 16px</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Design Tokens</h3>
+      <div style="margin-top:12px;font-size:14px;color:var(--gray-300);display:flex;flex-direction:column;gap:8px">
+        <div><strong>Border Radius:</strong> 4px (sharp, not pills)</div>
+        <div><strong>Sections:</strong> .section-dark / .section-light alternation</div>
+        <div><strong>Buttons:</strong> Blue rectangle, glow hover effect</div>
+        <div><strong>z-index:</strong> 200 (header) through 910 (sub-overlay)</div>
+        <div><strong>Safe Area:</strong> viewport-fit=cover + env(safe-area-inset)</div>
+        <div><strong>Font:</strong> Inter only (Google Fonts CDN)</div>
       </div>
     </div>
   </div>
-
 </div>
 
-</div><!-- /container -->
+<!-- ============================================ -->
+<!-- PANEL: ISSUES & FIXES -->
+<!-- ============================================ -->
+<div class="panel" id="issues">
+  <div class="page-header">
+    <h1><span>Issues & Fixes</span></h1>
+    <p>Full audit tracker. 13 of 15 issues resolved. 2 pending user action.</p>
+  </div>
 
-<footer style="text-align:center;padding:40px 24px;color:var(--gray-600);font-size:12px;border-top:1px solid rgba(255,255,255,.04);margin-top:60px">
-  A7 Laundry Orlando — Command Center | Internal Use Only | Generated 2026-03-04
-</footer>
+  <div class="g g-3" style="margin-bottom:32px">
+    <div class="stat-card"><div class="stat-value" style="color:var(--green)">13</div><div class="stat-label">Fixed</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--amber)">2</div><div class="stat-label">Pending Action</div></div>
+    <div class="stat-card"><div class="stat-value" style="color:var(--green)">87%</div><div class="stat-label">Completion</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Issue</th><th>Status</th><th>Resolution</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="opacity:.5;text-decoration:line-through">Bag count mismatch</td><td><span class="badge badge-green">FIXED</span></td><td>Family=3, Premium=4 bags. Updated.</td></tr>
+        <tr><td>2</td><td style="color:var(--white);font-weight:600">Stripe links in TEST mode</td><td><span class="badge badge-amber">PENDING</span></td><td>TODOs flagged. Awaiting production payment links.</td></tr>
+        <tr><td>3</td><td style="opacity:.5;text-decoration:line-through">Email capture localStorage only</td><td><span class="badge badge-green">FIXED</span></td><td>Formspree webhook connected (mqeyzaqa).</td></tr>
+        <tr><td>4</td><td style="opacity:.5;text-decoration:line-through">Duplicate carpet campaign</td><td><span class="badge badge-green">FIXED</span></td><td>/carpet-campaign/ deleted. Kept a7-carpet-campaign.</td></tr>
+        <tr><td>5</td><td style="opacity:.5;text-decoration:line-through">Domain fragmentation</td><td><span class="badge badge-green">FIXED</span></td><td>Consolidated to a7laundry.com.</td></tr>
+        <tr><td>6</td><td style="opacity:.5;text-decoration:line-through">Privacy policy accents</td><td><span class="badge badge-green">FIXED</span></td><td>100+ PT/ES accent corrections.</td></tr>
+        <tr><td>7</td><td style="opacity:.5;text-decoration:line-through">GA4 inconsistent</td><td><span class="badge badge-green">FIXED</span></td><td>GTM on all pages, duplicate removed.</td></tr>
+        <tr><td>8</td><td style="opacity:.5;text-decoration:line-through">No business hours</td><td><span class="badge badge-green">FIXED</span></td><td>Hours added to all footers (EN/PT/ES).</td></tr>
+        <tr><td>9</td><td style="opacity:.5;text-decoration:line-through">Address inconsistency</td><td><span class="badge badge-green">FIXED</span></td><td>Winter Garden address standardized.</td></tr>
+        <tr><td>10</td><td style="opacity:.5;text-decoration:line-through">"#1" claims (FTC risk)</td><td><span class="badge badge-green">FIXED</span></td><td>"Top-rated" / "4.9-star rated" everywhere.</td></tr>
+        <tr><td>11</td><td style="opacity:.5;text-decoration:line-through">GBP guide placeholder</td><td><span class="badge badge-green">FIXED</span></td><td>Real address, domain, email updated.</td></tr>
+        <tr><td>12</td><td style="opacity:.5;text-decoration:line-through">FL breach notification</td><td><span class="badge badge-green">FIXED</span></td><td>Fla. Stat. 501.171 added (EN/PT/ES).</td></tr>
+        <tr><td>13</td><td style="opacity:.5;text-decoration:line-through">No eco messaging</td><td><span class="badge badge-green">FIXED</span></td><td>Eco badge added to trust strip.</td></tr>
+        <tr><td>14</td><td style="opacity:.5;text-decoration:line-through">Email only in privacy</td><td><span class="badge badge-green">FIXED</span></td><td>Email + hours in all footers.</td></tr>
+        <tr><td>15</td><td style="color:var(--white);font-weight:600">Referral program page</td><td><span class="badge badge-purple">BACKLOG</span></td><td>Phase 4 roadmap item.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- PANEL: ROADMAP -->
+<!-- ============================================ -->
+<div class="panel" id="roadmap">
+  <div class="page-header">
+    <h1><span>Roadmap</span></h1>
+    <p>From launch to 200 subscribers. Phased execution plan with clear milestones.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item done">
+      <div class="tl-phase">Phase 0 — Completed</div>
+      <div class="tl-title">Foundation & Audit</div>
+      <div class="tl-desc">Full project audit, FTC compliance, domain consolidation, privacy fixes, creative assets, command center.</div>
+      <div class="tl-tags">
+        <span class="badge badge-green">13/15 fixed</span>
+        <span class="badge badge-green">168 creatives</span>
+        <span class="badge badge-green">7 pages live</span>
+      </div>
+    </div>
+
+    <div class="tl-item active">
+      <div class="tl-phase">Phase 1 — Week 1-2</div>
+      <div class="tl-title">Launch Readiness</div>
+      <div class="tl-desc">Stripe production links, GBP setup, GA4 conversion events, first community posts.</div>
+      <div class="tl-tags">
+        <span class="badge badge-amber">Stripe pending</span>
+        <span class="badge badge-blue">GBP guide ready</span>
+        <span class="badge badge-green">Formspree active</span>
+      </div>
+    </div>
+
+    <div class="tl-item pending">
+      <div class="tl-phase">Phase 2 — Week 2-4</div>
+      <div class="tl-title">Community Seeding (Target: 25 subs)</div>
+      <div class="tl-desc">WhatsApp groups, Nextdoor, Facebook local groups, UCF partnerships. Launch promo codes FIRSTBAG + SAVE20.</div>
+      <div class="tl-tags">
+        <span class="badge badge-purple">Organic</span>
+        <span class="badge badge-amber">Brazilian community</span>
+      </div>
+    </div>
+
+    <div class="tl-item pending">
+      <div class="tl-phase">Phase 3 — Week 3-8</div>
+      <div class="tl-title">Paid Acquisition (Target: 100 subs)</div>
+      <div class="tl-desc">Meta Ads ($30-50/day) + Google Ads ($20-40/day). 4 audience segments, 168 creatives ready for A/B testing.</div>
+      <div class="tl-tags">
+        <span class="badge badge-blue">Meta Ads</span>
+        <span class="badge badge-green">Google Ads</span>
+        <span class="badge badge-purple">$50-90/day</span>
+      </div>
+    </div>
+
+    <div class="tl-item pending">
+      <div class="tl-phase">Phase 4 — Week 6-12</div>
+      <div class="tl-title">Referral Engine (Target: 200 subs)</div>
+      <div class="tl-desc">"Give $10, Get $10" referral program. Loyalty perks. Airbnb host partnerships. Viral coefficient target: 1.3x</div>
+      <div class="tl-tags">
+        <span class="badge badge-teal">Referral page</span>
+        <span class="badge badge-pink">Loyalty program</span>
+        <span class="badge badge-amber">B2B hosts</span>
+      </div>
+    </div>
+
+    <div class="tl-item pending">
+      <div class="tl-phase">Phase 5 — Month 4+</div>
+      <div class="tl-title">Scale & Expand</div>
+      <div class="tl-desc">Brazilian community dedicated LP (PT-BR first). Expand to Kissimmee, Lake Nona, Oviedo. Partner with gyms, coworking spaces.</div>
+      <div class="tl-tags">
+        <span class="badge badge-purple">PT-BR page</span>
+        <span class="badge badge-teal">Geo expansion</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
 
 <script>
-function showTab(id){
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
-  window.scrollTo({top:200,behavior:'smooth'});
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+  var panel=document.getElementById(id);
+  if(panel)panel.classList.add('active');
+  // Find and activate the nav item that triggered this
+  var navItems=document.querySelectorAll('.nav-item');
+  navItems.forEach(function(n){
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').indexOf("'"+id+"'")!==-1){
+      n.classList.add('active');
+    }
+  });
+  // Close mobile sidebar
+  document.querySelector('.sidebar').classList.remove('open');
+  // Scroll to top
+  window.scrollTo(0,0);
 }
+
+// Animate goal ring on load
+window.addEventListener('load',function(){
+  var circle=document.getElementById('goalCircle');
+  if(circle){
+    // Currently 0 subscribers — ring stays empty
+    // Update stroke-dashoffset as subscribers grow
+    // Full circle = 553, empty = 553, full = 0
+    circle.style.transition='stroke-dashoffset 2s cubic-bezier(.4,0,.2,1)';
+    circle.style.strokeDashoffset='553'; // 0% — change as subs grow
+  }
+});
 </script>
 </body>
 </html>
