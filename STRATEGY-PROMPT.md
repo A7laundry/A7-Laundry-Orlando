@@ -22,7 +22,7 @@ A7 Laundry Orlando possui 5 landing pages de serviços especializados, todas em 
 
 ### Padrões compartilhados entre as LPs
 - **Framework de copy:** PAS (Problem-Agitation-Solution) + Hormozi Value Stack
-- **CTA principal:** WhatsApp (407-787-8590)
+- **CTA principal:** WhatsApp (407-670-8839)
 - **Idiomas:** EN / PT-BR / ES (language switcher)
 - **Elementos de conversão:** Live viewers widget, scroll progress bar, urgency bar com countdown, FAQ accordion
 - **Membership:** Todas mencionam "A7 Members Save 25% on Every Cleaning"
@@ -202,7 +202,7 @@ CONTEXTO:
 - A7 Laundry é uma lavanderia brasileira em Orlando, FL que oferece serviço
   de assinatura por bag + serviços especializados (carpet, shoe, upholstery, vacation rental)
 - Deploy: GitHub Pages (HTML/CSS/JS puro, sem frameworks)
-- CTA principal: WhatsApp (407-787-8590)
+- CTA principal: WhatsApp (407-670-8839)
 - Idiomas: EN / PT-BR / ES com language switcher
 - Público: busy professionals, famílias, hosts Airbnb, comunidade brasileira, estudantes
 
@@ -239,7 +239,7 @@ REFERÊNCIAS DE COPY:
 ARQUIVOS EXISTENTES NO PROJETO:
 - carpet-cleaning.html, shoe-cleaning.html, upholstery-cleaning.html, vacation-rental.html
 - a7-logo.jpg, LOGO HORIZONTAL-01.png
-- WhatsApp: https://wa.me/14077878590
+- WhatsApp: https://wa.me/14076708839
 ```
 
 ---

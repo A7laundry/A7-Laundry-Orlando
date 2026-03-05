@@ -49,9 +49,9 @@ Horizon West, FL
 
 ### Step 6: Contact Info
 ```
-Phone: (407) 555-0197
-Website: https://www.a7servicepremium.com/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_website
-Email: info@a7servicepremium.com
+Phone: (407) 670-8839
+Website: https://a7laundry.vercel.app/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_website
+Email: contact@a7laundry.com
 ```
 
 ### Step 7: Hours
@@ -78,7 +78,7 @@ We offer transparent pricing, a 100% satisfaction guarantee, and same-day servic
 
 Serving Orlando, Winter Park, Kissimmee, Lake Nona, Dr. Phillips, Windermere, Celebration, Altamonte Springs, and all of Orange, Seminole, and Osceola counties.
 
-Call (407) 555-0197 for your free estimate today.
+Call (407) 670-8839 for your free estimate today.
 ```
 > 743 characters — within Google's 750-character limit.
 
@@ -171,7 +171,7 @@ Check all that apply in your GBP dashboard:
 
 | Day | Type | Post Template |
 |---|---|---|
-| **Monday** | Before/After | "Check out this transformation! Our team deep-cleaned [X] rooms in this [neighborhood] vacation home. Swipe to see the results. Book your free estimate: (407) 555-0197" |
+| **Monday** | Before/After | "Check out this transformation! Our team deep-cleaned [X] rooms in this [neighborhood] vacation home. Swipe to see the results. Book your free estimate: (407) 670-8839" |
 | **Wednesday** | Educational Tip | "Did you know? Orlando's 74% average humidity can cause mold growth under dirty carpets. The IICRC recommends professional cleaning every 6-12 months. Schedule yours today!" |
 | **Friday** | Offer/Promo | "Weekend Special: Book 3+ rooms and get a FREE hallway cleaning. Plus 15% off for multi-property owners. Valid through [date]. Book now: [link with UTM]" |
 
@@ -220,7 +220,7 @@ Thank you so much, [Name]! We're thrilled that our carpet cleaning team could [r
 
 **Negative Review:**
 ```
-Hi [Name], we sincerely apologize for this experience. This does not reflect our usual standard of service. We'd like to make this right — please call us directly at (407) 555-0197 so we can discuss a solution. Thank you for bringing this to our attention.
+Hi [Name], we sincerely apologize for this experience. This does not reflect our usual standard of service. We'd like to make this right — please call us directly at (407) 670-8839 so we can discuss a solution. Thank you for bringing this to our attention.
 ```
 
 ### Rules
@@ -237,14 +237,14 @@ Log in to your GBP and post these questions, then answer them yourself:
 
 | Question | Answer |
 |---|---|
-| How much does carpet cleaning cost? | Our carpet cleaning starts at $49 per standard room. Master suites from $79. All prices include pre-treatment, hot water extraction, and deodorizing. Call (407) 555-0197 for a free estimate. |
-| Do you offer free estimates? | Yes! We provide free, no-obligation estimates for all carpet cleaning services in the Orlando area. Call or text (407) 555-0197. |
+| How much does carpet cleaning cost? | Our carpet cleaning starts at $49 per standard room. Master suites from $79. All prices include pre-treatment, hot water extraction, and deodorizing. Call (407) 670-8839 for a free estimate. |
+| Do you offer free estimates? | Yes! We provide free, no-obligation estimates for all carpet cleaning services in the Orlando area. Call or text (407) 670-8839. |
 | Is your cleaning safe for pets and kids? | Absolutely. We use EPA-registered, non-toxic, hypoallergenic solutions. No harsh chemicals. Safe for your entire family. |
 | How long until carpets dry? | Most carpets dry within 4-8 hours. We deploy commercial-grade air movers to accelerate drying, especially important in Orlando's humid climate. |
 | What method do you use? | We use hot water extraction (steam cleaning), the method recommended by Shaw, Mohawk, and Stainmaster carpet manufacturers. Our truck-mounted systems deliver 200+ degree water at 500 PSI. |
 | Do you serve Winter Park / Kissimmee / Lake Nona? | Yes! We serve all of Greater Orlando including Winter Park, Kissimmee, Lake Nona, Dr. Phillips, Windermere, Celebration, Altamonte Springs, and all of Orange, Seminole, and Osceola counties. |
 | Do you offer discounts for multiple properties? | Yes! 15% off for 2 properties, 20% off for 3-5, and 25% off for 6+. We also offer recurring maintenance plans with up to 25% savings. |
-| Do you offer same-day service? | Yes, we offer same-day and next-day appointments based on availability. Call (407) 555-0197 for scheduling. |
+| Do you offer same-day service? | Yes, we offer same-day and next-day appointments based on availability. Call (407) 670-8839 for scheduling. |
 | Are you licensed and insured? | Yes, we are fully licensed and insured in Florida with $2M liability coverage. All technicians are IICRC-certified and background-checked. |
 | Do you clean vacation rental properties? | Yes! We specialize in vacation home carpet cleaning in the Orlando area. We offer multi-property discounts and recurring maintenance plans for property managers. |
 
@@ -256,22 +256,22 @@ Use these links in your GBP:
 
 ### Website Button
 ```
-https://www.a7servicepremium.com/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_website
+https://a7laundry.vercel.app/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_website
 ```
 
 ### Appointment/Booking Link
 ```
-https://www.a7servicepremium.com/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_booking#quote
+https://a7laundry.vercel.app/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_booking#quote
 ```
 
 ### For GBP Posts (change utm_content per post)
 ```
-https://www.a7servicepremium.com/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_post&utm_content=february_special_2026
+https://a7laundry.vercel.app/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_post&utm_content=february_special_2026
 ```
 
 ### For Services Links
 ```
-https://www.a7servicepremium.com/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_services&utm_content=carpet_cleaning
+https://a7laundry.vercel.app/carpet-cleaning-orlando/?utm_source=gbp&utm_medium=organic&utm_campaign=gbp_services&utm_content=carpet_cleaning
 ```
 
 ---

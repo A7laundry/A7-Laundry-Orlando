@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0a0f1a">
   <title>A7 Laundry | Laundry Subscription Plans — Orlando, FL</title>
-  <meta name="description" content="Stop wasting 5+ hours/week on laundry. Orlando's #1 laundry subscription: fill a bag, leave it at your door, get it back fresh in 24h. Plans from $1.99/day. Buy 1 bag, get 1 FREE. No contracts.">
+  <meta name="description" content="Stop wasting 5+ hours/week on laundry. Orlando's top-rated laundry subscription: fill a bag, leave it at your door, get it back fresh in 24h. Plans from $1.99/day. Buy 1 bag, get 1 FREE. No contracts.">
   <meta property="og:title" content="A7 Laundry | Stop Wasting Your Weekends on Laundry — Orlando, FL">
   <meta property="og:description" content="Fill a bag. Leave it at your door. Get it back fresh in 24h. Plans from $1.99/day with free pickup & delivery. Buy 1 bag, get 1 FREE. No contracts.">
   <meta property="og:type" content="website">
@@ -37,7 +37,7 @@
         "@id":"https://a7laundry.vercel.app/#business",
         "name":"A7 Laundry",
         "alternateName":"A7 Laundry Orlando",
-        "description":"Orlando's #1 laundry subscription service. Fill a bag, leave it at your door, get it back fresh in 24h. Plans from $1.99/day with free pickup & delivery.",
+        "description":"Orlando's top-rated laundry subscription service. Fill a bag, leave it at your door, get it back fresh in 24h. Plans from $1.99/day with free pickup & delivery.",
         "url":"https://a7laundry.vercel.app",
         "telephone":"+1-407-670-8839",
         "priceRange":"$$",
@@ -221,7 +221,7 @@
 
     /* === TRUST STRIP === */
     .trust-strip{background:var(--light-section);padding:60px 0}
-    .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+    .trust-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;text-align:center}
     .trust-item .trust-val{font-size:clamp(32px,5vw,56px);font-weight:900;color:var(--primary);letter-spacing:-2px;line-height:1}
     .trust-item .trust-label{font-size:13px;color:var(--gray-500);margin-top:8px;font-weight:500}
     @media(max-width:768px){.trust-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
@@ -688,6 +688,14 @@
           <span data-lang="es">contratos</span>
         </div>
       </div>
+      <div class="trust-item">
+        <div class="trust-val" style="font-size:clamp(24px,4vw,40px)">🌿</div>
+        <div class="trust-label">
+          <span data-lang="en">eco-friendly products</span>
+          <span data-lang="pt">produtos ecológicos</span>
+          <span data-lang="es">productos ecológicos</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -996,9 +1004,9 @@
         </div>
         <ul class="plan-features">
           <li><span class="check">✓</span>
-            <span data-lang="en"><strong>2 XL bags</strong>/month (50 lbs — ~80-100 pieces)</span>
-            <span data-lang="pt"><strong>2 bags XL</strong>/mês (23 kg — ~80-100 peças)</span>
-            <span data-lang="es"><strong>2 bolsas XL</strong>/mes (23 kg — ~80-100 piezas)</span>
+            <span data-lang="en"><strong>3 XL bags</strong>/month (75 lbs — ~120-150 pieces)</span>
+            <span data-lang="pt"><strong>3 bags XL</strong>/mês (34 kg — ~120-150 peças)</span>
+            <span data-lang="es"><strong>3 bolsas XL</strong>/mes (34 kg — ~120-150 piezas)</span>
           </li>
           <li><span class="check">✓</span>
             <span data-lang="en"><strong>24-hour</strong> turnaround — back by tomorrow</span>
@@ -1557,7 +1565,10 @@
       <a href="tel:+14076708839" style="margin-right:12px">📞 (407) 670-8839</a>
       <span style="color:rgba(255,255,255,.3)">|</span>
       <a href="https://wa.me/14076708839" style="margin-left:12px" data-wa-link>💬 WhatsApp</a>
+      <span style="color:rgba(255,255,255,.3)">|</span>
+      <a href="mailto:contact@a7laundry.com" style="margin-left:12px">📧 contact@a7laundry.com</a>
     </p>
+    <p style="margin-top:4px;font-size:12px;opacity:.4"><span data-lang="en">Mon-Fri 7am-7pm · Sat 8am-5pm</span><span data-lang="pt">Seg-Sex 7h-19h · Sáb 8h-17h</span><span data-lang="es">Lun-Vie 7am-7pm · Sáb 8am-5pm</span></p>
     <p style="margin-top:8px">© 2026 A7 Laundry · Orlando, FL · <a href="privacy-policy.html">Privacy Policy</a></p>
   </div>
 </footer>
@@ -1763,13 +1774,21 @@
   })();
 
   // === Email Capture ===
+  var EMAIL_ENDPOINT = 'https://formspree.io/f/mqeyzaqa';
   function handleEmailCapture(e){
     e.preventDefault();
     var email=document.getElementById('emailInput').value.trim();
     if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return false;
+    // Save locally as backup
     var leads=JSON.parse(localStorage.getItem('a7_leads')||'[]');
-    leads.push({email:email,date:new Date().toISOString()});
+    leads.push({email:email,date:new Date().toISOString(),source:'website'});
     localStorage.setItem('a7_leads',JSON.stringify(leads));
+    // Send to backend (Formspree / CRM webhook)
+    fetch(EMAIL_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({email:email,source:'a7laundry-website',plan_interest:'15pct_discount'})
+    }).catch(function(){});
     document.getElementById('emailFormWrap').style.display='none';
     document.getElementById('emailSuccess').style.display='block';
     trackEvent('generate_lead','conversion','email_capture');
@@ -1945,6 +1964,8 @@
   // === Scroll Reveal: content visible by default, GSAP enhances if available ===
 
   // === Subscription Modal ===
+  // TODO: Replace Stripe TEST links with PRODUCTION links before launch
+  // Generate at: https://dashboard.stripe.com/payment-links (switch to Live mode)
   const planData = {
     essentials: {
       name: 'Essentials',
@@ -1952,15 +1973,15 @@
       bags: '1 bag',
       pieces: '~40-50 pcs',
       gradient: 'linear-gradient(135deg, #0a0f1a, #111827)',
-      paymentLink: 'https://buy.stripe.com/test_eVq6oH1dRf1U78n2Qa8AE00'
+      paymentLink: 'https://buy.stripe.com/test_eVq6oH1dRf1U78n2Qa8AE00' // TEST MODE
     },
     family: {
       name: 'Family',
       priceHtml: '<small>$</small>109<small>.90</small>',
-      bags: '2 bags',
-      pieces: '~80-100 pcs',
+      bags: '3 bags',
+      pieces: '~120-150 pcs',
       gradient: 'linear-gradient(135deg, #111827, #1a2332)',
-      paymentLink: 'https://buy.stripe.com/test_bJeaEXaOr5rkfET8au8AE01'
+      paymentLink: 'https://buy.stripe.com/test_bJeaEXaOr5rkfET8au8AE01' // TEST MODE
     },
     premium: {
       name: 'Premium',
@@ -1968,7 +1989,7 @@
       bags: '4 bags',
       pieces: '~160-200 pcs',
       gradient: 'linear-gradient(135deg, #0a0f1a, #2563eb)',
-      paymentLink: 'https://buy.stripe.com/test_00w7sL5u7bPI9gvaiC8AE02'
+      paymentLink: 'https://buy.stripe.com/test_00w7sL5u7bPI9gvaiC8AE02' // TEST MODE
     }
   };
 
