@@ -9,7 +9,8 @@
     { "source": "/vacation", "destination": "/vacation-rental.html" },
     { "source": "/carpet-campaign", "destination": "/a7-carpet-campaign/index.html" },
     { "source": "/command-center", "destination": "/a7-command-center.html" },
-    { "source": "/comforter", "destination": "/comforter-cleaning.html" }
+    { "source": "/comforter", "destination": "/comforter-cleaning.html" },
+    { "source": "/comforter-v2", "destination": "/comforter-cleaning-v2.html" }
   ],
   "headers": [
     {
