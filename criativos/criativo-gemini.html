@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A7 Laundry — Comforter Ad Creatives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0f0f0f;font-family:'Inter',sans-serif;color:#fff;padding:40px 20px}
+  h1{text-align:center;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:#666;margin-bottom:48px}
+
+  .gallery{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start}
+
+  .card{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#555}
+
+  /* ─── FEED 1:1 ─── */
+  .feed{width:540px;height:540px;position:relative;overflow:hidden;border-radius:8px}
+  .feed img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+
+  /* gradient bottom */
+  .feed .grad{
+    position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.18) 45%, transparent 70%);
+  }
+
+  /* logo top-left */
+  .feed .logo-wrap{position:absolute;top:24px;left:24px}
+  .feed .logo-wrap img{display:block;width:120px;height:34px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
+
+  /* badge top-right */
+  .feed .badge{
+    position:absolute;top:24px;right:24px;
+    background:#0ea5e9;color:#fff;
+    font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:6px 12px;border-radius:4px;
+  }
+
+  /* bottom copy */
+  .feed .copy{position:absolute;bottom:0;left:0;right:0;padding:28px 28px 28px}
+  .feed .copy .headline{font-size:26px;font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:8px}
+  .feed .copy .sub{font-size:14px;font-weight:400;color:rgba(255,255,255,.80);margin-bottom:16px}
+  .feed .copy .cta{
+    display:inline-block;
+    background:#0ea5e9;color:#fff;
+    font-size:13px;font-weight:700;letter-spacing:.04em;
+    padding:10px 20px;border-radius:4px;text-decoration:none;
+  }
+
+  /* ─── FEED VARIATION 2 — split bottom white panel ─── */
+  .feed2{width:540px;height:540px;position:relative;overflow:hidden;border-radius:8px;background:#fff;display:flex;flex-direction:column}
+  .feed2 .photo-half{flex:0 0 62%;overflow:hidden;position:relative}
+  .feed2 .photo-half img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+  .feed2 .panel{flex:1;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:20px 28px;gap:6px}
+  .feed2 .panel .top-row{display:flex;align-items:center;justify-content:space-between}
+  .feed2 .panel img.logo{display:block;width:100px;height:28px;object-fit:contain;object-position:left center}
+  .feed2 .panel .price-tag{background:#0ea5e9;color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:4px;letter-spacing:.04em}
+  .feed2 .panel h2{color:#0f0f0f;font-size:22px;font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-top:8px}
+  .feed2 .panel p{color:#555;font-size:12px;line-height:1.5}
+  .feed2 .panel .cta2{
+    margin-top:10px;align-self:flex-start;
+    background:#0f0f0f;color:#fff;
+    font-size:12px;font-weight:700;letter-spacing:.04em;
+    padding:9px 18px;border-radius:4px;text-decoration:none;
+  }
+
+  /* ─── STORY 9:16 ─── */
+  .story{width:304px;height:540px;position:relative;overflow:hidden;border-radius:8px}
+  .story img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+  .story .grad{
+    position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.30) 50%, rgba(0,0,0,.10) 80%, transparent 100%);
+  }
+  .story .logo-wrap{position:absolute;top:24px;left:20px}
+  .story .logo-wrap img{display:block;width:100px;height:28px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
+  .story .copy{position:absolute;bottom:0;left:0;right:0;padding:0 20px 32px}
+  .story .copy .eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0ea5e9;margin-bottom:8px}
+  .story .copy h2{font-size:22px;font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:6px}
+  .story .copy p{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:16px;line-height:1.5}
+  .story .copy .cta{
+    display:block;text-align:center;
+    background:#0ea5e9;color:#fff;
+    font-size:12px;font-weight:700;letter-spacing:.04em;
+    padding:12px;border-radius:4px;text-decoration:none;
+  }
+</style>
+</head>
+<body>
+
+<h1>A7 Laundry &mdash; Comforter Campaign &mdash; Ad Creatives</h1>
+
+<div class="gallery">
+
+  <!-- FEED V1: dark gradient overlay -->
+  <div class="card">
+    <div class="label">Feed 1:1 &mdash; Variation 1</div>
+    <div class="feed">
+      <img class="bg" src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="">
+      <div class="grad"></div>
+      <div class="logo-wrap"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="badge">From $33</div>
+      <div class="copy">
+        <div class="headline">Hotel-Fresh Comforters.<br>Delivered Back to You.</div>
+        <div class="sub">Free pickup &middot; 48h turnaround &middot; Orlando, FL</div>
+        <a class="cta" href="#">Book Online &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEED V2: split white panel -->
+  <div class="card">
+    <div class="label">Feed 1:1 &mdash; Variation 2</div>
+    <div class="feed2">
+      <div class="photo-half">
+        <img src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="">
+      </div>
+      <div class="panel">
+        <div class="top-row">
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <span class="price-tag">From $33</span>
+        </div>
+        <h2>Your Comforter,<br>Professionally Cleaned.</h2>
+        <p>Free pickup & delivery &middot; Twin $33 &middot; Queen $37 &middot; King $40<br>Orlando &middot; Winter Garden &middot; Dr. Phillips</p>
+        <a class="cta2" href="#">Book at a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <div class="card">
+    <div class="label">Story 9:16</div>
+    <div class="story">
+      <img class="bg" src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="">
+      <div class="grad"></div>
+      <div class="logo-wrap"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="copy">
+        <div class="eyebrow">Comforter Cleaning &mdash; Orlando</div>
+        <h2>Clean, Fresh &amp;<br>Delivered to<br>Your Door.</h2>
+        <p>Twin $33 &middot; Queen $37 &middot; King $40 &middot; Down $45<br>Free pickup. 48h turnaround.</p>
+        <a class="cta" href="#">Book Now &mdash; a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
