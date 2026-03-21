@@ -6,6 +6,7 @@
 <title>A7 Laundry — Comforter Ad Creatives</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:#0f0f0f;font-family:'Inter',sans-serif;color:#fff;padding:40px 20px}
@@ -15,6 +16,16 @@
 
   .card{display:flex;flex-direction:column;align-items:center;gap:12px}
   .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#555}
+  .dl-btn{
+    display:flex;align-items:center;gap:7px;
+    background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;
+    font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    padding:9px 18px;border-radius:4px;cursor:pointer;transition:all .2s;
+  }
+  .dl-btn:hover{background:#0ea5e9;border-color:#0ea5e9;color:#fff}
+  .dl-btn svg{flex-shrink:0}
+  .dl-btn.loading{opacity:.6;pointer-events:none}
+
   .section-label{
     text-align:center;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
     color:#333;margin:48px 0 24px;padding-bottom:12px;
@@ -262,5 +273,53 @@
 
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card').forEach((card) => {
+    const label = card.querySelector('.label').textContent.trim();
+    const creative = card.querySelector('.feed, .feed2, .story');
+
+    // detect language from section heading above
+    let lang = 'en';
+    let section = card.closest('.gallery').previousElementSibling;
+    if (section && section.classList.contains('section-label')) {
+      const t = section.textContent.toLowerCase();
+      if (t.includes('portugu')) lang = 'pt';
+      else if (t.includes('espa')) lang = 'es';
+    }
+
+    const slug = lang + '-' + label.toLowerCase()
+      .replace(/feed\s*1:1/g,'feed').replace(/story\s*9:16/g,'story')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+    const btn = document.createElement('button');
+    btn.className = 'dl-btn';
+    btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg> Download PNG`;
+
+    btn.addEventListener('click', () => {
+      btn.classList.add('loading');
+      btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg> Gerando...`;
+
+      html2canvas(creative, {
+        useCORS: true,
+        allowTaint: false,
+        scale: 2,
+        logging: false,
+        backgroundColor: null
+      }).then(canvas => {
+        const a = document.createElement('a');
+        a.download = 'a7-comforter-' + slug + '.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      }).finally(() => {
+        btn.classList.remove('loading');
+        btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg> Download PNG`;
+      });
+    });
+
+    card.appendChild(btn);
+  });
+});
+</script>
 </body>
 </html>
