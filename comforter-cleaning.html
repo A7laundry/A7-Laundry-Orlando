@@ -347,8 +347,10 @@
     .ep-icon{font-size:40px;margin-bottom:12px}
     .ep-title{font-size:22px;font-weight:900;color:var(--black);margin-bottom:8px;letter-spacing:-.5px}
     .ep-sub{font-size:14px;color:var(--gray-500);margin-bottom:24px;line-height:1.6}
-    .ep-cta{display:block;background:var(--accent);color:#fff;padding:14px 24px;border-radius:4px;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:12px;transition:.2s}
+    .ep-cta{display:block;background:var(--accent);color:#fff;padding:14px 24px;border-radius:4px;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:10px;transition:.2s}
     .ep-cta:hover{background:var(--accent-dark)}
+    .ep-cta-alt{display:block;font-size:13px;color:var(--gray-500);text-decoration:none;margin-bottom:12px;transition:.2s}
+    .ep-cta-alt:hover{color:var(--gray-700)}
     .ep-dismiss{background:none;border:none;font-size:13px;color:var(--gray-500);cursor:pointer;padding:4px}
 
     /* Responsive */
@@ -426,10 +428,15 @@
       <span data-lang="pt">Seu edredom acumula bactérias e ácaros há meses. Uma coleta muda tudo.</span>
       <span data-lang="es">Tu edredón acumula bacterias y ácaros hace meses. Una recogida lo cambia todo.</span>
     </div>
-    <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20to%20schedule%20comforter%20cleaning!" class="ep-cta" data-wa-link target="_blank" rel="noopener">
-      <span data-lang="en">Schedule Pickup via WhatsApp</span>
-      <span data-lang="pt">Agendar Coleta via WhatsApp</span>
-      <span data-lang="es">Programar Recogida por WhatsApp</span>
+    <a href="sms:+14076708839&body=Hi!%20I%27d%20like%20to%20schedule%20a%20comforter%20cleaning." class="ep-cta">
+      <span data-lang="en">Text Us to Schedule</span>
+      <span data-lang="pt">Enviar SMS para Agendar</span>
+      <span data-lang="es">Enviar SMS para Reservar</span>
+    </a>
+    <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20to%20schedule%20comforter%20cleaning!" class="ep-cta-alt" data-wa-link target="_blank" rel="noopener">
+      <span data-lang="en">or schedule via WhatsApp</span>
+      <span data-lang="pt">ou agendar pelo WhatsApp</span>
+      <span data-lang="es">o programar por WhatsApp</span>
     </a>
     <button class="ep-dismiss" id="exitDismiss">
       <span data-lang="en">No thanks, I'll pass</span>
