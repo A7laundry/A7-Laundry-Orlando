@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frustração — Meta Ads Criativos | A7 Laundry</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;padding:40px 24px}
+
+/* Header */
+.page-header{text-align:center;margin-bottom:56px}
+.page-header h1{font-size:clamp(28px,5vw,48px);font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+.page-header p{color:rgba(255,255,255,.5);font-size:15px;max-width:520px;margin:0 auto;line-height:1.6}
+.persona-tag{display:inline-block;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);color:#ef4444;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:20px}
+
+/* Language sections */
+.lang-section{margin-bottom:64px}
+.lang-header{display:flex;align-items:center;gap:14px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid #1a1a1a}
+.lang-flag{font-size:28px;line-height:1}
+.lang-name{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.lang-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px}
+.lang-badge.en{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#60a5fa}
+.lang-badge.pt{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#4ade80}
+.lang-badge.es{background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.3);color:#fb923c}
+
+/* Cards grid */
+.cards-grid{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start}
+
+/* Card wrapper */
+.card-wrap{display:flex;flex-direction:column;gap:12px}
+.card-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.dl-btn{
+  background:#111;border:1px solid #2a2a2a;color:rgba(255,255,255,.6);
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:600;
+  padding:8px 16px;border-radius:4px;cursor:pointer;
+  transition:all .2s;width:100%
+}
+.dl-btn:hover{background:#1a1a1a;border-color:#3a3a3a;color:#fff}
+.dl-btn.loading{opacity:.5;pointer-events:none}
+
+/* ── FEED SQUARE (1:1) — 540×540 ── */
+.feed-sq{
+  width:540px;height:540px;position:relative;overflow:hidden;
+  border-radius:4px;flex-shrink:0
+}
+.feed-sq .bg{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.feed-sq .grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.60) 0%, transparent 30%),
+    linear-gradient(to top,    rgba(0,0,0,.85) 0%, transparent 50%)
+}
+.feed-sq .logo{
+  position:absolute;top:22px;left:24px;
+  width:90px;height:26px;object-fit:contain;object-position:left center;
+  filter:brightness(0) invert(1);opacity:.9
+}
+.feed-sq .content{
+  position:absolute;bottom:0;left:0;right:0;padding:24px 26px 28px
+}
+.feed-sq .eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:10px
+}
+.feed-sq .headline{
+  font-size:34px;font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  color:#fff;margin-bottom:10px
+}
+.feed-sq .sub{
+  font-size:13px;color:rgba(255,255,255,.65);line-height:1.5;margin-bottom:16px
+}
+.feed-sq .cta{
+  display:inline-block;background:#0ea5e9;color:#fff;
+  font-size:12px;font-weight:700;letter-spacing:.04em;
+  padding:9px 18px;border-radius:3px
+}
+
+/* ── FEED PORTRAIT (4:5) — 432×540 ── */
+.feed-pt{
+  width:432px;height:540px;position:relative;overflow:hidden;
+  border-radius:4px;flex-shrink:0
+}
+.feed-pt .bg{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.feed-pt .grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.65) 0%, transparent 28%),
+    linear-gradient(to top,    rgba(0,0,0,.90) 0%, transparent 45%)
+}
+.feed-pt .logo{
+  position:absolute;top:20px;left:20px;
+  width:80px;height:22px;object-fit:contain;object-position:left center;
+  filter:brightness(0) invert(1);opacity:.9
+}
+.feed-pt .content{
+  position:absolute;bottom:0;left:0;right:0;padding:20px 22px 26px
+}
+.feed-pt .badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.4);
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#fca5a5;padding:3px 10px;border-radius:100px;margin-bottom:12px
+}
+.feed-pt .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#ef4444;flex-shrink:0}
+.feed-pt .headline{
+  font-size:26px;font-weight:900;letter-spacing:-.03em;line-height:1.1;
+  color:#fff;margin-bottom:8px
+}
+.feed-pt .sub{
+  font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:14px
+}
+.feed-pt .cta{
+  display:inline-block;background:#0ea5e9;color:#fff;
+  font-size:12px;font-weight:700;letter-spacing:.04em;
+  padding:8px 16px;border-radius:3px
+}
+
+/* ── STORY (9:16) — 304×540 ── */
+.story{
+  width:304px;height:540px;position:relative;overflow:hidden;
+  border-radius:8px;flex-shrink:0
+}
+.story .bg{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
+.story .grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.70) 0%, transparent 35%),
+    linear-gradient(to top,    rgba(0,0,0,.92) 0%, transparent 50%)
+}
+.story .logo{
+  position:absolute;top:18px;left:18px;
+  width:70px;height:20px;object-fit:contain;object-position:left center;
+  filter:brightness(0) invert(1);opacity:.9
+}
+.story .progress{
+  position:absolute;top:12px;left:0;right:0;
+  display:flex;gap:3px;padding:0 14px
+}
+.story .progress span{height:2px;flex:1;background:rgba(255,255,255,.35);border-radius:1px}
+.story .progress span:first-child{background:rgba(255,255,255,.9)}
+.story .content{
+  position:absolute;bottom:0;left:0;right:0;padding:18px 20px 28px
+}
+.story .eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:10px
+}
+.story .headline{
+  font-size:28px;font-weight:900;letter-spacing:-.03em;line-height:1.05;
+  color:#fff;margin-bottom:8px
+}
+.story .sub{
+  font-size:11px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:14px
+}
+.story .cta{
+  display:block;background:#0ea5e9;color:#fff;text-align:center;
+  font-size:13px;font-weight:700;letter-spacing:.03em;
+  padding:12px 16px;border-radius:4px
+}
+
+/* divider between format groups */
+.format-divider{width:100%;height:1px;background:#111;margin:8px 0}
+
+/* back link */
+.back{display:block;text-align:center;margin-top:40px;color:rgba(255,255,255,.25);font-size:12px;text-decoration:none}
+.back:hover{color:rgba(255,255,255,.5)}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="persona-tag">Persona: Frustration — Machine Too Small</div>
+  <h1>It doesn't fit, does it?</h1>
+  <p>Criativo focado na dor real: tentar lavar o edredom em casa e a máquina não comportar. 3 formatos × 3 idiomas.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ENGLISH
+══════════════════════════════════════════ -->
+<div class="lang-section">
+  <div class="lang-header">
+    <span class="lang-flag">🇺🇸</span>
+    <span class="lang-name">English</span>
+    <span class="lang-badge en">EN</span>
+  </div>
+  <div class="cards-grid">
+
+    <!-- Feed Square EN -->
+    <div class="card-wrap">
+      <div class="card-label">Feed Square · 1:1</div>
+      <div class="feed-sq" id="en-sq">
+        <img class="bg" src="Frustração 1.jpg" alt="">
+        <div class="grad"></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="eyebrow">A7 Laundry Orlando</div>
+          <div class="headline">It doesn't fit,<br>does it?</div>
+          <div class="sub">Your machine wasn't built for this.<br>Ours was. Free pickup & delivery.</div>
+          <span class="cta">Book pickup — from $33</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'en-sq','en-feed-square')">Download PNG</button>
+    </div>
+
+    <!-- Feed Portrait EN -->
+    <div class="card-wrap">
+      <div class="card-label">Feed Portrait · 4:5</div>
+      <div class="feed-pt" id="en-pt">
+        <img class="bg" src="Frustração 3.jpg" alt="">
+        <div class="grad"></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="badge">Sound familiar?</div>
+          <div class="headline">Too big<br>for home.<br>We fix that.</div>
+          <div class="sub">We pick up your comforter, deep clean it in our industrial machines, and deliver it back — fresh in 48h.</div>
+          <span class="cta">Schedule free pickup</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'en-pt','en-feed-portrait')">Download PNG</button>
+    </div>
+
+    <!-- Story EN -->
+    <div class="card-wrap">
+      <div class="card-label">Story / Reels · 9:16</div>
+      <div class="story" id="en-st">
+        <img class="bg" src="Frustração 4.jpg" alt="">
+        <div class="grad"></div>
+        <div class="progress"><span></span><span></span><span></span></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="eyebrow">Orlando's #1 Laundry Service</div>
+          <div class="headline">Stop fighting<br>your machine.</div>
+          <div class="sub">We pick up, deep clean in industrial machines, and deliver back in 48h. No drop-off, no hassle.</div>
+          <span class="cta">Book pickup — from $33</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'en-st','en-story')">Download PNG</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PORTUGUESE
+══════════════════════════════════════════ -->
+<div class="lang-section">
+  <div class="lang-header">
+    <span class="lang-flag">🇧🇷</span>
+    <span class="lang-name">Português</span>
+    <span class="lang-badge pt">PT</span>
+  </div>
+  <div class="cards-grid">
+
+    <!-- Feed Square PT -->
+    <div class="card-wrap">
+      <div class="card-label">Feed Square · 1:1</div>
+      <div class="feed-sq" id="pt-sq">
+        <img class="bg" src="Frustração 1.jpg" alt="">
+        <div class="grad"></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="eyebrow">A7 Laundry Orlando</div>
+          <div class="headline">Não coube<br>na máquina?</div>
+          <div class="sub">A sua não foi feita pra isso.<br>A nossa foi. Buscamos e entregamos grátis.</div>
+          <span class="cta">Agendar coleta — a partir de $33</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'pt-sq','pt-feed-square')">Download PNG</button>
+    </div>
+
+    <!-- Feed Portrait PT -->
+    <div class="card-wrap">
+      <div class="card-label">Feed Portrait · 4:5</div>
+      <div class="feed-pt" id="pt-pt">
+        <img class="bg" src="Frustração 3.jpg" alt="">
+        <div class="grad"></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="badge">Já passou por isso?</div>
+          <div class="headline">Grande demais<br>pra máquina<br>de casa.</div>
+          <div class="sub">A gente busca seu edredom, lava fundo nas nossas máquinas industriais e entrega fresquinho em 48h.</div>
+          <span class="cta">Agendar coleta grátis</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'pt-pt','pt-feed-portrait')">Download PNG</button>
+    </div>
+
+    <!-- Story PT -->
+    <div class="card-wrap">
+      <div class="card-label">Story / Reels · 9:16</div>
+      <div class="story" id="pt-st">
+        <img class="bg" src="Frustração 4.jpg" alt="">
+        <div class="grad"></div>
+        <div class="progress"><span></span><span></span><span></span></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="eyebrow">Lavanderia em Orlando, FL</div>
+          <div class="headline">Para de<br>brigar com<br>a máquina.</div>
+          <div class="sub">A gente busca, lava nas nossas máquinas industriais e entrega na sua porta em 48h. Sem complicação.</div>
+          <span class="cta">Agendar coleta — a partir de $33</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'pt-st','pt-story')">Download PNG</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SPANISH
+══════════════════════════════════════════ -->
+<div class="lang-section">
+  <div class="lang-header">
+    <span class="lang-flag">🇪🇸</span>
+    <span class="lang-name">Español</span>
+    <span class="lang-badge es">ES</span>
+  </div>
+  <div class="cards-grid">
+
+    <!-- Feed Square ES -->
+    <div class="card-wrap">
+      <div class="card-label">Feed Square · 1:1</div>
+      <div class="feed-sq" id="es-sq">
+        <img class="bg" src="Frustração 1.jpg" alt="">
+        <div class="grad"></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="eyebrow">A7 Laundry Orlando</div>
+          <div class="headline">¿No cabe<br>en la lavadora?</div>
+          <div class="sub">La tuya no fue hecha para esto.<br>La nuestra sí. Recogemos gratis.</div>
+          <span class="cta">Reservar recolección — desde $33</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'es-sq','es-feed-square')">Download PNG</button>
+    </div>
+
+    <!-- Feed Portrait ES -->
+    <div class="card-wrap">
+      <div class="card-label">Feed Portrait · 4:5</div>
+      <div class="feed-pt" id="es-pt">
+        <img class="bg" src="Frustração 3.jpg" alt="">
+        <div class="grad"></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="badge">¿Te suena familiar?</div>
+          <div class="headline">Demasiado<br>grande para<br>lavar en casa.</div>
+          <div class="sub">Recogemos tu edredón, lo lavamos a fondo en nuestras máquinas industriales y lo entregamos en 48h.</div>
+          <span class="cta">Agendar recolección gratis</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'es-pt','es-feed-portrait')">Download PNG</button>
+    </div>
+
+    <!-- Story ES -->
+    <div class="card-wrap">
+      <div class="card-label">Story / Reels · 9:16</div>
+      <div class="story" id="es-st">
+        <img class="bg" src="Frustração 4.jpg" alt="">
+        <div class="grad"></div>
+        <div class="progress"><span></span><span></span><span></span></div>
+        <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <div class="content">
+          <div class="eyebrow">Lavandería en Orlando, FL</div>
+          <div class="headline">Deja de<br>luchar con<br>tu lavadora.</div>
+          <div class="sub">Lo recogemos, lo lavamos en máquinas industriales y lo entregamos en tu puerta en 48h. Sin complicaciones.</div>
+          <span class="cta">Reservar recolección — desde $33</span>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="download(this,'es-st','es-story')">Download PNG</button>
+    </div>
+
+  </div>
+</div>
+
+<a class="back" href="hub.html">← Voltar ao hub de criativos</a>
+
+<script>
+async function download(btn, elId, filename) {
+  btn.textContent = 'Gerando...';
+  btn.classList.add('loading');
+  try {
+    const el = document.getElementById(elId);
+    const canvas = await html2canvas(el, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+      logging: false
+    });
+    const link = document.createElement('a');
+    link.download = `a7-${filename}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = 'Download PNG';
+    btn.classList.remove('loading');
+  } catch (e) {
+    btn.textContent = 'Erro — tente novamente';
+    btn.classList.remove('loading');
+    console.error(e);
+  }
+}
+</script>
+</body>
+</html>
