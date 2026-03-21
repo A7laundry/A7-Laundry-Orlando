@@ -20,10 +20,12 @@
   .feed{width:540px;height:540px;position:relative;overflow:hidden;border-radius:8px}
   .feed img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%}
 
-  /* gradient bottom */
+  /* gradient top + bottom */
   .feed .grad{
     position:absolute;inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.18) 45%, transparent 70%);
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,.55) 0%, transparent 28%),
+      linear-gradient(to top,    rgba(0,0,0,.72) 0%, rgba(0,0,0,.18) 45%, transparent 70%);
   }
 
   /* logo top-left */
@@ -71,7 +73,9 @@
   .story img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%}
   .story .grad{
     position:absolute;inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.30) 50%, rgba(0,0,0,.10) 80%, transparent 100%);
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,.55) 0%, transparent 25%),
+      linear-gradient(to top,    rgba(0,0,0,.85) 0%, rgba(0,0,0,.30) 50%, transparent 75%);
   }
   .story .logo-wrap{position:absolute;top:24px;left:20px}
   .story .logo-wrap img{display:block;width:100px;height:28px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
