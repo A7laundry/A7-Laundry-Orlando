@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A7 Laundry — Campaign Creatives Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080808;font-family:'Inter',sans-serif;color:#fff;min-height:100vh}
+
+/* ── HEADER ── */
+.hub-header{
+  padding:40px 32px 32px;border-bottom:1px solid #141414;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.hub-header img.logo{display:block;width:110px;height:30px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1);opacity:.7}
+.hub-header h1{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#333;font-weight:600}
+
+/* ── LANG SELECTOR ── */
+.lang-selector{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  padding:48px 32px 32px;
+}
+.lang-card{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  background:#111;border:1px solid #1e1e1e;border-radius:12px;
+  padding:28px 40px;cursor:pointer;
+  transition:all .2s;width:220px;
+}
+.lang-card:hover{border-color:#333;background:#161616;transform:translateY(-2px)}
+.lang-card.active.en{border-color:#3b5bdb;background:#0c1020}
+.lang-card.active.pt{border-color:#2f9e44;background:#0a1a0d}
+.lang-card.active.es{border-color:#e67700;background:#1a1005}
+.lang-card .flag{font-size:40px;line-height:1}
+.lang-card .lang-name{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.lang-card .lang-count{font-size:11px;color:#444;letter-spacing:.04em}
+.lang-card.active.en .lang-name{color:#748ffc}
+.lang-card.active.pt .lang-name{color:#69db7c}
+.lang-card.active.es .lang-name{color:#ffa94d}
+.lang-card .lang-badge{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;background:#1a1a1a;border:1px solid #2a2a2a;color:#555;
+}
+.lang-card.active.en .lang-badge{border-color:#3b5bdb;color:#748ffc;background:#0d1535}
+.lang-card.active.pt .lang-badge{border-color:#2f9e44;color:#69db7c;background:#0b2010}
+.lang-card.active.es .lang-badge{border-color:#e67700;color:#ffa94d;background:#1f1200}
+
+/* ── CONTENT PANEL ── */
+.content-panel{display:none;padding:0 32px 80px;animation:fadeIn .3s ease}
+.content-panel.visible{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:32px 0 20px;border-bottom:1px solid #141414;margin-bottom:40px;
+}
+.panel-header h2{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.panel-header .close-btn{
+  background:#161616;border:1px solid #222;color:#555;
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 16px;border-radius:4px;cursor:pointer;transition:all .2s;
+}
+.panel-header .close-btn:hover{border-color:#444;color:#fff}
+
+.creatives-section{margin-bottom:48px}
+.section-tag{
+  font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:#2a2a2a;border-bottom:1px solid #141414;padding-bottom:10px;margin-bottom:24px;
+}
+.creatives-grid{display:flex;flex-wrap:wrap;gap:28px;justify-content:flex-start}
+
+.creative-card{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.creative-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#444}
+
+/* ── CREATIVE FORMATS ── */
+.feed{width:460px;height:460px;position:relative;overflow:hidden;border-radius:6px;flex-shrink:0}
+.feed img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scrim-b{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.25) 45%,transparent 70%)}
+.scrim-tb{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.58) 0%,transparent 30%),linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.22) 50%,transparent 75%)}
+
+.logo-tl{position:absolute;top:18px;left:18px}
+.logo-tl img,.logo-tr img{display:block;width:100px;height:28px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
+.logo-tr{position:absolute;top:18px;right:18px}
+
+.badge-top{position:absolute;top:18px;right:18px;background:#0ea5e9;color:#fff;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:5px 13px;border-radius:20px}
+.badge-glass{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px}
+
+.copy-bottom{position:absolute;bottom:0;left:0;right:0;padding:22px 22px 26px}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0ea5e9;margin-bottom:7px}
+.headline{font-size:26px;font-weight:900;line-height:1.1;letter-spacing:-.025em;margin-bottom:6px}
+.subline{font-size:12px;color:rgba(255,255,255,.72);line-height:1.5;margin-bottom:13px}
+.cta{display:inline-block;background:#0ea5e9;color:#fff;font-size:12px;font-weight:700;letter-spacing:.03em;padding:9px 18px;border-radius:4px}
+
+.feed-split{width:460px;height:460px;border-radius:6px;overflow:hidden;background:#fff;display:flex;flex-direction:column;flex-shrink:0}
+.split-photo{flex:0 0 60%;overflow:hidden}
+.split-photo img{width:100%;height:100%;object-fit:cover}
+.split-panel{flex:1;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:16px 22px;gap:5px}
+.split-panel .sp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.split-panel img.sp-logo{display:block;width:78px;height:22px;object-fit:contain;object-position:left center}
+.split-panel .sp-badge{background:#0ea5e9;color:#fff;font-size:10px;font-weight:700;padding:4px 9px;border-radius:3px}
+.split-panel .sp-tag{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#0ea5e9}
+.split-panel h2{color:#0a0a0a;font-size:17px;font-weight:800;line-height:1.2;letter-spacing:-.02em}
+.split-panel p{color:#666;font-size:11px;line-height:1.5}
+.split-panel p strong{color:#0a0a0a}
+.split-panel .sp-cta{margin-top:7px;align-self:flex-start;background:#0a0a0a;color:#fff;font-size:11px;font-weight:700;padding:8px 14px;border-radius:4px}
+
+.story{width:258px;height:460px;position:relative;overflow:hidden;border-radius:6px;flex-shrink:0}
+.story img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.story-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.65) 0%,transparent 30%),linear-gradient(to top,rgba(0,0,0,.90) 0%,rgba(0,0,0,.35) 52%,transparent 75%)}
+.story .logo-tl img{width:84px;height:23px}
+.story .copy-bottom{padding:18px 16px 24px}
+.story .headline{font-size:21px}
+.story .subline{font-size:11px;margin-bottom:11px}
+.story .cta{font-size:11px;padding:10px 16px;display:block;text-align:center}
+
+/* ── PAS overlay ── */
+.pas-pills{position:absolute;top:18px;left:50%;transform:translateX(-50%);display:flex;border-radius:4px;overflow:hidden;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.pas-pills .p1{background:rgba(239,68,68,.85);color:#fff;padding:5px 12px}
+.pas-pills .p2{background:rgba(14,165,233,.9);color:#fff;padding:5px 12px}
+
+/* ── DOWNLOAD BTN ── */
+.dl-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:#141414;border:1px solid #1e1e1e;color:#555;
+  font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 16px;border-radius:4px;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;
+}
+.dl-btn:hover{background:#0ea5e9;border-color:#0ea5e9;color:#fff}
+.dl-btn.loading{opacity:.5;pointer-events:none}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0a0a0a}::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
+
+@media(max-width:520px){
+  .feed,.feed-split{width:340px;height:340px}
+  .story{width:191px;height:340px}
+  .lang-card{width:160px;padding:20px 24px}
+  .hub-header,.lang-selector,.content-panel{padding-left:16px;padding-right:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="hub-header">
+  <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+  <h1>Campaign Creatives Hub</h1>
+</div>
+
+<!-- LANGUAGE SELECTOR -->
+<div class="lang-selector">
+  <div class="lang-card en" onclick="openLang('en')">
+    <div class="flag">🇺🇸</div>
+    <div class="lang-name">English</div>
+    <div class="lang-count">8 creatives</div>
+    <div class="lang-badge">EN</div>
+  </div>
+  <div class="lang-card pt" onclick="openLang('pt')">
+    <div class="flag">🇧🇷</div>
+    <div class="lang-name">Portugues</div>
+    <div class="lang-count">8 criativos</div>
+    <div class="lang-badge">PT</div>
+  </div>
+  <div class="lang-card es" onclick="openLang('es')">
+    <div class="flag">🇪🇸</div>
+    <div class="lang-name">Espanol</div>
+    <div class="lang-count">8 creativos</div>
+    <div class="lang-badge">ES</div>
+  </div>
+</div>
+
+<!-- ══════════════ ENGLISH PANEL ══════════════ -->
+<div class="content-panel" id="panel-en">
+  <div class="panel-header">
+    <h2 style="color:#748ffc">English — 8 Creatives</h2>
+    <button class="close-btn" onclick="closeLang('en')">Close</button>
+  </div>
+
+  <div class="creatives-section">
+    <div class="section-tag">Original Campaign — Comforter Cleaning</div>
+    <div class="creatives-grid">
+
+      <div class="creative-card">
+        <div class="creative-label">Feed 1:1 — Overlay</div>
+        <div class="feed" id="en-feed-v1">
+          <img class="bg" src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="" style="object-position:center 20%">
+          <div class="scrim-tb"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-top">From $33</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Comforter Cleaning — Orlando</div>
+            <div class="headline">Hotel-Fresh Comforters.<br>Delivered Back to You.</div>
+            <div class="subline">Free pickup · 48h turnaround · Orlando, FL</div>
+            <span class="cta">Book Online &rarr;</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-feed-v1','en-feed-overlay')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Feed 1:1 — Split Panel</div>
+        <div class="feed-split" id="en-feed-v2">
+          <div class="split-photo"><img src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt=""></div>
+          <div class="split-panel">
+            <div class="sp-top">
+              <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+              <span class="sp-badge">From $33</span>
+            </div>
+            <div class="sp-tag">Your Comforter</div>
+            <h2>Professionally<br>Cleaned &amp; Delivered.</h2>
+            <p>Free pickup &amp; delivery · Twin $33 · Queen $37 · King $40<br><strong>Orlando · Winter Garden · Dr. Phillips</strong></p>
+            <span class="sp-cta">Book at a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-feed-v2','en-feed-split')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">BAB — Before · After · Bridge</div>
+        <div class="feed" id="en-bab">
+          <img class="bg" src="./1774119194212.jpg" alt="" style="object-position:center 30%">
+          <div class="scrim-tb"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-glass">After</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Before: stains, odors, allergens</div>
+            <div class="headline">After: This.</div>
+            <div class="subline">One pickup. 48 hours. A7 Laundry.</div>
+            <span class="cta">Book Now — From $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-bab','en-bab')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">PAS — Problem · Agitation · Solution</div>
+        <div class="feed" id="en-pas">
+          <img class="bg" src="./1774119789127.jpeg" alt="" style="object-position:center 20%">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.52) 0%,transparent 28%),linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.4) 50%,transparent 72%)"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="pas-pills"><span class="p1">Problem</span><span class="p2">Solution</span></div>
+          <div class="copy-bottom">
+            <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:5px">Your comforter is hiding more than you think.</div>
+            <div class="headline" style="font-size:23px">Dead skin. Dust mites.<br>Odors you got used to.</div>
+            <div class="subline" style="color:#0ea5e9;font-weight:600;margin-bottom:10px">We fix that. Professionally. From $33.</div>
+            <span class="cta">Schedule Pickup &rarr;</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-pas','en-pas')">&#8595; Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="creatives-section">
+    <div class="section-tag">Delivery Campaign — "It's at your door"</div>
+    <div class="creatives-grid">
+
+      <div class="creative-card">
+        <div class="creative-label">Feed — Casa Florida Premium</div>
+        <div class="feed" id="en-entrega-casa">
+          <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="">
+          <div class="scrim-b"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-top">Free Delivery</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Comforter Cleaning — Orlando</div>
+            <div class="headline">It's at your door.<br>Clean.</div>
+            <div class="subline">You booked online. We picked it up.<br>Now it's back — fresh, fluffy, sanitized.</div>
+            <span class="cta">Book Now — From $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-entrega-casa','en-delivery-casa')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Feed — Split "You didn't lift a finger"</div>
+        <div class="feed-split" id="en-entrega-split">
+          <div class="split-photo"><img src="./Entrega Townhome Florida Variação 1.jpg" alt="" style="object-position:center 40%"></div>
+          <div class="split-panel">
+            <div class="sp-top">
+              <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+              <span class="sp-badge">From $33</span>
+            </div>
+            <div class="sp-tag">You didn't lift a finger.</div>
+            <h2>Picked up, cleaned<br>&amp; back at your door.</h2>
+            <p>Free pickup · 48h · <strong>Twin $33 · Queen $37 · King $40</strong><br>Orlando · Winter Garden · Dr. Phillips</p>
+            <span class="sp-cta">Book at a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-entrega-split','en-delivery-split')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Story — Porta Premium</div>
+        <div class="story" id="en-story-casa">
+          <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center 60%">
+          <div class="story-scrim"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="copy-bottom">
+            <div class="eyebrow">A7 Laundry — Orlando, FL</div>
+            <div class="headline">Clean.<br>Fresh.<br>At your door.</div>
+            <div class="subline">Comforter picked up &amp; delivered.<br>From $33. Free pickup.</div>
+            <span class="cta">Book — a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-story-casa','en-story-delivery')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Story — "Tomorrow it could be your door"</div>
+        <div class="story" id="en-story-ref">
+          <img class="bg" src="./Entrega Townhome Referência Variação 1.jpg" alt="" style="object-position:center 30%">
+          <div class="story-scrim"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Comforter Cleaning</div>
+            <div class="headline">This could be<br>your front door<br>tomorrow.</div>
+            <div class="subline">Book today. Free pickup.<br>Clean in 48h. From $33.</div>
+            <span class="cta">Book Now</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'en-story-ref','en-story-tomorrow')">&#8595; Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PORTUGUESE PANEL ══════════════ -->
+<div class="content-panel" id="panel-pt">
+  <div class="panel-header">
+    <h2 style="color:#69db7c">Portugues — 8 Criativos</h2>
+    <button class="close-btn" onclick="closeLang('pt')">Fechar</button>
+  </div>
+
+  <div class="creatives-section">
+    <div class="section-tag">Campanha Original — Lavagem de Edredon</div>
+    <div class="creatives-grid">
+
+      <div class="creative-card">
+        <div class="creative-label">Feed 1:1 — Overlay</div>
+        <div class="feed" id="pt-feed-v1">
+          <img class="bg" src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="" style="object-position:center 20%">
+          <div class="scrim-tb"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-top">A partir de $33</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Lavagem de Edredon — Orlando</div>
+            <div class="headline">Edredon Limpo<br>como o de Hotel.</div>
+            <div class="subline">Coleta gratis · Pronto em 48h · Orlando, FL</div>
+            <span class="cta">Agende Online &rarr;</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-feed-v1','pt-feed-overlay')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Feed 1:1 — Split Panel</div>
+        <div class="feed-split" id="pt-feed-v2">
+          <div class="split-photo"><img src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt=""></div>
+          <div class="split-panel">
+            <div class="sp-top">
+              <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+              <span class="sp-badge">A partir de $33</span>
+            </div>
+            <div class="sp-tag">Seu Edredon</div>
+            <h2>Lavado com Cuidado<br>e Entregue na Porta.</h2>
+            <p>Coleta e entrega gratis · Solteiro $33 · Queen $37 · King $40<br><strong>Orlando · Winter Garden · Dr. Phillips</strong></p>
+            <span class="sp-cta">Agende em a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-feed-v2','pt-feed-split')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">BAB — Antes · Depois · Ponte</div>
+        <div class="feed" id="pt-bab">
+          <img class="bg" src="./1774119194212.jpg" alt="" style="object-position:center 30%">
+          <div class="scrim-tb"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-glass">Depois</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Antes: manchas, odores, acaros</div>
+            <div class="headline">Depois: Assim.</div>
+            <div class="subline">Uma coleta. 48 horas. A7 Laundry.</div>
+            <span class="cta">Agende — A partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-bab','pt-bab')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">PAS — Problema · Agitacao · Solucao</div>
+        <div class="feed" id="pt-pas">
+          <img class="bg" src="./1774119789127.jpeg" alt="" style="object-position:center 20%">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.52) 0%,transparent 28%),linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.4) 50%,transparent 72%)"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="pas-pills"><span class="p1">Problema</span><span class="p2">Solucao</span></div>
+          <div class="copy-bottom">
+            <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:5px">Seu edredon esconde mais do que voce imagina.</div>
+            <div class="headline" style="font-size:23px">Pele morta. Acaros.<br>Odores que voce ja nem sente.</div>
+            <div class="subline" style="color:#0ea5e9;font-weight:600;margin-bottom:10px">A gente resolve. Do jeito certo. A partir de $33.</div>
+            <span class="cta">Agendar Coleta &rarr;</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-pas','pt-pas')">&#8595; Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="creatives-section">
+    <div class="section-tag">Campanha Entrega — "Ta na sua porta"</div>
+    <div class="creatives-grid">
+
+      <div class="creative-card">
+        <div class="creative-label">Feed — Casa Florida Premium</div>
+        <div class="feed" id="pt-entrega-casa">
+          <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="">
+          <div class="scrim-b"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-top">Entrega Gratis</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Lavagem de Edredon — Orlando</div>
+            <div class="headline">Ta na sua porta.<br>Limpo.</div>
+            <div class="subline">Voce agendou online. A gente foi buscar.<br>Voltou fresquinho, macio e higienizado.</div>
+            <span class="cta">Agende Agora — A partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-entrega-casa','pt-delivery-casa')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Feed — Split "Voce nao precisou sair"</div>
+        <div class="feed-split" id="pt-entrega-split">
+          <div class="split-photo"><img src="./Entrega Townhome Florida Variação 1.jpg" alt="" style="object-position:center 40%"></div>
+          <div class="split-panel">
+            <div class="sp-top">
+              <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+              <span class="sp-badge">A partir de $33</span>
+            </div>
+            <div class="sp-tag">Voce nao precisou sair de casa.</div>
+            <h2>Coletado, lavado<br>e devolvido na porta.</h2>
+            <p>Coleta gratis · 48h · <strong>Solteiro $33 · Queen $37 · King $40</strong><br>Orlando · Winter Garden · Dr. Phillips</p>
+            <span class="sp-cta">Agende em a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-entrega-split','pt-delivery-split')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Story — Porta Premium</div>
+        <div class="story" id="pt-story-casa">
+          <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center 60%">
+          <div class="story-scrim"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="copy-bottom">
+            <div class="eyebrow">A7 Laundry — Orlando, FL</div>
+            <div class="headline">Limpo.<br>Fresquinho.<br>Na sua porta.</div>
+            <div class="subline">Edredon coletado e entregue.<br>A partir de $33. Coleta gratis.</div>
+            <span class="cta">Agende — a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-story-casa','pt-story-delivery')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Story — "Amanha pode ser na sua porta"</div>
+        <div class="story" id="pt-story-ref">
+          <img class="bg" src="./Entrega Townhome Referência Variação 1.jpg" alt="" style="object-position:center 30%">
+          <div class="story-scrim"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Lavagem de Edredon</div>
+            <div class="headline">Amanha pode<br>ser na frente<br>da sua casa.</div>
+            <div class="subline">Agende hoje. Coleta amanha.<br>Pronto em 48h. A partir de $33.</div>
+            <span class="cta">Agendar Agora</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'pt-story-ref','pt-story-tomorrow')">&#8595; Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SPANISH PANEL ══════════════ -->
+<div class="content-panel" id="panel-es">
+  <div class="panel-header">
+    <h2 style="color:#ffa94d">Espanol — 8 Creativos</h2>
+    <button class="close-btn" onclick="closeLang('es')">Cerrar</button>
+  </div>
+
+  <div class="creatives-section">
+    <div class="section-tag">Campana Original — Limpieza de Edredon</div>
+    <div class="creatives-grid">
+
+      <div class="creative-card">
+        <div class="creative-label">Feed 1:1 — Overlay</div>
+        <div class="feed" id="es-feed-v1">
+          <img class="bg" src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="" style="object-position:center 20%">
+          <div class="scrim-tb"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-top">Desde $33</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Limpieza de Edredon — Orlando</div>
+            <div class="headline">Tu Edredon Limpio<br>y en tu Puerta.</div>
+            <div class="subline">Recogida gratis · Listo en 48h · Orlando, FL</div>
+            <span class="cta">Reserva Online &rarr;</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-feed-v1','es-feed-overlay')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Feed 1:1 — Split Panel</div>
+        <div class="feed-split" id="es-feed-v2">
+          <div class="split-photo"><img src="./Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt=""></div>
+          <div class="split-panel">
+            <div class="sp-top">
+              <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+              <span class="sp-badge">Desde $33</span>
+            </div>
+            <div class="sp-tag">Tu Edredon</div>
+            <h2>Lavado Profesionalmente<br>y Entregado en tu Puerta.</h2>
+            <p>Recogida y entrega gratis · Individual $33 · Queen $37 · King $40<br><strong>Orlando · Winter Garden · Dr. Phillips</strong></p>
+            <span class="sp-cta">Reserva en a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-feed-v2','es-feed-split')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">BAB — Antes · Despues · Puente</div>
+        <div class="feed" id="es-bab">
+          <img class="bg" src="./1774119194212.jpg" alt="" style="object-position:center 30%">
+          <div class="scrim-tb"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-glass">Despues</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Antes: manchas, olores, alergenos</div>
+            <div class="headline">Despues: Asi.</div>
+            <div class="subline">Una recogida. 48 horas. A7 Laundry.</div>
+            <span class="cta">Reserva — Desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-bab','es-bab')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">PAS — Problema · Agitacion · Solucion</div>
+        <div class="feed" id="es-pas">
+          <img class="bg" src="./1774119789127.jpeg" alt="" style="object-position:center 20%">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.52) 0%,transparent 28%),linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.4) 50%,transparent 72%)"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="pas-pills"><span class="p1">Problema</span><span class="p2">Solucion</span></div>
+          <div class="copy-bottom">
+            <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:5px">Tu edredon esconde mas de lo que crees.</div>
+            <div class="headline" style="font-size:23px">Piel muerta. Acaros.<br>Olores a los que te acostumbraste.</div>
+            <div class="subline" style="color:#0ea5e9;font-weight:600;margin-bottom:10px">Lo resolvemos. Profesionalmente. Desde $33.</div>
+            <span class="cta">Programar Recogida &rarr;</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-pas','es-pas')">&#8595; Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="creatives-section">
+    <div class="section-tag">Campana Entrega — "Esta en tu puerta"</div>
+    <div class="creatives-grid">
+
+      <div class="creative-card">
+        <div class="creative-label">Feed — Casa Florida Premium</div>
+        <div class="feed" id="es-entrega-casa">
+          <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="">
+          <div class="scrim-b"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="badge-top">Entrega Gratis</div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Limpieza de Edredon — Orlando</div>
+            <div class="headline">Esta en tu puerta.<br>Limpio.</div>
+            <div class="subline">Reservaste online. Nosotros lo recogimos.<br>Ya esta de vuelta — fresco, suave, higienizado.</div>
+            <span class="cta">Reserva Ahora — Desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-entrega-casa','es-delivery-casa')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Feed — Split "No moviste un dedo"</div>
+        <div class="feed-split" id="es-entrega-split">
+          <div class="split-photo"><img src="./Entrega Townhome Florida Variação 1.jpg" alt="" style="object-position:center 40%"></div>
+          <div class="split-panel">
+            <div class="sp-top">
+              <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+              <span class="sp-badge">Desde $33</span>
+            </div>
+            <div class="sp-tag">No moviste un dedo.</div>
+            <h2>Recogido, lavado<br>y devuelto en tu puerta.</h2>
+            <p>Recogida gratis · 48h · <strong>Individual $33 · Queen $37 · King $40</strong><br>Orlando · Winter Garden · Dr. Phillips</p>
+            <span class="sp-cta">Reserva en a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-entrega-split','es-delivery-split')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Story — Puerta Premium</div>
+        <div class="story" id="es-story-casa">
+          <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center 60%">
+          <div class="story-scrim"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="copy-bottom">
+            <div class="eyebrow">A7 Laundry — Orlando, FL</div>
+            <div class="headline">Limpio.<br>Fresco.<br>En tu puerta.</div>
+            <div class="subline">Edredon recogido y entregado.<br>Desde $33. Recogida gratis.</div>
+            <span class="cta">Reserva — a7laundry.com/comforter</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-story-casa','es-story-delivery')">&#8595; Download PNG</button>
+      </div>
+
+      <div class="creative-card">
+        <div class="creative-label">Story — "Manana puede ser tu puerta"</div>
+        <div class="story" id="es-story-ref">
+          <img class="bg" src="./Entrega Townhome Referência Variação 1.jpg" alt="" style="object-position:center 30%">
+          <div class="story-scrim"></div>
+          <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+          <div class="copy-bottom">
+            <div class="eyebrow">Limpieza de Edredon</div>
+            <div class="headline">Manana puede<br>ser frente a<br>tu casa.</div>
+            <div class="subline">Reserva hoy. Recogida manana.<br>Listo en 48h. Desde $33.</div>
+            <span class="cta">Reservar Ahora</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="download(this,'es-story-ref','es-story-tomorrow')">&#8595; Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function openLang(lang) {
+  // deactivate all cards and panels
+  document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.content-panel').forEach(p => { p.classList.remove('visible'); });
+
+  // activate selected
+  document.querySelector('.lang-card.' + lang).classList.add('active');
+  const panel = document.getElementById('panel-' + lang);
+  panel.classList.add('visible');
+  setTimeout(() => panel.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+}
+
+function closeLang(lang) {
+  document.querySelector('.lang-card.' + lang).classList.remove('active');
+  document.getElementById('panel-' + lang).classList.remove('visible');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function download(btn, elId, filename) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  btn.classList.add('loading');
+  btn.textContent = 'Gerando...';
+  html2canvas(el, {useCORS:true, allowTaint:false, scale:2, logging:false, backgroundColor:null})
+    .then(canvas => {
+      const a = document.createElement('a');
+      a.download = 'a7-' + filename + '.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+    }).finally(() => {
+      btn.classList.remove('loading');
+      btn.innerHTML = '&#8595; Download PNG';
+    });
+}
+</script>
+</body>
+</html>
