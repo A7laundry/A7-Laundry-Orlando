@@ -160,9 +160,9 @@
 
     /* === HERO === */
     .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--black);padding:100px 0 80px}
-    .hero-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,#fff,#fff 1px,transparent 1px,transparent 60px),repeating-linear-gradient(90deg,#fff,#fff 1px,transparent 1px,transparent 60px)}
-    .hero-glow{position:absolute;top:-20%;right:-10%;width:700px;height:700px;background:radial-gradient(circle,rgba(14,165,233,.18),transparent 70%);border-radius:50%;pointer-events:none}
-    .hero-glow2{position:absolute;bottom:-20%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(14,165,233,.10),transparent 70%);border-radius:50%;pointer-events:none}
+    .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+    .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.55) 55%,rgba(0,0,0,.25) 100%)}
+    .hero-glow{position:absolute;bottom:-10%;right:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(14,165,233,.12),transparent 70%);border-radius:50%;pointer-events:none;z-index:2}
     .hero .container{position:relative;z-index:2}
     .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.8);padding:7px 18px;border-radius:50px;font-size:12px;font-weight:600;margin-bottom:32px;letter-spacing:.5px;text-transform:uppercase;animation:fadeInDown .6s}
     .hero-badge .dot{width:7px;height:7px;background:#10b981;border-radius:50%;animation:blink 1.5s infinite}
@@ -198,17 +198,20 @@
     .pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--gray-100);border:1px solid var(--gray-100);border-radius:var(--radius-md);overflow:hidden;max-width:880px;margin:0 auto 48px}
     .pain-card{background:#fff;padding:32px 24px;text-align:left;transition:.2s}
     .pain-card:hover{background:var(--gray-50)}
-    .pain-icon{font-size:28px;margin-bottom:12px}
     .pain-card h3{font-size:15px;font-weight:800;margin-bottom:6px;color:var(--black);letter-spacing:-.3px}
     .pain-card p{font-size:13px;color:var(--gray-500);line-height:1.6}
 
     /* === PRICING === */
     .pricing{padding:100px 0;background:var(--gray-50);text-align:center}
     .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:900px;margin:0 auto 32px}
-    .pricing-card{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius-md);padding:32px 20px;text-align:center;transition:.25s;position:relative}
+    .pricing-card{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius-md);padding:0 0 28px;text-align:center;transition:.25s;position:relative;overflow:hidden}
     .pricing-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 32px rgba(14,165,233,.12)}
     .pricing-card.featured{border:2px solid var(--black);transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-    .pricing-card .pc-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--black);color:#fff;padding:4px 16px;border-radius:50px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap}
+    .pricing-card .pc-badge{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:var(--black);color:#fff;padding:4px 16px;border-radius:50px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap;z-index:2}
+    .pc-img-wrap{width:100%;height:140px;overflow:hidden;margin-bottom:20px}
+    .pc-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+    .pricing-card:hover .pc-img{transform:scale(1.05)}
+    .pc-content{padding:0 20px}
     .pricing-card .pc-size{font-size:13px;font-weight:700;color:var(--gray-500);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
     .pricing-card .pc-price{font-size:clamp(36px,5vw,48px);font-weight:900;color:var(--black);letter-spacing:-2px;line-height:1}
     .pricing-card .pc-price sup{font-size:20px;font-weight:700;vertical-align:top;margin-top:8px}
@@ -232,7 +235,6 @@
     .diff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-md);overflow:hidden;max-width:880px;margin:0 auto}
     .diff-item{background:var(--black);padding:36px 28px;text-align:left;transition:.2s}
     .diff-item:hover{background:#1a1a1a}
-    .diff-icon{font-size:26px;margin-bottom:14px}
     .diff-item h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:-.2px}
     .diff-item p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65}
 
@@ -483,9 +485,15 @@
 
   <!-- 1. HERO -->
   <section class="hero" aria-labelledby="hero-heading">
-    <div class="hero-pattern"></div>
+    <img
+      class="hero-img"
+      src="https://images.unsplash.com/photo-1620332372374-f108c53d2e03?w=1920&q=85&auto=format&fit=crop"
+      alt="Luxury hotel bedroom with white comforter and natural light"
+      fetchpriority="high"
+      decoding="async"
+    >
+    <div class="hero-overlay"></div>
     <div class="hero-glow"></div>
-    <div class="hero-glow2"></div>
     <div class="container">
       <div class="hero-badge">
         <span class="dot"></span>
@@ -576,23 +584,19 @@
       </div>
       <div class="pain-grid">
         <div class="pain-card">
-          <div class="pain-icon">&#128566;</div>
-          <h3><span data-lang="en">Sweat & Body Oils</span><span data-lang="pt">Suor e Oleosidade</span><span data-lang="es">Sudor y Aceites</span></h3>
+          <h3><span data-lang="en">Sweat &amp; Body Oils</span><span data-lang="pt">Suor e Oleosidade</span><span data-lang="es">Sudor y Aceites</span></h3>
           <p><span data-lang="en">8 hours a night, every night. Your body deposits oils, sweat and dead skin directly into the fill.</span><span data-lang="pt">8 horas por noite, toda noite. Seu corpo deposita óleos, suor e pele morta diretamente no preenchimento.</span><span data-lang="es">8 horas por noche, cada noche. Tu cuerpo deposita aceites, sudor y piel muerta directamente en el relleno.</span></p>
         </div>
         <div class="pain-card">
-          <div class="pain-icon">&#129425;</div>
           <h3><span data-lang="en">Dust Mites</span><span data-lang="pt">Ácaros</span><span data-lang="es">Ácaros del Polvo</span></h3>
           <p><span data-lang="en">Up to 10 million dust mites can live in a single comforter. They feed on dead skin and trigger allergies.</span><span data-lang="pt">Até 10 milhões de ácaros podem viver em um único edredom. Eles se alimentam de pele morta e causam alergias.</span><span data-lang="es">Hasta 10 millones de ácaros pueden vivir en un solo edredón. Se alimentan de piel muerta y provocan alergias.</span></p>
         </div>
         <div class="pain-card">
-          <div class="pain-icon">&#129408;</div>
           <h3><span data-lang="en">Hidden Bacteria</span><span data-lang="pt">Bactérias Invisíveis</span><span data-lang="es">Bacterias Ocultas</span></h3>
           <p><span data-lang="en">A comforter not cleaned for 6+ months harbors dangerous bacteria you cannot see, smell or feel.</span><span data-lang="pt">Um edredom não lavado por 6+ meses abriga bactérias perigosas que você não vê, cheira ou sente.</span><span data-lang="es">Un edredón sin limpiar por 6+ meses alberga bacterias peligrosas que no puedes ver, oler ni sentir.</span></p>
         </div>
         <div class="pain-card">
-          <div class="pain-icon">&#128054;</div>
-          <h3><span data-lang="en">Pet Hair & Dander</span><span data-lang="pt">Pelos de Pet</span><span data-lang="es">Pelo y Caspa de Mascotas</span></h3>
+          <h3><span data-lang="en">Pet Hair &amp; Dander</span><span data-lang="pt">Pelos de Pet</span><span data-lang="es">Pelo y Caspa de Mascotas</span></h3>
           <p><span data-lang="en">If your pet sleeps near you, their hair and dander embed deep into the fabric fibers and fill.</span><span data-lang="pt">Se seu pet dorme perto de você, pelos e caspa se depositam fundo nas fibras e no recheio.</span><span data-lang="es">Si tu mascota duerme cerca de ti, su pelo y caspa se incrustan profundamente en las fibras.</span></p>
         </div>
       </div>
@@ -624,12 +628,17 @@
       </p>
       <div class="pricing-grid">
         <div class="pricing-card">
-          <div class="pc-size">Twin</div>
-          <div class="pc-price"><sup>$</sup>33</div>
-          <div class="pc-note">
-            <span data-lang="en">Single comforter</span>
-            <span data-lang="pt">Solteiro</span>
-            <span data-lang="es">Individual</span>
+          <div class="pc-img-wrap">
+            <img class="pc-img" src="https://images.unsplash.com/photo-1564019472231-4586c552dc27?w=600&q=80&auto=format&fit=crop" alt="White comforter texture close up" loading="lazy" decoding="async">
+          </div>
+          <div class="pc-content">
+            <div class="pc-size">Twin</div>
+            <div class="pc-price"><sup>$</sup>33</div>
+            <div class="pc-note">
+              <span data-lang="en">Single comforter</span>
+              <span data-lang="pt">Solteiro</span>
+              <span data-lang="es">Individual</span>
+            </div>
           </div>
         </div>
         <div class="pricing-card featured">
@@ -638,34 +647,49 @@
             <span data-lang="pt">Mais Pedido</span>
             <span data-lang="es">Más Pedido</span>
           </div>
-          <div class="pc-size">Full / Queen</div>
-          <div class="pc-price"><sup>$</sup>37</div>
-          <div class="pc-note">
-            <span data-lang="en">Most common size</span>
-            <span data-lang="pt">Tamanho mais comum</span>
-            <span data-lang="es">Tamaño más común</span>
+          <div class="pc-img-wrap">
+            <img class="pc-img" src="https://images.unsplash.com/photo-1558392164-be227dfe1c98?w=600&q=80&auto=format&fit=crop" alt="White queen comforter clean and fluffy" loading="lazy" decoding="async">
+          </div>
+          <div class="pc-content">
+            <div class="pc-size">Full / Queen</div>
+            <div class="pc-price"><sup>$</sup>37</div>
+            <div class="pc-note">
+              <span data-lang="en">Most common size</span>
+              <span data-lang="pt">Tamanho mais comum</span>
+              <span data-lang="es">Tamaño más común</span>
+            </div>
           </div>
         </div>
         <div class="pricing-card">
-          <div class="pc-size">King</div>
-          <div class="pc-price"><sup>$</sup>40</div>
-          <div class="pc-note">
-            <span data-lang="en">King / Cal King</span>
-            <span data-lang="pt">King / Super King</span>
-            <span data-lang="es">King / Cal King</span>
+          <div class="pc-img-wrap">
+            <img class="pc-img" src="https://images.unsplash.com/photo-1521218784442-4c7dd69eab2a?w=600&q=80&auto=format&fit=crop" alt="King size bed with white comforter" loading="lazy" decoding="async">
+          </div>
+          <div class="pc-content">
+            <div class="pc-size">King</div>
+            <div class="pc-price"><sup>$</sup>40</div>
+            <div class="pc-note">
+              <span data-lang="en">King / Cal King</span>
+              <span data-lang="pt">King / Super King</span>
+              <span data-lang="es">King / Cal King</span>
+            </div>
           </div>
         </div>
         <div class="pricing-card">
-          <div class="pc-size">
-            <span data-lang="en">Down / Feather</span>
-            <span data-lang="pt">Penas / Down</span>
-            <span data-lang="es">Plumas / Relleno</span>
+          <div class="pc-img-wrap">
+            <img class="pc-img" src="https://images.unsplash.com/photo-1521510535750-13af4de027e4?w=600&q=80&auto=format&fit=crop" alt="Down feather comforter near window natural light" loading="lazy" decoding="async">
           </div>
-          <div class="pc-price"><sup>$</sup>45</div>
-          <div class="pc-note">
-            <span data-lang="en">All sizes included</span>
-            <span data-lang="pt">Todos os tamanhos</span>
-            <span data-lang="es">Todos los tamaños</span>
+          <div class="pc-content">
+            <div class="pc-size">
+              <span data-lang="en">Down / Feather</span>
+              <span data-lang="pt">Penas / Down</span>
+              <span data-lang="es">Plumas / Relleno</span>
+            </div>
+            <div class="pc-price"><sup>$</sup>45</div>
+            <div class="pc-note">
+              <span data-lang="en">All sizes included</span>
+              <span data-lang="pt">Todos os tamanhos</span>
+              <span data-lang="es">Todos los tamaños</span>
+            </div>
           </div>
         </div>
       </div>
@@ -765,7 +789,6 @@
       </p>
       <div class="diff-grid">
         <div class="diff-item">
-          <div class="diff-icon">&#9889;</div>
           <h3>
             <span data-lang="en">Professional Equipment</span>
             <span data-lang="pt">Equipamento Profissional</span>
@@ -778,7 +801,6 @@
           </p>
         </div>
         <div class="diff-item">
-          <div class="diff-icon">&#129514;</div>
           <h3>
             <span data-lang="en">Fabric-Safe Process</span>
             <span data-lang="pt">Processo Seguro para o Tecido</span>
@@ -791,7 +813,6 @@
           </p>
         </div>
         <div class="diff-item">
-          <div class="diff-icon">&#128737;</div>
           <h3>
             <span data-lang="en">Deep Sanitization</span>
             <span data-lang="pt">Sanitização Profunda</span>
@@ -804,9 +825,8 @@
           </p>
         </div>
         <div class="diff-item">
-          <div class="diff-icon">&#128062;</div>
           <h3>
-            <span data-lang="en">Pet & Odor Treatment</span>
+            <span data-lang="en">Pet &amp; Odor Treatment</span>
             <span data-lang="pt">Tratamento Pet e Odores</span>
             <span data-lang="es">Tratamiento Mascotas y Olores</span>
           </h3>
@@ -840,11 +860,11 @@
             <span data-lang="pt">Antes</span>
             <span data-lang="es">Antes</span>
           </h3>
-          <div class="transform-item"><span class="ti-icon">&#10060;</span><span><span data-lang="en">Heavy and clumped fill</span><span data-lang="pt">Recheio pesado e empacotado</span><span data-lang="es">Relleno pesado y apelmazado</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10060;</span><span><span data-lang="en">Stale, musty odor</span><span data-lang="pt">Cheiro velho e abafado</span><span data-lang="es">Olor rancio y mustio</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10060;</span><span><span data-lang="en">Millions of dust mites</span><span data-lang="pt">Milhões de ácaros</span><span data-lang="es">Millones de ácaros</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10060;</span><span><span data-lang="en">Yellowish, stained fabric</span><span data-lang="pt">Tecido amarelado e manchado</span><span data-lang="es">Tela amarillenta y manchada</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10060;</span><span><span data-lang="en">Triggers allergies</span><span data-lang="pt">Desencadeia alergias</span><span data-lang="es">Provoca alergias</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--gray-400)">&#8212;</span><span><span data-lang="en">Heavy and clumped fill</span><span data-lang="pt">Recheio pesado e empacotado</span><span data-lang="es">Relleno pesado y apelmazado</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--gray-400)">&#8212;</span><span><span data-lang="en">Stale, musty odor</span><span data-lang="pt">Cheiro velho e abafado</span><span data-lang="es">Olor rancio y mustio</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--gray-400)">&#8212;</span><span><span data-lang="en">Millions of dust mites</span><span data-lang="pt">Milhões de ácaros</span><span data-lang="es">Millones de ácaros</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--gray-400)">&#8212;</span><span><span data-lang="en">Yellowish, stained fabric</span><span data-lang="pt">Tecido amarelado e manchado</span><span data-lang="es">Tela amarillenta y manchada</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--gray-400)">&#8212;</span><span><span data-lang="en">Triggers allergies</span><span data-lang="pt">Desencadeia alergias</span><span data-lang="es">Provoca alergias</span></span></div>
         </div>
         <div class="transform-col after">
           <h3>
@@ -852,11 +872,11 @@
             <span data-lang="pt">Depois da A7</span>
             <span data-lang="es">Después de A7</span>
           </h3>
-          <div class="transform-item"><span class="ti-icon">&#10003;</span><span><span data-lang="en">Light, fluffy and even fill</span><span data-lang="pt">Leve, fofo e uniforme</span><span data-lang="es">Ligero, esponjoso y uniforme</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10003;</span><span><span data-lang="en">Clean, fresh scent</span><span data-lang="pt">Cheiro limpo e fresco</span><span data-lang="es">Olor limpio y fresco</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10003;</span><span><span data-lang="en">99.9% bacteria eliminated</span><span data-lang="pt">99,9% das bactérias eliminadas</span><span data-lang="es">99.9% de bacterias eliminadas</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10003;</span><span><span data-lang="en">Bright, restored color</span><span data-lang="pt">Cor restaurada e vibrante</span><span data-lang="es">Color restaurado y brillante</span></span></div>
-          <div class="transform-item"><span class="ti-icon">&#10003;</span><span><span data-lang="en">Hypoallergenic & safe</span><span data-lang="pt">Hipoalergênico e seguro</span><span data-lang="es">Hipoalergénico y seguro</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--accent-light)">&#10003;</span><span><span data-lang="en">Light, fluffy and even fill</span><span data-lang="pt">Leve, fofo e uniforme</span><span data-lang="es">Ligero, esponjoso y uniforme</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--accent-light)">&#10003;</span><span><span data-lang="en">Clean, fresh scent</span><span data-lang="pt">Cheiro limpo e fresco</span><span data-lang="es">Olor limpio y fresco</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--accent-light)">&#10003;</span><span><span data-lang="en">99.9% bacteria eliminated</span><span data-lang="pt">99,9% das bactérias eliminadas</span><span data-lang="es">99.9% de bacterias eliminadas</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--accent-light)">&#10003;</span><span><span data-lang="en">Bright, restored color</span><span data-lang="pt">Cor restaurada e vibrante</span><span data-lang="es">Color restaurado y brillante</span></span></div>
+          <div class="transform-item"><span class="ti-icon" style="color:var(--accent-light)">&#10003;</span><span><span data-lang="en">Hypoallergenic & safe</span><span data-lang="pt">Hipoalergênico e seguro</span><span data-lang="es">Hipoalergénico y seguro</span></span></div>
         </div>
       </div>
     </div>
@@ -941,7 +961,6 @@
   <section class="guarantee" id="guarantee">
     <div class="container">
       <div class="guarantee-box">
-        <div class="guarantee-icon">&#128737;</div>
         <h2>
           <span data-lang="en">100% Satisfaction Guarantee</span>
           <span data-lang="pt">Garantia de 100% de Satisfação</span>
