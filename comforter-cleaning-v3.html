@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Comforter Cleaning — A7 Laundry Orlando</title>
+<meta name="description" content="Professional comforter cleaning in Orlando. Deep clean, sanitized, delivered to your door. From $33. Book directly online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;line-height:1.5;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ─── TOKENS ─── */
+:root{
+  --blue:#0ea5e9;
+  --blue-dark:#0284c7;
+  --surface:#111;
+  --surface2:#1a1a1a;
+  --border:#222;
+  --text-muted:rgba(255,255,255,.5);
+  --text-sub:rgba(255,255,255,.72);
+  --radius:6px;
+  --transition:.22s ease;
+}
+
+/* ─── UTILITY ─── */
+.container{width:100%;max-width:1100px;margin:0 auto;padding:0 24px}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ─── STICKY NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;
+  background:rgba(10,10,10,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:background var(--transition);
+}
+.nav-logo img{display:block;width:110px;height:30px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
+.nav-cta{
+  background:var(--blue);color:#fff;
+  font-size:13px;font-weight:700;letter-spacing:.02em;
+  padding:9px 20px;border-radius:var(--radius);
+  transition:background var(--transition),transform var(--transition);
+}
+.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px)}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;align-items:center;justify-content:flex-start;
+}
+.hero-img{
+  position:absolute;inset:0;
+  background-image:url('criativos/1774119194212.jpg');
+  background-size:cover;background-position:center 30%;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(0,0,0,.90) 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.10) 100%),
+    linear-gradient(to top,   rgba(0,0,0,.40) 0%, transparent 50%);
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:120px 24px 80px;
+  max-width:640px;
+  margin-left:calc((100vw - 1100px) / 2);
+}
+@media(max-width:1148px){.hero-content{margin-left:24px}}
+.hero-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(40px,7vw,76px);font-weight:900;line-height:1.05;letter-spacing:-.03em;
+  margin-bottom:24px;
+}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-sub{
+  font-size:clamp(15px,2vw,18px);color:var(--text-sub);line-height:1.65;
+  margin-bottom:36px;max-width:480px;font-weight:400;
+}
+.hero-sub strong{color:#fff;font-weight:600}
+.hero-cta-group{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--blue);color:#fff;
+  font-size:15px;font-weight:700;letter-spacing:.01em;
+  padding:15px 28px;border-radius:var(--radius);
+  transition:background var(--transition),transform var(--transition),box-shadow var(--transition);
+  box-shadow:0 0 0 0 rgba(14,165,233,0);
+}
+.btn-primary:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 30px rgba(14,165,233,.35)}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.08);color:#fff;
+  font-size:14px;font-weight:600;
+  padding:14px 24px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.15);
+  transition:background var(--transition);
+}
+.btn-secondary:hover{background:rgba(255,255,255,.14)}
+.hero-proof{
+  margin-top:40px;display:flex;align-items:center;gap:12px;
+  font-size:13px;color:var(--text-muted);
+}
+.stars{color:#f59e0b;letter-spacing:2px;font-size:14px}
+
+/* ─── PROBLEM ─── */
+.problem{padding:100px 0;background:#0a0a0a}
+.section-tag{
+  display:inline-block;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:20px;
+}
+.problem h2{
+  font-size:clamp(30px,5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-.025em;
+  margin-bottom:48px;max-width:600px;
+}
+.problem-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;
+  border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:40px;
+}
+.problem-item{
+  padding:28px 24px;background:var(--surface);
+  border-right:1px solid var(--border);
+}
+.problem-item:last-child{border-right:none}
+.problem-item .icon{font-size:22px;margin-bottom:12px;filter:grayscale(1) opacity(.6)}
+.problem-item h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.problem-item p{font-size:13px;color:var(--text-muted);line-height:1.6}
+.problem-close{
+  font-size:clamp(18px,3vw,26px);font-weight:700;color:var(--text-sub);
+  border-left:3px solid var(--blue);padding-left:20px;line-height:1.4;
+}
+.problem-close strong{color:#fff}
+
+/* ─── TRANSFORMATION ─── */
+.transform{padding:100px 0;background:var(--surface)}
+.transform-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:8px;overflow:hidden}
+@media(max-width:640px){.transform-grid{grid-template-columns:1fr}}
+.transform-half{position:relative;aspect-ratio:4/3;overflow:hidden}
+.transform-half img{width:100%;height:100%;object-fit:cover}
+.transform-half .half-label{
+  position:absolute;top:16px;left:16px;
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 12px;border-radius:3px;
+}
+.half-before .half-label{background:rgba(239,68,68,.85);color:#fff}
+.half-after  .half-label{background:rgba(14,165,233,.85);color:#fff}
+.transform-copy{padding-top:48px;text-align:center}
+.transform-copy h2{font-size:clamp(24px,4vw,42px);font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
+.transform-copy p{font-size:16px;color:var(--text-sub);max-width:500px;margin:0 auto}
+
+/* ─── SOLUTION ─── */
+.solution{padding:100px 0;background:#0a0a0a}
+.solution-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+@media(max-width:768px){.solution-grid{grid-template-columns:1fr;gap:40px}}
+.solution-img{border-radius:8px;overflow:hidden;aspect-ratio:4/3}
+.solution-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.solution-copy h2{font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-.025em;margin-bottom:24px;line-height:1.1}
+.solution-list{list-style:none;display:flex;flex-direction:column;gap:16px}
+.solution-list li{
+  display:flex;gap:14px;align-items:flex-start;
+  font-size:15px;color:var(--text-sub);line-height:1.5;
+}
+.solution-list li::before{
+  content:'';flex-shrink:0;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(14,165,233,.15);border:1.5px solid var(--blue);
+  background-image:url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%230ea5e9' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;margin-top:2px;
+}
+.solution-list li strong{color:#fff}
+
+/* ─── PRICING ─── */
+.pricing{padding:100px 0;background:var(--surface)}
+.pricing-header{text-align:center;margin-bottom:56px}
+.pricing-header h2{font-size:clamp(28px,4.5vw,48px);font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
+.pricing-header p{font-size:16px;color:var(--text-sub)}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px}
+.price-card{
+  background:var(--surface2);padding:32px 24px;
+  display:flex;flex-direction:column;gap:0;
+  position:relative;transition:background var(--transition);
+  cursor:pointer;
+}
+.price-card:hover{background:#1f1f1f}
+.price-card.featured{background:#0c1e2e;border:1px solid rgba(14,165,233,.3)}
+.price-card.featured::before{
+  content:'Most Popular';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  background:var(--blue);color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 14px;border-radius:0 0 6px 6px;white-space:nowrap;
+}
+.price-card .card-img{
+  width:100%;aspect-ratio:16/9;border-radius:4px;overflow:hidden;margin-bottom:20px;
+}
+.price-card .card-img img{width:100%;height:100%;object-fit:cover}
+.price-card .card-size{font-size:18px;font-weight:800;letter-spacing:-.01em;margin-bottom:4px}
+.price-card .card-desc{font-size:12px;color:var(--text-muted);margin-bottom:20px;line-height:1.5}
+.price-card .card-price{font-size:36px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px}
+.price-card .card-price span{font-size:16px;font-weight:400;color:var(--text-muted)}
+.price-card .card-sub{font-size:12px;color:var(--text-muted);margin-bottom:24px}
+.price-card .card-cta{
+  margin-top:auto;display:block;text-align:center;
+  background:var(--blue);color:#fff;
+  font-size:13px;font-weight:700;letter-spacing:.02em;
+  padding:12px;border-radius:4px;
+  transition:background var(--transition),transform var(--transition);
+}
+.price-card:hover .card-cta{background:var(--blue-dark);transform:translateY(-1px)}
+.price-card.featured .card-cta{box-shadow:0 4px 20px rgba(14,165,233,.3)}
+.stripe-trust{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:20px;font-size:12px;color:var(--text-muted);
+}
+.stripe-trust svg{opacity:.5}
+
+/* ─── SOCIAL PROOF ─── */
+.proof{padding:100px 0;background:#0a0a0a}
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px}
+.proof-card{
+  background:var(--surface);padding:28px 24px;
+  border-left:2px solid var(--border);
+}
+.proof-card .stars{color:#f59e0b;font-size:13px;margin-bottom:12px;letter-spacing:2px}
+.proof-card blockquote{font-size:15px;line-height:1.65;color:var(--text-sub);margin-bottom:16px;font-style:italic}
+.proof-card blockquote strong{color:#fff;font-style:normal}
+.proof-card cite{font-size:12px;color:var(--text-muted);font-style:normal}
+
+/* ─── URGENCY / FINAL CTA ─── */
+.final-cta{
+  padding:120px 24px;text-align:center;
+  background:radial-gradient(ellipse at center, rgba(14,165,233,.12) 0%, transparent 70%), #0a0a0a;
+}
+.final-cta h2{
+  font-size:clamp(36px,7vw,72px);font-weight:900;letter-spacing:-.03em;
+  margin-bottom:16px;line-height:1.05;
+}
+.final-cta p{font-size:16px;color:var(--text-sub);margin-bottom:12px}
+.urgency-tag{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#f59e0b;border:1px solid rgba(245,158,11,.3);
+  padding:6px 16px;border-radius:20px;margin-bottom:32px;
+}
+.final-cta .btn-primary{margin:0 auto;font-size:16px;padding:18px 36px}
+
+/* ─── STICKY CTA BAR (mobile) ─── */
+.sticky-bar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:190;
+  background:rgba(10,10,10,.95);backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  gap:10px;
+}
+@media(max-width:768px){.sticky-bar{display:flex}}
+.sticky-bar .sb-cta{
+  flex:1;display:block;text-align:center;
+  background:var(--blue);color:#fff;
+  font-size:14px;font-weight:700;
+  padding:13px;border-radius:var(--radius);
+}
+.sticky-bar .sb-wa{
+  display:flex;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:var(--radius);
+  background:var(--surface2);border:1px solid var(--border);flex-shrink:0;
+}
+
+/* ─── WHATSAPP FLOAT ─── */
+.wa-float{
+  position:fixed;bottom:80px;right:20px;z-index:180;
+  width:52px;height:52px;border-radius:50%;
+  background:#25d366;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:transform var(--transition);
+}
+.wa-float:hover{transform:scale(1.1)}
+@media(max-width:768px){.wa-float{bottom:72px}}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:40px 24px;text-align:center;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--text-muted);
+  background:var(--surface);
+}
+footer a{color:var(--text-muted)}
+footer a:hover{color:#fff}
+.footer-logo img{
+  display:block;width:90px;height:24px;object-fit:contain;margin:0 auto 16px;
+  filter:brightness(0) invert(1);opacity:.5;
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" href="/"><img src="A7 LAUNDRY-05.png" alt="A7 Laundry"></a>
+  <a class="nav-cta" href="#pricing">See Prices</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Comforter Cleaning — Orlando, FL</p>
+    <h1>Your comforter<br>is <em>not</em> clean.</h1>
+    <p class="hero-sub">
+      It may look fine.<br>
+      But it holds <strong>sweat, dust, and bacteria</strong> you can not see.<br><br>
+      We deep clean it the right way.
+    </p>
+    <div class="hero-cta-group">
+      <a class="btn-primary" href="#pricing">Clean My Comforter Now</a>
+      <a class="btn-secondary" href="tel:+14076708839">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.36 6.36l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (407) 670-8839
+      </a>
+    </div>
+    <div class="hero-proof">
+      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span>4.9 rating &middot; 2,000+ comforters cleaned &middot; Orlando</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROBLEM ─── -->
+<section class="problem">
+  <div class="container">
+    <p class="section-tag reveal">The problem</p>
+    <h2 class="reveal">You sleep in this every night.</h2>
+    <div class="problem-grid reveal">
+      <div class="problem-item">
+        <div class="icon">💧</div>
+        <h3>Sweat buildup</h3>
+        <p>Every night, your body releases moisture that soaks deep into the fill layers.</p>
+      </div>
+      <div class="problem-item">
+        <div class="icon">🦠</div>
+        <h3>Dust mites</h3>
+        <p>Millions of microscopic organisms feed on dead skin inside your comforter.</p>
+      </div>
+      <div class="problem-item">
+        <div class="icon">🐾</div>
+        <h3>Pet hair & dander</h3>
+        <p>Even one night of pets on the bed leaves allergens deep in the fabric.</p>
+      </div>
+      <div class="problem-item">
+        <div class="icon">👃</div>
+        <h3>Odors you stopped noticing</h3>
+        <p>Gradual odor buildup goes undetected until you sleep on someone else's clean bedding.</p>
+      </div>
+    </div>
+    <p class="problem-close reveal">You don't see it. <strong>But it's there.</strong></p>
+  </div>
+</section>
+
+<!-- ─── TRANSFORMATION ─── -->
+<section class="transform">
+  <div class="container">
+    <div class="transform-grid reveal">
+      <div class="transform-half half-before">
+        <img src="criativos/1774119789127.jpeg" alt="Before: stained comforter" style="object-position:left center">
+        <span class="half-label">Before</span>
+      </div>
+      <div class="transform-half half-after">
+        <img src="criativos/1774119789127.jpeg" alt="After: clean comforter" style="object-position:right center">
+        <span class="half-label">After</span>
+      </div>
+    </div>
+    <div class="transform-copy reveal">
+      <h2>From heavy and dull — to soft, fresh and fluffy.</h2>
+      <p>One pickup. 48 hours. Delivered back to your door.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SOLUTION ─── -->
+<section class="solution">
+  <div class="container">
+    <div class="solution-grid">
+      <div class="solution-img reveal">
+        <img src="criativos/Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="Professional comforter cleaning">
+      </div>
+      <div class="solution-copy reveal">
+        <p class="section-tag">Our process</p>
+        <h2>We don't just wash.<br>We deep clean.</h2>
+        <ul class="solution-list">
+          <li><span><strong>Professional equipment</strong> — oversized machines handle any size without compressing the fill.</span></li>
+          <li><span><strong>Fabric-safe process</strong> — detergents matched to your comforter material and fill type.</span></li>
+          <li><span><strong>Sanitization</strong> — high-temperature cycle eliminates dust mites and bacteria.</span></li>
+          <li><span><strong>Fresh, soft finish</strong> — your comforter comes back fluffy, odor-free, and ready to use.</span></li>
+          <li><span><strong>Free pickup & delivery</strong> — we collect it from your door and bring it back. No trips needed.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="pricing-header reveal">
+      <p class="section-tag">Pricing</p>
+      <h2>Simple pricing. No surprises.</h2>
+      <p>Free pickup & delivery included. Pay once. Sleep clean.</p>
+    </div>
+    <div class="pricing-grid reveal">
+
+      <div class="price-card">
+        <div class="card-img"><img src="criativos/Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="Twin comforter"></div>
+        <div class="card-size">Twin</div>
+        <div class="card-desc">For single beds. Pickup, deep clean, delivery.</div>
+        <div class="card-price">$33<span>/clean</span></div>
+        <div class="card-sub">Free pickup &middot; 48h turnaround</div>
+        <a class="card-cta" href="https://buy.stripe.com/7sY00jbJy8FE0oTbRfeZ207" target="_blank" rel="noopener">Select & Checkout</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="card-img"><img src="criativos/1774119194212.jpg" alt="Queen comforter" style="object-position:center 40%"></div>
+        <div class="card-size">Full / Queen</div>
+        <div class="card-desc">Most common size. Deep clean for the whole bed.</div>
+        <div class="card-price">$37<span>/clean</span></div>
+        <div class="card-sub">Free pickup &middot; 48h turnaround</div>
+        <a class="card-cta" href="https://buy.stripe.com/aFa8wP3d2f420oT6wVeZ208" target="_blank" rel="noopener">Select & Checkout</a>
+      </div>
+
+      <div class="price-card">
+        <div class="card-img"><img src="criativos/1774119706540.jpeg" alt="King comforter" style="object-position:center 25%"></div>
+        <div class="card-size">King</div>
+        <div class="card-desc">Full-size treatment. Extra care for larger fill volume.</div>
+        <div class="card-price">$40<span>/clean</span></div>
+        <div class="card-sub">Free pickup &middot; 48h turnaround</div>
+        <a class="card-cta" href="https://buy.stripe.com/8x200jaFu7BA6Nh2gFeZ209" target="_blank" rel="noopener">Select & Checkout</a>
+      </div>
+
+      <div class="price-card">
+        <div class="card-img"><img src="criativos/Gemini_Generated_Image_vib7yzvib7yzvib7.png" alt="Down comforter" style="object-position:center 60%"></div>
+        <div class="card-size">Down / Feather</div>
+        <div class="card-desc">Delicate fill. Specialist handling to preserve loft.</div>
+        <div class="card-price">$45<span>/clean</span></div>
+        <div class="card-sub">Free pickup &middot; 48h turnaround</div>
+        <a class="card-cta" href="https://buy.stripe.com/bJe14n8xm2hg1sXdZneZ20a" target="_blank" rel="noopener">Select & Checkout</a>
+      </div>
+
+    </div>
+    <p class="stripe-trust reveal">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Secure checkout powered by Stripe
+    </p>
+  </div>
+</section>
+
+<!-- ─── SOCIAL PROOF ─── -->
+<section class="proof">
+  <div class="container">
+    <p class="section-tag reveal">Reviews</p>
+    <div class="proof-grid reveal">
+      <div class="proof-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote><strong>Smells amazing.</strong> I had no idea my comforter was that dirty. It came back feeling brand new — softer than when I bought it.</blockquote>
+        <cite>Jessica M. &mdash; Dr. Phillips, Orlando</cite>
+      </div>
+      <div class="proof-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>Way better than washing at home. My king comforter never came out right from the laundromat. <strong>This is a completely different result.</strong></blockquote>
+        <cite>Carlos R. &mdash; Windermere, FL</cite>
+      </div>
+      <div class="proof-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>Pickup was on time, delivery was next day. <strong>Feels like a hotel comforter.</strong> I booked again immediately for my guest room.</blockquote>
+        <cite>Amanda T. &mdash; Winter Garden, FL</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FINAL CTA ─── -->
+<section class="final-cta">
+  <p class="urgency-tag reveal">Limited daily pickup slots available</p>
+  <h2 class="reveal">Sleep clean tonight.</h2>
+  <p class="reveal">Book now. We pick up. You relax.</p>
+  <a class="btn-primary reveal" href="#pricing">Book Now</a>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo"><img src="A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+  <p>A7 Laundry &middot; 10097 Tuller Loop, Winter Garden, FL 34787</p>
+  <p style="margin-top:6px">
+    <a href="tel:+14076708839">(407) 670-8839</a> &middot;
+    <a href="mailto:contact@a7laundry.com">contact@a7laundry.com</a> &middot;
+    <a href="/privacy-policy.html">Privacy Policy</a>
+  </p>
+  <p style="margin-top:12px;font-size:11px;opacity:.4">&copy; 2025 A7 Laundry LLC. All rights reserved.</p>
+</footer>
+
+<!-- ─── STICKY BAR (mobile) ─── -->
+<div class="sticky-bar">
+  <a class="sb-cta" href="#pricing">Clean My Comforter Now</a>
+  <a class="sb-wa" href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20comforter%20cleaning." aria-label="WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+
+<!-- ─── WA FLOAT (desktop) ─── -->
+<a class="wa-float" href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20comforter%20cleaning." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Remove emojis from problem items (CSS-only fallback for text)
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background =
+    window.scrollY > 50 ? 'rgba(10,10,10,.97)' : 'rgba(10,10,10,.85)';
+}, {passive:true});
+</script>
+
+</body>
+</html>
