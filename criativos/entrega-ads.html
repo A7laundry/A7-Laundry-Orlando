@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A7 Laundry — Delivery Creatives</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;font-family:'Inter',sans-serif;color:#fff;padding:40px 20px}
+h1{text-align:center;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#555;margin-bottom:6px}
+.page-sub{text-align:center;font-size:12px;color:#333;margin-bottom:52px}
+
+.section-label{
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:#2a2a2a;border-bottom:1px solid #181818;
+  padding-bottom:10px;margin:56px 0 8px;
+}
+.section-desc{font-size:12px;color:#333;margin-bottom:28px;font-style:italic}
+.gallery{display:flex;flex-wrap:wrap;gap:36px;justify-content:center;align-items:flex-start;margin-bottom:8px}
+.card{display:flex;flex-direction:column;align-items:center;gap:10px}
+.lang-badge{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 12px;border-radius:20px;background:#111;border:1px solid #222;color:#444;
+}
+.lang-badge.en{border-color:#3b5bdb;color:#748ffc}
+.lang-badge.pt{border-color:#2f9e44;color:#69db7c}
+.lang-badge.es{border-color:#e67700;color:#ffa94d}
+
+/* ── FEED 1:1 ── */
+.feed{width:500px;height:500px;position:relative;overflow:hidden;border-radius:6px}
+.feed img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* scrim top + bottom */
+.scrim-tb{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.58) 0%, transparent 30%),
+    linear-gradient(to top,    rgba(0,0,0,.80) 0%, rgba(0,0,0,.20) 50%, transparent 75%);
+}
+/* scrim bottom only (bright top photos) */
+.scrim-b{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.25) 45%, transparent 70%);
+}
+
+.logo-tl{position:absolute;top:20px;left:20px}
+.logo-tl img{display:block;width:100px;height:28px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
+.logo-tr{position:absolute;top:20px;right:20px}
+.logo-tr img{display:block;width:90px;height:26px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
+
+.badge-pill{
+  position:absolute;top:20px;right:20px;
+  background:rgba(14,165,233,.92);color:#fff;
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;
+}
+.badge-pill.left{right:auto;left:20px}
+
+.copy-bottom{position:absolute;bottom:0;left:0;right:0;padding:24px 24px 28px}
+.eyebrow-tag{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:#0ea5e9;margin-bottom:8px;
+}
+.headline{font-size:clamp(22px,4.5vw,30px);font-weight:900;line-height:1.1;letter-spacing:-.025em;margin-bottom:6px}
+.subline{font-size:13px;color:rgba(255,255,255,.75);line-height:1.5;margin-bottom:14px}
+.cta-btn{
+  display:inline-block;background:#0ea5e9;color:#fff;
+  font-size:12px;font-weight:700;letter-spacing:.04em;
+  padding:10px 20px;border-radius:4px;
+}
+
+/* ── FEED SPLIT ── */
+.feed-split{width:500px;height:500px;border-radius:6px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.split-photo{flex:0 0 60%;overflow:hidden;position:relative}
+.split-photo img{width:100%;height:100%;object-fit:cover}
+.split-panel{flex:1;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:18px 24px;gap:5px}
+.split-panel .sp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.split-panel img.sp-logo{display:block;width:80px;height:22px;object-fit:contain;object-position:left center}
+.split-panel .sp-badge{background:#0ea5e9;color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:.04em}
+.split-panel .sp-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#0ea5e9;margin-bottom:2px}
+.split-panel h2{color:#0a0a0a;font-size:19px;font-weight:800;line-height:1.2;letter-spacing:-.02em}
+.split-panel p{color:#666;font-size:11px;line-height:1.55}
+.split-panel p strong{color:#0a0a0a}
+.split-panel .sp-cta{
+  margin-top:8px;align-self:flex-start;
+  background:#0a0a0a;color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;
+  padding:9px 16px;border-radius:4px;
+}
+
+/* ── STORY 9:16 ── */
+.story{width:281px;height:500px;position:relative;overflow:hidden;border-radius:6px}
+.story img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.story .scrim-tb{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.65) 0%, transparent 30%),
+    linear-gradient(to top,    rgba(0,0,0,.90) 0%, rgba(0,0,0,.35) 52%, transparent 75%);
+}
+.story .logo-tl{position:absolute;top:18px;left:18px}
+.story .logo-tl img{width:88px;height:24px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1)}
+.story .copy-bottom{position:absolute;bottom:0;left:0;right:0;padding:20px 18px 26px}
+.story .eyebrow-tag{font-size:9px;margin-bottom:6px}
+.story .headline{font-size:22px}
+.story .subline{font-size:12px;margin-bottom:12px}
+.story .cta-btn{font-size:11px;padding:10px 18px;display:block;text-align:center}
+
+/* DL button */
+.dl-btn{
+  display:flex;align-items:center;gap:7px;
+  background:#141414;border:1px solid #222;color:#555;
+  font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 16px;border-radius:4px;cursor:pointer;transition:all .2s;
+}
+.dl-btn:hover{background:#0ea5e9;border-color:#0ea5e9;color:#fff}
+.dl-btn.loading{opacity:.5;pointer-events:none}
+</style>
+</head>
+<body>
+
+<h1>A7 Laundry — Delivery Campaign Creatives</h1>
+<p class="page-sub">Moment: your comforter arrived. Clean. At your door. You didn't lift a finger.</p>
+
+<!-- ═══════════ FEED V1 — PORTA DA CASA (casa florida premium) ═══════════ -->
+<div class="section-label">Feed 1:1 — "It's at your door." — Casa Florida Premium</div>
+<div class="section-desc">Imagem: entrega na porta de casa luxuosa com logo A7 visivel &mdash; copy foca no resultado, nao no processo</div>
+<div class="gallery">
+
+  <div class="card" data-lang="en">
+    <span class="lang-badge en">EN</span>
+    <div class="feed">
+      <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center center">
+      <div class="scrim-b"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="badge-pill">Free Delivery</div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Comforter Cleaning — Orlando</div>
+        <div class="headline">It's at your door.<br>Clean.</div>
+        <div class="subline">You booked online. We picked it up.<br>Now it's back — fresh, fluffy, sanitized.</div>
+        <a class="cta-btn" href="#">Book Now — From $33</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="pt">
+    <span class="lang-badge pt">PT</span>
+    <div class="feed">
+      <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center center">
+      <div class="scrim-b"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="badge-pill">Entrega Gratis</div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Lavagem de Edredon — Orlando</div>
+        <div class="headline">Ta na sua porta.<br>Limpo.</div>
+        <div class="subline">Voce agendou online. A gente foi buscar.<br>Voltou fresquinho, macio e higienizado.</div>
+        <a class="cta-btn" href="#">Agende Agora — A partir de $33</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="es">
+    <span class="lang-badge es">ES</span>
+    <div class="feed">
+      <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center center">
+      <div class="scrim-b"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="badge-pill">Entrega Gratis</div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Limpieza de Edredon — Orlando</div>
+        <div class="headline">Esta en tu puerta.<br>Limpio.</div>
+        <div class="subline">Reservaste online. Nosotros lo recogimos.<br>Ya esta de vuelta — fresco, suave, higienizado.</div>
+        <a class="cta-btn" href="#">Reserva Ahora — Desde $33</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ FEED V2 — SPLIT PANEL (townhome welcome mat) ═══════════ -->
+<div class="section-label">Feed 1:1 — Split Panel — Townhome "Welcome"</div>
+<div class="section-desc">Imagem: sacolas A7 na porta com tapete "WELCOME" &mdash; copy usa o contraste entre esforco zero e resultado premium</div>
+<div class="gallery">
+
+  <div class="card" data-lang="en">
+    <span class="lang-badge en">EN</span>
+    <div class="feed-split">
+      <div class="split-photo">
+        <img src="./Entrega Townhome Florida Variação 1.jpg" alt="" style="object-position:center 40%">
+      </div>
+      <div class="split-panel">
+        <div class="sp-top">
+          <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <span class="sp-badge">From $33</span>
+        </div>
+        <div class="sp-tag">You didn't lift a finger.</div>
+        <h2>Your comforter.<br>Picked up, cleaned<br>&amp; back at your door.</h2>
+        <p>Free pickup &middot; 48h turnaround &middot; <strong>Twin $33 &middot; Queen $37 &middot; King $40</strong><br>Orlando &middot; Winter Garden &middot; Dr. Phillips</p>
+        <a class="sp-cta" href="#">Book at a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="pt">
+    <span class="lang-badge pt">PT</span>
+    <div class="feed-split">
+      <div class="split-photo">
+        <img src="./Entrega Townhome Florida Variação 1.jpg" alt="" style="object-position:center 40%">
+      </div>
+      <div class="split-panel">
+        <div class="sp-top">
+          <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <span class="sp-badge">A partir de $33</span>
+        </div>
+        <div class="sp-tag">Voce nao precisou sair de casa.</div>
+        <h2>Seu edredon.<br>Coletado, lavado<br>e devolvido na porta.</h2>
+        <p>Coleta gratis &middot; Pronto em 48h &middot; <strong>Solteiro $33 &middot; Queen $37 &middot; King $40</strong><br>Orlando &middot; Winter Garden &middot; Dr. Phillips</p>
+        <a class="sp-cta" href="#">Agende em a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="es">
+    <span class="lang-badge es">ES</span>
+    <div class="feed-split">
+      <div class="split-photo">
+        <img src="./Entrega Townhome Florida Variação 1.jpg" alt="" style="object-position:center 40%">
+      </div>
+      <div class="split-panel">
+        <div class="sp-top">
+          <img class="sp-logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <span class="sp-badge">Desde $33</span>
+        </div>
+        <div class="sp-tag">No moviste un dedo.</div>
+        <h2>Tu edredon.<br>Recogido, lavado<br>y devuelto en tu puerta.</h2>
+        <p>Recogida gratis &middot; Listo en 48h &middot; <strong>Individual $33 &middot; Queen $37 &middot; King $40</strong><br>Orlando &middot; Winter Garden &middot; Dr. Phillips</p>
+        <a class="sp-cta" href="#">Reserva en a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ FEED V3 — VOLUME (3 sacolas referencia) ═══════════ -->
+<div class="section-label">Feed 1:1 — Volume — "3 Bags, Zero Effort"</div>
+<div class="section-desc">Imagem: 3 sacolas empilhadas na frente da casa &mdash; comunica volume, confianca, profissionalismo. Ideal para familia</div>
+<div class="gallery">
+
+  <div class="card" data-lang="en">
+    <span class="lang-badge en">EN</span>
+    <div class="feed">
+      <img class="bg" src="./1774123347165.jpeg" alt="" style="object-position:center 35%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="badge-pill">All Clean</div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Family Comforter Cleaning</div>
+        <div class="headline">Every comforter.<br>One pickup. Done.</div>
+        <div class="subline">Twin, Queen, King or Down — we handle all sizes.<br>Free pickup &middot; 48h &middot; Delivered right here.</div>
+        <a class="cta-btn" href="#">Book Family Pack</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="pt">
+    <span class="lang-badge pt">PT</span>
+    <div class="feed">
+      <img class="bg" src="./1774123347165.jpeg" alt="" style="object-position:center 35%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="badge-pill">Tudo Limpo</div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Lavagem de Edredons — Familia</div>
+        <div class="headline">Todos os edredons.<br>Uma coleta. Pronto.</div>
+        <div class="subline">Solteiro, Queen, King ou Pluma — todos os tamanhos.<br>Coleta gratis &middot; 48h &middot; Devolvido na sua porta.</div>
+        <a class="cta-btn" href="#">Agendar Coleta</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="es">
+    <span class="lang-badge es">ES</span>
+    <div class="feed">
+      <img class="bg" src="./1774123347165.jpeg" alt="" style="object-position:center 35%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="badge-pill">Todo Limpio</div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Limpieza Familiar de Edredones</div>
+        <div class="headline">Todos los edredones.<br>Una recogida. Listo.</div>
+        <div class="subline">Individual, Queen, King o Plumon — todos los tamanos.<br>Recogida gratis &middot; 48h &middot; Entregado en tu puerta.</div>
+        <a class="cta-btn" href="#">Programar Recogida</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ STORY — PORTA PREMIUM ═══════════ -->
+<div class="section-label">Story 9:16 — Porta Premium</div>
+<div class="section-desc">Imagem mais premium com logo A7 visivel &mdash; story direto ao ponto, CTA unico</div>
+<div class="gallery">
+
+  <div class="card" data-lang="en">
+    <span class="lang-badge en">EN</span>
+    <div class="story">
+      <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center 60%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">A7 Laundry — Orlando, FL</div>
+        <div class="headline">Clean.<br>Fresh.<br>At your door.</div>
+        <div class="subline">Comforter picked up &amp; delivered.<br>From $33. Free pickup.</div>
+        <a class="cta-btn" href="#">Book — a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="pt">
+    <span class="lang-badge pt">PT</span>
+    <div class="story">
+      <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center 60%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">A7 Laundry — Orlando, FL</div>
+        <div class="headline">Limpo.<br>Fresquinho.<br>Na sua porta.</div>
+        <div class="subline">Edredon coletado e entregue.<br>A partir de $33. Coleta gratis.</div>
+        <a class="cta-btn" href="#">Agende — a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="es">
+    <span class="lang-badge es">ES</span>
+    <div class="story">
+      <img class="bg" src="./Entrega Casa Florida Variação 2.jpg" alt="" style="object-position:center 60%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">A7 Laundry — Orlando, FL</div>
+        <div class="headline">Limpio.<br>Fresco.<br>En tu puerta.</div>
+        <div class="subline">Edredon recogido y entregado.<br>Desde $33. Recogida gratis.</div>
+        <a class="cta-btn" href="#">Reserva — a7laundry.com/comforter</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════ STORY — TOWNHOME REFERENCE ═══════════ -->
+<div class="section-label">Story 9:16 — Townhome Reference</div>
+<div class="section-desc">Imagem referencia &mdash; angulo aberto, casas de bairro reconheciveis pelos moradores de Orlando</div>
+<div class="gallery">
+
+  <div class="card" data-lang="en">
+    <span class="lang-badge en">EN</span>
+    <div class="story">
+      <img class="bg" src="./Entrega Townhome Referência Variação 1.jpg" alt="" style="object-position:center 30%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Comforter Cleaning</div>
+        <div class="headline">This could be<br>your front door<br>tomorrow.</div>
+        <div class="subline">Book today. Free pickup tomorrow.<br>Clean in 48h. From $33.</div>
+        <a class="cta-btn" href="#">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="pt">
+    <span class="lang-badge pt">PT</span>
+    <div class="story">
+      <img class="bg" src="./Entrega Townhome Referência Variação 1.jpg" alt="" style="object-position:center 30%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Lavagem de Edredon</div>
+        <div class="headline">Amanha pode ser<br>na frente da<br>sua casa.</div>
+        <div class="subline">Agende hoje. Coleta amanha.<br>Pronto em 48h. A partir de $33.</div>
+        <a class="cta-btn" href="#">Agendar Agora</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-lang="es">
+    <span class="lang-badge es">ES</span>
+    <div class="story">
+      <img class="bg" src="./Entrega Townhome Referência Variação 1.jpg" alt="" style="object-position:center 30%">
+      <div class="scrim-tb"></div>
+      <div class="logo-tl"><img src="../A7 LAUNDRY-05.png" alt="A7 Laundry"></div>
+      <div class="copy-bottom">
+        <div class="eyebrow-tag">Limpieza de Edredon</div>
+        <div class="headline">Manana puede ser<br>frente a<br>tu casa.</div>
+        <div class="subline">Reserva hoy. Recogida manana.<br>Listo en 48h. Desde $33.</div>
+        <a class="cta-btn" href="#">Reservar Ahora</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card').forEach(card => {
+    const creative = card.querySelector('.feed, .feed-split, .story');
+    if (!creative) return;
+    const lang = card.dataset.lang || 'en';
+
+    let sectionEl = card.closest('.gallery').previousElementSibling;
+    while (sectionEl && !sectionEl.classList.contains('section-label'))
+      sectionEl = sectionEl.previousElementSibling;
+    const slug = (lang + '-' + (sectionEl ? sectionEl.textContent : '').toLowerCase()
+      .replace(/feed|story|split|volume|panel|—|premium|reference|townhome|porta|referencia/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,22)).replace(/-+/g,'-');
+
+    const btn = document.createElement('button');
+    btn.className = 'dl-btn';
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg> Download PNG`;
+    btn.onclick = () => {
+      btn.classList.add('loading');
+      btn.textContent = 'Gerando...';
+      html2canvas(creative, {useCORS:true, allowTaint:false, scale:2, logging:false, backgroundColor:null})
+        .then(canvas => {
+          const a = document.createElement('a');
+          a.download = 'a7-entrega-' + slug + '.png';
+          a.href = canvas.toDataURL('image/png');
+          a.click();
+        }).finally(() => {
+          btn.classList.remove('loading');
+          btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg> Download PNG`;
+        });
+    };
+    card.appendChild(btn);
+  });
+});
+</script>
+</body>
+</html>
