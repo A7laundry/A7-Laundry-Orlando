@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alto Impacto — Meta Ads Criativos | A7 Laundry</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;padding:40px 24px}
+
+/* Header */
+.page-header{text-align:center;margin-bottom:56px}
+.page-header h1{font-size:clamp(26px,5vw,44px);font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+.page-header p{color:rgba(255,255,255,.45);font-size:14px;max-width:500px;margin:0 auto;line-height:1.6}
+.variant-tag{display:inline-block;background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);color:#38bdf8;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:20px}
+
+/* Language sections */
+.lang-section{margin-bottom:72px}
+.lang-header{display:flex;align-items:center;gap:14px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid #1a1a1a}
+.lang-flag{font-size:26px;line-height:1}
+.lang-name{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.lang-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px}
+.lang-badge.en{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#60a5fa}
+.lang-badge.pt{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#4ade80}
+.lang-badge.es{background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.3);color:#fb923c}
+
+/* Variant label */
+.variant-group{margin-bottom:40px}
+.variant-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2a2a2a;border-bottom:1px solid #141414;padding-bottom:10px;margin-bottom:20px}
+
+/* Cards grid */
+.cards-grid{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+
+/* Card wrapper */
+.card-wrap{display:flex;flex-direction:column;gap:10px}
+.card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.dl-btn{
+  background:#111;border:1px solid #222;color:rgba(255,255,255,.5);
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.04em;
+  padding:8px 14px;border-radius:4px;cursor:pointer;transition:all .18s;width:100%
+}
+.dl-btn:hover{background:#161616;border-color:#333;color:#fff}
+.dl-btn.loading{opacity:.4;pointer-events:none}
+
+/* ── FEED SQUARE (1:1) ── 540×540 */
+.sq{width:540px;height:540px;position:relative;overflow:hidden;border-radius:4px;flex-shrink:0}
+.sq img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.sq .grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.62) 0%, rgba(0,0,0,.1) 32%),
+    linear-gradient(to top,    rgba(0,0,0,.88) 0%, rgba(0,0,0,.2) 50%, transparent 72%)
+}
+.sq .logo{
+  position:absolute;top:22px;left:24px;
+  width:88px;height:25px;object-fit:contain;object-position:left center;
+  filter:brightness(0) invert(1);opacity:.9
+}
+.sq .content{position:absolute;bottom:0;left:0;right:0;padding:24px 26px 28px}
+.sq .eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px}
+.sq .headline{font-size:38px;font-weight:900;letter-spacing:-.04em;line-height:1;color:#fff;margin-bottom:10px}
+.sq .sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:16px}
+.sq .cta{display:inline-block;background:#0ea5e9;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:3px}
+
+/* ── FEED PORTRAIT (4:5) ── 432×540 */
+.pt{width:432px;height:540px;position:relative;overflow:hidden;border-radius:4px;flex-shrink:0}
+.pt img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.pt .grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.65) 0%, rgba(0,0,0,.05) 30%),
+    linear-gradient(to top,    rgba(0,0,0,.92) 0%, rgba(0,0,0,.25) 48%, transparent 68%)
+}
+.pt .logo{
+  position:absolute;top:20px;left:20px;
+  width:78px;height:22px;object-fit:contain;object-position:left center;
+  filter:brightness(0) invert(1);opacity:.9
+}
+.pt .content{position:absolute;bottom:0;left:0;right:0;padding:20px 22px 26px}
+.pt .flag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(239,68,68,.18);border:1px solid rgba(239,68,68,.35);
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#fca5a5;padding:3px 10px;border-radius:100px;margin-bottom:12px
+}
+.pt .flag::before{content:'';width:5px;height:5px;border-radius:50%;background:#ef4444;flex-shrink:0}
+.pt .headline{font-size:30px;font-weight:900;letter-spacing:-.04em;line-height:1.05;color:#fff;margin-bottom:8px}
+.pt .sub{font-size:12px;color:rgba(255,255,255,.58);line-height:1.5;margin-bottom:14px}
+.pt .cta{display:inline-block;background:#0ea5e9;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:8px 16px;border-radius:3px}
+
+/* back link */
+.back{display:block;text-align:center;margin-top:40px;color:rgba(255,255,255,.2);font-size:12px;text-decoration:none}
+.back:hover{color:rgba(255,255,255,.45)}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="variant-tag">Alto Impacto — Frustration Angle</div>
+  <h1>It's not going in.</h1>
+  <p>4 criativos x 3 idiomas = 12 anuncios. Feed Square (1:1) e Feed Portrait (4:5), dois angulos de copy.</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     ENGLISH
+══════════════════════════════════════ -->
+<div class="lang-section">
+  <div class="lang-header">
+    <span class="lang-flag">🇺🇸</span>
+    <span class="lang-name">English</span>
+    <span class="lang-badge en">EN</span>
+  </div>
+
+  <!-- V1 — lighter, relatable -->
+  <div class="variant-group">
+    <div class="variant-label">Version A — "You Already Know" (relatable, lighter)</div>
+    <div class="cards-grid">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="en-v1-sq">
+          <img class="bg" src="Alto Impacto 1_1 - Vers%C3%A3o 1.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">It's not<br>going in.</div>
+            <div class="sub">You already know how this ends.<br>We pick it up and do it right.</div>
+            <span class="cta">Book pickup — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'en-v1-sq','en-v1-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="en-v1-pt">
+          <img class="bg" src="Alto Impacto 4_5 - Vers%C3%A3o 1.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="flag">Sound familiar?</div>
+            <div class="headline">You already<br>know this<br>won't work.</div>
+            <div class="sub">Your machine was never built for a comforter. We pick it up, deep clean it and deliver it back fresh in 48h.</div>
+            <span class="cta">Free pickup — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'en-v1-pt','en-v1-portrait')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- V2 — stronger frustration -->
+  <div class="variant-group">
+    <div class="variant-label">Version B — "Every Single Time" (stronger frustration)</div>
+    <div class="cards-grid">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="en-v2-sq">
+          <img class="bg" src="Alto Impacto 1_1 - Vers%C3%A3o 2.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Every.<br>Single.<br>Time.</div>
+            <div class="sub">Stop forcing it. We pick up, deep clean and deliver back in 48h.</div>
+            <span class="cta">Book pickup — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'en-v2-sq','en-v2-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="en-v2-pt">
+          <img class="bg" src="Alto Impacto 4_5 - Vers%C3%A3o 2.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="flag">Been there?</div>
+            <div class="headline">It never<br>ends well.</div>
+            <div class="sub">Your comforter deserves better than this. Free pickup, deep clean, delivered back in 48h — from $33.</div>
+            <span class="cta">Book now — free pickup</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'en-v2-pt','en-v2-portrait')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PORTUGUESE
+══════════════════════════════════════ -->
+<div class="lang-section">
+  <div class="lang-header">
+    <span class="lang-flag">🇧🇷</span>
+    <span class="lang-name">Portugues</span>
+    <span class="lang-badge pt">PT</span>
+  </div>
+
+  <!-- V1 -->
+  <div class="variant-group">
+    <div class="variant-label">Version A — "Voce Ja Sabe" (relatable)</div>
+    <div class="cards-grid">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="pt-v1-sq">
+          <img class="bg" src="Alto Impacto 1_1 - Vers%C3%A3o 1.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Nao vai<br>caber.</div>
+            <div class="sub">Voce ja sabe como isso termina.<br>A gente busca e faz certo.</div>
+            <span class="cta">Agendar coleta — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'pt-v1-sq','pt-v1-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="pt-v1-pt">
+          <img class="bg" src="Alto Impacto 4_5 - Vers%C3%A3o 1.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="flag">Familiar?</div>
+            <div class="headline">Voce ja sabe<br>que nao<br>vai funcionar.</div>
+            <div class="sub">Sua maquina nao foi feita pra edredom. A gente busca, lava fundo e entrega fresquinho em 48h.</div>
+            <span class="cta">Coleta gratis — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'pt-v1-pt','pt-v1-portrait')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- V2 -->
+  <div class="variant-group">
+    <div class="variant-label">Version B — "Toda Vez" (frustracao forte)</div>
+    <div class="cards-grid">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="pt-v2-sq">
+          <img class="bg" src="Alto Impacto 1_1 - Vers%C3%A3o 2.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Toda.<br>Vez.</div>
+            <div class="sub">Chega de forcar. A gente busca, lava fundo e entrega em 48h.</div>
+            <span class="cta">Agendar coleta — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'pt-v2-sq','pt-v2-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="pt-v2-pt">
+          <img class="bg" src="Alto Impacto 4_5 - Vers%C3%A3o 2.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="flag">Ja passou por isso?</div>
+            <div class="headline">Isso nunca<br>termina bem.</div>
+            <div class="sub">Seu edredom merece mais que isso. Coleta gratis, lavagem funda, entrega em 48h — a partir de $33.</div>
+            <span class="cta">Agendar agora — gratis</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'pt-v2-pt','pt-v2-portrait')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SPANISH
+══════════════════════════════════════ -->
+<div class="lang-section">
+  <div class="lang-header">
+    <span class="lang-flag">🇪🇸</span>
+    <span class="lang-name">Espanol</span>
+    <span class="lang-badge es">ES</span>
+  </div>
+
+  <!-- V1 -->
+  <div class="variant-group">
+    <div class="variant-label">Version A — "Ya Lo Sabes" (relatable)</div>
+    <div class="cards-grid">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="es-v1-sq">
+          <img class="bg" src="Alto Impacto 1_1 - Vers%C3%A3o 1.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">No va<br>a entrar.</div>
+            <div class="sub">Ya sabes como termina esto.<br>Lo recogemos y lo hacemos bien.</div>
+            <span class="cta">Reservar — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'es-v1-sq','es-v1-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="es-v1-pt">
+          <img class="bg" src="Alto Impacto 4_5 - Vers%C3%A3o 1.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="flag">Te suena familiar?</div>
+            <div class="headline">Ya sabes<br>que esto<br>no va a funcionar.</div>
+            <div class="sub">Tu lavadora no fue hecha para edredones. Lo recogemos, lavamos a fondo y entregamos en 48h.</div>
+            <span class="cta">Recoleccion gratis — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'es-v1-pt','es-v1-portrait')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- V2 -->
+  <div class="variant-group">
+    <div class="variant-label">Version B — "Cada Vez" (frustracion fuerte)</div>
+    <div class="cards-grid">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="es-v2-sq">
+          <img class="bg" src="Alto Impacto 1_1 - Vers%C3%A3o 2.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Cada.<br>Vez.</div>
+            <div class="sub">Deja de forzarlo. Lo recogemos, lavamos a fondo y entregamos en 48h.</div>
+            <span class="cta">Reservar — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'es-v2-sq','es-v2-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="es-v2-pt">
+          <img class="bg" src="Alto Impacto 4_5 - Vers%C3%A3o 2.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="flag">Ya estuviste ahi?</div>
+            <div class="headline">Esto nunca<br>termina bien.</div>
+            <div class="sub">Tu edredon merece algo mejor. Recoleccion gratis, limpieza profunda, entrega en 48h — desde $33.</div>
+            <span class="cta">Reservar ahora — gratis</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'es-v2-pt','es-v2-portrait')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<a class="back" href="hub.html">← Voltar ao hub de criativos</a>
+
+<script>
+async function dl(btn, elId, filename) {
+  btn.textContent = 'Gerando...';
+  btn.classList.add('loading');
+  try {
+    const el = document.getElementById(elId);
+    const canvas = await html2canvas(el, { scale:2, useCORS:true, allowTaint:true, backgroundColor:null, logging:false });
+    const link = document.createElement('a');
+    link.download = `a7-${filename}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch(e) { console.error(e); }
+  btn.textContent = 'Download PNG';
+  btn.classList.remove('loading');
+}
+</script>
+</body>
+</html>
