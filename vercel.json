@@ -12,7 +12,8 @@
     { "source": "/comforter", "destination": "/comforter-cleaning.html" },
     { "source": "/comforter-v2", "destination": "/comforter-cleaning-v2.html" },
     { "source": "/comforter-v3", "destination": "/comforter-cleaning-v3.html" },
-    { "source": "/comforter-thanks", "destination": "/comforter-thanks.html" }
+    { "source": "/comforter-thanks", "destination": "/comforter-thanks.html" },
+    { "source": "/comforter-v4", "destination": "/comforter-cleaning-v4.html" }
   ],
   "headers": [
     {
