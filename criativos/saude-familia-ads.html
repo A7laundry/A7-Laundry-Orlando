@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saude & Familia — Meta Ads Criativos | A7 Laundry</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;padding:40px 24px}
+
+/* Page header */
+.page-header{text-align:center;margin-bottom:64px}
+.page-header h1{font-size:clamp(26px,5vw,44px);font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+.page-header p{color:rgba(255,255,255,.4);font-size:14px;max-width:500px;margin:0 auto;line-height:1.6}
+
+/* Persona separator */
+.persona-block{margin-bottom:80px}
+.persona-header{margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid #141414}
+.persona-eyebrow{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
+.persona-eyebrow.health{color:#10b981}
+.persona-eyebrow.family{color:#f59e0b}
+.persona-title{font-size:22px;font-weight:900;letter-spacing:-.02em}
+.persona-desc{font-size:13px;color:rgba(255,255,255,.4);margin-top:5px;line-height:1.5;max-width:600px}
+
+/* Language sections */
+.lang-section{margin-bottom:56px}
+.lang-header{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.lang-flag{font-size:22px;line-height:1}
+.lang-name{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.lang-badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 9px;border-radius:100px}
+.lang-badge.en{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#60a5fa}
+.lang-badge.pt{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#4ade80}
+.lang-badge.es{background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.3);color:#fb923c}
+
+/* Cards row */
+.cards-row{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+
+/* Card wrap */
+.card-wrap{display:flex;flex-direction:column;gap:9px}
+.card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.dl-btn{background:#111;border:1px solid #1e1e1e;color:rgba(255,255,255,.45);font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.04em;padding:7px 14px;border-radius:4px;cursor:pointer;transition:all .18s;width:100%}
+.dl-btn:hover{background:#161616;border-color:#2e2e2e;color:#fff}
+.dl-btn.loading{opacity:.35;pointer-events:none}
+
+/* ── FEED SQUARE 1:1 — 540×540 ── */
+.sq{width:540px;height:540px;position:relative;overflow:hidden;border-radius:4px;flex-shrink:0}
+.sq img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sq .grad{position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, transparent 28%),
+    linear-gradient(to top,    rgba(0,0,0,.80) 0%, rgba(0,0,0,.15) 52%, transparent 72%)}
+.sq .logo{position:absolute;top:22px;left:24px;width:88px;height:25px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1);opacity:.88}
+.sq .content{position:absolute;bottom:0;left:0;right:0;padding:22px 26px 28px}
+.sq .eyebrow{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:9px}
+.sq .headline{font-size:36px;font-weight:900;letter-spacing:-.04em;line-height:1.02;color:#fff;margin-bottom:9px}
+.sq .sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:14px}
+.sq .cta{display:inline-block;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:9px 18px;border-radius:3px}
+.sq .cta.green{background:#10b981}
+.sq .cta.amber{background:#f59e0b}
+.sq .cta.blue{background:#0ea5e9}
+
+/* ── FEED PORTRAIT 4:5 — 432×540 ── */
+.pt{width:432px;height:540px;position:relative;overflow:hidden;border-radius:4px;flex-shrink:0}
+.pt img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.pt .grad{position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.58) 0%, transparent 30%),
+    linear-gradient(to top,    rgba(0,0,0,.90) 0%, rgba(0,0,0,.22) 50%, transparent 70%)}
+.pt .logo{position:absolute;top:20px;left:20px;width:78px;height:22px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1);opacity:.88}
+.pt .content{position:absolute;bottom:0;left:0;right:0;padding:18px 22px 26px}
+.pt .badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:11px}
+.pt .badge.health{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
+.pt .badge.family{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d}
+.pt .headline{font-size:28px;font-weight:900;letter-spacing:-.04em;line-height:1.05;color:#fff;margin-bottom:8px}
+.pt .sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:13px}
+.pt .cta{display:inline-block;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:8px 16px;border-radius:3px}
+.pt .cta.green{background:#10b981}
+.pt .cta.amber{background:#f59e0b}
+.pt .cta.blue{background:#0ea5e9}
+
+/* ── STORY 9:16 — 304×540 ── */
+.st{width:304px;height:540px;position:relative;overflow:hidden;border-radius:8px;flex-shrink:0}
+.st img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%}
+.st .grad{position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.65) 0%, transparent 35%),
+    linear-gradient(to top,    rgba(0,0,0,.92) 0%, rgba(0,0,0,.32) 50%, transparent 74%)}
+.st .logo{position:absolute;top:18px;left:18px;width:72px;height:20px;object-fit:contain;object-position:left center;filter:brightness(0) invert(1);opacity:.88}
+.st .bars{position:absolute;top:12px;left:0;right:0;display:flex;gap:3px;padding:0 13px}
+.st .bars span{height:2px;flex:1;background:rgba(255,255,255,.28);border-radius:1px}
+.st .bars span:first-child{background:rgba(255,255,255,.85)}
+.st .content{position:absolute;bottom:0;left:0;right:0;padding:16px 18px 26px}
+.st .eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:9px}
+.st .headline{font-size:26px;font-weight:900;letter-spacing:-.04em;line-height:1.05;color:#fff;margin-bottom:7px}
+.st .sub{font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:12px}
+.st .cta{display:block;color:#fff;font-size:12px;font-weight:700;letter-spacing:.03em;padding:11px 16px;border-radius:4px;text-align:center}
+.st .cta.green{background:#10b981}
+.st .cta.amber{background:#f59e0b}
+
+/* back */
+.back{display:block;text-align:center;margin-top:48px;color:rgba(255,255,255,.18);font-size:12px;text-decoration:none}
+.back:hover{color:rgba(255,255,255,.4)}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Saude, Familia & Bem-Estar</h1>
+  <p>Dois angulos — quem prioriza saude e sono, e quem pensa na familia toda. 3 formatos x 3 idiomas.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PERSONA 1: SAUDE & BEM-ESTAR
+════════════════════════════════════════════════════ -->
+<div class="persona-block">
+  <div class="persona-header">
+    <div class="persona-eyebrow health">Persona — Saude & Bem-Estar</div>
+    <div class="persona-title">Voce merece dormir limpo.</div>
+    <div class="persona-desc">Para quem sofre com alergia, asma, ou simplesmente quer uma cama mais saudavel. O hook e o beneficio invisivel do edredom limpo: qualidade do sono.</div>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="lang-section">
+    <div class="lang-header">
+      <span class="lang-flag">🇺🇸</span><span class="lang-name">English</span><span class="lang-badge en">EN</span>
+    </div>
+    <div class="cards-row">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="h-en-sq">
+          <img class="bg" src="1774141254435.jpg" alt="" style="object-position:center 20%">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">This is what<br>clean feels like.</div>
+            <div class="sub">No dust mites. No allergens. Just a deep-cleaned comforter and the best sleep of your life.</div>
+            <span class="cta green">Book pickup — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-en-sq','health-en-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="h-en-pt">
+          <img class="bg" src="1774141249224.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="badge health">Health & Wellness</div>
+            <div class="headline">Sleep without<br>the dust mites.</div>
+            <div class="sub">Your comforter collects millions of allergens over time. One professional clean changes everything. Free pickup included.</div>
+            <span class="cta green">Book now — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-en-pt','health-en-portrait')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Story · 9:16</div>
+        <div class="st" id="h-en-st">
+          <img class="bg" src="1774141259204.jpg" alt="">
+          <div class="grad"></div>
+          <div class="bars"><span></span><span></span><span></span></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">Sleep better tonight</div>
+            <div class="headline">No more<br>waking up<br>congested.</div>
+            <div class="sub">Professional comforter cleaning removes dust mites, bacteria and allergens. Free pickup & delivery in Orlando.</div>
+            <span class="cta green">Book pickup — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-en-st','health-en-story')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PORTUGUESE -->
+  <div class="lang-section">
+    <div class="lang-header">
+      <span class="lang-flag">🇧🇷</span><span class="lang-name">Portugues</span><span class="lang-badge pt">PT</span>
+    </div>
+    <div class="cards-row">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="h-pt-sq">
+          <img class="bg" src="1774141254435.jpg" alt="" style="object-position:center 20%">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">E assim que<br>limpo parece.</div>
+            <div class="sub">Sem acaros. Sem alergenios. So um edredom higienizado e o melhor sono da sua vida.</div>
+            <span class="cta green">Agendar coleta — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-pt-sq','health-pt-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="h-pt-pt">
+          <img class="bg" src="1774141249224.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="badge health">Saude & Bem-Estar</div>
+            <div class="headline">Durma sem<br>os acaros.</div>
+            <div class="sub">Seu edredom acumula milhoes de acaros ao longo do tempo. Uma lavagem profissional muda tudo. Coleta inclusa.</div>
+            <span class="cta green">Agendar agora — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-pt-pt','health-pt-portrait')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Story · 9:16</div>
+        <div class="st" id="h-pt-st">
+          <img class="bg" src="1774141259204.jpg" alt="">
+          <div class="grad"></div>
+          <div class="bars"><span></span><span></span><span></span></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">Durma melhor hoje</div>
+            <div class="headline">Chega de<br>acordar com<br>alergia.</div>
+            <div class="sub">Lavagem profissional remove acaros, bacterias e alergenios. Coleta e entrega gratis em Orlando.</div>
+            <span class="cta green">Agendar coleta — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-pt-st','health-pt-story')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SPANISH -->
+  <div class="lang-section">
+    <div class="lang-header">
+      <span class="lang-flag">🇪🇸</span><span class="lang-name">Espanol</span><span class="lang-badge es">ES</span>
+    </div>
+    <div class="cards-row">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="h-es-sq">
+          <img class="bg" src="1774141254435.jpg" alt="" style="object-position:center 20%">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Asi se siente<br>lo limpio.</div>
+            <div class="sub">Sin acaros. Sin alergenos. Solo un edredon higienizado y el mejor sueno de tu vida.</div>
+            <span class="cta green">Reservar — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-es-sq','health-es-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="h-es-pt">
+          <img class="bg" src="1774141249224.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="badge health">Salud & Bienestar</div>
+            <div class="headline">Duerme sin<br>los acaros.</div>
+            <div class="sub">Tu edredon acumula millones de acaros con el tiempo. Una limpieza profesional lo cambia todo. Recoleccion incluida.</div>
+            <span class="cta green">Reservar ahora — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-es-pt','health-es-portrait')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Story · 9:16</div>
+        <div class="st" id="h-es-st">
+          <img class="bg" src="1774141259204.jpg" alt="">
+          <div class="grad"></div>
+          <div class="bars"><span></span><span></span><span></span></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">Duerme mejor esta noche</div>
+            <div class="headline">Basta de<br>despertar<br>con alergia.</div>
+            <div class="sub">La limpieza profesional elimina acaros, bacterias y alergenos. Recoleccion y entrega gratis en Orlando.</div>
+            <span class="cta green">Reservar — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'h-es-st','health-es-story')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PERSONA 2: FAMILIA & PETS
+════════════════════════════════════════════════════ -->
+<div class="persona-block">
+  <div class="persona-header">
+    <div class="persona-eyebrow family">Persona — Familia & Pets</div>
+    <div class="persona-title">Toda a familia dorme aqui.</div>
+    <div class="persona-desc">Para familias com criancas e pets. O hook e que todo mundo divide o edredom — e isso torna a limpeza ainda mais urgente e necessaria.</div>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="lang-section">
+    <div class="lang-header">
+      <span class="lang-flag">🇺🇸</span><span class="lang-name">English</span><span class="lang-badge en">EN</span>
+    </div>
+    <div class="cards-row">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="f-en-sq">
+          <img class="bg" src="Fam%C3%ADlia%20Premium%20-%20Varia%C3%A7%C3%A3o%201.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Your whole<br>family sleeps<br>here.</div>
+            <div class="sub">Kids, pets, everyone. Make sure what they sleep on is truly clean.</div>
+            <span class="cta amber">Book pickup — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-en-sq','family-en-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="f-en-pt">
+          <img class="bg" src="Fam%C3%ADlia%20Premium%20-%20Varia%C3%A7%C3%A3o%202.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="badge family">Family & Pets</div>
+            <div class="headline">They all share<br>this comforter.<br>Clean it right.</div>
+            <div class="sub">One professional clean removes dust mites, pet dander and bacteria. We pick up and deliver back in 48h.</div>
+            <span class="cta amber">Free pickup — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-en-pt','family-en-portrait')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Story · 9:16</div>
+        <div class="st" id="f-en-st">
+          <img class="bg" src="1774141866741.jpg" alt="" style="object-position:center 15%">
+          <div class="grad"></div>
+          <div class="bars"><span></span><span></span><span></span></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">For families in Orlando</div>
+            <div class="headline">Kids, dog,<br>everyone.<br>Keep it clean.</div>
+            <div class="sub">Professional comforter cleaning — free pickup, 48h turnaround, delivered back to your door.</div>
+            <span class="cta amber">Book now — from $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-en-st','family-en-story')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PORTUGUESE -->
+  <div class="lang-section">
+    <div class="lang-header">
+      <span class="lang-flag">🇧🇷</span><span class="lang-name">Portugues</span><span class="lang-badge pt">PT</span>
+    </div>
+    <div class="cards-row">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="f-pt-sq">
+          <img class="bg" src="Fam%C3%ADlia%20Premium%20-%20Varia%C3%A7%C3%A3o%201.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Toda a familia<br>dorme aqui.</div>
+            <div class="sub">Criancas, pets, todo mundo. Garanta que o que eles dormem esta de verdade limpo.</div>
+            <span class="cta amber">Agendar coleta — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-pt-sq','family-pt-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="f-pt-pt">
+          <img class="bg" src="Fam%C3%ADlia%20Premium%20-%20Varia%C3%A7%C3%A3o%202.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="badge family">Familia & Pets</div>
+            <div class="headline">Todo mundo<br>divide esse<br>edredom.</div>
+            <div class="sub">Uma lavagem profissional remove acaros, pelos de pet e bacterias. A gente busca e entrega em 48h.</div>
+            <span class="cta amber">Coleta gratis — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-pt-pt','family-pt-portrait')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Story · 9:16</div>
+        <div class="st" id="f-pt-st">
+          <img class="bg" src="1774141866741.jpg" alt="" style="object-position:center 15%">
+          <div class="grad"></div>
+          <div class="bars"><span></span><span></span><span></span></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">Para familias em Orlando</div>
+            <div class="headline">Criancas,<br>pet, todos.<br>Cuide disso.</div>
+            <div class="sub">Lavagem profissional de edredom — coleta gratis, 48h de retorno, entrega na sua porta.</div>
+            <span class="cta amber">Agendar agora — a partir de $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-pt-st','family-pt-story')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SPANISH -->
+  <div class="lang-section">
+    <div class="lang-header">
+      <span class="lang-flag">🇪🇸</span><span class="lang-name">Espanol</span><span class="lang-badge es">ES</span>
+    </div>
+    <div class="cards-row">
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Square · 1:1</div>
+        <div class="sq" id="f-es-sq">
+          <img class="bg" src="Fam%C3%ADlia%20Premium%20-%20Varia%C3%A7%C3%A3o%201.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">A7 Laundry Orlando</div>
+            <div class="headline">Toda tu familia<br>duerme aqui.</div>
+            <div class="sub">Ninos, mascotas, todos. Asegurate de que lo que duermen este de verdad limpio.</div>
+            <span class="cta amber">Reservar — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-es-sq','family-es-square')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Feed Portrait · 4:5</div>
+        <div class="pt" id="f-es-pt">
+          <img class="bg" src="Fam%C3%ADlia%20Premium%20-%20Varia%C3%A7%C3%A3o%202.jpg" alt="">
+          <div class="grad"></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="badge family">Familia & Mascotas</div>
+            <div class="headline">Todos comparten<br>este edredon.<br>Limpialo bien.</div>
+            <div class="sub">Una limpieza profesional elimina acaros, pelo de mascota y bacterias. Lo recogemos y entregamos en 48h.</div>
+            <span class="cta amber">Recoleccion gratis — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-es-pt','family-es-portrait')">Download PNG</button>
+      </div>
+
+      <div class="card-wrap">
+        <div class="card-label">Story · 9:16</div>
+        <div class="st" id="f-es-st">
+          <img class="bg" src="1774141866741.jpg" alt="" style="object-position:center 15%">
+          <div class="grad"></div>
+          <div class="bars"><span></span><span></span><span></span></div>
+          <img class="logo" src="../A7 LAUNDRY-05.png" alt="A7 Laundry">
+          <div class="content">
+            <div class="eyebrow">Para familias en Orlando</div>
+            <div class="headline">Ninos,<br>mascota,<br>todos.</div>
+            <div class="sub">Limpieza profesional de edredon — recoleccion gratis, 48h de retorno, entrega en tu puerta.</div>
+            <span class="cta amber">Reservar ahora — desde $33</span>
+          </div>
+        </div>
+        <button class="dl-btn" onclick="dl(this,'f-es-st','family-es-story')">Download PNG</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<a class="back" href="hub.html">← Voltar ao hub de criativos</a>
+
+<script>
+async function dl(btn, elId, filename) {
+  btn.textContent = 'Gerando...';
+  btn.classList.add('loading');
+  try {
+    const el = document.getElementById(elId);
+    const canvas = await html2canvas(el, { scale:2, useCORS:true, allowTaint:true, backgroundColor:null, logging:false });
+    const a = document.createElement('a');
+    a.download = `a7-${filename}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  } catch(e) { console.error(e); }
+  btn.textContent = 'Download PNG';
+  btn.classList.remove('loading');
+}
+</script>
+</body>
+</html>
