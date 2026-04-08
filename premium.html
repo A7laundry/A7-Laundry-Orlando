@@ -1,538 +1,573 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>A7 Laundry | Luxury Orlando Concierge Laundry Service</title>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>A7 Laundry | Luxury Concierge Laundry — Orlando, Kissimmee, Reunion</title>
+<meta name="description" content="Premium laundry pickup & delivery for vacation rentals in Orlando. Express 6h or Normal 24h. From $1.95/lb. No app needed — book on WhatsApp."/>
+<meta property="og:title" content="A7 Laundry | Luxury Concierge Laundry — Orlando"/>
+<meta property="og:description" content="We handle the laundry. You enjoy Orlando. Express 6h · Normal 24h · From $1.95/lb · Free pickup & delivery."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://a7laundry.vercel.app/A7%20LAUNDRY-05.png"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://a7laundry.vercel.app/premium"/>
+<link rel="icon" type="image/png" href="/favicon.png"/>
+<link rel="apple-touch-icon" href="/favicon.png"/>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PM7QGX6L');</script>
+<script>function gtag(){dataLayer.push(arguments);}</script>
+<!-- End Google Tag Manager -->
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":["LocalBusiness","LaundryService"],
+  "name":"A7 Laundry",
+  "description":"Luxury concierge laundry pickup & delivery for vacation rentals in Orlando. Express 6h or Normal 24h.",
+  "url":"https://a7laundry.vercel.app",
+  "telephone":"+1-407-670-8839",
+  "priceRange":"$$",
+  "image":"https://a7laundry.vercel.app/A7%20LAUNDRY-05.png",
+  "address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},
+  "areaServed":[
+    {"@type":"City","name":"Orlando"},
+    {"@type":"City","name":"Kissimmee"},
+    {"@type":"Place","name":"Reunion Resort"},
+    {"@type":"Place","name":"Windsor Hills"},
+    {"@type":"Place","name":"Champions Gate"}
+  ],
+  "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"2500","bestRating":"5"}
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "tertiary-fixed": "#ffdbcd",
-                    "inverse-primary": "#0053db",
-                    "on-primary-fixed": "#00174b",
-                    "surface-variant": "#31353d",
-                    "primary-container": "#2563eb",
-                    "surface": "#10131b",
-                    "error": "#ffb4ab",
-                    "secondary": "#ffb95f",
-                    "outline-variant": "#434655",
-                    "on-primary": "#002a78",
-                    "surface-tint": "#b4c5ff",
-                    "inverse-surface": "#e0e2ed",
-                    "surface-container-lowest": "#0a0e16",
-                    "secondary-fixed-dim": "#ffb95f",
-                    "inverse-on-surface": "#2d3039",
-                    "surface-container-highest": "#31353d",
-                    "tertiary-fixed-dim": "#ffb596",
-                    "surface-container": "#1c2027",
-                    "on-surface": "#e0e2ed",
-                    "secondary-fixed": "#ffddb8",
-                    "on-error": "#690005",
-                    "on-tertiary-fixed": "#360f00",
-                    "primary-fixed-dim": "#b4c5ff",
-                    "surface-dim": "#10131b",
-                    "surface-container-high": "#262a32",
-                    "on-primary-container": "#eeefff",
-                    "primary": "#b4c5ff",
-                    "on-secondary-fixed": "#2a1700",
-                    "primary-fixed": "#dbe1ff",
-                    "surface-container-low": "#181c23",
-                    "secondary-container": "#ee9800",
-                    "on-secondary": "#472a00",
-                    "surface-bright": "#363942",
-                    "on-tertiary-fixed-variant": "#7d2d00",
-                    "background": "#10131b",
-                    "on-error-container": "#ffdad6",
-                    "outline": "#8d90a0",
-                    "on-surface-variant": "#c3c6d7",
-                    "tertiary-container": "#bc4800",
-                    "on-tertiary": "#581e00",
-                    "error-container": "#93000a",
-                    "on-secondary-fixed-variant": "#653e00",
-                    "tertiary": "#ffb596",
-                    "on-secondary-container": "#5b3800",
-                    "on-primary-fixed-variant": "#003ea8",
-                    "on-tertiary-container": "#ffede6",
-                    "on-background": "#e0e2ed"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
-          },
-        },
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface": "#10131b",
+        "surface-container-lowest": "#0a0e16",
+        "surface-container-low": "#181c23",
+        "surface-container": "#1c2027",
+        "surface-container-high": "#262a32",
+        "surface-container-highest": "#31353d",
+        "surface-bright": "#363942",
+        "surface-dim": "#10131b",
+        "on-surface": "#e0e2ed",
+        "on-surface-variant": "#c3c6d7",
+        "primary": "#b4c5ff",
+        "primary-container": "#2563eb",
+        "on-primary": "#002a78",
+        "on-primary-container": "#eeefff",
+        "secondary": "#ffb95f",
+        "secondary-container": "#ee9800",
+        "on-secondary": "#472a00",
+        "on-secondary-container": "#5b3800",
+        "tertiary": "#ffb596",
+        "tertiary-container": "#bc4800",
+        "outline": "#8d90a0",
+        "outline-variant": "#434655",
+        "background": "#10131b",
+        "on-background": "#e0e2ed",
+        "inverse-surface": "#e0e2ed",
+        "inverse-on-surface": "#2d3039"
+      },
+      borderRadius: {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      fontFamily: {
+        "headline": ["Inter"],
+        "body": ["Inter"],
+        "label": ["Inter"]
       }
-    </script>
+    }
+  }
+}
+</script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .pulse-ring {
-            animation: pulse 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(0.7); opacity: 1; }
-            100% { transform: scale(2.5); opacity: 0; }
-        }
-    </style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .pulse-ring { animation: pulse 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite; }
+  @keyframes pulse { 0% { transform: scale(0.7); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+  .hero-img { animation: kenburns 14s ease-in-out infinite alternate; }
+  @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.06); } }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Inter', -apple-system, sans-serif; }
+  .wa-fab { position: fixed; bottom: 24px; right: 20px; z-index: 900; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,.4); text-decoration: none; transition: all .3s; }
+  .wa-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,.6); }
+  .counter-val { min-width: 1.5rem; text-align: center; }
+</style>
 </head>
 <body class="bg-background text-on-background font-body">
-<!-- TopNavBar -->
+
+<!-- GTM noscript -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM7QGX6L" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup." target="_blank" rel="noopener" class="wa-fab" aria-label="Book on WhatsApp" onclick="gtag('event','wa_fab_click',{event_category:'CTA',event_label:'premium_fab'})">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 0C5.374 0 0 5.373 0 12c0 2.113.554 4.094 1.523 5.815L0 24l6.335-1.503A11.954 11.954 0 0012.004 24C18.63 24 24 18.627 24 12S18.63 0 12.004 0zm0 21.818a9.823 9.823 0 01-5.003-1.366l-.36-.213-3.757.891.952-3.653-.234-.374A9.782 9.782 0 012.182 12c0-5.42 4.404-9.818 9.822-9.818 5.42 0 9.818 4.399 9.818 9.818 0 5.42-4.399 9.818-9.818 9.818z"/></svg>
+</a>
+
+<!-- NAV -->
 <nav class="fixed top-0 w-full z-50 bg-slate-950/60 backdrop-blur-md shadow-[0px_10px_30px_rgba(37,99,235,0.2)]">
-<div class="flex justify-between items-center px-8 py-4 max-w-full">
-<div class="text-xl font-black tracking-tighter text-white font-['Inter'] uppercase">A7 Laundry</div>
-<div class="hidden md:flex items-center gap-8">
-<a class="text-white border-b-2 border-blue-600 pb-1 font-medium transition-colors" href="#">Services</a>
-<a class="text-slate-300 font-medium hover:text-white transition-colors" href="#">How it Works</a>
-<a class="text-slate-300 font-medium hover:text-white transition-colors" href="#">Coverage</a>
-</div>
-<button class="bg-primary-container text-on-primary-container px-6 py-2 font-bold transition-all duration-300 ease-in-out active:scale-95 hover:shadow-[0px_0px_15px_rgba(37,99,235,0.3)] rounded-lg">
-                Schedule Pickup
-            </button>
-</div>
+  <div class="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto">
+    <a href="/index.html">
+      <img src="/A7 LAUNDRY-05.png" alt="A7 Laundry" style="height:36px;width:auto;display:block;"/>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="text-white border-b-2 border-blue-600 pb-1 font-medium transition-colors" href="#">Services</a>
+      <a class="text-slate-300 font-medium hover:text-white transition-colors" href="#how-it-works">How it Works</a>
+      <a class="text-slate-300 font-medium hover:text-white transition-colors" href="#coverage">Coverage</a>
+    </div>
+    <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup." target="_blank" rel="noopener"
+       class="bg-primary-container text-white px-6 py-2 font-bold transition-all duration-300 active:scale-95 hover:shadow-[0px_0px_15px_rgba(37,99,235,0.3)] rounded-lg text-sm"
+       onclick="gtag('event','nav_cta',{event_category:'CTA',event_label:'premium_nav'})">
+      Schedule Pickup
+    </a>
+  </div>
 </nav>
+
 <!-- SECTION 1: HERO -->
 <section class="relative h-screen w-full flex items-center overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img alt="Luxury resort pool" class="w-full h-full object-cover" data-alt="Cinematic shot of a family laughing and jumping into a luxury resort pool at golden hour with warm amber lighting and palm trees" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHlQ9fNerQlBEbi7gaAOPQM_V-GHYgksCl8hVSI_vbt4QGss4XLuKajZyMVUHTKrLtNoAJl2b3vOse0D5aCd-WGM5f0rFXWI0pvDfiGzwbuMJ6nOsWOxoORWHICK-y4GKMcd5N1s3GjwjmzKteTBCMWPyNWEXT5cBeFK0d6SNDqa63yrAwuN7HihSAZW1YoyIzvqIScqyo1jJguFkOQWPnK8_qgYNcT6qK7nml8jdxQMkjCGfpubxVlSzxmcl1vSNHpRu4mG8c510j"/>
-<div class="absolute inset-0 bg-gradient-to-r from-[#05080f]/90 via-[#05080f]/45 to-transparent"></div>
-</div>
-<div class="relative z-10 container mx-auto px-8 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-<div class="space-y-8">
-<div class="flex items-center gap-3">
-<div class="relative flex h-3 w-3">
-<span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-</div>
-<span class="label-md font-bold text-white tracking-widest uppercase text-xs">Available now · Orlando, Kissimmee, Reunion</span>
-</div>
-<h1 class="text-6xl md:text-8xl lg:text-[5.5rem] font-black text-white leading-[0.9] tracking-[-4px] uppercase font-headline">
-                    Enjoy Orlando. <br/>
-                    We handle <br/>
-<span class="text-primary-container">the laundry.</span>
-</h1>
-<div class="flex flex-wrap gap-4">
-<div class="bg-secondary-container text-on-secondary-container px-4 py-1 flex items-center gap-2 rounded-lg text-xs font-bold uppercase tracking-wider">
-<span class="material-symbols-outlined text-sm" data-weight="fill">bolt</span> Express 6h
-                    </div>
-<div class="border border-white/20 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">
-                        Normal 24h
-                    </div>
-</div>
-<div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-<button class="bg-primary-container text-on-primary-container px-10 py-5 font-black text-lg flex items-center gap-3 hover:shadow-[0px_10px_40px_rgba(37,99,235,0.4)] transition-all active:scale-95 rounded-lg group">
-                        Schedule Pickup on WhatsApp 
-                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</button>
-<div class="flex flex-col">
-<div class="flex text-secondary">
-<span class="material-symbols-outlined" data-weight="fill">star</span>
-<span class="material-symbols-outlined" data-weight="fill">star</span>
-<span class="material-symbols-outlined" data-weight="fill">star</span>
-<span class="material-symbols-outlined" data-weight="fill">star</span>
-<span class="material-symbols-outlined" data-weight="fill">star</span>
-</div>
-<span class="text-white/60 text-sm font-medium">4.9/5 Average Guest Rating</span>
-</div>
-</div>
-</div>
-<!-- Foreground visual elements -->
-<div class="hidden lg:flex justify-end relative h-[600px]">
-<div class="absolute bottom-10 right-10 w-96 aspect-square bg-white/10 backdrop-blur-md rounded-lg rotate-3 p-4 shadow-2xl">
-<img alt="Laundry bag on chair" class="w-full h-full object-cover rounded-lg" data-alt="Premium white laundry bag with A7 Laundry logo sitting on a stylish teak pool chair at a high-end resort" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDcbWqaQjFilm2wUAjM_40jfWzpRwc1SrLeoLl89ol4r_DVFM8PZsR7IegK5FHiCrImppLjiv3faoxGBOrvwTzLMISkUAHNM2_QnXUriuRtVrhInA5WJcA9cqpmI2VeU7Gdps_Q_AxFxVGWcQgj-TiQJ6HcDnsJnL9f0OlwAqNjXl8zryLoVzI7fYLLVsRYOVDPYJoRkudNuBK2fHdoWBuwVoVXaQrKnF5OnozGRUMoKGyM3dlG9rZ2l458A25Zeu4-0O7RyR_5D7m"/>
-</div>
-</div>
-</div>
+  <div class="absolute inset-0 z-0">
+    <img alt="Family at luxury Orlando resort pool" class="w-full h-full object-cover hero-img"
+         src="/public/hero-resort-pool.jpg"
+         onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuDHlQ9fNerQlBEbi7gaAOPQM_V-GHYgksCl8hVSI_vbt4QGss4XLuKajZyMVUHTKrLtNoAJl2b3vOse0D5aCd-WGM5f0rFXWI0pvDfiGzwbuMJ6nOsWOxoORWHICK-y4GKMcd5N1s3GjwjmzKteTBCMWPyNWEXT5cBeFK0d6SNDqa63yrAwuN7HihSAZW1YoyIzvqIScqyo1jJguFkOQWPnK8_qgYNcT6qK7nml8jdxQMkjCGfpubxVlSzxmcl1vSNHpRu4mG8c510j'"/>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#05080f]/90 via-[#05080f]/45 to-transparent"></div>
+  </div>
+  <div class="relative z-10 container mx-auto px-8 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="space-y-8">
+      <div class="flex items-center gap-3">
+        <div class="relative flex h-3 w-3">
+          <span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+        </div>
+        <span class="font-bold text-white tracking-widest uppercase text-xs">Available now · Orlando, Kissimmee, Reunion</span>
+      </div>
+      <h1 class="text-6xl md:text-8xl lg:text-[5.5rem] font-black text-white leading-[0.9] tracking-[-4px] uppercase font-headline">
+        Enjoy Orlando.<br/>
+        We handle<br/>
+        <span class="text-primary-container">the laundry.</span>
+      </h1>
+      <div class="flex flex-wrap gap-4">
+        <div class="bg-secondary-container text-on-secondary-container px-4 py-1 flex items-center gap-2 rounded-lg text-xs font-bold uppercase tracking-wider">
+          <span class="material-symbols-outlined text-sm fill">bolt</span> Express 6h
+        </div>
+        <div class="border border-white/20 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Normal 24h</div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+        <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup%20at%20my%20vacation%20rental." target="_blank" rel="noopener"
+           class="bg-primary-container text-white px-10 py-5 font-black text-lg flex items-center gap-3 hover:shadow-[0px_10px_40px_rgba(37,99,235,0.4)] transition-all active:scale-95 rounded-lg group"
+           onclick="gtag('event','hero_cta',{event_category:'CTA',event_label:'premium_hero'})">
+          Schedule Pickup on WhatsApp
+          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+        <div class="flex flex-col">
+          <div class="flex text-secondary">
+            <span class="material-symbols-outlined fill">star</span><span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span><span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+          </div>
+          <span class="text-white/60 text-sm font-medium">4.9/5 · 2,500+ Guest Reviews</span>
+        </div>
+      </div>
+    </div>
+    <div class="hidden lg:flex justify-end relative h-[600px]">
+      <div class="absolute bottom-10 right-10 w-96 aspect-square bg-white/10 backdrop-blur-md rounded-lg rotate-3 p-4 shadow-2xl">
+        <img alt="Clean folded laundry delivered to vacation rental" class="w-full h-full object-cover rounded-lg"
+             src="/public/Como Funciona - Entrega Profissional.jpg"
+             onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuDDcbWqaQjFilm2wUAjM_40jfWzpRwc1SrLeoLl89ol4r_DVFM8PZsR7IegK5FHiCrImppLjiv3faoxGBOrvwTzLMISkUAHNM2_QnXUriuRtVrhInA5WJcA9cqpmI2VeU7Gdps_Q_AxFxVGWcQgj-TiQJ6HcDnsJnL9f0OlwAqNjXl8zryLoVzI7fYLLVsRYOVDPYJoRkudNuBK2fHdoWBuwVoVXaQrKnF5OnozGRUMoKGyM3dlG9rZ2l458A25Zeu4-0O7RyR_5D7m'"/>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- SECTION 2: TRUST BAND -->
 <section class="bg-[#0a0f1a] py-12 border-y border-white/5">
-<div class="container mx-auto px-8">
-<div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:text-left">
-<div class="space-y-1">
-<div class="text-3xl font-black text-white">6h</div>
-<div class="text-on-surface-variant label-md uppercase tracking-widest text-xs">Express Return</div>
-</div>
-<div class="space-y-1">
-<div class="text-3xl font-black text-white">24h</div>
-<div class="text-on-surface-variant label-md uppercase tracking-widest text-xs">Standard Return</div>
-</div>
-<div class="space-y-1">
-<div class="text-3xl font-black text-white">$0</div>
-<div class="text-on-surface-variant label-md uppercase tracking-widest text-xs">Pickup &amp; Delivery</div>
-</div>
-<div class="space-y-1">
-<div class="text-3xl font-black text-white">4.9★</div>
-<div class="text-on-surface-variant label-md uppercase tracking-widest text-xs">Top Rated Service</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:text-left">
+      <div class="space-y-1">
+        <div class="text-3xl font-black text-white">6h</div>
+        <div class="text-on-surface-variant uppercase tracking-widest text-xs font-bold">Express Return</div>
+      </div>
+      <div class="space-y-1">
+        <div class="text-3xl font-black text-white">24h</div>
+        <div class="text-on-surface-variant uppercase tracking-widest text-xs font-bold">Standard Return</div>
+      </div>
+      <div class="space-y-1">
+        <div class="text-3xl font-black text-white">$0</div>
+        <div class="text-on-surface-variant uppercase tracking-widest text-xs font-bold">Pickup &amp; Delivery</div>
+      </div>
+      <div class="space-y-1">
+        <div class="text-3xl font-black text-white">4.9★</div>
+        <div class="text-on-surface-variant uppercase tracking-widest text-xs font-bold">Top Rated Service</div>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- SECTION 3: HOW IT WORKS -->
-<section class="bg-white py-32 text-[#05080f]">
-<div class="container mx-auto px-8">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-<div class="lg:col-span-5 space-y-16">
-<div class="space-y-4">
-<span class="text-primary-container font-black tracking-widest uppercase text-sm">Concierge Experience</span>
-<h2 class="text-5xl md:text-6xl font-black tracking-tighter leading-none">Vacation more, wash less.</h2>
-</div>
-<div class="space-y-12">
-<div class="flex gap-8 group">
-<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">1</div>
-<div class="space-y-2">
-<h3 class="text-2xl font-black">Book via WhatsApp</h3>
-<p class="text-slate-500 body-md">No apps to download. Just text us your location and service type. We respond in minutes.</p>
-</div>
-</div>
-<div class="flex gap-8 group">
-<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">2</div>
-<div class="space-y-2">
-<h3 class="text-2xl font-black">Contactless Pickup</h3>
-<p class="text-slate-500 body-md">Leave your laundry bag at your doorstep. Our concierge drivers handle the rest while you're at the parks.</p>
-</div>
-</div>
-<div class="flex gap-8 group">
-<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">3</div>
-<div class="space-y-2">
-<h3 class="text-2xl font-black">Fresh Return</h3>
-<p class="text-slate-500 body-md">Sorted, washed, and professionally folded items delivered back within 6 or 24 hours.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="lg:col-span-7 relative">
-<div class="rounded-xl overflow-hidden shadow-2xl">
-<img alt="Delivery to vacation rental" class="w-full h-[600px] object-cover" data-alt="Professional delivery person handing a clean white laundry bag to a smiling couple at a sun-drenched Orlando vacation rental doorway" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7oT1_eQNN3oOaAhOT1i2aMzVJK-cedY5lCu4ZIqxglgtGNm3YRzfBIxh4gCFnSrShKx-i-XzwW6ml8o0oU8UJATpBPPnSk82Zaaie33mXYH-ZCEuZXi-rQUkr7VbWS53Ik4tfzpBhIN9BNg-rolA5mYMaD9R3a_7rD6TfjRDRDDWBtoSY-oi_XSOhv6Wzw68osqr4UfsPl9nuGZEG8UDQqSM2mu6zD8mQZOkzLuWN4JWMRwjTDAWHiMQ9_x8TgFh68Y-V_iNo2ifL"/>
-</div>
-<div class="absolute -bottom-8 -left-8 bg-white p-8 shadow-xl max-w-xs rounded-lg border border-slate-100 hidden md:block">
-<p class="italic text-slate-600 mb-4">"The best decision we made for our Disney trip. Came back from the parks to fresh clothes!"</p>
-<p class="font-bold text-[#05080f]">— Sarah J., VRBO Guest</p>
-</div>
-</div>
-</div>
-</div>
+<section id="how-it-works" class="bg-white py-32 text-[#05080f]">
+  <div class="container mx-auto px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <div class="lg:col-span-5 space-y-16">
+        <div class="space-y-4">
+          <span class="text-blue-600 font-black tracking-widest uppercase text-sm">Concierge Experience</span>
+          <h2 class="text-5xl md:text-6xl font-black tracking-tighter leading-none">Vacation more, wash less.</h2>
+        </div>
+        <div class="space-y-12">
+          <div class="flex gap-8">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">1</div>
+            <div class="space-y-2">
+              <h3 class="text-2xl font-black">Book via WhatsApp</h3>
+              <p class="text-slate-500">No apps to download. Just text us your location and service type. We respond in minutes.</p>
+            </div>
+          </div>
+          <div class="flex gap-8">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">2</div>
+            <div class="space-y-2">
+              <h3 class="text-2xl font-black">Contactless Pickup</h3>
+              <p class="text-slate-500">Leave your laundry bag at your doorstep. Our concierge drivers handle the rest while you're at the parks.</p>
+            </div>
+          </div>
+          <div class="flex gap-8">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">3</div>
+            <div class="space-y-2">
+              <h3 class="text-2xl font-black">Fresh Return</h3>
+              <p class="text-slate-500">Sorted, washed, and professionally folded items delivered back within 6 or 24 hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7 relative">
+        <div class="rounded-xl overflow-hidden shadow-2xl">
+          <img alt="Professional laundry delivery to Orlando vacation rental" class="w-full h-[600px] object-cover"
+               src="/public/Como Funciona - Entrega Profissional.jpg"
+               onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuB7oT1_eQNN3oOaAhOT1i2aMzVJK-cedY5lCu4ZIqxglgtGNm3YRzfBIxh4gCFnSrShKx-i-XzwW6ml8o0oU8UJATpBPPnSk82Zaaie33mXYH-ZCEuZXi-rQUkr7VbWS53Ik4tfzpBhIN9BNg-rolA5mYMaD9R3a_7rD6TfjRDDDWBtoSY-oi_XSOhv6Wzw68osqr4UfsPl9nuGZEG8UDQqSM2mu6zD8mQZOkzLuWN4JWMRwjTDAWHiMQ9_x8TgFh68Y-V_iNo2ifL'"/>
+        </div>
+        <div class="absolute -bottom-8 -left-8 bg-white p-8 shadow-xl max-w-xs rounded-lg border border-slate-100 hidden md:block">
+          <p class="italic text-slate-600 mb-4">"The best decision we made for our Disney trip. Came back from the parks to fresh clothes!"</p>
+          <p class="font-bold text-[#05080f]">— Sarah J., VRBO Guest</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- SECTION 4: PRICING -->
-<section class="bg-[#f8fafc] py-32 text-[#05080f]">
-<div class="container mx-auto px-8">
-<div class="text-center mb-20 space-y-4">
-<h2 class="text-4xl md:text-5xl font-black tracking-tighter">Choose your speed</h2>
-<p class="text-slate-500 max-w-xl mx-auto">Transparent per-pound pricing with no hidden resort fees or park premiums.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-<!-- Normal Card -->
-<div class="bg-white p-12 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-6 hover:shadow-xl transition-shadow">
-<div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">
-<span class="material-symbols-outlined text-primary-container text-3xl">schedule</span>
-</div>
-<div>
-<h3 class="text-3xl font-black">Normal 24h</h3>
-<p class="text-slate-500 mt-2">Perfect for regular wash &amp; fold</p>
-</div>
-<div class="text-5xl font-black">$1.95<span class="text-lg text-slate-400 font-medium">/lb</span></div>
-<ul class="space-y-3 text-left w-full">
-<li class="flex items-center gap-3 text-slate-600"><span class="material-symbols-outlined text-green-500 text-sm">check_circle</span> Next-day delivery</li>
-<li class="flex items-center gap-3 text-slate-600"><span class="material-symbols-outlined text-green-500 text-sm">check_circle</span> Professional sorting</li>
-<li class="flex items-center gap-3 text-slate-600"><span class="material-symbols-outlined text-green-500 text-sm">check_circle</span> Premium hypoallergenic soaps</li>
-</ul>
-<button class="w-full border-2 border-primary-container text-primary-container font-black py-4 rounded-lg hover:bg-primary-container hover:text-white transition-colors">Select Standard</button>
-</div>
-<!-- Express Card -->
-<div class="bg-[#0a0f1a] p-12 rounded-lg text-white flex flex-col items-center text-center space-y-6 relative overflow-hidden shadow-2xl">
-<div class="absolute top-6 right-6 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]" data-weight="fill">bolt</span> Most Popular
-                    </div>
-<div class="w-16 h-16 rounded-full bg-secondary-container/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-3xl" data-weight="fill">bolt</span>
-</div>
-<div>
-<h3 class="text-3xl font-black">Express 6h</h3>
-<p class="text-slate-400 mt-2">Same day VIP service</p>
-</div>
-<div class="text-5xl font-black text-secondary">$2.95<span class="text-lg text-slate-500 font-medium">/lb</span></div>
-<ul class="space-y-3 text-left w-full">
-<li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Pick up by 10 AM, Back by 4 PM</li>
-<li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Priority processing</li>
-<li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> VIP concierge handling</li>
-</ul>
-<button class="w-full bg-primary-container text-white font-black py-4 rounded-lg hover:shadow-[0px_0px_20px_rgba(37,99,235,0.4)] transition-shadow">Select Express</button>
-</div>
-</div>
-</div>
+<section id="pricing" class="bg-[#f8fafc] py-32 text-[#05080f]">
+  <div class="container mx-auto px-8">
+    <div class="text-center mb-20 space-y-4">
+      <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Choose your speed</h2>
+      <p class="text-slate-500 max-w-xl mx-auto">Transparent per-pound pricing. No hidden resort fees. No park premiums.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <!-- Normal -->
+      <div class="bg-white p-12 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-6 hover:shadow-xl transition-shadow">
+        <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-blue-600 text-3xl">schedule</span>
+        </div>
+        <div>
+          <h3 class="text-3xl font-black">Normal 24h</h3>
+          <p class="text-slate-500 mt-2">Perfect for regular wash &amp; fold</p>
+        </div>
+        <div class="text-5xl font-black">$1.95<span class="text-lg text-slate-400 font-medium">/lb</span></div>
+        <ul class="space-y-3 text-left w-full">
+          <li class="flex items-center gap-3 text-slate-600"><span class="material-symbols-outlined text-green-500 text-sm fill">check_circle</span> Next-day delivery</li>
+          <li class="flex items-center gap-3 text-slate-600"><span class="material-symbols-outlined text-green-500 text-sm fill">check_circle</span> Professional sorting &amp; folding</li>
+          <li class="flex items-center gap-3 text-slate-600"><span class="material-symbols-outlined text-green-500 text-sm fill">check_circle</span> Premium hypoallergenic soaps</li>
+          <li class="flex items-center gap-3 text-slate-600"><span class="material-symbols-outlined text-green-500 text-sm fill">check_circle</span> Free pickup &amp; delivery</li>
+        </ul>
+        <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20book%20the%20Normal%20laundry%20service%20(24h)." target="_blank" rel="noopener"
+           class="w-full block border-2 border-blue-600 text-blue-600 font-black py-4 rounded-lg hover:bg-blue-600 hover:text-white transition-colors text-center"
+           onclick="gtag('event','pricing_cta',{event_category:'CTA',event_label:'normal_24h'})">
+          Book Normal — 24h
+        </a>
+      </div>
+      <!-- Express -->
+      <div class="bg-[#0a0f1a] p-12 rounded-lg text-white flex flex-col items-center text-center space-y-6 relative overflow-hidden shadow-2xl">
+        <div class="absolute top-6 right-6 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+          <span class="material-symbols-outlined text-[12px] fill">bolt</span> Most Popular
+        </div>
+        <div class="w-16 h-16 rounded-full bg-secondary-container/20 flex items-center justify-center">
+          <span class="material-symbols-outlined text-secondary text-3xl fill">bolt</span>
+        </div>
+        <div>
+          <h3 class="text-3xl font-black">Express 6h</h3>
+          <p class="text-slate-400 mt-2">Same-day VIP service</p>
+        </div>
+        <div class="text-5xl font-black text-secondary">$2.95<span class="text-lg text-slate-500 font-medium">/lb</span></div>
+        <ul class="space-y-3 text-left w-full">
+          <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Pickup by 10 AM → Back by 4 PM</li>
+          <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Priority processing</li>
+          <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> VIP concierge handling</li>
+          <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Free pickup &amp; delivery</li>
+        </ul>
+        <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20book%20the%20Express%20laundry%20service%20(6h)." target="_blank" rel="noopener"
+           class="w-full block bg-primary-container text-white font-black py-4 rounded-lg hover:shadow-[0px_0px_20px_rgba(37,99,235,0.4)] transition-shadow text-center"
+           onclick="gtag('event','pricing_cta',{event_category:'CTA',event_label:'express_6h'})">
+          Book Express — 6h
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- SECTION 5: WEIGHT ESTIMATOR -->
-<section class="bg-surface py-32">
-<div class="container mx-auto px-8 max-w-6xl">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-<div class="space-y-8">
-<h2 class="text-5xl font-black tracking-tighter leading-none">Calculate your load.</h2>
-<p class="text-on-surface-variant text-lg">Not sure how much it weighs? Use our concierge estimator to get a rough idea of your service cost.</p>
-<div class="p-8 bg-surface-container-low rounded-lg space-y-4">
-<div class="flex justify-between items-end border-b border-white/5 pb-4">
-<span class="text-on-surface-variant font-bold uppercase tracking-widest text-xs">Estimated Weight</span>
-<span class="text-4xl font-black text-primary">~18 lbs</span>
-</div>
-<div class="flex justify-between items-end">
-<span class="text-on-surface-variant font-bold uppercase tracking-widest text-xs">Estimated Cost (Standard)</span>
-<span class="text-4xl font-black text-white">$35.10</span>
-</div>
-</div>
-</div>
-<div class="bg-surface-container-highest p-8 rounded-lg shadow-2xl border border-white/5">
-<div class="grid grid-cols-3 md:grid-cols-4 gap-4">
-<!-- Estimator Tiles -->
-<div class="bg-surface-container-low p-4 rounded-lg flex flex-col items-center gap-3 group hover:bg-surface-container-high transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-primary" data-weight="fill">apparel</span>
-<span class="text-xs font-bold uppercase tracking-tighter">T-Shirt</span>
-<div class="flex items-center gap-3 mt-2">
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">-</button>
-<span class="font-black">4</span>
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-primary">+</button>
-</div>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg flex flex-col items-center gap-3 group hover:bg-surface-container-high transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-primary">straighten</span>
-<span class="text-xs font-bold uppercase tracking-tighter">Jeans</span>
-<div class="flex items-center gap-3 mt-2">
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">-</button>
-<span class="font-black">2</span>
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-primary">+</button>
-</div>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg flex flex-col items-center gap-3 group hover:bg-surface-container-high transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-primary">checkroom</span>
-<span class="text-xs font-bold uppercase tracking-tighter">Jackets</span>
-<div class="flex items-center gap-3 mt-2">
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">-</button>
-<span class="font-black">1</span>
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-primary">+</button>
-</div>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg flex flex-col items-center gap-3 group hover:bg-surface-container-high transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-primary">bed</span>
-<span class="text-xs font-bold uppercase tracking-tighter">Bedding</span>
-<div class="flex items-center gap-3 mt-2">
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">-</button>
-<span class="font-black">0</span>
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-primary">+</button>
-</div>
-</div>
-<div class="bg-surface-container-low p-4 rounded-lg flex flex-col items-center gap-3 group hover:bg-surface-container-high transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-primary">dry_cleaning</span>
-<span class="text-xs font-bold uppercase tracking-tighter">Towels</span>
-<div class="flex items-center gap-3 mt-2">
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">-</button>
-<span class="font-black">6</span>
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-primary">+</button>
-</div>
-</div>
-<!-- Add more tiles as needed for the 3x4 grid -->
-<div class="bg-surface-container-low p-4 rounded-lg flex flex-col items-center gap-3 group hover:bg-surface-container-high transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-primary">checkroom</span>
-<span class="text-xs font-bold uppercase tracking-tighter">Dresses</span>
-<div class="flex items-center gap-3 mt-2">
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">-</button>
-<span class="font-black">0</span>
-<button class="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-primary">+</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<section id="estimator" class="bg-surface py-32">
+  <div class="container mx-auto px-8 max-w-6xl">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div class="space-y-8">
+        <h2 class="text-5xl font-black tracking-tighter leading-none">Calculate your load.</h2>
+        <p class="text-on-surface-variant text-lg">Not sure how much it weighs? Use our estimator to get a rough idea of your service cost.</p>
+        <div class="p-8 bg-surface-container-low rounded-lg space-y-4">
+          <div class="flex justify-between items-end border-b border-white/5 pb-4">
+            <span class="text-on-surface-variant font-bold uppercase tracking-widest text-xs">Estimated Weight</span>
+            <span class="text-4xl font-black text-primary" id="totalWeight">~0 lbs</span>
+          </div>
+          <div class="flex justify-between items-end border-b border-white/5 pb-4">
+            <span class="text-on-surface-variant font-bold uppercase tracking-widest text-xs">Normal 24h</span>
+            <span class="text-2xl font-black text-white" id="costNormal">$0.00</span>
+          </div>
+          <div class="flex justify-between items-end">
+            <span class="text-on-surface-variant font-bold uppercase tracking-widest text-xs">Express 6h</span>
+            <span class="text-2xl font-black text-secondary" id="costExpress">$0.00</span>
+          </div>
+        </div>
+        <a id="estimatorCta" href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup." target="_blank" rel="noopener"
+           class="block w-full bg-primary-container text-white font-black py-4 rounded-lg hover:shadow-[0px_0px_20px_rgba(37,99,235,0.4)] transition-shadow text-center"
+           onclick="gtag('event','estimator_book',{event_category:'CTA',event_label:'estimator_cta'})">
+          Schedule Pickup on WhatsApp
+        </a>
+      </div>
+      <div class="bg-surface-container-highest p-8 rounded-lg shadow-2xl border border-white/5">
+        <div class="grid grid-cols-3 md:grid-cols-4 gap-4" id="estimatorGrid">
+          <!-- tiles injected by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- SECTION 6: COVERAGE -->
-<section class="bg-[#05080f] py-32 border-t border-white/5">
-<div class="container mx-auto px-8 text-center space-y-12">
-<h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase font-headline">Serving Orlando's Premier Rentals</h2>
-<div class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
-<div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
-<div class="relative h-2 w-2">
-<span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-</div>
-<span class="font-bold text-on-surface uppercase tracking-widest text-xs">Orlando City</span>
-</div>
-<div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
-<div class="relative h-2 w-2">
-<span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-</div>
-<span class="font-bold text-on-surface uppercase tracking-widest text-xs">Kissimmee</span>
-</div>
-<div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
-<div class="relative h-2 w-2">
-<span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-</div>
-<span class="font-bold text-on-surface uppercase tracking-widest text-xs">Reunion Resort</span>
-</div>
-<div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
-<div class="relative h-2 w-2">
-<span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-</div>
-<span class="font-bold text-on-surface uppercase tracking-widest text-xs">Windsor Hills</span>
-</div>
-<div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
-<div class="relative h-2 w-2">
-<span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-</div>
-<span class="font-bold text-on-surface uppercase tracking-widest text-xs">Champions Gate</span>
-</div>
-</div>
-<p class="text-on-surface-variant max-w-2xl mx-auto body-md">We specialize in servicing Airbnb, VRBO, and luxury vacation home communities across the greater Orlando area.</p>
-</div>
+<section id="coverage" class="bg-[#05080f] py-32 border-t border-white/5">
+  <div class="container mx-auto px-8 text-center space-y-12">
+    <h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase font-headline">Serving Orlando's Premier Rentals</h2>
+    <div class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+      <div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
+        <div class="relative h-2 w-2"><span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></div>
+        <span class="font-bold text-on-surface uppercase tracking-widest text-xs">Orlando City</span>
+      </div>
+      <div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
+        <div class="relative h-2 w-2"><span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></div>
+        <span class="font-bold text-on-surface uppercase tracking-widest text-xs">Kissimmee</span>
+      </div>
+      <div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
+        <div class="relative h-2 w-2"><span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></div>
+        <span class="font-bold text-on-surface uppercase tracking-widest text-xs">Reunion Resort</span>
+      </div>
+      <div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
+        <div class="relative h-2 w-2"><span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></div>
+        <span class="font-bold text-on-surface uppercase tracking-widest text-xs">Windsor Hills</span>
+      </div>
+      <div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
+        <div class="relative h-2 w-2"><span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></div>
+        <span class="font-bold text-on-surface uppercase tracking-widest text-xs">Champions Gate</span>
+      </div>
+      <div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
+        <div class="relative h-2 w-2"><span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></div>
+        <span class="font-bold text-on-surface uppercase tracking-widest text-xs">Lake Nona</span>
+      </div>
+    </div>
+    <p class="text-on-surface-variant max-w-2xl mx-auto">We specialize in Airbnb, VRBO, and luxury vacation home communities across the greater Orlando area.</p>
+  </div>
 </section>
+
 <!-- SECTION 7: REVIEWS -->
-<section class="bg-surface py-32 overflow-hidden">
-<div class="container mx-auto px-8">
-<div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
-<div class="space-y-4">
-<h2 class="text-5xl font-black tracking-tighter">Guest Favorites</h2>
-<p class="text-on-surface-variant max-w-lg">Over 2,500 vacationers have trusted us with their laundry so they could spend more time at the parks.</p>
-</div>
-<div class="flex items-center gap-4 bg-surface-container-high p-4 rounded-lg">
-<span class="text-4xl font-black">4.9</span>
-<div class="flex flex-col">
-<div class="flex text-secondary">
-<span class="material-symbols-outlined text-sm" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-sm" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-sm" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-sm" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-sm" data-weight="fill">star</span>
-</div>
-<span class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">2.5k Reviews</span>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Testimonial 1 -->
-<div class="bg-surface-container-low p-10 rounded-lg border border-white/5 space-y-6">
-<div class="flex gap-1 text-secondary">
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-</div>
-<p class="italic text-on-surface-variant">"Saved our vacation! With 3 kids, the laundry piles up fast. A7 picked up from our Airbnb in Windsor Hills and everything was back fresh the next morning. Lifesaver."</p>
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center font-bold">MK</div>
-<div>
-<p class="font-bold text-sm">Melissa K.</p>
-<p class="text-[10px] uppercase text-slate-500 font-bold">Airbnb Guest</p>
-</div>
-</div>
-</div>
-<!-- Testimonial 2 -->
-<div class="bg-surface-container-low p-10 rounded-lg border border-white/5 space-y-6">
-<div class="flex gap-1 text-secondary">
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-</div>
-<p class="italic text-on-surface-variant">"Incredible service. Used the 6-hour express while we were at Hollywood Studios. Came back and everything was folded perfectly. Worth every penny."</p>
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center font-bold">JD</div>
-<div>
-<p class="font-bold text-sm">John D.</p>
-<p class="text-[10px] uppercase text-slate-500 font-bold">VRBO Traveler</p>
-</div>
-</div>
-</div>
-<!-- Testimonial 3 -->
-<div class="bg-surface-container-low p-10 rounded-lg border border-white/5 space-y-6">
-<div class="flex gap-1 text-secondary">
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-<span class="material-symbols-outlined text-xs" data-weight="fill">star</span>
-</div>
-<p class="italic text-on-surface-variant">"The communication via WhatsApp was so easy. They even handled some delicate dresses for a dinner at Epcot with zero issues. Premium feel throughout."</p>
-<div class="flex items-center gap-4">
-<div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold">AW</div>
-<div>
-<p class="font-bold text-sm">Amanda W.</p>
-<p class="text-[10px] uppercase text-slate-500 font-bold">Reunion Resort Guest</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+<section id="reviews" class="bg-surface py-32 overflow-hidden">
+  <div class="container mx-auto px-8">
+    <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
+      <div class="space-y-4">
+        <h2 class="text-5xl font-black tracking-tighter">Guest Favorites</h2>
+        <p class="text-on-surface-variant max-w-lg">Over 2,500 vacationers trusted us with their laundry so they could enjoy Orlando without stress.</p>
+      </div>
+      <div class="flex items-center gap-4 bg-surface-container-high p-4 rounded-lg">
+        <span class="text-4xl font-black">4.9</span>
+        <div class="flex flex-col">
+          <div class="flex text-secondary">
+            <span class="material-symbols-outlined text-sm fill">star</span><span class="material-symbols-outlined text-sm fill">star</span>
+            <span class="material-symbols-outlined text-sm fill">star</span><span class="material-symbols-outlined text-sm fill">star</span>
+            <span class="material-symbols-outlined text-sm fill">star</span>
+          </div>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant">2,500+ Reviews</span>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-surface-container-low p-10 rounded-lg border border-white/5 space-y-6">
+        <div class="flex gap-1 text-secondary">
+          <span class="material-symbols-outlined text-xs fill">star</span><span class="material-symbols-outlined text-xs fill">star</span>
+          <span class="material-symbols-outlined text-xs fill">star</span><span class="material-symbols-outlined text-xs fill">star</span>
+          <span class="material-symbols-outlined text-xs fill">star</span>
+        </div>
+        <p class="italic text-on-surface-variant">"Saved our vacation! With 3 kids, the laundry piles up fast. A7 picked up from our Airbnb in Windsor Hills and everything was back fresh the next morning. Lifesaver."</p>
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center font-bold text-white">MK</div>
+          <div><p class="font-bold text-sm">Melissa K.</p><p class="text-[10px] uppercase text-slate-500 font-bold">Airbnb Guest</p></div>
+        </div>
+      </div>
+      <div class="bg-surface-container-low p-10 rounded-lg border border-white/5 space-y-6">
+        <div class="flex gap-1 text-secondary">
+          <span class="material-symbols-outlined text-xs fill">star</span><span class="material-symbols-outlined text-xs fill">star</span>
+          <span class="material-symbols-outlined text-xs fill">star</span><span class="material-symbols-outlined text-xs fill">star</span>
+          <span class="material-symbols-outlined text-xs fill">star</span>
+        </div>
+        <p class="italic text-on-surface-variant">"Incredible service. Used the 6-hour express while we were at Hollywood Studios. Came back and everything was folded perfectly. Worth every penny."</p>
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center font-bold">JD</div>
+          <div><p class="font-bold text-sm">John D.</p><p class="text-[10px] uppercase text-slate-500 font-bold">VRBO Traveler</p></div>
+        </div>
+      </div>
+      <div class="bg-surface-container-low p-10 rounded-lg border border-white/5 space-y-6">
+        <div class="flex gap-1 text-secondary">
+          <span class="material-symbols-outlined text-xs fill">star</span><span class="material-symbols-outlined text-xs fill">star</span>
+          <span class="material-symbols-outlined text-xs fill">star</span><span class="material-symbols-outlined text-xs fill">star</span>
+          <span class="material-symbols-outlined text-xs fill">star</span>
+        </div>
+        <p class="italic text-on-surface-variant">"The communication via WhatsApp was so easy. They even handled some delicate dresses for a dinner at Epcot with zero issues. Premium feel throughout."</p>
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white">AW</div>
+          <div><p class="font-bold text-sm">Amanda W.</p><p class="text-[10px] uppercase text-slate-500 font-bold">Reunion Resort Guest</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
 <!-- SECTION 8: OTHER SERVICES -->
 <section class="bg-surface-container-lowest py-32">
-<div class="container mx-auto px-8">
-<h2 class="text-4xl md:text-5xl font-black tracking-tighter mb-16 text-center">Beyond Clothes</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-<div class="group relative overflow-hidden rounded-lg h-[400px]">
-<img alt="Carpet cleaning" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Close-up of a high-end textured rug being professionally steam cleaned with soft ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF4i-b14EEzU7SVMzhu3SXtF1B8FirG4-IMKBsAseUfgW9hQpmEDR_JBq3ORfUmRJGo2MA5__VveMj346Z8rlOutl0KV8AFK9ceHzA3u8lXqEbN9Fu5n0TiQwDvEWPX7blKDeQpGCqHmLvRoaEGi1tDjGbLZ0b2MdiWPl_pdHDW75FhqjPWIuR-vXLxl0t8f9zlgSuWiP8-WsMtjKy_4vCt5pj96Q-C9fpRY5uPjLM1hN1w8g4A8chNXZTYdXagxgIKtbXx_DwpSs6"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
-<h3 class="text-3xl font-black text-white">Carpet &amp; Rug Cleaning</h3>
-<p class="text-white/70 mt-2">Deep industrial cleaning for high-traffic vacation home rugs.</p>
-<button class="mt-6 text-primary-container font-black flex items-center gap-2">Learn More <span class="material-symbols-outlined">chevron_right</span></button>
-</div>
-</div>
-<div class="group relative overflow-hidden rounded-lg h-[400px]">
-<img alt="Upholstery cleaning" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Professional deep cleaning of a luxury grey velvet sofa with detailed focus on steam and fabric texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJwc10msUOn7hd5degBA6StwJROudZYsHawSfvIyrDQYJ-zj2L8mfnnT1HqDClTBpaRDI-ExK6mjsv6-QQV_mDSEdBrnEzSnnGAdaFOdBokZ8FHPyH4U4JQxaAIYVgGVvHBP7JId63g3J-qJ7pfTvKDNvt-vaKhdJtCrZIJN36uWsS13Bljst1Bt6FzaaKL8IlDQfI11lcuTlLc_Gqb5oEmzaoIGNiUh-BaAhNeW_WC_Wavz5ySEAJQ2OrAzwjW16AVom8oPBbLd92"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
-<h3 class="text-3xl font-black text-white">Upholstery Cleaning</h3>
-<p class="text-white/70 mt-2">Refresh sofas and armchairs with our non-toxic deep steam service.</p>
-<button class="mt-6 text-primary-container font-black flex items-center gap-2">Learn More <span class="material-symbols-outlined">chevron_right</span></button>
-</div>
-</div>
-</div>
-</div>
+  <div class="container mx-auto px-8">
+    <h2 class="text-4xl md:text-5xl font-black tracking-tighter mb-16 text-center">Beyond Clothes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <a href="/carpet-cleaning.html" class="group relative overflow-hidden rounded-lg h-[400px] block">
+        <img alt="Carpet and rug cleaning Orlando" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF4i-b14EEzU7SVMzhu3SXtF1B8FirG4-IMKBsAseUfgW9hQpmEDR_JBq3ORfUmRJGo2MA5__VveMj346Z8rlOutl0KV8AFK9ceHzA3u8lXqEbN9Fu5n0TiQwDvEWPX7blKDeQpGCqHmLvRoaEGi1tDjGbLZ0b2MdiWPl_pdHDW75FhqjPWIuR-vXLxl0t8f9zlgSuWiP8-WsMtjKy_4vCt5pj96Q-C9fpRY5uPjLM1hN1w8g4A8chNXZTYdXagxgIKtbXx_DwpSs6"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
+          <h3 class="text-3xl font-black text-white">Carpet &amp; Rug Cleaning</h3>
+          <p class="text-white/70 mt-2">Deep industrial cleaning for high-traffic vacation home rugs.</p>
+          <span class="mt-6 text-primary-container font-black flex items-center gap-2">Learn More <span class="material-symbols-outlined">chevron_right</span></span>
+        </div>
+      </a>
+      <a href="/upholstery-cleaning.html" class="group relative overflow-hidden rounded-lg h-[400px] block">
+        <img alt="Upholstery cleaning Orlando" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJwc10msUOn7hd5degBA6StwJROudZYsHawSfvIyrDQYJ-zj2L8mfnnT1HqDClTBpaRDI-ExK6mjsv6-QQV_mDSEdBrnEzSnnGAdaFOdBokZ8FHPyH4U4JQxaAIYVgGVvHBP7JId63g3J-qJ7pfTvKDNvt-vaKhdJtCrZIJN36uWsS13Bljst1Bt6FzaaKL8IlDQfI11lcuTlLc_Gqb5oEmzaoIGNiUh-BaAhNeW_Wavz5ySEAJQ2OrAzwjW16AVom8oPBbLd92"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
+          <h3 class="text-3xl font-black text-white">Upholstery Cleaning</h3>
+          <p class="text-white/70 mt-2">Refresh sofas and armchairs with our non-toxic deep steam service.</p>
+          <span class="mt-6 text-primary-container font-black flex items-center gap-2">Learn More <span class="material-symbols-outlined">chevron_right</span></span>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
+
 <!-- SECTION 9: FINAL CTA -->
 <section class="bg-primary-container py-40 overflow-hidden relative">
-<div class="absolute inset-0 opacity-10 pointer-events-none">
-<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
-<path d="M0 100 L100 0 L100 100 Z" fill="white"></path>
-</svg>
-</div>
-<div class="container mx-auto px-8 relative z-10 text-center">
-<h2 class="text-6xl md:text-9xl font-black text-white tracking-[-6px] leading-[0.8] mb-12 uppercase">
-                Ready to drop <br/> the laundry bag?
-            </h2>
-<button class="bg-white text-primary-container px-16 py-8 text-2xl font-black rounded-lg hover:scale-105 transition-all shadow-2xl flex items-center gap-4 mx-auto">
-                Schedule Now on WhatsApp
-                <span class="material-symbols-outlined text-3xl">chat_bubble</span>
-</button>
-<p class="text-white/80 mt-8 font-medium uppercase tracking-[0.2em] text-sm">Average response time: 3 Minutes</p>
-</div>
+  <div class="absolute inset-0 opacity-10 pointer-events-none">
+    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M0 100 L100 0 L100 100 Z" fill="white"></path></svg>
+  </div>
+  <div class="container mx-auto px-8 relative z-10 text-center">
+    <h2 class="text-6xl md:text-9xl font-black text-white tracking-[-6px] leading-[0.8] mb-12 uppercase">
+      Ready to drop<br/>the laundry bag?
+    </h2>
+    <a href="https://wa.me/14076708839?text=Hi!%20I%27m%20ready%20to%20schedule%20a%20laundry%20pickup%20at%20my%20vacation%20rental%20in%20Orlando." target="_blank" rel="noopener"
+       class="bg-white text-primary-container px-16 py-8 text-2xl font-black rounded-lg hover:scale-105 transition-all shadow-2xl inline-flex items-center gap-4"
+       onclick="gtag('event','final_cta',{event_category:'CTA',event_label:'premium_final'})">
+      Schedule Now on WhatsApp
+      <span class="material-symbols-outlined text-3xl">chat_bubble</span>
+    </a>
+    <p class="text-white/80 mt-8 font-medium uppercase tracking-[0.2em] text-sm">Average response time: 3 Minutes</p>
+  </div>
 </section>
-<!-- Footer -->
+
+<!-- FOOTER -->
 <footer class="bg-[#05080f] w-full border-t border-slate-800/50">
-<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 gap-6 container mx-auto">
-<div class="text-lg font-black text-white font-['Inter'] uppercase">A7 Laundry</div>
-<div class="flex flex-wrap justify-center gap-8">
-<a class="text-slate-500 hover:text-white transition-colors text-sm font-['Inter']" href="#">Services</a>
-<a class="text-slate-500 hover:text-white transition-colors text-sm font-['Inter']" href="#">How it Works</a>
-<a class="text-slate-500 hover:text-white transition-colors text-sm font-['Inter']" href="#">Coverage</a>
-<a class="text-slate-500 hover:text-white transition-colors text-sm font-['Inter']" href="#">Terms</a>
-<a class="text-slate-500 hover:text-white transition-colors text-sm font-['Inter']" href="#">Privacy</a>
-</div>
-<div class="text-slate-500 text-sm font-['Inter']">© 2026 A7 Laundry. All rights reserved.</div>
-</div>
+  <div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 gap-6 container mx-auto">
+    <a href="/index.html"><img src="/A7 LAUNDRY-05.png" alt="A7 Laundry" style="height:28px;width:auto;filter:brightness(0) invert(1);"/></a>
+    <div class="flex flex-wrap justify-center gap-8">
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/index.html">Home</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/carpet-cleaning.html">Carpet</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/shoe-cleaning.html">Shoes</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/upholstery-cleaning.html">Upholstery</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/vacation-rental.html">Vacation Rental</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/privacy-policy.html">Privacy</a>
+    </div>
+    <div class="text-slate-500 text-sm">© 2026 A7 Laundry. All rights reserved.</div>
+  </div>
 </footer>
-</body></html>
+
+<script>
+// Estimator
+const ITEMS = [
+  { icon:'apparel',    label:'T-Shirt',  lbs: 0.5 },
+  { icon:'straighten', label:'Jeans',    lbs: 1.5 },
+  { icon:'checkroom',  label:'Jacket',   lbs: 2.0 },
+  { icon:'bed',        label:'Bedding',  lbs: 4.0 },
+  { icon:'dry_cleaning',label:'Towels',  lbs: 1.0 },
+  { icon:'checkroom',  label:'Dress',    lbs: 0.8 },
+  { icon:'backpack',   label:'Shorts',   lbs: 0.6 },
+  { icon:'layers',     label:'Sweater',  lbs: 1.2 },
+];
+
+const counts = ITEMS.map(() => 0);
+
+function recalc() {
+  const total = ITEMS.reduce((sum, item, i) => sum + item.lbs * counts[i], 0);
+  document.getElementById('totalWeight').textContent = total > 0 ? `~${total.toFixed(1)} lbs` : '~0 lbs';
+  document.getElementById('costNormal').textContent = total > 0 ? `$${(total * 1.95).toFixed(2)}` : '$0.00';
+  document.getElementById('costExpress').textContent = total > 0 ? `$${(total * 2.95).toFixed(2)}` : '$0.00';
+  if (total > 0) {
+    const msg = encodeURIComponent(`Hi! I'd like to schedule a laundry pickup. Estimated load: ~${total.toFixed(1)} lbs.`);
+    document.getElementById('estimatorCta').href = `https://wa.me/14076708839?text=${msg}`;
+  }
+}
+
+const grid = document.getElementById('estimatorGrid');
+ITEMS.forEach((item, i) => {
+  const tile = document.createElement('div');
+  tile.className = 'bg-surface-container-low p-4 rounded-lg flex flex-col items-center gap-3 hover:bg-surface-container-high transition-colors';
+  tile.innerHTML = `
+    <span class="material-symbols-outlined text-primary">${item.icon}</span>
+    <span class="text-xs font-bold uppercase tracking-tighter">${item.label}</span>
+    <div class="flex items-center gap-2 mt-2">
+      <button onclick="adj(${i},-1)" class="w-7 h-7 rounded bg-white/10 flex items-center justify-center text-white font-bold hover:bg-white/20 transition-colors">−</button>
+      <span class="font-black counter-val" id="c${i}">0</span>
+      <button onclick="adj(${i},1)" class="w-7 h-7 rounded bg-primary-container flex items-center justify-center text-white font-bold hover:opacity-90 transition-opacity">+</button>
+    </div>`;
+  grid.appendChild(tile);
+});
+
+window.adj = function(i, delta) {
+  counts[i] = Math.max(0, counts[i] + delta);
+  document.getElementById('c' + i).textContent = counts[i];
+  recalc();
+  gtag('event', 'estimator_interact', {event_category: 'Estimator', event_label: ITEMS[i].label});
+};
+</script>
+</body>
+</html>
