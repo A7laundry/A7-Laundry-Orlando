@@ -197,8 +197,16 @@
     .urgency-sep{opacity:.5}
 
     /* === HERO === */
+    @keyframes kenBurns{
+      0%  {transform:scale(1) translate(0,0)}
+      25% {transform:scale(1.06) translate(-12px,-6px)}
+      75% {transform:scale(1.04) translate(10px,4px)}
+      100%{transform:scale(1) translate(0,0)}
+    }
     .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--base-dark);padding:0}
-    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(37,99,235,.12) 0%,transparent 70%);pointer-events:none}
+    .hero-bg{position:absolute;inset:-6%;z-index:0;will-change:transform}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;display:block;animation:kenBurns 16s ease-in-out infinite;transform-origin:center center}
+    .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(10,15,26,.88) 0%,rgba(10,15,26,.65) 55%,rgba(10,15,26,.3) 100%)}
     .hero-content{position:relative;z-index:2;text-align:left;max-width:900px;padding:160px 32px 100px}
     .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);border-radius:24px;padding:6px 16px;font-size:12px;font-weight:700;color:var(--primary-light);letter-spacing:1px;text-transform:uppercase;margin-bottom:28px}
     .hero-eyebrow-dot{width:6px;height:6px;background:var(--primary-light);border-radius:50%;animation:blink 2s infinite}
@@ -219,6 +227,9 @@
     @media(max-width:600px){.hero h1{letter-spacing:-2px}.hero-content{padding:140px 20px 80px}.hero-ctas{flex-direction:column}.hero-cta-primary,.hero-cta-secondary{justify-content:center}}
 
     /* === HOW IT WORKS === */
+    .hiw-photo{margin-top:64px;border-radius:16px;overflow:hidden;max-height:500px;position:relative}
+    .hiw-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+    .hiw-photo:hover img{transform:scale(1.02)}
     .hiw-section{padding:100px 0;background:var(--surface)}
     .hiw-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;margin-top:56px}
     .hiw-steps::before{content:'';position:absolute;top:36px;left:calc(16.66% + 20px);right:calc(16.66% + 20px);height:1px;background:linear-gradient(90deg,var(--primary),var(--primary-light));opacity:.3;pointer-events:none}
@@ -227,6 +238,13 @@
     .hiw-step-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:10px}
     .hiw-step-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.7}
     @media(max-width:700px){.hiw-steps{grid-template-columns:1fr;gap:40px}.hiw-steps::before{display:none}.hiw-step{padding:0 16px}}
+
+    /* === CONTRAST SPLIT === */
+    .contrast-section{background:var(--base-dark);padding:80px 0}
+    .contrast-img{border-radius:16px;overflow:hidden;box-shadow:var(--shadow-xl)}
+    .contrast-img img{width:100%;display:block;height:auto}
+    .contrast-caption{text-align:center;margin-top:20px;font-size:13px;color:rgba(255,255,255,.3);letter-spacing:.5px}
+    .contrast-caption strong{color:rgba(255,255,255,.55)}
 
     /* === SERVICES === */
     .services-section{padding:100px 0;background:var(--base-dark)}
@@ -512,6 +530,11 @@
   <!-- HERO -->
   <main id="main">
     <section class="hero" aria-label="Hero">
+      <!-- Background com Ken Burns -->
+      <div class="hero-bg">
+        <img src="public/Hero - Familia em Alegria.png" alt="" aria-hidden="true" fetchpriority="high">
+      </div>
+      <div class="hero-overlay"></div>
       <div class="container">
         <div class="hero-content">
           <div class="hero-eyebrow">
@@ -625,6 +648,28 @@
             </p>
           </div>
         </div>
+        <!-- Foto real da entrega -->
+        <div class="hiw-photo">
+          <img src="public/Como Funciona - Entrega Profissional.jpg"
+               alt="A7 Laundry delivery — professional handing clean laundry bag at vacation rental"
+               loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTRAST -->
+    <section class="contrast-section" aria-label="Why A7 Laundry">
+      <div class="container">
+        <div class="contrast-img">
+          <img src="public/1775625968812.png"
+               alt="Wasted vacation time at laundromat vs relaxing at the beach with A7 Laundry"
+               loading="lazy">
+        </div>
+        <p class="contrast-caption">
+          <span data-lang="en"><strong>10:45 PM. Wasted Vacation Time.</strong> Or just let us handle it.</span>
+          <span data-lang="pt" style="display:none"><strong>22h45. Tempo de férias jogado fora.</strong> Ou deixa a gente resolver.</span>
+          <span data-lang="es" style="display:none"><strong>22:45. Tiempo de vacaciones perdido.</strong> O déjanos resolverlo.</span>
+        </p>
       </div>
     </section>
 
