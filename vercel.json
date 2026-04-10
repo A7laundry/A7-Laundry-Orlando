@@ -17,7 +17,11 @@
     { "source": "/comforter-v4", "destination": "/comforter-cleaning-v4.html" },
     { "source": "/comforter-v5", "destination": "/comforter-cleaning-v5.html" },
     { "source": "/comforter-v6", "destination": "/comforter-cleaning-v6.html" },
-    { "source": "/premium", "destination": "/premium.html" }
+    { "source": "/premium", "destination": "/premium.html" },
+    { "source": "/blog", "destination": "/blog/index.html" },
+    { "source": "/blog/laundry-service-orlando", "destination": "/blog/laundry-service-orlando.html" },
+    { "source": "/blog/how-to-clean-comforter", "destination": "/blog/how-to-clean-comforter.html" },
+    { "source": "/blog/vacation-rental-laundry-orlando", "destination": "/blog/vacation-rental-laundry-orlando.html" }
   ],
   "headers": [
     {
