@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /command-center
+Disallow: /criativos/
+
+Sitemap: https://a7laundry.com/sitemap.xml

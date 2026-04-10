@@ -21,7 +21,9 @@
     { "source": "/blog", "destination": "/blog/index.html" },
     { "source": "/blog/laundry-service-orlando", "destination": "/blog/laundry-service-orlando.html" },
     { "source": "/blog/how-to-clean-comforter", "destination": "/blog/how-to-clean-comforter.html" },
-    { "source": "/blog/vacation-rental-laundry-orlando", "destination": "/blog/vacation-rental-laundry-orlando.html" }
+    { "source": "/blog/vacation-rental-laundry-orlando", "destination": "/blog/vacation-rental-laundry-orlando.html" },
+    { "source": "/blog/same-day-laundry-orlando", "destination": "/blog/same-day-laundry-orlando.html" },
+    { "source": "/blog/laundry-kissimmee", "destination": "/blog/laundry-kissimmee.html" }
   ],
   "headers": [
     {
