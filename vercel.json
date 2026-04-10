@@ -3,6 +3,7 @@
   "outputDirectory": ".",
   "framework": null,
   "rewrites": [
+    { "source": "/plans", "destination": "/plans.html" },
     { "source": "/carpet", "destination": "/carpet-cleaning.html" },
     { "source": "/shoes", "destination": "/shoe-cleaning.html" },
     { "source": "/upholstery", "destination": "/upholstery-cleaning.html" },
@@ -15,7 +16,8 @@
     { "source": "/comforter-thanks", "destination": "/comforter-thanks.html" },
     { "source": "/comforter-v4", "destination": "/comforter-cleaning-v4.html" },
     { "source": "/comforter-v5", "destination": "/comforter-cleaning-v5.html" },
-    { "source": "/comforter-v6", "destination": "/comforter-cleaning-v6.html" }
+    { "source": "/comforter-v6", "destination": "/comforter-cleaning-v6.html" },
+    { "source": "/premium", "destination": "/premium.html" }
   ],
   "headers": [
     {
