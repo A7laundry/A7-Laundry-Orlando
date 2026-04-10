@@ -416,25 +416,6 @@
     }
     @media(max-width:768px) { .sticky-cta { display: block; } .live-viewers { bottom: 80px; } }
 
-    /* ===== EXIT INTENT POPUP ===== */
-    .exit-overlay {
-      display: none; position: fixed; inset: 0; z-index: 10000;
-      background: rgba(10,6,24,0.85); backdrop-filter: blur(8px);
-      align-items: center; justify-content: center;
-    }
-    .exit-overlay.show { display: flex; }
-    .exit-box {
-      background: var(--gray-900); border: 1px solid rgba(5,150,105,0.3);
-      border-radius: var(--radius-lg); padding: 48px 36px; max-width: 460px;
-      text-align: center; position: relative;
-    }
-    .exit-box h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; color: var(--white); margin-bottom: 12px; }
-    .exit-box p { font-size: 15px; color: var(--gray-200); margin-bottom: 24px; }
-    .exit-close {
-      display: block; margin-top: 16px; background: transparent; border: none;
-      color: var(--gray-500); font-size: 13px; cursor: pointer; text-decoration: underline;
-    }
-
     /* ===== SCROLL REVEAL ===== */
     .rv { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .rv.visible { opacity: 1; transform: translateY(0); }
@@ -473,7 +454,6 @@
       .compare-grid { grid-template-columns: 1fr; }
       .value-box { padding: 28px 20px; }
       .guarantee-box { padding: 32px 20px; }
-      .exit-box { margin: 20px; padding: 36px 24px; }
       .lifestyle>div { grid-template-columns: 1fr !important; }
     }
     @media(max-width:480px) {
@@ -989,102 +969,11 @@
         <li><span data-lang="en">Dedicated cleaning team assigned to your properties</span><span data-lang="pt">Equipe de limpeza dedicada para suas propriedades</span><span data-lang="es">Equipo de limpieza dedicado asignado a tus propiedades</span></li>
         <li><span data-lang="en">Free restocking consultation included</span><span data-lang="pt">Consultoria de reposi&ccedil;&atilde;o gr&aacute;tis inclu&iacute;da</span><span data-lang="es">Consultor&iacute;a de reabastecimiento gratis incluida</span></li>
       </ul>
-      <button onclick="document.getElementById('memberModal').classList.add('show')" class="btn-primary" style="border:none;cursor:pointer;font-family:inherit;margin-top:12px"><span data-lang="en">View Membership Plans &rarr;</span><span data-lang="pt">Ver Planos de Assinatura &rarr;</span><span data-lang="es">Ver Planes de Membres&iacute;a &rarr;</span></button>
+      <button class="btn-primary" style="border:none;cursor:pointer;font-family:inherit;margin-top:12px"><span data-lang="en">View Membership Plans &rarr;</span><span data-lang="pt">Ver Planos de Assinatura &rarr;</span><span data-lang="es">Ver Planes de Membres&iacute;a &rarr;</span></button>
     </div>
   </div>
 </section>
 
-<!-- MEMBERSHIP MODAL -->
-<div id="memberModal" style="position:fixed;inset:0;z-index:10000;background:rgba(10,6,24,.85);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.4s;backdrop-filter:blur(8px)" onclick="if(event.target===this)this.classList.remove('show')">
-  <style>
-    #memberModal.show{opacity:1;visibility:visible}
-    #memberModal .modal-box{transform:scale(.9);transition:.4s}
-    #memberModal.show .modal-box{transform:scale(1)}
-    .plan-toggle{display:flex;background:rgba(5,150,105,.1);border-radius:50px;padding:4px;gap:4px;margin:0 auto 32px;width:fit-content}
-    .plan-toggle button{padding:10px 28px;border:none;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;font-family:inherit;background:transparent;color:var(--gray-500)}
-    .plan-toggle button.active{background:var(--accent);color:var(--white)}
-    .plan-toggle .save-badge{display:inline-block;background:#fbbf24;color:#000;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:6px;vertical-align:middle}
-    .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
-    .plan-card{background:var(--white);border:2px solid #e5e7eb;border-radius:20px;padding:32px 24px;text-align:center;position:relative;transition:.3s;color:var(--gray-900)}
-    .plan-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
-    .plan-card.popular{border-color:var(--accent);transform:scale(1.05)}
-    .plan-card.popular:hover{transform:scale(1.05) translateY(-4px)}
-    .popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--white);padding:4px 20px;border-radius:50px;font-size:11px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
-    .plan-card h4{font-size:20px;font-weight:800;margin-bottom:4px}
-    .plan-price{font-size:42px;font-weight:900;color:var(--accent-dark);letter-spacing:-2px;margin:12px 0 4px}
-    .plan-price small{font-size:16px;font-weight:600;color:var(--gray-500)}
-    .plan-period{font-size:13px;color:var(--gray-500);margin-bottom:20px}
-    .plan-features{list-style:none;text-align:left;margin-bottom:24px}
-    .plan-features li{padding:8px 0;font-size:13px;color:var(--gray-700);display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid #f3f4f6}
-    .plan-features li:last-child{border-bottom:none}
-    .plan-features li::before{display:none}
-    .plan-features .pf-check{color:var(--accent);font-weight:700;flex-shrink:0}
-    .plan-btn{display:block;width:100%;padding:14px;border:none;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;font-family:inherit;text-decoration:none;text-align:center}
-    .plan-btn.primary{background:var(--accent);color:var(--white)}
-    .plan-btn.primary:hover{background:var(--accent-dark);transform:translateY(-1px)}
-    .plan-btn.outline{background:transparent;border:2px solid #e5e7eb;color:var(--gray-700)}
-    .plan-btn.outline:hover{border-color:var(--accent);color:var(--accent-dark)}
-    @media(max-width:768px){.plans-grid{grid-template-columns:1fr;max-width:400px}.plan-card.popular{transform:none}.plan-card.popular:hover{transform:translateY(-4px)}}
-  </style>
-  <div class="modal-box" style="background:var(--white);border-radius:24px;max-width:980px;width:95%;max-height:90vh;overflow-y:auto;padding:48px 36px;position:relative">
-    <button onclick="document.getElementById('memberModal').classList.remove('show')" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--gray-500);line-height:1">&times;</button>
-    <div style="text-align:center;margin-bottom:12px">
-      <div class="section-tag" style="background:rgba(5,150,105,.1);color:var(--accent-dark)"><span data-lang="en">MEMBERSHIP PLANS</span><span data-lang="pt">PLANOS DE ASSINATURA</span><span data-lang="es">PLANES DE MEMBRES&Iacute;A</span></div>
-      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;color:var(--gray-900);margin:12px 0 8px"><span data-lang="en">Vacation Rental Plans</span><span data-lang="pt">Planos para Vacation Rental</span><span data-lang="es">Planes para Alquiler Vacacional</span></h2>
-      <p style="font-size:15px;color:var(--gray-500);max-width:500px;margin:0 auto 24px"><span data-lang="en">Consistent turnovers at a fixed monthly price. Cancel anytime.</span><span data-lang="pt">Turnovers consistentes a um pre&ccedil;o mensal fixo. Cancele quando quiser.</span><span data-lang="es">Turnovers consistentes a un precio mensual fijo. Cancela cuando quieras.</span></p>
-    </div>
-    <div class="plan-toggle">
-      <button class="active" onclick="togglePlan(this,'monthly')"><span data-lang="en">Monthly</span><span data-lang="pt">Mensal</span><span data-lang="es">Mensual</span></button>
-      <button onclick="togglePlan(this,'annual')"><span data-lang="en">Annual</span><span data-lang="pt">Anual</span><span data-lang="es">Anual</span> <span class="save-badge"><span data-lang="en">Save 2 months</span><span data-lang="pt">Economize 2 meses</span><span data-lang="es">Ahorra 2 meses</span></span></button>
-    </div>
-    <div class="plans-grid">
-      <div class="plan-card">
-        <h4>Starter</h4>
-        <div class="plan-price" data-monthly="199" data-annual="1990"><small>$</small>199<small>/mo</small></div>
-        <div class="plan-period" data-monthly="Billed monthly" data-annual="$1,990/year — save $398"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Facturado mensualmente</span></div>
-        <ul class="plan-features">
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Up to 4 turnovers/month</span><span data-lang="pt">At&eacute; 4 turnovers/m&ecirc;s</span><span data-lang="es">Hasta 4 turnovers/mes</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Deep clean all rooms</span><span data-lang="pt">Limpeza profunda de todos os c&ocirc;modos</span><span data-lang="es">Limpieza profunda de todas las habitaciones</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Kitchen &amp; bathroom sanitization</span><span data-lang="pt">Higieniza&ccedil;&atilde;o de cozinha &amp; banheiro</span><span data-lang="es">Sanitizaci&oacute;n de cocina &amp; ba&ntilde;o</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Photo verification report</span><span data-lang="pt">Relat&oacute;rio de verifica&ccedil;&atilde;o por fotos</span><span data-lang="es">Informe de verificaci&oacute;n con fotos</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Same-day availability</span><span data-lang="pt">Disponibilidade no mesmo dia</span><span data-lang="es">Disponibilidad el mismo d&iacute;a</span></li>
-        </ul>
-        <a href="#stripe-vr-starter" class="plan-btn outline"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
-      </div>
-      <div class="plan-card popular">
-        <div class="popular-badge"><span data-lang="en">MOST POPULAR</span><span data-lang="pt">MAIS POPULAR</span><span data-lang="es">M&Aacute;S POPULAR</span></div>
-        <h4>Professional</h4>
-        <div class="plan-price" data-monthly="399" data-annual="3990"><small>$</small>399<small>/mo</small></div>
-        <div class="plan-period" data-monthly="Billed monthly" data-annual="$3,990/year — save $798"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Facturado mensualmente</span></div>
-        <ul class="plan-features">
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Up to 10 turnovers/month</span><span data-lang="pt">At&eacute; 10 turnovers/m&ecirc;s</span><span data-lang="es">Hasta 10 turnovers/mes</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Deep clean + linen service</span><span data-lang="pt">Limpeza profunda + servi&ccedil;o de roupas de cama</span><span data-lang="es">Limpieza profunda + servicio de s&aacute;banas</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Kitchen &amp; bathroom sanitization</span><span data-lang="pt">Higieniza&ccedil;&atilde;o de cozinha &amp; banheiro</span><span data-lang="es">Sanitizaci&oacute;n de cocina &amp; ba&ntilde;o</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Restock essentials checklist</span><span data-lang="pt">Checklist de reposi&ccedil;&atilde;o de essenciais</span><span data-lang="es">Checklist de reabastecimiento de esenciales</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Photo verification report</span><span data-lang="pt">Relat&oacute;rio de verifica&ccedil;&atilde;o por fotos</span><span data-lang="es">Informe de verificaci&oacute;n con fotos</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Priority scheduling</span><span data-lang="pt">Agendamento priorit&aacute;rio</span><span data-lang="es">Programaci&oacute;n prioritaria</span></li>
-        </ul>
-        <a href="#stripe-vr-professional" class="plan-btn primary"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
-      </div>
-      <div class="plan-card">
-        <h4>Enterprise</h4>
-        <div class="plan-price" data-monthly="699" data-annual="6990"><small>$</small>699<small>/mo</small></div>
-        <div class="plan-period" data-monthly="Billed monthly" data-annual="$6,990/year — save $1,398"><span data-lang="en">Billed monthly</span><span data-lang="pt">Cobrado mensalmente</span><span data-lang="es">Facturado mensualmente</span></div>
-        <ul class="plan-features">
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Unlimited turnovers</span><span data-lang="pt">Turnovers ilimitados</span><span data-lang="es">Turnovers ilimitados</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Dedicated cleaning team</span><span data-lang="pt">Equipe de limpeza dedicada</span><span data-lang="es">Equipo de limpieza dedicado</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Full linen + towel service</span><span data-lang="pt">Servi&ccedil;o completo de roupas de cama + toalhas</span><span data-lang="es">Servicio completo de s&aacute;banas + toallas</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Restock &amp; inventory management</span><span data-lang="pt">Reposi&ccedil;&atilde;o &amp; gest&atilde;o de invent&aacute;rio</span><span data-lang="es">Reabastecimiento &amp; gesti&oacute;n de inventario</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Photo verification report</span><span data-lang="pt">Relat&oacute;rio de verifica&ccedil;&atilde;o por fotos</span><span data-lang="es">Informe de verificaci&oacute;n con fotos</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Priority scheduling</span><span data-lang="pt">Agendamento priorit&aacute;rio</span><span data-lang="es">Programaci&oacute;n prioritaria</span></li>
-          <li><span class="pf-check">&check;</span> <span data-lang="en">Account manager assigned</span><span data-lang="pt">Gerente de conta dedicado</span><span data-lang="es">Gerente de cuenta asignado</span></li>
-        </ul>
-        <a href="#stripe-vr-enterprise" class="plan-btn outline"><span data-lang="en">Subscribe Now</span><span data-lang="pt">Assinar Agora</span><span data-lang="es">Suscribirse Ahora</span></a>
-      </div>
-    </div>
-    <p style="text-align:center;font-size:12px;color:var(--gray-500);margin-top:24px"><span data-lang="en">All plans include 30-day satisfaction guarantee. Cancel anytime. Stripe secure checkout.</span><span data-lang="pt">Todos os planos incluem garantia de satisfa&ccedil;&atilde;o de 30 dias. Cancele quando quiser. Pagamento seguro via Stripe.</span><span data-lang="es">Todos los planes incluyen garant&iacute;a de satisfacci&oacute;n de 30 d&iacute;as. Cancela cuando quieras. Pago seguro con Stripe.</span></p>
-  </div>
-</div>
 
 <!-- IMPACT BANNER -->
 <section style="position:relative;min-height:400px;display:flex;align-items:center;overflow:hidden">
@@ -1169,16 +1058,6 @@
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta">
   <a href="tel:+14076708839"><span data-lang="en">📞 Call Now — (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora — (407) 670-8839</span><span data-lang="es">📞 Llama Ahora — (407) 670-8839</span></a>
-</div>
-
-<!-- EXIT INTENT POPUP -->
-<div class="exit-overlay" id="exitPopup">
-  <div class="exit-box">
-    <h2><span data-lang="en">Wait! Don't Miss Your FREE Cleaning!</span><span data-lang="pt">Espere! N&atilde;o Perca Sua Limpeza GR&Aacute;TIS!</span><span data-lang="es">&iexcl;Espera! &iexcl;No Pierdas Tu Limpieza GRATIS!</span></h2>
-    <p><span data-lang="en">Your first vacation rental turnover is on us. No credit card, no commitment &mdash; just a spotless property.</span><span data-lang="pt">Seu primeiro turnover de vacation rental &eacute; por nossa conta. Sem cart&atilde;o, sem compromisso &mdash; apenas uma propriedade impec&aacute;vel.</span><span data-lang="es">Tu primer turnover de alquiler vacacional va por nuestra cuenta. Sin tarjeta, sin compromiso &mdash; solo una propiedad impecable.</span></p>
-    <a href="https://wa.me/14076708839?text=Hi!%20I%20almost%20left%20but%20I'm%20interested%20in%20the%20free%20cleaning%20offer." class="btn-primary" data-wa-link rel="noopener noreferrer"><span data-lang="en">Claim My FREE Cleaning &rarr;</span><span data-lang="pt">Quero Minha Limpeza GR&Aacute;TIS &rarr;</span><span data-lang="es">Quiero Mi Limpieza GRATIS &rarr;</span></a>
-    <button class="exit-close" id="exitClose"><span data-lang="en">No thanks, I'll handle turnovers myself</span><span data-lang="pt">N&atilde;o obrigado, eu mesmo cuido dos turnovers</span><span data-lang="es">No gracias, yo me encargo de los turnovers</span></button>
-  </div>
 </div>
 
 <script>
@@ -1472,36 +1351,6 @@
     setTimeout(showToast, delay);
   }
   setTimeout(showToast, 15000);
-
-  /* ===== EXIT INTENT POPUP ===== */
-  var exitPopup = document.getElementById('exitPopup');
-  var exitClose = document.getElementById('exitClose');
-  var exitShown = false;
-
-  // Desktop: mouse leave
-  document.addEventListener('mouseleave', function(e){
-    if (e.clientY < 5 && !exitShown) {
-      exitShown = true;
-      exitPopup.classList.add('show');
-    }
-  });
-
-  // Mobile: 45s timer
-  if (window.innerWidth < 768) {
-    setTimeout(function(){
-      if (!exitShown) {
-        exitShown = true;
-        exitPopup.classList.add('show');
-      }
-    }, 45000);
-  }
-
-  exitClose.addEventListener('click', function(){
-    exitPopup.classList.remove('show');
-  });
-  exitPopup.addEventListener('click', function(e){
-    if (e.target === exitPopup) exitPopup.classList.remove('show');
-  });
 
   /* === Hamburger Menu === */
   (function(){

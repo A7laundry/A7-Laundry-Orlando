@@ -343,20 +343,6 @@
     .toast-name{font-weight:700}
     .toast-action{color:var(--gray-500);margin-top:2px}
 
-    /* === EXIT POPUP === */
-    .exit-popup{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.3s}
-    .exit-popup.show{opacity:1;pointer-events:auto}
-    .exit-popup-box{background:#fff;border-radius:var(--radius-xl);padding:48px 40px;max-width:400px;width:100%;text-align:center;transform:scale(.95);transition:.3s}
-    .exit-popup.show .exit-popup-box{transform:scale(1)}
-    .ep-icon{font-size:40px;margin-bottom:12px}
-    .ep-title{font-size:22px;font-weight:900;color:var(--black);margin-bottom:8px;letter-spacing:-.5px}
-    .ep-sub{font-size:14px;color:var(--gray-500);margin-bottom:24px;line-height:1.6}
-    .ep-cta{display:block;background:var(--accent);color:#fff;padding:14px 24px;border-radius:4px;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:10px;transition:.2s}
-    .ep-cta:hover{background:var(--accent-dark)}
-    .ep-cta-alt{display:block;font-size:13px;color:var(--gray-500);text-decoration:none;margin-bottom:12px;transition:.2s}
-    .ep-cta-alt:hover{color:var(--gray-700)}
-    .ep-dismiss{background:none;border:none;font-size:13px;color:var(--gray-500);cursor:pointer;padding:4px}
-
     /* Responsive */
     @media(max-width:768px){
       .steps::before{display:none}
@@ -416,38 +402,6 @@
 <div class="toast" id="proofToast">
   <div class="toast-name" id="toastName">Sarah from Lake Nona</div>
   <div class="toast-action" id="toastAction">just scheduled a King comforter pickup</div>
-</div>
-
-<!-- Exit popup -->
-<div class="exit-popup" id="exitPopup" role="dialog" aria-modal="true" aria-label="Special offer">
-  <div class="exit-popup-box">
-    <div class="ep-icon">🛏</div>
-    <div class="ep-title">
-      <span data-lang="en">Wait — still thinking?</span>
-      <span data-lang="pt">Espera — ainda pensando?</span>
-      <span data-lang="es">Espera — ¿todavía pensando?</span>
-    </div>
-    <div class="ep-sub">
-      <span data-lang="en">Your comforter has been building up bacteria and dust mites for months. One pickup changes everything.</span>
-      <span data-lang="pt">Seu edredom acumula bactérias e ácaros há meses. Uma coleta muda tudo.</span>
-      <span data-lang="es">Tu edredón acumula bacterias y ácaros hace meses. Una recogida lo cambia todo.</span>
-    </div>
-    <a href="sms:+14076708839&body=Hi!%20I%27d%20like%20to%20schedule%20a%20comforter%20cleaning." class="ep-cta">
-      <span data-lang="en">Text Us to Schedule</span>
-      <span data-lang="pt">Enviar SMS para Agendar</span>
-      <span data-lang="es">Enviar SMS para Reservar</span>
-    </a>
-    <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20to%20schedule%20comforter%20cleaning!" class="ep-cta-alt" data-wa-link target="_blank" rel="noopener">
-      <span data-lang="en">or schedule via WhatsApp</span>
-      <span data-lang="pt">ou agendar pelo WhatsApp</span>
-      <span data-lang="es">o programar por WhatsApp</span>
-    </a>
-    <button class="ep-dismiss" id="exitDismiss">
-      <span data-lang="en">No thanks, I'll pass</span>
-      <span data-lang="pt">Não obrigado</span>
-      <span data-lang="es">No gracias</span>
-    </button>
-  </div>
 </div>
 
 <!-- Mobile menu overlay -->
@@ -1297,19 +1251,6 @@
     showToast();
     setInterval(showToast, 45000);
   }, 120000);
-
-  /* === EXIT POPUP === */
-  var exitPopup = document.getElementById('exitPopup');
-  var exitShown = false;
-  setTimeout(function(){
-    if (!exitShown) { exitShown = true; exitPopup.classList.add('show'); }
-  }, 40000);
-  document.getElementById('exitDismiss').addEventListener('click', function(){
-    exitPopup.classList.remove('show');
-  });
-  exitPopup.addEventListener('click', function(e){
-    if (e.target === exitPopup) exitPopup.classList.remove('show');
-  });
 
   /* === FAQ ACCORDION === */
   document.querySelectorAll('.faq-q').forEach(function(btn){

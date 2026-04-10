@@ -345,17 +345,6 @@
     .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:996;padding:12px 16px;background:rgba(10,6,24,.97);border-top:1px solid rgba(245,158,11,.2);backdrop-filter:blur(10px)}
     .sticky-cta a{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#000;padding:14px;border-radius:var(--radius-md);font-size:15px;font-weight:800;text-decoration:none;width:100%}
 
-    /* === EXIT POPUP === */
-    .exit-popup{position:fixed;inset:0;z-index:9998;background:rgba(10,6,24,.85);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.4s;backdrop-filter:blur(4px)}
-    .exit-popup.show{opacity:1;visibility:visible}
-    .exit-box{background:#fff;border-radius:var(--radius-xl);max-width:440px;width:90%;padding:40px 28px;text-align:center;transform:scale(.85);transition:.4s}
-    .exit-popup.show .exit-box{transform:scale(1)}
-    .exit-box h3{font-size:22px;font-weight:800;color:var(--gray-900);margin-bottom:8px}
-    .exit-box p{font-size:14px;color:var(--gray-500);margin-bottom:20px}
-    .exit-box .exit-cta{display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:14px 32px;border-radius:50px;font-size:15px;font-weight:700;text-decoration:none;transition:.3s}
-    .exit-box .exit-cta:hover{transform:translateY(-2px)}
-    .exit-box .exit-dismiss{display:block;margin-top:12px;font-size:12px;color:var(--gray-500);cursor:pointer;border:none;background:none;text-decoration:underline}
-
     /* === MULTILINGUAL === */
     [data-lang]{display:none}
     .lang-active-en [data-lang="en"],.lang-active-pt [data-lang="pt"],.lang-active-es [data-lang="es"]{display:inline}
@@ -441,23 +430,6 @@
     .services-nav a{color:rgba(255,255,255,.5);font-size:12px;font-weight:600;text-decoration:none;transition:.2s;display:flex;align-items:center;gap:4px}
     .services-nav a:hover,.services-nav a.active{color:var(--accent-light)}
 
-    /* === PROMO POPUP === */
-    .promo-popup{position:fixed;inset:0;z-index:9997;background:rgba(10,6,24,.85);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.4s;backdrop-filter:blur(4px)}
-    .promo-popup.show{opacity:1;visibility:visible}
-    .promo-box{background:#fff;border-radius:var(--radius-xl);max-width:480px;width:90%;padding:40px 28px;text-align:center;transform:scale(.85);transition:.4s;position:relative}
-    .promo-popup.show .promo-box{transform:scale(1)}
-    .promo-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--gray-500);line-height:1}
-    .promo-badge{display:inline-block;background:var(--accent);color:#000;padding:6px 20px;border-radius:50px;font-size:12px;font-weight:800;letter-spacing:1px;margin-bottom:16px}
-    .promo-box h3{font-size:24px;font-weight:800;color:var(--gray-900);margin-bottom:8px}
-    .promo-price{color:var(--accent-dark)}
-    .promo-was{font-size:14px;color:var(--gray-500);margin-bottom:16px}
-    .promo-extras{background:var(--off-white);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;text-align:left;font-size:14px;color:var(--gray-700)}
-    .promo-extras div{padding:4px 0}
-    .promo-urgency{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;color:#dc2626;margin-bottom:16px}
-    .pulse-dot{width:8px;height:8px;background:#dc2626;border-radius:50%;animation:blink 1.5s infinite}
-    .promo-cta{display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:16px 36px;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 8px 24px rgba(37,211,102,.3)}
-    .promo-cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(37,211,102,.4)}
-    .promo-dismiss{display:block;margin:12px auto 0;font-size:12px;color:var(--gray-500);cursor:pointer;border:none;background:none;text-decoration:underline}
 
     /* === HAMBURGER MENU === */
     .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:6px;z-index:1001}
@@ -1005,7 +977,7 @@
           <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">25% off every clean</span><span data-lang="pt">25% de desconto sempre</span><span data-lang="es">25% de descuento siempre</span></div>
           <div class="member-perk"><span class="mp-i">✓</span> <span data-lang="en">Free spot treatments</span><span data-lang="pt">Tratamento de manchas grátis</span><span data-lang="es">Tratamiento de manchas gratis</span></div>
         </div>
-        <button onclick="document.getElementById('memberModal').classList.add('show')" class="member-cta" style="border:none;cursor:pointer;font-family:inherit">View Membership Plans →</button>
+        <button class="member-cta" style="border:none;cursor:pointer;font-family:inherit">View Membership Plans →</button>
       </div>
     </div>
   </section>
@@ -1059,96 +1031,6 @@
     </div>
   </section>
 
-  <!-- ===== MEMBERSHIP MODAL ===== -->
-  <div id="memberModal" style="position:fixed;inset:0;z-index:10000;background:rgba(10,6,24,.85);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.4s;backdrop-filter:blur(8px)" onclick="if(event.target===this)this.classList.remove('show')">
-    <style>
-      #memberModal.show{opacity:1;visibility:visible}
-      #memberModal .modal-box{transform:scale(.9);transition:.4s}
-      #memberModal.show .modal-box{transform:scale(1)}
-      .plan-toggle{display:flex;background:rgba(255,255,255,.1);border-radius:50px;padding:4px;gap:4px;margin:0 auto 32px;width:fit-content}
-      .plan-toggle button{padding:10px 28px;border:none;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;font-family:inherit;background:transparent;color:var(--gray-500)}
-      .plan-toggle button.active{background:var(--accent);color:#000}
-      .plan-toggle .save-badge{display:inline-block;background:#10b981;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:6px;vertical-align:middle}
-      .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
-      .plan-card{background:#fff;border:2px solid var(--gray-200);border-radius:20px;padding:32px 24px;text-align:center;position:relative;transition:.3s}
-      .plan-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
-      .plan-card.popular{border-color:var(--accent);transform:scale(1.05)}
-      .plan-card.popular:hover{transform:scale(1.05) translateY(-4px)}
-      .popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;padding:4px 20px;border-radius:50px;font-size:11px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
-      .plan-card h4{font-size:20px;font-weight:800;color:var(--gray-900);margin-bottom:4px}
-      .plan-price{font-size:42px;font-weight:900;color:var(--accent-dark);letter-spacing:-2px;margin:12px 0 4px}
-      .plan-price small{font-size:16px;font-weight:600;color:var(--gray-500)}
-      .plan-period{font-size:13px;color:var(--gray-500);margin-bottom:20px}
-      .plan-features{list-style:none;text-align:left;margin-bottom:24px}
-      .plan-features li{padding:8px 0;font-size:13px;color:var(--gray-700);display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid var(--gray-100)}
-      .plan-features li:last-child{border-bottom:none}
-      .plan-features .pf-check{color:var(--accent);font-weight:700;flex-shrink:0}
-      .plan-btn{display:block;width:100%;padding:14px;border:none;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:.3s;font-family:inherit;text-decoration:none;text-align:center}
-      .plan-btn.primary{background:var(--accent);color:#000}
-      .plan-btn.primary:hover{background:var(--accent-dark);transform:translateY(-1px)}
-      .plan-btn.outline{background:transparent;border:2px solid var(--gray-200);color:var(--gray-700)}
-      .plan-btn.outline:hover{border-color:var(--accent);color:var(--accent-dark)}
-      @media(max-width:768px){.plans-grid{grid-template-columns:1fr;max-width:400px}.plan-card.popular{transform:none}.plan-card.popular:hover{transform:translateY(-4px)}}
-    </style>
-    <div class="modal-box" style="background:var(--off-white);border-radius:24px;max-width:980px;width:95%;max-height:90vh;overflow-y:auto;padding:48px 36px;position:relative">
-      <button onclick="document.getElementById('memberModal').classList.remove('show')" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--gray-500);line-height:1">&times;</button>
-      <div style="text-align:center;margin-bottom:12px">
-        <span class="section-tag">MEMBERSHIP PLANS</span>
-        <h2 style="font-size:clamp(24px,3.5vw,36px);font-weight:800;color:var(--gray-900);margin:12px 0 8px">Carpet Cleaning Plans</h2>
-        <p style="font-size:15px;color:var(--gray-500);max-width:500px;margin:0 auto 24px">Choose the perfect plan for your home. Cancel anytime.</p>
-      </div>
-      <div class="plan-toggle">
-        <button class="active" onclick="togglePlan(this,'monthly')">Monthly</button>
-        <button onclick="togglePlan(this,'annual')">Annual <span class="save-badge">Save 2 months</span></button>
-      </div>
-      <div class="plans-grid">
-        <div class="plan-card">
-          <h4>Essential</h4>
-          <div class="plan-price" data-monthly="79" data-annual="790"><small>$</small>79<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$790/year — save $158">Billed monthly</div>
-          <ul class="plan-features">
-            <li><span class="pf-check">✓</span> 1 room quarterly (4x/year)</li>
-            <li><span class="pf-check">✓</span> Pre-treatment included</li>
-            <li><span class="pf-check">✓</span> Hot water extraction</li>
-            <li><span class="pf-check">✓</span> Deodorizer application</li>
-            <li><span class="pf-check">✓</span> Priority scheduling</li>
-          </ul>
-          <a href="#stripe-carpet-essential" class="plan-btn outline">Subscribe Now</a>
-        </div>
-        <div class="plan-card popular">
-          <div class="popular-badge">MOST POPULAR</div>
-          <h4>Home</h4>
-          <div class="plan-price" data-monthly="149" data-annual="1490"><small>$</small>149<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$1,490/year — save $298">Billed monthly</div>
-          <ul class="plan-features">
-            <li><span class="pf-check">✓</span> 3 rooms quarterly (4x/year)</li>
-            <li><span class="pf-check">✓</span> Spot treatment between cleans</li>
-            <li><span class="pf-check">✓</span> Hot water extraction</li>
-            <li><span class="pf-check">✓</span> Deodorizer + sanitizer</li>
-            <li><span class="pf-check">✓</span> Priority scheduling</li>
-            <li><span class="pf-check">✓</span> Speed-dry fan service</li>
-          </ul>
-          <a href="#stripe-carpet-home" class="plan-btn primary">Subscribe Now</a>
-        </div>
-        <div class="plan-card">
-          <h4>Premium</h4>
-          <div class="plan-price" data-monthly="249" data-annual="2490"><small>$</small>249<small>/mo</small></div>
-          <div class="plan-period" data-monthly="Billed monthly" data-annual="$2,490/year — save $498">Billed monthly</div>
-          <ul class="plan-features">
-            <li><span class="pf-check">✓</span> Whole house quarterly (4x/year)</li>
-            <li><span class="pf-check">✓</span> Monthly spot treatment</li>
-            <li><span class="pf-check">✓</span> Hot water extraction</li>
-            <li><span class="pf-check">✓</span> Full deodorizer + sanitizer</li>
-            <li><span class="pf-check">✓</span> Priority scheduling</li>
-            <li><span class="pf-check">✓</span> Dedicated cleaning team</li>
-            <li><span class="pf-check">✓</span> Furniture moving included</li>
-          </ul>
-          <a href="#stripe-carpet-premium" class="plan-btn outline">Subscribe Now</a>
-        </div>
-      </div>
-      <p style="text-align:center;font-size:12px;color:var(--gray-500);margin-top:24px">All plans include 30-day satisfaction guarantee. Cancel anytime. Stripe secure checkout.</p>
-    </div>
-  </div>
 
   <!-- ===== IMPACT BANNER ===== -->
   <section style="position:relative;min-height:400px;display:flex;align-items:center;overflow:hidden">
@@ -1235,43 +1117,6 @@
   <!-- STICKY MOBILE CTA -->
   <div class="sticky-cta">
     <a href="tel:+14076708839"><span data-lang="en">📞 Call Now — (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora — (407) 670-8839</span><span data-lang="es">📞 Llama Ahora — (407) 670-8839</span></a>
-  </div>
-
-  <!-- EXIT POPUP -->
-  <div class="exit-popup" id="exitPopup">
-    <div class="exit-box">
-      <h3><span data-lang="en">Wait! Don't Miss<br>3 Rooms for $107 🎉</span><span data-lang="pt">Espere! Não Perca<br>3 Quartos por $107 🎉</span><span data-lang="es">¡Espera! No Te Pierdas<br>3 Habitaciones por $107 🎉</span></h3>
-      <p><span data-lang="en">Orlando's most competitive carpet cleaning deal. Professional service starting at $45/room.</span><span data-lang="pt">A oferta mais competitiva de limpeza de carpete em Orlando. Serviço profissional a partir de $45/quarto.</span><span data-lang="es">La oferta más competitiva de limpieza de alfombras en Orlando. Servicio profesional desde $45/habitación.</span></p>
-      <a href="https://wa.me/14076708839?text=Hi!%20I%20almost%20left%20but%20I%20want%20to%20book%20carpet%20cleaning!" class="exit-cta" data-wa-link data-wa-type="exit">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <span data-lang="en">Book Now via WhatsApp</span><span data-lang="pt">Agendar via WhatsApp</span><span data-lang="es">Reservar por WhatsApp</span>
-      </a>
-      <button class="exit-dismiss" id="exitDismiss"><span data-lang="en">No thanks, not right now</span><span data-lang="pt">Não, obrigado, agora não</span><span data-lang="es">No gracias, ahora no</span></button>
-    </div>
-  </div>
-
-  <!-- ===== PROMO POPUP ===== -->
-  <div class="promo-popup" id="promoPopup">
-    <div class="promo-box">
-      <button class="promo-close" id="promoClose">&times;</button>
-      <div class="promo-badge"><span data-lang="en">🎉 LIMITED OFFER</span><span data-lang="pt">🎉 OFERTA LIMITADA</span><span data-lang="es">🎉 OFERTA LIMITADA</span></div>
-      <h3><span data-lang="en">3 Regular Rooms for <span class="promo-price">$107</span></span><span data-lang="pt">3 Quartos Regulares por <span class="promo-price">$107</span></span><span data-lang="es">3 Habitaciones Regulares por <span class="promo-price">$107</span></span></h3>
-      <p class="promo-was"><span data-lang="en">Regular: $135 — <strong>Save $28!</strong></span><span data-lang="pt">Regular: $135 — <strong>Economize $28!</strong></span><span data-lang="es">Regular: $135 — <strong>¡Ahorra $28!</strong></span></p>
-      <div class="promo-extras">
-        <div><span data-lang="en">+ Additional Room: <strong>$35</strong></span><span data-lang="pt">+ Quarto Adicional: <strong>$35</strong></span><span data-lang="es">+ Habitación Adicional: <strong>$35</strong></span></div>
-        <div><span data-lang="en">+ Master Suite: <strong>$45</strong> <s style="color:var(--gray-500)">$65</s></span><span data-lang="pt">+ Suíte Master: <strong>$45</strong> <s style="color:var(--gray-500)">$65</s></span><span data-lang="es">+ Suite Principal: <strong>$45</strong> <s style="color:var(--gray-500)">$65</s></span></div>
-        <div><span data-lang="en">+ Pet Treatment: <strong>$25/room</strong></span><span data-lang="pt">+ Tratamento Pet: <strong>$25/quarto</strong></span><span data-lang="es">+ Tratamiento Mascotas: <strong>$25/hab.</strong></span></div>
-      </div>
-      <div class="promo-urgency">
-        <span class="pulse-dot"></span>
-        <span data-lang="en">Only 5 spots left this week</span><span data-lang="pt">Apenas 5 vagas esta semana</span><span data-lang="es">Solo 5 lugares esta semana</span>
-      </div>
-      <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20the%203%20Rooms%20for%20$107%20deal!" class="promo-cta" data-wa-link data-wa-type="promo">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <span data-lang="en">Book 3 Rooms for $107 →</span><span data-lang="pt">Agendar 3 Quartos por $107 →</span><span data-lang="es">Reservar 3 Habitaciones por $107 →</span>
-      </a>
-      <button class="promo-dismiss" id="promoDismiss"><span data-lang="en">No thanks, I'll pay full price</span><span data-lang="pt">Não, obrigado, prefiro pagar preço cheio</span><span data-lang="es">No gracias, prefiero pagar precio completo</span></button>
-    </div>
   </div>
 
   <script>
@@ -1506,48 +1351,6 @@
       showToast();
       setInterval(showToast, 25000 + Math.random() * 15000);
     }, 8000);
-
-    /* === EXIT INTENT === */
-    var exitPopup = document.getElementById('exitPopup');
-    var promoPopup = document.getElementById('promoPopup');
-    var exitShown = false;
-    document.addEventListener('mouseleave', function(e){
-      if (e.clientY < 5 && !exitShown && !sessionStorage.getItem('a7carpet_exit') && !promoPopup.classList.contains('show')) {
-        exitShown = true;
-        exitPopup.classList.add('show');
-        sessionStorage.setItem('a7carpet_exit', '1');
-      }
-    });
-    setTimeout(function(){
-      if (!exitShown && !sessionStorage.getItem('a7carpet_exit') && !promoPopup.classList.contains('show')) {
-        exitShown = true;
-        exitPopup.classList.add('show');
-        sessionStorage.setItem('a7carpet_exit', '1');
-      }
-    }, 45000);
-    document.getElementById('exitDismiss').addEventListener('click', function(){
-      exitPopup.classList.remove('show');
-    });
-    exitPopup.addEventListener('click', function(e){
-      if (e.target === exitPopup) exitPopup.classList.remove('show');
-    });
-
-    /* === PROMO POPUP (30s) === */
-    setTimeout(function(){
-      if (!sessionStorage.getItem('a7carpet_promo') && !exitPopup.classList.contains('show')) {
-        promoPopup.classList.add('show');
-        sessionStorage.setItem('a7carpet_promo', '1');
-      }
-    }, 30000);
-    document.getElementById('promoClose').addEventListener('click', function(){
-      promoPopup.classList.remove('show');
-    });
-    document.getElementById('promoDismiss').addEventListener('click', function(){
-      promoPopup.classList.remove('show');
-    });
-    promoPopup.addEventListener('click', function(e){
-      if (e.target === promoPopup) promoPopup.classList.remove('show');
-    });
 
     /* === SCROLL ANIMATIONS === */
     var obs = new IntersectionObserver(function(entries){
