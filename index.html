@@ -486,27 +486,65 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- SECTION 8: OTHER SERVICES -->
+<!-- SECTION 8: ALL SERVICES -->
 <section class="bg-surface-container-lowest py-32">
   <div class="container mx-auto px-8">
-    <h2 class="text-4xl md:text-5xl font-black tracking-tighter mb-16 text-center">Beyond Clothes</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-      <a href="/carpet-cleaning.html" class="group relative overflow-hidden rounded-lg h-[400px] block">
+    <div class="text-center mb-16">
+      <p class="text-xs font-bold uppercase tracking-[0.3em] text-primary-container mb-4">Full Service Menu</p>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Everything we handle.</h2>
+      <p class="text-on-surface-variant mt-4 max-w-xl mx-auto">One call. Pickup & delivery. No machines. No stress.</p>
+    </div>
+
+    <!-- Comforter — featured wide card -->
+    <a href="/comforter" class="group relative overflow-hidden rounded-lg h-[300px] block mb-6">
+      <img alt="Comforter cleaning Orlando" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+           src="https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=1600&q=80"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex flex-col justify-center p-10 md:p-16">
+        <span class="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container text-xs font-black uppercase tracking-widest px-3 py-1 rounded-lg w-fit mb-4">
+          <span class="material-symbols-outlined text-sm fill">bolt</span> Most Popular
+        </span>
+        <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight">Comforter Cleaning</h3>
+        <p class="text-white/70 mt-2 max-w-md">Too big for your machine? We pick up, deep clean, and deliver fresh. Twin to King.</p>
+        <span class="mt-6 text-white font-black flex items-center gap-2 group-hover:gap-4 transition-all">See Pricing <span class="material-symbols-outlined">arrow_forward</span></span>
+      </div>
+    </a>
+
+    <!-- 4 service cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <a href="/carpet" class="group relative overflow-hidden rounded-lg h-[280px] block">
         <img alt="Carpet and rug cleaning Orlando" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF4i-b14EEzU7SVMzhu3SXtF1B8FirG4-IMKBsAseUfgW9hQpmEDR_JBq3ORfUmRJGo2MA5__VveMj346Z8rlOutl0KV8AFK9ceHzA3u8lXqEbN9Fu5n0TiQwDvEWPX7blKDeQpGCqHmLvRoaEGi1tDjGbLZ0b2MdiWPl_pdHDW75FhqjPWIuR-vXLxl0t8f9zlgSuWiP8-WsMtjKy_4vCt5pj96Q-C9fpRY5uPjLM1hN1w8g4A8chNXZTYdXagxgIKtbXx_DwpSs6"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
-          <h3 class="text-3xl font-black text-white">Carpet &amp; Rug Cleaning</h3>
-          <p class="text-white/70 mt-2">Deep industrial cleaning for high-traffic vacation home rugs.</p>
-          <span class="mt-6 text-primary-container font-black flex items-center gap-2">Learn More <span class="material-symbols-outlined">chevron_right</span></span>
+             src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10 flex flex-col justify-end p-6">
+          <h3 class="text-xl font-black text-white">Carpet &amp; Rug</h3>
+          <p class="text-white/60 text-sm mt-1">Deep clean for vacation home rugs.</p>
+          <span class="mt-4 text-primary-container font-black text-sm flex items-center gap-1 group-hover:gap-2 transition-all">Learn More <span class="material-symbols-outlined text-sm">chevron_right</span></span>
         </div>
       </a>
-      <a href="/upholstery-cleaning.html" class="group relative overflow-hidden rounded-lg h-[400px] block">
+      <a href="/shoes" class="group relative overflow-hidden rounded-lg h-[280px] block">
+        <img alt="Shoe cleaning Orlando" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10 flex flex-col justify-end p-6">
+          <h3 class="text-xl font-black text-white">Shoe Cleaning</h3>
+          <p class="text-white/60 text-sm mt-1">Restore sneakers &amp; dress shoes.</p>
+          <span class="mt-4 text-primary-container font-black text-sm flex items-center gap-1 group-hover:gap-2 transition-all">Learn More <span class="material-symbols-outlined text-sm">chevron_right</span></span>
+        </div>
+      </a>
+      <a href="/upholstery" class="group relative overflow-hidden rounded-lg h-[280px] block">
         <img alt="Upholstery cleaning Orlando" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJwc10msUOn7hd5degBA6StwJROudZYsHawSfvIyrDQYJ-zj2L8mfnnT1HqDClTBpaRDI-ExK6mjsv6-QQV_mDSEdBrnEzSnnGAdaFOdBokZ8FHPyH4U4JQxaAIYVgGVvHBP7JId63g3J-qJ7pfTvKDNvt-vaKhdJtCrZIJN36uWsS13Bljst1Bt6FzaaKL8IlDQfI11lcuTlLc_Gqb5oEmzaoIGNiUh-BaAhNeW_Wavz5ySEAJQ2OrAzwjW16AVom8oPBbLd92"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-10">
-          <h3 class="text-3xl font-black text-white">Upholstery Cleaning</h3>
-          <p class="text-white/70 mt-2">Refresh sofas and armchairs with our non-toxic deep steam service.</p>
-          <span class="mt-6 text-primary-container font-black flex items-center gap-2">Learn More <span class="material-symbols-outlined">chevron_right</span></span>
+             src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10 flex flex-col justify-end p-6">
+          <h3 class="text-xl font-black text-white">Upholstery</h3>
+          <p class="text-white/60 text-sm mt-1">Sofas &amp; armchairs, deep steam clean.</p>
+          <span class="mt-4 text-primary-container font-black text-sm flex items-center gap-1 group-hover:gap-2 transition-all">Learn More <span class="material-symbols-outlined text-sm">chevron_right</span></span>
+        </div>
+      </a>
+      <a href="/vacation" class="group relative overflow-hidden rounded-lg h-[280px] block">
+        <img alt="Vacation rental laundry Orlando" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10 flex flex-col justify-end p-6">
+          <h3 class="text-xl font-black text-white">Vacation Rental</h3>
+          <p class="text-white/60 text-sm mt-1">Turnover laundry for Airbnb hosts.</p>
+          <span class="mt-4 text-primary-container font-black text-sm flex items-center gap-1 group-hover:gap-2 transition-all">Learn More <span class="material-symbols-outlined text-sm">chevron_right</span></span>
         </div>
       </a>
     </div>
@@ -538,10 +576,11 @@ tailwind.config = {
     <a href="/"><img src="/logo-a7-laundry-usa.png" alt="A7 Laundry" style="height:28px;width:auto;"/></a>
     <div class="flex flex-wrap justify-center gap-8">
       <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/">Home</a>
-      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/carpet-cleaning.html">Carpet</a>
-      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/shoe-cleaning.html">Shoes</a>
-      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/upholstery-cleaning.html">Upholstery</a>
-      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/vacation-rental.html">Vacation Rental</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/comforter">Comforter</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/carpet">Carpet</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/shoes">Shoes</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/upholstery">Upholstery</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/vacation">Vacation Rental</a>
       <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/privacy-policy.html">Privacy</a>
     </div>
     <div class="text-slate-500 text-sm">© 2026 A7 Laundry. All rights reserved.</div>
