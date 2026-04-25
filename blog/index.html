@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>Blog | A7 Laundry — Laundry Tips & Orlando Guide</title>
-<meta name="description" content="Expert laundry tips, Orlando cleaning guides, and vacation rental advice from A7 Laundry — Orlando's premier concierge laundry service."/>
-<meta property="og:title" content="Blog | A7 Laundry — Laundry Tips & Orlando Guide"/>
-<meta property="og:description" content="Expert laundry tips, Orlando cleaning guides, and vacation rental advice from A7 Laundry."/>
+<title>Blog | A7 Laundry — Orlando Laundry Tips, Comforter Cleaning & Vacation Rental Guides</title>
+<meta name="description" content="Expert laundry tips, comforter cleaning guides, and vacation rental advice from A7 Laundry — Orlando's premier concierge laundry service. 21+ articles covering pickup & delivery near Disney, Kissimmee, Champions Gate and Reunion Resort."/>
+<meta property="og:title" content="A7 Laundry Blog — Orlando Laundry Tips & Vacation Rental Guides"/>
+<meta property="og:description" content="The complete library: pickup & delivery near Disney, comforter cleaning, vacation rental hosting, Express 6h service, and more."/>
 <meta property="og:type" content="website"/>
 <meta property="og:image" content="https://a7laundry.com/A7%20LAUNDRY-05.png"/>
 <meta name="robots" content="index, follow"/>
@@ -20,6 +20,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-PM7QGX6L');</script>
 <!-- End Google Tag Manager -->
+
+<!-- Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1452877649635363');fbq('track','PageView');</script>
 
 <script type="application/ld+json">
 {
@@ -80,11 +88,25 @@ tailwind.config = {
   .article-card:hover .card-title { color: #b4c5ff; }
   .article-card { transition: transform .25s, box-shadow .25s; }
   .article-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(37,99,235,0.15); }
+  .featured-card { background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(28,32,39,0.95) 60%); border: 1px solid rgba(37,99,235,0.3); }
+  .featured-card:hover { border-color: rgba(37,99,235,0.6); }
+  .section-divider { background: linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent); height: 1px; }
+  .badge-guide { background: rgba(124,58,237,0.15); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.3); }
+  .badge-service { background: rgba(37,99,235,0.15); color: #b4c5ff; border: 1px solid rgba(37,99,235,0.3); }
+  .badge-hosts { background: rgba(34,197,94,0.12); color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
+  .badge-comforter { background: rgba(238,152,0,0.12); color: #ffb95f; border: 1px solid rgba(238,152,0,0.3); }
+  .badge-local { background: rgba(56,189,248,0.12); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.3); }
+  .badge-tips { background: rgba(244,114,182,0.12); color: #f9a8d4; border: 1px solid rgba(244,114,182,0.3); }
+  .badge-pill { display: inline-block; font-size: 11px; font-weight: 700; uppercase: true; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
 </style>
+<!-- WhatsApp tracking + UTM (A7) -->
+<script src="/wa-tracking.js" defer></script>
+
 </head>
 <body class="bg-background text-on-background font-body">
 
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM7QGX6L" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1452877649635363&ev=PageView&noscript=1"/></noscript>
 
 <!-- WhatsApp FAB -->
 <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup." target="_blank" rel="noopener" class="wa-fab" aria-label="Book on WhatsApp">
@@ -110,7 +132,7 @@ tailwind.config = {
 <!-- HERO BANNER -->
 <section class="pt-28 pb-12 px-6" style="background: linear-gradient(135deg, #0a0e16 0%, #111827 100%);">
   <div class="max-w-4xl mx-auto text-center">
-    <span class="inline-block bg-primary-container/20 text-primary text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5 border border-primary/20">A7 Laundry Blog</span>
+    <span class="inline-block bg-primary-container/20 text-primary text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5 border border-primary/20">A7 Laundry Blog · 21 Articles</span>
     <h1 class="text-4xl md:text-5xl font-black text-white leading-tight mb-4">
       Laundry Tips &<br/><span class="text-primary">Orlando Guides</span>
     </h1>
@@ -120,68 +142,111 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ARTICLES GRID -->
-<main class="max-w-5xl mx-auto px-6 py-14">
+<!-- ============================================ -->
+<!-- SECTION 1: FEATURED GUIDES                   -->
+<!-- ============================================ -->
+<main class="max-w-6xl mx-auto px-6 py-14">
 
-  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+  <div class="mb-10">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">Start Here</span>
+    <h2 class="text-2xl md:text-3xl font-black text-white mt-2">Featured Guides</h2>
+    <p class="text-on-surface-variant mt-2">The most comprehensive resources on this site.</p>
+  </div>
 
-    <!-- Article 1 -->
-    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
-      <a href="/blog/laundry-service-orlando" class="block">
-        <div class="h-44 overflow-hidden bg-surface-container-high flex items-center justify-center">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Laundry service Orlando" class="w-full h-full object-cover opacity-80"/>
+  <div class="grid gap-6 md:grid-cols-3 mb-16">
+
+    <!-- FEATURED 1: PILLAR -->
+    <article class="article-card featured-card rounded-xl overflow-hidden md:col-span-2 md:row-span-1">
+      <a href="/blog/orlando-vacation-rental-laundry-guide" class="block h-full">
+        <div class="h-56 overflow-hidden bg-surface-container-high">
+          <img src="https://a7laundry.com/blog/img-v2/05-process.jpg" alt="Complete Orlando vacation rental laundry guide" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1200&q=80'"/>
         </div>
-        <div class="p-6">
-          <span class="text-xs font-bold uppercase tracking-widest text-primary">Local Guide</span>
-          <h2 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
-            Best Laundry Pickup & Delivery in Orlando, FL (2026 Guide)
-          </h2>
-          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
-            Everything you need to know about choosing a laundry service in Orlando — prices, turnaround, and what vacation rental guests actually need.
+        <div class="p-7">
+          <span class="badge-pill badge-guide">The Complete Guide</span>
+          <h3 class="card-title text-white font-black text-2xl mt-3 mb-3 leading-tight transition-colors">
+            The Complete Orlando Vacation Rental Laundry Guide (2026)
+          </h3>
+          <p class="text-on-surface-variant text-base leading-relaxed mb-4">
+            Everything about laundry in Orlando — for vacation rental hosts, Airbnb guests, and tourists. Pricing, turnaround, options, and how to book.
           </p>
           <div class="flex items-center justify-between">
-            <span class="text-xs text-outline">6 min read</span>
+            <span class="text-xs text-outline">12 min read · Pillar guide</span>
+            <span class="text-primary text-sm font-semibold">Read the full guide →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <!-- FEATURED 2: COMFORTER V2 -->
+    <article class="article-card featured-card rounded-xl overflow-hidden">
+      <a href="/blog/comforter-cleaning-service-orlando-v2" class="block h-full">
+        <div class="h-56 overflow-hidden bg-surface-container-high">
+          <img src="https://a7laundry.com/blog/img-v2/01-hero.jpg" alt="Comforter cleaning Orlando" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80'"/>
+        </div>
+        <div class="p-7">
+          <span class="badge-pill badge-comforter">Comforter Cleaning</span>
+          <h3 class="card-title text-white font-black text-xl mt-3 mb-3 leading-tight transition-colors">
+            Comforter Cleaning Orlando — Free Pickup, $33 Twin · $40 King
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Premium comforter cleaning. Free door pickup, 24h turnaround, Express 6h available.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">From $33</span>
+            <span class="text-primary text-sm font-semibold">Book now →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+  </div>
+
+  <div class="section-divider mb-16"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 2: VACATION RENTAL HOSTS             -->
+  <!-- ============================================ -->
+  <div class="mb-10">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">For Hosts</span>
+    <h2 class="text-2xl md:text-3xl font-black text-white mt-2">Vacation Rental & Airbnb</h2>
+    <p class="text-on-surface-variant mt-2">Streamline turnovers, cut prep time, keep ratings high.</p>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/laundry-subscription-vacation-rental" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Laundry subscription Orlando" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-service">Subscription Plans</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Laundry Subscription for Airbnb Hosts in Orlando: Is It Worth It?
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Should you set up a recurring laundry plan for your Orlando rental? The math, the benefits, and how it works.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">8 min read</span>
             <span class="text-primary text-sm font-semibold">Read article →</span>
           </div>
         </div>
       </a>
     </article>
 
-    <!-- Article 2 -->
     <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
-      <a href="/blog/how-to-clean-comforter" class="block">
-        <div class="h-44 overflow-hidden bg-surface-container-high flex items-center justify-center">
-          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="How to clean a comforter" class="w-full h-full object-cover opacity-80"/>
+      <a href="/blog/airbnb-host-laundry-tips-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=600&q=80" alt="Airbnb host laundry tips Orlando" class="w-full h-full object-cover opacity-90"/>
         </div>
         <div class="p-6">
-          <span class="text-xs font-bold uppercase tracking-widest text-primary">Cleaning Tips</span>
-          <h2 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
-            How to Clean a King-Size Comforter (Without a Giant Washer)
-          </h2>
+          <span class="badge-pill badge-hosts">Hosts & Rentals</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            7 Laundry Tips Every Orlando Airbnb Host Should Follow
+          </h3>
           <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
-            Most home washers can't handle a king comforter properly. Here's the right way to clean it — and why most people get it wrong.
-          </p>
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-outline">5 min read</span>
-            <span class="text-primary text-sm font-semibold">Read article →</span>
-          </div>
-        </div>
-      </a>
-    </article>
-
-    <!-- Article 3 -->
-    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
-      <a href="/blog/vacation-rental-laundry-orlando" class="block">
-        <div class="h-44 overflow-hidden bg-surface-container-high flex items-center justify-center">
-          <img src="https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=600&q=80" alt="Vacation rental laundry Orlando" class="w-full h-full object-cover opacity-80"/>
-        </div>
-        <div class="p-6">
-          <span class="text-xs font-bold uppercase tracking-widest text-primary">Hosts & Rentals</span>
-          <h2 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
-            Vacation Rental Laundry Orlando: What Airbnb Hosts Need to Know
-          </h2>
-          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
-            Managing linen turnovers for your Orlando vacation rental? A professional laundry service can cut your between-guest prep time in half.
+            Streamline your linen turnover, cut prep time, and protect your ratings with these 7 host-tested tips.
           </p>
           <div class="flex items-center justify-between">
             <span class="text-xs text-outline">7 min read</span>
@@ -191,43 +256,81 @@ tailwind.config = {
       </a>
     </article>
 
-  </div>
-
-    <!-- Article 4 -->
     <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
-      <a href="/blog/same-day-laundry-orlando" class="block">
-        <div class="h-44 overflow-hidden bg-surface-container-high flex items-center justify-center">
-          <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&q=80" alt="Same day laundry Orlando" class="w-full h-full object-cover opacity-80"/>
+      <a href="/blog/vacation-rental-checklist-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Orlando vacation rental linen checklist" class="w-full h-full object-cover opacity-90"/>
         </div>
         <div class="p-6">
-          <span class="text-xs font-bold uppercase tracking-widest text-primary">Local Guide</span>
-          <h2 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
-            Same-Day Laundry Pickup & Delivery in Orlando, FL
-          </h2>
+          <span class="badge-pill badge-hosts">Hosts & Rentals</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            The Orlando Vacation Rental Linen Checklist
+          </h3>
           <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
-            Need clothes washed and back before dinner? Our Express 6-hour service covers Orlando, Kissimmee, and resort communities near Disney.
+            What to stock, how many sets, when to wash, and how to streamline your between-guest turnover.
           </p>
           <div class="flex items-center justify-between">
-            <span class="text-xs text-outline">4 min read</span>
+            <span class="text-xs text-outline">6 min read</span>
             <span class="text-primary text-sm font-semibold">Read article →</span>
           </div>
         </div>
       </a>
     </article>
 
-    <!-- Article 5 -->
     <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
-      <a href="/blog/laundry-kissimmee" class="block">
-        <div class="h-44 overflow-hidden bg-surface-container-high flex items-center justify-center">
-          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" alt="Laundry service Kissimmee FL" class="w-full h-full object-cover opacity-80"/>
+      <a href="/blog/how-often-wash-vacation-rental-linens" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt="How often wash vacation rental linens" class="w-full h-full object-cover opacity-90"/>
         </div>
         <div class="p-6">
-          <span class="text-xs font-bold uppercase tracking-widest text-primary">Local Guide</span>
-          <h2 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
-            Laundry Service in Kissimmee, FL — Pickup Near Disney World
-          </h2>
+          <span class="badge-pill badge-hosts">Hosts & Rentals</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            How Often Should You Wash Vacation Rental Linens?
+          </h3>
           <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
-            Serving Reunion Resort, Windsor Hills, Champions Gate, and all Kissimmee vacation rentals. Free pickup and delivery from $2.90/lb.
+            Washing frequency guide — sheets, towels, comforters, pillows. Plus how a service makes it effortless.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">6 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/vacation-rental-laundry-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Vacation rental laundry Orlando" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-hosts">Hosts & Rentals</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Vacation Rental Laundry Orlando: What Hosts Need to Know
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Managing laundry for your Orlando rental? A pickup & delivery service cuts your turnover time in half.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">7 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/laundry-for-vacation-rental-guests" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1568495248636-6432b97bd949?w=600&q=80" alt="Laundry for vacation rental guests" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-tips">For Guests</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            No Washer in Your Airbnb? Here's What Orlando Guests Do
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Staying in a vacation rental without a washer? Your best options — including same-day pickup near Disney.
           </p>
           <div class="flex items-center justify-between">
             <span class="text-xs text-outline">5 min read</span>
@@ -237,10 +340,330 @@ tailwind.config = {
       </a>
     </article>
 
+  </div>
+
+  <div class="section-divider mb-16"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 3: COMFORTER & CLEANING TIPS         -->
+  <!-- ============================================ -->
+  <div class="mb-10">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">Care Guides</span>
+    <h2 class="text-2xl md:text-3xl font-black text-white mt-2">Comforter & Cleaning</h2>
+    <p class="text-on-surface-variant mt-2">How-to guides and care tips for your bedding.</p>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/comforter-cleaning-service-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://a7laundry.com/blog/img-v2/02-problem.jpg" alt="Comforter cleaning service Orlando" class="w-full h-full object-cover opacity-90" onerror="this.src='https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80'"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-comforter">Comforter</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Comforter Cleaning Service in Orlando: Pricing & What to Expect
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Professional comforter cleaning with free pickup. Twin $33 · Queen $37 · King $40 · Down $45.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">6 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/how-to-clean-comforter" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="How to clean a comforter" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-tips">How-To</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            How to Clean a King-Size Comforter (Without a Giant Washer)
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Most home washers can't handle a king comforter. Here's the right way — and why pros often do it better.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">5 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/orlando-laundromat-vs-delivery" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&q=80" alt="Laundromat vs laundry delivery Orlando" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-tips">Comparison</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Laundromat vs Laundry Delivery in Orlando: Honest Comparison
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Laundromat or pickup & delivery? Cost, time, convenience, and quality compared so you can decide.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">9 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+  </div>
+
+  <div class="section-divider mb-16"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 4: ORLANDO & LOCAL AREAS             -->
+  <!-- ============================================ -->
+  <div class="mb-10">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">By Area</span>
+    <h2 class="text-2xl md:text-3xl font-black text-white mt-2">Orlando & Local Areas</h2>
+    <p class="text-on-surface-variant mt-2">Pickup & delivery near Disney, Kissimmee, Champions Gate, Reunion Resort.</p>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/laundry-near-disney-world" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1597466599360-3b9775841aec?w=600&q=80" alt="Laundry near Disney World" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-local">Near Disney</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Laundry Service Near Disney World: Best Options for Guests
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Compare resort laundry rooms vs pickup & delivery. Express 6h service near all Disney-area resorts.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">6 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/laundry-disney-springs-area" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=600&q=80" alt="Laundry Disney Springs area" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-local">Disney Springs</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Laundry Service Near Disney Springs &amp; Lake Buena Vista
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Need pickup near Disney Springs or Lake Buena Vista? We serve the entire Disney corridor.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">5 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/laundry-champions-gate" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80" alt="Laundry Champions Gate FL" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-local">Champions Gate</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Laundry Pickup &amp; Delivery in Champions Gate, FL
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Serving vacation rentals near Disney World. Express 6h, free pickup, from $2.90/lb.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">6 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/reunion-resort-laundry-service" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" alt="Reunion Resort laundry service" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-local">Reunion Resort</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Laundry Pickup &amp; Delivery at Reunion Resort, FL
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Professional service at Reunion Resort. Pickup from your vacation home, 24h turnaround, comforter included.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">7 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/laundry-kissimmee" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" alt="Laundry service Kissimmee FL" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-local">Kissimmee</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Laundry Service Kissimmee, FL — Pickup Near Disney
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Reunion Resort, Windsor Hills, Champions Gate. Free pickup and delivery from $2.90/lb.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">5 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/laundry-service-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Laundry service Orlando" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-local">Orlando</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Best Laundry Pickup &amp; Delivery in Orlando, FL (2026)
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Compare prices, turnaround times, and find why hosts and guests choose A7 Laundry.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">6 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+  </div>
+
+  <div class="section-divider mb-16"></div>
+
+  <!-- ============================================ -->
+  <!-- SECTION 5: BOOKING & SERVICE                 -->
+  <!-- ============================================ -->
+  <div class="mb-10">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary">Booking</span>
+    <h2 class="text-2xl md:text-3xl font-black text-white mt-2">How to Book & Service Details</h2>
+    <p class="text-on-surface-variant mt-2">Reviews, Express service, WhatsApp booking — everything you need before your first pickup.</p>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-2 mb-16">
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/a7-laundry-review" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80" alt="A7 Laundry review" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-service">Reviews</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            A7 Laundry Orlando: Review From Vacation Rental Hosts (2026)
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Honest review covering service, pricing, turnaround, and real host results. 4.9/5 from 2,500+ reviews.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">7 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/book-laundry-whatsapp-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80" alt="Book laundry on WhatsApp Orlando" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-service">Booking</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            How to Book Laundry Pickup in Orlando via WhatsApp (60 Seconds)
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            No app, no account, no hassle. Here's exactly how to book — in under 60 seconds.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">4 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/express-laundry-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=800&q=80" alt="Express laundry Orlando" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-service">Express 6h</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Express Laundry in Orlando: What 6-Hour Service Actually Means
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            What's included, how same-day pickup works, cutoff times, and who Express is best for.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">5 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+    <article class="article-card bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40">
+      <a href="/blog/same-day-laundry-orlando" class="block">
+        <div class="h-44 overflow-hidden bg-surface-container-high">
+          <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=800&q=80" alt="Same-day laundry Orlando" class="w-full h-full object-cover opacity-90"/>
+        </div>
+        <div class="p-6">
+          <span class="badge-pill badge-service">Same-Day</span>
+          <h3 class="card-title text-white font-bold text-lg mt-2 mb-3 leading-snug transition-colors">
+            Same-Day Laundry Pickup &amp; Delivery in Orlando, FL
+          </h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+            Express 6-hour pickup &amp; delivery across Orlando, Kissimmee, Reunion Resort, and Champions Gate.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-outline">4 min read</span>
+            <span class="text-primary text-sm font-semibold">Read article →</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
+  </div>
+
   <!-- CTA STRIP -->
-  <div class="mt-16 bg-primary-container/10 border border-primary-container/30 rounded-xl px-8 py-10 text-center">
+  <div class="mt-4 bg-primary-container/10 border border-primary-container/30 rounded-xl px-8 py-10 text-center">
     <p class="text-on-surface-variant text-sm uppercase tracking-widest mb-3 font-semibold">Ready to skip the laundry?</p>
-    <h3 class="text-2xl font-black text-white mb-2">Free pickup & delivery in Orlando</h3>
+    <h3 class="text-2xl font-black text-white mb-2">Free pickup &amp; delivery in Orlando</h3>
     <p class="text-on-surface-variant mb-6">Express 6h · Normal 24h · From $2.90/lb</p>
     <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup."
        target="_blank" rel="noopener"
