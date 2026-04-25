@@ -170,10 +170,6 @@ tailwind.config = {
   .wa-fab { position: fixed; bottom: 24px; right: 20px; z-index: 90; width: 60px; height: 60px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(37,211,102,.45); text-decoration: none; transition: transform .25s ease; }
   .wa-fab:hover { transform: scale(1.08); }
 
-  /* Stage pill */
-  .stage-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; background: #ffb596; color: #10131b; }
-  .stage-pill::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: #10131b; }
-
   /* Pricing card featured */
   .price-card { background: #1c2027; border: 1px solid #262a32; border-top: 4px solid var(--accent, #b4c5ff); border-radius: 16px; padding: 32px 28px; position: relative; }
   .price-card.featured { transform: scale(1.04); border-color: #ffb596; box-shadow: 0 30px 60px -20px rgba(255,181,150,.18); }
@@ -223,11 +219,11 @@ tailwind.config = {
   .blog-card { background: #1c2027; border: 1px solid #262a32; border-radius: 16px; overflow: hidden; }
   .blog-card:hover { border-color: rgba(180,197,255,.4); transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(0,0,0,.6); }
   .blog-card .img-wrap { aspect-ratio: 16/10; background-size: cover; background-position: center; }
-  .stage-chip { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
-  .chip-tofu   { background: rgba(255,185,95,.18);  color: #ffb95f; }
-  .chip-mofu   { background: rgba(180,197,255,.18); color: #b4c5ff; }
-  .chip-bofu   { background: rgba(255,181,150,.18); color: #ffb596; }
-  .chip-pillar { background: rgba(255,255,255,.12); color: #ffffff; }
+  .topic-chip { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+  .chip-amber     { background: rgba(255,185,95,.18);  color: #ffb95f; }
+  .chip-lavender  { background: rgba(180,197,255,.18); color: #b4c5ff; }
+  .chip-tangerine { background: rgba(255,181,150,.18); color: #ffb596; }
+  .chip-white     { background: rgba(255,255,255,.12); color: #ffffff; }
 
   /* CTA buttons */
   .btn-primary { background: #2563eb; color: #fff; padding: 14px 28px; border-radius: 12px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 10px; transition: all .25s; box-shadow: 0 10px 25px -8px rgba(37,99,235,.5); }
@@ -279,8 +275,7 @@ tailwind.config = {
 <section class="hero-cinematic min-h-screen flex items-center !p-0 relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 md:px-8 pt-24 pb-16 w-full relative z-10">
     <div class="flex items-center gap-3 mb-8">
-      <span class="stage-pill">BOFU · Decision</span>
-      <span class="text-snow-50 text-sm tracking-wide">Orlando · Kissimmee · Disney Area</span>
+      <span class="text-tangerine text-sm font-extrabold tracking-[.18em] uppercase">Orlando · Kissimmee · Disney Area</span>
     </div>
 
     <h1 class="h-mega font-black text-white text-5xl sm:text-7xl md:text-8xl lg:text-9xl max-w-5xl">
@@ -737,7 +732,7 @@ tailwind.config = {
       <a href="/blog/how-to-clean-comforter" class="blog-card lift">
         <div class="img-wrap" style="background-image:url('/blog/img-v2/05-process.jpg');"></div>
         <div class="p-6">
-          <span class="stage-chip chip-tofu mb-3 inline-block">TOFU · Awareness</span>
+          <span class="topic-chip chip-amber mb-3 inline-block">How-To Guide</span>
           <h3 class="text-white font-bold text-xl leading-snug mb-2">How to Clean a Comforter at Home (and Why You Probably Shouldn't)</h3>
           <p class="text-snow-50 text-sm">The science of why home washers fail at this — and what to do instead.</p>
         </div>
@@ -745,7 +740,7 @@ tailwind.config = {
       <a href="/blog/laundry-near-disney-world" class="blog-card lift">
         <div class="img-wrap" style="background-image:url('/blog/img-v2/06-bedroom.jpg');"></div>
         <div class="p-6">
-          <span class="stage-chip chip-tofu mb-3 inline-block">TOFU · Awareness</span>
+          <span class="topic-chip chip-amber mb-3 inline-block">Local Guide</span>
           <h3 class="text-white font-bold text-xl leading-snug mb-2">Laundry Near Disney World — The Local's Guide</h3>
           <p class="text-snow-50 text-sm">Pickup zones, response times, and Disney-area resort coverage explained.</p>
         </div>
@@ -753,7 +748,7 @@ tailwind.config = {
       <a href="/blog/airbnb-host-laundry-tips-orlando" class="blog-card lift">
         <div class="img-wrap" style="background-image:url('/blog/img-v2/04-delivery.jpg');"></div>
         <div class="p-6">
-          <span class="stage-chip chip-mofu mb-3 inline-block">MOFU · Consideration</span>
+          <span class="topic-chip chip-lavender mb-3 inline-block">For Hosts</span>
           <h3 class="text-white font-bold text-xl leading-snug mb-2">Airbnb Host Laundry Tips — Orlando Edition</h3>
           <p class="text-snow-50 text-sm">Turnover laundry math, linen lifespan, and the 5-star review formula.</p>
         </div>
@@ -761,7 +756,7 @@ tailwind.config = {
       <a href="/blog/express-laundry-orlando" class="blog-card lift">
         <div class="img-wrap" style="background-image:url('/blog/img-v2/03-machine.jpg');"></div>
         <div class="p-6">
-          <span class="stage-chip chip-mofu mb-3 inline-block">MOFU · Consideration</span>
+          <span class="topic-chip chip-lavender mb-3 inline-block">Service</span>
           <h3 class="text-white font-bold text-xl leading-snug mb-2">Express Laundry Orlando — 6h Turnaround Explained</h3>
           <p class="text-snow-50 text-sm">When to choose Express, what it costs, and how the timing actually works.</p>
         </div>
@@ -769,7 +764,7 @@ tailwind.config = {
       <a href="/blog/a7-laundry-review" class="blog-card lift">
         <div class="img-wrap" style="background-image:url('/blog/img-v2/07-luxury-bed.jpg');"></div>
         <div class="p-6">
-          <span class="stage-chip chip-bofu mb-3 inline-block">BOFU · Decision</span>
+          <span class="topic-chip chip-tangerine mb-3 inline-block">Reviews</span>
           <h3 class="text-white font-bold text-xl leading-snug mb-2">A7 Laundry Review — What Real Customers Say</h3>
           <p class="text-snow-50 text-sm">327 reviews summarized. The recurring themes: speed, fluffiness, reliability.</p>
         </div>
@@ -777,7 +772,7 @@ tailwind.config = {
       <a href="/blog/orlando-vacation-rental-laundry-guide" class="blog-card lift">
         <div class="img-wrap" style="background-image:url('/blog/img-v2/01-hero.jpg');"></div>
         <div class="p-6">
-          <span class="stage-chip chip-pillar mb-3 inline-block">PILLAR · Master</span>
+          <span class="topic-chip chip-white mb-3 inline-block">Complete Guide</span>
           <h3 class="text-white font-bold text-xl leading-snug mb-2">The Complete Orlando Vacation Rental Laundry Guide</h3>
           <p class="text-snow-50 text-sm">Everything: pricing, turnover schedules, vendor selection, linen care.</p>
         </div>
