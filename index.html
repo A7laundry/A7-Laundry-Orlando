@@ -302,7 +302,7 @@ tailwind.config = {
   <div class="container mx-auto px-8">
     <div class="text-center mb-20 space-y-4">
       <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Choose your speed</h2>
-      <p class="text-slate-500 max-w-xl mx-auto">Transparent per-pound pricing. No hidden resort fees. No park premiums.</p>
+      <p class="text-slate-500 max-w-xl mx-auto">Transparent per-pound pricing. Free pickup &amp; delivery. $50 minimum order. No hidden resort fees.</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
       <!-- Normal -->
@@ -339,7 +339,7 @@ tailwind.config = {
           <h3 class="text-3xl font-black">Express 6h</h3>
           <p class="text-slate-400 mt-2">Same-day VIP service</p>
         </div>
-        <div class="text-5xl font-black text-secondary">$3.50<span class="text-lg text-slate-500 font-medium">/lb</span></div>
+        <div class="text-5xl font-black text-secondary">$3.20<span class="text-lg text-slate-500 font-medium">/lb</span></div>
         <ul class="space-y-3 text-left w-full">
           <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Pickup by 10 AM → Back by 4 PM</li>
           <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Priority processing</li>
@@ -607,7 +607,7 @@ function recalc() {
   const total = ITEMS.reduce((sum, item, i) => sum + item.lbs * counts[i], 0);
   document.getElementById('totalWeight').textContent = total > 0 ? `~${total.toFixed(1)} lbs` : '~0 lbs';
   document.getElementById('costNormal').textContent = total > 0 ? `$${(total * 2.90).toFixed(2)}` : '$0.00';
-  document.getElementById('costExpress').textContent = total > 0 ? `$${(total * 3.50).toFixed(2)}` : '$0.00';
+  document.getElementById('costExpress').textContent = total > 0 ? `$${(total * 3.20).toFixed(2)}` : '$0.00';
   if (total > 0) {
     const msg = encodeURIComponent(`Hi! I'd like to schedule a laundry pickup. Estimated load: ~${total.toFixed(1)} lbs.`);
     document.getElementById('estimatorCta').href = `https://wa.me/14076708839?text=${msg}`;

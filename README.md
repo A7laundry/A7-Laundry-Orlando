@@ -1,8 +1,10 @@
 # A7 Laundry Orlando
 
-Laundry subscription service + specialty cleaning — Orlando, FL.
+Per-pound wash & fold with free pickup & delivery + specialty cleaning — Orlando, FL.
 
-**Deploy:** https://a7laundry.github.io/A7-Laundry-Orlando/
+**Deploy:** https://a7laundry.com — via Vercel
+
+> Definição canônica do projeto: ver [MANIFESTO.md](MANIFESTO.md).
 
 ---
 
@@ -10,29 +12,37 @@ Laundry subscription service + specialty cleaning — Orlando, FL.
 
 | Page | Description | URL |
 |------|-------------|-----|
-| **Home (Hub)** | Central page with subscription plans | [index.html](https://a7laundry.github.io/A7-Laundry-Orlando/) |
-| Carpet Cleaning | LP — carpet cleaning service | [carpet-cleaning.html](https://a7laundry.github.io/A7-Laundry-Orlando/carpet-cleaning.html) |
-| Shoe Cleaning | LP — sneaker/shoe restoration | [shoe-cleaning.html](https://a7laundry.github.io/A7-Laundry-Orlando/shoe-cleaning.html) |
-| Upholstery Cleaning | LP — upholstery deep clean | [upholstery-cleaning.html](https://a7laundry.github.io/A7-Laundry-Orlando/upholstery-cleaning.html) |
-| Vacation Rental | LP — turnover cleaning for hosts | [vacation-rental.html](https://a7laundry.github.io/A7-Laundry-Orlando/vacation-rental.html) |
-| Carpet Campaign | SEO campaign page | [carpet-campaign/](https://a7laundry.github.io/A7-Laundry-Orlando/carpet-campaign/) |
+| **Home (Hub)** | Per-lb laundry — Normal 24h / Express 6h | [/](https://a7laundry.com/) |
+| Pricing | Per-lb pricing + weight estimator | [/plans](https://a7laundry.com/plans) |
+| Carpet Cleaning | LP — carpet cleaning service | [/carpet](https://a7laundry.com/carpet) |
+| Shoe Cleaning | LP — sneaker/shoe restoration | [/shoes](https://a7laundry.com/shoes) |
+| Upholstery Cleaning | LP — upholstery deep clean | [/upholstery](https://a7laundry.com/upholstery) |
+| Vacation Rental | LP — turnover cleaning for hosts | [/vacation](https://a7laundry.com/vacation) |
+| Comforter | LP — comforter cleaning (campaign) | [/comforter](https://a7laundry.com/comforter) |
+| Blog | SEO blog — 22 articles | [/blog](https://a7laundry.com/blog) |
+| Carpet Campaign | SEO campaign page | [/carpet-campaign](https://a7laundry.com/carpet-campaign) |
 
 ---
 
-## Subscription Plans
+## Pricing (per-pound)
 
-**Retail price:** $3.20/lb | **Bag:** 25 lbs (~40-50 pieces) | **Dimensions:** 30"x40" (76x102cm)
+Pay-per-use por libra — **sem assinatura, sem contrato**. Pickup & delivery sempre grátis.
 
-| Plan | Price | Bags/mo | Total lbs | Turnaround | Target |
-|------|-------|---------|-----------|------------|--------|
-| Essentials | $59.90/mo | 1 XL | 25 lbs | 48h | Singles, couples, guests |
-| Family | $109.90/mo | 2 XL | 50 lbs | 24h | Families |
-| Premium | $179.90/mo | 4 XL + dry cleaning | 100 lbs | Same-day | Pros, hosts |
+| Service | Turnaround | Price |
+|---------|-----------|-------|
+| **Normal** | 24h | **$2.90 / lb** |
+| **Express** | 6h (same-day) | **$3.20 / lb** |
+
+Minimum order: $50. Booking via WhatsApp **(407) 670-8839**.
+
+**Specialty add-ons:** carpet, shoe, upholstery, comforter & vacation-rental turnover cleaning.
 
 ---
 
 ## Stack
 
-- Static HTML/CSS/JS
-- Deploy: GitHub Pages
+- Static HTML/CSS/JS (no framework, no build)
+- Deploy: Vercel (`vercel.json` — clean URLs + security/cache headers)
+- Tracking: GTM (`GTM-PM7QGX6L`) + Meta Pixel + dataLayer + `wa-tracking.js`
+- Languages: EN / PT-BR / ES
 - Repo: [A7laundry/A7-Laundry-Orlando](https://github.com/A7laundry/A7-Laundry-Orlando)
