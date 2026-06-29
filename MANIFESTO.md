@@ -88,9 +88,9 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 - **Resíduo de assinatura/membership removido das páginas públicas:** `vacation-rental.html` (seção SUBSCRIPTION, membership, toasts falsos, nav), `shoe-cleaning.html`, `carpet-cleaning.html`, `upholstery-cleaning.html`, `privacy-policy.html`, `README.md`.
 - **Painéis internos migrados:** `a7-command-center.html` (stats/Stripe/card premium → per-lb), `criativos/` (15 decks de anúncio: index, painel + 13 estilos → per-lb, cupom FIRSTBAG→FIRSTWASH).
 - **Blog migrado (~12 artigos):** artigo dedicado `laundry-subscription-vacation-rental.html` reescrito para "recurring pickups" per-lb (mesma URL), removida a falsa economia de assinatura; menções/cards/seções de assinatura nos demais artigos → per-lb; corrigido o erro "Express = mesmo preço" (Express é $3.20, não grátis) em `express-laundry-orlando`, `same-day-laundry-orlando`, `a7-laundry-review`, `laundry-kissimmee`, `laundry-near-disney-world`, `book-laundry-whatsapp-orlando`.
+- **Labels de funil saneados (13 artigos):** pills "TOFU/MOFU/BOFU/PILLAR" visíveis → categorias amigáveis (Guide / Tips / Service / Complete Guide), classes de cor mantidas; removidos os pills de calendário "Day N" (regra staff-only [[feedback_funnel_labels]] agora respeitada na UI do blog).
 
 ### 6.2 Pendências conhecidas (fora do escopo desta passada)
-- **Termos de funil expostos na UI:** vários artigos do blog renderizam pills "BOFU/MOFU/TOFU/PILLAR" visíveis — viola a regra staff-only ([[feedback_funnel_labels]]). Sweep separado.
 - `reunion-resort-laundry-service.html` — "custom pricing on volume orders" para property managers (B2B borderline; deixado).
 - `STRATEGY-PROMPT.md` — documento da estratégia de assinatura (obsoleto; manter como histórico ou arquivar).
 - CSS morto das antigas seções `.membership`/`.member-card` nas LPs de serviço (invisível; opcional remover).
