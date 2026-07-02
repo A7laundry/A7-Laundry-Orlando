@@ -1,0 +1,21 @@
+# Públicos — Tourist Laundry Reinforcement (RASCUNHO)
+
+TOURIST:
+  name: "Tourist | Hotel + Airbnb guests | Corridor"
+  persona: "Turistas hospedados em hotel/Airbnb/vacation rental"
+  geo:
+    zones: ["Disney area", "Lake Buena Vista", "Universal area", "International Drive", "Kissimmee"]
+    targeting_note: "geo-turista (corredor); considerar 'travelers in this location' se disponível"
+  age: "25-55"
+  interests_suggested: ["hotel", "Airbnb / vacation rental", "family travel", "Orlando tourism / theme parks (interesse genérico, sem marca)"]
+  advantage_plus: "OFF (segmentação manual)"
+
+EXPRESS:
+  name: "Express Same-Day | Tourist high-intent | Corridor"
+  persona: "Turista com necessidade same-day (mala cheia / antes do checkout)"
+  geo:
+    zones: ["Disney area", "Lake Buena Vista", "Universal area", "International Drive", "Kissimmee"]
+  age: "25-55"
+  interests_suggested: ["hotel", "Airbnb / vacation rental", "family travel"]
+  advantage_plus: "OFF"
+  notes: "Público de urgência; oferta $3.95/lb subject to availability."

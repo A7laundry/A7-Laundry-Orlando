@@ -1,0 +1,68 @@
+# Campaign Spec — Comforter Dedicated (RASCUNHO — não criado no Meta)
+# Whitespace confirmado: ~0 anúncios de comforter cleaning em Orlando no Meta.
+# ⚠️ DRAFT. Nenhum objeto existe no Meta. Build futuro (só c/ aprovação) nasce status:PAUSED.
+
+meta:
+  slug: "2026-07-comforter-dedicated"
+  created: "2026-07-02"
+  status: "DRAFT — não deployado"
+  rationale: "Whitespace: ninguém anuncia comforter cleaning no Meta em Orlando. A7 já tem criativo C."
+
+campaign:
+  name: "A7 | Comforter Cleaning | Orlando | JUL26"
+  objective: "OUTCOME_ENGAGEMENT"          # Click-to-WhatsApp (default). Variante: OUTCOME_SALES p/ LP /comforter (ver test_variant)
+  buying_type: "AUCTION"
+  budget:
+    type: "CBO"
+    daily_budget_usd: 10.00                 # sugestão inicial; confirmar antes de build
+  special_ad_categories: []
+  deploy_policy: "born PAUSED; publish = gate manual separado"
+
+  test_variant:
+    description: "Testar WhatsApp direto vs tráfego p/ LP /comforter"
+    a: "Click-to-WhatsApp (conversa) — default"
+    b: "OUTCOME_SALES → LP /comforter (Pixel/retargeting) — opcional, ad set irmão"
+
+destination:
+  type: "WHATSAPP"
+  page_id: "625129510685107"
+  whatsapp: "+1 407-670-8839"
+  prefilled_message: "Hi A7! I'd like to clean my comforter. Size:"
+  landing_page_if_lp: "/comforter"
+
+offer:
+  model: "por tamanho (NÃO per-lb)"
+  prices:
+    twin: "From $35"
+    full_queen: "From $40"
+    king: "From $50"
+  includes: "Pickup & delivery available"
+
+ad_sets:
+  - ref: "audiences.yaml#COMF_LOCAL"        # 1 ad set inicial (CBO distribui)
+    ad_concepts: ["deep-clean", "before-after", "fresh-bed"]
+
+# Pipeline de criativos: 3 conceitos × 3 formatos = 9 slots. Detalhe em MANIFEST.md + creatives-map.csv.
+# Status: PENDING — 0/9 assets produzidos. Fluxo: assets/originals → optimized → approved.
+creatives_planned:
+  - concept: "deep-clean"
+    angle: "dor/deep clean (dust, sweat, allergens)"
+    formats: ["1:1", "4:5", "9:16"]
+    status: "PENDING"
+  - concept: "before-after"
+    angle: "prova visual (SEM '24HR TURNAROUND')"
+    formats: ["1:1", "4:5", "9:16"]
+    status: "PENDING"
+  - concept: "fresh-bed"
+    angle: "benefício (fresh, delivered)"
+    formats: ["1:1", "4:5", "9:16"]
+    status: "PENDING"
+  manifest_ref: "MANIFEST.md"
+
+kpis:
+  cost_per_conversation_target: "<= $20"
+  ctr_target: ">= 2%"
+  kill_rule: "pausar criativo com 0 conversas após $30–40 de gasto"
+  cpm_review: "se CPM > $30, revisar público"
+
+preflight_ref: "preflight-checklist.md"

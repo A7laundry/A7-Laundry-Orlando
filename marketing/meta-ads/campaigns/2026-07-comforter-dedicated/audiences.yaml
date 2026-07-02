@@ -1,0 +1,12 @@
+# Públicos — Comforter Dedicated (RASCUNHO)
+
+COMF_LOCAL:
+  name: "Comforter | Homeowners + Bedding | Orlando area"
+  persona: "Donos de casa / famílias (comprador de comforter cleaning)"
+  geo:
+    core: "Orlando + raio"
+    cities: ["Winter Garden", "Windermere", "Ocoee", "Lake Nona"]
+  age: "25-60"
+  interests_suggested: ["homeowners", "bedding / home & garden", "families", "home improvement"]
+  advantage_plus: "OFF (segmentação manual)"
+  notes: "Comforter é compra pontual/sazonal — geo local, não turista. Testar exclusão de renters se possível."
