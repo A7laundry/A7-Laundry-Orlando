@@ -1,0 +1,78 @@
+# Campaign Spec — A7 | WhatsApp Conversas | Laundry+Comforter | JUL26
+# Documenta a campanha ATUAL (já criada no Ads Manager). Esta spec é o registro versionado.
+# Para builds FUTUROS via API/MCP: objetos nascem status:PAUSED (ver a7-meta-ads-operator.md).
+
+meta:
+  slug: "2026-07-laundry-comforter"
+  created: "2026-07-02"
+  source: "reverse-documented from live Ads Manager (read-only)"
+
+campaign:
+  name: "A7 | WhatsApp Conversas | Laundry+Comforter | JUL26"
+  objective: "OUTCOME_ENGAGEMENT"          # Conversas / Click-to-WhatsApp
+  buying_type: "AUCTION"
+  budget:
+    type: "CBO"                             # Advantage Campaign Budget
+    daily_budget_usd: 15.00
+  schedule:
+    start: "2026-07-03T05:00:00-07:00"      # 05:00 PDT = 08:00 ET
+  special_ad_categories: []                 # laundry = nenhuma
+  deploy_policy: "future builds born PAUSED; publish is a separate manual gate"
+
+deployed:                                   # estado real na conta (NÃO alterar via arquivo)
+  ad_account_id: "650201661142284"
+  campaign_id: "120248527506970261"
+  status: "ACTIVE (scheduled)"              # programada p/ 2026-07-03
+  page_id: "625129510685107"               # A7 Laundry & Carpet Cleaning
+  instagram: "a7laundry"
+  whatsapp: "+1 407-670-8839"
+
+ad_sets:
+  - name: "AS1 | Local Residents + Comforter | Orlando"
+    adset_id: "120248527506950261"
+    destination_type: "WHATSAPP"
+    optimization_goal: "CONVERSATIONS"
+    promoted_object: { page_id: "625129510685107" }
+    budget: "CBO (herda da campanha)"
+    audience_ref: "audiences.yaml#AS1"
+    ads: ["B | Laundry Local | Residents", "C | Comforter | Residents"]
+
+  - name: "AS2 | Tourist-Hotel-Airbnb | Corridor"
+    adset_id: "120248530210880261"
+    destination_type: "WHATSAPP"
+    optimization_goal: "CONVERSATIONS"
+    promoted_object: { page_id: "625129510685107" }
+    budget: "CBO (herda da campanha)"
+    audience_ref: "audiences.yaml#AS2"
+    ads: ["A | Tourist | Hotel-Airbnb", "A2 | Tourist Express | Same-Day"]
+
+ads:
+  - name: "A | Tourist | Hotel-Airbnb"
+    ad_id: "120248530210890261"
+    adset_id: "120248530210880261"
+    creative_id: "27738209729131712"
+    cta: "WHATSAPP_MESSAGE"
+    price: "From $3.25/lb"
+
+  - name: "A2 | Tourist Express | Same-Day"
+    ad_id: "120248530210900261"
+    adset_id: "120248530210880261"
+    creative_id: "2815714845464626"
+    cta: "WHATSAPP_MESSAGE"
+    price: "From $3.95/lb (subject to availability)"
+
+  - name: "B | Laundry Local | Residents"
+    ad_id: "120248527506960261"
+    adset_id: "120248527506950261"
+    creative_id: "2070658857659765"
+    cta: "WHATSAPP_MESSAGE"
+    price: "From $2.90/lb"
+
+  - name: "C | Comforter | Residents"
+    ad_id: "120248527819680261"
+    adset_id: "120248527506950261"
+    creative_id: "1660611465208686"
+    cta: "WHATSAPP_MESSAGE"
+    price: "Twin $35 / Full-Queen $40 / King $50"
+
+preflight_ref: "preflight-report.md"

@@ -1,0 +1,13 @@
+# TEMPLATE — Ad (CTWA)
+- name: "<Letra | Ângulo | Público>"
+  ad_id: "<após build>"
+  adset_id: "<após build>"
+  creative_id: "<após build>"
+  status: "PAUSED"                       # sempre nasce pausado
+  cta: "WHATSAPP_MESSAGE"
+  price: "<conforme pricing-rules.md p/ o público>"
+  asset: "assets/<arquivo>.webp"
+  # creative (referência p/ build futuro):
+  # object_story_spec.link_data.call_to_action.type: WHATSAPP_MESSAGE
+  # object_story_spec.link_data.image_hash: <de POST /adimages>
+  # object_story_spec.page_id: 625129510685107

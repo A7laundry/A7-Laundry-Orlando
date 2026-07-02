@@ -1,0 +1,25 @@
+# A7 Laundry USA — identificadores da conta Meta Ads
+# ⚠️ SEM TOKENS. Apenas IDs públicos. O access token vive no MCP oficial (OAuth), nunca aqui.
+
+account:
+  name: "A7 LAUNDRY USA"
+  ad_account_id: "650201661142284"
+  currency: "USD"
+  business_id: "101217155598064"          # A7 Lavanderia - 01
+  business_name: "A7 Lavanderia - 01"
+
+page:
+  page_id: "625129510685107"
+  name_visual: "A7 Laundry & Carpet Cleaning"   # identificada nos previews (API retorna "(unknown)")
+  instagram: "a7laundry"
+
+whatsapp:
+  number_real: "+1 407-670-8839"          # número usado pelos anúncios click-to-WhatsApp (verificado no Ads Manager)
+  connection: "page-level (app WhatsApp Business)"  # NÃO é Cloud API/WABA
+  # ⚠️ Existe uma WABA de teste com +1 555-628-7241 ("Test WhatsApp Business Account") — ISOLADA, não usada pelos anúncios.
+  test_number_do_not_use: "+1 555-628-7241"
+
+api:
+  marketing_api_version: "v25.0"           # atual em jul/2026 — pinar sempre
+  connector: "official Meta Ads MCP (mcp__meta-ads__*)"
+  # facebook-business Python SDK só se/quando aprovado (ver RESEARCH-2026-07.md)

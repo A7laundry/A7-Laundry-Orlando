@@ -1,0 +1,5 @@
+ad_name,ad_id,adset_name,adset_id,creative_id,cta,price,asset,format
+A | Tourist | Hotel-Airbnb,120248530210890261,AS2 | Tourist-Hotel-Airbnb | Corridor,120248530210880261,27738209729131712,WHATSAPP_MESSAGE,From $3.25/lb,assets/a-tourist.webp,4:5
+A2 | Tourist Express | Same-Day,120248530210900261,AS2 | Tourist-Hotel-Airbnb | Corridor,120248530210880261,2815714845464626,WHATSAPP_MESSAGE,From $3.95/lb (subject to availability),assets/a2-tourist-express.webp,4:5
+B | Laundry Local | Residents,120248527506960261,AS1 | Local Residents + Comforter | Orlando,120248527506950261,2070658857659765,WHATSAPP_MESSAGE,From $2.90/lb,assets/b-laundry-local.webp,1.91:1
+C | Comforter | Residents,120248527819680261,AS1 | Local Residents + Comforter | Orlando,120248527506950261,1660611465208686,WHATSAPP_MESSAGE,Twin $35 / Full-Queen $40 / King $50,assets/c-comforter.webp,1:1

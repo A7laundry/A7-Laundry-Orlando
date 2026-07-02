@@ -1,0 +1,17 @@
+# TEMPLATE — Ad Set (CTWA)
+- name: "<AS# | Público | Região>"
+  adset_id: "<após build>"
+  status: "PAUSED"                       # sempre nasce pausado
+  destination_type: "WHATSAPP"
+  optimization_goal: "CONVERSATIONS"
+  billing_event: "IMPRESSIONS"
+  promoted_object: { page_id: "625129510685107" }
+  budget: "CBO (herda da campanha)"      # se ABO: daily_budget_usd + bid_strategy
+  advantage_plus: "OFF"                  # segmentação manual por padrão
+  targeting:
+    geo: "<cidade/raio>"
+    age_min: 18
+    age_max: 65
+    publisher_platforms: ["facebook", "instagram"]
+  audience_ref: "audiences.yaml#<AS#>"
+  ads: ["<nome do anúncio>", "..."]

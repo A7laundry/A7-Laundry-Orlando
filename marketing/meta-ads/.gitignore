@@ -1,0 +1,13 @@
+# Proteção de dados sensíveis de Meta Ads.
+# Se este repo for/ficar PÚBLICO, relatórios com gasto real NÃO devem ser commitados.
+# Descomente as linhas abaixo se o repositório for público:
+
+# performance-reports/*.md
+# reports/*.md
+# !**/.gitkeep
+
+# Nunca commitar credenciais (por segurança, mesmo que não devam existir aqui):
+*.token
+*.secret
+.env
+.env.*

@@ -1,0 +1,18 @@
+# Públicos — JUL26
+# Documentado a partir do Ads Manager (read-only). Estrutura de referência; refinar com dados live se necessário.
+
+AS1:
+  name: "AS1 | Local Residents + Comforter | Orlando"
+  persona: "Residentes de Orlando (famílias, donos de casa) + comforter"
+  geo: "Orlando + entorno (residentes locais)"
+  age: "18-65"
+  advantage_plus: "OFF (segmentação manual)"
+  notes: "Serve os anúncios B (laundry local $2.90) e C (comforter por tamanho)."
+
+AS2:
+  name: "AS2 | Tourist-Hotel-Airbnb | Corridor"
+  persona: "Turistas hospedados em hotel/Airbnb no corredor turístico"
+  geo: "Corredor turístico Orlando (I-Drive, Universal, Disney area)"
+  age: "18-65"
+  advantage_plus: "OFF (segmentação manual)"
+  notes: "Serve os anúncios A (tourist $3.25) e A2 (express $3.95)."

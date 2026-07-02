@@ -1,0 +1,29 @@
+# TEMPLATE — Campaign. Copie p/ campaigns/<YYYY-MM-slug>/campaign-spec.yaml e preencha <...>.
+# ⚠️ Builds futuros nascem status:PAUSED. Publicação = gate manual separado.
+
+meta:
+  slug: "<YYYY-MM-slug>"
+  created: "<YYYY-MM-DD>"
+
+campaign:
+  name: "<A7 | ... | MESYY>"
+  objective: "OUTCOME_ENGAGEMENT"        # CTWA / conversas
+  buying_type: "AUCTION"
+  budget:
+    type: "CBO"
+    daily_budget_usd: <15.00>
+  schedule:
+    start: "<ISO8601 com timezone>"
+  special_ad_categories: []
+  deploy_policy: "born PAUSED; publish is a separate manual gate"
+
+deployed:                                # preencher após build
+  ad_account_id: "650201661142284"
+  campaign_id: "<preencher após build>"
+  status: "PAUSED"
+  page_id: "625129510685107"
+  whatsapp: "+1 407-670-8839"
+
+ad_sets: []      # ver adset-template.yaml
+ads: []          # ver ad-template.yaml
+preflight_ref: "preflight-report.md"
