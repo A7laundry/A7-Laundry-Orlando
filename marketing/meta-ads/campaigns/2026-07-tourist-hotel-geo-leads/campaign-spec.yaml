@@ -1,0 +1,58 @@
+# Campaign Spec — Tourist Hotel Geo → Lead Ads (RASCUNHO — não criado no Meta)
+# Estratégia NÃO-mensagem: geo em cima de clusters de hotéis + Instant Form (leads).
+# ⚠️ DRAFT. Nenhum objeto existe no Meta. Build futuro (só c/ aprovação) nasce status:PAUSED.
+
+meta:
+  slug: "2026-07-tourist-hotel-geo-leads"
+  created: "2026-07-03"
+  status: "DRAFT — não deployado"
+  rationale: >
+    Whitespace tourist no Meta + intenção altíssima por geo (hóspede fisicamente no hotel
+    com mala suja) + corredor denso (Kissimmee/I-Drive/LBV/Universal). Lead Ads captura o
+    lead na hora e a A7 controla o follow-up (liga/SMS em minutos).
+
+campaign:
+  name: "A7 | Tourist Hotel Geo | Leads | JUL26"
+  objective: "OUTCOME_LEADS"            # Instant Form nativo (NÃO mensagem)
+  buying_type: "AUCTION"
+  budget:
+    type: "CBO"
+    daily_budget_usd: 20.00             # sugestão inicial; escala clusters vencedores
+  special_ad_categories: []
+  deploy_policy: "born PAUSED; publish = gate manual separado"
+
+destination:
+  type: "INSTANT_FORM"                  # form nativo do Meta (lead-form.md)
+  page_id: "625129510685107"
+  instagram: "a7laundry"
+  form_ref: "lead-form.md"
+  # backup no fim do form: WhatsApp +1 407-670-8839
+
+ad_sets:                                # 1 por cluster p/ ler qual corredor converte (ver audiences.yaml)
+  - ref: "audiences.yaml#KISSIMMEE"     # ⭐ prioridade
+  - ref: "audiences.yaml#LBV_DISNEY"
+  - ref: "audiences.yaml#IDRIVE"
+  - ref: "audiences.yaml#UNIVERSAL"
+  # - ref: "audiences.yaml#REUNION_CHAMPIONSGATE"   # opcional (vacation homes)
+
+creatives:
+  reuse_from: "campaigns/2026-07-tourist-laundry-reinforcement/assets/approved/"
+  note: "Reaproveitar tourist parks / pack-less / express (já aprovados). Trocar CTA WhatsApp por 'Get Pickup Quote' / 'Book Pickup' ligado ao Instant Form."
+  cta: "GET_QUOTE"                      # ou BOOK_NOW / SUBSCRIBE conforme disponível p/ Leads
+
+offer:
+  tourist: "From $3.25/lb · min $60 · pickup & delivery"
+  express: "Same-day, subject to availability (nunca 'guaranteed')"
+
+follow_up_sla:
+  target: "≤ 5 min (liga + SMS, 3 tentativas)"
+  note: "MAKE-OR-BREAK. Lead de turista esfria em minutos. Leads → CRM/planilha p/ ação imediata."
+
+kpis:
+  cpl_target: "$6–10"
+  cost_per_booked_pickup: "acompanhar"
+  lead_to_booking_rate: "acompanhar"
+  kill_rule: "pausar ad set/cluster com CPL > $20 após ~$40 sem coleta agendada"
+  cpm_review: "se CPM > $30, revisar raio/behavior"
+
+preflight_ref: "preflight-checklist.md"

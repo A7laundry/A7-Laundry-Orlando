@@ -1,0 +1,38 @@
+# Públicos — Tourist Hotel Geo (Lead Ads) — RASCUNHO
+# "Ad em cima do hotel": raio geográfico nos clusters + "pessoas recentemente neste local" (pega turista).
+# Meta: raio mínimo ~1 mi (1,6 km). Location type = RECENT (recently in location), NÃO "lives in".
+
+common:
+  location_type: "recent"          # people recently in this location (visitantes/turistas)
+  age: "25-55"
+  behaviors_suggested: ["Travelers", "Frequent international/domestic travelers"]
+  interests_optional: ["Hotels", "Resorts", "Airbnb", "Vacation rentals"]
+  advantage_plus: "OFF (segmentação manual)"
+  exclude: "moradores locais (implícito via 'recent'); considerar excluir funcionários de hotel se possível"
+
+KISSIMMEE:                          # ⭐ prioridade
+  name: "Hotel Geo | Kissimmee / W-192 / Celebration"
+  pins: ["W Irlo Bronson Hwy (192) hotel corridor", "Celebration", "Old Town / 192 resorts"]
+  radius: "~1.6–3 km por pin"
+  note: "Maior densidade de hotel + casa de temporada do corredor."
+
+LBV_DISNEY:
+  name: "Hotel Geo | Lake Buena Vista / Disney-area resorts"
+  pins: ["Lake Buena Vista", "Disney Springs resort area", "Hotel Plaza Blvd"]
+  radius: "~1.6–3 km por pin"
+
+IDRIVE:
+  name: "Hotel Geo | International Drive"
+  pins: ["I-Drive N", "I-Drive S / Convention Center"]
+  radius: "~1.6–3 km por pin"
+
+UNIVERSAL:
+  name: "Hotel Geo | Universal area"
+  pins: ["Universal Blvd resorts", "Major Blvd hotels"]
+  radius: "~1.6–3 km por pin"
+
+REUNION_CHAMPIONSGATE:              # opcional — mais vacation homes que hotel
+  name: "Geo | Reunion / Champions Gate / Windsor Hills"
+  pins: ["Reunion Resort", "ChampionsGate", "Windsor Hills / Windsor at Westside"]
+  radius: "~2–3 km por pin"
+  note: "Alta densidade de vacation homes (ponte natural p/ o B2B recorrente no futuro)."
