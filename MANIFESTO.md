@@ -22,8 +22,8 @@ Modelo **pay-per-use por libra** — duas velocidades. **Não existe mais assina
 
 | Serviço | Turnaround | Preço | Inclui |
 |---------|-----------|-------|--------|
-| **Normal** | 24h | **$2.90 / lb** | Coleta e entrega grátis, sorting & folding profissional, sabões hipoalergênicos premium |
-| **Express** | 6h (same-day) | **$3.20 / lb** | Tudo do Normal + processamento prioritário / VIP |
+| **Normal** | 24h | **$3.25 / lb** | Coleta e entrega grátis, sorting & folding profissional, sabões hipoalergênicos premium |
+| **Express** | 6h (same-day) | **$3.95 / lb** | Tudo do Normal + processamento prioritário / VIP |
 
 - **Pickup & delivery sempre grátis.**
 - **Pedido mínimo:** **$50 por pedido** (valor, não peso). À tarifa Normal equivale a ~17 lbs.
@@ -82,12 +82,12 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 ## 6. Migração do modelo antigo — STATUS (2026-06-28/29)
 
 ### 6.1 ✅ Concluído
-- **Preços alinhados $2.90 / $3.20:** `index.html`, `plans.html` (incl. estimador JS + schema FAQ), e antiga `premium.html`.
+- **Preços alinhados $3.25 / $3.95:** `index.html`, `plans.html` (incl. estimador JS + schema FAQ), e antiga `premium.html`.
 - **`premium.html` ARQUIVADO** em `_archive/premium.html`; rewrite `/premium` removido do `vercel.json`.
 - **Pedido mínimo = $50** (antes 25 lbs): `plans.html` (copy + estimador agora valida `max($50, peso×tarifa)`), `index.html`, docs.
 - **Resíduo de assinatura/membership removido das páginas públicas:** `vacation-rental.html` (seção SUBSCRIPTION, membership, toasts falsos, nav), `shoe-cleaning.html`, `carpet-cleaning.html`, `upholstery-cleaning.html`, `privacy-policy.html`, `README.md`.
 - **Painéis internos migrados:** `a7-command-center.html` (stats/Stripe/card premium → per-lb), `criativos/` (15 decks de anúncio: index, painel + 13 estilos → per-lb, cupom FIRSTBAG→FIRSTWASH).
-- **Blog migrado (~12 artigos):** artigo dedicado `laundry-subscription-vacation-rental.html` reescrito para "recurring pickups" per-lb (mesma URL), removida a falsa economia de assinatura; menções/cards/seções de assinatura nos demais artigos → per-lb; corrigido o erro "Express = mesmo preço" (Express é $3.20, não grátis) em `express-laundry-orlando`, `same-day-laundry-orlando`, `a7-laundry-review`, `laundry-kissimmee`, `laundry-near-disney-world`, `book-laundry-whatsapp-orlando`.
+- **Blog migrado (~12 artigos):** artigo dedicado `laundry-subscription-vacation-rental.html` reescrito para "recurring pickups" per-lb (mesma URL), removida a falsa economia de assinatura; menções/cards/seções de assinatura nos demais artigos → per-lb; corrigido o erro "Express = mesmo preço" (Express é $3.95, não grátis) em `express-laundry-orlando`, `same-day-laundry-orlando`, `a7-laundry-review`, `laundry-kissimmee`, `laundry-near-disney-world`, `book-laundry-whatsapp-orlando`.
 - **Labels de funil saneados (13 artigos):** pills "TOFU/MOFU/BOFU/PILLAR" visíveis → categorias amigáveis (Guide / Tips / Service / Complete Guide), classes de cor mantidas; removidos os pills de calendário "Day N" (regra staff-only [[feedback_funnel_labels]] agora respeitada na UI do blog).
 
 ### 6.2 Pendências conhecidas (fora do escopo desta passada)

@@ -30,8 +30,8 @@ Pay-per-use por libra — **sem assinatura, sem contrato**. Pickup & delivery se
 
 | Service | Turnaround | Price |
 |---------|-----------|-------|
-| **Normal** | 24h | **$2.90 / lb** |
-| **Express** | 6h (same-day) | **$3.20 / lb** |
+| **Normal** | 24h | **$3.25 / lb** |
+| **Express** | 6h (same-day) | **$3.95 / lb** |
 
 Minimum order: $50. Booking via WhatsApp **(407) 670-8839**.
 

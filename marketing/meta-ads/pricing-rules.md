@@ -6,9 +6,11 @@
 
 | Público / oferta | Preço no anúncio | Observação |
 |---|---|---|
-| **Local Laundry** (residentes Orlando) | **From $2.90/lb** | = preço do site/MANIFESTO |
-| **Tourist Laundry** (hotel/Airbnb) | **From $3.25/lb** | preço premium turista |
-| **Tourist Express** (same-day) | **From $3.95/lb** | + "Subject to availability" |
+| **Local Laundry** (residentes Orlando) | **From $2.90/lb** | **promo residente** — ABAIXO do site (desconto segmentado) |
+| **Tourist Laundry** (hotel/Airbnb) | **From $3.25/lb** | = **preço do site** (MANIFESTO Normal 24h) |
+| **Tourist Express** (same-day) | **From $3.95/lb** | = **site Express 6h** + "Subject to availability" |
+
+> **Mudança 2026-07-06:** o site/MANIFESTO subiu de $2.90/$3.20 → **$3.25 Normal / $3.95 Express** (alinhado às campanhas de turista). O **$2.90 sobrevive só como promo Local** (residente), abaixo do preço público.
 
 ## Comforter Cleaning (por tamanho — NÃO é per-lb)
 
