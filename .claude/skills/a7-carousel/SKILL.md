@@ -97,7 +97,7 @@ Escolher o ícone do serviço/tema (ver `brand-profile.md` → "Vocabulário de 
 - **Fundo fantasma** = mesmo ícone em todos os slides de conteúdo → continuidade.
 
 ### ⭐ Capa = imagem cinematográfica (padrão, não negociável)
-A capa (Slide 1) **sempre** usa uma **imagem de IA cinematográfica em tela cheia** (cena premium de Orlando — quarto de resort, mala arrumada, roupa dobrada em luz rica; escura/dramática) + overlay escuro + Anton uppercase + palavra em `{tangerine}`. Ver `templates.md` → "CAPA CINEMATOGRÁFICA". Gerar via Higgsfield (`recraft-v4-1` ou `generate_image`, 4:5, 2k, mood escuro, base fadeando pro escuro). O texto é **sempre** composto por cima na skin HTML — nunca deixar a IA escrever. Só cair pra "capa sem foto" (fallback) se não houver imagem viável.
+A capa (Slide 1) **sempre** usa uma **imagem de IA cinematográfica em tela cheia** (cena premium de Orlando — quarto de resort, mala arrumada, roupa dobrada em luz rica; escura/dramática) + overlay escuro + Anton uppercase + palavra em `{tangerine}`. Ver `templates.md` → "CAPA CINEMATOGRÁFICA". **Gerar no lovart.ai** (padrão oficial desde 2026-07-15 — as capas ficam melhores; via browser/Claude in Chrome, login do Dennis). Prompt-receita em `image-prompt.md`. Higgsfield (`generate_image`, `nano_banana_pro`, 4:5) = fallback rápido. Sempre 4:5, mood escuro, base fadeando pro escuro pro texto. O texto é **sempre** composto por cima na skin HTML — nunca deixar a IA escrever. Só cair pra "capa sem foto" (fallback) se não houver imagem viável.
 
 O **miolo** (slides 2–N) é o oposto: **editorial claro** (`bg`/`bg-alt`), respiro, linhas finas, setas →, destaque em `{brand_blue}`. Capa para o dedo, miolo para ler.
 
