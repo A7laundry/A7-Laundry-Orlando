@@ -41,10 +41,10 @@
 | P | Ação | Precisa de |
 |---|---|---|
 | **P1** ✅ | **FEITO (2026-07-16, no ar — commit de724ab).** Prova social real: badge **5.0★ · 23 Google reviews** no hero + CTA final · seção `#reviews` com depoimentos REAIS (1 EN destaque + Reynaldo/Carlos/Jully PT c/ tradução + selo Google) · schema `aggregateRating` 5.0/23 · removido o fake "Sarah J.". Dados: Google Business (5.0/23). Falta: mais depoimentos EN (pedir prints ao Dennis) + linha de volume/tempo ("desde 20XX" — confirmar com Dennis). |
-| **P2** | **Garantia** de satisfação ("não gostou? relavamos grátis") ao lado do preço + CTA | confirmar que oferece |
-| **P3** | **Enquadrar o preço premium** — liderar com o valor ("hotel-quality, 24h ou 6h express") em vez de esconder | Claude faz |
-| **P4** | **Preço no hero** + **comforter $35/$40/$50** visível | Claude faz |
-| **P5** | **Money page:** puxar o gancho emocional do hero da home | Claude faz |
+| **P2** ✅ | **FEITO (no ar, commit c/ garantia).** Faixa "Not perfectly clean? We'll re-wash it free — guaranteed." sob os preços (Dennis confirmou que oferece re-lavagem grátis). |
+| **P3** ✅ | **FEITO.** Pricing lidera com valor: eyebrow "Hotel-quality wash & fold" + subtítulo focado em qualidade (sorted by fabric, hypoallergenic, folded like new), não só preço. |
+| **P4** ✅ | **FEITO.** Preço no hero (chips "Wash & fold from $3.25/lb" + "Free pickup & delivery") + comforter com preços REAIS **Twin $33 · Full/Queen $37 · King $40** no card da home. |
+| **P5** ✅ | **FEITO.** Money page: H1 emocional "Enjoy Orlando. We handle the laundry." (keyword no subtítulo pro SEO) + badge 5.0★/23 no hero. |
 
 > ⚠️ **Nunca inventar review** (regra do projeto — já houve remoção de reviews falsos). P1/P2 dependem de números REAIS do Google Business/depoimentos do Dennis.
 
