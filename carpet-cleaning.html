@@ -500,12 +500,6 @@
     <button onclick="setLanguage('es')" aria-label="Español">ES</button>
   </div>
 
-  <!-- LIVE VIEWERS -->
-  <div class="live-viewers">
-    <span class="live-dot"></span>
-    🔥 <span id="liveViewers">21</span> <span data-lang="en">people viewing this page</span><span data-lang="pt">pessoas vendo esta página</span><span data-lang="es">personas viendo esta página</span>
-  </div>
-
   <!-- HEADER WITH LOGO -->
   <header class="site-header">
     <div class="container">
@@ -556,14 +550,6 @@
       <a href="vacation-rental.html">🌴 Vacation Rental</a>
     </div>
   </nav>
-
-  <!-- URGENCY BAR -->
-  <div class="urgency-bar">
-    <span>
-      ⏰ <span data-lang="en">LIMITED: Only <strong id="spotsLeft">9</strong> spots left this week — Offer expires in</span><span data-lang="pt">LIMITADO: Apenas <strong class="spots-mirror">9</strong> vagas esta semana — Oferta expira em</span><span data-lang="es">LIMITADO: Solo <strong class="spots-mirror">9</strong> lugares esta semana — Oferta expira en</span>
-      <span class="cd" id="countdown">23:59:59</span>
-    </span>
-  </div>
 
   <!-- Breadcrumb -->
   <div style="background:rgba(10,6,24,.98);padding:8px 20px;font-size:12px">
@@ -1083,12 +1069,6 @@
     </div>
   </footer>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast">
-    <div class="toast-avatar" id="toastAv">J</div>
-    <div><strong id="toastName">Jennifer W.</strong> just booked carpet cleaning<br><span class="t-time" id="toastTime">2 min ago</span></div>
-  </div>
-
   <!-- STICKY MOBILE CTA -->
   <div class="sticky-cta">
     <a href="tel:+14076708839"><span data-lang="en">📞 Call Now — (407) 670-8839</span><span data-lang="pt">📞 Ligue Agora — (407) 670-8839</span><span data-lang="es">📞 Llama Ahora — (407) 670-8839</span></a>
@@ -1190,49 +1170,6 @@
       bar.style.width = (window.scrollY / h * 100) + '%';
     });
 
-    /* === COUNTDOWN (24h localStorage cycle) === */
-    function updateCountdown(){
-      var key = 'a7carpet_cd';
-      var deadline = localStorage.getItem(key);
-      var now = Date.now();
-      if (!deadline || parseInt(deadline) < now) {
-        deadline = now + 86400000;
-        localStorage.setItem(key, deadline);
-      }
-      deadline = parseInt(deadline);
-      var diff = deadline - now;
-      if (diff <= 0) { localStorage.removeItem(key); return; }
-      var h = String(Math.floor(diff/3600000)).padStart(2,'0');
-      var m = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
-      var s = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-      document.getElementById('countdown').textContent = h+':'+m+':'+s;
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    /* === SPOTS LEFT (sessionStorage) === */
-    var spots = sessionStorage.getItem('a7carpet_spots');
-    if (!spots) { spots = 9; sessionStorage.setItem('a7carpet_spots', spots); }
-    document.getElementById('spotsLeft').textContent = spots;
-    document.querySelectorAll('.spots-mirror').forEach(function(el){ el.textContent = spots; });
-    setInterval(function(){
-      var s = parseInt(sessionStorage.getItem('a7carpet_spots'));
-      if (s > 3 && Math.random() < .15) {
-        s--;
-        sessionStorage.setItem('a7carpet_spots', s);
-        document.getElementById('spotsLeft').textContent = s;
-        document.querySelectorAll('.spots-mirror').forEach(function(el){ el.textContent = s; });
-      }
-    }, 45000);
-
-    /* === LIVE VIEWERS === */
-    function updateViewers(){
-      var v = 15 + Math.floor(Math.random() * 21);
-      document.getElementById('liveViewers').textContent = v;
-    }
-    updateViewers();
-    setInterval(updateViewers, 10000 + Math.random() * 5000);
-
     /* === STAT COUNTERS (IntersectionObserver) === */
     var statsObserved = false;
     var statsObs = new IntersectionObserver(function(entries){
@@ -1299,33 +1236,6 @@
       result.textContent = valid ? m.yes : m.no;
       result.className = 'zip-result ' + (valid ? 'yes' : 'no');
     };
-
-    /* === SOCIAL PROOF TOASTS === */
-    var toasts = [
-      {name:'Jennifer W.', init:'JW', time:'2 min ago'},
-      {name:'Michael T.', init:'MT', time:'5 min ago'},
-      {name:'Fernanda S.', init:'FS', time:'7 min ago'},
-      {name:'Amanda R.', init:'AR', time:'8 min ago'},
-      {name:'Robert S.', init:'RS', time:'12 min ago'},
-      {name:'Carlos M.', init:'CM', time:'15 min ago'},
-      {name:'Patricia L.', init:'PL', time:'18 min ago'},
-      {name:'David K.', init:'DK', time:'22 min ago'}
-    ];
-    var ti = 0;
-    function showToast(){
-      var t = document.getElementById('toast');
-      var d = toasts[ti % toasts.length];
-      document.getElementById('toastAv').textContent = d.init;
-      document.getElementById('toastName').textContent = d.name;
-      document.getElementById('toastTime').textContent = d.time;
-      t.classList.add('show');
-      setTimeout(function(){ t.classList.remove('show'); }, 4000);
-      ti++;
-    }
-    setTimeout(function(){
-      showToast();
-      setInterval(showToast, 25000 + Math.random() * 15000);
-    }, 8000);
 
     /* === SCROLL ANIMATIONS === */
     var obs = new IntersectionObserver(function(entries){

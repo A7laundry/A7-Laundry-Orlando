@@ -420,25 +420,7 @@
     <button onclick="setLang('es')" aria-label="Español">ES</button>
   </div>
 
-  <!-- Live Viewers -->
-  <div class="live-viewers" aria-live="polite">
-    <span class="live-dot"></span>
-    <span data-lang="en"><span id="viewerCount1">14</span> people viewing now</span>
-    <span data-lang="pt" style="display:none"><span id="viewerCount2">14</span> pessoas vendo agora</span>
-    <span data-lang="es" style="display:none"><span id="viewerCount3">14</span> personas viendo ahora</span>
-  </div>
-
-  <!-- Social Proof Toast -->
-  <div id="proofToast" class="proof-toast" aria-live="polite">
-    <div class="proof-avatar" id="proofAvatar">S</div>
-    <div class="proof-text">
-      <div class="proof-name" id="proofName">Sarah from Lake Nona</div>
-      <div class="proof-action" id="proofAction">just booked Express pickup</div>
-      <div class="proof-time" id="proofTime">3 minutes ago</div>
-    </div>
-  </div>
-
-  <!-- Header -->
+<!-- Header -->
   <header class="site-header" id="siteHeader" role="banner">
     <div class="container">
       <a href="/" aria-label="A7 Laundry Home">
@@ -1251,19 +1233,7 @@
     overlay.addEventListener('click',closeMenu);
     menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
 
-    // === LIVE VIEWERS ===
-    (function(){
-      var el=document.querySelector('.live-viewers');
-      if(!el)return;
-      function update(){
-        var base=Math.floor(Math.random()*8)+10;
-        document.querySelectorAll('[id^="viewerCount"]').forEach(function(e){e.textContent=base;});
-      }
-      function show(){update();el.classList.add('visible');setTimeout(function(){el.classList.remove('visible');},10000);}
-      setTimeout(function(){show();setInterval(show,150000);},30000);
-    })();
-
-    // === FAQ ===
+// === FAQ ===
     document.querySelectorAll('.faq-q').forEach(function(btn){
       btn.setAttribute('aria-expanded','false');
       btn.addEventListener('click',function(){
@@ -1387,52 +1357,8 @@
 
     buildEstimator();
     updateEstimator();
-
-    // === SOCIAL PROOF TOAST ===
-    (function(){
-      var guests=[
-        {name:'Sarah',    area:'Lake Nona',   service:'Express',  mins:3},
-        {name:'Carlos',   area:'Kissimmee',   service:'Normal',   mins:7},
-        {name:'Maria',    area:'Orlando',     service:'Express',  mins:2},
-        {name:'Jessica',  area:'Clermont',    service:'Normal',   mins:11},
-        {name:'Daniel',   area:'Champions Gate',service:'Express',mins:5},
-        {name:'Ana',      area:'Celebration', service:'Normal',   mins:9},
-        {name:'Lucas',    area:'Lake Nona',   service:'Express',  mins:4},
-        {name:'Bruna',    area:'Kissimmee',   service:'Normal',   mins:13},
-        {name:'James',    area:'Davenport',   service:'Express',  mins:6},
-        {name:'Amanda',   area:'Orlando',     service:'Normal',   mins:8},
-      ];
-      var toast=document.getElementById('proofToast');
-      var avatar=document.getElementById('proofAvatar');
-      var nameEl=document.getElementById('proofName');
-      var actionEl=document.getElementById('proofAction');
-      var timeEl=document.getElementById('proofTime');
-      var idx=0;
-      function show(){
-        var g=guests[idx%guests.length];
-        var mins=Math.floor(Math.random()*12)+1;
-        avatar.textContent=g.name[0];
-        if(currentLang==='pt'){
-          nameEl.textContent=g.name+' — '+g.area;
-          actionEl.textContent='agendou coleta '+g.service;
-          timeEl.textContent=mins+' minutos atrás';
-        } else if(currentLang==='es'){
-          nameEl.textContent=g.name+' — '+g.area;
-          actionEl.textContent='reservó recogida '+g.service;
-          timeEl.textContent='hace '+mins+' minutos';
-        } else {
-          nameEl.textContent=g.name+' from '+g.area;
-          actionEl.textContent='just booked '+g.service+' pickup';
-          timeEl.textContent=mins+' minute'+(mins>1?'s':'')+' ago';
-        }
-        toast.classList.add('show');
-        setTimeout(function(){toast.classList.remove('show');},8000);
-        idx++;
-      }
-      setTimeout(show,120000);
-      setInterval(show,180000);
-    })();
   </script>
+
 <script src="/a7-tracking.js" defer></script>
 </body>
 </html>

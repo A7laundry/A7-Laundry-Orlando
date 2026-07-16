@@ -377,15 +377,6 @@
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-label="Reading progress"></div>
 
-<!-- Live viewers -->
-<div class="live-viewers" id="liveViewers" aria-live="polite">
-  <span class="live-dot"></span>
-  <span id="liveCount">18</span>
-  <span data-lang="en">viewing now</span>
-  <span data-lang="pt">vendo agora</span>
-  <span data-lang="es">viendo ahora</span>
-</div>
-
 <!-- Lang switcher -->
 <div class="lang-sw" role="navigation" aria-label="Language selector">
   <button onclick="setLanguage('en')" class="active" aria-label="English">EN</button>
@@ -397,12 +388,6 @@
 <a href="https://wa.me/14076708839?text=Hi!%20I%20want%20to%20schedule%20comforter%20cleaning!" class="wa-float" data-wa-link aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
-<!-- Toast -->
-<div class="toast" id="proofToast">
-  <div class="toast-name" id="toastName">Sarah from Lake Nona</div>
-  <div class="toast-action" id="toastAction">just scheduled a King comforter pickup</div>
-</div>
 
 <!-- Mobile menu overlay -->
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -520,11 +505,11 @@
           </div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">2K+</div>
+          <div class="stat-num">$0</div>
           <div class="stat-label">
-            <span data-lang="en">Comforters cleaned</span>
-            <span data-lang="pt">Edredons lavados</span>
-            <span data-lang="es">Edredones limpiados</span>
+            <span data-lang="en">Free pickup</span>
+            <span data-lang="pt">Coleta grátis</span>
+            <span data-lang="es">Recogida gratis</span>
           </div>
         </div>
         <div class="stat-item">
@@ -1207,53 +1192,6 @@
     var pct = (s.scrollTop || document.body.scrollTop) / (s.scrollHeight - s.clientHeight) * 100;
     bar.style.width = Math.min(pct, 100) + '%';
   }, {passive:true});
-
-  /* === LIVE VIEWERS === */
-  var lv = document.getElementById('liveViewers');
-  var lc = document.getElementById('liveCount');
-  var baseCount = 14 + Math.floor(Math.random() * 10);
-  lc.textContent = baseCount;
-  setTimeout(function(){
-    lv.style.opacity = '1';
-    lv.style.transition = 'opacity .5s';
-  }, 30000);
-  setInterval(function(){
-    var delta = Math.floor(Math.random() * 5) - 2;
-    baseCount = Math.max(8, Math.min(35, baseCount + delta));
-    lc.textContent = baseCount;
-  }, 7000);
-  setTimeout(function(){
-    lv.style.opacity = '0';
-  }, 40000);
-  setTimeout(function(){
-    lv.style.opacity = '1';
-  }, 150000);
-
-  /* === PROOF TOAST === */
-  var toasts = [
-    {name:'Sarah from Lake Nona', action:'just scheduled a King comforter pickup', namePt:'Sarah de Lake Nona', actionPt:'acabou de agendar coleta de edredom King', nameEs:'Sarah de Lake Nona', actionEs:'acaba de programar recogida de edredón King'},
-    {name:'Marcus from Winter Park', action:'booked a Queen comforter cleaning', namePt:'Marcus de Winter Park', actionPt:'agendou lavagem de edredom Queen', nameEs:'Marcus de Winter Park', actionEs:'reservó limpieza de edredón Queen'},
-    {name:'Amanda from Kissimmee', action:'scheduled a down comforter pickup', namePt:'Amanda de Kissimmee', actionPt:'agendou coleta de edredom de penas', nameEs:'Amanda de Kissimmee', actionEs:'programó recogida de edredón de plumas'},
-    {name:'Carlos from Winter Garden', action:'just booked Twin comforter cleaning', namePt:'Carlos de Winter Garden', actionPt:'acabou de agendar lavagem de edredom solteiro', nameEs:'Carlos de Winter Garden', actionEs:'acaba de reservar limpieza de edredón individual'},
-    {name:'Priya from Oviedo', action:'scheduled pickup for 2 comforters', namePt:'Priya de Oviedo', actionPt:'agendou coleta de 2 edredons', nameEs:'Priya de Oviedo', actionEs:'programó recogida de 2 edredones'},
-  ];
-  var toastIndex = 0;
-  var toastEl = document.getElementById('proofToast');
-  var nameEl = document.getElementById('toastName');
-  var actionEl = document.getElementById('toastAction');
-  function showToast(){
-    var t = toasts[toastIndex % toasts.length];
-    var lang = localStorage.getItem('a7_lang') || 'en';
-    nameEl.textContent = lang === 'pt' ? t.namePt : lang === 'es' ? t.nameEs : t.name;
-    actionEl.textContent = lang === 'pt' ? t.actionPt : lang === 'es' ? t.actionEs : t.action;
-    toastEl.classList.add('show');
-    setTimeout(function(){ toastEl.classList.remove('show'); }, 7000);
-    toastIndex++;
-  }
-  setTimeout(function(){
-    showToast();
-    setInterval(showToast, 45000);
-  }, 120000);
 
   /* === FAQ ACCORDION === */
   document.querySelectorAll('.faq-q').forEach(function(btn){

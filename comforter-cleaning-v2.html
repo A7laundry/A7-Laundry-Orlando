@@ -329,15 +329,6 @@
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-label="Reading progress"></div>
 
-<!-- Live viewers -->
-<div class="live-viewers" id="liveViewers" aria-live="polite">
-  <span class="live-dot"></span>
-  <span id="liveCount">12</span>
-  <span data-lang="en">viewing now</span>
-  <span data-lang="pt">vendo agora</span>
-  <span data-lang="es">viendo ahora</span>
-</div>
-
 <!-- Lang switcher -->
 <div class="lang-sw" role="navigation" aria-label="Language selector">
   <button onclick="setLanguage('en')" class="active" aria-label="English">EN</button>
@@ -349,12 +340,6 @@
 <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20comforter%20cleaning." class="wa-float" data-wa-link aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
-<!-- Toast -->
-<div class="toast" id="proofToast">
-  <div class="toast-name" id="toastName">Maria from Winter Park</div>
-  <div class="toast-action" id="toastAction">just booked a Queen comforter cleaning</div>
-</div>
 
 <!-- Mobile menu -->
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -1115,44 +1100,6 @@
     var pct = (s.scrollTop || document.body.scrollTop) / (s.scrollHeight - s.clientHeight) * 100;
     bar.style.width = Math.min(pct, 100) + '%';
   }, {passive:true});
-
-  /* === LIVE VIEWERS === */
-  var lv = document.getElementById('liveViewers');
-  var lc = document.getElementById('liveCount');
-  var baseCount = 8 + Math.floor(Math.random() * 8);
-  lc.textContent = baseCount;
-  setTimeout(function(){
-    lv.style.opacity = '1';
-    lv.style.transition = 'opacity .5s';
-  }, 30000);
-  setInterval(function(){
-    baseCount = Math.max(5, Math.min(28, baseCount + (Math.floor(Math.random()*5)-2)));
-    lc.textContent = baseCount;
-  }, 9000);
-  setTimeout(function(){ lv.style.opacity = '0'; }, 40000);
-  setTimeout(function(){ lv.style.opacity = '1'; }, 160000);
-
-  /* === PROOF TOAST === */
-  var toasts = [
-    {en:['Maria from Winter Park','just booked a Queen comforter cleaning'],pt:['Maria de Winter Park','acabou de agendar lavagem de edredom Queen'],es:['Maria de Winter Park','acaba de reservar limpieza de edredon Queen']},
-    {en:['James from Lake Nona','scheduled pickup for 2 comforters'],pt:['James de Lake Nona','agendou coleta de 2 edredons'],es:['James de Lake Nona','programo recogida de 2 edredones']},
-    {en:['Sofia from Kissimmee','booked King comforter — 2 dogs'],pt:['Sofia de Kissimmee','agendou edredom King — 2 caes'],es:['Sofia de Kissimmee','reservo edredon King — 2 perros']},
-    {en:['David & Priya from Winter Garden','just scheduled family cleaning'],pt:['David & Priya de Winter Garden','acabaram de agendar limpeza familiar'],es:['David & Priya de Winter Garden','acaban de programar limpieza familiar']},
-  ];
-  var ti = 0;
-  var toast = document.getElementById('proofToast');
-  var tn = document.getElementById('toastName');
-  var ta = document.getElementById('toastAction');
-  function showToast(){
-    var t = toasts[ti % toasts.length];
-    var lang = localStorage.getItem('a7_lang') || 'en';
-    tn.textContent = t[lang] ? t[lang][0] : t.en[0];
-    ta.textContent = t[lang] ? t[lang][1] : t.en[1];
-    toast.classList.add('show');
-    setTimeout(function(){ toast.classList.remove('show'); }, 7000);
-    ti++;
-  }
-  setTimeout(function(){ showToast(); setInterval(showToast, 50000); }, 90000);
 
   /* === FAQ === */
   document.querySelectorAll('.faq-q').forEach(function(btn){
