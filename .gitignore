@@ -29,3 +29,6 @@ Thumbs.db
 .aios-core/local/
 .claude/settings.local.json
 .aios/install-log.txt
+
+# scratch da skill a7-carousel
+_tmp/
