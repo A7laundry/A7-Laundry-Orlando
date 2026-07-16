@@ -196,11 +196,13 @@ tailwind.config = {
         We handle<br/>
         <span class="text-primary-container">the laundry.</span>
       </h1>
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap gap-3">
         <div class="bg-secondary-container text-on-secondary-container px-4 py-1 flex items-center gap-2 rounded-lg text-xs font-bold uppercase tracking-wider">
           <span class="material-symbols-outlined text-sm fill">bolt</span> Express 6h
         </div>
         <div class="border border-white/20 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Normal 24h</div>
+        <div class="border border-white/20 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Wash &amp; fold from $3.25/lb</div>
+        <div class="border border-green-400/30 bg-green-400/10 text-green-300 px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Free pickup &amp; delivery</div>
       </div>
       <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
         <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup%20at%20my%20vacation%20rental." target="_blank" rel="noopener"
@@ -312,8 +314,9 @@ tailwind.config = {
 <section id="pricing" class="bg-[#f8fafc] py-32 text-[#05080f]">
   <div class="container mx-auto px-8">
     <div class="text-center mb-20 space-y-4">
+      <span class="text-blue-600 font-black tracking-widest uppercase text-sm">Hotel-quality wash &amp; fold</span>
       <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Choose your speed</h2>
-      <p class="text-slate-500 max-w-xl mx-auto">Transparent per-pound pricing. Free pickup &amp; delivery. $50 minimum order. No hidden resort fees.</p>
+      <p class="text-slate-500 max-w-xl mx-auto">Sorted by fabric, washed with premium hypoallergenic soaps, and folded like new — then delivered back to your door. Free pickup &amp; delivery, no hidden resort fees. $50 minimum.</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
       <!-- Normal -->
@@ -526,7 +529,14 @@ tailwind.config = {
         </span>
         <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight">Comforter Cleaning</h3>
         <p class="text-white/70 mt-2 max-w-md">Too big for your machine? We pick up, deep clean, and deliver fresh. Twin to King.</p>
-        <span class="mt-6 text-white font-black flex items-center gap-2 group-hover:gap-4 transition-all">See Pricing <span class="material-symbols-outlined">arrow_forward</span></span>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-4 text-white/90 text-sm font-bold">
+          <span>Twin <span class="text-secondary">$33</span></span>
+          <span class="text-white/30">·</span>
+          <span>Full/Queen <span class="text-secondary">$37</span></span>
+          <span class="text-white/30">·</span>
+          <span>King <span class="text-secondary">$40</span></span>
+        </div>
+        <span class="mt-6 text-white font-black flex items-center gap-2 group-hover:gap-4 transition-all">See Comforter Pricing <span class="material-symbols-outlined">arrow_forward</span></span>
       </div>
     </a>
 
