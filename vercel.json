@@ -7,6 +7,7 @@
     { "source": "/carpet", "destination": "/carpet-cleaning.html" },
     { "source": "/shoes", "destination": "/shoe-cleaning.html" },
     { "source": "/upholstery", "destination": "/upholstery-cleaning.html" },
+    { "source": "/mattress", "destination": "/mattress-cleaning.html" },
     { "source": "/vacation", "destination": "/vacation-rental.html" },
     { "source": "/carpet-campaign", "destination": "/a7-carpet-campaign/index.html" },
     { "source": "/command-center", "destination": "/a7-command-center.html" },
@@ -55,7 +56,10 @@
     { "source": "/blog/book-laundry-whatsapp-orlando", "destination": "/blog/book-laundry-whatsapp-orlando.html" },
     { "source": "/blog/laundry-subscription-vacation-rental", "destination": "/blog/laundry-subscription-vacation-rental.html" },
     { "source": "/blog/reunion-resort-laundry-service", "destination": "/blog/reunion-resort-laundry-service.html" },
-    { "source": "/blog/orlando-vacation-rental-laundry-guide", "destination": "/blog/orlando-vacation-rental-laundry-guide.html" }
+    { "source": "/blog/orlando-vacation-rental-laundry-guide", "destination": "/blog/orlando-vacation-rental-laundry-guide.html" },
+    { "source": "/blog/laundry-orlando-airport", "destination": "/blog/laundry-orlando-airport.html" },
+    { "source": "/blog/lavanderia-a-domicilio-orlando", "destination": "/blog/lavanderia-a-domicilio-orlando.html" },
+    { "source": "/blog/same-day-drop-off-laundry-orlando", "destination": "/blog/same-day-drop-off-laundry-orlando.html" }
   ],
   "headers": [
     {
