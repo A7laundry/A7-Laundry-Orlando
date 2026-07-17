@@ -16,9 +16,12 @@
 
 | Tamanho | Preço |
 |---|---|
-| Twin | From $35 |
-| Full / Queen | From $40 |
-| King | From $50 |
+| Twin | From $33 |
+| Full / Queen | From $37 |
+| King | From $40 |
+| Down / Feather | From $45 |
+
+> **Confirmado pelo Dennis 2026-07-16:** preço oficial do comforter = $33/$37/$40 (+ Down $45), batendo com a página `/comforter` no ar. O antigo $35/$40/$50 deste doc estava DESATUALIZADO.
 
 ## Regras de validação (usadas por `*validate` e `*preflight`)
 
