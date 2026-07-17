@@ -70,7 +70,26 @@
     { "source": "/blog/laundry-paradise-palms-resort", "destination": "/blog/laundry-paradise-palms-resort.html" },
     { "source": "/blog/laundry-terra-verde-resort", "destination": "/blog/laundry-terra-verde-resort.html" },
     { "source": "/blog/laundry-bella-vida-resort", "destination": "/blog/laundry-bella-vida-resort.html" },
-    { "source": "/blog/laundry-vista-cay-resort", "destination": "/blog/laundry-vista-cay-resort.html" }
+    { "source": "/blog/laundry-vista-cay-resort", "destination": "/blog/laundry-vista-cay-resort.html" },
+    { "source": "/blog/laundry-margaritaville-resort-orlando", "destination": "/blog/laundry-margaritaville-resort-orlando.html" },
+    { "source": "/blog/laundry-sonoma-resort-tapestry", "destination": "/blog/laundry-sonoma-resort-tapestry.html" },
+    { "source": "/blog/laundry-veranda-palms-resort", "destination": "/blog/laundry-veranda-palms-resort.html" },
+    { "source": "/blog/laundry-regal-oaks-resort", "destination": "/blog/laundry-regal-oaks-resort.html" },
+    { "source": "/blog/laundry-oakwater-resort", "destination": "/blog/laundry-oakwater-resort.html" },
+    { "source": "/blog/laundry-runaway-beach-club", "destination": "/blog/laundry-runaway-beach-club.html" },
+    { "source": "/blog/laundry-magic-village-resort", "destination": "/blog/laundry-magic-village-resort.html" },
+    { "source": "/blog/laundry-compass-bay-resort", "destination": "/blog/laundry-compass-bay-resort.html" },
+    { "source": "/blog/laundry-villas-seven-dwarfs", "destination": "/blog/laundry-villas-seven-dwarfs.html" },
+    { "source": "/blog/laundry-festival-resort-davenport", "destination": "/blog/laundry-festival-resort-davenport.html" },
+    { "source": "/blog/laundry-aviana-resort", "destination": "/blog/laundry-aviana-resort.html" },
+    { "source": "/blog/laundry-providence-resort", "destination": "/blog/laundry-providence-resort.html" },
+    { "source": "/blog/laundry-highlands-reserve", "destination": "/blog/laundry-highlands-reserve.html" },
+    { "source": "/blog/laundry-tuscan-hills-davenport", "destination": "/blog/laundry-tuscan-hills-davenport.html" },
+    { "source": "/blog/laundry-watersong-resort", "destination": "/blog/laundry-watersong-resort.html" },
+    { "source": "/blog/laundry-west-haven-davenport", "destination": "/blog/laundry-west-haven-davenport.html" },
+    { "source": "/blog/laundry-oasis-club-championsgate", "destination": "/blog/laundry-oasis-club-championsgate.html" },
+    { "source": "/blog/laundry-retreat-championsgate", "destination": "/blog/laundry-retreat-championsgate.html" },
+    { "source": "/blog/laundry-balmoral-resort", "destination": "/blog/laundry-balmoral-resort.html" }
   ],
   "headers": [
     {
