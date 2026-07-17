@@ -59,7 +59,18 @@
     { "source": "/blog/orlando-vacation-rental-laundry-guide", "destination": "/blog/orlando-vacation-rental-laundry-guide.html" },
     { "source": "/blog/laundry-orlando-airport", "destination": "/blog/laundry-orlando-airport.html" },
     { "source": "/blog/lavanderia-a-domicilio-orlando", "destination": "/blog/lavanderia-a-domicilio-orlando.html" },
-    { "source": "/blog/same-day-drop-off-laundry-orlando", "destination": "/blog/same-day-drop-off-laundry-orlando.html" }
+    { "source": "/blog/same-day-drop-off-laundry-orlando", "destination": "/blog/same-day-drop-off-laundry-orlando.html" },
+    { "source": "/blog/laundry-solara-resort", "destination": "/blog/laundry-solara-resort.html" },
+    { "source": "/blog/laundry-encore-resort-reunion", "destination": "/blog/laundry-encore-resort-reunion.html" },
+    { "source": "/blog/laundry-storey-lake-resort", "destination": "/blog/laundry-storey-lake-resort.html" },
+    { "source": "/blog/laundry-windsor-hills-resort", "destination": "/blog/laundry-windsor-hills-resort.html" },
+    { "source": "/blog/laundry-windsor-island-resort", "destination": "/blog/laundry-windsor-island-resort.html" },
+    { "source": "/blog/laundry-solterra-resort", "destination": "/blog/laundry-solterra-resort.html" },
+    { "source": "/blog/laundry-emerald-island-resort", "destination": "/blog/laundry-emerald-island-resort.html" },
+    { "source": "/blog/laundry-paradise-palms-resort", "destination": "/blog/laundry-paradise-palms-resort.html" },
+    { "source": "/blog/laundry-terra-verde-resort", "destination": "/blog/laundry-terra-verde-resort.html" },
+    { "source": "/blog/laundry-bella-vida-resort", "destination": "/blog/laundry-bella-vida-resort.html" },
+    { "source": "/blog/laundry-vista-cay-resort", "destination": "/blog/laundry-vista-cay-resort.html" }
   ],
   "headers": [
     {
