@@ -503,4 +503,30 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Fase 2b services + AEO (2026-07-16) -->
+  <url>
+    <loc>https://a7laundry.com/blog/laundry-cost-orlando</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://a7laundry.com/blog/linen-towel-service-orlando</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://a7laundry.com/area-rug</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://a7laundry.com/curtain</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

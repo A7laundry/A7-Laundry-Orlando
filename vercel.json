@@ -8,6 +8,8 @@
     { "source": "/shoes", "destination": "/shoe-cleaning.html" },
     { "source": "/upholstery", "destination": "/upholstery-cleaning.html" },
     { "source": "/mattress", "destination": "/mattress-cleaning.html" },
+    { "source": "/area-rug", "destination": "/area-rug-cleaning.html" },
+    { "source": "/curtain", "destination": "/curtain-cleaning.html" },
     { "source": "/vacation", "destination": "/vacation-rental.html" },
     { "source": "/carpet-campaign", "destination": "/a7-carpet-campaign/index.html" },
     { "source": "/command-center", "destination": "/a7-command-center.html" },
@@ -89,7 +91,9 @@
     { "source": "/blog/laundry-west-haven-davenport", "destination": "/blog/laundry-west-haven-davenport.html" },
     { "source": "/blog/laundry-oasis-club-championsgate", "destination": "/blog/laundry-oasis-club-championsgate.html" },
     { "source": "/blog/laundry-retreat-championsgate", "destination": "/blog/laundry-retreat-championsgate.html" },
-    { "source": "/blog/laundry-balmoral-resort", "destination": "/blog/laundry-balmoral-resort.html" }
+    { "source": "/blog/laundry-balmoral-resort", "destination": "/blog/laundry-balmoral-resort.html" },
+    { "source": "/blog/laundry-cost-orlando", "destination": "/blog/laundry-cost-orlando.html" },
+    { "source": "/blog/linen-towel-service-orlando", "destination": "/blog/linen-towel-service-orlando.html" }
   ],
   "headers": [
     {
