@@ -93,7 +93,18 @@
     { "source": "/blog/laundry-retreat-championsgate", "destination": "/blog/laundry-retreat-championsgate.html" },
     { "source": "/blog/laundry-balmoral-resort", "destination": "/blog/laundry-balmoral-resort.html" },
     { "source": "/blog/laundry-cost-orlando", "destination": "/blog/laundry-cost-orlando.html" },
-    { "source": "/blog/linen-towel-service-orlando", "destination": "/blog/linen-towel-service-orlando.html" }
+    { "source": "/blog/linen-towel-service-orlando", "destination": "/blog/linen-towel-service-orlando.html" },
+    { "source": "/blog/laundry-thornton-park", "destination": "/blog/laundry-thornton-park.html" },
+    { "source": "/blog/laundry-college-park", "destination": "/blog/laundry-college-park.html" },
+    { "source": "/blog/laundry-southchase", "destination": "/blog/laundry-southchase.html" },
+    { "source": "/blog/laundry-celebration", "destination": "/blog/laundry-celebration.html" },
+    { "source": "/blog/laundry-sand-lake-restaurant-row", "destination": "/blog/laundry-sand-lake-restaurant-row.html" },
+    { "source": "/blog/laundry-near-seaworld-orlando", "destination": "/blog/laundry-near-seaworld-orlando.html" },
+    { "source": "/blog/laundry-lake-buena-vista", "destination": "/blog/laundry-lake-buena-vista.html" },
+    { "source": "/blog/laundry-convention-center-orlando", "destination": "/blog/laundry-convention-center-orlando.html" },
+    { "source": "/blog/laundry-port-canaveral-cruise", "destination": "/blog/laundry-port-canaveral-cruise.html" },
+    { "source": "/blog/snowbird-laundry-orlando", "destination": "/blog/snowbird-laundry-orlando.html" },
+    { "source": "/blog/orlando-hotel-no-washer-laundry", "destination": "/blog/orlando-hotel-no-washer-laundry.html" }
   ],
   "headers": [
     {
