@@ -52,11 +52,49 @@ Bilíngue (ES/PT) · preço transparente ($3.25/$3.95 publicado enquanto rivais 
 | 19 | **Same-day comforter (rush bedding)** | "same day comforter cleaning orlando" | ✅ (cruza comforter + Express) |
 | 20 | **Contactless / no-contact pickup** | "contactless laundry pickup orlando" | ✅ (WhatsApp/porta) |
 
-## ⚠️ CONFIRMAR com o Dennis (a A7 oferece?) — só criar se sim
-- **Mattress cleaning** (colchão) — ALTO volume; extensão plausível do upholstery/extração. Se sim = gap de maior volume da lista.
-- **Area rug cleaning** (tapete solto) — alto volume, concorrência alta (especialistas em tapete oriental).
-- **Curtain / drapery cleaning** — exige take-down/rehang.
-- **Eco / hypoallergenic** como ângulo dedicado — o site já cita sabões hipoalergênicos; vale uma página?
+## ✅ Serviços CONFIRMADOS pelo Dennis (2026-07-16) — criar páginas
+- **Mattress cleaning** (colchão) — ✅ A7 faz. ALTO volume; gap de maior volume da lista.
+- **Area rug cleaning** (tapete solto) — ✅ A7 faz.
+- **Curtain / drapery cleaning** — ✅ A7 faz.
+> Eco/hypoallergenic: o site já cita sabões hipoalergênicos — vale uma página de ângulo (opcional).
+
+---
+
+## 🔥 VALIDAÇÃO COM GOOGLE SEARCH CONSOLE (dados REAIS, 3 meses, propriedade a7laundry.com)
+> 966 impressões · 12 cliques · posição média **20,3** (página 2) · 161 consultas. Site novo → estamos "quase rankeando" em vários termos. **Termos já com impressão em posição 5–15 = os mais fáceis de empurrar pra página 1 (atacar PRIMEIRO).**
+
+**Termos QUENTES (impressão real + posição perto da página 1):**
+| Consulta real (GSC) | Impr | Posição | Ação |
+|---|---|---|---|
+| **orlando airport area laundry pickup and delivery** (+ variação) | 24 (+4) | **13,3** | 🆕 **GAP NOVO — não temos página de AEROPORTO (MCO)**. Descoberta do GSC. |
+| **orlando same day drop off laundry service** | 19 | **13,7** | Temos same-day *pickup*; falta ângulo **"drop off"**. |
+| **orlando comforter laundry service** | 11 | **14,5** | Temos /comforter → otimizar (não criar). |
+| **international drive laundry components** | 5 | **7,6** | Temos I-Drive → reforçar; add Convention Center. |
+| **lavanderia cerca de mi** (2 variações ES) | 4+1 | **5,8 / 4,0** | 🆕 **ESPANHOL validado quente — sem página ES**. |
+| **orlando laundromat pickup delivery** | 4 | **10,0** | Ângulo "laundromat alternative". |
+| **luxury laundry service** | 2 | **1,0** | Já #1 — posicionamento premium funciona. |
+
+**Segmentos/bairros que já aparecem nas buscas reais (validam clusters):**
+- Boutique/linen: `orlando spa laundry service`, `orlando salon laundry service`, `college park towel laundry service`, `linen cleaning services in orlando` → cluster **spa/salon/towel/linen** confirmado.
+- Bairros de Orlando (além dos resorts turísticos): **Thornton Park, College Park, Southchase, Celebration, Restaurant Row / Sand Lake** → páginas de bairro têm demanda real.
+- **Aeroporto (MCO)** aparece 2×, **Espanhol** 2× — os dois maiores sinais quentes.
+
+**Termos-cabeça (pos 24–29, difíceis — NÃO priorizar):** `orlando laundry service`, `laundry orlando`, `wash and fold orlando`, `laundry service orlando`.
+
+---
+
+## 🎯 PRIORIZAÇÃO FINAL (validada por GSC) — atacar nesta ordem
+
+**FASE 1 — "empurrão pra página 1" (já têm impressão real + posição 5–15):**
+1. 🆕 **Laundry near Orlando Airport (MCO)** — 24 impr, pos 13, zero página. Maior oportunidade imediata.
+2. 🆕 **Página em Espanhol** — pos 4–6, whitespace, base hispânica.
+3. **Same-day DROP OFF** (ângulo novo, complementa o pickup) — pos 13,7.
+4. **I-Drive + Convention Center** (reforçar/expandir) — pos 7,6.
+5. Otimizar **/comforter** (pos 14,5) e criar **mattress cleaning** (Dennis faz, alto volume).
+
+**FASE 2 — clusters validados:** resorts de vacation rental (turnover) · spa/salon/towel/linen (host+boutique) · Four Corners corridor · custo/preço (AEO).
+
+**FASE 3 — bairros:** Thornton Park, College Park, Southchase, Celebration, Sand Lake/Restaurant Row + resorts nomeados.
 
 ## ❌ NÃO fazer (saturado ou fora de escopo)
 - Termos-cabeça genéricos (`laundry service orlando`, `wash and fold orlando`, `laundry pickup delivery orlando`) — The Laundry Room + apps nacionais dominam.
