@@ -147,6 +147,9 @@ const forbiddenPublicClaims = [
   ['unsupported satisfaction percentage', /\b100%\s+(?:satisfaction|satisfied)\b/i],
   ['unsupported review guarantee', /5-star reviews guaranteed/i],
   ['unsupported dermatologist claim', /dermatologist-tested|tested by dermatologists/i],
+  ['stale Express cutoff', /before\s+(?:noon|12(?::00)?\s*(?:p\.?m\.?)?)/i],
+  ['malformed Express cutoff', /6\s*PM:00\s*PM/i],
+  ['stale non-24/7 opening hours', /"opens"\s*:\s*"(?:07:00|08:00)"/i],
   ['known invented testimonial name', /\b(?:Sarah M|James R|Maria L|David K|Jennifer W|Michael T|Amanda R|Robert S|Fernanda S|Lisa M|Tom J|Sandra C|Nicole K|Marcus R|Ashley T|Justin L|Kayla P|Jennifer M|Rafael P|Ana C)\./i]
 ];
 

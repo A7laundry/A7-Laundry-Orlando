@@ -175,6 +175,11 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Wire the new destinations into unified tracking and add anti-regression tests.
 - [x] Reconcile the 19-thread WhatsApp sample into new leads, repeat orders and excluded contacts; correct the quoted denominator and remove the unsupported three-audio-loss claim.
 - [x] Install current-price WhatsApp quick replies and document the remaining mobile-only, ownership, schedule, coverage and unit-economics decisions.
+- [x] Convert owner-confirmed operations into canonical rules: 24/7 contact, Dennis primary,
+  A7 Laundry — Backup 1 after five minutes, 40 km coverage, custom-service 48h reference with
+  unit confirmation, Express requests until 6 PM and volume-qualified B2B pricing.
+- [x] Retire the historical recovery queue without sending messages, update the live WhatsApp
+  shortcuts and add anti-regression gates for stale Express cutoffs and non-24/7 schema hours.
 
 ## File List
 
@@ -209,6 +214,10 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `marketing/meta-ads/campaigns/2026-07-comforter-dedicated/`
 - `scripts/validate-site.mjs`
 - `laundry-pickup-delivery-orlando.html`
+- `a7-carpet-campaign/index.html`
+- `comforter-cleaning-v2.html`
+- `blog/*.html` (Express cutoff and opening-hours consistency)
+- `marketing/organic/instagram-feed/2026-07/2026-07-15-tourist-sameday-en/caption.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/`
 - `marketing/google-ads/2026-07-guest-laundry-search/LOVART-HERO-PROMPT.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/assets/hero/A7_GUEST_LAUNDRY_HERO_LOVART_MASTER.png`
@@ -423,3 +432,16 @@ Make the production conversion funnel observable from acquisition CTA through St
 - The native transport now uses the official `SearchStream` read-only method with explicit JSON headers, sequential reports and bounded exponential retry for HTTP 429/500/502/503/504. Persistent failure remains unavailable and never becomes zero performance.
 - Jul 31 direct WhatsApp reconciliation found that the prior 19-thread audit mixed 12 new leads, three repeat orders and four non-funnel contacts. Three service-response failures are confirmed, one audio response remains unclassified, and the confirmed quoted denominator is eight rather than seven; the descriptive close rate is therefore 2/8 = 25.0%, not 28.6%.
 - Nine current-price quick replies were installed in the Orlando WhatsApp Business account. The approved onboarding assets already show the US$50 minimum. Mobile-only greeting/away configuration, real service hours, primary/backup ownership, coverage, Express capacity, pressing pricing and variable costs remain explicit operating decisions rather than inferred values.
+- Jul 31 owner decisions now define the operating contract: customer contact is declared 24/7;
+  Dennis owns first response and A7 Laundry — Backup 1 is escalated after five minutes; addresses
+  are confirmed within up to 40 km of Orlando; custom services normally target 48h but always
+  require unit confirmation; Express requests are accepted until 6 PM and later requests are
+  evaluated case by case; B2B can start at US$1.95/lb depending on volume, frequency, scope and
+  capacity. Historical recovery contacts were closed without messages by owner decision.
+- WhatsApp Business now contains verified current versions of `/precoen`, `/precopt`,
+  `/pressingen` and the newly created `/b2ben`. The public location note states the 40 km limit;
+  the radius selector was not rounded up to its only larger option (50 km). The invalid legacy
+  map coordinate still requires removal in the mobile profile.
+- Public JSON-LD hours were normalized to 24/7 and the old noon Express cutoff was removed from
+  the source corpus. Static/build gates now reject the stale cutoff, malformed `6 PM:00 PM` text
+  and legacy 07:00/08:00 schema openings.

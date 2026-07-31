@@ -111,6 +111,14 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 7. **Express sem promessa absoluta.** 6h somente quando a disponibilidade for confirmada.
 8. **Prova real.** Reviews, números, tempos, fotos e resultados precisam ter fonte verificável.
 9. **Termos de funil são internos.** Nunca expor na UI pública.
+10. **Atendimento declarado 24/7.** Solicitações podem chegar a qualquer hora; coleta, prazo e
+    capacidade só ficam confirmados depois da validação da unidade.
+11. **Cobertura confirmada por endereço.** Operação em um raio de até 40 km de Orlando; o endereço
+    precisa ser validado antes do agendamento.
+12. **Customizados não são promessa de prateleira.** Referência usual de 48h, sempre com preço,
+    prazo e capacidade confirmados pela unidade.
+13. **B2B condicionado a volume.** Referência de US$ 1,95/lb, sujeita à validação de volume,
+    frequência, escopo e capacidade.
 
 ---
 
@@ -123,8 +131,10 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 | Promessa emocional | **Enjoy Orlando. We handle your laundry.** |
 | Promessa funcional | Hotel & Airbnb pickup. Washed, dried, folded and delivered. |
 | Oferta Normal | From **$3.25/lb** · 24h · **$50 minimum** |
-| Oferta Express | From **$3.95/lb** · 6h · **subject to availability** · **$50 minimum** |
+| Oferta Express | From **$3.95/lb** · 6h · pedidos até **6 PM**; depois, avaliação da unidade · **subject to availability** · **$50 minimum** |
 | Conveniência | Pickup & delivery included · no app · contactless handoff |
+| Atendimento | **24/7** · disponibilidade e janela confirmadas pela unidade |
+| Cobertura | Até **40 km de Orlando**, mediante confirmação do endereço |
 | CTA | Book on WhatsApp · **+1 407-670-8839** |
 | Prova autorizada | 5.0/23 Google reviews enquanto esse número continuar verificado; operação e fotos reais |
 

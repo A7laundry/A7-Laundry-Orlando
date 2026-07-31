@@ -163,6 +163,10 @@ if (!syntaxOnly) {
       ['MANIFESTO.md', manifesto, '$3.25/lb'],
       ['MANIFESTO.md', manifesto, '$3.95/lb'],
       ['MANIFESTO.md', manifesto, '$50'],
+      ['MANIFESTO.md', manifesto, 'Atendimento declarado 24/7'],
+      ['MANIFESTO.md', manifesto, '40 km de Orlando'],
+      ['MANIFESTO.md', manifesto, 'pedidos até **6 PM**'],
+      ['MANIFESTO.md', manifesto, 'US$ 1,95/lb'],
       ['index.html', homepage, 'Guest Laundry Pickup in Orlando'],
       ['index.html', homepage, 'Subject to Availability'],
       ['pricing-rules.md', pricingRules, 'From $3.95/lb · minimum $50'],
@@ -170,7 +174,11 @@ if (!syntaxOnly) {
       ['tourist spec', touristSpec, 'ARCHIVED — substituído pela campanha manual Guest Laundry; não implantar'],
       ['comforter manifest', comforterManifest, 'NÃO PUBLICAR'],
       ['comforter manifest', comforterManifest, 'Twin $33 / Full-Queen $37 / King $40 / Down $45'],
-      ['WhatsApp templates', whatsappTemplates, 'Comforter por tamanho (Twin $33 / Full-Queen $37 / King $40 / Down $45)']
+      ['WhatsApp templates', whatsappTemplates, 'Comforter por tamanho (Twin $33 / Full-Queen $37 / King $40 / Down $45)'],
+      ['WhatsApp templates', whatsappTemplates, 'A7 Laundry — Backup 1 após 5 minutos'],
+      ['WhatsApp templates', whatsappTemplates, 'requests until 6 PM'],
+      ['WhatsApp templates', whatsappTemplates, 'usual turnaround reference is'],
+      ['WhatsApp templates', whatsappTemplates, '$1.95/lb depending on volume']
     ];
     for (const [label, content, token] of requiredCommercialTokens) {
       if (!content.includes(token)) fail(`${label}: missing commercial source token ${token}`);
@@ -192,6 +200,19 @@ if (!syntaxOnly) {
     ]) {
       if (forbiddenTemplateClaim.test(whatsappTemplates)) {
         fail(`WhatsApp templates: unsupported or stale closing claim ${forbiddenTemplateClaim}`);
+      }
+    }
+
+    for (const file of htmlFiles) {
+      const html = read(file);
+      if (/before\s+(?:noon|12(?::00)?\s*(?:p\.?m\.?)?)/i.test(html)) {
+        fail(`${file}: stale pre-6-PM Express cutoff is still present`);
+      }
+      if (/6\s*PM:00\s*PM/i.test(html)) {
+        fail(`${file}: malformed Express cutoff is present`);
+      }
+      if (/"opens"\s*:\s*"(?:07:00|08:00)"/i.test(html)) {
+        fail(`${file}: stale non-24/7 opening hours are still present`);
       }
     }
   }

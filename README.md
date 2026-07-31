@@ -35,7 +35,14 @@ Pay-per-use por libra — **sem assinatura, sem contrato**. Pickup & delivery se
 
 Minimum order: $50. Booking via WhatsApp **(407) 670-8839**.
 
-**Specialty add-ons:** carpet, shoe, upholstery, comforter & vacation-rental turnover cleaning.
+Operating rules: customer contact is declared **24/7**; Express requests are accepted until
+**6 PM** and remain subject to unit availability; later requests are evaluated case by case.
+Service addresses are confirmed within a radius of up to **40 km from Orlando**. Custom services
+normally target 48h, but price, turnaround and capacity always require final unit confirmation.
+B2B pricing may start at **$1.95/lb**, depending on volume, frequency, scope and capacity.
+
+**Specialty add-ons:** carpet, shoe, upholstery, comforter & vacation-rental turnover cleaning,
+all subject to final scope, turnaround and capacity confirmation.
 
 ---
 

@@ -111,12 +111,13 @@ Agosto vai produzir os dados que hoje não existem.
    Everyday mostra **$50 minimum order** e o card Special não publica mínimo.
 2. **Contribuição preliminar por serviço** — levantamento grosseiro serve; zero não serve.
 3. **Confirmar o número oficial** no destino de todos os anúncios.
-4. **Nomear responsável, backup, horário e SLA** do WhatsApp.
+4. ✅ **Operação WhatsApp definida:** 24/7; Dennis responsável; A7 Laundry — Backup 1 acionado
+   após 5 minutos sem resposta humana; cobertura de até 40 km de Orlando.
 5. **Ler e classificar as conversas restantes** — sem extrapolar; as 19 originais já foram
    reconciliadas em 12 leads, 3 recompras e 4 exclusões.
 6. **Criar o registro por lead** com identificador único.
-7. **Recuperar em paralelo:** B2B das 9 casas e seis cotações sem pedido confirmado. Não tratar
-   os três áudios históricos como leads ignorados.
+7. ✅ **Encerrar o histórico sem recuperação:** por decisão do owner, os leads antigos não serão
+   contatados. Usar a reconciliação somente como baseline e começar o fluxo limpo daqui em diante.
 
 ### Semana 2 — aquisição sob controle
 
@@ -140,15 +141,14 @@ Agosto vai produzir os dados que hoje não existem.
 
 ## SLA realista
 
-A meta de "100% respondidos em 5 minutos, 24h por dia" é frágil para uma operação pequena e
-garante fracasso no papel. Substituída por:
+A operação será declarada 24/7. Para que isso não vire somente promessa pública, o controle
+interno usa escalonamento entre responsável e backup:
 
 | Regra | Alvo |
 |---|---|
 | Confirmação automática imediata | 100% |
-| Resposta humana dentro do horário | ≥ 95% em até 15 min |
+| Resposta humana 24/7 | alvo em até 5 min; acionar Backup 1 ao estourar 5 min |
 | Leads classificados até o fim do dia | 100% |
-| Fora do horário | Automática + humana na primeira janela |
 | Lead com mais de 24h sem tratamento | **Zero — alarme crítico** |
 | Cotação | > 90% dos **elegíveis** (não do total) |
 

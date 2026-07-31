@@ -38,10 +38,14 @@ Configuração: WhatsApp Business › Ferramentas comerciais › Mensagem de sau
 Ela não substitui o atendimento humano. Ela confirma o recebimento e coleta os dados mínimos;
 o efeito sobre fechamento ainda precisa ser medido.
 
-### 1.2 Mensagem de ausência
+### 1.2 Cobertura 24/7 e escalonamento
 
-Fora do horário de operação, responde sozinha com prazo de retorno. Evita que o lead da
-madrugada apareça como ignorado.
+O atendimento é declarado 24/7. **Dennis** é o responsável primário. Se não houver resposta
+humana em 5 minutos, acionar **A7 Laundry — Backup 1**. A saudação automática confirma o
+recebimento, mas não conta como resposta comercial nem substitui esse escalonamento.
+
+Não usar mensagem de ausência com janela “fora do horário”. Coleta, Express e serviços
+customizados continuam sujeitos à confirmação da unidade.
 
 ### 1.3 Respostas rápidas (atalhos)
 
@@ -73,7 +77,7 @@ caro da operação, e dá para verificar em cinco segundos filtrando a etiqueta.
 
 ## Camada 3 — Rotina diária (2 minutos)
 
-**Fim do expediente:**
+**A cada troca de responsável e no fechamento diário:**
 
 1. Filtrar `1-Novo` → tem que estar vazia. Se tiver alguém, responder antes de fechar.
 2. Filtrar `2-Cotado` → quem foi cotado ontem passa para `3-Follow-up` e recebe a mensagem D+1.
@@ -125,8 +129,13 @@ Não fazer agora. Registrado para não ser reinventado depois:
 Special não publica mínimo. Usar somente os arquivos `SEND.jpg` listados no inventário; retirar
 de circulação qualquer cópia histórica com US$ 60.
 
-✅ **Passadoria está no escopo** (confirmado 2026-07-30), mas sem preço nem prazo definidos e
-ausente do site. Não prometer valor até definir.
+✅ **Customizados e passadoria estão no escopo:** referência usual de 48h, sempre com preço,
+prazo e capacidade confirmados pela unidade antes da coleta.
+
+✅ **Cobertura:** até 40 km de Orlando, mediante validação do endereço.
+
+✅ **Express:** solicitações até 6 PM entram no fluxo Express, sempre sujeitas à disponibilidade;
+depois de 6 PM, somente após avaliação específica da unidade.
 
 ### Primeira resposta — EN
 
@@ -135,7 +144,7 @@ Hi! Thanks for reaching out to A7 Laundry 👋
 
 Wash, dry & fold with pickup and delivery:
 • $3.25/lb — ready in 24h
-• $3.95/lb — express 6h (subject to availability)
+• $3.95/lb — express 6h (requests until 6 PM; subject to availability)
 • Minimum order $50
 
 Just send me:
@@ -153,7 +162,7 @@ Oi! Aqui é da A7 Laundry 👋
 
 Lavamos, secamos e dobramos, com coleta e entrega:
 • $3.25/lb — pronto em 24h
-• $3.95/lb — express 6h (sujeito a disponibilidade)
+• $3.95/lb — express 6h (pedidos até 18h; sujeito a disponibilidade)
 • Pedido mínimo $50
 
 Me manda só:
@@ -209,8 +218,8 @@ Não usar o template padrão. Estes valem recorrência e merecem tratamento pró
 ```
 Hi [nome], thanks for reaching out!
 
-For vacation rentals we work with recurring turnover pricing —
-different from our per-guest rate. Tell me:
+For vacation rentals, commercial pricing can start at $1.95/lb depending on volume,
+frequency, scope and current capacity. Tell me:
 • How many properties?
 • Roughly how many turnovers per week?
 • Do you need linens and towels included?
@@ -228,7 +237,7 @@ I'll put together a plan that fits your schedule.
 **Hoje — o que funciona sozinho**
 1. Ativar a mensagem de saudação automática com preço (Camada 1.1). *Este item sozinho elimina
    o maior vazamento e não depende de ninguém.*
-2. Ativar a mensagem de ausência.
+2. Configurar o escalonamento Dennis → A7 Laundry — Backup 1 após 5 minutos.
 3. Cadastrar as respostas rápidas.
 
 ✅ Em 2026-07-31 foram cadastrados no WhatsApp Business os atalhos `/precoen`, `/precopt`,
@@ -238,9 +247,8 @@ Saudação e ausência continuam dependendo da configuração no aplicativo móv
 **Esta semana — o que depende de rotina**
 4. Criar as cinco etiquetas e classificar as conversas abertas dos últimos 30 dias.
 5. Começar o ritual de fim de dia: `1-Novo` vazia.
-6. Recuperar os pendentes reconciliados: o B2B das 9 casas, seis cotados sem pedido confirmado e
-   três falhas de atendimento. Os três áudios originais foram reclassificados e não formam uma
-   fila de recuperação.
+6. ✅ Encerrar os contatos anteriores sem recuperação, por decisão do owner. A reconciliação fica
+   como baseline; o fluxo preventivo vale para novos contatos.
 
 **Este mês — o que depende de medição**
 7. Primeira revisão semanal com números.

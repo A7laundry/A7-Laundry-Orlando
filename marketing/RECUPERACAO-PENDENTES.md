@@ -1,7 +1,9 @@
-# Recuperação de pendentes — executar na semana 1
+# Recuperação de pendentes — encerrada sem envio
 
 **Origem:** auditoria de 2026-07-30, reconciliada diretamente em 2026-07-31.
-**Status:** 19 threads classificadas; nenhuma mensagem de recuperação enviada.
+**Status:** arquivo histórico. Em 2026-07-31, o owner decidiu encerrar os contatos anteriores e
+não enviar recuperação. Os textos abaixo ficam preservados apenas como evidência da auditoria;
+**não executar**.
 
 ✅ **Mínimo oficial decidido: US$ 50** (2026-07-30). Site, textos e os dois assets aprovados do
 WhatsApp estão corretos. Usar somente os `SEND.jpg` do inventário e retirar qualquer cópia antiga
@@ -9,7 +11,13 @@ com US$ 60.
 
 ---
 
-## Como usar
+## Decisão final
+
+- Nenhuma mensagem deste documento foi enviada.
+- Os seis cotados, três atendimentos falhos, caso em áudio e base antiga foram encerrados.
+- A operação passa a medir somente os contatos novos a partir da implantação do fluxo preventivo.
+
+## Referência histórica — não usar
 
 Ordem por valor potencial, não por data. Envie de cima para baixo.
 
@@ -182,13 +190,13 @@ para estimar recompra dos clientes de agosto.** São coortes diferentes.
 - [x] ~~Confirmar se passadoria está no escopo~~ → **sim, fazem**
 - [x] **Flyers aprovados validados** — Everyday mostra US$ 50; Special não publica mínimo
 - [x] Respostas rápidas cadastradas no WhatsApp Business (9 atalhos operacionais)
-- [ ] Definir preço e prazo da passadoria
-- [ ] B2B das 9 casas — enviado e com dono nomeado
+- [x] Customizados/passadoria: referência usual de 48h, sempre com confirmação final da unidade
+- [x] B2B: referência de US$ 1,95/lb condicionada a volume; lead antigo encerrado sem envio
 - [x] 3 áudios reclassificados — 1 lead respondido, 1 automotivo, 1 outbound
-- [ ] 6 cotados sem pedido confirmado com follow-up
-- [ ] 3 falhas confirmadas contatadas
-- [ ] Base de recompra contatada
-- [ ] Tudo registrado em `leads.csv` com etiqueta no WhatsApp
+- [x] 6 cotados encerrados sem follow-up, por decisão do owner
+- [x] 3 falhas confirmadas encerradas sem contato, por decisão do owner
+- [x] Base de recompra antiga não reativada
+- [x] Histórico preservado; fluxo novo começa sem carregar pendências antigas
 
 **Resultado esperado:** desconhecido. Estes leads têm 8 a 19 dias e a taxa de recuperação de
 lead frio é significativamente menor que a de lead novo. Registre o que voltar — é o primeiro
