@@ -1,0 +1,9 @@
+# Preencher custos variaveis reais; nao usar percentual de margem inventado
+servico,unidade_preco,preco,lavagem_secagem,insumos,embalagem,taxa_pagamento,combustivel,mao_de_obra_variavel,custo_variavel_total,contribuicao,margem_pct,status,obs
+wash_fold_normal,lb,3.25,,,,,,,,,,pendente,"pedido minimo US$50; calcular tambem custo por rota"
+wash_fold_express,lb,3.95,,,,,,,,,,pendente,"6h somente sujeito a disponibilidade"
+comforter_twin,item,,,,,,,,,,,pendente,"confirmar tabela vigente e material"
+comforter_full_queen,item,,,,,,,,,,,pendente,"confirmar tabela vigente e material"
+comforter_king,item,,,,,,,,,,,pendente,"confirmar tabela vigente e material"
+pressing,item,,,,,,,,,,,pendente,"preco prazo e capacidade ainda nao definidos"
+b2b_vacation_rental,lb,1.95,,,,,,,,,,revalidar,"proposta historica; nao reafirmar sem custo e volume"

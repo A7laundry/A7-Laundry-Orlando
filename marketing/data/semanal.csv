@@ -1,0 +1,4 @@
+# Denominadores: lead=1a msg de numero novo | elegivel=area+servico+nao-spam | atendido=resposta humana util | cotado=recebeu preco | pedido=coleta+pagamento
+# NAO misturar amostra com extrapolacao. Registrar so o que foi contado.
+periodo,base,leads,elegiveis,atendidos,cotados,pedidos_novos,recompras,receita,contribuicao,gasto_midia,obs
+2026-06-30_2026-07-30,auditoria_reconciliada_19_threads,12,12,,8,2,3,,,,"19 threads = 12 leads novos + 3 recompras + 4 excluidos; 8 cotados = 6 sem pedido confirmado + 2 pedidos novos; fechamento descritivo 2/8=25% IC95%[7.1-59.1]; 3 falhas confirmadas e 1 atendimento por audio ainda sem classificacao"

@@ -1,0 +1,18 @@
+# REGISTRO MESTRE DE LEADS — uma linha por lead, ID unico, sem extrapolacao
+# id: L-AAAAMMDD-NN | origem: meta|google|organico|indicacao|desconhecido (usar tag "A7 Ref" ou carimbo do WhatsApp)
+# elegivel: sim|nao (nao = fora de area, spam, emprego, servico indisponivel)
+# atendido: resposta HUMANA util (automatica nao conta) | cotado: recebeu preco explicito
+# pedido: coleta confirmada E pagamento recebido | tipo_cliente: novo|recompra
+id,data_entrada,origem,ref_tag,contato,tipo,elegivel,resp_automatica,atendido,tempo_1a_resposta_min,cotado,libras,objecao,pedido,tipo_cliente,receita,contribuicao,data_pedido,obs
+L-20260706-01,2026-07-06,desconhecido,,"·954-6497",special_item,sim,,sim,,sim,,minimo_historico_60,nao,,,,,"Twin US$35; follow-up pendente"
+L-20260707-01,2026-07-07,desconhecido,,"·561-4794",guest_laundry,sim,,sim,,sim,,sem_retorno,nao,,,,,"cotacao com minimo historico US$60"
+L-20260708-01,2026-07-08,desconhecido,,"·276-5729",b2b,sim,,sim,,sim,,sem_retorno,nao,,,,,"vacation homes; cotacao US$2.25/lb"
+L-20260711-01,2026-07-11,meta,,"·246-4493",pressing,sim,,nao,,nao,,sem_resposta_comercial,nao,,,,,"preco e prazo de pressing ainda nao definidos"
+L-20260712-01,2026-07-12,desconhecido,,"·308-4212",guest_laundry,sim,,sim,,sim,,decisao_familiar,nao,,,,,"follow-up pendente"
+L-20260716-01,2026-07-16,desconhecido,,"·440-6440",b2b,sim,,sim,,sim,,sem_followup,nao,,,,,"9 casas; revalidar custo capacidade e proposta"
+L-20260718-01,2026-07-18,meta,,"Marco Soriano",special_item,sim,,nao,,nao,,sem_resposta_comercial,nao,,,,,"pediu preco do terno duas vezes"
+L-20260718-02,2026-07-18,desconhecido,,"·609-4463",guest_laundry,sim,,sim,,sim,,sem_pedido_confirmado,nao,,,,,"Hyatt; follow-up pendente"
+L-20260720-01,2026-07-20,meta,,"·242-7487",guest_laundry,sim,,,,,,,nao,,,,,"resposta em audio 4h09 depois; conteudo ainda nao classificado"
+L-20260721-01,2026-07-21,desconhecido,,"·381-4954",guest_laundry,sim,,sim,,sim,,,sim,novo,,,2026-07-21,"pedido entregue; receita e origem pendentes"
+L-20260722-01,2026-07-22,meta,,"·963-2601",guest_laundry,sim,,nao,,nao,,sem_resposta_comercial,nao,,,,,"recebeu apenas Good morning"
+L-20260731-99,,desconhecido,,"novo_pedido_identidade_pendente",guest_laundry,sim,,sim,,sim,,,sim,novo,,,,"segundo pedido novo da amostra; pareamento pendente"
