@@ -32,3 +32,29 @@ Thumbs.db
 
 # scratch da skill a7-carousel
 _tmp/
+
+# Framework/runtime local dependencies
+.aios-core/
+.aiox-core/
+
+# Generated AI/IDE integrations
+.antigravity/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.github/agents/
+
+# Local browser and creative workspaces
+.playwright-mcp/
+.tmp-*/
+_preview-*.html
+*-preview.png
+
+# Uncurated source material kept locally
+comforter/
+Ajuste Final A7 Laundry.rtf
+ga4 e gtm.rtf
+melhorias_a7_orlando.rtf
+modelo paleta de cores.jpeg
+d0f3f6cfc2be4b1f74ba4baba5000145.txt
