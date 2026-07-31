@@ -30,7 +30,7 @@ No canvas 9:16 (1080×1920), **TODA info crítica** (headline, preço, selos, **
 - **Posição da logo no universal:** parte de baixo da **safe zone** (~y 1350–1460), **não** na borda inferior (a base some no Stories). O script de composição deve mirar a safe zone, não o rodapé extremo.
 
 ## 4. Compliance (obrigatório)
-- Preço conforme `pricing-rules.md`: Local $2.90/lb · Tourist $3.25/lb (min $60) · Express $3.95/lb "subject to availability" (nunca "guaranteed") · Comforter por tamanho ($35/$40/$50, nunca /lb).
+- Preço conforme `pricing-rules.md`: Local $2.90/lb · Tourist $3.25/lb (min $50) · Express $3.95/lb "subject to availability" (nunca "guaranteed") · Comforter por tamanho (Twin $33 · Full/Queen $37 · King $40 · Down/Feather $45, nunca /lb).
 - Before/after **realista** (não sujo forçado). Sem watermark · sem marca de terceiro · sem nome real de parque · sem texto ilegível.
 - DNA: premium, alto contraste, Nike/dopamina, Orlando.
 
@@ -44,7 +44,10 @@ No canvas 9:16 (1080×1920), **TODA info crítica** (headline, preço, selos, **
 2. Baixar full-res → `originals/`.
 3. **Compor logo oficial** (ImageMagick, na safe zone) → `optimized/`.
 4. Validar (dimensão, safe zone, pricing, compliance) → `approved/`.
-5. Subir no Ads Manager (upload não é possível via MCP).
+5. Gerar e registrar prévias reais de **Instagram Feed, Facebook Feed, Instagram Stories, Facebook Stories, Instagram Reels e Facebook Reels**. Sem a atestação das seis prévias, o criativo permanece `ORGANIC-ONLY` ou `QUARANTINED`.
+6. Subir no Ads Manager (upload não é possível via MCP).
+
+> A dimensão correta do arquivo não comprova enquadramento correto. A prévia de cada placement é um gate separado e obrigatório; corte automático nunca pode decidir a posição de headline, preço, logo ou CTA.
 
 ## 7. Per-placement (só depois, pra vencedor comprovado)
 Quando um criativo provar escala, aí sim produzir 1:1 (1080×1080), 4:5 (1080×1350), 9:16 (1080×1920) sob medida + placement customization. Antes disso, **universal safe-zone basta**.

@@ -9,4 +9,6 @@ Verticais 1080×1920 safe-zone (conteúdo crítico no centro 1:1, logo oficial a
 | `tourist_pt_9x16` | 1088×1920 | PT | VOCÊ NÃO VEIO PRA ORLANDO LAVAR ROUPA · A partir de $3.25/lb | **primário** BR → AS2 |
 | `tourist_pt_9x16_alt` | 944×1666 | PT | mesma linha | reserva |
 
-**Preço:** $3.25/lb (turista, mín. $60). Todos funilam → WhatsApp +1 407-670-8839.
+**Preço vigente:** $3.25/lb (turista, mín. $50). Todos funilam → WhatsApp +1 407-670-8839.
+
+> Revisar o texto incorporado em cada arquivo antes de republicar. Qualquer ativo que ainda mostre mínimo de $60 está desatualizado e não pode ser publicado sem correção.

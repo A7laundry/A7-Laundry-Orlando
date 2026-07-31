@@ -1,0 +1,76 @@
+meta:
+  phase: 1
+  status: "READY_FOR_BUILD_PAUSED"
+  authorization: "No funds, publication or account-goal changes authorized"
+  account_id: "290-113-2891"
+  currency: "BRL"
+  timezone: "GMT-03:00 America/Sao_Paulo"
+
+campaign:
+  name: "A7 | Search | Guest Laundry | Orlando | EN | JUL26"
+  type: "SEARCH"
+  status_on_create: "PAUSED"
+  objective: "Verified guest-laundry revenue"
+  daily_budget_brl: 70
+  test_days: 7
+  maximum_test_spend_brl: 490
+  bidding:
+    strategy: "MAXIMIZE_CLICKS"
+    max_cpc_brl: 18
+    conversion_switch_gate: "At least 15 verified qualified leads or purchases"
+  networks:
+    google_search: true
+    search_partners: false
+    display_expansion: false
+  locations:
+    setting: "PRESENCE_ONLY"
+    included: ["Orlando tourist corridor", "Kissimmee", "Lake Buena Vista", "Davenport", "Four Corners"]
+    excluded: ["Brazil"]
+  language: "English"
+  final_url: "https://a7laundry.com/laundry-pickup-delivery-orlando"
+  final_url_suffix: "utm_source=google&utm_medium=cpc&utm_campaign=guest_search_orlando&utm_content={adgroupid}_{creative}&utm_term={keyword}&device={device}&matchtype={matchtype}&network={network}"
+
+ad_groups:
+  - name: "Hotel Guest Laundry"
+    intent: "Hotel or resort guest explicitly seeking laundry pickup"
+  - name: "Airbnb Guest Laundry"
+    intent: "Airbnb or vacation-rental guest seeking laundry pickup"
+  - name: "Pickup Delivery Orlando"
+    intent: "High-intent wash-and-fold pickup and delivery"
+  - name: "Express Guest Laundry"
+    intent: "Same-day need; every ad must say subject to availability"
+
+assets:
+  sitelinks:
+    - { text: "How It Works", url: "https://a7laundry.com/laundry-pickup-delivery-orlando#how" }
+    - { text: "Pricing", url: "https://a7laundry.com/laundry-pickup-delivery-orlando#pricing" }
+    - { text: "What We Wash", url: "https://a7laundry.com/laundry-pickup-delivery-orlando#care" }
+    - { text: "Service Areas", url: "https://a7laundry.com/service-areas" }
+  callouts:
+    - "Hotel & Airbnb Pickup"
+    - "$50 Minimum Order"
+    - "Pickup & Delivery Included"
+    - "24-Hour Normal Service"
+  call_asset:
+    enabled: false
+    reason: "WhatsApp/SMS first until English call handling and qualified-call measurement are approved"
+
+conversion_policy:
+  primary:
+    - "purchase — verified Stripe payment with value"
+    - "qualified_guest_lead — offline import only after operational qualification"
+  secondary:
+    - "whatsapp_click"
+    - "sms_click"
+    - "call_click"
+    - "money_page_view"
+  forbidden_primary:
+    - "raw call from ad"
+    - "page view"
+    - "unqualified WhatsApp click"
+
+stop_rules:
+  - "Pause for review after 20 clicks and zero qualified leads"
+  - "Pause for review after R$180 and zero qualified leads"
+  - "Pause for review after R$350 and zero verified orders"
+  - "Immediately block any search term about jobs, dating, equipment, self-service laundromats or non-guest services"

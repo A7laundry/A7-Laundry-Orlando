@@ -1,0 +1,14 @@
+{
+  "name": "a7-laundry-mos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs && npm run build"
+  },
+  "dependencies": {
+    "@vercel/oidc": "^3.8.1",
+    "google-auth-library": "^10.9.1"
+  }
+}

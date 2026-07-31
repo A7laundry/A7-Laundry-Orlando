@@ -25,4 +25,4 @@
 
 ## Compliance
 - Sem promessa "guaranteed same-day/6h". Express = "subject to availability".
-- Preço: tourist $3.25/lb (min $60) · express $3.95/lb (subject to availability). Nunca $2.90 (esse é local).
+- Preço: tourist $3.25/lb (min $50) · express $3.95/lb (subject to availability). Nunca $2.90 (esse é local).

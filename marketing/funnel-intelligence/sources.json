@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0",
+  "cutoffDate": "2026-07-30",
+  "market": "United States",
+  "protocol": {
+    "scope": "Acquisition, hooks, packaging, retention and creative experimentation for local-service demand generation.",
+    "inclusion": "Primary platform guidance or directly attributable creator material with a stable URL.",
+    "exclusion": "Unsourced summaries, popularity rankings and claims of causal lift without an A7 test.",
+    "freshnessRule": "A source without a verifiable publication or update date is marked potentially_outdated."
+  },
+  "findings": [
+    {
+      "id": "src-meta-diversification",
+      "organization": "Meta",
+      "title": "Performance 5: Creative diversification",
+      "url": "https://www.facebook.com/business/ads/performance-marketing?locale=en_GB",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "platform_guidance",
+      "claimSummary": "Meta recommends creative diversification so the delivery system can match distinct messages and formats to people.",
+      "limitation": "Platform guidance does not prove that eight variants improve A7 sales, and the page has no verified publication date.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Test strategically distinct territories, not cosmetic variants; keep each wave small enough to learn at the current budget."
+    },
+    {
+      "id": "src-meta-structure",
+      "organization": "Meta",
+      "title": "Simplify your ad set structure",
+      "url": "https://www.facebook.com/business/ads/ad-set-structure",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "platform_guidance",
+      "claimSummary": "Meta recommends consolidating similar ad sets so learning is not fragmented.",
+      "limitation": "This is delivery guidance, not evidence that any specific creative will produce conversations or sales.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Use one control and at most two challengers per wave; do not launch all eight hypotheses together."
+    },
+    {
+      "id": "src-youtube-retention",
+      "organization": "YouTube",
+      "title": "Measure key moments for audience retention",
+      "url": "https://support.google.com/youtube/answer/9314415",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "platform_guidance",
+      "claimSummary": "Audience-retention reporting separates the intro, spikes and dips so creators can diagnose where attention is gained or lost.",
+      "limitation": "Video retention is an attention signal, not a sale or proof of local-service demand.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Treat first-frame hold and completion as creative diagnostics while keeping WhatsApp conversations and reconciled sales separate."
+    },
+    {
+      "id": "src-youtube-recommendations",
+      "organization": "YouTube",
+      "title": "How YouTube recommendations work",
+      "url": "https://support.google.com/youtube/answer/16559650?hl=en",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "platform_guidance",
+      "claimSummary": "YouTube describes appeal, engagement and satisfaction as distinct groups of signals used to understand content performance and recommendations.",
+      "limitation": "Recommendation signals belong to YouTube consumption and do not establish local-service demand, a WhatsApp conversation or a sale.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Diagnose whether a concept earns attention, sustains it and satisfies the viewer without collapsing any of those signals into commercial conversion."
+    },
+    {
+      "id": "src-tiktok-creative-codes",
+      "organization": "TikTok for Business",
+      "title": "TikTok Creative Codes",
+      "url": "https://ads.tiktok.com/business/en-US/creative-codes",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "platform_guidance",
+      "claimSummary": "TikTok packages short-form creative as hook, body and close, and reports that the first six seconds account for 90% of ad-recall impact.",
+      "limitation": "The reported result concerns recall in TikTok's research, not qualified conversations, sales or incremental revenue for A7.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Give every short-form concept an immediately legible opening, a concrete service body and one explicit WhatsApp close; validate commercial quality separately."
+    },
+    {
+      "id": "src-motion-frameworks",
+      "organization": "Motion",
+      "title": "Creative strategy frameworks",
+      "url": "https://motionapp.com/library/frameworks/",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "commercial_vendor_framework",
+      "claimSummary": "Motion presents creative territory as combinations of customer persona, pain, awareness and angle to structure diversity and analysis.",
+      "limitation": "Motion sells creative analytics software; its framework is commercially motivated and does not causally validate a taxonomy or media result.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Use persona × pain × awareness × angle as an anti-copy signature, then require an explicit strategic difference and A7 evidence."
+    },
+    {
+      "id": "src-acquisition-leads",
+      "organization": "Acquisition.com / Alex Hormozi",
+      "title": "$100M Leads",
+      "url": "https://shop.acquisition.com/",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "creator_vendor_claim",
+      "claimSummary": "The material argues that the offer and its value proposition precede lead-generation mechanics.",
+      "limitation": "This is creator/vendor guidance, not independent causal evidence; A7 must test whether a clearer offer improves qualified demand and contribution.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Make the operational offer concrete before optimizing hooks, while preserving documented price, availability and attribution boundaries."
+    },
+    {
+      "id": "src-mrbeast-lex",
+      "organization": "Lex Fridman Podcast / Jimmy Donaldson",
+      "title": "MrBeast: Future of YouTube, Twitter, TikTok, and Instagram",
+      "url": "https://www.youtube.com/watch?v=Z3_PwvvfxIU",
+      "publishedAt": "2023-01-11",
+      "accessedAt": "2026-07-30",
+      "evidenceType": "creator_opinion",
+      "claimSummary": "Jimmy Donaldson describes packaging, immediate clarity and retention as engineered parts of content performance.",
+      "limitation": "Long-form entertainment at massive scale is not a causal model for a small Orlando laundry service.",
+      "freshness": "dated_but_attributable",
+      "a7Translation": "Borrow the discipline of an instantly legible promise and visual progression, then validate it against qualified conversations."
+    },
+    {
+      "id": "src-a7-ecosystem",
+      "organization": "A7 Laundry Orlando",
+      "title": "A7 Communication Ecosystem",
+      "url": "marketing/ECOSYSTEM.md",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "internal_operating_standard",
+      "claimSummary": "Paid, feed and stories use native formats and converge on human WhatsApp support.",
+      "limitation": "Internal operating doctrine is a testable hypothesis, not independent evidence of incremental sales.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "Design each territory for a native surface and use conversation as a distinct stage before sale."
+    },
+    {
+      "id": "src-a7-production",
+      "organization": "A7 Laundry Orlando",
+      "title": "Meta creative production standard",
+      "url": "marketing/meta-ads/creative-production-standard.md",
+      "publishedAt": null,
+      "accessedAt": "2026-07-30",
+      "evidenceType": "internal_operating_standard",
+      "claimSummary": "Paid eligibility requires safe-zone compliance and previews for six placements.",
+      "limitation": "Production correctness does not establish commercial performance.",
+      "freshness": "potentially_outdated",
+      "a7Translation": "A brief may enter production, but paid_challenger remains an internal eligibility state until preflight and explicit authorization."
+    }
+  ],
+  "stageMetrics": [
+    {"stage": "research", "signals": ["source freshness", "claim traceability"], "saleEquivalent": false},
+    {"stage": "organic", "signals": ["reach", "views", "hook hold", "video retention", "appeal", "engagement", "satisfaction", "clicks"], "saleEquivalent": false},
+    {"stage": "paid_challenger", "signals": ["impressions", "link clicks", "qualified conversations"], "saleEquivalent": false},
+    {"stage": "conversation", "signals": ["provenanced WhatsApp conversation"], "saleEquivalent": false},
+    {"stage": "sale", "signals": ["reconciled completed order", "reconciled contribution"], "saleEquivalent": true},
+    {"stage": "retention", "signals": ["reconciled repeat order"], "saleEquivalent": true}
+  ]
+}

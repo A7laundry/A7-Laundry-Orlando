@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>A7 Laundry | Luxury Concierge Laundry — Orlando, Kissimmee, Reunion</title>
-<meta name="description" content="Premium laundry pickup & delivery for vacation rentals in Orlando. Express 6h or Normal 24h. From $3.25/lb. No app needed — book on WhatsApp."/>
-<meta property="og:title" content="A7 Laundry | Luxury Concierge Laundry — Orlando"/>
-<meta property="og:description" content="We handle the laundry. You enjoy Orlando. Express 6h · Normal 24h · From $3.25/lb · Free pickup & delivery."/>
+<title>Guest Laundry Pickup in Orlando | Hotels &amp; Airbnbs | A7 Laundry</title>
+<meta name="description" content="Guest laundry pickup from Orlando hotels, resorts and Airbnbs. Washed, dried, folded and delivered. From $3.25/lb, $50 minimum. Book on WhatsApp."/>
+<meta property="og:title" content="A7 Laundry Orlando | Guest Laundry Pickup"/>
+<meta property="og:description" content="Enjoy Orlando. We handle your laundry. Hotel & Airbnb pickup, 24h Normal or 6h Express subject to availability."/>
 <meta property="og:type" content="website"/>
 <meta property="og:image" content="https://a7laundry.com/A7%20LAUNDRY-05.png"/>
 <meta name="robots" content="index, follow"/>
@@ -25,29 +25,53 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <!-- Schema.org -->
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":["LocalBusiness","LaundryService"],
-  "name":"A7 Laundry",
-  "description":"Luxury concierge laundry pickup & delivery for vacation rentals in Orlando. Express 6h or Normal 24h.",
-  "url":"https://a7laundry.com",
-  "telephone":"+1-407-670-8839",
-  "priceRange":"$$",
-  "image":"https://a7laundry.com/A7%20LAUNDRY-05.png",
-  "address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},
-  "areaServed":[
-    {"@type":"City","name":"Orlando"},
-    {"@type":"City","name":"Kissimmee"},
-    {"@type":"Place","name":"Reunion Resort"},
-    {"@type":"Place","name":"Windsor Hills"},
-    {"@type":"Place","name":"Champions Gate"}
-  ],
-  "aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"23","bestRating":"5","worstRating":"1"},
-  "sameAs":[
-    "https://www.instagram.com/a7laundry",
-    "https://www.google.com/search?q=A7+Laundry+Orlando+reviews"
-  ]
-}
+[
+  {
+    "@context":"https://schema.org",
+    "@type":["LocalBusiness","LaundryService"],
+    "@id":"https://a7laundry.com/#business",
+    "name":"A7 Laundry Orlando",
+    "description":"Service-area guest laundry pickup and delivery for hotels, resorts and Airbnbs across the Orlando tourist corridor.",
+    "url":"https://a7laundry.com/",
+    "telephone":"+1-407-670-8839",
+    "priceRange":"$$",
+    "logo":"https://a7laundry.com/A7%20LAUNDRY-05.png",
+    "image":"https://a7laundry.com/public/guest-laundry-hero.webp",
+    "address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},
+    "areaServed":[
+      {"@type":"City","name":"Orlando"},
+      {"@type":"City","name":"Kissimmee"},
+      {"@type":"City","name":"Davenport"},
+      {"@type":"Place","name":"Lake Buena Vista"},
+      {"@type":"Place","name":"Four Corners"},
+      {"@type":"Place","name":"International Drive"},
+      {"@type":"Place","name":"Reunion Resort"},
+      {"@type":"Place","name":"Champions Gate"}
+    ],
+    "sameAs":["https://www.instagram.com/a7laundry"]
+  },
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "@id":"https://a7laundry.com/#website",
+    "url":"https://a7laundry.com/",
+    "name":"A7 Laundry Orlando",
+    "publisher":{"@id":"https://a7laundry.com/#business"},
+    "inLanguage":"en-US"
+  },
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "@id":"https://a7laundry.com/#webpage",
+    "url":"https://a7laundry.com/",
+    "name":"Guest Laundry Pickup in Orlando | Hotels & Airbnbs | A7 Laundry",
+    "description":"Guest laundry pickup from Orlando hotels, resorts and Airbnbs. Washed, dried, folded and delivered.",
+    "about":{"@id":"https://a7laundry.com/#business"},
+    "isPartOf":{"@id":"https://a7laundry.com/#website"},
+    "dateModified":"2026-07-25",
+    "inLanguage":"en-US"
+  }
+]
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -149,6 +173,7 @@ tailwind.config = {
       <a class="text-white border-b-2 border-blue-600 pb-1 font-medium transition-colors" href="#">Services</a>
       <a class="text-slate-300 font-medium hover:text-white transition-colors" href="#how-it-works">How it Works</a>
       <a class="text-slate-300 font-medium hover:text-white transition-colors" href="#coverage">Coverage</a>
+      <a class="text-slate-300 font-medium hover:text-white transition-colors" href="/about">About</a>
       <a class="text-slate-300 font-medium hover:text-white transition-colors" href="/blog">Blog</a>
     </div>
     <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup." target="_blank" rel="noopener"
@@ -164,19 +189,19 @@ tailwind.config = {
   <div class="absolute inset-0 z-0">
     <div class="hero-slideshow">
       <div class="hero-slide active">
-        <img alt="Luxury resort pool Orlando" src="/public/hero-resort-pool.jpg" class="kb-1"
+        <img alt="Luxury resort pool Orlando" src="/public/hero-resort-pool.webp" class="kb-1" width="1920" height="1281" fetchpriority="high" decoding="async"
              onerror="this.src='https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600'"/>
       </div>
       <div class="hero-slide">
-        <img alt="Family happy in Orlando" src="/public/Hero - Familia em Alegria.png" class="kb-2"
+        <img alt="Family happy in Orlando" src="/public/hero-familia-orlando.webp" class="kb-2" width="1920" height="1072" loading="lazy" decoding="async"
              onerror="this.src='https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=1600'"/>
       </div>
       <div class="hero-slide">
-        <img alt="Family relaxing in Orlando vacation rental" src="/public/Família em Orlando - Sem Preocupações.png" class="kb-3"
+        <img alt="Family relaxing in Orlando vacation rental" src="/public/familia-orlando-sem-preocupacoes.webp" class="kb-3" width="1920" height="1072" loading="lazy" decoding="async"
              onerror="this.src='https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=1600'"/>
       </div>
       <div class="hero-slide">
-        <img alt="Professional laundry delivery" src="/public/Como Funciona - Entrega Profissional.jpg" class="kb-4"
+        <img alt="Professional laundry delivery" src="/public/como-funciona-entrega-profissional.webp" class="kb-4" width="1920" height="1434" loading="lazy" decoding="async"
              onerror="this.src='https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600'"/>
       </div>
     </div>
@@ -189,7 +214,7 @@ tailwind.config = {
           <span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
         </div>
-        <span class="font-bold text-white tracking-widest uppercase text-xs">Available now · Orlando, Kissimmee, Reunion</span>
+        <span class="font-bold text-white tracking-widest uppercase text-xs">Service-area pickup · Orlando tourist corridor</span>
       </div>
       <h1 class="text-6xl md:text-8xl lg:text-[5.5rem] font-black text-white leading-[0.9] tracking-[-4px] uppercase font-headline">
         Enjoy Orlando.<br/>
@@ -198,14 +223,14 @@ tailwind.config = {
       </h1>
       <div class="flex flex-wrap gap-3">
         <div class="bg-secondary-container text-on-secondary-container px-4 py-1 flex items-center gap-2 rounded-lg text-xs font-bold uppercase tracking-wider">
-          <span class="material-symbols-outlined text-sm fill">bolt</span> Express 6h
+          <span class="material-symbols-outlined text-sm fill">bolt</span> Express 6h · When Available
         </div>
         <div class="border border-white/20 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Normal 24h</div>
         <div class="border border-white/20 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Wash &amp; fold from $3.25/lb</div>
         <div class="border border-green-400/30 bg-green-400/10 text-green-300 px-4 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">Free pickup &amp; delivery</div>
       </div>
       <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-        <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20schedule%20a%20laundry%20pickup%20at%20my%20vacation%20rental." target="_blank" rel="noopener"
+        <a href="https://wa.me/14076708839?text=Hi!%20I%27m%20staying%20at%20an%20Orlando%20hotel%20or%20Airbnb%20and%20need%20guest%20laundry%20pickup." target="_blank" rel="noopener"
            class="bg-primary-container text-white px-10 py-5 font-black text-lg flex items-center gap-3 hover:shadow-[0px_10px_40px_rgba(37,99,235,0.4)] transition-all active:scale-95 rounded-lg group"
            onclick="gtag('event','hero_cta',{event_category:'CTA',event_label:'premium_hero'})">
           Schedule Pickup on WhatsApp
@@ -220,14 +245,14 @@ tailwind.config = {
             <span class="text-white/40 text-sm">·</span>
             <span class="text-white/70 text-sm font-medium group-hover:text-white transition-colors">23 Google reviews</span>
           </a>
-          <span class="text-white/60 text-sm font-medium">Trusted by Orlando visitors, families &amp; vacation-rental hosts</span>
+          <span class="text-white/60 text-sm font-medium">Trusted by Orlando hotel, resort &amp; Airbnb guests</span>
         </div>
       </div>
     </div>
     <div class="hidden lg:flex justify-end relative h-[600px]">
       <div class="absolute bottom-10 right-10 w-96 aspect-square bg-white/10 backdrop-blur-md rounded-lg rotate-3 p-4 shadow-2xl">
         <img alt="Clean folded laundry delivered to vacation rental" class="w-full h-full object-cover rounded-lg"
-             src="/public/Como Funciona - Entrega Profissional.jpg"
+             src="/public/como-funciona-entrega-profissional.webp" width="1920" height="1434" loading="lazy" decoding="async"
              onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuDDcbWqaQjFilm2wUAjM_40jfWzpRwc1SrLeoLl89ol4r_DVFM8PZsR7IegK5FHiCrImppLjiv3faoxGBOrvwTzLMISkUAHNM2_QnXUriuRtVrhInA5WJcA9cqpmI2VeU7Gdps_Q_AxFxVGWcQgj-TiQJ6HcDnsJnL9f0OlwAqNjXl8zryLoVzI7fYLLVsRYOVDPYJoRkudNuBK2fHdoWBuwVoVXaQrKnF5OnozGRUMoKGyM3dlG9rZ2l458A25Zeu4-0O7RyR_5D7m'"/>
       </div>
     </div>
@@ -272,21 +297,21 @@ tailwind.config = {
             <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">1</div>
             <div class="space-y-2">
               <h3 class="text-2xl font-black">Book via WhatsApp</h3>
-              <p class="text-slate-500">No apps to download. Just text us your location and service type. We respond in minutes.</p>
+              <p class="text-slate-500">No app to download. Send your hotel, resort or Airbnb location and preferred pickup window.</p>
             </div>
           </div>
           <div class="flex gap-8">
             <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">2</div>
             <div class="space-y-2">
               <h3 class="text-2xl font-black">Contactless Pickup</h3>
-              <p class="text-slate-500">Leave your laundry bag at your doorstep. Our concierge drivers handle the rest while you're at the parks.</p>
+              <p class="text-slate-500">Leave your bag with the front desk or at the agreed contactless handoff point. We confirm the pickup on WhatsApp.</p>
             </div>
           </div>
           <div class="flex gap-8">
             <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-200">3</div>
             <div class="space-y-2">
               <h3 class="text-2xl font-black">Fresh Return</h3>
-              <p class="text-slate-500">Sorted, washed, and professionally folded items delivered back within 6 or 24 hours.</p>
+              <p class="text-slate-500">Washed, dried and professionally folded, then returned in 24h — or 6h with Express when availability is confirmed.</p>
             </div>
           </div>
         </div>
@@ -294,7 +319,7 @@ tailwind.config = {
       <div class="lg:col-span-7 relative">
         <div class="rounded-xl overflow-hidden shadow-2xl">
           <img alt="Professional laundry delivery to Orlando vacation rental" class="w-full h-[600px] object-cover"
-               src="/public/Como Funciona - Entrega Profissional.jpg"
+               src="/public/como-funciona-entrega-profissional.webp" width="1920" height="1434" loading="lazy" decoding="async"
                onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuB7oT1_eQNN3oOaAhOT1i2aMzVJK-cedY5lCu4ZIqxglgtGNm3YRzfBIxh4gCFnSrShKx-i-XzwW6ml8o0oU8UJATpBPPnSk82Zaaie33mXYH-ZCEuZXi-rQUkr7VbWS53Ik4tfzpBhIN9BNg-rolA5mYMaD9R3a_7rD6TfjRDDDWBtoSY-oi_XSOhv6Wzw68osqr4UfsPl9nuGZEG8UDQqSM2mu6zD8mQZOkzLuWN4JWMRwjTDAWHiMQ9_x8TgFh68Y-V_iNo2ifL'"/>
         </div>
         <div class="absolute -bottom-8 -left-8 bg-white p-8 shadow-xl max-w-xs rounded-lg border border-slate-100 hidden md:block">
@@ -344,18 +369,18 @@ tailwind.config = {
       <!-- Express -->
       <div class="bg-[#0a0f1a] p-12 rounded-lg text-white flex flex-col items-center text-center space-y-6 relative overflow-hidden shadow-2xl">
         <div class="absolute top-6 right-6 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
-          <span class="material-symbols-outlined text-[12px] fill">bolt</span> Most Popular
+          <span class="material-symbols-outlined text-[12px] fill">bolt</span> Subject to Availability
         </div>
         <div class="w-16 h-16 rounded-full bg-secondary-container/20 flex items-center justify-center">
           <span class="material-symbols-outlined text-secondary text-3xl fill">bolt</span>
         </div>
         <div>
           <h3 class="text-3xl font-black">Express 6h</h3>
-          <p class="text-slate-400 mt-2">Same-day VIP service</p>
+          <p class="text-slate-400 mt-2">Same-day service when confirmed</p>
         </div>
         <div class="text-5xl font-black text-secondary">$3.95<span class="text-lg text-slate-500 font-medium">/lb</span></div>
         <ul class="space-y-3 text-left w-full">
-          <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Pickup by 10 AM → Back by 4 PM</li>
+          <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> 6-hour return after availability is confirmed</li>
           <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Priority processing</li>
           <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> VIP concierge handling</li>
           <li class="flex items-center gap-3 text-slate-300"><span class="material-symbols-outlined text-secondary text-sm fill">check_circle</span> Free pickup &amp; delivery</li>
@@ -363,7 +388,7 @@ tailwind.config = {
         <a href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20to%20book%20the%20Express%20laundry%20service%20(6h)." target="_blank" rel="noopener"
            class="w-full block bg-primary-container text-white font-black py-4 rounded-lg hover:shadow-[0px_0px_20px_rgba(37,99,235,0.4)] transition-shadow text-center"
            onclick="gtag('event','pricing_cta',{event_category:'CTA',event_label:'express_6h'})">
-          Book Express — 6h
+          Ask About Express — 6h
         </a>
       </div>
     </div>
@@ -416,7 +441,7 @@ tailwind.config = {
 <!-- SECTION 6: COVERAGE -->
 <section id="coverage" class="bg-[#05080f] py-32 border-t border-white/5">
   <div class="container mx-auto px-8 text-center space-y-12">
-    <h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase font-headline">Serving Orlando's Premier Rentals</h2>
+    <h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase font-headline">Guest Laundry Where You Stay</h2>
     <div class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
       <div class="bg-surface-container px-6 py-3 rounded-lg flex items-center gap-3 border border-white/5">
         <div class="relative h-2 w-2"><span class="pulse-ring absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></div>
@@ -443,7 +468,7 @@ tailwind.config = {
         <span class="font-bold text-on-surface uppercase tracking-widest text-xs">Lake Nona</span>
       </div>
     </div>
-    <p class="text-on-surface-variant max-w-2xl mx-auto">We specialize in Airbnb, VRBO, and luxury vacation home communities across the greater Orlando area.</p>
+    <p class="text-on-surface-variant max-w-2xl mx-auto">We pick up personal guest laundry from hotels, resorts, Airbnbs and vacation rentals across Orlando's tourist corridor.</p>
   </div>
 </section>
 
@@ -460,7 +485,7 @@ tailwind.config = {
         <span class="text-white font-black text-xl">5.0</span>
         <span class="text-on-surface-variant group-hover:text-white transition-colors">· 23 Google reviews</span>
       </a>
-      <p class="text-on-surface-variant max-w-xl mx-auto text-sm pt-2">From guests, families and vacation-rental hosts across Orlando — including our many Brazilian visitors.</p>
+      <p class="text-on-surface-variant max-w-xl mx-auto text-sm pt-2">From hotel, resort and Airbnb guests across Orlando — including Brazilian visitors.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -521,9 +546,9 @@ tailwind.config = {
 <section class="bg-surface-container-lowest py-32">
   <div class="container mx-auto px-8">
     <div class="text-center mb-16">
-      <p class="text-xs font-bold uppercase tracking-[0.3em] text-primary-container mb-4">Full Service Menu</p>
-      <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Everything we handle.</h2>
-      <p class="text-on-surface-variant mt-4 max-w-xl mx-auto">One call. Pickup & delivery. No machines. No stress.</p>
+      <p class="text-xs font-bold uppercase tracking-[0.3em] text-primary-container mb-4">Optional Specialty Services</p>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tighter">More services, when you need them.</h2>
+      <p class="text-on-surface-variant mt-4 max-w-xl mx-auto">Guest wash &amp; fold remains our primary pickup service.</p>
     </div>
 
     <!-- Comforter — featured wide card -->
@@ -532,7 +557,7 @@ tailwind.config = {
            src="https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=1600&q=80"/>
       <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex flex-col justify-center p-10 md:p-16">
         <span class="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container text-xs font-black uppercase tracking-widest px-3 py-1 rounded-lg w-fit mb-4">
-          <span class="material-symbols-outlined text-sm fill">bolt</span> Most Popular
+          <span class="material-symbols-outlined text-sm fill">bed</span> Specialty Service
         </span>
         <h3 class="text-3xl md:text-5xl font-black text-white tracking-tight">Comforter Cleaning</h3>
         <p class="text-white/70 mt-2 max-w-md">Too big for your machine? We pick up, deep clean, and deliver fresh. Twin to King.</p>
@@ -598,7 +623,7 @@ tailwind.config = {
     <h2 class="text-6xl md:text-9xl font-black text-white tracking-[-6px] leading-[0.8] mb-12 uppercase">
       Ready to drop<br/>the laundry bag?
     </h2>
-    <a href="https://wa.me/14076708839?text=Hi!%20I%27m%20ready%20to%20schedule%20a%20laundry%20pickup%20at%20my%20vacation%20rental%20in%20Orlando." target="_blank" rel="noopener"
+    <a href="https://wa.me/14076708839?text=Hi!%20I%27m%20staying%20at%20an%20Orlando%20hotel%20or%20Airbnb%20and%20want%20to%20schedule%20guest%20laundry%20pickup." target="_blank" rel="noopener"
        class="bg-white text-primary-container px-16 py-8 text-2xl font-black rounded-lg hover:scale-105 transition-all shadow-2xl inline-flex items-center gap-4"
        onclick="gtag('event','final_cta',{event_category:'CTA',event_label:'premium_final'})">
       Schedule Now on WhatsApp
@@ -609,7 +634,7 @@ tailwind.config = {
       <span class="text-white font-black">5.0</span>
       <span class="text-white/70 font-medium">· Rated 5.0 by 23 Google reviews</span>
     </div>
-    <p class="text-white/80 mt-4 font-medium uppercase tracking-[0.2em] text-sm">Average response time: 3 Minutes</p>
+    <p class="text-white/80 mt-4 font-medium uppercase tracking-[0.2em] text-sm">24/7 online support · Pickup windows confirmed on WhatsApp</p>
   </div>
 </section>
 
@@ -624,6 +649,7 @@ tailwind.config = {
       <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/shoes">Shoes</a>
       <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/upholstery">Upholstery</a>
       <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/vacation">Vacation Rental</a>
+      <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/about">About</a>
       <a class="text-slate-500 hover:text-white transition-colors text-sm" href="/privacy-policy.html">Privacy</a>
     </div>
     <div class="text-slate-500 text-sm">© 2026 A7 Laundry. All rights reserved.</div>

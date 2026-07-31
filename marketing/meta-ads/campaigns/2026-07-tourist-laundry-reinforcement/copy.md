@@ -1,4 +1,4 @@
-# Copy — Tourist Laundry Reinforcement (RASCUNHO — revisar antes de build)
+# Copy — Tourist Laundry Reinforcement (ARQUIVO — revisar antes de qualquer reuso)
 
 Página: A7 Laundry & Carpet Cleaning · CTA WhatsApp → +1 407-670-8839
 > Sem nomes reais de parques / logos protegidos. Ângulo genérico (hotel/Airbnb/parque).
@@ -27,4 +27,4 @@ Página: A7 Laundry & Carpet Cleaning · CTA WhatsApp → +1 407-670-8839
 - **Headline:** Same-Day Laundry Before Checkout — Orlando
 - **Description:** From $3.95/lb · subject to availability
 
-> Regra: Tourist $3.25/lb (min $60) · Express $3.95/lb (min $75, subject to availability). Coerente com pricing-rules.md.
+> Regra: Tourist $3.25/lb (min $50) · Express $3.95/lb (min $50, subject to availability). Coerente com pricing-rules.md.

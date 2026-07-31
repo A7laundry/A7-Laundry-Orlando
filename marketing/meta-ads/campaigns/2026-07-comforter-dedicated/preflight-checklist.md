@@ -1,6 +1,6 @@
-# Pré-Flight Checklist — Comforter Dedicated (rodar ANTES de publicar)
+# Pré-Flight Checklist — Comforter Dedicated (BLOQUEADO)
 
-> Usar a skill `*preflight` quando/se a campanha for construída. Nada publica sem GO + autorização.
+> **NO-GO atual:** zero vendas confirmadas e assets com preço antigo. Nada publica até nova autorização, novo lote visual e preflight completo.
 
 ## Estrutura & segurança
 - [ ] Objetos criados como `status: PAUSED` (campanha, ad sets, ads)
@@ -16,7 +16,7 @@
 - [ ] Se variante LP: destino = /comforter + Pixel ativo
 
 ## Pricing (pricing-rules.md)
-- [ ] Preços por TAMANHO (Twin $35 / Full-Queen $40 / King $50) — NUNCA "/lb"
+- [ ] Preços por TAMANHO (Twin $33 / Full-Queen $37 / King $40 / Down $45) — NUNCA "/lb"
 
 ## Criativos
 - [ ] beforeafter-9x16 produzido (SEM "24HR TURNAROUND")

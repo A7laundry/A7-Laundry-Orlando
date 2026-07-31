@@ -1,11 +1,11 @@
-# Campaign Spec — Comforter Dedicated (RASCUNHO — não criado no Meta)
+# Campaign Spec — Comforter Dedicated (ARQUIVADO — NÃO IMPLANTAR)
 # Whitespace confirmado: ~0 anúncios de comforter cleaning em Orlando no Meta.
 # ⚠️ DRAFT. Nenhum objeto existe no Meta. Build futuro (só c/ aprovação) nasce status:PAUSED.
 
 meta:
   slug: "2026-07-comforter-dedicated"
   created: "2026-07-02"
-  status: "DRAFT — não deployado"
+  status: "ARCHIVED — zero vendas confirmadas; assets com preço antigo em quarentena"
   rationale: "Whitespace: ninguém anuncia comforter cleaning no Meta em Orlando. A7 já tem criativo C."
 
 campaign:
@@ -33,9 +33,10 @@ destination:
 offer:
   model: "por tamanho (NÃO per-lb)"
   prices:
-    twin: "From $35"
-    full_queen: "From $40"
-    king: "From $50"
+    twin: "From $33"
+    full_queen: "From $37"
+    king: "From $40"
+    down_feather: "From $45"
   includes: "Pickup & delivery available"
 
 ad_sets:

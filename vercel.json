@@ -1,9 +1,10 @@
 {
-  "buildCommand": null,
-  "outputDirectory": ".",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
     { "source": "/plans", "destination": "/plans.html" },
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html" },
     { "source": "/carpet", "destination": "/carpet-cleaning.html" },
     { "source": "/shoes", "destination": "/shoe-cleaning.html" },
     { "source": "/upholstery", "destination": "/upholstery-cleaning.html" },
@@ -11,16 +12,11 @@
     { "source": "/area-rug", "destination": "/area-rug-cleaning.html" },
     { "source": "/curtain", "destination": "/curtain-cleaning.html" },
     { "source": "/vacation", "destination": "/vacation-rental.html" },
-    { "source": "/carpet-campaign", "destination": "/a7-carpet-campaign/index.html" },
-    { "source": "/command-center", "destination": "/a7-command-center.html" },
     { "source": "/comforter", "destination": "/comforter-cleaning.html" },
-    { "source": "/comforter-v2", "destination": "/comforter-cleaning-v2.html" },
-    { "source": "/comforter-v3", "destination": "/comforter-cleaning-v3.html" },
     { "source": "/comforter-thanks", "destination": "/comforter-thanks.html" },
-    { "source": "/comforter-v4", "destination": "/comforter-cleaning-v4.html" },
-    { "source": "/comforter-v5", "destination": "/comforter-cleaning-v5.html" },
-    { "source": "/comforter-v6", "destination": "/comforter-cleaning-v6.html" },
+    { "source": "/guest-payment-confirmation", "destination": "/guest-payment-confirmation.html" },
     { "source": "/laundry-pickup-delivery-orlando", "destination": "/laundry-pickup-delivery-orlando.html" },
+    { "source": "/about", "destination": "/about.html" },
     { "source": "/service-areas", "destination": "/service-areas.html" },
     { "source": "/blog", "destination": "/blog/index.html" },
     { "source": "/blog/hotel-laundry-service-orlando", "destination": "/blog/hotel-laundry-service-orlando.html" },
@@ -105,6 +101,14 @@
     { "source": "/blog/laundry-port-canaveral-cruise", "destination": "/blog/laundry-port-canaveral-cruise.html" },
     { "source": "/blog/snowbird-laundry-orlando", "destination": "/blog/snowbird-laundry-orlando.html" },
     { "source": "/blog/orlando-hotel-no-washer-laundry", "destination": "/blog/orlando-hotel-no-washer-laundry.html" }
+  ],
+  "redirects": [
+    { "source": "/carpet-campaign", "destination": "/carpet", "permanent": true },
+    { "source": "/comforter-v2", "destination": "/comforter", "permanent": false },
+    { "source": "/comforter-v3", "destination": "/comforter", "permanent": false },
+    { "source": "/comforter-v4", "destination": "/comforter", "permanent": false },
+    { "source": "/comforter-v5", "destination": "/comforter", "permanent": false },
+    { "source": "/comforter-v6", "destination": "/comforter", "permanent": false }
   ],
   "headers": [
     {

@@ -1,18 +1,31 @@
-/* A7 Laundry — unified tracking v2 (GA4 + Meta Pixel + conversion events)
+/* A7 Laundry — unified tracking v3 (GA4 + Google Ads + Meta Pixel + conversion events)
    Single source of truth. Include on every public page:
      <script src="/a7-tracking.js" defer></script>
-   - Initializes GA4 (G-JLQNRC7MK4) and Meta Pixel (1452877649635363) — idempotent
+   - Initializes GA4 (G-JLQNRC7MK4), Google Ads (AW-17146169189) and
+     Meta Pixel (1452877649635363) — idempotent
      (skips init + PageView if a page already inlined the Pixel, so no double count).
    - Fires Lead (Meta Pixel) + a GA4 event on WhatsApp / SMS / Call / pickup-CTA clicks.
    - Fires a typed page_view (money_page_view / service_page_view / blog_pageview) and
      ViewContent (Pixel) on money + service pages.
+   - Persists campaign parameters for the current browser session so a lead click
+     keeps its acquisition source after the visitor moves between pages.
    - Enriches every event with page_path, article_slug, funnel_stage, persona, geo,
-     cta_location, channel, destination. */
+     campaign attribution, cta_location, channel and destination. */
 (function () {
   'use strict';
 
   var GA4_ID = 'G-JLQNRC7MK4';
+  var GOOGLE_ADS_ID = 'AW-17146169189';
+  var GOOGLE_ADS_WHATSAPP_DESTINATION = 'AW-17146169189/dhI0CO_7xNgcEOWO9-8_';
+  var GOOGLE_ADS_PHONE_DESTINATION = 'AW-17146169189/83lbCLK53NgcEOWO9-8_';
+  var OFFICIAL_PHONE = '+1 407-670-8839';
   var PIXEL_ID = '1452877649635363';
+  var CHECKOUTS = {
+    '7sY00jbJy8FE0oTbRfeZ207': { item_id: 'comforter-twin', item_name: 'Twin Comforter Cleaning', value: 33 },
+    'aFa8wP3d2f420oT6wVeZ208': { item_id: 'comforter-queen', item_name: 'Full / Queen Comforter Cleaning', value: 37 },
+    '8x200jaFu7BA6Nh2gFeZ209': { item_id: 'comforter-king', item_name: 'King Comforter Cleaning', value: 40 },
+    'bJe14n8xm2hg1sXdZneZ20a': { item_id: 'comforter-down', item_name: 'Down / Feather Comforter Cleaning', value: 45 }
+  };
 
   /* ---------------- GA4 (gtag.js) ---------------- */
   window.dataLayer = window.dataLayer || [];
@@ -25,6 +38,10 @@
   }
   gtag('js', new Date());
   gtag('config', GA4_ID);
+  gtag('config', GOOGLE_ADS_ID);
+  gtag('config', GOOGLE_ADS_PHONE_DESTINATION, {
+    phone_conversion_number: OFFICIAL_PHONE
+  });
 
   /* ---------------- Meta Pixel (idempotent) ---------------- */
   if (!window.fbq) {
@@ -96,11 +113,97 @@
     return 'inline';
   }
 
+  /* ---------------- campaign attribution ---------------- */
+  var ATTRIBUTION_KEYS = [
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+    'gclid', 'gbraid', 'wbraid', 'fbclid'
+  ];
+  var ATTRIBUTION_STORAGE_KEY = 'a7_campaign_attribution';
+
+  function safeSessionRead() {
+    try {
+      var raw = window.sessionStorage && window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function safeSessionWrite(value) {
+    try {
+      if (window.sessionStorage) {
+        window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(value));
+      }
+    } catch (error) {
+      // Tracking must never block navigation when storage is unavailable.
+    }
+  }
+
+  function readCampaignAttribution() {
+    var saved = safeSessionRead();
+    var params = new URLSearchParams(location.search || '');
+    var foundCampaignParam = false;
+
+    for (var i = 0; i < ATTRIBUTION_KEYS.length; i++) {
+      var key = ATTRIBUTION_KEYS[i];
+      var value = params.get(key);
+      if (value) {
+        saved[key] = value.slice(0, 250);
+        foundCampaignParam = true;
+      }
+    }
+
+    if (!saved.landing_page) saved.landing_page = location.pathname;
+    if (foundCampaignParam) {
+      saved.attribution_captured_at = new Date().toISOString();
+      safeSessionWrite(saved);
+    } else if (!safeSessionRead().landing_page) {
+      safeSessionWrite(saved);
+    }
+    return saved;
+  }
+
+  function leadReference(attribution) {
+    var parts = [
+      attribution.utm_source,
+      attribution.utm_campaign,
+      attribution.utm_content
+    ].filter(Boolean);
+    if (!parts.length && attribution.gclid) parts.push('google-ads');
+    if (!parts.length && attribution.fbclid) parts.push('meta');
+    return parts.length
+      ? parts.join('|').replace(/[^a-zA-Z0-9_|.-]/g, '-').slice(0, 120)
+      : 'direct';
+  }
+
+  function decorateWhatsAppLinks(attribution) {
+    if (!document.querySelectorAll) return;
+    var reference = leadReference(attribution);
+    if (reference === 'direct') return;
+    var links = document.querySelectorAll('a[href*="wa.me/"]');
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      try {
+        var url = new URL(link.getAttribute('href'), 'https://a7laundry.com');
+        var message = url.searchParams.get('text') || '';
+        if (message.indexOf('A7 Ref:') === -1) {
+          url.searchParams.set('text', message + '\nA7 Ref: ' + reference);
+          link.setAttribute('href', url.toString());
+        }
+      } catch (error) {
+        // A malformed third-party link must not affect the rest of the page.
+      }
+    }
+  }
+
   var SLUG = getSlug();
   var PATH = location.pathname;
+  var ATTRIBUTION = readCampaignAttribution();
+  decorateWhatsAppLinks(ATTRIBUTION);
   var isBlog = /^\/blog\//.test(PATH) || SLUG === 'blog-index';
   var isMoney = /laundry-pickup-delivery-orlando/.test(PATH);
-  var isService = /(service-areas|comforter|carpet|shoe|upholstery|vacation|plans)/.test(PATH) && !isMoney;
+  var isThankYou = /comforter-thanks/.test(PATH);
+  var isService = /(service-areas|comforter|carpet|shoe|upholstery|vacation|plans)/.test(PATH) && !isMoney && !isThankYou;
 
   function baseParams(extra) {
     var p = {
@@ -108,8 +211,14 @@
       article_slug: SLUG,
       funnel_stage: FUNNEL[SLUG] || (isMoney ? 'bofu' : 'other'),
       persona: PERSONA[SLUG] || 'general',
-      geo: GEO[SLUG] || 'orlando'
+      geo: GEO[SLUG] || 'orlando',
+      landing_page: ATTRIBUTION.landing_page || PATH,
+      lead_reference: leadReference(ATTRIBUTION)
     };
+    for (var i = 0; i < ATTRIBUTION_KEYS.length; i++) {
+      var attributionKey = ATTRIBUTION_KEYS[i];
+      if (ATTRIBUTION[attributionKey]) p[attributionKey] = ATTRIBUTION[attributionKey];
+    }
     if (extra) for (var k in extra) p[k] = extra[k];
     return p;
   }
@@ -127,6 +236,7 @@
     if (!a) return;
     var href = a.getAttribute('href') || '';
     var channel = href.indexOf('wa.me/') > -1 ? 'whatsapp'
+      : href.indexOf('buy.stripe.com/') > -1 ? 'checkout'
       : href.indexOf('sms:') === 0 ? 'sms'
       : href.indexOf('tel:') === 0 ? 'call'
       : (/laundry-pickup-delivery-orlando/.test(href) || /schedule pickup|book (a )?pickup|request pickup/i.test(a.textContent || '')) ? 'pickup'
@@ -134,13 +244,37 @@
     if (!channel) return;
 
     var evName = channel === 'whatsapp' ? 'whatsapp_click'
+      : channel === 'checkout' ? 'begin_checkout'
       : channel === 'sms' ? 'sms_click'
       : channel === 'call' ? 'call_click' : 'pickup_cta_click';
 
     var params = baseParams({ cta_location: ctaLocation(a), channel: channel, destination: href, source_page: PATH });
+    if (channel === 'checkout') {
+      var checkoutId = href.split('/').pop().split('?')[0];
+      var checkout = CHECKOUTS[checkoutId];
+      if (checkout) {
+        params.currency = 'USD';
+        params.value = checkout.value;
+        params.items = [{ item_id: checkout.item_id, item_name: checkout.item_name, price: checkout.value, quantity: 1 }];
+      }
+    }
     gtag('event', evName, params);
+    if (channel === 'whatsapp') {
+      gtag('event', 'conversion', {
+        send_to: GOOGLE_ADS_WHATSAPP_DESTINATION
+      });
+    }
     if (window.fbq) {
-      fbq('track', 'Lead', { content_name: SLUG, content_category: params.funnel_stage, source: channel + ':' + params.cta_location });
+      if (channel === 'checkout') {
+        fbq('track', 'InitiateCheckout', {
+          content_name: params.items ? params.items[0].item_name : SLUG,
+          content_category: 'comforter_cleaning',
+          value: params.value,
+          currency: params.currency || 'USD'
+        });
+      } else {
+        fbq('track', 'Lead', { content_name: SLUG, content_category: params.funnel_stage, source: channel + ':' + params.cta_location });
+      }
     }
   }, true);
 })();

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "evidence": [],
+  "semantics": {
+    "attentionSignals": ["reach", "view", "hook_hold", "video_retention"],
+    "acquisitionSignals": ["click", "session", "call"],
+    "conversationSignals": ["conversation", "qualified_conversation"],
+    "saleSignals": ["completed_order", "reconciled_contribution"],
+    "retentionSignals": ["repeat_order"],
+    "rule": "Signals never inherit the meaning of a later stage. Missing values remain null with partial or unavailable status."
+  }
+}
