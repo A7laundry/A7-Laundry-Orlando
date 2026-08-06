@@ -1,11 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { INDEXNOW_KEY, INDEXNOW_KEY_FILE } from './public-artifacts.mjs';
 
 const root = process.cwd();
 const host = 'a7laundry.com';
 const origin = `https://${host}`;
-const key = 'd0f3f6cfc2be4b1f74ba4baba5000145';
-const keyLocation = `${origin}/${key}.txt`;
+const key = INDEXNOW_KEY;
+const keyLocation = `${origin}/${INDEXNOW_KEY_FILE}`;
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const submitAll = args.includes('--all');

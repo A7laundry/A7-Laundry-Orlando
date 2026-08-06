@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { PUBLIC_TEXT_ARTIFACTS } from './public-artifacts.mjs';
 import { resolveValidationContext } from './validation-context.mjs';
 
 const root = process.cwd();
@@ -59,7 +60,7 @@ for (const entry of rootFiles) {
   if (/\.html$/i.test(entry.name) || /\.(?:js|png|jpg|jpeg|webp|ico)$/i.test(entry.name)) copy(entry.name);
 }
 
-for (const file of ['robots.txt', 'sitemap.xml', 'llms.txt', 'd0f3f6cfc2be4b1f74ba4baba5000145.txt']) copy(file);
+for (const file of PUBLIC_TEXT_ARTIFACTS) copy(file);
 
 const supersededPublicAssets = new Set([
   'public/1775625968812.png',

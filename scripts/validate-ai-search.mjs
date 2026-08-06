@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { INDEXNOW_KEY, INDEXNOW_KEY_FILE, PUBLIC_TEXT_ARTIFACTS } from './public-artifacts.mjs';
 
 const root = process.cwd();
 const failures = [];
@@ -75,9 +76,12 @@ if (!Array.isArray(quarantine.routes) || quarantine.routes.length !== 35) {
   }
 }
 
-const indexNowKey = read('d0f3f6cfc2be4b1f74ba4baba5000145.txt').trim();
-if (indexNowKey !== 'd0f3f6cfc2be4b1f74ba4baba5000145') {
+const indexNowKey = read(INDEXNOW_KEY_FILE).trim();
+if (indexNowKey !== INDEXNOW_KEY || INDEXNOW_KEY_FILE !== `${INDEXNOW_KEY}.txt`) {
   fail('IndexNow key file content does not match its public filename');
+}
+if (!PUBLIC_TEXT_ARTIFACTS.includes(INDEXNOW_KEY_FILE)) {
+  fail('IndexNow key file is missing from the deterministic public build artifact list');
 }
 
 if (failures.length) {
