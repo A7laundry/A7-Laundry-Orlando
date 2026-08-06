@@ -1,11 +1,24 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { resolveValidationContext } from './validation-context.mjs';
 
 const root = process.cwd();
 const output = path.join(root, 'dist');
+let validationContext;
 
-execFileSync(process.execPath, [path.join(root, 'scripts/validate-site.mjs')], { stdio: 'inherit' });
+try {
+  validationContext = resolveValidationContext(process.argv.slice(2));
+} catch (error) {
+  console.error(`Build validation context error: ${error.message}`);
+  process.exit(1);
+}
+
+execFileSync(
+  process.execPath,
+  [path.join(root, 'scripts/validate-site.mjs'), `--validation-context=${validationContext}`],
+  { stdio: 'inherit' }
+);
 execFileSync(process.execPath, [path.join(root, 'scripts/validate-ai-search.mjs')], { stdio: 'inherit' });
 
 // dist is generated output owned by this script.
@@ -122,7 +135,19 @@ for (const { source, destination } of config.rewrites) {
   }
 }
 
-for (const privatePath of ['a7-command-center.html', 'mos-kpis.js', '_preview-edu.html', 'a7-carpet-campaign', 'marketing', 'docs']) {
+for (const privatePath of [
+  'a7-command-center.html',
+  'mos-kpis.js',
+  '_preview-edu.html',
+  'a7-carpet-campaign',
+  'marketing',
+  'docs',
+  'MANIFESTO.md',
+  'AGENTS.md',
+  '.aios-core',
+  '.codex',
+  '.github'
+]) {
   if (fs.existsSync(path.join(output, privatePath))) throw new Error(`Private path leaked into dist: ${privatePath}`);
 }
 

@@ -1,9 +1,27 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  findMissingRepositoryPrivateSources,
+  repositoryPrivateValidationFailures,
+  resolveValidationContext
+} from './validation-context.mjs';
 
 const root = process.cwd();
 const syntaxOnly = process.argv.includes('--syntax-only');
 const failures = [];
+let validationContext;
+
+try {
+  validationContext = resolveValidationContext(process.argv.slice(2));
+} catch (error) {
+  console.error(`Validation context error: ${error.message}`);
+  process.exit(1);
+}
+
+console.log(`Validation context: ${validationContext}`);
+if (validationContext === 'public') {
+  console.log('Repository-private validation: not applicable to the publishable Vercel source set.');
+}
 
 function fail(message) {
   failures.push(message);
@@ -137,19 +155,13 @@ if (!syntaxOnly) {
   if (!exists('public/guest-laundry-hero.webp')) {
     fail('Guest Laundry landing: optimized Lovart hero is missing');
   }
-  const guestHeroSourceDirectory = 'marketing/google-ads/2026-07-guest-laundry-search';
-  if (exists(guestHeroSourceDirectory)) {
-    if (!exists(`${guestHeroSourceDirectory}/LOVART-HERO-PROMPT.md`)) {
-      fail('Guest Laundry landing: Lovart hero production brief is missing');
-    }
-    if (!exists(`${guestHeroSourceDirectory}/assets/hero/A7_GUEST_LAUNDRY_HERO_LOVART_MASTER.png`)) {
-      fail('Guest Laundry landing: Lovart hero master is missing from the campaign archive');
-    }
+  if (validationContext === 'repository') {
+    for (const sourceFailure of repositoryPrivateValidationFailures(root)) fail(sourceFailure);
   }
 
   // Internal commercial sources are intentionally omitted from the public Vercel
-  // upload. Validate them whenever the full repository is available.
-  if (exists('MANIFESTO.md') && exists('marketing/meta-ads/pricing-rules.md')) {
+  // upload. The explicit repository context keeps these source gates mandatory.
+  if (validationContext === 'repository' && findMissingRepositoryPrivateSources(root).length === 0) {
     const manifesto = read('MANIFESTO.md');
     const homepage = read('index.html');
     const pricingRules = read('marketing/meta-ads/pricing-rules.md');
