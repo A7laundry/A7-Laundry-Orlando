@@ -1,6 +1,6 @@
 # Story A7-006 — Vercel Preview Validation Context
 
-**Status:** Ready for Review
+**Status:** Done
 
 **Created:** 2026-08-06
 
@@ -53,9 +53,9 @@ Restore the normal remote preview pipeline. A partial or excluded `marketing/` t
 ## Acceptance Criteria
 
 1. **Remote preview succeeds with the public source set**
-   - [ ] A Vercel preview build completes when `marketing/`, `MANIFESTO.md`, `docs/` and other internal sources are excluded according to `.vercelignore`.
+   - [x] A Vercel preview build completes when `marketing/`, `MANIFESTO.md`, `docs/` and other internal sources are excluded according to `.vercelignore`.
    - [x] A partially materialized or empty internal directory cannot, by itself, select complete-repository validation.
-   - [ ] The successful preview uses the standard remote build path; it does not depend on `vercel deploy --prebuilt`.
+   - [x] The successful preview uses the standard remote build path; it does not depend on `vercel deploy --prebuilt`.
 
 2. **Complete-repository gates remain strict**
    - [x] In a complete checkout, validation still requires both `marketing/google-ads/2026-07-guest-laundry-search/LOVART-HERO-PROMPT.md` and `marketing/google-ads/2026-07-guest-laundry-search/assets/hero/A7_GUEST_LAUNDRY_HERO_LOVART_MASTER.png`.
@@ -79,7 +79,7 @@ Restore the normal remote preview pipeline. A partial or excluded `marketing/` t
 6. **Regression coverage and release readiness**
    - [x] Automated coverage includes: complete repository success, missing brief failure, missing master failure, public context success with internal paths absent, and public context success with a partial/empty internal directory.
    - [x] `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `vercel build` and `git diff --check` pass before review.
-   - [ ] The executor records the new successful preview deployment ID supplied by the authorized preview action and confirms that no production deployment was triggered by the validation run.
+   - [x] The executor records the new successful preview deployment ID supplied by the authorized preview action and confirms that no production deployment was triggered by the validation run.
 
 7. **Scope isolation**
    - [x] A7-003 and A7-005 remain unchanged.
@@ -101,11 +101,11 @@ Restore the normal remote preview pipeline. A partial or excluded `marketing/` t
   - [x] Add isolated fixtures or equivalent deterministic tests for repository and public contexts.
   - [x] Cover both missing-source failures, absent/partial public internals and context reporting.
 
-- [ ] **Task 4 — Verify deployment privacy and standard preview flow** (AC: 1, 5, 6)
+- [x] **Task 4 — Verify deployment privacy and standard preview flow** (AC: 1, 5, 6)
   - [x] Inspect the built artifact for every private path listed in AC 5.
   - [x] Run the local quality gates and a local Vercel build.
   - [x] Record preview `dpl_6UpSbE5ZHc9xsUoMGREjvKpRKZXJ` and correct its newly exposed missing-public-artifact failure without relaxing `.vercelignore`.
-  - [ ] After review authorization, hand off the normal remote preview action to `@devops`; record the deployment ID and result returned by that authorized action.
+  - [x] After review authorization, hand off the normal remote preview action to `@devops`; record the deployment ID and result returned by that authorized action.
 
 - [x] **Task 5 — Update the story record** (AC: 6, 7)
   - [x] Record commands, results, implementation decisions and rollback notes.
@@ -167,6 +167,7 @@ Restore the normal remote preview pipeline. A partial or excluded `marketing/` t
 | 2026-08-06 | 0.2 | PO validation: incident evidence reconciled, agent authority clarified and story approved without relaxing deployment privacy | Pax (`@po`) |
 | 2026-08-06 | 0.3 | Explicit repository/public validation contexts, offline regression coverage and local Vercel preview build implemented | Dex (`@dev`) |
 | 2026-08-06 | 0.4 | Public IndexNow verification artifact restored to the GitHub source set with shared build/submission configuration and regression coverage | Dex (`@dev`) |
+| 2026-08-06 | 1.0 | Standard Git-triggered preview completed successfully; deployment evidence recorded and story closed | Gage (`@devops`) |
 
 ## PO Validation
 
@@ -224,7 +225,16 @@ GPT-5 Codex
 - The IndexNow key is centralized in `scripts/public-artifacts.mjs`; build, validation and submission consume the same public filename/key instead of maintaining divergent literals.
 - `.gitignore` no longer misclassifies the public verification file as uncurated local material, allowing a standard GitHub/Vercel clone to contain it without changing `.vercelignore`.
 - Rollback: restore the previous `buildCommand` and package scripts, then remove the context module/tests and context forwarding from both validator/build entrypoints. `.vercelignore` requires no rollback.
-- Remaining release evidence is intentionally delegated: after independent review, `@devops` must create the normal remote preview and record its deployment ID/result; no commit, push or deploy was performed by `@dev`.
+- The implementation handoff completed without a developer-side push or deploy; the authorized DevOps preview evidence is recorded below.
+
+## DevOps Release Evidence
+
+- Commit `46e8591` was pushed to `feat/meta-ads-ops-structure` through the normal Git workflow.
+- Vercel created preview `dpl_7pZChn9a2etmEtxojyiMd1y4KBa6` from that branch and reported `target: preview`, `readyState: READY`.
+- The successful build used `npm run build:public` in the standard remote path; no `--prebuilt` fallback was used.
+- No production deployment or production alias change was triggered by this validation run.
+- The preview URL is protected by Vercel SSO and returns HTTP 302 to anonymous requests; build readiness and target were verified through the authenticated Vercel deployment record.
+- The prior production deployment `dpl_37e76qAWjQFAoVyU6991QxSQwLJL` remains the active production release for `a7laundry.com`.
 
 ### File List
 
