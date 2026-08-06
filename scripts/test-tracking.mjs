@@ -4,13 +4,14 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync(new URL('../a7-tracking.js', import.meta.url), 'utf8');
 
-function trackingRuntime(pathname, search = '', initialStorage = {}, pageLinks = []) {
+function trackingRuntime(pathname, search = '', initialStorage = {}, pageLinks = [], referrer = '') {
   const gaEvents = [];
   const metaEvents = [];
   const listeners = {};
   const gtag = (...args) => gaEvents.push(args);
   const fbq = (...args) => metaEvents.push(args);
   const document = {
+    referrer,
     head: { appendChild() {} },
     getElementById() { return {}; },
     createElement() { return {}; },
@@ -35,6 +36,37 @@ function trackingRuntime(pathname, search = '', initialStorage = {}, pageLinks =
   });
   vm.runInContext(source, context);
   return { gaEvents, metaEvents, listeners, storage };
+}
+
+{
+  const whatsapp = anchor('https://wa.me/14076708839?text=Hello', 'WhatsApp', 'hero');
+  const runtime = trackingRuntime('/blog/laundry-service-orlando', '', {}, [whatsapp], 'https://www.google.com/search?q=laundry+service+orlando');
+  const decorated = new URL(whatsapp.getAttribute('href'));
+  assert.match(decorated.searchParams.get('text'), /A7 Ref: google-organic\|laundry-service-orlando/);
+  const eventAnchor = anchor(whatsapp.getAttribute('href'), 'WhatsApp', 'hero');
+  runtime.listeners.click({ target: eventAnchor });
+  const event = runtime.gaEvents.find((entry) => entry[0] === 'event' && entry[1] === 'whatsapp_click');
+  assert.equal(event[2].origin_class, 'organic_search');
+  assert.equal(event[2].origin_source, 'google-organic');
+}
+
+{
+  const whatsapp = anchor('https://wa.me/14076708839?text=Hello', 'WhatsApp', 'hero');
+  const runtime = trackingRuntime('/blog/laundry-near-disney-world', '', {}, [whatsapp], 'https://chatgpt.com/');
+  const decorated = new URL(whatsapp.getAttribute('href'));
+  assert.match(decorated.searchParams.get('text'), /A7 Ref: ai-chatgpt\|laundry-near-disney-world/);
+  const eventAnchor = anchor(whatsapp.getAttribute('href'), 'WhatsApp', 'hero');
+  runtime.listeners.click({ target: eventAnchor });
+  const event = runtime.gaEvents.find((entry) => entry[0] === 'event' && entry[1] === 'whatsapp_click');
+  assert.equal(event[2].origin_class, 'ai_assistant');
+  assert.equal(event[2].origin_source, 'ai-chatgpt');
+}
+
+{
+  const whatsapp = anchor('https://wa.me/14076708839?text=Hello', 'WhatsApp', 'hero');
+  trackingRuntime('/plans', '', {}, [whatsapp]);
+  const decorated = new URL(whatsapp.getAttribute('href'));
+  assert.match(decorated.searchParams.get('text'), /A7 Ref: direct\|plans/);
 }
 
 function anchor(href, textContent, location = 'inline') {

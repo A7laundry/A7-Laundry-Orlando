@@ -97,6 +97,10 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Native Google Ads measurement covers attributed WhatsApp opens and website-originated calls lasting at least 60 seconds without changing Stripe tracking.
 - [x] Phone-button and pickup-CTA clicks remain diagnostic events and are not mislabeled as qualified calls or confirmed bookings.
 - [x] The official `+1 407-670-8839` destination and both native Google Ads conversion destinations are protected by automated tracking gates.
+- [x] Organic, referral, AI-assistant and direct WhatsApp opens carry a page-level `A7 Ref`, while campaign references preserve their UTM/click provenance.
+- [x] The verified empty GTM container is removed from the public site; unified tracking remains the single event source and inline contact events are blocked by the production gate.
+- [x] Public 15–20 lb price examples respect the US$50 minimum, hotel handoffs require property approval and stale calculations are blocked by the production trust gate.
+- [x] Search Console query-to-page evidence is recorded before any same-day, hotel or airport redirect is authorized.
 
 ## Tasks
 
@@ -180,6 +184,8 @@ Make the production conversion funnel observable from acquisition CTA through St
   unit confirmation, Express requests until 6 PM and volume-qualified B2B pricing.
 - [x] Retire the historical recovery queue without sending messages, update the live WhatsApp
   shortcuts and add anti-regression gates for stale Express cutoffs and non-24/7 schema hours.
+- [x] Execute the first organic integrity block: correct public math and handoff claims, classify
+  organic/AI WhatsApp origin, remove empty GTM and record query-to-page cannibalization evidence.
 
 ## File List
 
@@ -192,6 +198,9 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `scripts/test-stripe-confirmation.mjs`
 - `vercel.json`
 - `scripts/build-site.mjs`
+- `docs/PLANO-ORGANICO-COMPETITIVO-AGOSTO-2026.md`
+- `docs/audits/2026-08-06-seo-tracking-cleanup.md`
+- `*.html` (site-wide empty-GTM removal and inline-contact cleanup)
 - `sitemap.xml`
 - `MANIFESTO.md`
 - `README.md`

@@ -139,6 +139,41 @@
     }
   }
 
+  function classifyReferrer() {
+    var rawReferrer = document.referrer || '';
+    if (!rawReferrer) return { origin_class: 'direct', origin_source: 'direct' };
+    try {
+      var hostname = new URL(rawReferrer).hostname.toLowerCase().replace(/^www\./, '');
+      if (hostname === 'a7laundry.com' || hostname.endsWith('.a7laundry.com')) return null;
+      if (hostname === 'google.com' || hostname.endsWith('.google.com')) {
+        return { origin_class: 'organic_search', origin_source: 'google-organic' };
+      }
+      if (hostname === 'bing.com' || hostname.endsWith('.bing.com')) {
+        return { origin_class: 'organic_search', origin_source: 'bing-organic' };
+      }
+      if (hostname === 'yahoo.com' || hostname.endsWith('.yahoo.com')) {
+        return { origin_class: 'organic_search', origin_source: 'yahoo-organic' };
+      }
+      var aiSources = {
+        'chatgpt.com': 'ai-chatgpt',
+        'openai.com': 'ai-openai',
+        'perplexity.ai': 'ai-perplexity',
+        'claude.ai': 'ai-claude',
+        'gemini.google.com': 'ai-gemini',
+        'copilot.microsoft.com': 'ai-copilot'
+      };
+      if (aiSources[hostname]) {
+        return { origin_class: 'ai_assistant', origin_source: aiSources[hostname] };
+      }
+      return {
+        origin_class: 'referral',
+        origin_source: ('ref-' + hostname).slice(0, 80)
+      };
+    } catch (error) {
+      return { origin_class: 'direct', origin_source: 'direct' };
+    }
+  }
+
   function readCampaignAttribution() {
     var saved = safeSessionRead();
     var params = new URLSearchParams(location.search || '');
@@ -154,12 +189,18 @@
     }
 
     if (!saved.landing_page) saved.landing_page = location.pathname;
+    if (!saved.entry_slug) saved.entry_slug = getSlug();
     if (foundCampaignParam) {
+      saved.origin_class = 'campaign';
+      saved.origin_source = saved.utm_source
+        || (saved.gclid || saved.gbraid || saved.wbraid ? 'google-ads' : 'meta');
       saved.attribution_captured_at = new Date().toISOString();
-      safeSessionWrite(saved);
-    } else if (!safeSessionRead().landing_page) {
-      safeSessionWrite(saved);
+    } else if (!saved.origin_class) {
+      var referrer = classifyReferrer();
+      saved.origin_class = referrer ? referrer.origin_class : 'direct';
+      saved.origin_source = referrer ? referrer.origin_source : 'direct';
     }
+    safeSessionWrite(saved);
     return saved;
   }
 
@@ -171,15 +212,16 @@
     ].filter(Boolean);
     if (!parts.length && attribution.gclid) parts.push('google-ads');
     if (!parts.length && attribution.fbclid) parts.push('meta');
-    return parts.length
-      ? parts.join('|').replace(/[^a-zA-Z0-9_|.-]/g, '-').slice(0, 120)
-      : 'direct';
+    if (!parts.length) {
+      parts.push(attribution.origin_source || 'direct');
+      parts.push(attribution.entry_slug || 'unknown-page');
+    }
+    return parts.join('|').replace(/[^a-zA-Z0-9_|.-]/g, '-').slice(0, 120);
   }
 
   function decorateWhatsAppLinks(attribution) {
     if (!document.querySelectorAll) return;
     var reference = leadReference(attribution);
-    if (reference === 'direct') return;
     var links = document.querySelectorAll('a[href*="wa.me/"]');
     for (var i = 0; i < links.length; i++) {
       var link = links[i];
@@ -213,7 +255,9 @@
       persona: PERSONA[SLUG] || 'general',
       geo: GEO[SLUG] || 'orlando',
       landing_page: ATTRIBUTION.landing_page || PATH,
-      lead_reference: leadReference(ATTRIBUTION)
+      lead_reference: leadReference(ATTRIBUTION),
+      origin_class: ATTRIBUTION.origin_class || 'direct',
+      origin_source: ATTRIBUTION.origin_source || 'direct'
     };
     for (var i = 0; i < ATTRIBUTION_KEYS.length; i++) {
       var attributionKey = ATTRIBUTION_KEYS[i];

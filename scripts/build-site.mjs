@@ -150,6 +150,8 @@ const forbiddenPublicClaims = [
   ['stale Express cutoff', /before\s+(?:noon|12(?::00)?\s*(?:p\.?m\.?)?)/i],
   ['malformed Express cutoff', /6\s*PM:00\s*PM/i],
   ['stale non-24/7 opening hours', /"opens"\s*:\s*"(?:07:00|08:00)"/i],
+  ['incorrect 15 lb price example', /\$43\.50\b/i],
+  ['incorrect 15–20 lb price range', /\$(?:44\s*[–-]\s*58|50\s*[–-]\s*58)(?![\d.])/i],
   ['known invented testimonial name', /\b(?:Sarah M|James R|Maria L|David K|Jennifer W|Michael T|Amanda R|Robert S|Fernanda S|Lisa M|Tom J|Sandra C|Nicole K|Marcus R|Ashley T|Justin L|Kayla P|Jennifer M|Rafael P|Ana C)\./i]
 ];
 
@@ -161,6 +163,12 @@ for (const relativePath of productionHtmlFiles) {
   }
   if (/wa-tracking\.js/i.test(html)) {
     throw new Error(`Tracking gate failed in ${relativePath}: legacy tracking script is still included`);
+  }
+  if (/GTM-KV9LGVRN/i.test(html)) {
+    throw new Error(`Tracking gate failed in ${relativePath}: empty GTM container must not compete with unified tracking`);
+  }
+  if (/<a\b(?=[^>]*href=["'](?:https:\/\/wa\.me\/|sms:|tel:))[^>]*\bonclick=/i.test(html)) {
+    throw new Error(`Tracking gate failed in ${relativePath}: contact link contains duplicate inline tracking`);
   }
   for (const [label, pattern] of forbiddenPublicClaims) {
     if (pattern.test(html)) throw new Error(`Trust gate failed in ${relativePath}: ${label}`);
@@ -182,7 +190,11 @@ for (const requiredTrackingToken of [
   "'begin_checkout'",
   "'InitiateCheckout'",
   'a7_campaign_attribution',
-  'lead_reference'
+  'lead_reference',
+  'origin_class',
+  'origin_source',
+  'ai-chatgpt',
+  'google-organic'
 ]) {
   if (!trackingSource.includes(requiredTrackingToken)) {
     throw new Error(`Tracking gate failed: a7-tracking.js is missing ${requiredTrackingToken}`);
