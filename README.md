@@ -12,7 +12,7 @@ Guest laundry pickup & delivery for hotels, resorts and Airbnbs — per-pound wa
 
 | Page | Description | URL |
 |------|-------------|-----|
-| **Home (Hub)** | Guest laundry — Normal 24h / Express 6h subject to availability | [/](https://a7laundry.com/) |
+| **Home (Hub)** | Guest laundry — Normal 24h / Express 8h subject to availability | [/](https://a7laundry.com/) |
 | **Guest Laundry** | Conversion page for hotel, resort and Airbnb pickup | [/laundry-pickup-delivery-orlando](https://a7laundry.com/laundry-pickup-delivery-orlando) |
 | Pricing | Per-lb pricing + weight estimator | [/plans](https://a7laundry.com/plans) |
 | Carpet Cleaning | LP — carpet cleaning service | [/carpet](https://a7laundry.com/carpet) |
@@ -31,7 +31,7 @@ Pay-per-use por libra — **sem assinatura, sem contrato**. Pickup & delivery se
 | Service | Turnaround | Price |
 |---------|-----------|-------|
 | **Normal** | 24h | **$3.25 / lb** |
-| **Express** | 6h (same-day, subject to availability) | **$3.95 / lb** |
+| **Express** | 8h (same-day, subject to availability) | **$3.95 / lb** |
 
 Minimum order: $50. Booking via WhatsApp **(407) 670-8839**.
 

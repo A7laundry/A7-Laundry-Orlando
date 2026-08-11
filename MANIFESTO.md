@@ -25,7 +25,7 @@ Modelo **pay-per-use por libra** — duas velocidades. **Não existe mais assina
 | Serviço | Turnaround | Preço | Inclui |
 |---------|-----------|-------|--------|
 | **Normal** | 24h | **$3.25 / lb** | Coleta e entrega grátis, sorting & folding profissional, sabões hipoalergênicos premium |
-| **Express** | 6h (same-day) | **$3.95 / lb** | Tudo do Normal + processamento prioritário, sempre sujeito a disponibilidade confirmada |
+| **Express** | 8h (same-day) | **$3.95 / lb** | Tudo do Normal + processamento prioritário, sempre sujeito a disponibilidade confirmada |
 
 - **Pickup & delivery sempre grátis.**
 - **Pedido mínimo:** **$50 por pedido** (valor, não peso). À tarifa Normal equivale a ~17 lbs.
@@ -108,7 +108,7 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 4. **EN como padrão; PT/ES dedicados.** Não misturar idiomas na mesma peça nem prometer cobertura inexistente.
 5. **Grátis o que importa:** pickup & delivery sempre incluídos.
 6. **Uma marca pública:** A7 Laundry Orlando. Nomes legais ficam restritos a documentos legais e faturamento.
-7. **Express sem promessa absoluta.** 6h somente quando a disponibilidade for confirmada.
+7. **Express sem promessa absoluta.** 8h somente quando a disponibilidade for confirmada.
 8. **Prova real.** Reviews, números, tempos, fotos e resultados precisam ter fonte verificável.
 9. **Termos de funil são internos.** Nunca expor na UI pública.
 10. **Atendimento declarado 24/7.** Solicitações podem chegar a qualquer hora; coleta, prazo e
@@ -131,7 +131,7 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 | Promessa emocional | **Enjoy Orlando. We handle your laundry.** |
 | Promessa funcional | Hotel & Airbnb pickup. Washed, dried, folded and delivered. |
 | Oferta Normal | From **$3.25/lb** · 24h · **$50 minimum** |
-| Oferta Express | From **$3.95/lb** · 6h · pedidos até **6 PM**; depois, avaliação da unidade · **subject to availability** · **$50 minimum** |
+| Oferta Express | From **$3.95/lb** · 8h · pedidos até **6 PM**; depois, avaliação da unidade · **subject to availability** · **$50 minimum** |
 | Conveniência | Pickup & delivery included · no app · contactless handoff |
 | Atendimento | **24/7** · disponibilidade e janela confirmadas pela unidade |
 | Cobertura | Até **40 km de Orlando**, mediante confirmação do endereço |

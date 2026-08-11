@@ -8,7 +8,7 @@
 - **Primary service:** Guest laundry pickup, wash, dry, fold and delivery
 - **Primary customers:** Hotel, resort, Airbnb and vacation-rental guests
 - **Normal wash and fold:** From US$3.25/lb; expected return in about 24 hours
-- **Express wash and fold:** From US$3.95/lb; expected return in about 6 hours when availability is confirmed
+- **Express wash and fold:** From US$3.95/lb; expected return in about 8 hours when availability is confirmed
 - **Minimum order:** US$50 per pickup and delivery order
 - **Pickup and delivery:** Included within confirmed service areas
 - **Booking:** WhatsApp or SMS; no app or customer account required
@@ -62,4 +62,4 @@ Everyday machine-washable clothing can be handled by the pound. Comforters, snea
 - The project audit last verified a 5.0 Google Business Profile rating from 23 reviews on 2026-07-16. Because ratings change, confirm the current number directly on Google before quoting it as current.
 - Customer-facing claims, pricing and service availability should be taken from the canonical service page and this file only when their review dates are current.
 - A7 Laundry Orlando is independent and is not affiliated with, endorsed by or operated by any hotel, resort, vacation-rental platform or Orlando theme park named as a service-area landmark.
-- Do not infer guaranteed pickup slots, guaranteed six-hour return, a fixed response time, a satisfaction guarantee or services not stated on an official page.
+- Do not infer guaranteed pickup slots, guaranteed eight-hour return, a fixed response time, a satisfaction guarantee or services not stated on an official page.

@@ -8,7 +8,7 @@
 |---|---|---|
 | **Local Laundry** (residentes Orlando) | **From $2.90/lb** | **promo residente** — ABAIXO do site (desconto segmentado) |
 | **Tourist Laundry** (hotel/Airbnb) | **From $3.25/lb · minimum $50** | = **preço do site** (MANIFESTO Normal 24h) |
-| **Tourist Express** (same-day) | **From $3.95/lb · minimum $50** | = **site Express 6h** + "Subject to availability" |
+| **Tourist Express** (same-day) | **From $3.95/lb · minimum $50** | = **site Express 8h** + "Subject to availability" |
 
 > **Mudança 2026-07-06:** o site/MANIFESTO subiu de $2.90/$3.20 → **$3.25 Normal / $3.95 Express** (alinhado às campanhas de turista). O **$2.90 sobrevive só como promo Local** (residente), abaixo do preço público.
 

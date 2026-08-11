@@ -63,7 +63,7 @@
       "name":"Wash & Fold",
       "itemListElement":[
         {"@type":"Offer","name":"Normal wash & fold (24h)","priceCurrency":"USD","price":"3.25","priceSpecification":{"@type":"UnitPriceSpecification","price":"3.25","priceCurrency":"USD","unitText":"per pound"}},
-        {"@type":"Offer","name":"Express wash & fold (6h)","priceCurrency":"USD","price":"3.95","priceSpecification":{"@type":"UnitPriceSpecification","price":"3.95","priceCurrency":"USD","unitText":"per pound"}}
+        {"@type":"Offer","name":"Express wash & fold (8h)","priceCurrency":"USD","price":"3.95","priceSpecification":{"@type":"UnitPriceSpecification","price":"3.95","priceCurrency":"USD","unitText":"per pound"}}
       ]
     }
   },
@@ -71,10 +71,10 @@
     "@context":"https://schema.org",
     "@type":"FAQPage",
     "mainEntity":[
-      {"@type":"Question","name":"How does laundry pickup & delivery work in Orlando?","acceptedAnswer":{"@type":"Answer","text":"Message us your hotel or Airbnb location and preferred pickup window on WhatsApp. We confirm the handoff, wash and fold, and return the order in 24 hours with Normal service or in 6 hours with Express when available."}},
-      {"@type":"Question","name":"How much does it cost?","acceptedAnswer":{"@type":"Answer","text":"Wash & fold is $3.25/lb for Normal service (24h) or $3.95/lb for Express (6h), with a $50 minimum order. Pickup and delivery are included."}},
+      {"@type":"Question","name":"How does laundry pickup & delivery work in Orlando?","acceptedAnswer":{"@type":"Answer","text":"Message us your hotel or Airbnb location and preferred pickup window on WhatsApp. We confirm the handoff, wash and fold, and return the order in 24 hours with Normal service or in 8 hours with Express when available."}},
+      {"@type":"Question","name":"How much does it cost?","acceptedAnswer":{"@type":"Answer","text":"Wash & fold is $3.25/lb for Normal service (24h) or $3.95/lb for Express (8h), with a $50 minimum order. Pickup and delivery are included."}},
       {"@type":"Question","name":"Do you pick up from hotels and resorts?","acceptedAnswer":{"@type":"Answer","text":"Yes. We pick up from hotels, resorts, Airbnbs and vacation rentals across the Orlando area. Text us your hotel name and room or your Airbnb address and a pickup time."}},
-      {"@type":"Question","name":"Can I get same-day laundry in Orlando?","acceptedAnswer":{"@type":"Answer","text":"Express 6-hour service is subject to availability. Message us with your location and required return time so we can confirm before pickup."}},
+      {"@type":"Question","name":"Can I get same-day laundry in Orlando?","acceptedAnswer":{"@type":"Answer","text":"Express 8-hour service is subject to availability. Message us with your location and required return time so we can confirm before pickup."}},
       {"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"Orlando and the surrounding tourist corridor — Kissimmee, Lake Buena Vista, the Disney and Universal areas, Reunion Resort, Champions Gate, Davenport, International Drive, plus Orlando neighborhoods like Lake Nona, Dr. Phillips and Winter Park."}},
       {"@type":"Question","name":"What clothes are included in per-pound wash and fold?","acceptedAnswer":{"@type":"Answer","text":"Everyday machine-washable clothes such as T-shirts, shorts, socks, underwear and pajamas can be handled as per-pound wash and fold. Comforters, sneakers, dry-clean-only garments and items needing special care are not automatically included. Send a photo so A7 Laundry can confirm whether the item can be handled and provide a separate quote before pickup."}},
       {"@type":"Question","name":"How do I book?","acceptedAnswer":{"@type":"Answer","text":"Message A7 Laundry Orlando on WhatsApp at (407) 670-8839 with your hotel, resort or Airbnb location, preferred pickup window and approximate bag size. We confirm availability before pickup."}}
@@ -555,7 +555,7 @@ tailwind.config = {
 <section class="offer-rail" aria-label="Guest laundry offer">
   <div class="offer-item"><span class="material-symbols-outlined fill" aria-hidden="true">local_shipping</span><span><strong>Pickup &amp; delivery included</strong><span>Hotel, resort or Airbnb</span></span></div>
   <div class="offer-item"><span class="material-symbols-outlined fill" aria-hidden="true">sell</span><span><strong>From $3.25/lb</strong><span>$50 minimum order</span></span></div>
-  <div class="offer-item"><span class="material-symbols-outlined fill" aria-hidden="true">schedule</span><span><strong>24h Normal · 6h Express</strong><span>Express when available</span></span></div>
+  <div class="offer-item"><span class="material-symbols-outlined fill" aria-hidden="true">schedule</span><span><strong>24h Normal · 8h Express</strong><span>Express when available</span></span></div>
 </section>
 
 <main class="px-6 max-w-6xl mx-auto">
@@ -568,7 +568,7 @@ tailwind.config = {
 
   <!-- ANSWER BLOCK (GEO) -->
   <section class="bg-primary-container/10 border border-primary-container/30 rounded-xl p-6 -mt-4 mb-14">
-    <p class="text-on-surface"><strong class="text-white">In short:</strong> A7 Laundry Orlando provides guest wash &amp; fold pickup and delivery for hotels, resorts and Airbnbs. Normal service is $3.25/lb with 24-hour return; Express is $3.95/lb with 6-hour return when available. The minimum order is $50 and pickup and delivery are included. Send your location on WhatsApp at (407) 670-8839 so we can confirm a pickup window.</p>
+    <p class="text-on-surface"><strong class="text-white">In short:</strong> A7 Laundry Orlando provides guest wash &amp; fold pickup and delivery for hotels, resorts and Airbnbs. Normal service is $3.25/lb with 24-hour return; Express is $3.95/lb with 8-hour return when available. The minimum order is $50 and pickup and delivery are included. Send your location on WhatsApp at (407) 670-8839 so we can confirm a pickup window.</p>
   </section>
 
   <!-- HOW IT WORKS -->
@@ -598,10 +598,10 @@ tailwind.config = {
         </ul>
       </div>
       <div class="card p-8 text-center border-primary-container/50 bg-primary-container/5">
-        <h3 class="font-black text-2xl text-white">Express · 6h</h3>
+        <h3 class="font-black text-2xl text-white">Express · 8h</h3>
         <div class="text-5xl font-black text-secondary my-3">$3.95<span class="text-lg text-outline font-medium">/lb</span></div>
         <ul class="text-on-surface-variant text-sm space-y-2 text-left mt-4">
-          <li>✓ 6-hour return when available</li><li>✓ Priority processing</li><li>✓ Pickup &amp; delivery included</li>
+          <li>✓ 8-hour return when available</li><li>✓ Priority processing</li><li>✓ Pickup &amp; delivery included</li>
         </ul>
       </div>
     </div>
@@ -628,7 +628,7 @@ tailwind.config = {
           <li><span class="material-symbols-outlined fill" aria-hidden="true">check_circle</span><span>Washed, dried and neatly folded for return</span></li>
           <li><span class="material-symbols-outlined fill" aria-hidden="true">check_circle</span><span>Pickup and delivery included · $50 minimum</span></li>
         </ul>
-        <p class="care-note"><strong>Need it sooner?</strong> Express is $3.95/lb with a 6-hour return when availability is confirmed.</p>
+        <p class="care-note"><strong>Need it sooner?</strong> Express is $3.95/lb with an 8-hour return when availability is confirmed.</p>
         <a class="care-action" href="https://wa.me/14076708839?text=Hi!%20I%27d%20like%20everyday%20wash%20and%20fold%20pickup.%20My%20hotel%20or%20Airbnb%20is%3A%20" target="_blank" rel="noopener"><span class="material-symbols-outlined fill" aria-hidden="true">chat</span> Send your location</a>
       </article>
 
@@ -677,7 +677,7 @@ tailwind.config = {
   <section class="mb-16 card p-8 text-center">
     <span class="material-symbols-outlined text-secondary text-4xl mb-2 fill">bolt</span>
     <h2 class="text-2xl font-black text-white mb-2">Need laundry today?</h2>
-    <p class="text-on-surface-variant max-w-xl mx-auto mb-5">Express 6-hour service is available <strong class="text-white">depending on availability</strong>. Message us early and ask for today's availability — request pickup today and we'll confirm what's possible.</p>
+    <p class="text-on-surface-variant max-w-xl mx-auto mb-5">Express 8-hour service is available <strong class="text-white">depending on availability</strong>. Message us early and ask for today's availability — request pickup today and we'll confirm what's possible.</p>
     <a href="https://wa.me/14076708839?text=Hi!%20I%20need%20laundry%20today%20in%20Orlando%20%E2%80%94%20can%20you%20tell%20me%20today%27s%20Express%20availability%3F" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-6 py-3 rounded-lg hover:brightness-110 transition"><span class="material-symbols-outlined fill text-[20px]">chat</span> Ask for today's availability</a>
   </section>
 
@@ -692,10 +692,10 @@ tailwind.config = {
   <section class="mb-16">
     <h2 class="text-3xl font-black text-white mb-8 text-center">Frequently Asked Questions</h2>
     <div class="space-y-3 max-w-3xl mx-auto">
-      <details class="card p-5"><summary class="font-bold text-white cursor-pointer">How does laundry pickup &amp; delivery work in Orlando?</summary><p class="text-on-surface-variant text-sm mt-3">Message us your hotel or Airbnb location and preferred pickup window. We confirm the handoff, wash and fold, and return the order in 24 hours with Normal service or in 6 hours with Express when available.</p></details>
-      <details class="card p-5"><summary class="font-bold text-white cursor-pointer">How much does it cost?</summary><p class="text-on-surface-variant text-sm mt-3">Wash &amp; fold is $3.25/lb for Normal service (24h) or $3.95/lb for Express (6h), with a $50 minimum order. Pickup and delivery are included.</p></details>
+      <details class="card p-5"><summary class="font-bold text-white cursor-pointer">How does laundry pickup &amp; delivery work in Orlando?</summary><p class="text-on-surface-variant text-sm mt-3">Message us your hotel or Airbnb location and preferred pickup window. We confirm the handoff, wash and fold, and return the order in 24 hours with Normal service or in 8 hours with Express when available.</p></details>
+      <details class="card p-5"><summary class="font-bold text-white cursor-pointer">How much does it cost?</summary><p class="text-on-surface-variant text-sm mt-3">Wash &amp; fold is $3.25/lb for Normal service (24h) or $3.95/lb for Express (8h), with a $50 minimum order. Pickup and delivery are included.</p></details>
       <details class="card p-5"><summary class="font-bold text-white cursor-pointer">Do you pick up from hotels and resorts?</summary><p class="text-on-surface-variant text-sm mt-3">Yes. We pick up from hotels, resorts, Airbnbs and vacation rentals across the Orlando area. Text us your hotel name and room or your Airbnb address and a pickup time.</p></details>
-      <details class="card p-5"><summary class="font-bold text-white cursor-pointer">Can I get same-day laundry in Orlando?</summary><p class="text-on-surface-variant text-sm mt-3">Express targets a 6-hour turnaround when the unit confirms capacity. Requests are accepted until 6 PM; later requests are evaluated case by case.</p></details>
+      <details class="card p-5"><summary class="font-bold text-white cursor-pointer">Can I get same-day laundry in Orlando?</summary><p class="text-on-surface-variant text-sm mt-3">Express targets an 8-hour turnaround when the unit confirms capacity. Requests are accepted until 6 PM; later requests are evaluated case by case.</p></details>
       <details class="card p-5"><summary class="font-bold text-white cursor-pointer">What areas do you serve?</summary><p class="text-on-surface-variant text-sm mt-3">Orlando and the surrounding tourist corridor — Kissimmee, Lake Buena Vista, the Disney and Universal areas, Reunion Resort, Champions Gate, Davenport, International Drive, plus Orlando neighborhoods like Lake Nona, Dr. Phillips and Winter Park. <a href="/service-areas" class="text-primary underline">See all areas</a>.</p></details>
       <details class="card p-5"><summary class="font-bold text-white cursor-pointer">What clothes are included in per-pound wash and fold?</summary><p class="text-on-surface-variant text-sm mt-3">Everyday machine-washable clothes such as T-shirts, shorts, socks, underwear and pajamas can go in the per-pound order. Comforters, sneakers, dry-clean-only garments and items needing special care are not automatically included. Send a photo so we can confirm whether A7 can handle the item and provide a separate quote before pickup.</p></details>
       <details class="card p-5"><summary class="font-bold text-white cursor-pointer">How do I book?</summary><p class="text-on-surface-variant text-sm mt-3">Message us on WhatsApp at (407) 670-8839 with your hotel, resort or Airbnb location, preferred pickup window and approximate bag size. We confirm availability before pickup.</p></details>
@@ -723,7 +723,7 @@ tailwind.config = {
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <a href="/blog/orlando-vacation-rental-laundry-guide" class="card p-4 hover:border-primary transition"><p class="font-bold text-white text-sm">The Complete Orlando Vacation Rental Laundry Guide</p></a>
       <a href="/blog/laundry-near-disney-world" class="card p-4 hover:border-primary transition"><p class="font-bold text-white text-sm">Laundry Service Near Disney World</p></a>
-      <a href="/blog/express-laundry-orlando" class="card p-4 hover:border-primary transition"><p class="font-bold text-white text-sm">Express Laundry in Orlando — What 6h Means</p></a>
+      <a href="/blog/express-laundry-orlando" class="card p-4 hover:border-primary transition"><p class="font-bold text-white text-sm">Express Laundry in Orlando — What 8h Means</p></a>
       <a href="/blog/laundry-kissimmee" class="card p-4 hover:border-primary transition"><p class="font-bold text-white text-sm">Laundry Service in Kissimmee</p></a>
     </div>
   </section>
