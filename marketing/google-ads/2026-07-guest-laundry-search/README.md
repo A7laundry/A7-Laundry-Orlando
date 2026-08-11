@@ -11,7 +11,7 @@ Capture high-intent searches from guests staying at Orlando hotels, resorts and 
 - Account: `290-113-2891` — BRL — Brasília timezone.
 - Public brand: **A7 Laundry Orlando**.
 - Destination: `https://a7laundry.com/laundry-pickup-delivery-orlando`.
-- Offer: Normal 24h from US$3.25/lb; Express 6h from US$3.95/lb when available; US$50 minimum; pickup and delivery included.
+- Offer: Normal 24h from US$3.25/lb; Express 8h from US$3.95/lb when available; US$50 minimum; pickup and delivery included.
 - Initial language: English. Portuguese and Spanish require separate campaigns, ads and landing-page validation.
 - Customer contact: WhatsApp/SMS first. Do not use calls as a primary conversion while English call handling is unavailable.
 - Campaign type: Search only. No Performance Max, Display, Search Partners, broad match or auto-created assets in the first cycle.

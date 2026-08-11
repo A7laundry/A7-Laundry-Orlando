@@ -107,7 +107,7 @@ Deve responder acima da dobra, sem rolagem:
 - o que fazemos;
 - para quem: hotel, resort, Airbnb e vacation rental;
 - US$ 3,25/lb, mínimo US$ 50;
-- Normal 24h e Express 6h quando confirmado;
+- Normal 24h e Express 8h quando confirmado;
 - coleta e entrega incluídas;
 - áreas atendidas e protocolo de handoff;
 - botão de WhatsApp com referência de origem.
@@ -123,7 +123,7 @@ Adicionar prova que não seja texto genérico: fotos reais do processo, respons�
 2. `/blog/same-day-laundry-tourists-orlando`
    - manter como candidata vencedora até análise consulta × página;
    - explicar cutoff, disponibilidade, prazo e protocolo de hotel;
-   - título candidato: `Same-Day Laundry Orlando for Hotel Guests | Express 6h`.
+   - título candidato: `Same-Day Laundry Orlando for Hotel Guests | Express 8h`.
 3. `/blog/orlando-laundromat-vs-delivery`
    - corrigir os cálculos;
    - comparar custo de máquina, Uber/transporte e 2–3 horas do visitante sem declarar que delivery é sempre mais barato;

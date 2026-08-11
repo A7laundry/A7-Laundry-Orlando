@@ -106,7 +106,7 @@ A comunicação precisa responder **antes do clique**, para filtrar curioso:
 - US$ 3,25/lb (normal) · US$ 3,95/lb (express)
 - **Pedido mínimo US$ 50** — já existe, precisa estar visível no anúncio
 - Coleta e entrega incluídas
-- Prazo: 24h normal / 6h express (sujeito a disponibilidade)
+- Prazo: 24h normal / 8h express (sujeito a disponibilidade)
 - Área atendida
 - Como funciona em hotel/Airbnb (deixar na recepção)
 - Prova social

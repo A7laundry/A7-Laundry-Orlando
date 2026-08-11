@@ -144,7 +144,7 @@ Hi! Thanks for reaching out to A7 Laundry 👋
 
 Wash, dry & fold with pickup and delivery:
 • $3.25/lb — ready in 24h
-• $3.95/lb — express 6h (requests until 6 PM; subject to availability)
+• $3.95/lb — express 8h (requests until 6 PM; subject to availability)
 • Minimum order $50
 
 Just send me:
@@ -162,7 +162,7 @@ Oi! Aqui é da A7 Laundry 👋
 
 Lavamos, secamos e dobramos, com coleta e entrega:
 • $3.25/lb — pronto em 24h
-• $3.95/lb — express 6h (pedidos até 18h; sujeito a disponibilidade)
+• $3.95/lb — express 8h (pedidos até 18h; sujeito a disponibilidade)
 • Pedido mínimo $50
 
 Me manda só:

@@ -6,7 +6,7 @@
 >
 > **Idioma:** PT p/ turista brasileiro (público da A4, nossa locomotiva) · EN p/ turista geral. Responda no idioma em que o lead escreveu.
 >
-> **Preços (fonte: MANIFESTO.md):** Wash & fold **$3.25/lb** (Normal 24h) · **$3.95/lb** (Express 6h, pedidos até 18h e sujeito a disponibilidade; depois das 18h, avaliação da unidade) · coleta e entrega incluídas · **mínimo $50** · Comforter por tamanho (Twin $33 / Full-Queen $37 / King $40 / Down $45) · B2B a partir de **$1.95/lb**, condicionado a volume.
+> **Preços (fonte: MANIFESTO.md):** Wash & fold **$3.25/lb** (Normal 24h) · **$3.95/lb** (Express 8h, pedidos até 18h e sujeito a disponibilidade; depois das 18h, avaliação da unidade) · coleta e entrega incluídas · **mínimo $50** · Comforter por tamanho (Twin $33 / Full-Queen $37 / King $40 / Down $45) · B2B a partir de **$1.95/lb**, condicionado a volume.
 >
 > **Operação:** atendimento declarado 24/7 · Dennis responsável · A7 Laundry — Backup 1 após 5 minutos · cobertura de até 40 km de Orlando mediante confirmação do endereço · customizados normalmente em 48h, sempre com confirmação final da unidade.
 >
@@ -50,7 +50,7 @@ Pra eu já te passar o valor e verificar a coleta: qual é o hotel, resort ou Ai
 ```
 Perfeito! 🙌 Nosso wash & fold é a partir de $3.25/lb (Normal, entrega em 24h), com coleta e entrega grátis e pedido mínimo $50.
 
-Precisa pra hoje? Tem o Express 6h a $3.95/lb para pedidos até 18h, sujeito a disponibilidade. Depois das 18h, eu consulto a unidade.
+Precisa pra hoje? Tem o Express 8h a $3.95/lb para pedidos até 18h, sujeito a disponibilidade. Depois das 18h, eu consulto a unidade.
 
 Quer que eu verifique a próxima janela de coleta? É só me passar o endereço 📍
 ```
@@ -105,7 +105,7 @@ So I can send you the price and check pickup availability: which hotel, resort o
 ```
 Perfect! 🙌 Our wash & fold is from $3.25/lb (Normal, 24h delivery), with free pickup & delivery and a $50 minimum.
 
-Need it today? Express 6h is $3.95/lb for requests until 6 PM, subject to availability. After 6 PM, I'll check with the unit.
+Need it today? Express 8h is $3.95/lb for requests until 6 PM, subject to availability. After 6 PM, I'll check with the unit.
 
 Want me to check the next pickup window? Just send your address 📍
 ```
