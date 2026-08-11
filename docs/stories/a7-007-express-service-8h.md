@@ -1,6 +1,6 @@
 # Story A7-007 — Correct Express Service Duration from 6h to 8h
 
-**Status:** Ready for Release
+**Status:** Done
 
 **Created:** 2026-08-10
 
@@ -55,6 +55,9 @@
 - `git diff --check`: passed.
 - `npm test`: passed in the isolated release worktree, excluding the unrelated in-progress attribution files from the original dirty worktree.
 - Final inventory found no obsolete Express 6-hour duration in the guarded current scope and no accidental 8 PM cutoff.
+- Vercel preview `dpl_7nAtMacey1gvtNsiuwbDirj4ERQs`: Ready; authenticated page checks passed.
+- Vercel production `dpl_CEPs1V3aboJQB5WsYsLKkrfrFJJu`: Ready and aliased to `a7laundry.com` on 2026-08-11.
+- Post-deploy checks confirmed $3.25/lb Normal, $3.95/lb Express, $50 minimum and Express 8h on the home, plans, Guest Laundry landing and pricing blog page.
 
 ## Completion Notes
 
@@ -63,6 +66,7 @@
 - Preserved archives, historical evidence and internal analytics identifiers.
 - Added repository and production-build guards against reintroducing the obsolete duration.
 - Release prepared in an isolated worktree from commit `516651b`; unrelated attribution and local work were excluded.
+- The validated preview was promoted to production without rebuilding a different source set.
 
 ## File List
 
