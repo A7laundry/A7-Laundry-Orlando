@@ -1,7 +1,8 @@
 # Story A7-008 — Improve Organic CTR and Separate Search Intent
 
-**Status:** Ready for Review  
+**Status:** Released  
 **Date:** 2026-08-11  
+**Release Date:** 2026-08-13  
 **Source:** Live Google Search Console review for `sc-domain:a7laundry.com` covering 2026-06-30 through 2026-08-09.
 
 ## User Story
@@ -60,6 +61,14 @@
 - `npm test` — passed, including the new nine-page SEO intent gate.
 - `npm run build` — passed; production bundle created in `dist/`.
 - Redirects and `noindex` were intentionally deferred until a longer query/page cohort exists.
+
+## Release Evidence
+
+- Pull request: `https://github.com/A7laundry/A7-Laundry-Orlando/pull/3`.
+- Production deployment: `dpl_GpYxB1FBZnBr39MtoNnzpwsDmqzb`, Ready and aliased to `https://a7laundry.com`.
+- Post-deploy HTTP checks confirmed the new titles, official self-canonicals and `$3.25/lb` Normal / `$3.95/lb` Express pricing on representative priority pages.
+- IndexNow accepted all nine changed URLs with HTTP 200.
+- Google Search Console confirmed all nine URLs are indexed; eight were submitted to the priority crawl queue during this release and `/blog/vacation-rental-laundry-orlando` already showed `Indexação solicitada`.
 
 ## File List
 
