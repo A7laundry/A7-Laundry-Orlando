@@ -52,6 +52,23 @@ customizados continuam sujeitos à confirmação da unidade.
 Cadastrar os textos da seção Templates como atalhos (`/preco`, `/coleta`, `/minimo`, `/fup1`).
 Elimina o "How can I help you?" — que a auditoria mostrou ser o que mais mata lead.
 
+### 1.4 Gerador de link de pagamento
+
+**`a7laundry.com/payment-link`** — cria o link do Stripe já com a confirmação configurada.
+
+Antes: criar o Payment Link no Dashboard, abrir as configurações, colar a URL de confirmação
+com `{CHECKOUT_SESSION_ID}`, copiar o link. A cada cotação. Esquecer o parâmetro faz o cliente
+que acabou de pagar ver uma tela de erro.
+
+Agora: digitar as libras → o valor sai calculado (com o mínimo de US$ 50 aplicado) → gerar →
+copiar. O redirect vai certo sempre, porque está no código e não na mão.
+
+- Tarifa Normal ou Express no seletor; o valor recalcula sozinho
+- Campo **referência interna** grava no metadata do Stripe — use para cruzar com `leads.csv`
+- Botão "copiar com mensagem pronta" já monta o texto em inglês para colar no WhatsApp
+- Cada link aceita **um único pagamento**, então não há risco de a mesma URL ser paga duas vezes
+- O token de acesso é pedido uma vez e fica salvo no aparelho
+
 ---
 
 ## Camada 2 — Etiquetas como pipeline
@@ -144,7 +161,7 @@ Hi! Thanks for reaching out to A7 Laundry 👋
 
 Wash, dry & fold with pickup and delivery:
 • $3.25/lb — ready in 24h
-• $3.95/lb — express 6h (requests until 6 PM; subject to availability)
+• $3.95/lb — express 8h (requests until 6 PM; subject to availability)
 • Minimum order $50
 
 Just send me:
@@ -162,7 +179,7 @@ Oi! Aqui é da A7 Laundry 👋
 
 Lavamos, secamos e dobramos, com coleta e entrega:
 • $3.25/lb — pronto em 24h
-• $3.95/lb — express 6h (pedidos até 18h; sujeito a disponibilidade)
+• $3.95/lb — express 8h (pedidos até 18h; sujeito a disponibilidade)
 • Pedido mínimo $50
 
 Me manda só:

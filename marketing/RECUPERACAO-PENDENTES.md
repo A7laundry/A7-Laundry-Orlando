@@ -158,7 +158,7 @@ Hi! Sorry for the slow reply.
 
 A7 Laundry — wash, dry & fold with pickup and delivery:
 • $3.25/lb — ready in 24h
-• $3.95/lb — express 6h
+• $3.95/lb — express 8h
 • Minimum order $50
 
 Still need it? Send me your hotel/Airbnb address and roughly how many pounds or bags, and I'll

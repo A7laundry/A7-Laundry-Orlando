@@ -21,7 +21,7 @@ preserve a lossless 1080×1350 version; the 1600×2000 Lovart masters remain und
 ## Verified commercial content
 
 - Normal: **$3.25/lb · 24h**
-- Express: **$3.95/lb · 6h · subject to availability**
+- Express: **$3.95/lb · 8h · subject to availability**
 - Minimum guest wash & fold order: **$50**
 - Pickup and delivery included
 - Phone / WhatsApp: **+1 407-670-8839**

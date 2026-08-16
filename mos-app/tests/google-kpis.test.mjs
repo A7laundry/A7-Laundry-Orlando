@@ -94,8 +94,8 @@ test('live contract preserves source, period, freshness and numeric zero returne
   const authClient = {
     async request(request) {
       if (request.url.includes('analyticsdata') && !request.data.dimensions) {
-        return { data: gaReport([], ['activeUsers', 'newUsers', 'sessions', 'engagedSessions', 'engagementRate', 'averageSessionDuration', 'eventCount', 'keyEvents', 'totalRevenue'], [
-          { metricValues: [80, 70, 120, 65, 0.5417, 38.2, 640, 21, 0] }
+        return { data: gaReport([], ['activeUsers', 'newUsers', 'sessions', 'engagedSessions', 'engagementRate', 'averageSessionDuration', 'eventCount', 'keyEvents', 'ecommercePurchases', 'totalRevenue'], [
+          { metricValues: [80, 70, 120, 65, 0.5417, 38.2, 640, 21, 10, 491] }
         ]) };
       }
       if (request.url.includes('analyticsdata')) {
@@ -160,7 +160,8 @@ test('live contract preserves source, period, freshness and numeric zero returne
   assert.equal(result.status, 'live');
   assert.equal(result.freshness.state, 'current');
   assert.equal(result.sources.ga4.source, 'Google Analytics Data API');
-  assert.equal(result.sources.ga4.summary.totalRevenue, 0);
+  assert.equal(result.sources.ga4.summary.ecommercePurchases, 10);
+  assert.equal(result.sources.ga4.summary.totalRevenue, 491);
   assert.equal(result.sources.searchConsole.summary.impressions, 1800);
   assert.equal(result.sources.searchConsole.queries[0].query, 'laundry service orlando');
   assert.equal(result.sources.ga4.landingPages[0].canonicalPath, '/laundry-pickup-delivery-orlando');

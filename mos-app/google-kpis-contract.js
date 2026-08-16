@@ -7,6 +7,7 @@ const GA4_METRICS = [
   'averageSessionDuration',
   'eventCount',
   'keyEvents',
+  'ecommercePurchases',
   'totalRevenue'
 ];
 

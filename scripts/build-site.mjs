@@ -3,6 +3,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { PUBLIC_TEXT_ARTIFACTS } from './public-artifacts.mjs';
 import { resolveValidationContext } from './validation-context.mjs';
+import { scanBusinessDestinations } from './guard-business-destinations.mjs';
 
 const root = process.cwd();
 const output = path.join(root, 'dist');
@@ -75,6 +76,23 @@ copyTree('blog', (relativePath) => {
   if (relativePath === 'blog/_TEMPLATE.html' || relativePath === 'blog/TEMPLATE-GUIDE.md') return false;
   return /\.(?:html|png|jpg|jpeg|webp|svg|ico)$/i.test(relativePath);
 });
+
+// Foundation modules are injected at build time to avoid a risky mechanical
+// edit across every static source page. Unified tracking retains safe fallbacks.
+for (const relativePath of listFiles('', (file) => file.endsWith('.html'))) {
+  const absolutePath = path.join(output, relativePath);
+  let html = fs.readFileSync(absolutePath, 'utf8');
+  const trackingTag = /<script\s+src=["']\/a7-tracking\.js["']\s+defer><\/script>/i;
+  if (!trackingTag.test(html)) continue;
+  html = html.replace(
+    trackingTag,
+    '<script src="/a7-business-config.js" defer></script>\n'
+      + '<script src="/a7-attribution.js" defer></script>\n'
+      + '<script src="/a7-events.js" defer></script>\n'
+      + '<script src="/a7-tracking.js" defer></script>'
+  );
+  fs.writeFileSync(absolutePath, html);
+}
 
 const indexationQuarantine = JSON.parse(
   fs.readFileSync(path.join(root, 'indexation-quarantine.json'), 'utf8')
@@ -162,7 +180,8 @@ const forbiddenPublicClaims = [
   ['unsupported 200,000 bacteria claim', /200[,.]000\+?\s+bact/i],
   ['unsupported 527-review claim', /527\+?\s+(?:Google\s+)?reviews|"reviewCount"\s*:\s*"?527/i],
   ['unsupported 4,200-home claim', /4[,.]200\+?\s+(?:Orlando\s+)?homes/i],
-  ['unsupported six-hour guarantee', /guaranteed\s+6-hour/i],
+  ['unsupported eight-hour guarantee', /guaranteed\s+8-hour/i],
+  ['obsolete Express six-hour duration', /(?:\bexpress\b[\s\S]{0,100}(?<![_-])(?:\b6h\b|\b6[-\s]?hours?\b|\b6\s+horas?\b|\bsix[-\s]hours?\b)|(?<![_-])(?:\b6h\b|\b6[-\s]?hours?\b|\b6\s+horas?\b|\bsix[-\s]hours?\b)[\s\S]{0,100}\bexpress\b)/i],
   ['unsupported three-minute response promise', /average response time:\s*3 minutes/i],
   ['unsupported top-rated claim', /Orlando(?:'s)?\s+Top-Rated/i],
   ['invented hosting testimonial headline', /A7 Changed My Hosting Business Forever/i],
@@ -182,10 +201,21 @@ const forbiddenPublicClaims = [
 ];
 
 const productionHtmlFiles = listFiles('', (file) => file.endsWith('.html'));
+const acquisitionTrackingExemptions = new Set([
+  // Pre-existing internal operator tool. It is not an acquisition landing page
+  // and intentionally must not create customer attribution or ad conversions.
+  'payment-link.html'
+]);
 for (const relativePath of productionHtmlFiles) {
   const html = fs.readFileSync(path.join(output, relativePath), 'utf8');
+  if (acquisitionTrackingExemptions.has(relativePath)) continue;
   if (!/<script\s+src=["']\/a7-tracking\.js["']\s+defer><\/script>/i.test(html)) {
     throw new Error(`Tracking gate failed in ${relativePath}: unified tracking script is missing`);
+  }
+  for (const foundationScript of ['a7-business-config.js', 'a7-attribution.js', 'a7-events.js']) {
+    if (!html.includes(`<script src="/${foundationScript}" defer></script>`)) {
+      throw new Error(`Tracking gate failed in ${relativePath}: ${foundationScript} is missing`);
+    }
   }
   if (/wa-tracking\.js/i.test(html)) {
     throw new Error(`Tracking gate failed in ${relativePath}: legacy tracking script is still included`);
@@ -215,15 +245,20 @@ for (const requiredTrackingToken of [
   '1452877649635363',
   "'begin_checkout'",
   "'InitiateCheckout'",
-  'a7_campaign_attribution',
+  '__A7_TRACKING_INITIALIZED__',
   'lead_reference',
   'origin_class',
-  'origin_source',
-  'ai-chatgpt',
-  'google-organic'
+  'origin_source'
 ]) {
   if (!trackingSource.includes(requiredTrackingToken)) {
     throw new Error(`Tracking gate failed: a7-tracking.js is missing ${requiredTrackingToken}`);
+  }
+}
+
+const attributionSource = fs.readFileSync(path.join(output, 'a7-attribution.js'), 'utf8');
+for (const requiredAttributionToken of ['/api/attribution/session', 'first_touch', 'last_touch', 'short_ref', 'ai-chatgpt', 'google-organic']) {
+  if (!attributionSource.includes(requiredAttributionToken)) {
+    throw new Error(`Tracking gate failed: a7-attribution.js is missing ${requiredAttributionToken}`);
   }
 }
 
@@ -256,6 +291,11 @@ for (const requiredSecurityToken of [
 }
 if (/fbq\(['"]init['"]/.test(guestConfirmationHtml)) {
   throw new Error('Tracking gate failed in guest-payment-confirmation.html: duplicate inline Meta Pixel initialization');
+}
+
+const businessDestinationFailures = scanBusinessDestinations(output);
+if (businessDestinationFailures.length) {
+  throw new Error(`Production business destination guard failed:\n${businessDestinationFailures.join('\n')}`);
 }
 
 console.log(`Production bundle created at dist/ with ${creativeAssets.size} legacy creative asset(s).`);

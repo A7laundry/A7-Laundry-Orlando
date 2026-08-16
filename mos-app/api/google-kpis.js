@@ -108,7 +108,7 @@ export async function GET(request) {
       status: 'unavailable',
       error: {
         code: 'GOOGLE_CONNECTION_FAILED',
-        message: 'A conexão temporária com o Google falhou; o MOS deve manter o retrato histórico.'
+        message: 'A conexão temporária com o Google falhou; os indicadores atuais devem permanecer indisponíveis.'
       }
     }, 502);
   }

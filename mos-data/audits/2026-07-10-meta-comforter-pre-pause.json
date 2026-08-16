@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-10-meta-comforter-pre-pause",
+  "auditDate": "2026-07-10",
+  "title": "Meta Ads — comforter pre-pause checkpoint",
+  "type": "campaign_snapshot",
+  "status": "partial",
+  "scope": [
+    "meta_ads",
+    "comforter"
+  ],
+  "summary": "Checkpoint documental anterior à pausa da campanha de edredom. Não contém um snapshot MOS normalizado completo.",
+  "sources": [
+    {
+      "name": "Meta Ads campaign snapshot",
+      "status": "partial",
+      "period": "até 10 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "marketing/meta-ads/campaigns/2026-07-laundry-comforter/snapshot-2026-07-10-pre-pause-AC.md",
+      "sha256": "756ee7675966ddaed607dd6dca906ce12cb4b2c19cff5ae909b0ebb49f3ffd79"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": null,
+  "previousRecordSha256": null
+}

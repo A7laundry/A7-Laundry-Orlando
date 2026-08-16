@@ -13,7 +13,7 @@
    - **Business/convention** (Orange County Convention Center), **cruise/Port Canaveral**, **medical/hospital**, **snowbird** — nichos com concorrência baixíssima.
 
 ## Vantagens estruturais da A7 que os concorrentes não exploram
-Bilíngue (ES/PT) · preço transparente ($3.25/$3.95 publicado enquanto rivais escondem) · Express 6h · reserva por WhatsApp sem app/contrato · foco turista+host (whitespace).
+Bilíngue (ES/PT) · preço transparente ($3.25/$3.95 publicado enquanto rivais escondem) · Express 8h · reserva por WhatsApp sem app/contrato · foco turista+host (whitespace).
 
 ---
 

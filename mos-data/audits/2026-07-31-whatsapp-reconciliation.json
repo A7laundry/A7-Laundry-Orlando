@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-31-whatsapp-reconciliation",
+  "auditDate": "2026-07-31",
+  "title": "WhatsApp — status operacional e reconciliação",
+  "type": "operational_reconciliation",
+  "status": "partial",
+  "scope": [
+    "whatsapp",
+    "conversion",
+    "revenue"
+  ],
+  "summary": "Status operacional e arquivo de reconciliação preservados; registros manuais não são promovidos a dados ao vivo.",
+  "sources": [
+    {
+      "name": "WhatsApp operational records",
+      "status": "partial",
+      "period": "31 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "marketing/data/reconciliacao-whatsapp-2026-07-31.csv",
+      "sha256": "ff96da7458f490b3fdaad9ded79604dfa0d7e3755cf365d3ab6f966714b65156"
+    },
+    {
+      "path": "marketing/whatsapp/STATUS-OPERACIONAL-2026-07-31.md",
+      "sha256": "301c8ef97109dd2c91fee1f349b69f480e915d7cd939390f935db854079d59a8"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-30-consolidated-audit",
+  "previousRecordSha256": "fd4e8a5a0f11bccd9f1c87b46d01e86fbd0435e3d2159aeb11780871627dbff4"
+}

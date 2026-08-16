@@ -27,7 +27,7 @@
 | Ausência | Não usar janela “fora do horário”, pois o canal é declarado 24/7 | Manter desativada; usar saudação e escalonamento |
 | Nome comercial | `A7 Laundry | Upholstery Couch` | Pendente confirmar se será simplificado para `A7 Laundry Orlando` |
 | Customizados/passadoria | Referência usual de **48h**, sempre sujeita à confirmação final de preço, prazo e capacidade pela unidade | Atalho deve coletar peça/foto/endereço; nunca fechar prazo sozinho |
-| Express | 6h sujeito à disponibilidade; solicitações aceitas até **6 PM**. Depois desse horário, a unidade avalia caso a caso | Dennis ou Backup 1 confirma a capacidade |
+| Express | 8h sujeito à disponibilidade; solicitações aceitas até **6 PM**. Depois desse horário, a unidade avalia caso a caso | Dennis ou Backup 1 confirma a capacidade |
 | B2B | Referência de **US$ 1,95/lb**, condicionada a volume, frequência, escopo e capacidade | Nunca publicar como preço irrestrito |
 
 ## Histórico anterior encerrado sem recuperação

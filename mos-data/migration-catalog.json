@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0",
+  "audits": [
+    {
+      "auditId": "2026-07-10-meta-comforter-pre-pause",
+      "auditDate": "2026-07-10",
+      "title": "Meta Ads — comforter pre-pause checkpoint",
+      "type": "campaign_snapshot",
+      "status": "partial",
+      "scope": ["meta_ads", "comforter"],
+      "summary": "Checkpoint documental anterior à pausa da campanha de edredom. Não contém um snapshot MOS normalizado completo.",
+      "sources": [{"name": "Meta Ads campaign snapshot", "status": "partial", "period": "até 10 jul 2026"}],
+      "evidence": [{"path": "marketing/meta-ads/campaigns/2026-07-laundry-comforter/snapshot-2026-07-10-pre-pause-AC.md"}]
+    },
+    {
+      "auditId": "2026-07-15-meta-comforter",
+      "auditDate": "2026-07-15",
+      "title": "Meta Ads — comforter campaign checkpoint",
+      "type": "campaign_snapshot",
+      "status": "partial",
+      "scope": ["meta_ads", "comforter"],
+      "summary": "Checkpoint documental da campanha de edredom. Métricas não presentes no documento permanecem indisponíveis.",
+      "sources": [{"name": "Meta Ads campaign snapshot", "status": "partial", "period": "até 15 jul 2026"}],
+      "evidence": [{"path": "marketing/meta-ads/campaigns/2026-07-laundry-comforter/snapshot-2026-07-15.md"}]
+    },
+    {
+      "auditId": "2026-07-22-ga4-gsc-evidence",
+      "auditDate": "2026-07-22",
+      "title": "GA4 e Search Console — pacote de evidências",
+      "type": "evidence_capture",
+      "status": "partial",
+      "scope": ["ga4", "search_console", "seo"],
+      "summary": "Exportações auditáveis de GA4 e Search Console preservadas com seus períodos originais.",
+      "sources": [
+        {"name": "Google Analytics 4 exports", "status": "verified", "period": "22 jun–21 jul 2026 e comparativos documentados"},
+        {"name": "Google Search Console exports", "status": "verified", "period": "períodos declarados nos arquivos"}
+      ],
+      "evidenceDirectories": ["docs/audits/evidence/2026-07-22/ga4", "docs/audits/evidence/2026-07-22/gsc"]
+    },
+    {
+      "auditId": "2026-07-24-google-ads-meta-organic",
+      "auditDate": "2026-07-24",
+      "title": "Google Ads e Meta orgânico — evidências",
+      "type": "evidence_capture",
+      "status": "partial",
+      "scope": ["google_ads", "meta_organic"],
+      "summary": "Evidências documentais de Google Ads e exportações orgânicas do Meta; não representam estado atual das plataformas.",
+      "sources": [
+        {"name": "Google Ads audit evidence", "status": "partial", "period": "até 24 jul 2026"},
+        {"name": "Meta organic exports", "status": "verified", "period": "24 jun–24 jul 2026"}
+      ],
+      "evidenceDirectories": ["docs/audits/evidence/2026-07-24/google-ads", "docs/audits/evidence/2026-07-24/meta-organic"]
+    },
+    {
+      "auditId": "2026-07-27-mos-kpi-snapshot",
+      "auditDate": "2026-07-27",
+      "title": "MOS — snapshot completo de KPIs",
+      "type": "kpi_snapshot",
+      "status": "complete",
+      "scope": ["mos", "ga4", "search_console", "google_ads", "meta_ads", "meta_organic", "revenue"],
+      "summary": "Snapshot completo e datado que antes era o único estado histórico carregado pelo MOS.",
+      "sources": [{"name": "MOS versioned KPI snapshot", "status": "verified", "period": "períodos individuais preservados por métrica"}],
+      "snapshotFrom": "mos-kpis.js",
+      "snapshotPath": "mos-data/snapshots/2026-07-27-mos-kpis.js",
+      "metricsFromSnapshotScorecard": true
+    },
+    {
+      "auditId": "2026-07-28-meta-guest-reactivation",
+      "auditDate": "2026-07-28",
+      "title": "Meta Ads — guest laundry reactivation checkpoint",
+      "type": "campaign_snapshot",
+      "status": "partial",
+      "scope": ["meta_ads", "guest_laundry"],
+      "summary": "Checkpoint documental da tentativa de reativação da campanha manual de guest laundry.",
+      "sources": [{"name": "Meta Ads campaign snapshot", "status": "partial", "period": "28 jul 2026"}],
+      "evidence": [{"path": "marketing/meta-ads/campaigns/2026-07-guest-laundry-manual/snapshot-2026-07-28-reactivation.md"}]
+    },
+    {
+      "auditId": "2026-07-29-google-ads-conversion-tracking",
+      "auditDate": "2026-07-29",
+      "title": "Google Ads — auditoria de conversion tracking",
+      "type": "audit_report",
+      "status": "partial",
+      "scope": ["google_ads", "conversion_tracking"],
+      "summary": "Relatório de auditoria do rastreamento de conversões do Google Ads.",
+      "sources": [{"name": "Audit report", "status": "verified", "period": "29 jul 2026"}],
+      "evidence": [{"path": "docs/audits/2026-07-29-google-ads-conversion-tracking.md"}]
+    },
+    {
+      "auditId": "2026-07-30-consolidated-audit",
+      "auditDate": "2026-07-30",
+      "title": "MOS — auditoria consolidada",
+      "type": "audit_report",
+      "status": "partial",
+      "scope": ["mos", "marketing", "conversion", "seo"],
+      "summary": "Relatório consolidado da auditoria disponível em 30 de julho.",
+      "sources": [{"name": "Consolidated audit report", "status": "verified", "period": "até 30 jul 2026"}],
+      "evidence": [{"path": "docs/audits/2026-07-30-audit-consolidado.md"}]
+    },
+    {
+      "auditId": "2026-07-31-whatsapp-reconciliation",
+      "auditDate": "2026-07-31",
+      "title": "WhatsApp — status operacional e reconciliação",
+      "type": "operational_reconciliation",
+      "status": "partial",
+      "scope": ["whatsapp", "conversion", "revenue"],
+      "summary": "Status operacional e arquivo de reconciliação preservados; registros manuais não são promovidos a dados ao vivo.",
+      "sources": [{"name": "WhatsApp operational records", "status": "partial", "period": "31 jul 2026"}],
+      "evidence": [
+        {"path": "marketing/whatsapp/STATUS-OPERACIONAL-2026-07-31.md"},
+        {"path": "marketing/data/reconciliacao-whatsapp-2026-07-31.csv"}
+      ]
+    },
+    {
+      "auditId": "2026-08-06-seo-tracking-cleanup",
+      "auditDate": "2026-08-06",
+      "title": "SEO e tracking — auditoria de limpeza",
+      "type": "audit_report",
+      "status": "partial",
+      "scope": ["seo", "tracking"],
+      "summary": "Relatório da limpeza de SEO e tracking, preservado como checkpoint posterior à auditoria consolidada.",
+      "sources": [{"name": "SEO/tracking audit report", "status": "verified", "period": "6 ago 2026"}],
+      "evidence": [{"path": "docs/audits/2026-08-06-seo-tracking-cleanup.md"}]
+    },
+    {
+      "auditId": "2026-07-16-site-cro-audit",
+      "auditDate": "2026-07-16",
+      "title": "Site — auditoria de mensagem e conversão",
+      "type": "audit_report",
+      "status": "partial",
+      "scope": ["site", "cro", "conversion"],
+      "summary": "Relatório de CRO datado de 16 de julho, localizado durante a auditoria final do registro e acrescentado sem reescrever os registros anteriores.",
+      "sources": [{"name": "Site CRO audit report", "status": "verified", "period": "16 jul 2026"}],
+      "evidence": [{"path": "marketing/SITE-CRO-AUDIT.md"}]
+    },
+    {
+      "auditId": "2026-07-30-whatsapp-audit",
+      "auditDate": "2026-07-30",
+      "title": "WhatsApp — auditoria de atendimento",
+      "type": "audit_report",
+      "status": "partial",
+      "scope": ["whatsapp", "conversion", "customer_service"],
+      "summary": "Auditoria de atendimento com errata e direcionamento corretivo preservados; acrescentada como backfill sem alterar a cadeia anterior.",
+      "sources": [{"name": "WhatsApp audit report", "status": "partial", "period": "30–31 jul 2026"}],
+      "evidence": [
+        {"path": "marketing/AUDITORIA-WHATSAPP-2026-07-30.md"},
+        {"path": "docs/DIRECIONAMENTO-AGOSTO-2026.md"}
+      ]
+    }
+  ]
+}

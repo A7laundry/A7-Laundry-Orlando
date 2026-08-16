@@ -35,6 +35,24 @@ function exists(relativePath) {
   return fs.existsSync(path.join(root, relativePath));
 }
 
+const obsoleteExpressDurationPattern = /(?:\bexpress\b[\s\S]{0,100}(?<![_-])(?:\b6h\b|\b6[-\s]?hours?\b|\b6\s+horas?\b|\bsix[-\s]hours?\b)|(?<![_-])(?:\b6h\b|\b6[-\s]?hours?\b|\b6\s+horas?\b|\bsix[-\s]hours?\b)[\s\S]{0,100}\bexpress\b)/i;
+
+function isExpressDurationGuardCandidate(relativePath) {
+  if (!/\.(?:csv|html|md|txt|ya?ml)$/i.test(relativePath)) return false;
+  return ![
+    '.vercel/',
+    '_archive/',
+    'dist/',
+    'docs/audits/',
+    'docs/stories/',
+    'marketing/audits/',
+    'marketing/meta-ads/competitors/',
+    'marketing/meta-ads/campaigns/2026-07-tourist-laundry-reinforcement/',
+    'mos-app/.vercel/',
+    'mos-app/dist/'
+  ].some((prefix) => relativePath.startsWith(prefix));
+}
+
 function walk(directory) {
   const result = [];
   for (const entry of fs.readdirSync(path.join(root, directory), { withFileTypes: true })) {
@@ -62,6 +80,12 @@ if (!syntaxOnly) {
     ...fs.readdirSync(path.join(root, 'blog')).filter((file) => file.endsWith('.html')).map((file) => `blog/${file}`),
     ...fs.readdirSync(path.join(root, 'a7-carpet-campaign')).filter((file) => file.endsWith('.html')).map((file) => `a7-carpet-campaign/${file}`)
   ];
+
+  for (const file of walk('').filter(isExpressDurationGuardCandidate)) {
+    if (obsoleteExpressDurationPattern.test(read(file))) {
+      fail(`${file}: obsolete Express 6-hour duration is present`);
+    }
+  }
 
   for (const [source, target] of rewrites) {
     if (!exists(target)) fail(`vercel rewrite ${source}: missing target ${target}`);
@@ -140,8 +164,8 @@ if (!syntaxOnly) {
   if (/images\.unsplash\.com/i.test(guestLanding)) {
     fail('Guest Laundry landing: hero must use a controlled local image asset');
   }
-  if (/\$60\b|8-hour|8 hours/i.test(guestLanding)) {
-    fail('Guest Laundry landing: stale minimum or Express turnaround is present');
+  if (/\$60\b/i.test(guestLanding) || obsoleteExpressDurationPattern.test(guestLanding)) {
+    fail('Guest Laundry landing: stale minimum or obsolete Express turnaround is present');
   }
   if (/onclick="gtag\('event','(?:whatsapp_click|sms_click|call_click|pickup_cta|special_item_quote)'/i.test(guestLanding)) {
     fail('Guest Laundry landing: inline contact tracking would fragment or duplicate unified events');

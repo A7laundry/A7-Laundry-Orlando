@@ -11,7 +11,7 @@
 - CTAs priority: **WhatsApp → SMS → Call**. Number: **(407) 670-8839** · `wa.me/14076708839` · `sms:+14076708839` · `tel:+14076708839`.
 - **Conditional same-day only:** "ask for today's availability", "depending on availability", "Express availability may vary", "request pickup today". Never "guaranteed same-day".
 - **No fabrication:** no invented address, reviews, ratings, customer counts, certifications or partnerships. **No `AggregateRating`** without approval.
-- Prices (real): Normal **$3.25/lb** (24h) · Express **$3.95/lb** (6h) · free pickup & delivery · **$50 minimum**. Comforter from **$33**.
+- Prices (real): Normal **$3.25/lb** (24h) · Express **$3.95/lb** (8h) · free pickup & delivery · **$50 minimum**. Comforter from **$33**.
 - Funnel terms (TOFU/MOFU/BOFU/PILLAR) are **staff-only** — never visible. Use friendly badges.
 - FAQ **visible = FAQPage schema** (5–7 Q&A). Always include **BreadcrumbList**. Always a **GEO answer block** near the top.
 - On the real article set `robots` to `index, follow` (the template file is `noindex`).
@@ -89,7 +89,7 @@ include_sticky_cta:        true (BOFU/persona) | false
 - **Vacation-rental guest** — "Schedule Pickup" / "We pick up from your rental, wash & fold, deliver back." · WA `Hi! I'm at an Orlando vacation rental and need laundry pickup.`
 - **Family** — "Schedule Family Pickup" / "Theme-park days = piles of laundry. We handle it." / "Less laundry, more vacation." · WA `Hi! Family laundry pickup in Orlando — about __ lbs.`
 - **Checkout/last-minute** — "Request pickup today" / "Checking out today? Ask for today's availability." · WA `Hi! I check out today in Orlando — can you do same-day laundry? Time/location:`
-- **Same-day/Express** — "Ask for today's availability" / "Need it today? Express 6h, depending on availability." · WA `Hi! I need laundry today in Orlando — what's today's Express availability?`
+- **Same-day/Express** — "Ask for today's availability" / "Need it today? Express 8h, depending on availability." · WA `Hi! I need laundry today in Orlando — what's today's Express availability?`
 - **Long stay** — "Set up recurring pickups" / "Here a while? Recurring pickup, same per-lb rate, no subscription." · WA `Hi! Long stay in Orlando — recurring laundry pickups?`
 - **No car** — "We come to you" / "No car? Free pickup at your door." · WA `Hi! No car in Orlando — can you pick up my laundry? Location:`
 - **Disney area** — "Pickup near Disney" · WA `Hi! Laundry pickup near Disney World. Location:`
@@ -109,19 +109,19 @@ Default fallback: WhatsApp "Schedule Pickup on WhatsApp" → SMS "Text us your l
 - **Geo:** "Do you offer laundry pickup in [area]?" · "How much is laundry in [area]?" · "What areas near [area] do you serve?" · "How fast is delivery in [area]?" · "How do I book in [area]?"
 - **Persona (hotel/Airbnb):** "Do you pick up from [hotels/Airbnbs]?" · "How do I arrange pickup from my [hotel/rental]?" · "How much does it cost?" · "How fast is it?" · "Do I need to be there for pickup?"
 
-**Reusable price answer:** *"Wash & fold is $3.25/lb (Normal 24h) or $3.95/lb (Express 6h), with free pickup & delivery and a $50 minimum order."*
+**Reusable price answer:** *"Wash & fold is $3.25/lb (Normal 24h) or $3.95/lb (Express 8h), with free pickup & delivery and a $50 minimum order."*
 
 ---
 
 ## F. GEO/AI answer blocks (2–3 sentences)
 
 - **Pickup & delivery:** "A7 Laundry offers laundry pickup & delivery across Orlando. We collect from your hotel, resort, Airbnb or home, wash and fold, and deliver back — from $3.25/lb with free pickup. Book on WhatsApp at (407) 670-8839."
-- **Same-day:** "Need laundry today in Orlando? A7 Laundry offers Express 6-hour pickup & delivery, depending on availability. Ask for today's availability — Express is $3.95/lb (vs $3.25/lb Normal)."
+- **Same-day:** "Need laundry today in Orlando? A7 Laundry offers Express 8-hour pickup & delivery, depending on availability. Ask for today's availability — Express is $3.95/lb (vs $3.25/lb Normal)."
 - **Hotel guest:** "Staying at an Orlando hotel? A7 Laundry picks up from your hotel, washes & folds, and delivers back — from $3.25/lb, free pickup. Text your hotel and room."
 - **Airbnb guest:** "At an Orlando Airbnb? A7 Laundry picks up from your rental, washes & folds, and delivers back — from $3.25/lb, free pickup. Send your address on WhatsApp."
 - **Checkout:** "Checking out of an Orlando rental today? Ask for today's Express availability — we may be able to pick up, wash & fold, and return before checkout. Express is $3.95/lb, free pickup."
 - **Family:** "Theme-park days fill the hamper fast. A7 Laundry picks up your family's laundry, washes & folds, and delivers back — from $3.25/lb, free pickup. No laundromat, no lost vacation time."
-- **Geo/local:** "A7 Laundry offers free laundry pickup & delivery in [area], FL. Wash & fold is $3.25/lb (Normal 24h) or $3.95/lb (Express 6h), with free pickup. Book on WhatsApp at (407) 670-8839."
+- **Geo/local:** "A7 Laundry offers free laundry pickup & delivery in [area], FL. Wash & fold is $3.25/lb (Normal 24h) or $3.95/lb (Express 8h), with free pickup. Book on WhatsApp at (407) 670-8839."
 - **Comparison:** "Comparing [A] vs [B] in Orlando? [B] is usually easier for visitors — A7 Laundry picks up, washes & folds, and delivers from $3.25/lb with free pickup."
 
 ---

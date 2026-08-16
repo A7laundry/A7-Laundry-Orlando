@@ -98,6 +98,13 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Native Google Ads measurement covers attributed WhatsApp opens and website-originated calls lasting at least 60 seconds without changing Stripe tracking.
 - [x] Phone-button and pickup-CTA clicks remain diagnostic events and are not mislabeled as qualified calls or confirmed bookings.
 - [x] The official `+1 407-670-8839` destination and both native Google Ads conversion destinations are protected by automated tracking gates.
+- [x] Measurement V2 Phase 0 centralizes public business configuration and adds executable phone/WhatsApp destination guards plus a CLI CTA inventory.
+- [x] Measurement V2 Phase 1 creates explicit first-touch/last-touch contracts, opaque attribution IDs and non-ambiguous short references without exposing click IDs in WhatsApp or GA4 event parameters.
+- [x] The shadow attribution API validates bounded same-origin payloads, uses a replaceable storage adapter and fails open when durable storage is unavailable.
+- [x] WhatsApp URL construction and compatible event contracts are centralized while the existing native Google Ads WhatsApp conversion fires exactly once per interaction.
+- [x] Shadow diagnostics are development/authorized-only, masked and free of click-ID values, message contents and customer PII.
+- [x] No persistent attribution cookie is created without an affirmative consent signal; the missing CMP remains an explicit gap.
+- [x] Root lint, typecheck, tests and build pass without changing Google Ads, Stripe conversion logic, campaign delivery or bidding.
 
 ## Tasks
 
@@ -181,6 +188,9 @@ Make the production conversion funnel observable from acquisition CTA through St
   unit confirmation, Express requests until 6 PM and volume-qualified B2B pricing.
 - [x] Retire the historical recovery queue without sending messages, update the live WhatsApp
   shortcuts and add anti-regression gates for stale Express cutoffs and non-24/7 schema hours.
+- [x] Implement and validate Measurement V2 Phase 0 business configuration, phone guard and CTA inventory.
+- [x] Implement and validate Measurement V2 Phase 1 attribution/event contracts, shadow API, fail-open WhatsApp builder and masked diagnostics.
+- [x] Document current flow, privacy boundary, rollback and future durable-storage integration without advancing later measurement phases.
 
 ## File List
 
@@ -226,6 +236,15 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `A7 LAUNDRY-06.png`
 - `scripts/validate-google-ads-phase1.mjs`
 - `scripts/preflight-google-ads-live.mjs`
+- `a7-business-config.js`
+- `a7-attribution.js`
+- `a7-events.js`
+- `api/attribution/session.js`
+- `lib/attribution-store.js`
+- `scripts/guard-business-destinations.mjs`
+- `scripts/inventory-ctas.mjs`
+- `scripts/test-attribution-v2.mjs`
+- `docs/measurement-v2-foundation.md`
 - `mos-app/tests/dashboard.test.mjs`
 - `scripts/validate-audit-evidence.mjs`
 - `scripts/validate-meta-ads-guardrails.mjs`
@@ -446,3 +465,17 @@ Make the production conversion funnel observable from acquisition CTA through St
 - Public JSON-LD hours were normalized to 24/7 and the old noon Express cutoff was removed from
   the source corpus. Static/build gates now reject the stale cutoff, malformed `6 PM:00 PM` text
   and legacy 07:00/08:00 schema openings.
+- Aug 7 Measurement V2 Phase 0/1 foundation centralizes public business/measurement constants,
+  inventories 864 contact/booking links and scans 105 production-source executable files for the
+  official WhatsApp destination and legacy numbers. Attribution V2 uses a 128-bit opaque ID, a
+  50-bit ten-character short reference, immutable first touch, external-entry-only last touch and
+  a same-origin/rate-limited shadow API with a replaceable storage contract. The current adapter is
+  explicitly ephemeral and creates no persistent cookie while consent is unknown.
+- The public build injects the three foundation modules before unified tracking. Dynamic WhatsApp
+  CTAs are normalized again at click time; module/API/Google-tag failures never cancel navigation.
+  The existing `AW-17146169189/dhI0CO_7xNgcEOWO9-8_` action remains single-fire, raw click IDs and
+  UTMs are excluded from GA4 event payloads, and Stripe/payment logic was not changed by this phase.
+- `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, focused attribution/tracking
+  tests, the business-destination scan and `git diff --check` pass. The pre-existing internal
+  untracked `payment-link.html` has an explicit acquisition-tracking build exemption; its Stripe
+  behavior remains untouched.

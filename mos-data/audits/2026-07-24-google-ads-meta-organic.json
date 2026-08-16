@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-24-google-ads-meta-organic",
+  "auditDate": "2026-07-24",
+  "title": "Google Ads e Meta orgânico — evidências",
+  "type": "evidence_capture",
+  "status": "partial",
+  "scope": [
+    "google_ads",
+    "meta_organic"
+  ],
+  "summary": "Evidências documentais de Google Ads e exportações orgânicas do Meta; não representam estado atual das plataformas.",
+  "sources": [
+    {
+      "name": "Google Ads audit evidence",
+      "status": "partial",
+      "period": "até 24 jul 2026"
+    },
+    {
+      "name": "Meta organic exports",
+      "status": "verified",
+      "period": "24 jun–24 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "docs/audits/evidence/2026-07-24/google-ads/README.md",
+      "sha256": "9cdc619bb90958315fbb6df43d46a06922b7e05044f97264b1bac9bd76971cff"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-24/meta-organic/A7_META_FB_PERFORMANCE_2026-06-24_2026-07-24.csv",
+      "sha256": "ddd5873a2a6977f44f1af0dd7df416170438c6eedc897fdb82261ff104c2de16"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-24/meta-organic/A7_META_FB_PUBLISHED_2026-06-24_2026-07-24.csv",
+      "sha256": "d627c3f9f8dcb01b29ba21ecc529d86c8f194ae6190430fd7882d8dc0111ac50"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-24/meta-organic/A7_META_IG_PUBLISHED_PERFORMANCE_2026-06-24_2026-07-24.csv",
+      "sha256": "a9aa73b9011beeea099d6aa4080ff767599a7a8f94ea0255efbf9f532668ed7f"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-24/meta-organic/README.md",
+      "sha256": "4f6b50206dad27534723dab0623117ec207740c4d0a9407956dc96a1adca4631"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-22-ga4-gsc-evidence",
+  "previousRecordSha256": "4239b7afc0f891f52bd0258971797120da30f157093f3daa648c7ef5cc17218c"
+}

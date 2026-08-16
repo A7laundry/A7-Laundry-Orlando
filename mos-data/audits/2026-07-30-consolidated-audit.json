@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-30-consolidated-audit",
+  "auditDate": "2026-07-30",
+  "title": "MOS — auditoria consolidada",
+  "type": "audit_report",
+  "status": "partial",
+  "scope": [
+    "mos",
+    "marketing",
+    "conversion",
+    "seo"
+  ],
+  "summary": "Relatório consolidado da auditoria disponível em 30 de julho.",
+  "sources": [
+    {
+      "name": "Consolidated audit report",
+      "status": "verified",
+      "period": "até 30 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "docs/audits/2026-07-30-audit-consolidado.md",
+      "sha256": "2bee876169efefe75f0d921c29b18d14e7562559ee3d507d5ab6462acfb12328"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-29-google-ads-conversion-tracking",
+  "previousRecordSha256": "7f081ec54eef65c83b09a958db3fbbc089a85081ea36162fa87e21609eb7fd48"
+}

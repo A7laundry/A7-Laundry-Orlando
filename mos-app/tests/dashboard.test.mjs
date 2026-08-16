@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 await import('../../mos-kpis.js');
+await import('../generated/audit-registry.js');
 
 function dashboardRuntime() {
   delete globalThis.A7_MOS_LIVE;
@@ -22,15 +23,17 @@ function dashboardRuntime() {
     querySelector: () => ({ classList: { add() {}, remove() {} } })
   };
   globalThis.window = { addEventListener() {}, scrollTo() {} };
-  const api = new Function(`${script}; return { renderMosKpis, changeMosCreativeFocus, resetMosFilters };`)();
+  const api = new Function(`${script}; return { renderMosKpis, renderMosAuditRegistry, changeMosCreativeFocus, resetMosFilters };`)();
   return { api, element };
 }
 
 test('MOS filters produce decision-grade paid, creative and revenue views', () => {
   const { api, element } = dashboardRuntime();
   api.renderMosKpis();
-  assert.match(element('mosDecision').innerHTML, /campanha de hóspedes foi pausada porque o destino de WhatsApp regrediu/);
-  assert.match(element('mosDecision').innerHTML, /\+1 407-670-8839/);
+  assert.match(element('mosDecision').innerHTML, /Aguardando fontes atuais/);
+  assert.match(element('mosScorecard').innerHTML, /Indisponível/);
+  assert.doesNotMatch(element('mosScorecard').innerHTML, />68</);
+  assert.match(element('mosHistoricalScorecard').innerHTML, /RETRATO HISTÓRICO/);
   assert.match(element('mosActions').innerHTML, /Corrigir a atribuição da mídia paga/);
   assert.match(element('mosActions').innerHTML, /Conectar receita e pedidos/);
   assert.equal((element('mosActiveAds').innerHTML.match(/<article/g) || []).length, 3);
@@ -40,7 +43,8 @@ test('MOS filters produce decision-grade paid, creative and revenue views', () =
   element('mosPeriodFilter').value = 'early';
   api.renderMosKpis();
   assert.match(element('mosDecision').innerHTML, /estado atual do Meta Ads não está disponível/);
-  assert.match(element('mosMediaStatus').innerHTML, /206,88/);
+  assert.match(element('mosMediaStatus').innerHTML, /DADOS ATUAIS INDISPONÍVEIS/);
+  assert.doesNotMatch(element('mosMediaStatus').innerHTML, /206,88/);
   assert.match(element('mosActiveAds').innerHTML, /divisão por criativo não foi coletada/);
 
   api.resetMosFilters();
@@ -57,8 +61,11 @@ test('MOS filters produce decision-grade paid, creative and revenue views', () =
   api.resetMosFilters();
   element('mosChannelFilter').value = 'analytics';
   api.renderMosKpis();
-  assert.match(element('mosDecision').innerHTML, /não mede o funil comercial/);
+  assert.match(element('mosDecision').innerHTML, /indicadores atuais do GA4 não estão disponíveis/);
   assert.match(element('mosScorecard').innerHTML, /Usuários ativos no GA4/);
+  assert.match(element('mosScorecard').innerHTML, /Google Analytics Data API/);
+  assert.match(element('mosScorecard').innerHTML, /Período atual não recebido/);
+  assert.doesNotMatch(element('mosScorecard').innerHTML, />68</);
   assert.match(element('mosAnalyticsFindings').innerHTML, /Atribuição da mídia paga ausente/);
   assert.match(element('mosActions').innerHTML, /UTMs padronizadas/);
   assert.equal(element('mosMediaSection').style.display, 'none');
@@ -82,25 +89,49 @@ test('MOS filters produce decision-grade paid, creative and revenue views', () =
   api.resetMosFilters();
   element('mosChannelFilter').value = 'organic';
   api.renderMosKpis();
-  assert.match(element('mosDecision').innerHTML, /562 visualizações no Instagram e 206 no Facebook/);
-  assert.match(element('mosDecision').innerHTML, /zero salvamentos e zero seguimentos/);
+  assert.match(element('mosDecision').innerHTML, /busca orgânica atual não está disponível/);
+  assert.match(element('mosScorecard').innerHTML, /Google Search Console API/);
+  assert.match(element('mosScorecard').innerHTML, /Período atual não recebido/);
   assert.match(element('mosContentSignal').innerHTML, /33 → 60 impressões/);
   assert.match(element('mosContentSignal').innerHTML, /Visualizações no Instagram/);
   assert.match(element('mosContentSignal').innerHTML, /30 jul de 2026 · 10:00 no Planner — não programada/);
   assert.match(element('mosContentSignal').innerHTML, /3 CSVs únicos, 4 downloads encontrados e 1 duplicata/);
   assert.doesNotMatch(element('mosContentSignal').innerHTML, />\+700%<\/div>/);
-  assert.match(element('mosSeoPageRows').innerHTML, /same-day-laundry-tourists-orlando/);
+  assert.match(element('mosSeoPageRows').innerHTML, /Nenhuma página orgânica/);
   assert.match(element('mosActions').innerHTML, /Melhorar CTR e indexação orgânica/);
   assert.match(element('mosActions').innerHTML, /Redistribuir o calendário orgânico/);
 
   api.resetMosFilters();
   element('mosChannelFilter').value = 'revenue';
   api.renderMosKpis();
-  assert.match(element('mosDecision').innerHTML, /seis pedidos e US\$ 491/);
-  assert.match(element('mosDecision').innerHTML, /ROAS bruto mesclado de 0,90x/);
-  assert.match(element('mosScorecard').innerHTML, /Receita bruta informada/);
-  assert.match(element('mosScorecard').innerHTML, /491,00/);
+  assert.match(element('mosDecision').innerHTML, /Vendas e receita atuais ainda não possuem fonte integrada/);
+  assert.doesNotMatch(element('mosScorecard').innerHTML, /Receita bruta informada/);
+  assert.match(element('mosManualScorecard').innerHTML, /MANUAL · NÃO É AO VIVO/);
+  assert.match(element('mosManualScorecard').innerHTML, /491,00/);
+  assert.match(element('mosManualScorecard').innerHTML, /Fonte: Relato do proprietário/);
+  assert.match(element('mosManualScorecard').innerHTML, /Período: 22 jun–21 jul de 2026/);
+  assert.doesNotMatch(element('mosManualScorecard').innerHTML, /API ao vivo/);
   assert.doesNotMatch(element('mosScorecard').innerHTML, /Investimento no Meta Ads/);
+});
+
+test('MOS preserves and exposes the complete immutable audit timeline', () => {
+  const {api, element} = dashboardRuntime();
+  api.renderMosKpis();
+  assert.match(element('mosAuditRegistrySummary').innerHTML, /12 auditorias imutáveis preservadas/);
+  assert.match(element('mosAuditRegistrySummary').innerHTML, /Mais recente.*apenas um ponteiro/);
+  assert.equal((element('mosAuditTimeline').innerHTML.match(/<button/g) || []).length, 12);
+  assert.match(element('mosAuditTimeline').innerHTML, /2026-07-10/);
+  assert.match(element('mosAuditTimeline').innerHTML, /2026-08-06/);
+  assert.match(element('mosAuditTimeline').innerHTML, /auditoria de mensagem e conversão/i);
+  assert.match(element('mosAuditTimeline').innerHTML, /auditoria de atendimento/i);
+  assert.match(element('mosAuditDetail').innerHTML, /SEO e tracking/);
+  assert.match(element('mosAuditDetail').innerHTML, /SHA-256/);
+  assert.match(element('mosAuditComparison').innerHTML, /não inventa valores/);
+  element('mosAuditSelect').value = '2026-07-27-mos-kpi-snapshot';
+  element('mosAuditCompareSelect').value = '2026-07-24-google-ads-meta-organic';
+  api.renderMosAuditRegistry();
+  assert.match(element('mosAuditDetail').innerHTML, /snapshot completo de KPIs/i);
+  assert.match(element('mosAuditDetail').innerHTML, /mos-data\/snapshots\/2026-07-27-mos-kpis\.js/);
 });
 
 test('MOS visible operating experience defaults to Brazilian Portuguese', () => {
@@ -124,7 +155,7 @@ test('MOS replaces only connected Google KPIs and labels their provenance', () =
         status: 'live',
         source: 'Google Analytics Data API',
         requestedPeriod: { startDate: '2026-06-24', endDate: '2026-07-23' },
-        summary: { activeUsers: 80, sessions: 123, engagementRate: 0.55, keyEvents: 22 },
+        summary: { activeUsers: 80, sessions: 123, engagementRate: 0.55, keyEvents: 22, ecommercePurchases: 10, totalRevenue: 491 },
         channels: [{ sessionDefaultChannelGroup: 'Organic Search', sessions: 50, engagedSessions: 30, engagementRate: 0.6, keyEvents: 8 }],
         landingPages: [
           { landingPage: '/blog/orlando-vacation-rental-laundry-guide.html', canonicalPath: '/blog/orlando-vacation-rental-laundry-guide.html', sessions: 12, activeUsers: 10, engagedSessions: 8, keyEvents: 1 },
@@ -203,6 +234,17 @@ test('MOS replaces only connected Google KPIs and labels their provenance', () =
   assert.doesNotMatch(element('mosKpiAlert').innerHTML, /Meta Ads permanece não conectado/);
   assert.match(element('mosScorecard').innerHTML, /API ao vivo/);
   assert.match(element('mosScorecard').innerHTML, />123</);
+  element('mosChannelFilter').value = 'revenue';
+  api.renderMosKpis();
+  assert.match(element('mosScorecard').innerHTML, /Compras registradas no GA4/);
+  assert.match(element('mosScorecard').innerHTML, />10</);
+  assert.match(element('mosScorecard').innerHTML, /Receita registrada no GA4/);
+  assert.match(element('mosScorecard').innerHTML, /491,00/);
+  assert.match(element('mosScorecard').innerHTML, /Google Analytics Data API/);
+  assert.match(element('mosScorecard').innerHTML, /2026-06-24–2026-07-23/);
+  assert.match(element('mosScorecard').innerHTML, /API ao vivo/);
+  element('mosChannelFilter').value = 'all';
+  api.renderMosKpis();
   assert.match(element('mosAnalyticsSummary').innerHTML, /API AO VIVO/);
   assert.match(element('mosSeoRows').innerHTML, /&lt;script&gt;unsafe&lt;\/script&gt;/);
   assert.doesNotMatch(element('mosSeoRows').innerHTML, /<script>unsafe<\/script>/);
@@ -225,8 +267,9 @@ test('MOS replaces only connected Google KPIs and labels their provenance', () =
   assert.match(element('mosArticleSummary').innerHTML, />4</);
   assert.ok(element('mosArticleRows').innerHTML.indexOf('Orlando vacation laundry guide') < element('mosArticleRows').innerHTML.indexOf('Laundry cost in Orlando'));
   assert.match(element('mosNetworkFunnel').innerHTML, /Descoberta/);
-  assert.match(element('mosNetworkFunnel').innerHTML, /Retenção/);
-  assert.match(element('mosNetworkFunnelBoundary').innerHTML, /não são atribuídas a um artigo/);
+  assert.doesNotMatch(element('mosNetworkFunnel').innerHTML, /Retenção/);
+  assert.doesNotMatch(element('mosNetworkFunnel').innerHTML, /Venda/);
+  assert.match(element('mosNetworkFunnelBoundary').innerHTML, /Registros manuais/);
 
   element('mosArticleSort').value = 'keyEvents';
   api.renderMosKpis();
@@ -312,15 +355,23 @@ test('MOS uses the native Google Ads API for current campaign and delivery state
   assert.doesNotMatch(element('mosGoogleAdsSummary').innerHTML, /Fundos esgotados/);
 });
 
-test('MOS keeps the dated snapshot when the live connection is unavailable', () => {
+test('MOS fails closed and separates the dated snapshot when the live connection is unavailable', () => {
   const { api, element } = dashboardRuntime();
   globalThis.A7_MOS_LIVE = { schemaVersion: '1.0', status: 'unavailable', sources: {} };
   globalThis.A7_MOS_LIVE_STATE = { status: 'unavailable' };
   api.renderMosKpis();
-  assert.match(element('mosKpiAlert').innerHTML, /Fallback histórico ativo/);
+  assert.match(element('mosKpiAlert').innerHTML, /Dados atuais indisponíveis/);
+  assert.match(element('mosKpiAlert').innerHTML, /Nenhum número histórico foi usado como fallback/);
   assert.match(element('mosScorecard').innerHTML, /Usuários ativos no GA4/);
-  assert.match(element('mosAnalyticsSummary').innerHTML, /RETRATO HISTÓRICO/);
-  assert.match(element('mosScorecard').innerHTML, />68</);
+  assert.match(element('mosScorecard').innerHTML, /Indisponível/);
+  assert.match(element('mosScorecard').innerHTML, /Google Analytics Data API/);
+  assert.match(element('mosScorecard').innerHTML, /Período atual não recebido/);
+  assert.match(element('mosAnalyticsSummary').innerHTML, /INDISPONÍVEL/);
+  assert.doesNotMatch(element('mosScorecard').innerHTML, />68</);
+  assert.match(element('mosHistoricalScorecard').innerHTML, />68</);
+  assert.match(element('mosHistoricalScorecard').innerHTML, /RETRATO HISTÓRICO/);
+  assert.match(element('mosManualScorecard').innerHTML, /MANUAL · NÃO É AO VIVO/);
+  assert.doesNotMatch(element('mosManualScorecard').innerHTML, /API ao vivo/);
 });
 
 test('browser bundle contains no Google workload identity values or private keys', () => {

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-15-meta-comforter",
+  "auditDate": "2026-07-15",
+  "title": "Meta Ads — comforter campaign checkpoint",
+  "type": "campaign_snapshot",
+  "status": "partial",
+  "scope": [
+    "meta_ads",
+    "comforter"
+  ],
+  "summary": "Checkpoint documental da campanha de edredom. Métricas não presentes no documento permanecem indisponíveis.",
+  "sources": [
+    {
+      "name": "Meta Ads campaign snapshot",
+      "status": "partial",
+      "period": "até 15 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "marketing/meta-ads/campaigns/2026-07-laundry-comforter/snapshot-2026-07-15.md",
+      "sha256": "b98010c1b79eab35c0c59456302dccd0c07e2d00ec1c8dbfafa1b8fde48b3bad"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-10-meta-comforter-pre-pause",
+  "previousRecordSha256": "4fa722aee62f82c55bcd01170ed23c8469065fa2dd126ac910072d0905352546"
+}

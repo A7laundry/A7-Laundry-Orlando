@@ -1,25 +1,36 @@
-/* A7 Laundry — unified tracking v3 (GA4 + Google Ads + Meta Pixel + conversion events)
-   Single source of truth. Include on every public page:
-     <script src="/a7-tracking.js" defer></script>
-   - Initializes GA4 (G-JLQNRC7MK4), Google Ads (AW-17146169189) and
-     Meta Pixel (1452877649635363) — idempotent
-     (skips init + PageView if a page already inlined the Pixel, so no double count).
-   - Fires Lead (Meta Pixel) + a GA4 event on WhatsApp / SMS / Call / pickup-CTA clicks.
-   - Fires a typed page_view (money_page_view / service_page_view / blog_pageview) and
-     ViewContent (Pixel) on money + service pages.
-   - Persists campaign parameters for the current browser session so a lead click
-     keeps its acquisition source after the visitor moves between pages.
-   - Enriches every event with page_path, article_slug, funnel_stage, persona, geo,
-     campaign attribution, cta_location, channel and destination. */
+/* A7 Laundry — unified tracking v4 shadow foundation.
+   GA4 + Google Ads + Meta remain compatible. Attribution V2 is fail-open. */
 (function () {
   'use strict';
 
-  var GA4_ID = 'G-JLQNRC7MK4';
-  var GOOGLE_ADS_ID = 'AW-17146169189';
-  var GOOGLE_ADS_WHATSAPP_DESTINATION = 'AW-17146169189/dhI0CO_7xNgcEOWO9-8_';
-  var GOOGLE_ADS_PHONE_DESTINATION = 'AW-17146169189/83lbCLK53NgcEOWO9-8_';
+  if (window.__A7_TRACKING_INITIALIZED__) return;
+  window.__A7_TRACKING_INITIALIZED__ = true;
+
+  var FALLBACK_CONFIG = {
+    businessName: 'A7 Laundry Orlando',
+    phoneE164: '+14076708839',
+    whatsappNumber: '14076708839',
+    displayPhone: '(407) 670-8839',
+    measurement: {
+      ga4Id: 'G-JLQNRC7MK4',
+      googleAdsId: 'AW-17146169189',
+      whatsappConversion: 'AW-17146169189/dhI0CO_7xNgcEOWO9-8_',
+      websiteCallConversion: 'AW-17146169189/83lbCLK53NgcEOWO9-8_',
+      metaPixelId: '1452877649635363'
+    },
+    buildWhatsAppUrl: function (message, shortRef) {
+      var clean = typeof message === 'string' ? message.replace(/(?:\r?\n)?A7 Ref:\s*[^\r\n]+\s*$/i, '').trim() : '';
+      if (/^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{10}$/i.test(shortRef || '')) clean += (clean ? '\n' : '') + 'A7 Ref: ' + shortRef.toUpperCase();
+      return 'https://wa.me/14076708839' + (clean ? '?text=' + encodeURIComponent(clean) : '');
+    }
+  };
+  var CONFIG = window.A7_BUSINESS_CONFIG || FALLBACK_CONFIG;
+  var GA4_ID = CONFIG.measurement.ga4Id;
+  var GOOGLE_ADS_ID = CONFIG.measurement.googleAdsId;
+  var GOOGLE_ADS_WHATSAPP_DESTINATION = CONFIG.measurement.whatsappConversion;
+  var GOOGLE_ADS_PHONE_DESTINATION = CONFIG.measurement.websiteCallConversion;
   var OFFICIAL_PHONE = '+1 407-670-8839';
-  var PIXEL_ID = '1452877649635363';
+  var PIXEL_ID = CONFIG.measurement.metaPixelId;
   var CHECKOUTS = {
     '7sY00jbJy8FE0oTbRfeZ207': { item_id: 'comforter-twin', item_name: 'Twin Comforter Cleaning', value: 33 },
     'aFa8wP3d2f420oT6wVeZ208': { item_id: 'comforter-queen', item_name: 'Full / Queen Comforter Cleaning', value: 37 },
@@ -27,39 +38,59 @@
     'bJe14n8xm2hg1sXdZneZ20a': { item_id: 'comforter-down', item_name: 'Down / Feather Comforter Cleaning', value: 45 }
   };
 
-  /* ---------------- GA4 (gtag.js) ---------------- */
+  var debugAllowed = location.hostname === 'localhost'
+    || location.hostname === '127.0.0.1'
+    || window.__A7_DEBUG_AUTHORIZED__ === true;
+  var debugLog = [];
+  function diagnose(type, detail) {
+    if (!debugAllowed) return;
+    debugLog.push({ at: new Date().toISOString(), type: type, detail: detail || {} });
+    if (debugLog.length > 100) debugLog.shift();
+  }
+  if (debugAllowed) {
+    window.__A7_MEASUREMENT_DEBUG__ = {
+      entries: function () { return debugLog.slice(); },
+      snapshot: function () {
+        var state = attributionClient && attributionClient.getState();
+        return {
+          attribution_id: window.A7_ATTRIBUTION ? window.A7_ATTRIBUTION.maskId(state && state.attribution_id) : 'unavailable',
+          short_ref: state && state.short_ref || '',
+          click_id_present: state && state.click_id_present || { gclid: false, gbraid: false, wbraid: false },
+          source: state && state.last_touch && state.last_touch.source || '',
+          medium: state && state.last_touch && state.last_touch.medium || '',
+          whatsapp_destination: CONFIG.whatsappNumber
+        };
+      }
+    };
+  }
+
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   if (!document.getElementById('ga4-js')) {
-    var g = document.createElement('script');
-    g.async = true; g.id = 'ga4-js';
-    g.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
-    document.head.appendChild(g);
+    var script = document.createElement('script');
+    script.async = true;
+    script.id = 'ga4-js';
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+    document.head.appendChild(script);
   }
-  gtag('js', new Date());
-  gtag('config', GA4_ID);
-  gtag('config', GOOGLE_ADS_ID);
-  gtag('config', GOOGLE_ADS_PHONE_DESTINATION, {
-    phone_conversion_number: OFFICIAL_PHONE
-  });
+  try {
+    gtag('js', new Date());
+    gtag('config', GA4_ID);
+    gtag('config', GOOGLE_ADS_ID);
+    gtag('config', GOOGLE_ADS_PHONE_DESTINATION, { phone_conversion_number: OFFICIAL_PHONE });
+  } catch (_) { diagnose('google_tag_init_failed'); }
 
-  /* ---------------- Meta Pixel (idempotent) ---------------- */
   if (!window.fbq) {
     !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () {
-        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      };
+      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
       if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
       n.queue = []; t = b.createElement(e); t.async = !0; t.src = v;
       s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', PIXEL_ID);
-    fbq('track', 'PageView'); // only when this file did the init → avoids double PageView
+    try { fbq('init', PIXEL_ID); fbq('track', 'PageView'); } catch (_) { diagnose('meta_init_failed'); }
   }
 
-  /* ---------------- context maps ---------------- */
   var FUNNEL = {
-    // phase-1 (persona/BOFU + geo + TOFU)
     'hotel-laundry-service-orlando': 'bofu', 'airbnb-laundry-service-orlando': 'bofu',
     'laundry-before-checkout-orlando': 'bofu', 'hotel-vs-pickup-laundry-orlando': 'mofu',
     'family-vacation-laundry-orlando': 'bofu', 'laundry-international-drive-orlando': 'bofu',
@@ -67,7 +98,6 @@
     'laundry-windermere-fl': 'geo', 'laundry-clermont-fl': 'geo', 'laundry-ocoee-fl': 'geo',
     'same-day-laundry-tourists-orlando': 'tofu', 'pack-less-orlando-trip-laundry': 'tofu',
     'no-car-laundry-orlando': 'tofu', 'laundry-tips-orlando-vacation': 'tofu',
-    // legacy
     'laundry-service-orlando': 'tofu', 'how-to-clean-comforter': 'tofu',
     'vacation-rental-laundry-orlando': 'mofu', 'same-day-laundry-orlando': 'bofu',
     'laundry-kissimmee': 'geo', 'laundry-near-disney-world': 'geo',
@@ -83,11 +113,10 @@
   var PERSONA = {
     'hotel-laundry-service-orlando': 'hotel', 'hotel-vs-pickup-laundry-orlando': 'hotel',
     'airbnb-laundry-service-orlando': 'airbnb', 'laundry-for-vacation-rental-guests': 'airbnb',
-    'family-vacation-laundry-orlando': 'family',
-    'airbnb-host-laundry-tips-orlando': 'host', 'how-often-wash-vacation-rental-linens': 'host',
-    'laundry-subscription-vacation-rental': 'host', 'vacation-rental-checklist-orlando': 'host',
-    'a7-laundry-review': 'host', 'orlando-vacation-rental-laundry-guide': 'host',
-    'vacation-rental-laundry-orlando': 'host'
+    'family-vacation-laundry-orlando': 'family', 'airbnb-host-laundry-tips-orlando': 'host',
+    'how-often-wash-vacation-rental-linens': 'host', 'laundry-subscription-vacation-rental': 'host',
+    'vacation-rental-checklist-orlando': 'host', 'a7-laundry-review': 'host',
+    'orlando-vacation-rental-laundry-guide': 'host', 'vacation-rental-laundry-orlando': 'host'
   };
   var GEO = {
     'laundry-international-drive-orlando': 'i-drive', 'laundry-near-universal-orlando': 'universal',
@@ -103,6 +132,7 @@
     if (parts[0] === 'blog' && parts.length === 1) return 'blog-index';
     return parts[parts.length - 1].replace(/\.html$/, '');
   }
+
   function ctaLocation(el) {
     if (!el || !el.closest) return 'inline';
     if (el.classList && el.classList.contains('wa-fab')) return 'sticky-fab';
@@ -113,212 +143,154 @@
     return 'inline';
   }
 
-  /* ---------------- campaign attribution ---------------- */
-  var ATTRIBUTION_KEYS = [
-    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
-    'gclid', 'gbraid', 'wbraid', 'fbclid'
-  ];
-  var ATTRIBUTION_STORAGE_KEY = 'a7_campaign_attribution';
-
-  function safeSessionRead() {
-    try {
-      var raw = window.sessionStorage && window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : {};
-    } catch (error) {
-      return {};
-    }
-  }
-
-  function safeSessionWrite(value) {
-    try {
-      if (window.sessionStorage) {
-        window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(value));
-      }
-    } catch (error) {
-      // Tracking must never block navigation when storage is unavailable.
-    }
-  }
-
-  function classifyReferrer() {
-    var rawReferrer = document.referrer || '';
-    if (!rawReferrer) return { origin_class: 'direct', origin_source: 'direct' };
-    try {
-      var hostname = new URL(rawReferrer).hostname.toLowerCase().replace(/^www\./, '');
-      if (hostname === 'a7laundry.com' || hostname.endsWith('.a7laundry.com')) return null;
-      if (hostname === 'google.com' || hostname.endsWith('.google.com')) {
-        return { origin_class: 'organic_search', origin_source: 'google-organic' };
-      }
-      if (hostname === 'bing.com' || hostname.endsWith('.bing.com')) {
-        return { origin_class: 'organic_search', origin_source: 'bing-organic' };
-      }
-      if (hostname === 'yahoo.com' || hostname.endsWith('.yahoo.com')) {
-        return { origin_class: 'organic_search', origin_source: 'yahoo-organic' };
-      }
-      var aiSources = {
-        'chatgpt.com': 'ai-chatgpt',
-        'openai.com': 'ai-openai',
-        'perplexity.ai': 'ai-perplexity',
-        'claude.ai': 'ai-claude',
-        'gemini.google.com': 'ai-gemini',
-        'copilot.microsoft.com': 'ai-copilot'
-      };
-      if (aiSources[hostname]) {
-        return { origin_class: 'ai_assistant', origin_source: aiSources[hostname] };
-      }
-      return {
-        origin_class: 'referral',
-        origin_source: ('ref-' + hostname).slice(0, 80)
-      };
-    } catch (error) {
-      return { origin_class: 'direct', origin_source: 'direct' };
-    }
-  }
-
-  function readCampaignAttribution() {
-    var saved = safeSessionRead();
-    var params = new URLSearchParams(location.search || '');
-    var foundCampaignParam = false;
-
-    for (var i = 0; i < ATTRIBUTION_KEYS.length; i++) {
-      var key = ATTRIBUTION_KEYS[i];
-      var value = params.get(key);
-      if (value) {
-        saved[key] = value.slice(0, 250);
-        foundCampaignParam = true;
-      }
-    }
-
-    if (!saved.landing_page) saved.landing_page = location.pathname;
-    if (!saved.entry_slug) saved.entry_slug = getSlug();
-    if (foundCampaignParam) {
-      saved.origin_class = 'campaign';
-      saved.origin_source = saved.utm_source
-        || (saved.gclid || saved.gbraid || saved.wbraid ? 'google-ads' : 'meta');
-      saved.attribution_captured_at = new Date().toISOString();
-    } else if (!saved.origin_class) {
-      var referrer = classifyReferrer();
-      saved.origin_class = referrer ? referrer.origin_class : 'direct';
-      saved.origin_source = referrer ? referrer.origin_source : 'direct';
-    }
-    safeSessionWrite(saved);
-    return saved;
-  }
-
-  function leadReference(attribution) {
-    var parts = [
-      attribution.utm_source,
-      attribution.utm_campaign,
-      attribution.utm_content
-    ].filter(Boolean);
-    if (!parts.length && attribution.gclid) parts.push('google-ads');
-    if (!parts.length && attribution.fbclid) parts.push('meta');
-    if (!parts.length) {
-      parts.push(attribution.origin_source || 'direct');
-      parts.push(attribution.entry_slug || 'unknown-page');
-    }
-    return parts.join('|').replace(/[^a-zA-Z0-9_|.-]/g, '-').slice(0, 120);
-  }
-
-  function decorateWhatsAppLinks(attribution) {
-    if (!document.querySelectorAll) return;
-    var reference = leadReference(attribution);
-    var links = document.querySelectorAll('a[href*="wa.me/"]');
-    for (var i = 0; i < links.length; i++) {
-      var link = links[i];
-      try {
-        var url = new URL(link.getAttribute('href'), 'https://a7laundry.com');
-        var message = url.searchParams.get('text') || '';
-        if (message.indexOf('A7 Ref:') === -1) {
-          url.searchParams.set('text', message + '\nA7 Ref: ' + reference);
-          link.setAttribute('href', url.toString());
-        }
-      } catch (error) {
-        // A malformed third-party link must not affect the rest of the page.
-      }
-    }
-  }
-
   var SLUG = getSlug();
   var PATH = location.pathname;
-  var ATTRIBUTION = readCampaignAttribution();
-  decorateWhatsAppLinks(ATTRIBUTION);
   var isBlog = /^\/blog\//.test(PATH) || SLUG === 'blog-index';
   var isMoney = /laundry-pickup-delivery-orlando/.test(PATH);
   var isThankYou = /comforter-thanks/.test(PATH);
   var isService = /(service-areas|comforter|carpet|shoe|upholstery|vacation|plans)/.test(PATH) && !isMoney && !isThankYou;
+  var attributionClient = null;
+
+  function attributionState() { return attributionClient && attributionClient.getState(); }
 
   function baseParams(extra) {
-    var p = {
+    var state = attributionState();
+    var touch = state && state.last_touch;
+    var params = {
       page_path: PATH,
       article_slug: SLUG,
       funnel_stage: FUNNEL[SLUG] || (isMoney ? 'bofu' : 'other'),
       persona: PERSONA[SLUG] || 'general',
       geo: GEO[SLUG] || 'orlando',
-      landing_page: ATTRIBUTION.landing_page || PATH,
-      lead_reference: leadReference(ATTRIBUTION),
-      origin_class: ATTRIBUTION.origin_class || 'direct',
-      origin_source: ATTRIBUTION.origin_source || 'direct'
+      landing_page: state && state.first_touch && state.first_touch.landing_page || PATH,
+      lead_reference: state && state.short_ref || '',
+      origin_class: touch && touch.entry_type || 'unknown',
+      origin_source: touch && touch.source || 'unknown'
     };
-    for (var i = 0; i < ATTRIBUTION_KEYS.length; i++) {
-      var attributionKey = ATTRIBUTION_KEYS[i];
-      if (ATTRIBUTION[attributionKey]) p[attributionKey] = ATTRIBUTION[attributionKey];
-    }
-    if (extra) for (var k in extra) p[k] = extra[k];
-    return p;
+    if (extra) for (var key in extra) params[key] = extra[key];
+    return params;
   }
 
-  /* ---------------- typed page_view ---------------- */
+  function originalWhatsAppMessage(link) {
+    try {
+      var url = new URL(link.getAttribute('href'), 'https://a7laundry.com');
+      return CONFIG.cleanWhatsAppMessage ? CONFIG.cleanWhatsAppMessage(url.searchParams.get('text') || '') : (url.searchParams.get('text') || '');
+    } catch (_) { return ''; }
+  }
+
+  function buildWhatsAppLink(link) {
+    if (!link) return;
+    try {
+      var state = attributionState();
+      link.setAttribute('href', CONFIG.buildWhatsAppUrl(originalWhatsAppMessage(link), state && state.short_ref));
+      diagnose('whatsapp_cta_built', { short_ref: state && state.short_ref || '', destination: CONFIG.whatsappNumber });
+    } catch (_) { diagnose('whatsapp_cta_build_failed'); }
+  }
+
+  function decorateWhatsAppLinks() {
+    if (!document.querySelectorAll) return;
+    var links = document.querySelectorAll('a[href*="wa.me/"]');
+    for (var i = 0; i < links.length; i++) buildWhatsAppLink(links[i]);
+  }
+
+  if (window.A7_ATTRIBUTION && typeof window.A7_ATTRIBUTION.createBrowserClient === 'function') {
+    attributionClient = window.A7_ATTRIBUTION.createBrowserClient({ window: window });
+    attributionClient.subscribe(function (state, kind) {
+      var safeDetail = {
+        attribution_id: window.A7_ATTRIBUTION.maskId(state && state.attribution_id),
+        short_ref: state && state.short_ref || '',
+        click_id_present: state && state.click_id_present || { gclid: false, gbraid: false, wbraid: false }
+      };
+      diagnose(kind, safeDetail);
+      if (kind === 'attribution_created') diagnose('short_ref_generated', { short_ref: safeDetail.short_ref });
+      if (state && state.first_touch) diagnose('first_touch', { source: state.first_touch.source, medium: state.first_touch.medium });
+      if (state && state.last_touch) diagnose('last_touch', { source: state.last_touch.source, medium: state.last_touch.medium });
+      if (state && state.short_ref) decorateWhatsAppLinks();
+    });
+    attributionClient.initialize({
+      url: location.href,
+      referrer: document.referrer || '',
+      timestamp: new Date().toISOString()
+    });
+  } else {
+    diagnose('attribution_module_unavailable');
+  }
+
   var pageEvent = isMoney ? 'money_page_view' : isBlog ? 'blog_pageview' : isService ? 'service_page_view' : 'page_view_typed';
-  gtag('event', pageEvent, baseParams());
+  try {
+    if (pageEvent === 'service_page_view' && window.A7_EVENTS) window.A7_EVENTS.track('service_page_view', baseParams(), window.gtag);
+    else gtag('event', pageEvent, baseParams());
+  } catch (_) { diagnose('page_event_failed', { event: pageEvent }); }
   if ((isMoney || isService) && window.fbq) {
-    fbq('track', 'ViewContent', { content_name: SLUG, content_category: isMoney ? 'money_page' : 'service_page' });
+    try { fbq('track', 'ViewContent', { content_name: SLUG, content_category: isMoney ? 'money_page' : 'service_page' }); } catch (_) {}
   }
 
-  /* ---------------- click tracking (WhatsApp / SMS / Call / pickup) ---------------- */
-  document.addEventListener('click', function (e) {
-    var a = e.target && e.target.closest && e.target.closest('a');
-    if (!a) return;
-    var href = a.getAttribute('href') || '';
+  var processedEvents = typeof WeakSet === 'function' ? new WeakSet() : null;
+  document.addEventListener('click', function (event) {
+    if (processedEvents) {
+      if (processedEvents.has(event)) return;
+      processedEvents.add(event);
+    }
+    var anchor = event.target && event.target.closest && event.target.closest('a');
+    if (!anchor) return;
+    var href = anchor.getAttribute('href') || '';
     var channel = href.indexOf('wa.me/') > -1 ? 'whatsapp'
       : href.indexOf('buy.stripe.com/') > -1 ? 'checkout'
       : href.indexOf('sms:') === 0 ? 'sms'
       : href.indexOf('tel:') === 0 ? 'call'
-      : (/laundry-pickup-delivery-orlando/.test(href) || /schedule pickup|book (a )?pickup|request pickup/i.test(a.textContent || '')) ? 'pickup'
+      : (/laundry-pickup-delivery-orlando/.test(href) || /schedule pickup|book (a )?pickup|request pickup/i.test(anchor.textContent || '')) ? 'pickup'
       : null;
     if (!channel) return;
 
-    var evName = channel === 'whatsapp' ? 'whatsapp_click'
+    if (channel === 'whatsapp') {
+      buildWhatsAppLink(anchor);
+      href = anchor.getAttribute('href') || href;
+    }
+    var eventName = channel === 'whatsapp' ? 'whatsapp_click'
       : channel === 'checkout' ? 'begin_checkout'
       : channel === 'sms' ? 'sms_click'
       : channel === 'call' ? 'call_click' : 'pickup_cta_click';
-
-    var params = baseParams({ cta_location: ctaLocation(a), channel: channel, destination: href, source_page: PATH });
+    var params = baseParams({ cta_location: ctaLocation(anchor), channel: channel, destination: href, source_page: PATH });
     if (channel === 'checkout') {
       var checkoutId = href.split('/').pop().split('?')[0];
       var checkout = CHECKOUTS[checkoutId];
       if (checkout) {
-        params.currency = 'USD';
-        params.value = checkout.value;
+        params.currency = 'USD'; params.value = checkout.value;
         params.items = [{ item_id: checkout.item_id, item_name: checkout.item_name, price: checkout.value, quantity: 1 }];
       }
     }
-    gtag('event', evName, params);
+
+    try {
+      if (channel === 'whatsapp' && window.A7_EVENTS) window.A7_EVENTS.track('whatsapp_click', params, window.gtag);
+      else if (channel === 'call' && window.A7_EVENTS) window.A7_EVENTS.track('phone_click', params, window.gtag);
+      else gtag('event', eventName, params);
+    } catch (_) { diagnose('analytics_event_failed', { event: eventName }); }
+
+    var adsConversionFired = false;
     if (channel === 'whatsapp') {
-      gtag('event', 'conversion', {
-        send_to: GOOGLE_ADS_WHATSAPP_DESTINATION
-      });
+      try {
+        gtag('event', 'conversion', { send_to: GOOGLE_ADS_WHATSAPP_DESTINATION });
+        adsConversionFired = true;
+      } catch (_) { diagnose('ads_conversion_failed'); }
     }
     if (window.fbq) {
-      if (channel === 'checkout') {
-        fbq('track', 'InitiateCheckout', {
-          content_name: params.items ? params.items[0].item_name : SLUG,
-          content_category: 'comforter_cleaning',
-          value: params.value,
-          currency: params.currency || 'USD'
-        });
-      } else {
-        fbq('track', 'Lead', { content_name: SLUG, content_category: params.funnel_stage, source: channel + ':' + params.cta_location });
-      }
+      try {
+        if (channel === 'checkout') {
+          fbq('track', 'InitiateCheckout', {
+            content_name: params.items ? params.items[0].item_name : SLUG,
+            content_category: 'comforter_cleaning', value: params.value, currency: params.currency || 'USD'
+          });
+        } else {
+          fbq('track', 'Lead', { content_name: SLUG, content_category: params.funnel_stage, source: channel + ':' + params.cta_location });
+        }
+      } catch (_) { diagnose('meta_event_failed', { event: eventName }); }
     }
+    diagnose(channel === 'whatsapp' ? 'whatsapp_click' : 'contact_click', {
+      event: eventName,
+      attribution_id: window.A7_ATTRIBUTION ? window.A7_ATTRIBUTION.maskId(attributionState() && attributionState().attribution_id) : 'unavailable',
+      short_ref: attributionState() && attributionState().short_ref || '',
+      destination: channel === 'whatsapp' ? CONFIG.whatsappNumber : channel,
+      ads_conversion_fired: adsConversionFired
+    });
   }, true);
-})();
+}());

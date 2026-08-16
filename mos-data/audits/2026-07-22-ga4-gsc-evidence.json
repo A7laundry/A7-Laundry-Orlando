@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-22-ga4-gsc-evidence",
+  "auditDate": "2026-07-22",
+  "title": "GA4 e Search Console — pacote de evidências",
+  "type": "evidence_capture",
+  "status": "partial",
+  "scope": [
+    "ga4",
+    "search_console",
+    "seo"
+  ],
+  "summary": "Exportações auditáveis de GA4 e Search Console preservadas com seus períodos originais.",
+  "sources": [
+    {
+      "name": "Google Analytics 4 exports",
+      "status": "verified",
+      "period": "22 jun–21 jul 2026 e comparativos documentados"
+    },
+    {
+      "name": "Google Search Console exports",
+      "status": "verified",
+      "period": "períodos declarados nos arquivos"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_CAMPAIGNS.csv",
+      "sha256": "44d512528742af9e4d191468a9be4cee87e20042c40b4330279f3cc05d63fcbe"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_DAILY_DEVICE_USERS.csv",
+      "sha256": "ffa8c36e9ba742ea9166cc5db0b0524d1177145dcfecfc26b9791016f71912da"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_ECOMMERCE_EMPTY.csv",
+      "sha256": "2683e7ab11a697bb8909bdbf8437fc8e485adecf0b9f96701d6b2e51f5f47e35"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_EVENTS.csv",
+      "sha256": "13b2c0cf9a04e38726fc6ef2b10a28139f8b61214576931f3cb0a5037e86f124"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_GEOGRAPHY_COUNTRY.csv",
+      "sha256": "151ff92fb5ccfd8f2de8c4c7e73a0665d032304c5ac8ab4d1eb1dada113665c7"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_KEY_EVENTS_LEADS.csv",
+      "sha256": "9ca92072c04ee61f3420b30930eda8b7f8d12b64f9f5c3e6bce997fc4f176c56"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_LANDING_PAGES.csv",
+      "sha256": "72352825f07fb4bae3ba243cf3b123f17cd5aa1e62df486fb850197695c18458"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_PAGES_SCREENS.csv",
+      "sha256": "0cc660d566f045b528e507d9e65d7fdd0b5354df7f2c673d9b1433ab498c626b"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_SOURCE_MEDIUM.csv",
+      "sha256": "6b9828780e18165b0ddaa0c9e2117a4209402d2d207a9b1d36c879c6bbe86e54"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_TECHNOLOGY_BROWSER.csv",
+      "sha256": "2443c37491bd4c5546e37cde5ff94f74d80748f87ee16699d5f886ee43336dc1"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_TRAFFIC_ACQUISITION.csv",
+      "sha256": "3ace4263fd9d64431ca371e40613aa5b3d0895031b564dd9ece17700eac6af26"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_2026-06-22_2026-07-21_USER_ACQUISITION.csv",
+      "sha256": "4667b44e4cb15a8d6edf46664dd800f87c489e378ffe20f74b3677498e920611"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_COMPARISON_2026-07-03_2026-07-10.csv",
+      "sha256": "6c1837385361549af63c058c7ff376932e7696ee079b9cddb127b3cda3010e54"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/A7_GA4_COMPARISON_2026-07-11_2026-07-21.csv",
+      "sha256": "80e9c02b7e9ba9933c1373a34284e44b1de94dee65fae9881ef5184ff811ac01"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/ga4/README.md",
+      "sha256": "8c253f5e8616b9be47db98e9d24237ef7914c9c3e2285beabe76963bd64e44a5"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/gsc/A7_GSC_2026-06-30_2026-07-17_PERFORMANCE.xlsx",
+      "sha256": "252cadfa7137d0ed77b4c5fac725218bd573f229b763f3992186870abb81bfae"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/gsc/A7_GSC_2026-07-09_COVERAGE.xlsx",
+      "sha256": "25c99ed854f66ff83a02151d3701d593bfa88eb2194e5bf5c76765c28f5a4660"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/gsc/A7_GSC_2026-07-20_BREADCRUMBS.xlsx",
+      "sha256": "a85b57f36ab9433e5bade04a9cca7430e76256943ce2fb7d3bbea9a63dbd7f38"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/gsc/A7_GSC_2026-07-20_REVIEW_SNIPPETS.xlsx",
+      "sha256": "cc0719a49b2849dbf5da4c4fbb2e35cb800ca2bdb783f64d43ba1cf553004fa0"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/gsc/A7_GSC_2026-07-21_HTTPS.xlsx",
+      "sha256": "764ab5e1f8b420d7f73f937f2f85758121c881879d9418297ee38e80eb7e35c4"
+    },
+    {
+      "path": "docs/audits/evidence/2026-07-22/gsc/README.md",
+      "sha256": "6a923e13f1f26566e933e2cd0957c9b68f67fd0be1d45158217f1c57922359e6"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-15-meta-comforter",
+  "previousRecordSha256": "baf6c1d96eed1fe60dda8b2e4d494159a4c47df366d8a850eaad1d34085ec0c2"
+}

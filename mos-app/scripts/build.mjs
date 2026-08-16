@@ -8,6 +8,8 @@ const output = path.join(appRoot, 'dist');
 
 execFileSync(process.execPath, [path.join(projectRoot, 'scripts/mos-funnel.mjs'), 'compile'], {stdio: 'inherit'});
 execFileSync(process.execPath, [path.join(projectRoot, 'scripts/validate-funnel-intelligence.mjs')], {stdio: 'inherit'});
+execFileSync(process.execPath, [path.join(projectRoot, 'scripts/mos-audits.mjs'), 'compile'], {stdio: 'inherit'});
+execFileSync(process.execPath, [path.join(projectRoot, 'scripts/mos-audits.mjs'), 'validate'], {stdio: 'inherit'});
 
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
@@ -21,6 +23,8 @@ if (!dashboard.includes('href="/api/logout"')) throw new Error('MOS logout injec
 
 fs.writeFileSync(path.join(output, 'index.html'), dashboard);
 fs.copyFileSync(path.join(projectRoot, 'mos-kpis.js'), path.join(output, 'mos-kpis.js'));
+fs.copyFileSync(path.join(appRoot, 'generated/audit-registry.js'), path.join(output, 'audit-registry.js'));
+fs.cpSync(path.join(projectRoot, 'mos-data'), path.join(output, 'mos-data'), {recursive: true});
 fs.copyFileSync(path.join(appRoot, 'funnel-intelligence-contract.js'), path.join(output, 'funnel-intelligence-contract.js'));
 fs.mkdirSync(path.join(output, 'generated'), {recursive: true});
 fs.copyFileSync(path.join(appRoot, 'generated/funnel-intelligence.json'), path.join(output, 'generated/funnel-intelligence.json'));
@@ -54,9 +58,12 @@ fs.copyFileSync(
   path.join(testCreativeOutput, 'opt-op1-discricao-operacao-real_pt_9x16.png')
 );
 
-for (const file of ['index.html', 'mos-kpis.js', 'funnel-intelligence-contract.js', 'generated/funnel-intelligence.json', 'login.html', 'logo-a7-laundry-usa.png']) {
+for (const file of ['index.html', 'mos-kpis.js', 'audit-registry.js', 'funnel-intelligence-contract.js', 'generated/funnel-intelligence.json', 'login.html', 'logo-a7-laundry-usa.png']) {
   if (!fs.existsSync(path.join(output, file))) throw new Error(`MOS build missing ${file}`);
 }
+if (!fs.existsSync(path.join(output, 'mos-data/audits/2026-07-10-meta-comforter-pre-pause.json'))) throw new Error('MOS build missing oldest immutable audit');
+if (!fs.existsSync(path.join(output, 'mos-data/audits/2026-08-06-seo-tracking-cleanup.json'))) throw new Error('MOS build missing latest immutable audit');
+if (!fs.existsSync(path.join(output, 'mos-data/snapshots/2026-07-27-mos-kpis.js'))) throw new Error('MOS build missing immutable KPI snapshot');
 for (const [, file] of activeCreatives) {
   if (!fs.existsSync(path.join(activeCreativeOutput, file))) throw new Error(`MOS build missing active creative ${file}`);
 }

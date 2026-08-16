@@ -3,133 +3,473 @@
   "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
-    { "source": "/plans", "destination": "/plans.html" },
-    { "source": "/privacy-policy", "destination": "/privacy-policy.html" },
-    { "source": "/carpet", "destination": "/carpet-cleaning.html" },
-    { "source": "/shoes", "destination": "/shoe-cleaning.html" },
-    { "source": "/upholstery", "destination": "/upholstery-cleaning.html" },
-    { "source": "/mattress", "destination": "/mattress-cleaning.html" },
-    { "source": "/area-rug", "destination": "/area-rug-cleaning.html" },
-    { "source": "/curtain", "destination": "/curtain-cleaning.html" },
-    { "source": "/vacation", "destination": "/vacation-rental.html" },
-    { "source": "/comforter", "destination": "/comforter-cleaning.html" },
-    { "source": "/comforter-thanks", "destination": "/comforter-thanks.html" },
-    { "source": "/guest-payment-confirmation", "destination": "/guest-payment-confirmation.html" },
-    { "source": "/laundry-pickup-delivery-orlando", "destination": "/laundry-pickup-delivery-orlando.html" },
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/service-areas", "destination": "/service-areas.html" },
-    { "source": "/blog", "destination": "/blog/index.html" },
-    { "source": "/blog/hotel-laundry-service-orlando", "destination": "/blog/hotel-laundry-service-orlando.html" },
-    { "source": "/blog/airbnb-laundry-service-orlando", "destination": "/blog/airbnb-laundry-service-orlando.html" },
-    { "source": "/blog/laundry-before-checkout-orlando", "destination": "/blog/laundry-before-checkout-orlando.html" },
-    { "source": "/blog/hotel-vs-pickup-laundry-orlando", "destination": "/blog/hotel-vs-pickup-laundry-orlando.html" },
-    { "source": "/blog/family-vacation-laundry-orlando", "destination": "/blog/family-vacation-laundry-orlando.html" },
-    { "source": "/blog/laundry-international-drive-orlando", "destination": "/blog/laundry-international-drive-orlando.html" },
-    { "source": "/blog/laundry-near-universal-orlando", "destination": "/blog/laundry-near-universal-orlando.html" },
-    { "source": "/blog/laundry-winter-garden-fl", "destination": "/blog/laundry-winter-garden-fl.html" },
-    { "source": "/blog/laundry-windermere-fl", "destination": "/blog/laundry-windermere-fl.html" },
-    { "source": "/blog/laundry-clermont-fl", "destination": "/blog/laundry-clermont-fl.html" },
-    { "source": "/blog/laundry-ocoee-fl", "destination": "/blog/laundry-ocoee-fl.html" },
-    { "source": "/blog/same-day-laundry-tourists-orlando", "destination": "/blog/same-day-laundry-tourists-orlando.html" },
-    { "source": "/blog/pack-less-orlando-trip-laundry", "destination": "/blog/pack-less-orlando-trip-laundry.html" },
-    { "source": "/blog/no-car-laundry-orlando", "destination": "/blog/no-car-laundry-orlando.html" },
-    { "source": "/blog/laundry-tips-orlando-vacation", "destination": "/blog/laundry-tips-orlando-vacation.html" },
-    { "source": "/blog/laundry-service-orlando", "destination": "/blog/laundry-service-orlando.html" },
-    { "source": "/blog/how-to-clean-comforter", "destination": "/blog/how-to-clean-comforter.html" },
-    { "source": "/blog/vacation-rental-laundry-orlando", "destination": "/blog/vacation-rental-laundry-orlando.html" },
-    { "source": "/blog/same-day-laundry-orlando", "destination": "/blog/same-day-laundry-orlando.html" },
-    { "source": "/blog/laundry-kissimmee", "destination": "/blog/laundry-kissimmee.html" },
-    { "source": "/blog/laundry-for-vacation-rental-guests", "destination": "/blog/laundry-for-vacation-rental-guests.html" },
-    { "source": "/blog/orlando-laundromat-vs-delivery", "destination": "/blog/orlando-laundromat-vs-delivery.html" },
-    { "source": "/blog/laundry-near-disney-world", "destination": "/blog/laundry-near-disney-world.html" },
-    { "source": "/blog/laundry-disney-springs-area", "destination": "/blog/laundry-disney-springs-area.html" },
-    { "source": "/blog/vacation-rental-checklist-orlando", "destination": "/blog/vacation-rental-checklist-orlando.html" },
-    { "source": "/blog/airbnb-host-laundry-tips-orlando", "destination": "/blog/airbnb-host-laundry-tips-orlando.html" },
-    { "source": "/blog/comforter-cleaning-service-orlando", "destination": "/blog/comforter-cleaning-service-orlando.html" },
-    { "source": "/blog/comforter-cleaning-service-orlando-v2", "destination": "/blog/comforter-cleaning-service-orlando-v2.html" },
-    { "source": "/blog/laundry-champions-gate", "destination": "/blog/laundry-champions-gate.html" },
-    { "source": "/blog/how-often-wash-vacation-rental-linens", "destination": "/blog/how-often-wash-vacation-rental-linens.html" },
-    { "source": "/blog/express-laundry-orlando", "destination": "/blog/express-laundry-orlando.html" },
-    { "source": "/blog/a7-laundry-review", "destination": "/blog/a7-laundry-review.html" },
-    { "source": "/blog/book-laundry-whatsapp-orlando", "destination": "/blog/book-laundry-whatsapp-orlando.html" },
-    { "source": "/blog/laundry-subscription-vacation-rental", "destination": "/blog/laundry-subscription-vacation-rental.html" },
-    { "source": "/blog/reunion-resort-laundry-service", "destination": "/blog/reunion-resort-laundry-service.html" },
-    { "source": "/blog/orlando-vacation-rental-laundry-guide", "destination": "/blog/orlando-vacation-rental-laundry-guide.html" },
-    { "source": "/blog/laundry-orlando-airport", "destination": "/blog/laundry-orlando-airport.html" },
-    { "source": "/blog/lavanderia-a-domicilio-orlando", "destination": "/blog/lavanderia-a-domicilio-orlando.html" },
-    { "source": "/blog/same-day-drop-off-laundry-orlando", "destination": "/blog/same-day-drop-off-laundry-orlando.html" },
-    { "source": "/blog/laundry-solara-resort", "destination": "/blog/laundry-solara-resort.html" },
-    { "source": "/blog/laundry-encore-resort-reunion", "destination": "/blog/laundry-encore-resort-reunion.html" },
-    { "source": "/blog/laundry-storey-lake-resort", "destination": "/blog/laundry-storey-lake-resort.html" },
-    { "source": "/blog/laundry-windsor-hills-resort", "destination": "/blog/laundry-windsor-hills-resort.html" },
-    { "source": "/blog/laundry-windsor-island-resort", "destination": "/blog/laundry-windsor-island-resort.html" },
-    { "source": "/blog/laundry-solterra-resort", "destination": "/blog/laundry-solterra-resort.html" },
-    { "source": "/blog/laundry-emerald-island-resort", "destination": "/blog/laundry-emerald-island-resort.html" },
-    { "source": "/blog/laundry-paradise-palms-resort", "destination": "/blog/laundry-paradise-palms-resort.html" },
-    { "source": "/blog/laundry-terra-verde-resort", "destination": "/blog/laundry-terra-verde-resort.html" },
-    { "source": "/blog/laundry-bella-vida-resort", "destination": "/blog/laundry-bella-vida-resort.html" },
-    { "source": "/blog/laundry-vista-cay-resort", "destination": "/blog/laundry-vista-cay-resort.html" },
-    { "source": "/blog/laundry-margaritaville-resort-orlando", "destination": "/blog/laundry-margaritaville-resort-orlando.html" },
-    { "source": "/blog/laundry-sonoma-resort-tapestry", "destination": "/blog/laundry-sonoma-resort-tapestry.html" },
-    { "source": "/blog/laundry-veranda-palms-resort", "destination": "/blog/laundry-veranda-palms-resort.html" },
-    { "source": "/blog/laundry-regal-oaks-resort", "destination": "/blog/laundry-regal-oaks-resort.html" },
-    { "source": "/blog/laundry-oakwater-resort", "destination": "/blog/laundry-oakwater-resort.html" },
-    { "source": "/blog/laundry-runaway-beach-club", "destination": "/blog/laundry-runaway-beach-club.html" },
-    { "source": "/blog/laundry-magic-village-resort", "destination": "/blog/laundry-magic-village-resort.html" },
-    { "source": "/blog/laundry-compass-bay-resort", "destination": "/blog/laundry-compass-bay-resort.html" },
-    { "source": "/blog/laundry-villas-seven-dwarfs", "destination": "/blog/laundry-villas-seven-dwarfs.html" },
-    { "source": "/blog/laundry-festival-resort-davenport", "destination": "/blog/laundry-festival-resort-davenport.html" },
-    { "source": "/blog/laundry-aviana-resort", "destination": "/blog/laundry-aviana-resort.html" },
-    { "source": "/blog/laundry-providence-resort", "destination": "/blog/laundry-providence-resort.html" },
-    { "source": "/blog/laundry-highlands-reserve", "destination": "/blog/laundry-highlands-reserve.html" },
-    { "source": "/blog/laundry-tuscan-hills-davenport", "destination": "/blog/laundry-tuscan-hills-davenport.html" },
-    { "source": "/blog/laundry-watersong-resort", "destination": "/blog/laundry-watersong-resort.html" },
-    { "source": "/blog/laundry-west-haven-davenport", "destination": "/blog/laundry-west-haven-davenport.html" },
-    { "source": "/blog/laundry-oasis-club-championsgate", "destination": "/blog/laundry-oasis-club-championsgate.html" },
-    { "source": "/blog/laundry-retreat-championsgate", "destination": "/blog/laundry-retreat-championsgate.html" },
-    { "source": "/blog/laundry-balmoral-resort", "destination": "/blog/laundry-balmoral-resort.html" },
-    { "source": "/blog/laundry-cost-orlando", "destination": "/blog/laundry-cost-orlando.html" },
-    { "source": "/blog/linen-towel-service-orlando", "destination": "/blog/linen-towel-service-orlando.html" },
-    { "source": "/blog/laundry-thornton-park", "destination": "/blog/laundry-thornton-park.html" },
-    { "source": "/blog/laundry-college-park", "destination": "/blog/laundry-college-park.html" },
-    { "source": "/blog/laundry-southchase", "destination": "/blog/laundry-southchase.html" },
-    { "source": "/blog/laundry-celebration", "destination": "/blog/laundry-celebration.html" },
-    { "source": "/blog/laundry-sand-lake-restaurant-row", "destination": "/blog/laundry-sand-lake-restaurant-row.html" },
-    { "source": "/blog/laundry-near-seaworld-orlando", "destination": "/blog/laundry-near-seaworld-orlando.html" },
-    { "source": "/blog/laundry-lake-buena-vista", "destination": "/blog/laundry-lake-buena-vista.html" },
-    { "source": "/blog/laundry-convention-center-orlando", "destination": "/blog/laundry-convention-center-orlando.html" },
-    { "source": "/blog/laundry-port-canaveral-cruise", "destination": "/blog/laundry-port-canaveral-cruise.html" },
-    { "source": "/blog/snowbird-laundry-orlando", "destination": "/blog/snowbird-laundry-orlando.html" },
-    { "source": "/blog/orlando-hotel-no-washer-laundry", "destination": "/blog/orlando-hotel-no-washer-laundry.html" }
+    {
+      "source": "/plans",
+      "destination": "/plans.html"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy-policy.html"
+    },
+    {
+      "source": "/carpet",
+      "destination": "/carpet-cleaning.html"
+    },
+    {
+      "source": "/shoes",
+      "destination": "/shoe-cleaning.html"
+    },
+    {
+      "source": "/upholstery",
+      "destination": "/upholstery-cleaning.html"
+    },
+    {
+      "source": "/mattress",
+      "destination": "/mattress-cleaning.html"
+    },
+    {
+      "source": "/area-rug",
+      "destination": "/area-rug-cleaning.html"
+    },
+    {
+      "source": "/curtain",
+      "destination": "/curtain-cleaning.html"
+    },
+    {
+      "source": "/vacation",
+      "destination": "/vacation-rental.html"
+    },
+    {
+      "source": "/comforter",
+      "destination": "/comforter-cleaning.html"
+    },
+    {
+      "source": "/comforter-thanks",
+      "destination": "/comforter-thanks.html"
+    },
+    {
+      "source": "/guest-payment-confirmation",
+      "destination": "/guest-payment-confirmation.html"
+    },
+    {
+      "source": "/payment-link",
+      "destination": "/payment-link.html"
+    },
+    {
+      "source": "/laundry-pickup-delivery-orlando",
+      "destination": "/laundry-pickup-delivery-orlando.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/service-areas",
+      "destination": "/service-areas.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/hotel-laundry-service-orlando",
+      "destination": "/blog/hotel-laundry-service-orlando.html"
+    },
+    {
+      "source": "/blog/airbnb-laundry-service-orlando",
+      "destination": "/blog/airbnb-laundry-service-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-before-checkout-orlando",
+      "destination": "/blog/laundry-before-checkout-orlando.html"
+    },
+    {
+      "source": "/blog/hotel-vs-pickup-laundry-orlando",
+      "destination": "/blog/hotel-vs-pickup-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/family-vacation-laundry-orlando",
+      "destination": "/blog/family-vacation-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-international-drive-orlando",
+      "destination": "/blog/laundry-international-drive-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-near-universal-orlando",
+      "destination": "/blog/laundry-near-universal-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-winter-garden-fl",
+      "destination": "/blog/laundry-winter-garden-fl.html"
+    },
+    {
+      "source": "/blog/laundry-windermere-fl",
+      "destination": "/blog/laundry-windermere-fl.html"
+    },
+    {
+      "source": "/blog/laundry-clermont-fl",
+      "destination": "/blog/laundry-clermont-fl.html"
+    },
+    {
+      "source": "/blog/laundry-ocoee-fl",
+      "destination": "/blog/laundry-ocoee-fl.html"
+    },
+    {
+      "source": "/blog/same-day-laundry-tourists-orlando",
+      "destination": "/blog/same-day-laundry-tourists-orlando.html"
+    },
+    {
+      "source": "/blog/pack-less-orlando-trip-laundry",
+      "destination": "/blog/pack-less-orlando-trip-laundry.html"
+    },
+    {
+      "source": "/blog/no-car-laundry-orlando",
+      "destination": "/blog/no-car-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-tips-orlando-vacation",
+      "destination": "/blog/laundry-tips-orlando-vacation.html"
+    },
+    {
+      "source": "/blog/laundry-service-orlando",
+      "destination": "/blog/laundry-service-orlando.html"
+    },
+    {
+      "source": "/blog/how-to-clean-comforter",
+      "destination": "/blog/how-to-clean-comforter.html"
+    },
+    {
+      "source": "/blog/vacation-rental-laundry-orlando",
+      "destination": "/blog/vacation-rental-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/same-day-laundry-orlando",
+      "destination": "/blog/same-day-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-kissimmee",
+      "destination": "/blog/laundry-kissimmee.html"
+    },
+    {
+      "source": "/blog/laundry-for-vacation-rental-guests",
+      "destination": "/blog/laundry-for-vacation-rental-guests.html"
+    },
+    {
+      "source": "/blog/orlando-laundromat-vs-delivery",
+      "destination": "/blog/orlando-laundromat-vs-delivery.html"
+    },
+    {
+      "source": "/blog/laundry-near-disney-world",
+      "destination": "/blog/laundry-near-disney-world.html"
+    },
+    {
+      "source": "/blog/laundry-disney-springs-area",
+      "destination": "/blog/laundry-disney-springs-area.html"
+    },
+    {
+      "source": "/blog/vacation-rental-checklist-orlando",
+      "destination": "/blog/vacation-rental-checklist-orlando.html"
+    },
+    {
+      "source": "/blog/airbnb-host-laundry-tips-orlando",
+      "destination": "/blog/airbnb-host-laundry-tips-orlando.html"
+    },
+    {
+      "source": "/blog/comforter-cleaning-service-orlando",
+      "destination": "/blog/comforter-cleaning-service-orlando.html"
+    },
+    {
+      "source": "/blog/comforter-cleaning-service-orlando-v2",
+      "destination": "/blog/comforter-cleaning-service-orlando-v2.html"
+    },
+    {
+      "source": "/blog/laundry-champions-gate",
+      "destination": "/blog/laundry-champions-gate.html"
+    },
+    {
+      "source": "/blog/how-often-wash-vacation-rental-linens",
+      "destination": "/blog/how-often-wash-vacation-rental-linens.html"
+    },
+    {
+      "source": "/blog/express-laundry-orlando",
+      "destination": "/blog/express-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/a7-laundry-review",
+      "destination": "/blog/a7-laundry-review.html"
+    },
+    {
+      "source": "/blog/book-laundry-whatsapp-orlando",
+      "destination": "/blog/book-laundry-whatsapp-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-subscription-vacation-rental",
+      "destination": "/blog/laundry-subscription-vacation-rental.html"
+    },
+    {
+      "source": "/blog/reunion-resort-laundry-service",
+      "destination": "/blog/reunion-resort-laundry-service.html"
+    },
+    {
+      "source": "/blog/orlando-vacation-rental-laundry-guide",
+      "destination": "/blog/orlando-vacation-rental-laundry-guide.html"
+    },
+    {
+      "source": "/blog/laundry-orlando-airport",
+      "destination": "/blog/laundry-orlando-airport.html"
+    },
+    {
+      "source": "/blog/lavanderia-a-domicilio-orlando",
+      "destination": "/blog/lavanderia-a-domicilio-orlando.html"
+    },
+    {
+      "source": "/blog/same-day-drop-off-laundry-orlando",
+      "destination": "/blog/same-day-drop-off-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-solara-resort",
+      "destination": "/blog/laundry-solara-resort.html"
+    },
+    {
+      "source": "/blog/laundry-encore-resort-reunion",
+      "destination": "/blog/laundry-encore-resort-reunion.html"
+    },
+    {
+      "source": "/blog/laundry-storey-lake-resort",
+      "destination": "/blog/laundry-storey-lake-resort.html"
+    },
+    {
+      "source": "/blog/laundry-windsor-hills-resort",
+      "destination": "/blog/laundry-windsor-hills-resort.html"
+    },
+    {
+      "source": "/blog/laundry-windsor-island-resort",
+      "destination": "/blog/laundry-windsor-island-resort.html"
+    },
+    {
+      "source": "/blog/laundry-solterra-resort",
+      "destination": "/blog/laundry-solterra-resort.html"
+    },
+    {
+      "source": "/blog/laundry-emerald-island-resort",
+      "destination": "/blog/laundry-emerald-island-resort.html"
+    },
+    {
+      "source": "/blog/laundry-paradise-palms-resort",
+      "destination": "/blog/laundry-paradise-palms-resort.html"
+    },
+    {
+      "source": "/blog/laundry-terra-verde-resort",
+      "destination": "/blog/laundry-terra-verde-resort.html"
+    },
+    {
+      "source": "/blog/laundry-bella-vida-resort",
+      "destination": "/blog/laundry-bella-vida-resort.html"
+    },
+    {
+      "source": "/blog/laundry-vista-cay-resort",
+      "destination": "/blog/laundry-vista-cay-resort.html"
+    },
+    {
+      "source": "/blog/laundry-margaritaville-resort-orlando",
+      "destination": "/blog/laundry-margaritaville-resort-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-sonoma-resort-tapestry",
+      "destination": "/blog/laundry-sonoma-resort-tapestry.html"
+    },
+    {
+      "source": "/blog/laundry-veranda-palms-resort",
+      "destination": "/blog/laundry-veranda-palms-resort.html"
+    },
+    {
+      "source": "/blog/laundry-regal-oaks-resort",
+      "destination": "/blog/laundry-regal-oaks-resort.html"
+    },
+    {
+      "source": "/blog/laundry-oakwater-resort",
+      "destination": "/blog/laundry-oakwater-resort.html"
+    },
+    {
+      "source": "/blog/laundry-runaway-beach-club",
+      "destination": "/blog/laundry-runaway-beach-club.html"
+    },
+    {
+      "source": "/blog/laundry-magic-village-resort",
+      "destination": "/blog/laundry-magic-village-resort.html"
+    },
+    {
+      "source": "/blog/laundry-compass-bay-resort",
+      "destination": "/blog/laundry-compass-bay-resort.html"
+    },
+    {
+      "source": "/blog/laundry-villas-seven-dwarfs",
+      "destination": "/blog/laundry-villas-seven-dwarfs.html"
+    },
+    {
+      "source": "/blog/laundry-festival-resort-davenport",
+      "destination": "/blog/laundry-festival-resort-davenport.html"
+    },
+    {
+      "source": "/blog/laundry-aviana-resort",
+      "destination": "/blog/laundry-aviana-resort.html"
+    },
+    {
+      "source": "/blog/laundry-providence-resort",
+      "destination": "/blog/laundry-providence-resort.html"
+    },
+    {
+      "source": "/blog/laundry-highlands-reserve",
+      "destination": "/blog/laundry-highlands-reserve.html"
+    },
+    {
+      "source": "/blog/laundry-tuscan-hills-davenport",
+      "destination": "/blog/laundry-tuscan-hills-davenport.html"
+    },
+    {
+      "source": "/blog/laundry-watersong-resort",
+      "destination": "/blog/laundry-watersong-resort.html"
+    },
+    {
+      "source": "/blog/laundry-west-haven-davenport",
+      "destination": "/blog/laundry-west-haven-davenport.html"
+    },
+    {
+      "source": "/blog/laundry-oasis-club-championsgate",
+      "destination": "/blog/laundry-oasis-club-championsgate.html"
+    },
+    {
+      "source": "/blog/laundry-retreat-championsgate",
+      "destination": "/blog/laundry-retreat-championsgate.html"
+    },
+    {
+      "source": "/blog/laundry-balmoral-resort",
+      "destination": "/blog/laundry-balmoral-resort.html"
+    },
+    {
+      "source": "/blog/laundry-cost-orlando",
+      "destination": "/blog/laundry-cost-orlando.html"
+    },
+    {
+      "source": "/blog/linen-towel-service-orlando",
+      "destination": "/blog/linen-towel-service-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-thornton-park",
+      "destination": "/blog/laundry-thornton-park.html"
+    },
+    {
+      "source": "/blog/laundry-college-park",
+      "destination": "/blog/laundry-college-park.html"
+    },
+    {
+      "source": "/blog/laundry-southchase",
+      "destination": "/blog/laundry-southchase.html"
+    },
+    {
+      "source": "/blog/laundry-celebration",
+      "destination": "/blog/laundry-celebration.html"
+    },
+    {
+      "source": "/blog/laundry-sand-lake-restaurant-row",
+      "destination": "/blog/laundry-sand-lake-restaurant-row.html"
+    },
+    {
+      "source": "/blog/laundry-near-seaworld-orlando",
+      "destination": "/blog/laundry-near-seaworld-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-lake-buena-vista",
+      "destination": "/blog/laundry-lake-buena-vista.html"
+    },
+    {
+      "source": "/blog/laundry-convention-center-orlando",
+      "destination": "/blog/laundry-convention-center-orlando.html"
+    },
+    {
+      "source": "/blog/laundry-port-canaveral-cruise",
+      "destination": "/blog/laundry-port-canaveral-cruise.html"
+    },
+    {
+      "source": "/blog/snowbird-laundry-orlando",
+      "destination": "/blog/snowbird-laundry-orlando.html"
+    },
+    {
+      "source": "/blog/orlando-hotel-no-washer-laundry",
+      "destination": "/blog/orlando-hotel-no-washer-laundry.html"
+    }
   ],
   "redirects": [
-    { "source": "/carpet-campaign", "destination": "/carpet", "permanent": true },
-    { "source": "/comforter-v2", "destination": "/comforter", "permanent": false },
-    { "source": "/comforter-v3", "destination": "/comforter", "permanent": false },
-    { "source": "/comforter-v4", "destination": "/comforter", "permanent": false },
-    { "source": "/comforter-v5", "destination": "/comforter", "permanent": false },
-    { "source": "/comforter-v6", "destination": "/comforter", "permanent": false }
+    {
+      "source": "/carpet-campaign",
+      "destination": "/carpet",
+      "permanent": true
+    },
+    {
+      "source": "/comforter-v2",
+      "destination": "/comforter",
+      "permanent": false
+    },
+    {
+      "source": "/comforter-v3",
+      "destination": "/comforter",
+      "permanent": false
+    },
+    {
+      "source": "/comforter-v4",
+      "destination": "/comforter",
+      "permanent": false
+    },
+    {
+      "source": "/comforter-v5",
+      "destination": "/comforter",
+      "permanent": false
+    },
+    {
+      "source": "/comforter-v6",
+      "destination": "/comforter",
+      "permanent": false
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
       ]
     },
     {
       "source": "/(.*).html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/(.+\\.(?:jpg|png|svg|ico))",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ]

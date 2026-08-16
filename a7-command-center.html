@@ -427,7 +427,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <p style="margin-top:8px">Target: win 200 paying customers within the first 90 days of launch. Proof of product-market fit for transparent per-pound wash &amp; fold across the Orlando metro area.</p>
         <div style="display:flex;gap:16px;margin-top:20px;flex-wrap:wrap">
           <div><span style="font-size:28px;font-weight:900;color:var(--green)">$3.25</span><br><span style="font-size:12px;color:var(--gray-400)">per lb · Normal 24h</span></div>
-          <div><span style="font-size:28px;font-weight:900;color:var(--amber)">$3.95</span><br><span style="font-size:12px;color:var(--gray-400)">per lb · Express 6h</span></div>
+          <div><span style="font-size:28px;font-weight:900;color:var(--amber)">$3.95</span><br><span style="font-size:12px;color:var(--gray-400)">per lb · Express 8h</span></div>
           <div><span style="font-size:28px;font-weight:900;color:var(--purple)">$50</span><br><span style="font-size:12px;color:var(--gray-400)">minimum order</span></div>
         </div>
       </div>
@@ -520,18 +520,40 @@ tr:hover td{background:rgba(255,255,255,.02)}
   <div class="mos-filter-bar" aria-label="Filtros do painel MOS">
     <div class="mos-filter"><label for="mosChannelFilter">Canal</label><select id="mosChannelFilter" onchange="renderMosKpis()"><option value="all">Todos os canais</option><option value="paid">Meta Ads</option><option value="google_ads">Google Ads</option><option value="analytics">Site / GA4</option><option value="organic">Orgânico / SEO</option><option value="revenue">Receita / ROAS</option></select></div>
     <div class="mos-filter"><label for="mosHealthFilter">Situação</label><select id="mosHealthFilter" onchange="renderMosKpis()"><option value="all">Todas as situações</option><option value="good">Bom</option><option value="attention">Atenção</option><option value="critical">Crítico</option><option value="unavailable">Indisponível</option><option value="context">Somente contexto</option></select></div>
-    <div class="mos-filter"><label for="mosPeriodFilter">Período Meta</label><select id="mosPeriodFilter" onchange="renderMosKpis()"><option value="full">22 jun–21 jul</option><option value="early">3–10 jul</option><option value="recent">11–21 jul</option></select></div>
+    <div class="mos-filter"><label for="mosPeriodFilter">Período Meta histórico</label><select id="mosPeriodFilter" onchange="renderMosKpis()"><option value="full">22 jun–21 jul</option><option value="early">3–10 jul</option><option value="recent">11–21 jul</option></select></div>
     <div class="mos-filter"><label for="mosCreativeFilter">Foco do criativo</label><select id="mosCreativeFilter" onchange="changeMosCreativeFocus()"><option value="all">Todos os criativos ativos</option><option value="tourist">Turistas / lavanderia</option><option value="comforter">Edredom</option></select></div>
     <button class="mos-filter-reset" type="button" onclick="resetMosFilters()">Limpar filtros</button>
   </div>
   <div id="mosHealthSummary" class="health-summary"></div>
   <div id="mosHealthChecks" class="health-checks"></div>
   <details class="health-rules"><summary>Como o MOS classifica o que está bom ou ruim</summary><div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>Métrica</th><th>Bom</th><th>Atenção</th><th>Crítico</th><th>Referência</th></tr></thead><tbody id="mosHealthRules"></tbody></table></div></details>
+  <div class="section-header"><div class="section-title"><span class="section-icon" style="background:rgba(34,197,94,.15);color:var(--green)">L</span> Indicadores atuais por API</div></div>
+  <p style="font-size:12px;color:var(--gray-500);margin:-10px 0 14px">Somente fontes que responderam à consulta atual exibem números. Falha ou ausência de conexão aparece como indisponível, sem reaproveitar valores antigos.</p>
   <div id="mosScorecard" class="g g-4"></div>
 
+  <div class="section" id="mosManualSection">
+    <div class="section-header"><div class="section-title"><span class="section-icon" style="background:rgba(245,158,11,.15);color:var(--amber)">M</span> Registros manuais</div></div>
+    <p style="font-size:12px;color:var(--gray-500);margin:-10px 0 14px">Informações declaradas por pessoas, sem conciliação automática com GA4 ou Stripe. Não representam faturamento atual.</p>
+    <div id="mosManualScorecard" class="g g-4"></div>
+  </div>
+
+  <details class="health-rules" id="mosHistoricalSection"><summary>Consultar todas as auditorias e retratos históricos</summary>
+    <p style="font-size:12px;color:var(--gray-500);margin:14px 0">Registro append-only: uma nova auditoria é acrescentada e nunca substitui as anteriores. Evidências datadas nunca substituem uma API atual.</p>
+    <div id="mosAuditRegistrySummary" class="mos-alert" style="margin-bottom:14px"></div>
+    <div class="mos-filter-bar" aria-label="Seleção do histórico de auditorias">
+      <div class="mos-filter"><label for="mosAuditSelect">Abrir auditoria</label><select id="mosAuditSelect" onchange="renderMosAuditRegistry()"></select></div>
+      <div class="mos-filter"><label for="mosAuditCompareSelect">Comparar com</label><select id="mosAuditCompareSelect" onchange="renderMosAuditRegistry()"></select></div>
+    </div>
+    <div id="mosAuditTimeline" class="g g-4" style="margin-bottom:16px"></div>
+    <div id="mosAuditDetail" class="card" style="margin-bottom:16px"></div>
+    <div id="mosAuditComparison" class="card" style="margin-bottom:16px"></div>
+    <h3 style="font-size:14px;margin:18px 0 10px">KPIs do snapshot completo de 27 jul 2026</h3>
+    <div id="mosHistoricalScorecard" class="g g-4"></div>
+  </details>
+
   <div class="section" id="mosActionsSection">
-    <div class="section-header"><div class="section-title"><span class="section-icon" style="background:rgba(245,158,11,.15);color:var(--amber)">!</span> Planos de ação prioritários</div></div>
-    <p style="font-size:12px;color:var(--gray-500);margin:-10px 0 14px">Ações derivadas dos alertas verificados. Nenhuma mudança de orçamento ou publicação de anúncio é executada pelo painel.</p>
+    <div class="section-header"><div class="section-title"><span class="section-icon" style="background:rgba(245,158,11,.15);color:var(--amber)">!</span> Planos de ação do retrato histórico</div></div>
+    <p style="font-size:12px;color:var(--gray-500);margin:-10px 0 14px">Backlog derivado da auditoria datada de julho de 2026. Revalidar o estado atual antes de executar; o painel não altera orçamento nem publica anúncios.</p>
     <div id="mosActions" class="action-plan-grid"></div>
   </div>
 
@@ -619,7 +641,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 
   <div class="section" id="mosCreativesSection">
     <div class="section-header"><div class="section-title"><span class="section-icon" style="background:rgba(34,197,94,.15);color:var(--green)">A</span> Criativos e anúncios</div></div>
-    <p style="font-size:12px;color:var(--gray-500);margin:-10px 0 14px">Com a Meta API conectada, aparecem primeiro os anúncios ativos e suas métricas do período atual. O baseline encerrado em 21 de julho só é usado como fallback identificado.</p>
+    <p style="font-size:12px;color:var(--gray-500);margin:-10px 0 14px">Com a Meta API conectada, aparecem primeiro os anúncios ativos e suas métricas do período atual. Sem API, o baseline encerrado em 21 de julho aparece somente como evidência histórica identificada.</p>
     <div id="mosActiveAds" class="active-ads-grid"></div>
     <h3 style="margin-top:28px">Backlog e próxima rodada</h3>
     <p style="font-size:12px;color:var(--gray-500);margin-top:4px">T5/T6 estão criados e pausados; C3/C4 permanecem fora da campanha porque comforter não teve venda confirmada.</p>
@@ -760,7 +782,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <div class="card">
         <span class="badge badge-teal">B2B</span>
         <h3 style="margin-top:12px">Airbnb Host Program</h3>
-        <p>15K+ short-term rentals in Orlando. Priority Express (6h) turnover with free pickup &amp; delivery. Partner with property management companies.</p>
+        <p>15K+ short-term rentals in Orlando. Priority Express (8h) turnover with free pickup &amp; delivery. Partner with property management companies.</p>
       </div>
     </div>
   </div>
@@ -1293,6 +1315,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 </main>
 </div>
 
+<script src="audit-registry.js"></script>
 <script src="mos-kpis.js"></script>
 <script type="module" src="funnel-intelligence-contract.js"></script>
 <script>
@@ -1365,6 +1388,54 @@ function formatMosValue(value,format){
 
 function mosHealthLabel(health){
   return {good:'Bom',attention:'Atenção',critical:'Crítico',unavailable:'Indisponível',context:'Contexto'}[health]||health;
+}
+
+function mosAuditRegistry(){
+  var registry=globalThis.A7_MOS_AUDIT_REGISTRY;
+  return registry&&Array.isArray(registry.audits)?registry:null;
+}
+
+function mosAuditById(registry,id){
+  return registry.audits.find(function(audit){return audit.auditId===id})||null;
+}
+
+function mosAuditMetricComparison(first,second){
+  var before=new Map((first.metrics||[]).map(function(metric){return [metric.id,metric]}));
+  return (second.metrics||[]).map(function(metric){
+    var prior=before.get(metric.id);
+    var comparable=prior&&prior.source===metric.source&&prior.period===metric.period&&typeof prior.value==='number'&&typeof metric.value==='number';
+    return comparable?{id:metric.id,label:metric.label,before:prior.value,after:metric.value,delta:metric.value-prior.value,format:metric.format}:null;
+  }).filter(Boolean);
+}
+
+function renderMosAuditRegistry(){
+  var registry=mosAuditRegistry();
+  var summary=document.getElementById('mosAuditRegistrySummary');
+  if(!registry){
+    summary.innerHTML='<strong>Registro histórico indisponível.</strong> A validação append-only precisa ser executada antes do build.';
+    document.getElementById('mosAuditTimeline').innerHTML='';
+    document.getElementById('mosAuditDetail').innerHTML='';
+    document.getElementById('mosAuditComparison').innerHTML='';
+    return;
+  }
+  var primarySelect=document.getElementById('mosAuditSelect');
+  var compareSelect=document.getElementById('mosAuditCompareSelect');
+  var options=registry.audits.map(function(audit){return '<option value="'+escapeMosHtml(audit.auditId)+'">'+escapeMosHtml(audit.auditDate+' · '+audit.title)+'</option>'}).join('');
+  var existingPrimary=primarySelect.value;
+  var existingCompare=compareSelect.value;
+  primarySelect.innerHTML=options;
+  compareSelect.innerHTML=options;
+  primarySelect.value=mosAuditById(registry,existingPrimary)?existingPrimary:registry.latestAuditId;
+  compareSelect.value=mosAuditById(registry,existingCompare)?existingCompare:(registry.audits.length>1?registry.audits[registry.audits.length-2].auditId:registry.latestAuditId);
+  var selected=mosAuditById(registry,primarySelect.value);
+  var compared=mosAuditById(registry,compareSelect.value);
+  summary.innerHTML='<strong>'+registry.auditCount+' auditorias imutáveis preservadas.</strong> A mais recente é '+escapeMosHtml(registry.latestAuditId)+'. “Mais recente” é apenas um ponteiro; os '+registry.auditCount+' registros continuam disponíveis.';
+  document.getElementById('mosAuditTimeline').innerHTML=registry.audits.slice().reverse().map(function(audit){
+    return '<button type="button" class="card" style="text-align:left;cursor:pointer;border-color:'+(audit.auditId===selected.auditId?'var(--primary)':'var(--gray-200)')+'" onclick="document.getElementById(\'mosAuditSelect\').value=\''+escapeMosHtml(audit.auditId)+'\';renderMosAuditRegistry()"><span class="data-status '+(audit.status==='complete'?'good':'attention')+'">'+(audit.status==='complete'?'COMPLETA':'PARCIAL')+'</span><h4>'+escapeMosHtml(audit.auditDate)+'</h4><p>'+escapeMosHtml(audit.title)+'</p><div class="kpi-meta">'+audit.evidence.length+' evidência(s) · '+audit.metrics.length+' métrica(s)</div></button>';
+  }).join('');
+  document.getElementById('mosAuditDetail').innerHTML='<span class="data-status '+(selected.status==='complete'?'good':'attention')+'">AUDITORIA '+escapeMosHtml(selected.status.toUpperCase())+'</span><h3>'+escapeMosHtml(selected.title)+'</h3><p>'+escapeMosHtml(selected.summary)+'</p><div class="kpi-meta"><strong>ID imutável:</strong> '+escapeMosHtml(selected.auditId)+'<br><strong>Escopo:</strong> '+escapeMosHtml(selected.scope.join(', '))+'<br><strong>Fontes/períodos:</strong> '+selected.sources.map(function(source){return escapeMosHtml(source.name+' — '+source.period+' — '+source.status)}).join('<br>')+'<br><strong>Evidências com SHA-256:</strong><br>'+selected.evidence.map(function(item){return escapeMosHtml(item.path)+' · '+escapeMosHtml(item.sha256.slice(0,12))+'…'}).join('<br>')+(selected.snapshot?'<br>'+escapeMosHtml(selected.snapshot.path)+' · '+escapeMosHtml(selected.snapshot.sha256.slice(0,12))+'…':'')+'</div>';
+  var comparable=mosAuditMetricComparison(compared,selected);
+  document.getElementById('mosAuditComparison').innerHTML='<h3>Comparação: '+escapeMosHtml(compared.auditDate)+' → '+escapeMosHtml(selected.auditDate)+'</h3>'+(comparable.length?'<div class="table-wrap"><table><thead><tr><th>Métrica</th><th>Antes</th><th>Depois</th><th>Variação</th></tr></thead><tbody>'+comparable.map(function(item){return '<tr><td>'+escapeMosHtml(item.label)+'</td><td>'+formatMosValue(item.before,item.format)+'</td><td>'+formatMosValue(item.after,item.format)+'</td><td>'+formatMosValue(item.delta,item.format)+'</td></tr>'}).join('')+'</tbody></table></div>':'<p>Nenhuma métrica normalizada é diretamente comparável entre estes dois registros. Os documentos e checksums continuam preservados; o MOS não inventa valores para preencher a comparação.</p>');
 }
 
 function escapeMosHtml(value){
@@ -1450,6 +1521,8 @@ function mosLiveKpi(kpi){
     ga4_sessions:ga4&&['live','partial','no_data'].indexOf(ga4.status)!==-1?{source:ga4,value:ga4.summary&&ga4.summary.sessions,format:'integer'}:null,
     ga4_engagement:ga4&&['live','partial','no_data'].indexOf(ga4.status)!==-1?{source:ga4,value:ga4.summary&&ga4.summary.engagementRate===null?null:ga4.summary.engagementRate*100,format:'percent'}:null,
     ga4_key_events:ga4&&['live','partial','no_data'].indexOf(ga4.status)!==-1?{source:ga4,value:ga4.summary&&ga4.summary.keyEvents,format:'integer'}:null,
+    ga4_purchases:ga4&&['live','partial','no_data'].indexOf(ga4.status)!==-1?{source:ga4,value:ga4.summary&&ga4.summary.ecommercePurchases,format:'integer'}:null,
+    ga4_revenue:ga4&&['live','partial','no_data'].indexOf(ga4.status)!==-1?{source:ga4,value:ga4.summary&&ga4.summary.totalRevenue,format:'usd'}:null,
     search_clicks:search&&['live','no_data'].indexOf(search.status)!==-1?{source:search,value:search.summary&&search.summary.clicks,format:'integer'}:null,
     search_impressions:search&&['live','no_data'].indexOf(search.status)!==-1?{source:search,value:search.summary&&search.summary.impressions,format:'compact'}:null,
     search_ctr:search&&['live','no_data'].indexOf(search.status)!==-1?{source:search,value:search.summary&&search.summary.ctr===null?null:search.summary.ctr*100,format:'percent'}:null,
@@ -1704,14 +1777,12 @@ function renderMosArticleFunnel(filters,data){
     {name:'Entrada',value:articleMetricTotal(rows,'sessions'),health:'attention',source:'GA4 · sessões iniciadas em artigos'},
     {name:'Intenção',value:totalKeyEvents,health:totalKeyEvents>0?'good':'attention',source:'GA4 · eventos principais nos artigos'},
     {name:'Contato',value:articleMetricTotal(rows,'contactEvents'),health:'attention',source:'GA4 · eventos de contato nos artigos'},
-    {name:'Venda',value:data.media.salesValidation.saleCount,health:'attention',source:'Relato do proprietário · todos os canais'},
-    {name:'Retenção',value:data.media.salesValidation.repeatOrders,health:'attention',source:'Pedidos repetidos informados · todos os canais'}
   ];
   document.getElementById('mosNetworkFunnel').innerHTML=stages.map(function(stage,index){
     return '<div class="network-funnel-stage '+stage.health+'"><span class="data-status '+stage.health+'">ETAPA '+(index+1)+'</span><span class="stage-number">'+formatMosValue(stage.value,'integer')+'</span><strong>'+stage.name+'</strong><p>'+stage.source+'</p></div>';
   }).join('');
   var searchPeriod=search?mosLivePeriod(search):'indisponível';
-  document.getElementById('mosNetworkFunnelBoundary').innerHTML='<strong>Limite atual de atribuição:</strong> descoberta, consumo, entrada, intenção e contato podem ser relacionados à URL do artigo. As '+data.media.salesValidation.saleCount+' vendas e '+data.media.salesValidation.repeatOrders+' recompra foram informadas apenas no total do período e <strong>não são atribuídas a um artigo</strong>. Por isso o MOS não calcula conversão entre essas etapas. <span style="color:var(--gray-500)">GA4 '+escapeMosHtml(period)+' · GSC '+escapeMosHtml(searchPeriod)+' · unidade conectada: A7 Laundry Orlando.</span>';
+  document.getElementById('mosNetworkFunnelBoundary').innerHTML='<strong>Limite atual de atribuição:</strong> descoberta, consumo, entrada, intenção e contato podem ser relacionados à URL do artigo. Vendas e retenção manuais ficam fora deste funil e aparecem somente na seção “Registros manuais”. <span style="color:var(--gray-500)">GA4 '+escapeMosHtml(period)+' · GSC '+escapeMosHtml(searchPeriod)+' · unidade conectada: A7 Laundry Orlando.</span>';
 }
 
 async function loadMosLiveKpis(){
@@ -1769,9 +1840,11 @@ function changeMosCreativeFocus(){
 }
 
 function renderMosDecision(data,filters,checks){
-  var decision=data.decision;
+  var decision={health:'unavailable',label:'Indisponível',headline:'Aguardando fontes atuais.',detail:'O MOS não usa o retrato histórico para tomar uma decisão operacional atual.'};
   var metaOperational=mosMetaOperational();
   var googleOperational=mosGoogleOperational();
+  var ga4Operational=mosOperationalSource(mosLiveSource('ga4'));
+  var searchOperational=mosOperationalSource(mosLiveSource('searchConsole'));
   if(filters.channel==='all'&&(metaOperational||googleOperational)){
     var connected=[metaOperational?'Meta Ads':null,googleOperational?'Google Ads':null].filter(Boolean);
     var missing=[!metaOperational?'Meta Ads':null,!googleOperational?'Google Ads nativo':null].filter(Boolean);
@@ -1810,9 +1883,13 @@ function renderMosDecision(data,filters,checks){
       decision={health:'unavailable',label:'Indisponível',headline:'A Google Ads API nativa ainda não está conectada ao MOS.',detail:'O vínculo do GA4 e o snapshot auditado não informam com segurança campanha ativa, orçamento, anúncio ou investimento atual. Esses valores permanecem fora da decisão até a credencial nativa responder.'};
     }
   }
-  if(filters.channel==='organic')decision={health:'attention',label:'Atenção',headline:'Busca e redes sociais estão reconciliadas, mas conteúdo e calendário ainda exigem ação.',detail:'O SEO cresce sobre base pequena; no Meta orgânico houve 562 visualizações no Instagram e 206 no Facebook, porém zero salvamentos e zero seguimentos. O calendário ficou saturado de 24 a 27 de julho e quase vazio em agosto.'};
-  if(filters.channel==='analytics')decision={health:'critical',label:'Crítico',headline:'O GA4 identifica tráfego, mas ainda não mede o funil comercial com confiança.',detail:'Falta atribuição da mídia paga, há nomes de eventos sobrepostos e não existe instrumentação completa de lead, checkout, compra e receita.'};
-  if(filters.channel==='revenue')decision={health:'attention',label:'Atenção',headline:'Há vendas confirmadas manualmente, mas o retorno ainda não sustenta escala.',detail:'Foram informados seis pedidos e US$ 491 de receita para US$ 543,17 de mídia: ROAS bruto mesclado de 0,90x. Falta atribuição por anúncio, custo variável e margem.'};
+  if(filters.channel==='organic')decision=searchOperational
+    ?{health:'attention',label:'Atenção',headline:'A busca orgânica está conectada no período atual.',detail:'Use os cartões e consultas do Search Console abaixo; o histórico de Meta orgânico permanece somente na área de retratos históricos.'}
+    :{health:'unavailable',label:'Indisponível',headline:'A busca orgânica atual não está disponível.',detail:'O MOS não reutiliza cliques, impressões ou posição de um período antigo quando o Search Console não responde.'};
+  if(filters.channel==='analytics')decision=ga4Operational
+    ?{health:'attention',label:'Atenção',headline:'O GA4 respondeu para o período atual.',detail:'Usuários, sessões e eventos principais vêm da API. Vendas e receita só são declaradas quando a métrica correspondente possui proveniência GA4 ou Stripe.'}
+    :{health:'unavailable',label:'Indisponível',headline:'Os indicadores atuais do GA4 não estão disponíveis.',detail:'Nenhum número do retrato histórico é exibido como tráfego atual.'};
+  if(filters.channel==='revenue')decision={health:'unavailable',label:'Indisponível',headline:'Vendas e receita atuais ainda não possuem fonte integrada.',detail:'O registro manual de seis pedidos e US$ 491 permanece separado e datado abaixo. Ele não é receita ao vivo nem é combinado com mídia atual.'};
   document.getElementById('mosDecision').className='mos-decision '+decision.health;
   document.getElementById('mosDecision').innerHTML='<div class="decision-light">'+decision.label+'</div><div class="decision-copy"><h3>'+decision.headline+'</h3><p>'+decision.detail+'</p></div>';
 }
@@ -1841,29 +1918,30 @@ function renderMosKpis(){
       :'Google Ads nativo ainda não está conectado; o vínculo do GA4 não substitui essa fonte.';
     alert.innerHTML='<strong>Mapa de marketing consultado em modo somente leitura.</strong> Cada fonte usa sua própria janela operacional. <span style="color:var(--gray-500)">Consulta feita em '+fetched+'. '+googleAdsMessage+' '+metaMessage+' Histórico não declara saldo, veiculação nem vencedor atual.</span>';
   }else if(liveState&&liveState.status==='loading'){
-    alert.innerHTML='<strong>Conectando às fontes Google…</strong> Enquanto a consulta protegida é concluída, o MOS mantém o retrato histórico visível.';
+    alert.innerHTML='<strong>Conectando às fontes atuais…</strong> Os indicadores permanecem indisponíveis até a consulta protegida responder. Retratos antigos ficam somente na seção histórica.';
   }else{
-    alert.innerHTML='<strong>Fallback histórico ativo.</strong> '+data.reportingNote+' <span style="color:var(--gray-500)">Retrato atualizado em '+updated+'. Falhas de API não substituem valores por zero.</span>';
+    alert.innerHTML='<strong>Dados atuais indisponíveis.</strong> A consulta às APIs não respondeu. <span style="color:var(--gray-500)">Nenhum número histórico foi usado como fallback. O retrato de '+updated+' permanece apenas na seção histórica.</span>';
   }
   renderMosLiveSources();
+  renderMosAuditRegistry();
 
   var metaOperational=mosMetaOperational();
   var googleOperational=mosGoogleOperational();
   var periodChecks=data.healthChecks.filter(function(check){
-    return check.channel!=='google_ads';
+    return check.channel==='paid'&&['campaign_ctr','campaign_cpr'].indexOf(check.id)!==-1;
   }).map(function(check){
     var copy=Object.assign({},check);
     if(copy.id==='campaign_ctr'){
-      var metaCtr=metaOperational&&metaOperational.period.ctr!==null?metaOperational.period.ctr*100:paidPeriod.ctr;
+      var metaCtr=metaOperational&&metaOperational.period.ctr!==null?metaOperational.period.ctr*100:null;
       copy.value=metaCtr;
-      copy.health=metaCtr>=1.5?'good':metaCtr>=1?'attention':'critical';
-      copy.reason=metaOperational?'Meta Marketing API '+mosLivePeriod(metaOperational.source)+': CTR de '+metaCtr.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%.':'Baseline histórico do Meta '+paidPeriod.period+': CTR de '+metaCtr.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%.';
+      copy.health=metaCtr===null?'unavailable':metaCtr>=1.5?'good':metaCtr>=1?'attention':'critical';
+      copy.reason=metaOperational?'Meta Marketing API '+mosLivePeriod(metaOperational.source)+': CTR de '+metaCtr.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%.':'Meta Marketing API indisponível; o baseline histórico não foi usado.';
     }
     if(copy.id==='campaign_cpr'){
-      var metaCpr=metaOperational?metaOperational.period.costPerConversation:paidPeriod.costPerConversationUsd;
+      var metaCpr=metaOperational?metaOperational.period.costPerConversation:null;
       copy.value=metaCpr;
       copy.health=metaCpr===null?'unavailable':metaCpr<=20?'good':metaCpr<=25?'attention':'critical';
-      copy.reason=metaOperational?'Meta Marketing API '+mosLivePeriod(metaOperational.source)+': '+formatMosValue(metaCpr,'usd')+' por conversa.':'Baseline histórico do Meta '+paidPeriod.period+': '+formatMosValue(metaCpr,'usd')+' por conversa.';
+      copy.reason=metaOperational?'Meta Marketing API '+mosLivePeriod(metaOperational.source)+': '+formatMosValue(metaCpr,'usd')+' por conversa.':'Meta Marketing API indisponível; o baseline histórico não foi usado.';
     }
     return copy;
   });
@@ -1887,7 +1965,7 @@ function renderMosKpis(){
   renderMosDecision(data,filters,channelChecks);
 
   var healthStates=['good','attention','critical','unavailable','context'];
-  var summaryItems=channelChecks.concat(data.scorecard.filter(function(kpi){return kpi.health==='context'&&(filters.channel==='all'||kpi.channel===filters.channel)}));
+  var summaryItems=channelChecks;
   document.getElementById('mosHealthSummary').innerHTML=healthStates.map(function(health){
     var count=summaryItems.filter(function(check){return check.health===health}).length;
     return '<button class="health-chip '+health+'" type="button" onclick="setMosHealthFilter(\''+health+'\')"><strong>'+count+'</strong><span>'+mosHealthLabel(health)+'</span></button>';
@@ -1902,25 +1980,45 @@ function renderMosKpis(){
     return '<tr><td>'+rule.metric+'</td><td>'+rule.good+'</td><td>'+rule.attention+'</td><td>'+rule.critical+(rule.unavailable?'<br>'+rule.unavailable:'')+'</td><td>'+rule.basis+'</td></tr>';
   }).join('');
 
-  var periodScorecard=data.scorecard.map(function(kpi){
+  var liveMetricIds=['search_clicks','search_impressions','search_ctr','search_position','meta_spend','meta_conversations','ga4_active_users','ga4_sessions','ga4_engagement','ga4_key_events'];
+  var liveOnlyScorecard=[
+    {id:'ga4_purchases',label:'Compras registradas no GA4',value:null,format:'integer',source:'Google Analytics Data API',period:'Período atual não recebido',status:'unavailable',health:'unavailable',channel:'revenue',target:null,healthReason:'A métrica só aparece quando a API do GA4 responde.'},
+    {id:'ga4_revenue',label:'Receita registrada no GA4',value:null,format:'usd',source:'Google Analytics Data API',period:'Período atual não recebido',status:'unavailable',health:'unavailable',channel:'revenue',target:null,healthReason:'A métrica só aparece quando a API do GA4 responde; não substitui conciliação financeira do Stripe.'}
+  ];
+  var periodScorecard=data.scorecard.filter(function(kpi){return liveMetricIds.indexOf(kpi.id)!==-1}).concat(liveOnlyScorecard).map(function(kpi){
     var copy=Object.assign({},kpi);
     if(copy.id==='meta_spend'){
-      copy.value=metaOperational?metaOperational.period.spend:paidPeriod.spendUsd;
-      copy.period=metaOperational?mosLivePeriod(metaOperational.source):paidPeriod.period;
-      if(metaOperational){copy.source='Meta Marketing API';copy.status='live'}
+      copy.value=metaOperational?metaOperational.period.spend:null;
+      copy.period=metaOperational?mosLivePeriod(metaOperational.source):'Período atual não recebido';
+      copy.source='Meta Marketing API';
+      copy.status=metaOperational?'live':'unavailable';
+      copy.health=metaOperational?copy.health:'unavailable';
+      copy.healthReason=metaOperational?'Atualizado pela API somente leitura.':'A API atual não respondeu; nenhum valor histórico foi reutilizado.';
     }
     if(copy.id==='meta_conversations'){
-      copy.value=metaOperational?metaOperational.period.conversations:paidPeriod.messagingConversations;
-      copy.period=metaOperational?mosLivePeriod(metaOperational.source):paidPeriod.period;
-      if(metaOperational){copy.source='Meta Marketing API';copy.status='live'}
+      copy.value=metaOperational?metaOperational.period.conversations:null;
+      copy.period=metaOperational?mosLivePeriod(metaOperational.source):'Período atual não recebido';
+      copy.source='Meta Marketing API';
+      copy.status=metaOperational?'live':'unavailable';
+      copy.health=metaOperational?copy.health:'unavailable';
+      copy.healthReason=metaOperational?'Atualizado pela API somente leitura.':'A API atual não respondeu; nenhum valor histórico foi reutilizado.';
     }
     var liveReplacement=mosLiveKpi(copy);
-    if(liveReplacement)copy=Object.assign(copy,liveReplacement);
+    if(liveReplacement){
+      copy=Object.assign(copy,liveReplacement);
+    }else if(copy.id.indexOf('ga4_')===0||copy.id.indexOf('search_')===0){
+      copy.value=null;
+      copy.status='unavailable';
+      copy.health='unavailable';
+      copy.source=copy.id.indexOf('ga4_')===0?'Google Analytics Data API':'Google Search Console API';
+      copy.period='Período atual não recebido';
+      copy.healthReason='A API atual não respondeu; nenhum valor histórico foi reutilizado.';
+    }
     return copy;
   });
   var scorecard=periodScorecard.filter(function(kpi){return mosMatches(kpi,filters)});
   document.getElementById('mosScorecard').innerHTML=scorecard.length?scorecard.map(function(kpi){
-    var statusLabel={verified:'Verificado',owner_reported:'Informado pelo proprietário',not_integrated:'Não integrado',live:'API ao vivo',live_partial:'API parcial',live_no_data:'API sem linhas'}[kpi.status]||kpi.status;
+    var statusLabel={verified:'Retrato histórico',owner_reported:'Manual',not_integrated:'Não integrado',live:'API ao vivo',live_partial:'API parcial',live_no_data:'API sem linhas',unavailable:'Indisponível'}[kpi.status]||kpi.status;
     return '<div class="stat-card health-'+kpi.health+'">'+
       '<span class="data-status '+kpi.health+'">'+mosHealthLabel(kpi.health)+'</span>'+
       '<div class="stat-value" style="font-size:30px">'+formatMosValue(kpi.value,kpi.format)+'</div>'+
@@ -1929,41 +2027,51 @@ function renderMosKpis(){
     '</div>';
   }).join(''):'<div class="mos-empty" style="grid-column:1/-1">Nenhum indicador corresponde a estes filtros.</div>';
 
+  var manualScorecard=data.scorecard.filter(function(kpi){return kpi.status==='owner_reported'&&mosMatches(kpi,filters)});
+  document.getElementById('mosManualSection').style.display=manualScorecard.length?'block':'none';
+  document.getElementById('mosManualScorecard').innerHTML=manualScorecard.map(function(kpi){
+    return '<div class="stat-card health-attention"><span class="data-status attention">MANUAL · NÃO É AO VIVO</span><div class="stat-value" style="font-size:30px">'+formatMosValue(kpi.value,kpi.format)+'</div><div class="stat-label">'+kpi.label+'</div><div class="kpi-meta">'+kpi.healthReason+'<br><strong>Fonte: '+escapeMosHtml(kpi.source)+'</strong><br>Período: '+escapeMosHtml(kpi.period)+'</div></div>';
+  }).join('');
+
+  var historicalScorecard=data.scorecard.filter(function(kpi){return kpi.status!=='owner_reported'&&mosMatches(kpi,filters)});
+  document.getElementById('mosHistoricalSection').style.display=historicalScorecard.length?'block':'none';
+  document.getElementById('mosHistoricalScorecard').innerHTML=historicalScorecard.map(function(kpi){
+    return '<div class="stat-card health-context"><span class="data-status context">RETRATO HISTÓRICO</span><div class="stat-value" style="font-size:30px">'+formatMosValue(kpi.value,kpi.format)+'</div><div class="stat-label">'+kpi.label+'</div><div class="kpi-meta">'+kpi.healthReason+'<br><strong>Fonte: '+escapeMosHtml(kpi.source)+'</strong><br>Período: '+escapeMosHtml(kpi.period)+'</div></div>';
+  }).join('');
+
   var actions=data.actions.filter(function(action){return (filters.channel==='all'||action.channel===filters.channel)&&(filters.health==='all'||action.health===filters.health)&&(filters.focus==='all'||!action.focus||action.focus===filters.focus)});
   document.getElementById('mosActionsSection').style.display=actions.length?'block':'none';
   document.getElementById('mosActions').innerHTML=actions.map(function(action){
     return '<article class="action-plan-card '+action.health+'"><span class="data-status '+action.health+'">'+action.priority+' · '+mosHealthLabel(action.health)+'</span><h3>'+action.title+'</h3><p>'+action.action+'</p><div class="action-meta"><div>Responsável<strong>'+action.owner+'</strong></div><div>Prazo<strong>'+action.deadline+'</strong></div><div style="grid-column:1/-1">Critério de sucesso<strong>'+action.success+'</strong></div></div></article>';
   }).join('');
 
-  var signals=data.funnel.filter(function(stage){return mosMatches(stage,filters)});
-  document.getElementById('mosSignalsSection').style.display=signals.length?'block':'none';
-  document.getElementById('mosFunnel').innerHTML=signals.map(function(stage){
-    return '<div class="funnel-step" style="width:100%;background:'+(stage.value===null?'rgba(245,158,11,.12)':'rgba(37,99,235,.18)')+'"><span class="f-label">'+stage.stage+'<small style="display:block;color:var(--gray-500);font-weight:500;margin-top:3px">'+stage.period+'</small></span><span class="f-value">'+formatMosValue(stage.value,'integer')+' · '+stage.source+'</span></div>';
-  }).join('');
+  document.getElementById('mosSignalsSection').style.display='none';
+  document.getElementById('mosFunnel').innerHTML='';
   renderMosMarketingGraph(filters);
   renderMosArticleFunnel(filters,data);
 
   var analyticsVisible=filters.channel==='all'||filters.channel==='analytics';
   var analyticsFindings=data.analytics.findings.filter(function(finding){return filters.health==='all'||finding.health===filters.health});
   var liveGa4=mosLiveSource('ga4');
-  var analyticsSummary=liveGa4&&['live','partial','no_data'].indexOf(liveGa4.status)!==-1?liveGa4.summary:data.analytics.summary;
-  var analyticsChannels=liveGa4&&['live','partial','no_data'].indexOf(liveGa4.status)!==-1?liveGa4.channels:data.analytics.channels;
-  var analyticsBadge=liveGa4&&liveGa4.status==='live'?'<span class="data-status good">API AO VIVO</span>':liveGa4&&liveGa4.status==='partial'?'<span class="data-status attention">API PARCIAL</span>':'<span class="data-status attention">RETRATO HISTÓRICO</span>';
-  var analyticsPeriod=liveGa4?mosLivePeriod(liveGa4):data.analytics.period;
+  var analyticsAvailable=liveGa4&&['live','partial','no_data'].indexOf(liveGa4.status)!==-1;
+  var analyticsSummary=analyticsAvailable?liveGa4.summary:null;
+  var analyticsChannels=analyticsAvailable?liveGa4.channels:[];
+  var analyticsBadge=liveGa4&&liveGa4.status==='live'?'<span class="data-status good">API AO VIVO</span>':liveGa4&&liveGa4.status==='partial'?'<span class="data-status attention">API PARCIAL</span>':'<span class="data-status unavailable">INDISPONÍVEL</span>';
+  var analyticsPeriod=analyticsAvailable?mosLivePeriod(liveGa4):'período atual não recebido';
   document.getElementById('mosAnalyticsSection').style.display=analyticsVisible?'block':'none';
-  document.getElementById('mosAnalyticsSummary').innerHTML='<div class="g g-4"><div><h4>Usuários ativos</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(analyticsSummary&&analyticsSummary.activeUsers,'integer')+'</div></div><div><h4>Sessões</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(analyticsSummary&&analyticsSummary.sessions,'integer')+'</div></div><div><h4>Taxa de engajamento</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(liveGa4&&analyticsSummary&&analyticsSummary.engagementRate!==null?analyticsSummary.engagementRate*100:analyticsSummary&&analyticsSummary.engagementRate,'percent')+'</div></div><div><h4>Eventos principais</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(analyticsSummary&&analyticsSummary.keyEvents,'integer')+'</div></div></div><p class="kpi-meta">'+analyticsBadge+' '+data.analytics.verdict+' · '+analyticsPeriod+'. Ausência ou falha da API não é convertida em zero.</p>';
+  document.getElementById('mosAnalyticsSummary').innerHTML='<div class="g g-4"><div><h4>Usuários ativos</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(analyticsSummary&&analyticsSummary.activeUsers,'integer')+'</div></div><div><h4>Sessões</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(analyticsSummary&&analyticsSummary.sessions,'integer')+'</div></div><div><h4>Taxa de engajamento</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(liveGa4&&analyticsSummary&&analyticsSummary.engagementRate!==null?analyticsSummary.engagementRate*100:analyticsSummary&&analyticsSummary.engagementRate,'percent')+'</div></div><div><h4>Eventos principais</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(analyticsSummary&&analyticsSummary.keyEvents,'integer')+'</div></div></div><p class="kpi-meta">'+analyticsBadge+' '+(analyticsAvailable?data.analytics.verdict:'Sem leitura atual do GA4')+' · '+analyticsPeriod+'. Ausência ou falha da API não é convertida em zero.</p>';
   document.getElementById('mosAnalyticsChannels').innerHTML=analyticsChannels&&analyticsChannels.length?analyticsChannels.map(function(channel){return '<tr><td>'+escapeMosHtml(channel.sessionDefaultChannelGroup||channel.name)+'</td><td>'+formatMosValue(channel.sessions,'integer')+'</td><td>'+formatMosValue(channel.engagedSessions,'integer')+'</td><td>'+formatMosValue(liveGa4&&channel.engagementRate!==null?channel.engagementRate*100:channel.engagementRate,'percent')+'</td><td>'+formatMosValue(channel.keyEvents,'integer')+'</td></tr>'}).join(''):'<tr><td colspan="5">A fonte respondeu sem linhas para este período.</td></tr>';
-  document.getElementById('mosAnalyticsFindings').innerHTML=analyticsFindings.length?analyticsFindings.map(function(finding){return '<div class="analytics-finding '+finding.health+'"><span class="data-status '+finding.health+'">'+mosHealthLabel(finding.health)+'</span><strong>'+finding.title+'</strong><p>'+finding.detail+'</p></div>'}).join(''):'<div class="mos-empty">Nenhum achado do GA4 corresponde a este filtro.</div>';
+  document.getElementById('mosAnalyticsFindings').innerHTML=analyticsFindings.length?analyticsFindings.map(function(finding){return '<div class="analytics-finding '+finding.health+'"><span class="data-status context">AUDITORIA HISTÓRICA · '+escapeMosHtml(data.analytics.period)+'</span><strong>'+finding.title+'</strong><p>'+finding.detail+'</p></div>'}).join(''):'<div class="mos-empty">Nenhum achado do GA4 corresponde a este filtro.</div>';
 
   var seoVisible=(filters.channel==='all'||filters.channel==='organic')&&(filters.focus==='all');
   var liveSearch=mosLiveSource('searchConsole');
-  var seoSourceRows=liveSearch&&['live','no_data'].indexOf(liveSearch.status)!==-1?(liveSearch.queries||[]).map(function(row){var position=row.position;return {health:position===null?'unavailable':position<=10?'good':position<=20?'attention':'critical',query:row.query,impressions:row.impressions,clicks:row.clicks,ctr:row.ctr===null?null:row.ctr*100,position:row.position}}):data.seo.opportunities;
+  var seoSourceRows=liveSearch&&['live','no_data'].indexOf(liveSearch.status)!==-1?(liveSearch.queries||[]).map(function(row){var position=row.position;return {health:position===null?'unavailable':position<=10?'good':position<=20?'attention':'critical',query:row.query,impressions:row.impressions,clicks:row.clicks,ctr:row.ctr===null?null:row.ctr*100,position:row.position}}):[];
   var seoRows=seoSourceRows.filter(function(row){return filters.health==='all'||row.health===filters.health});
   document.getElementById('mosSeoSection').style.display=seoVisible?'block':'none';
   document.getElementById('mosSeoRows').innerHTML=seoRows.length?seoRows.map(function(row){
     return '<tr><td><span class="data-status '+row.health+'">'+mosHealthLabel(row.health)+'</span></td><td>'+escapeMosHtml(row.query)+'</td><td>'+formatMosValue(row.impressions,'integer')+'</td><td>'+formatMosValue(row.clicks,'integer')+'</td><td>'+formatMosValue(row.ctr,'percent')+'</td><td>'+formatMosValue(row.position,'decimal')+'</td></tr>';
   }).join(''):'<tr><td colspan="6">Nenhuma oportunidade de SEO corresponde a este filtro.</td></tr>';
-  var seoSourcePages=liveSearch&&['live','no_data'].indexOf(liveSearch.status)!==-1?(liveSearch.pages||[]).map(function(row){var position=row.position;return {health:position===null?'unavailable':position<=10?'good':position<=20?'attention':'critical',path:row.page,impressions:row.impressions,clicks:row.clicks,ctr:row.ctr===null?null:row.ctr*100,position:row.position}}):data.seo.pages;
+  var seoSourcePages=liveSearch&&['live','no_data'].indexOf(liveSearch.status)!==-1?(liveSearch.pages||[]).map(function(row){var position=row.position;return {health:position===null?'unavailable':position<=10?'good':position<=20?'attention':'critical',path:row.page,impressions:row.impressions,clicks:row.clicks,ctr:row.ctr===null?null:row.ctr*100,position:row.position}}):[];
   var seoPages=seoSourcePages.filter(function(row){return filters.health==='all'||row.health===filters.health});
   document.getElementById('mosSeoPageRows').innerHTML=seoPages.length?seoPages.map(function(row){return '<tr><td><span class="data-status '+row.health+'">'+mosHealthLabel(row.health)+'</span></td><td>'+escapeMosHtml(row.path)+'</td><td>'+formatMosValue(row.impressions,'integer')+'</td><td>'+formatMosValue(row.clicks,'integer')+'</td><td>'+formatMosValue(row.ctr,'percent')+'</td><td>'+formatMosValue(row.position,'decimal')+'</td></tr>'}).join(''):'<tr><td colspan="6">Nenhuma página orgânica corresponde a este filtro.</td></tr>';
 
@@ -1972,12 +2080,12 @@ function renderMosKpis(){
   var contentVisible=(filters.channel==='all'||filters.channel==='organic')&&filters.focus==='all'&&(filters.health==='all'||filters.health==='attention'||filters.health==='context');
   document.getElementById('mosContentCard').style.display=contentVisible?'block':'none';
   document.getElementById('mosContentSignal').innerHTML=
-    '<span class="data-status attention">Meta orgânico verificado</span>'+
+    '<span class="data-status context">RETRATO HISTÓRICO · META ORGÂNICO · '+escapeMosHtml(social.period)+'</span>'+
     '<div class="g g-4" style="margin:16px 0"><div><h4>Peças de feed</h4><div style="font-size:24px;font-weight:900">'+social.summary.uniqueFeedPieces+'</div></div><div><h4>Visualizações no Instagram</h4><div style="font-size:24px;font-weight:900">'+social.summary.instagram.views+'</div></div><div><h4>Visualizações no Facebook</h4><div style="font-size:24px;font-weight:900">'+social.summary.facebook.views+'</div></div><div><h4>Curtidas no Instagram</h4><div style="font-size:24px;font-weight:900">'+social.summary.instagram.likes+'</div></div></div>'+
     '<p><strong>Retenção:</strong> '+social.summary.instagram.saves+' salvamentos · '+social.summary.instagram.follows+' seguimentos · '+social.summary.instagram.comments+' comentários no Instagram.</p>'+
     '<div class="kpi-meta"><strong>Próximos dias livres:</strong> '+social.calendar.nextFreeDates.join(' · ')+'.<br><strong>Janela recomendada:</strong> '+social.calendar.recommendation+' — não programada.<br><strong>Fuso:</strong> '+social.timezone+'; conferir no compositor antes de agendar.<br><strong>Evidência:</strong> '+social.exportEvidence.canonicalFiles+' CSVs únicos, '+social.exportEvidence.downloadedFiles+' downloads encontrados e '+social.exportEvidence.duplicateFiles+' duplicata. O Planner não oferece exportação.</div>'+
     '<hr style="border:0;border-top:1px solid var(--gray-200);margin:22px 0">'+
-    '<span class="data-status '+signal.health+'">SEO sobre base pequena</span><div style="font-size:36px;font-weight:900;color:var(--amber)">+'+signal.impressionGrowthPercent+'%</div><p><strong>'+signal.previousImpressions+' → '+signal.currentImpressions+' impressões</strong> para '+signal.path+'.</p><div class="kpi-meta">'+signal.comparison+'. '+signal.note+'</div><div class="kpi-meta"><strong>Indexação:</strong> '+data.seo.indexedPages+' indexadas · '+data.seo.nonIndexedPages+' não indexadas ('+data.seo.indexationReasons[1].pages+' descobertas, mas não indexadas).<br><strong>Dispositivos:</strong> CTR no celular '+data.seo.devices[0].ctr+'% · CTR no computador '+data.seo.devices[1].ctr+'%.<br><strong>CWV:</strong> indisponível — '+data.seo.quality.coreWebVitalsReason+'.</div>';
+    '<span class="data-status context">RETRATO HISTÓRICO · SEO</span><div style="font-size:36px;font-weight:900;color:var(--amber)">+'+signal.impressionGrowthPercent+'%</div><p><strong>'+signal.previousImpressions+' → '+signal.currentImpressions+' impressões</strong> para '+signal.path+'.</p><div class="kpi-meta">'+signal.comparison+'. '+signal.note+'</div><div class="kpi-meta"><strong>Indexação:</strong> '+data.seo.indexedPages+' indexadas · '+data.seo.nonIndexedPages+' não indexadas ('+data.seo.indexationReasons[1].pages+' descobertas, mas não indexadas).<br><strong>Dispositivos:</strong> CTR no celular '+data.seo.devices[0].ctr+'% · CTR no computador '+data.seo.devices[1].ctr+'%.<br><strong>CWV:</strong> indisponível — '+data.seo.quality.coreWebVitalsReason+'.</div>';
 
   var dynamicIntegrations=[
     {name:'Google Analytics 4',channel:'analytics',state:mosOperationalSource(mosLiveSource('ga4'))?'active':'blocked',health:mosOperationalSource(mosLiveSource('ga4'))?'good':'unavailable',detail:mosOperationalSource(mosLiveSource('ga4'))?'API somente leitura · '+mosLivePeriod(mosLiveSource('ga4')):'Sem resposta atual da API.'},
@@ -1987,13 +2095,16 @@ function renderMosKpis(){
   ];
   var staticIntegrations=data.integrations.filter(function(item){
     return ['Google Analytics 4','Google Search Console','Google Ads','Meta Ads'].indexOf(item.name)===-1;
+  }).map(function(item){
+    return Object.assign({},item,{name:item.name+' · retrato histórico',state:'historical',health:'context',detail:'Evidência datada: '+item.detail});
   });
   var integrations=dynamicIntegrations.concat(staticIntegrations).filter(function(item){return (filters.channel==='all'||item.channel==='all'||item.channel===filters.channel)&&(filters.health==='all'||item.health===filters.health)});
   document.getElementById('mosIntegrationsCard').style.display=integrations.length?'block':'none';
   document.getElementById('mosDataSection').style.display=contentVisible||integrations.length?'grid':'none';
   document.getElementById('mosIntegrations').innerHTML=integrations.map(function(item){
-    var stateLabel={active:'Ativo',warning:'Atenção',blocked:'Bloqueado',not_integrated:'Não integrado'}[item.state]||item.state;
-    return '<div class="source-line"><div><strong>'+item.name+'</strong><div class="source-detail">'+item.detail+'</div></div><span class="data-status '+item.state+'">'+stateLabel+'</span></div>';
+    var stateLabel={active:'Ativo',warning:'Atenção',blocked:'Bloqueado',not_integrated:'Não integrado',historical:'Histórico'}[item.state]||item.state;
+    var stateClass=item.state==='historical'?'context':item.state;
+    return '<div class="source-line"><div><strong>'+item.name+'</strong><div class="source-detail">'+item.detail+'</div></div><span class="data-status '+stateClass+'">'+stateLabel+'</span></div>';
   }).join('');
 
   var google=data.googleAds;
@@ -2061,14 +2172,14 @@ function renderMosKpis(){
   var metaOperationalBanner=metaOperational
     ?'<div class="analytics-finding '+(metaOperational.activeCampaigns.length?'good':'attention')+'" style="margin-top:18px"><span class="data-status '+(metaOperational.activeCampaigns.length?'good':'attention')+'">'+(metaOperational.activeCampaigns.length?'ESTRUTURA ATIVA PELA API':'SEM CAMPANHA ATIVA')+'</span><strong>'+metaOperational.activeCampaigns.length+' campanha(s) · '+metaOperational.activeAdSets.length+' conjunto(s) · '+metaOperational.activeAds.length+' anúncio(s) ativos</strong><p>Hoje: '+formatMosValue(metaTodayMetrics.spend,'usd')+' investidos · '+formatMosValue(metaTodayMetrics.impressions,'integer')+' impressões · '+formatMosValue(metaTodayMetrics.conversations,'integer')+' conversas identificadas.</p><div class="kpi-meta">'+escapeMosHtml(metaOperational.todayDate)+' · dados intradiários.</div></div>'
     :'<div class="analytics-finding unavailable"><span class="data-status unavailable">ESTADO ATUAL INDISPONÍVEL</span><strong>O snapshot não substitui a Meta Marketing API</strong><p>Campanha, anúncio e vencedor atual permanecem indisponíveis até a API responder.</p></div>';
-  var currentSpend=metaOperational?metaPeriodMetrics.spend:current.spendUsd;
-  var currentConversations=metaOperational?metaPeriodMetrics.conversations:current.messagingConversations;
-  var currentCpr=metaOperational?metaPeriodMetrics.costPerConversation:current.costPerConversationUsd;
-  var currentCtr=metaOperational&&metaPeriodMetrics.ctr!==null?metaPeriodMetrics.ctr*100:current.ctr;
+  var currentSpend=metaOperational?metaPeriodMetrics.spend:null;
+  var currentConversations=metaOperational?metaPeriodMetrics.conversations:null;
+  var currentCpr=metaOperational?metaPeriodMetrics.costPerConversation:null;
+  var currentCtr=metaOperational&&metaPeriodMetrics.ctr!==null?metaPeriodMetrics.ctr*100:null;
   document.getElementById('mosMediaStatus').innerHTML=
     metaDestinationBanner+metaLiveBanner+metaOperationalBanner+
     '<div class="g g-4" style="margin:20px 0"><div><h4>Investimento</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(currentSpend,'usd')+'</div></div><div><h4>Conversas no WhatsApp</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(currentConversations,'integer')+'</div></div><div><h4>Custo por conversa</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(currentCpr,'usd')+'</div></div><div><h4>CTR (todos os cliques)</h4><div style="font-size:24px;font-weight:900">'+formatMosValue(currentCtr,'percent')+'</div></div></div>'+
-    '<p class="kpi-meta"><span class="data-status '+(metaOperational?'good':'context')+'">'+(metaOperational?'META MARKETING API':'BASELINE HISTÓRICO')+'</span><br>'+(metaOperational?escapeMosHtml(mosLivePeriod(metaOperational.source))+' · conta '+escapeMosHtml(metaOperational.source.adAccountId)+' · consulta somente leitura.':'22 jun–21 jul 2026 · não representa situação atual.')+'</p>';
+    '<p class="kpi-meta"><span class="data-status '+(metaOperational?'good':'unavailable')+'">'+(metaOperational?'META MARKETING API':'DADOS ATUAIS INDISPONÍVEIS')+'</span><br>'+(metaOperational?escapeMosHtml(mosLivePeriod(metaOperational.source))+' · conta '+escapeMosHtml(metaOperational.source.adAccountId)+' · consulta somente leitura.':'Nenhum valor histórico foi usado como situação atual.')+'</p>';
 
   var metaInsightsByAd=Object.create(null);
   metaInsights.forEach(function(row){
