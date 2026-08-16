@@ -74,7 +74,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] A public About/operations page explains the service-area model, official offer, coverage, contact path and fact-verification date without implying a walk-in storefront.
 - [ ] The Google Ads Guest Laundry campaign contains the four approved intent groups, exact/phrase inventory, shared negatives, paused RSAs and purchase-led measurement before activation.
 - [x] The verified Stripe confirmation emits the native Google Ads purchase action with dynamic value, currency and transaction ID only after server-side paid-session verification.
-- [ ] The proven guest-laundry campaign is reinforced by a new English 4:5 feed carousel that explains the hotel/Airbnb pickup flow, uses official pricing and ends in a WhatsApp CTA.
+- [x] The proven guest-laundry campaign is reinforced by a new English 4:5 feed carousel that explains the hotel/Airbnb pickup flow, uses official pricing and ends in a WhatsApp CTA.
 - [x] MOS reads GA4 and Search Console through protected server-side APIs while preserving the dated KPI snapshot only as explicit historical context, never as a current fallback.
 - [x] Every live KPI exposes source, requested period, freshness and availability status; API or schema failures never become numeric zero.
 - [x] Google credentials remain server-side, read-only and absent from the browser bundle, repository and public acquisition deployment.
@@ -157,7 +157,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Publish and validate the A7 About/operations entity page.
 - [ ] Complete the paused Google Search build and reconcile conversion goals before requesting final activation.
 - [x] Create and install the native Google Ads purchase action without enabling enhanced conversions or exposing customer data.
-- [ ] Produce and visually validate the campaign-aligned guest “how it works” carousel and its publication-ready caption.
+- [x] Produce and visually validate the campaign-aligned guest “how it works” carousel and its publication-ready caption.
 - [x] Create the dedicated `a7-laundry-mos` Google Cloud project and enable the Google Analytics Data API and Search Console API.
 - [x] Provision the read-only MOS workload identity and grant it access to GA4 property `543807649` and `sc-domain:a7laundry.com`.
 - [x] Implement the protected Google KPI API, live/snapshot reconciliation and visible freshness states in the MOS.
@@ -213,6 +213,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `upholstery-cleaning.html`
 - `marketing/whatsapp/message-templates.md`
 - `marketing/whatsapp/STATUS-OPERACIONAL-2026-07-31.md`
+- `marketing/whatsapp/STATUS-OPERACIONAL-2026-08-16.md`
 - `marketing/whatsapp/assets/2026-07-guest-onboarding/`
 - `marketing/AUDITORIA-WHATSAPP-2026-07-30.md`
 - `marketing/PLAYBOOK-ATENDIMENTO.md`
@@ -232,6 +233,9 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `marketing/google-ads/2026-07-guest-laundry-search/`
 - `marketing/google-ads/2026-07-guest-laundry-search/LOVART-HERO-PROMPT.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/assets/hero/A7_GUEST_LAUNDRY_HERO_LOVART_MASTER.png`
+- `marketing/meta-ads/campaigns/2026-08-guest-how-it-works-carousel/`
+- `scripts/build-guest-carousel.mjs`
+- `scripts/validate-guest-carousel.mjs`
 - `public/guest-laundry-hero.webp`
 - `A7 LAUNDRY-06.png`
 - `scripts/validate-google-ads-phase1.mjs`
@@ -343,8 +347,8 @@ Make the production conversion funnel observable from acquisition CTA through St
 - Contrast-corrected deployment `dpl_2hjANfXuBiUJCKGj8pKd3pib9hTd` is Ready and aliased to `https://a7laundry.com`. Production source contains two dark-surface uses of `A7 LAUNDRY-06.png`; both official wordmark variants and the Lovart hero return HTTP 200.
 - Guest care architecture keeps everyday per-pound wash and fold separate from comforters, shoes, dry-clean-only labels and special requests; the page asks for a photo and confirmation instead of promising unsupported custom-care capabilities.
 - The landing now connects the LocalBusiness, Service, WebPage and primary ImageObject entities; publishes a matching image sitemap entry, a descriptive HTML image and a visible service-review block. This supports machine understanding while keeping the visible content people-first.
-- Clean guest-care deployment `dpl_ADfxg7hcoPqRixaqqYpki73ExoSy` is Ready and aliased to `https://a7laundry.com`. Production verification confirmed the Everyday/Special decision section, separate-quote guard, linked LocalBusiness/Service/WebPage/ImageObject entities, large image-preview directive, image sitemap and current last-modified date; stale US$60 and eight-hour claims are absent.
-- Two 1600×2000 Lovart guest-onboarding masters were visually audited and archived. Approved 1080×1350 PNGs and 384/376 KB progressive JPEG send versions preserve the canonical US$50 minimum, 24h Normal, 6h availability-qualified Express, direct WhatsApp number and a separate-quote guard for special items.
+- Clean guest-care deployment `dpl_ADfxg7hcoPqRixaqqYpki73ExoSy` is Ready and aliased to `https://a7laundry.com`. Production verification confirmed the Everyday/Special decision section, separate-quote guard, linked LocalBusiness/Service/WebPage/ImageObject entities, large image-preview directive, image sitemap and current last-modified date; stale US$60 and pre-8h Express claims are absent.
+- Two 1600×2000 Lovart guest-onboarding masters were visually audited and archived in July. The Everyday variants were moved intact to `quarantined/obsolete-pre-8h-duration/` on Aug 16 because their pixels contain the former Express duration; they are historical evidence only and no longer approved. The Special Item variants remain approved because they request a photo and separate quote without stating the obsolete duration.
 - No Google Ads campaign, budget, conversion goal, billing setting or account balance was changed. Ads Manager construction and activation remain separate authorized steps.
 - MOS KPI validation protects required fields, duplicate identifiers and null semantics for unavailable financial data.
 - The internal KPI snapshot and Command Center are excluded from the public production bundle.
@@ -479,3 +483,11 @@ Make the production conversion funnel observable from acquisition CTA through St
   tests, the business-destination scan and `git diff --check` pass. The pre-existing internal
   untracked `payment-link.html` has an explicit acquisition-tracking build exemption; its Stripe
   behavior remains untouched.
+- Aug 16 produced and visually inspected a five-slide English 1080×1350 Guest Laundry
+  carousel with hotel/Airbnb pickup flow, Normal 24h from US$3.25/lb, Express 8h from
+  US$3.95/lb subject to availability, US$50 minimum and the official WhatsApp CTA. The
+  ImageGen source photos, deterministic build script, caption and validation gate are
+  versioned; the package is approved as an asset but remains unpublished.
+- The live Google Search preflight now rejects the actual obsolete pre-8h Express variants
+  instead of incorrectly rejecting the current 8h language. Landing, attribution and
+  commercial checks pass against production.

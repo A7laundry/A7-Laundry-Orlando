@@ -35,7 +35,7 @@ for (const token of [
 ]) {
   assert.ok(html.includes(token), `Live landing is missing ${token}`);
 }
-assert.doesNotMatch(html, /\$60\b|8-hour|8 hours/i, 'Live landing contains stale commercial terms');
+assert.doesNotMatch(html, /\$60\b|(?:express\s*)?6(?:-|\s*)hours?\b|express\s*6h\b/i, 'Live landing contains stale commercial terms');
 
 const trackingResponse = await fetch(new URL('/a7-tracking.js', finalUrl));
 assert.equal(trackingResponse.status, 200, `Tracking script returned HTTP ${trackingResponse.status}`);

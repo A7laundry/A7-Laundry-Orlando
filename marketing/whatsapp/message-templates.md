@@ -27,12 +27,14 @@ Pasta: `marketing/whatsapp/assets/2026-07-guest-onboarding/approved/`
 
 | Momento | Arquivo |
 |---|---|
-| Depois de identificar hotel/resort/Airbnb ou junto da primeira cotação em EN | `A7_WHATSAPP_GUEST_EVERYDAY_EN_4x5_SEND.jpg` |
 | Somente se o cliente mencionar item especial, etiqueta delicada, comforter, tênis ou mancha | `A7_WHATSAPP_SPECIAL_ITEM_EN_4x5_SEND.jpg` |
 
-Não enviar as duas automaticamente para todo lead. A primeira conduz a compra principal;
-a segunda protege o escopo e pede foto antes de qualquer promessa. As artes estão em
-inglês e não substituem a resposta humana no idioma em que o cliente escreveu.
+O antigo card Everyday foi retirado deste conjunto porque seus pixels exibem o prazo
+anterior ao Express 8h. Ele permanece apenas em
+`quarantined/obsolete-pre-8h-duration/` como evidência histórica e
+nunca deve ser enviado. Para a oferta principal, use a resposta rápida atual ou o pacote
+`marketing/meta-ads/campaigns/2026-08-guest-how-it-works-carousel/`, validado com Express
+8h. O card Special protege o escopo e pede foto antes de qualquer promessa.
 
 ---
 
