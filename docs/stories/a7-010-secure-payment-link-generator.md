@@ -1,6 +1,6 @@
 # Story A7-010 — Secure Payment Link Generator
 
-**Status:** In Progress
+**Status:** Done
 
 **Created:** 2026-08-16
 
@@ -23,28 +23,34 @@
 
 ## Acceptance Criteria
 
-- [ ] Missing configuration fails closed with HTTP 503.
-- [ ] Missing or invalid operator token returns HTTP 401 before any Stripe request.
-- [ ] Invalid amount returns HTTP 400 before any Stripe request.
-- [ ] Valid input creates a Stripe Price and a one-use Payment Link with the verified confirmation URL.
-- [ ] Description and internal reference are bounded and stripped of control characters.
-- [ ] Automated tests cover method, configuration, authentication, amount validation, Stripe request contract and upstream failure.
-- [ ] Production and Preview Vercel environments contain encrypted `PAYMENT_LINK_TOKEN`.
-- [ ] The token is stored outside Git for operator retrieval.
-- [ ] Root lint, typecheck, tests, build and `git diff --check` pass.
-- [ ] Production probes confirm the page loads, unauthenticated API access fails closed and no secret is present in public artifacts.
+- [x] Missing configuration fails closed with HTTP 503.
+- [x] Missing or invalid operator token returns HTTP 401 before any Stripe request.
+- [x] Invalid amount returns HTTP 400 before any Stripe request.
+- [x] Valid input creates a Stripe Price and a one-use Payment Link with the verified confirmation URL.
+- [x] Description and internal reference are bounded and stripped of control characters.
+- [x] Automated tests cover method, configuration, authentication, amount validation, Stripe request contract and upstream failure.
+- [x] Production and Preview Vercel environments contain encrypted `PAYMENT_LINK_TOKEN`.
+- [x] The token is stored outside Git for operator retrieval.
+- [x] Root lint, typecheck, tests, build and `git diff --check` pass.
+- [x] Production probes confirm the page loads, unauthenticated API access fails closed and no secret is present in public artifacts.
 
 ## Tasks
 
-- [ ] Add server-handler regression tests.
-- [ ] Add tests to the root quality gate.
-- [ ] Configure the encrypted Vercel secret without printing it.
-- [ ] Deploy and validate production behavior.
-- [ ] Update validation notes and File List.
+- [x] Add server-handler regression tests.
+- [x] Add tests to the root quality gate.
+- [x] Configure the encrypted Vercel secret without printing it.
+- [x] Deploy and validate production behavior.
+- [x] Update validation notes and File List.
 
 ## Validation Notes
 
-- Pending.
+- Five focused handler tests passed for method, fail-closed configuration, authentication, amount bounds, text sanitation, Stripe request parameters and upstream failure.
+- Root lint, typecheck, tests, public build, MOS tests and `git diff --check` passed before deployment.
+- `PAYMENT_LINK_TOKEN` is encrypted in Vercel Production and in Preview for `feat/meta-ads-ops-structure`; `STRIPE_SECRET_KEY` remains encrypted in both environments.
+- The operator token is stored in the macOS login Keychain as `A7 Laundry Orlando Payment Link Token`; no value was printed or written to Git.
+- Production deployment `dpl_GPHsLUQADbK4EA2RpgYyjCZhJLtJ` reached `READY` and was aliased to `https://a7laundry.com`.
+- Production `/payment-link` returned HTTP 200 with Express 8h and no secret pattern. GET `/api/create-payment-link` returned 405; unauthorized POST returned 401 rather than 503, proving the server configuration is present and fail-closed.
+- No authorized production link was generated during verification, avoiding an unnecessary Stripe Price/Payment Link mutation.
 
 ## File List
 

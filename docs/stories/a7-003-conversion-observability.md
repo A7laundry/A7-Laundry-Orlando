@@ -75,7 +75,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [ ] The Google Ads Guest Laundry campaign contains the four approved intent groups, exact/phrase inventory, shared negatives, paused RSAs and purchase-led measurement before activation.
 - [x] The verified Stripe confirmation emits the native Google Ads purchase action with dynamic value, currency and transaction ID only after server-side paid-session verification.
 - [ ] The proven guest-laundry campaign is reinforced by a new English 4:5 feed carousel that explains the hotel/Airbnb pickup flow, uses official pricing and ends in a WhatsApp CTA.
-- [x] MOS reads GA4 and Search Console through protected server-side APIs while preserving the dated KPI snapshot as an explicit fallback.
+- [x] MOS reads GA4 and Search Console through protected server-side APIs while preserving the dated KPI snapshot only as explicit historical context, never as a current fallback.
 - [x] Every live KPI exposes source, requested period, freshness and availability status; API or schema failures never become numeric zero.
 - [x] Google credentials remain server-side, read-only and absent from the browser bundle, repository and public acquisition deployment.
 - [x] Contract, fallback and freshness tests block deployment when a required KPI disappears, changes type or loses provenance metadata.

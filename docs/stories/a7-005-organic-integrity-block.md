@@ -1,6 +1,8 @@
 # Story A7-005 — Organic Integrity Block
 
-**Status:** Ready for Review
+**Status:** Done
+
+**Closed:** 2026-08-16 — owner-authorized release; production deployment `dpl_GPHsLUQADbK4EA2RpgYyjCZhJLtJ` passed the public validation context and was aliased to `https://a7laundry.com`.
 **Created:** 2026-08-06
 **Source commit:** `a45994a` (`fix(organic): harden tracking and public claims`)
 **Origin:** Retrospective split from `A7-003 — Conversion Observability`

@@ -1,6 +1,6 @@
 # Story A7-007 — Correct Express Service Duration from 6h to 8h
 
-**Status:** Ready for Review
+**Status:** Done
 
 **Created:** 2026-08-10
 
@@ -56,6 +56,8 @@
 - Final inventory found and corrected the last operational reference in `marketing/RECUPERACAO-PENDENTES.md`; the previous explicit validator exemption was removed.
 - Final guarded inventory found no obsolete Express 6-hour duration in current public, operational or marketing scope and no accidental 8 PM cutoff.
 - Full gates passed again on 2026-08-16 before release preparation.
+- Production deployment `dpl_GPHsLUQADbK4EA2RpgYyjCZhJLtJ` reached `READY` and was aliased to `https://a7laundry.com` on 2026-08-16.
+- Read-only production probes confirmed Express 8h on the homepage, plans and Payment Link page; $3.25/$3.95 remained present and the obsolete-duration pattern was absent.
 
 ## Completion Notes
 

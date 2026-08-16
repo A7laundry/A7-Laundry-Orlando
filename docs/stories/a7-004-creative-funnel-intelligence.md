@@ -1,6 +1,8 @@
 # Story A7-004 — Inteligência de Funil Criativo no MOS
 
-**Status:** Ready for Review
+**Status:** Done
+
+**Closed:** 2026-08-16 — owner-authorized release; the protected MOS deployment `dpl_FKnLn5W8vrLH9drFXk66jXRgoXGq` includes the validated read-only funnel artifact and UI.
 **Created:** 2026-07-30
 **Source:** Solicitação direta do owner para estruturar aquisição, retenção e experimentação criativa no MOS
 **Depends on:** A7-003 Conversion Observability (`In Progress`) para os contratos observacionais e limites de atribuição já existentes

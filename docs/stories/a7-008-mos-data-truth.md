@@ -1,6 +1,6 @@
 # Story A7-008 — MOS Data Truth
 
-**Status:** Ready for Review
+**Status:** Done
 
 **Created:** 2026-08-15
 
@@ -30,7 +30,7 @@
 - [x] Existing MOS authentication is preserved: protected dashboard and data routes remain inaccessible without a valid authenticated session.
 - [x] Automated tests cover historical-snapshot exclusion from current fallback, API-failure unavailable behavior, card source/period labels, manual-data separation, sales/revenue live-label restrictions and authentication preservation.
 - [x] `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` and `git diff --check` pass before review.
-- [ ] No deploy, production-data mutation, campaign change or external-system write is performed as part of implementation without separate authorization.
+- [x] Implementation performed no external mutation; Dennis separately authorized the production release on 2026-08-16.
 
 ## Tasks
 
@@ -58,11 +58,12 @@
 - `npm run typecheck`: passed.
 - Root `npm run build`: passed.
 - `git diff --check`: passed.
-- `cd mos-app && npm test`: passed — 36 tests plus protected MOS build.
+- `cd mos-app && npm test`: passed — 37 tests plus protected MOS build.
 - Browser validation of the compiled MOS bundle: passed for unavailable current state, source/period labels, manual separation and historical labeling.
 - Root `npm test`: passed after reconciling the in-memory adapter with its approved `shadow_ephemeral` contract and deriving cookie validity from `RETENTION_DAYS`.
 - `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` and `git diff --check`: all passed on 2026-08-15.
-- Production release remains an explicit `@devops` action.
+- Authorized production deployment `dpl_FKnLn5W8vrLH9drFXk66jXRgoXGq` reached `READY` and was aliased to `https://mos.a7laundry.com` on 2026-08-16.
+- Anonymous production probes confirmed that the dashboard, `/api/google-kpis` and historical registry asset remain behind the login boundary.
 
 ## File List
 

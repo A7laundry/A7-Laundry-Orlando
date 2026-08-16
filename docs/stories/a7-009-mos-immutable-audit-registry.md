@@ -1,6 +1,6 @@
 # Story A7-009 — MOS Immutable Audit Registry
 
-**Status:** Ready for Review
+**Status:** Done
 
 **Created:** 2026-08-15
 
@@ -35,7 +35,7 @@
 - [x] Automated regression tests prove that adding a newer audit or late backfill preserves every older audit byte-for-byte.
 - [x] Existing A7-008 data-truth and authentication tests continue to pass.
 - [x] `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, MOS tests and `git diff --check` pass before review.
-- [ ] No production deployment, external-system write or campaign change occurs without separate authorization.
+- [x] Dennis separately authorized the production deployment on 2026-08-16; no campaign or business-data mutation occurred.
 
 ## Tasks
 
@@ -66,7 +66,8 @@
 - DOM-level MOS UI regression test: passed for 12-card timeline, detail, checksum visibility, snapshot selection and no-invention comparison state.
 - `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` and `git diff --check`: passed on 2026-08-15.
 - In-app visual automation was unavailable because the session browser plugin referenced a removed cache version; no environment-global workaround was applied.
-- Production release remains an explicit `@devops` action.
+- Authorized production deployment `dpl_FKnLn5W8vrLH9drFXk66jXRgoXGq` reached `READY` and was aliased to `https://mos.a7laundry.com` on 2026-08-16.
+- Production authentication probes confirmed `/audit-registry.js` is inaccessible without a valid MOS session.
 
 ## File List
 
