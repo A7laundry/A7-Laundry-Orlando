@@ -1,3 +1,5 @@
+import contentCatalog from './generated/content-catalog.json' with { type: 'json' };
+
 const GA4_METRICS = [
   'activeUsers',
   'newUsers',
@@ -19,6 +21,21 @@ const CONFIG_KEYS = [
   'GA4_PROPERTY_ID',
   'GSC_PROPERTY'
 ];
+
+export const FUNNEL_REGISTRY = Object.freeze(contentCatalog.assets.filter((asset) => asset.funnel).map((asset) => Object.freeze({
+  assetId: asset.assetId,
+  id: asset.funnel.id,
+  name: asset.funnel.name,
+  canonicalPath: asset.canonicalPath,
+  funnelCodes: asset.funnel.codes,
+  releaseStatus: 'unobserved',
+  intent: asset.intent,
+  audience: asset.audience,
+  action: asset.nextAction,
+  campaignRole: asset.funnel.campaignRole,
+  journeyStage: asset.journeyStage,
+  clusterId: asset.clusterId
+})));
 
 function isoDate(date) {
   return date.toISOString().slice(0, 10);
@@ -54,6 +71,16 @@ function canonicalPath(value) {
   } catch {
     const normalized = String(value).split(/[?#]/)[0].replace(/\/{2,}/g, '/').replace(/\/$/, '');
     return normalized.startsWith('/') ? normalized || '/' : `/${normalized}`;
+  }
+}
+
+function paidDestination(value) {
+  try {
+    const url = new URL(value);
+    if (url.protocol !== 'https:' || !['a7laundry.com', 'www.a7laundry.com'].includes(url.hostname.toLowerCase())) return null;
+    return canonicalPath(url.href);
+  } catch {
+    return null;
   }
 }
 
@@ -179,12 +206,12 @@ async function requestGa4(authClient, config, period, currentDay) {
     acquisition: query(
       ['sessionSourceMedium', 'sessionCampaignName'],
       ['sessions', 'engagedSessions', 'engagementRate', 'keyEvents'],
-      100
+      1000
     ),
     landingPages: query(
       ['landingPage'],
       ['sessions', 'activeUsers', 'engagedSessions', 'engagementRate', 'keyEvents'],
-      100
+      1000
     ),
     contentPages: query(
       ['pagePath', 'pageTitle'],
@@ -205,12 +232,12 @@ async function requestGa4(authClient, config, period, currentDay) {
     journeys: query(
       ['sessionSourceMedium', 'sessionCampaignName', 'landingPage'],
       ['sessions', 'engagedSessions', 'keyEvents'],
-      250
+      1000
     ),
     interactions: query(
       ['pagePath', 'eventName'],
       ['eventCount', 'totalUsers', 'keyEvents'],
-      250
+      2000
     ),
     linkedGoogleAds: query(
       ['sessionGoogleAdsCustomerId', 'sessionGoogleAdsCampaignId', 'sessionGoogleAdsCampaignName', 'sessionGoogleAdsCampaignType'],
@@ -281,17 +308,17 @@ async function requestSearchConsole(authClient, config, period) {
     authClient.request({
       url: endpoint,
       method: 'POST',
-      data: { ...base, dimensions: ['query'], rowLimit: 50, aggregationType: 'auto' }
+      data: { ...base, dimensions: ['query'], rowLimit: 1000, aggregationType: 'auto' }
     }),
     authClient.request({
       url: endpoint,
       method: 'POST',
-      data: { ...base, dimensions: ['page'], rowLimit: 50, aggregationType: 'auto' }
+      data: { ...base, dimensions: ['page'], rowLimit: 1000, aggregationType: 'auto' }
     }),
     authClient.request({
       url: endpoint,
       method: 'POST',
-      data: { ...base, dimensions: ['query', 'page'], rowLimit: 250, aggregationType: 'auto' }
+      data: { ...base, dimensions: ['query', 'page'], rowLimit: 5000, aggregationType: 'auto' }
     })
   ]);
   const summaryRow = summaryResponse.data?.rows?.[0];
@@ -445,6 +472,117 @@ function marketingGraph(ga4, searchConsole, period, fetchedAt) {
   };
 }
 
+function sumObserved(rows, key) {
+  if (!rows.length) return null;
+  const values = rows.map((row) => numberOrNull(row[key])).filter((value) => value !== null);
+  return values.length ? values.reduce((total, value) => total + value, 0) : null;
+}
+
+// Definitions must be supplied by the validated growth artifact. The legacy
+// registry remains exported temporarily for migration comparisons only; it is
+// never a runtime fallback because its release state can be stale.
+export function buildFunnelCatalog(ga4, searchConsole, period, fetchedAt, definitions = []) {
+  const ga4Available = ['live', 'partial', 'no_data'].includes(ga4?.status);
+  const gscAvailable = ['live', 'no_data'].includes(searchConsole?.status);
+  return definitions.map((definition) => {
+    const path = definition.canonicalPath;
+    const landingRows = (ga4?.landingPages || []).filter((row) => row.canonicalPath === path);
+    const contentRows = (ga4?.contentPages || []).filter((row) => row.canonicalPath === path);
+    const interactionRows = (ga4?.interactions || []).filter((row) => row.canonicalPath === path);
+    const contactRows = interactionRows.filter((row) => /whatsapp|sms|contact|pickup|call/i.test(row.eventName || ''));
+    const journeyRows = (ga4?.journeys || []).filter((row) => row.canonicalPath === path);
+    const gscPageRows = (searchConsole?.pages || []).filter((row) => row.canonicalPath === path);
+    const gscQueryRows = (searchConsole?.queryPages || []).filter((row) => row.canonicalPath === path);
+    const gscImpressions = sumObserved(gscPageRows, 'impressions');
+    const gscClicks = sumObserved(gscPageRows, 'clicks');
+    const weightedPosition = gscPageRows.reduce((total, row) => total + (numberOrNull(row.position) || 0) * (numberOrNull(row.impressions) || 0), 0);
+    const campaigns = journeyRows.map((row) => ({
+      sourceMedium: row.sessionSourceMedium || '(não definido)',
+      campaign: row.sessionCampaignName || '(não definida)',
+      sessions: row.sessions,
+      engagedSessions: row.engagedSessions,
+      keyEvents: row.keyEvents
+    })).sort((a, b) => (b.sessions || 0) - (a.sessions || 0));
+    const topQueries = gscQueryRows.slice().sort((a, b) => (b.impressions || 0) - (a.impressions || 0)).slice(0, 8).map((row) => ({
+      query: row.query,
+      clicks: row.clicks,
+      impressions: row.impressions,
+      ctr: row.ctr,
+      position: row.position
+    }));
+    return {
+      ...definition,
+      requestedPeriod: period,
+      fetchedAt,
+      sources: {
+        ga4: { status: !ga4Available ? 'unavailable' : landingRows.length || contentRows.length || interactionRows.length ? 'observed' : 'not_returned', source: 'Google Analytics Data API', matchMethod: 'exact_canonical' },
+        searchConsole: { status: !gscAvailable ? 'unavailable' : gscPageRows.length || gscQueryRows.length ? 'observed' : 'not_returned', source: 'Google Search Console API', matchMethod: 'exact_canonical' },
+        googleAds: { status: 'unavailable', source: 'Google Ads API', matchMethod: 'unmatched' }
+      },
+      performance: {
+        ga4: {
+          sessions: ga4Available ? sumObserved(landingRows, 'sessions') : null,
+          engagedSessions: ga4Available ? sumObserved(landingRows, 'engagedSessions') : null,
+          activeUsers: ga4Available ? sumObserved(contentRows, 'activeUsers') : null,
+          views: ga4Available ? sumObserved(contentRows, 'screenPageViews') : null,
+          // Landing and content reports are different GA4 grains and may contain
+          // the same key event. Prefer landing attribution and only fall back to
+          // the content report when the landing path was not returned.
+          keyEvents: ga4Available ? sumObserved(landingRows.length ? landingRows : contentRows, 'keyEvents') : null,
+          contactEvents: ga4Available ? sumObserved(contactRows, 'eventCount') : null
+        },
+        searchConsole: {
+          clicks: gscAvailable ? gscClicks : null,
+          impressions: gscAvailable ? gscImpressions : null,
+          ctr: gscAvailable && gscImpressions ? gscClicks / gscImpressions : null,
+          position: gscAvailable && gscImpressions ? weightedPosition / gscImpressions : null
+        }
+      },
+      campaigns,
+      topQueries,
+      limitation: 'Métricas permanecem nulas quando a API está indisponível ou a URL não foi devolvida. Ausência de linha não é convertida em zero; campanhas e consultas não representam usuários deduplicados.'
+    };
+  });
+}
+
+function addNullable(total, value) {
+  const number = numberOrNull(value);
+  return number === null ? total : (total ?? 0) + number;
+}
+
+export function attachGoogleAdsToFunnels(funnels, googleAds) {
+  if (!Array.isArray(funnels)) return [];
+  if (!googleAds || !['live', 'partial_live', 'partial'].includes(googleAds.status)) {
+    return funnels.map((funnel) => ({ ...funnel, sources: { ...funnel.sources, googleAds: { status: 'unavailable', source: 'Google Ads API', matchMethod: 'unmatched' } }, paidMedia: { status: 'unavailable', ads: [], metrics: null } }));
+  }
+  const byPath = new Map(funnels.map((funnel) => [canonicalPath(funnel.canonicalPath), funnel.id]));
+  const assignments = new Map(funnels.map((funnel) => [funnel.id, []]));
+  const ambiguous = [];
+  const unmatched = [];
+  for (const ad of googleAds.ads || []) {
+    const destinations = [...new Set((ad.finalUrls || []).map(paidDestination))];
+    const resolved = destinations.map((path) => path ? byPath.get(path) || null : null);
+    const matched = [...new Set(resolved.filter(Boolean))];
+    const exact = destinations.length > 0 && resolved.every(Boolean) && matched.length === 1;
+    if (exact) assignments.get(matched[0]).push({ ...ad, matchMethod: 'exact_canonical' });
+    else if (matched.length) ambiguous.push({ adId: ad.id, funnelIds: matched, finalUrls: ad.finalUrls || [], matchMethod: 'ambiguous' });
+    else unmatched.push({ adId: ad.id, finalUrls: ad.finalUrls || [], matchMethod: 'unmatched' });
+  }
+  return funnels.map((funnel) => {
+    const ads = assignments.get(funnel.id) || [];
+    const metrics = ads.reduce((totals, ad) => {
+      const row = ad.performance?.last30 || {};
+      for (const key of ['cost', 'clicks', 'impressions', 'conversions', 'conversionValue']) totals[key] = addNullable(totals[key], row[key]);
+      return totals;
+    }, { cost: null, clicks: null, impressions: null, conversions: null, conversionValue: null });
+    return {
+      ...funnel,
+      sources: { ...funnel.sources, googleAds: { status: ads.length ? 'observed' : 'not_returned', source: 'Google Ads API', matchMethod: ads.length ? 'exact_canonical' : 'unmatched' } },
+      paidMedia: { status: ads.length ? 'observed' : 'not_returned', ads, metrics: ads.length ? metrics : null, ambiguous: ambiguous.filter((item) => item.funnelIds.includes(funnel.id)), unmatchedCount: unmatched.length, limitation: 'Cada anúncio é atribuído no máximo uma vez. Destinos múltiplos ou desconhecidos não distribuem custo por inferência.' }
+    };
+  });
+}
+
 export async function collectGoogleKpis(authClient, config, options = {}) {
   const now = options.now || new Date();
   const period = options.period || requestedGooglePeriod(now);
@@ -464,6 +602,7 @@ export async function collectGoogleKpis(authClient, config, options = {}) {
   if (ga4Result.status === 'rejected') errors.push(sourceError('ga4', ga4Result.reason));
   if (searchConsoleResult.status === 'rejected') errors.push(sourceError('search_console', searchConsoleResult.reason));
   const graph = marketingGraph(ga4, searchConsole, period, fetchedAt);
+  const funnels = buildFunnelCatalog(ga4, searchConsole, period, fetchedAt);
   const googleAds = ga4.linkedGoogleAds
     ? { ...ga4.linkedGoogleAds, requestedPeriod: period, fetchedAt }
     : {
@@ -482,7 +621,7 @@ export async function collectGoogleKpis(authClient, config, options = {}) {
   };
   const liveSources = [ga4, searchConsole].filter((source) => ['live', 'partial', 'no_data'].includes(source.status)).length;
   return {
-    schemaVersion: '1.3',
+    schemaVersion: '1.4',
     status: liveSources === 2 ? 'live' : liveSources === 1 ? 'partial' : 'unavailable',
     requestedPeriod: period,
     fetchedAt,
@@ -493,6 +632,7 @@ export async function collectGoogleKpis(authClient, config, options = {}) {
     },
     sources: { ga4, searchConsole, googleAds, metaAds },
     marketingGraph: graph,
+    funnels,
     errors
   };
 }

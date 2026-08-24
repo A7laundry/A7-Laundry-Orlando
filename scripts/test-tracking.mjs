@@ -24,10 +24,12 @@ function anchor(href, textContent, placement = 'inline') {
   };
 }
 
-async function trackingRuntime({pathname = '/', search = '', referrer = '', initialStorage = {}, pageLinks = [], apiFailure = false, gtagFailure = false} = {}) {
+async function trackingRuntime({pathname = '/', search = '', referrer = '', initialStorage = {}, pageLinks = [], apiFailure = false, gtagFailure = false, deferVendorTags = false} = {}) {
   const gaEvents = [];
   const metaEvents = [];
   const listeners = {};
+  const windowListeners = {};
+  const appendedScripts = [];
   const storage = {...initialStorage};
   const sessionStorage = {
     getItem(key) { return Object.hasOwn(storage, key) ? storage[key] : null; },
@@ -46,11 +48,14 @@ async function trackingRuntime({pathname = '/', search = '', referrer = '', init
   const fbq = (...args) => metaEvents.push(args);
   const document = {
     referrer,
-    head: {appendChild() {}},
-    getElementById() { return {}; },
+    head: {appendChild(node) { appendedScripts.push(node); }},
+    getElementById() { return null; },
     createElement() { return {}; },
     getElementsByTagName() { return [{parentNode: {insertBefore() {}}}]; },
     addEventListener(type, handler) { (listeners[type] ||= []).push(handler); },
+    removeEventListener(type, handler) {
+      if (listeners[type]) listeners[type] = listeners[type].filter((candidate) => candidate !== handler);
+    },
     querySelectorAll(selector) { return selector.includes('wa.me/') ? pageLinks : []; }
   };
   const fetch = async () => {
@@ -71,7 +76,11 @@ async function trackingRuntime({pathname = '/', search = '', referrer = '', init
       }
     };
   };
-  const window = {dataLayer: [], gtag, fbq, sessionStorage, fetch};
+  const window = {
+    dataLayer: [], gtag, fbq, sessionStorage, fetch,
+    __A7_DEFER_VENDOR_TAGS__: deferVendorTags,
+    addEventListener(type, handler) { (windowListeners[type] ||= []).push(handler); }
+  };
   const context = vm.createContext({window, document, location, gtag, fbq, fetch, URL, URLSearchParams, WeakSet, Date, console, setTimeout, clearTimeout});
   for (const source of [configSource, attributionSource, eventsSource]) vm.runInContext(source, context);
   window.A7_BUSINESS_CONFIG = context.A7_BUSINESS_CONFIG;
@@ -80,7 +89,7 @@ async function trackingRuntime({pathname = '/', search = '', referrer = '', init
   vm.runInContext(trackingSource, context);
   vm.runInContext(trackingSource, context); // repeated inclusion must be idempotent
   await new Promise((resolve) => setTimeout(resolve, 0));
-  return {window, gaEvents, metaEvents, listeners, storage};
+  return {window, gaEvents, metaEvents, listeners, windowListeners, appendedScripts, storage};
 }
 
 function click(runtime, target, event = {target}) {
@@ -136,6 +145,22 @@ function click(runtime, target, event = {target}) {
   click(runtime, phone);
   assert.ok(runtime.gaEvents.some((entry) => entry[0] === 'event' && entry[1] === 'call_click'));
   assert.ok(!runtime.gaEvents.some((entry) => entry[0] === 'event' && entry[1] === 'conversion' && entry[2].send_to === 'AW-17146169189/83lbCLK53NgcEOWO9-8_'));
+}
+
+{
+  const whatsapp = anchor('https://wa.me/14076708839?text=Hello', 'WhatsApp', 'hero');
+  const runtime = await trackingRuntime({pathname: '/blog/laundry-lake-buena-vista', pageLinks: [whatsapp], deferVendorTags: true});
+  assert.equal(runtime.appendedScripts.length, 0, 'LBV must queue measurement without loading vendors during the critical render.');
+  assert.equal(runtime.listeners.pointerdown.length, 1, 'The first user intent must release queued vendor tags.');
+  runtime.listeners.pointerdown[0]();
+  assert.deepEqual(
+    runtime.appendedScripts.map((script) => script.src),
+    ['https://www.googletagmanager.com/gtag/js?id=G-JLQNRC7MK4', 'https://connect.facebook.net/en_US/fbevents.js'],
+    'The interaction release must load each measurement vendor once.'
+  );
+  click(runtime, whatsapp);
+  assert.equal(runtime.gaEvents.filter((entry) => entry[0] === 'event' && entry[1] === 'whatsapp_click').length, 1);
+  assert.equal(runtime.gaEvents.filter((entry) => entry[0] === 'event' && entry[1] === 'conversion').length, 1);
 }
 
 {

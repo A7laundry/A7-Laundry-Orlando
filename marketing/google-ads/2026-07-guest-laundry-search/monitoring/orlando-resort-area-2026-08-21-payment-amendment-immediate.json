@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "immediate",
+  "checkedAt": "2026-08-22T01:24:39.061Z",
+  "url": "https://a7laundry.com/blog/laundry-near-universal-orlando",
+  "pass": true,
+  "checks": {
+    "html200": true,
+    "hero200": true,
+    "tracking200": true,
+    "sitemap200": true,
+    "finalUrlExact": true,
+    "contentTypes": true,
+    "canonicalExact": true,
+    "h1Exact": true,
+    "whatsappCount": 5,
+    "whatsappSafe": true,
+    "smsCount": 2,
+    "smsSafe": true,
+    "zeroCallRoutes": true,
+    "heroPresent": true,
+    "responsiveImages": true,
+    "noRemoteUiDependencies": true,
+    "fourJsonLd": true,
+    "faqParity": true,
+    "offerSafe": true,
+    "noForbiddenVisibleBrands": true,
+    "noDoubleEscapes": true,
+    "socialSafe": true,
+    "paymentMethodsSafe": true,
+    "sitemapUrl": true,
+    "sitemapHero": true,
+    "htmlHash": true,
+    "heroHash": true,
+    "trackingHash": true
+  },
+  "artifacts": {
+    "html": {
+      "bytes": 44969,
+      "sha256": "ab7790d8d15e90d83c7f451222d99350a453ff8857a2c833a90535d58351b4f7"
+    },
+    "hero": {
+      "bytes": 89388,
+      "sha256": "22c83e8b465f3ddcb9b3728ae91a1b20aaa72e3d57b76039fe8ff9a169ad3b81"
+    },
+    "tracking": {
+      "bytes": 15867,
+      "sha256": "af0bb70c4e044e25e62e6dcd9405c3c30f187bb53014d7f5eb67d20ffe4a23bf"
+    }
+  }
+}

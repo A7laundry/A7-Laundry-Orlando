@@ -10,6 +10,10 @@ execFileSync(process.execPath, [path.join(projectRoot, 'scripts/mos-funnel.mjs')
 execFileSync(process.execPath, [path.join(projectRoot, 'scripts/validate-funnel-intelligence.mjs')], {stdio: 'inherit'});
 execFileSync(process.execPath, [path.join(projectRoot, 'scripts/mos-audits.mjs'), 'compile'], {stdio: 'inherit'});
 execFileSync(process.execPath, [path.join(projectRoot, 'scripts/mos-audits.mjs'), 'validate'], {stdio: 'inherit'});
+execFileSync(process.execPath, [path.join(projectRoot, 'scripts/growth-content.mjs'), 'compile'], {stdio: 'inherit'});
+execFileSync(process.execPath, [path.join(projectRoot, 'scripts/growth-content.mjs'), 'check-generated'], {stdio: 'inherit'});
+execFileSync(process.execPath, [path.join(projectRoot, 'scripts/growth-release.mjs'), 'compile'], {stdio: 'inherit'});
+execFileSync(process.execPath, [path.join(projectRoot, 'scripts/growth-release.mjs'), 'validate'], {stdio: 'inherit'});
 
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
@@ -28,6 +32,8 @@ fs.cpSync(path.join(projectRoot, 'mos-data'), path.join(output, 'mos-data'), {re
 fs.copyFileSync(path.join(appRoot, 'funnel-intelligence-contract.js'), path.join(output, 'funnel-intelligence-contract.js'));
 fs.mkdirSync(path.join(output, 'generated'), {recursive: true});
 fs.copyFileSync(path.join(appRoot, 'generated/funnel-intelligence.json'), path.join(output, 'generated/funnel-intelligence.json'));
+fs.copyFileSync(path.join(appRoot, 'generated/content-catalog.json'), path.join(output, 'generated/content-catalog.json'));
+fs.copyFileSync(path.join(appRoot, 'generated/release-ledger.json'), path.join(output, 'generated/release-ledger.json'));
 fs.copyFileSync(path.join(projectRoot, 'logo-a7-laundry-usa.png'), path.join(output, 'logo-a7-laundry-usa.png'));
 fs.copyFileSync(path.join(appRoot, 'login.html'), path.join(output, 'login.html'));
 
@@ -58,7 +64,7 @@ fs.copyFileSync(
   path.join(testCreativeOutput, 'opt-op1-discricao-operacao-real_pt_9x16.png')
 );
 
-for (const file of ['index.html', 'mos-kpis.js', 'audit-registry.js', 'funnel-intelligence-contract.js', 'generated/funnel-intelligence.json', 'login.html', 'logo-a7-laundry-usa.png']) {
+for (const file of ['index.html', 'mos-kpis.js', 'audit-registry.js', 'funnel-intelligence-contract.js', 'generated/funnel-intelligence.json', 'generated/content-catalog.json', 'generated/release-ledger.json', 'login.html', 'logo-a7-laundry-usa.png']) {
   if (!fs.existsSync(path.join(output, file))) throw new Error(`MOS build missing ${file}`);
 }
 if (!fs.existsSync(path.join(output, 'mos-data/audits/2026-07-10-meta-comforter-pre-pause.json'))) throw new Error('MOS build missing oldest immutable audit');

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "immediate",
+  "checkedAt": "2026-08-21T04:48:14.099Z",
+  "target": "https://a7laundry.com/blog/laundry-lake-buena-vista",
+  "pass": true,
+  "checks": {
+    "html200": true,
+    "hero200": true,
+    "tracking200": true,
+    "robots200": true,
+    "sitemap200": true,
+    "disneySprings200": true,
+    "nearDisney200": true,
+    "canonicalExact": true,
+    "h1Exact": true,
+    "fourWhatsappCtas": true,
+    "whatsappOfficial": true,
+    "whatsappPrefillComplete": true,
+    "twoTelephoneLinks": true,
+    "funnelPresent": true,
+    "heroPresent": true,
+    "fourJsonLdBlocks": true,
+    "offerSafe": true,
+    "htmlMatchesReleasedArtifact": true,
+    "heroMatchesReleasedArtifact": true,
+    "trackingMatchesReleasedArtifact": true,
+    "targetIndexable": true,
+    "targetContextualLinks": true,
+    "robotsAllowsPublic": true,
+    "sitemapTarget": true,
+    "sitemapHero": true,
+    "disneySpringsCanonical": true,
+    "disneySpringsInformational": true,
+    "disneySpringsLinksTarget": true,
+    "nearDisneyCanonical": true,
+    "nearDisneyLinksTarget": true,
+    "finalUrlExact": true,
+    "htmlContentType": true,
+    "heroContentType": true,
+    "trackingContentType": true,
+    "hsts": true,
+    "noSniff": true,
+    "frameDenied": true,
+    "strictReferrer": true,
+    "explicitCachePolicy": true
+  },
+  "artifacts": {
+    "html": {
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 32653,
+      "sha256": "9641d43c6c7e27688cf80e086051f1a3917543eba6f0582fa9b2ecb87af2474e",
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-type": "text/html; charset=utf-8",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY"
+      }
+    },
+    "hero": {
+      "status": 200,
+      "contentType": "image/webp",
+      "bytes": 76674,
+      "sha256": "32065c4545a112b30301d021cd0d2d4b300ae12d63b65d45fa1ccf7c92779a56"
+    },
+    "tracking": {
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "bytes": 15867,
+      "sha256": "af0bb70c4e044e25e62e6dcd9405c3c30f187bb53014d7f5eb67d20ffe4a23bf"
+    }
+  },
+  "semantics": {
+    "canonicalExact": true,
+    "h1Exact": true,
+    "whatsappCount": 4,
+    "whatsappOfficial": true,
+    "whatsappPrefillComplete": true,
+    "telephoneCount": 2,
+    "funnelPresent": true,
+    "heroPresent": true,
+    "jsonLdCount": 4,
+    "jsonLdParseable": true,
+    "offerSafe": true
+  },
+  "seoGraph": {
+    "targetIndexable": true,
+    "targetContextualLinks": true,
+    "robotsAllowsPublic": true,
+    "sitemapTarget": true,
+    "sitemapHero": true,
+    "disneySpringsCanonical": true,
+    "disneySpringsInformational": true,
+    "disneySpringsLinksTarget": true,
+    "nearDisneyCanonical": true,
+    "nearDisneyLinksTarget": true
+  },
+  "delivery": {
+    "finalUrlExact": true,
+    "htmlContentType": true,
+    "heroContentType": true,
+    "trackingContentType": true,
+    "hsts": true,
+    "noSniff": true,
+    "frameDenied": true,
+    "strictReferrer": true,
+    "explicitCachePolicy": true
+  },
+  "commercialEvidence": {
+    "status": "not-collected-by-technical-smoke",
+    "required": [
+      "qualified leads",
+      "paid orders",
+      "revenue",
+      "margin",
+      "deadline/handoff quality",
+      "source reconciliation"
+    ],
+    "warning": "Raw pageviews, CTA clicks and WhatsApp opens are not sales."
+  }
+}

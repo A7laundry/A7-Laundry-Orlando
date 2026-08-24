@@ -2,6 +2,8 @@ import { getVercelOidcToken } from '@vercel/oidc';
 import { ExternalAccountClient } from 'google-auth-library';
 import { readCookie, verifySession } from '../auth.js';
 import {
+  buildFunnelCatalog,
+  attachGoogleAdsToFunnels,
   collectGoogleKpis,
   externalAccountOptions,
   readGoogleKpiConfig
@@ -12,6 +14,11 @@ import {
   requestedPaidMediaPeriod
 } from '../google-ads-kpis-contract.js';
 import { collectMetaKpis, readMetaKpiConfig } from '../meta-kpis-contract.js';
+import {
+  definitionsFromGrowthManifest,
+  observeGrowthManifest
+} from '../growth-manifest-contract.js';
+import { loadEmbeddedReleaseLedger } from '../release-ledger-contract.js';
 
 function json(body, status = 200) {
   return Response.json(body, {
@@ -28,11 +35,24 @@ export async function GET(request) {
   const allowedEmail = String(process.env.MOS_ADMIN_EMAIL || '').trim().toLowerCase();
   if (!session || session.email !== allowedEmail) return json({ error: 'Não autorizado.' }, 401);
 
+  const growthRegistry = await observeGrowthManifest(fetch, { releaseLedger: loadEmbeddedReleaseLedger() });
+  const observedFunnelDefinitions = definitionsFromGrowthManifest(growthRegistry);
+
   const config = readGoogleKpiConfig();
   if (!config.ok) {
+    const fetchedAt = new Date().toISOString();
     return json({
-      schemaVersion: '1.3',
+      schemaVersion: '1.4',
       status: 'unavailable',
+      fetchedAt,
+      growthRegistry,
+      funnels: buildFunnelCatalog(
+        { status: 'unavailable' },
+        { status: 'unavailable' },
+        null,
+        fetchedAt,
+        observedFunnelDefinitions
+      ),
       error: {
         code: 'CONFIGURATION_INCOMPLETE',
         message: 'A conexão de leitura do Google ainda não está completamente configurada.'
@@ -52,7 +72,17 @@ export async function GET(request) {
     }));
     if (!authClient) throw new Error('External account client unavailable');
     const result = await collectGoogleKpis(authClient, config);
-    result.schemaVersion = '1.3';
+    result.growthRegistry = growthRegistry;
+    if (observedFunnelDefinitions.length) {
+      result.funnels = buildFunnelCatalog(
+        result.sources.ga4,
+        result.sources.searchConsole,
+        result.requestedPeriod,
+        result.fetchedAt,
+        observedFunnelDefinitions
+      );
+    }
+    result.schemaVersion = '1.4';
     result.periods = {
       googleOrganic: result.requestedPeriod,
       ga4CurrentDay: result.sources.ga4?.currentDay?.requestedPeriod || null,
@@ -70,6 +100,7 @@ export async function GET(request) {
         ...nativeGoogleAds,
         linkedGa4Fallback: linkedFallback
       };
+      result.funnels = attachGoogleAdsToFunnels(result.funnels, result.sources.googleAds);
       result.errors.push(...(nativeGoogleAds.errors || []).map((error) => ({
         source: 'google_ads',
         ...error
@@ -78,8 +109,9 @@ export async function GET(request) {
       result.sources.googleAds.nativeConnection = {
         status: 'unavailable',
         source: 'Google Ads API',
-        limitation: 'A integração nativa aguarda GOOGLE_ADS_CUSTOMER_ID e GOOGLE_ADS_DEVELOPER_TOKEN no servidor.'
+        limitation: 'A integração nativa aguarda customer ID, login customer ID do manager e developer token no servidor.'
       };
+      result.funnels = attachGoogleAdsToFunnels(result.funnels, null);
     }
     const metaConfig = readMetaKpiConfig();
     if (metaConfig.ok) {
@@ -103,9 +135,19 @@ export async function GET(request) {
     }
     return json(result, result.status === 'unavailable' ? 502 : 200);
   } catch {
+    const fetchedAt = new Date().toISOString();
     return json({
-      schemaVersion: '1.3',
+      schemaVersion: '1.4',
       status: 'unavailable',
+      fetchedAt,
+      growthRegistry,
+      funnels: buildFunnelCatalog(
+        { status: 'unavailable' },
+        { status: 'unavailable' },
+        null,
+        fetchedAt,
+        observedFunnelDefinitions
+      ),
       error: {
         code: 'GOOGLE_CONNECTION_FAILED',
         message: 'A conexão temporária com o Google falhou; os indicadores atuais devem permanecer indisponíveis.'

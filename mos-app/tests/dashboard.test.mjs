@@ -225,6 +225,23 @@ test('MOS replaces only connected Google KPIs and labels their provenance', () =
         { id: 'edge:1', type: 'campaign_to_page', from: 'campaign:1', to: 'page:/laundry-pickup-delivery-orlando', source: 'Google Analytics Data API', requestedPeriod: { startDate: '2026-06-24', endDate: '2026-07-23' }, metrics: { sessions: 18, keyEvents: 4 } },
         { id: 'edge:2', type: 'page_to_event', from: 'page:/laundry-pickup-delivery-orlando', to: 'event:whatsapp', source: 'Google Analytics Data API', requestedPeriod: { startDate: '2026-06-24', endDate: '2026-07-23' }, metrics: { eventCount: 7, keyEvents: 3 } }
       ]
+    },
+    funnels: [{
+      id: 'orlando-money', name: 'Orlando Guest Pickup', canonicalPath: '/laundry-pickup-delivery-orlando', managedFunnel: true,
+      funnelCodes: ['SEO-ORLANDO-MONEY-V2'], releaseStatus: 'active_production',
+      intent: '<script>commercial intent</script>', audience: 'Hotel guests', action: 'Send stay and deadline', campaignRole: 'Main Guest Laundry destination',
+      sources: { ga4: { status: 'observed' }, searchConsole: { status: 'observed' } },
+      performance: { ga4: { sessions: 18, contactEvents: 7 }, searchConsole: { impressions: 700, clicks: 10, ctr: 0.0143, position: 9 } },
+      campaigns: [{ sourceMedium: 'google / cpc', campaign: 'Guest Laundry Search', sessions: 18 }],
+      topQueries: [{ query: '<script>hotel laundry</script>', impressions: 300 }],
+      limitation: 'Sources are not deduplicated.'
+    }],
+    growthRegistry: {
+      status: 'live', artifactState: 'built', sourceUrlCount: 98, publicIndexableCount: 62,
+      assets: [
+        { canonicalPath: '/laundry-pickup-delivery-orlando', journeyStage: 'bofu', clusterId: 'guest-laundry-orlando', intendedIndexation: 'index', observationState: 'active_production' },
+        { canonicalPath: '/blog/laundry-solara-resort', journeyStage: 'bofu', clusterId: 'resort-property-review', intendedIndexation: 'noindex_review', observationState: 'unobserved' }
+      ]
     }
   };
   globalThis.A7_MOS_LIVE_STATE = { status: 'live' };
@@ -234,6 +251,18 @@ test('MOS replaces only connected Google KPIs and labels their provenance', () =
   assert.doesNotMatch(element('mosKpiAlert').innerHTML, /Meta Ads permanece não conectado/);
   assert.match(element('mosScorecard').innerHTML, /API ao vivo/);
   assert.match(element('mosScorecard').innerHTML, />123</);
+  assert.match(element('mosFunnelCatalog').innerHTML, /Orlando Guest Pickup/);
+  assert.match(element('mosFunnelCatalog').innerHTML, /Guest Laundry Search/);
+  assert.match(element('mosFunnelCatalog').innerHTML, /700/);
+  assert.match(element('mosFunnelCatalog').innerHTML, /&lt;script&gt;commercial intent&lt;\/script&gt;/);
+  assert.doesNotMatch(element('mosFunnelCatalog').innerHTML, /<script>commercial intent<\/script>/);
+  assert.match(element('mosFunnelCatalog').innerHTML, /&lt;script&gt;hotel laundry&lt;\/script&gt;/);
+  assert.match(element('mosGrowthPortfolioSummary').innerHTML, /98/);
+  assert.match(element('mosGrowthPortfolioSummary').innerHTML, /62/);
+  assert.match(element('mosGrowthPortfolioRows').innerHTML, /laundry-solara-resort/);
+  assert.match(element('mosGrowthPortfolioRows').innerHTML, /QUARENTENA/);
+  const dashboardSource = fs.readFileSync(path.resolve(import.meta.dirname, '../../a7-command-center.html'), 'utf8');
+  assert.match(dashboardSource, /schemaVersion:'1\.4',status:'unavailable',sources:\{\},funnels:\[\]/);
   element('mosChannelFilter').value = 'revenue';
   api.renderMosKpis();
   assert.match(element('mosScorecard').innerHTML, /Compras registradas no GA4/);

@@ -93,6 +93,40 @@ Estamos confirmando a disponibilidade da unidade. Enquanto isso me adianta: ende
 
 ---
 
+### 7. Cobrança / link de pagamento  ·  atalho `/pagar`
+> Enviar **depois** de confirmar disponibilidade, janela e endereço. Nunca antes.
+> ⚠️ Ao gerar o link em `/payment-link`, **cole o A7 Ref no campo "Referência interna"** —
+> é o que liga o pedido pago à origem do lead. Sem isso o pedido fica órfão no Stripe.
+```
+Tudo confirmado! ✅
+
+🧺 Wash, dry & fold — {PESO} lb × ${TARIFA}/lb
+🕐 Retorno: {24h Normal | 8h Express — disponibilidade já confirmada}
+📍 Coleta: {HOTEL/ENDEREÇO} · {JANELA}
+
+Total: ${VALOR}
+Pagamento seguro pelo Stripe:
+{LINK}
+
+Assim que o pagamento entrar eu confirmo a coleta na janela combinada. Qualquer dúvida, é só chamar por aqui 😊
+
+A7 Ref: {REF}
+```
+
+### 8. Recibo pós-pagamento  ·  atalho `/recibo`
+```
+Pagamento recebido, obrigado! 🎉
+
+📍 Coleta confirmada: {JANELA} em {LOCAL}
+🕐 Devolução prevista: {DATA/HORA}
+
+Vou te mandar uma foto da sacola no momento da coleta e aviso aqui quando estiver a caminho de volta 📸
+
+A7 Ref: {REF}
+```
+
+---
+
 ## 🇺🇸 ENGLISH
 
 ### 1. Greeting (first message)
@@ -143,6 +177,38 @@ If you do, send me your hotel/Airbnb and preferred time. I'll check availability
 ```
 Hi! 👋 Got your message — thanks for reaching out to A7 Laundry!
 We're confirming the unit's availability. Meanwhile, please send your address, hotel/Airbnb and approximate load. That lets me verify coverage, price and pickup 😊
+```
+
+### 7. Payment link  ·  `/pay`
+> Send **after** confirming availability, window and address. Never before.
+> ⚠️ When generating the link at `/payment-link`, **paste the A7 Ref into the
+> "Referência interna" field** — that is what connects the paid order back to the lead source.
+```
+All set! ✅
+
+🧺 Wash, dry & fold — {LBS} lb × ${RATE}/lb
+🕐 Return: {24h Normal | 8h Express — availability confirmed}
+📍 Pickup: {HOTEL/ADDRESS} · {WINDOW}
+
+Total: ${AMOUNT}
+Secure payment via Stripe:
+{LINK}
+
+As soon as the payment clears I'll confirm your pickup for the agreed window. Any questions, just message me here 😊
+
+A7 Ref: {REF}
+```
+
+### 8. Post-payment receipt  ·  `/receipt`
+```
+Payment received — thank you! 🎉
+
+📍 Pickup confirmed: {WINDOW} at {LOCATION}
+🕐 Estimated return: {DATE/TIME}
+
+I'll send you a photo of the bag at pickup and message you here when it's on its way back 📸
+
+A7 Ref: {REF}
 ```
 
 ## Serviços customizados e B2B

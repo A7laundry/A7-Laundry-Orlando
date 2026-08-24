@@ -105,6 +105,33 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Shadow diagnostics are development/authorized-only, masked and free of click-ID values, message contents and customer PII.
 - [x] No persistent attribution cookie is created without an affirmative consent signal; the missing CMP remains an explicit gap.
 - [x] Root lint, typecheck, tests and build pass without changing Google Ads, Stripe conversion logic, campaign delivery or bidding.
+- [x] A local CLI validates a redacted Gate B ledger, rejects PII columns and links Ads, orders and payments only through deterministic technical IDs.
+- [x] Gate B reconciliation reports paid attributed/unattributed cases, duplicates, refunds and the expected Google Ads purchase-count check without mutating external systems.
+- [x] The Aug 18–19 Lake Buena Vista commercial signal is recorded without customer PII, separating received service revenue, tips, projected revenue and technically attributed Google Ads purchases.
+- [x] The Aug 19 Drive forensic audit and adversarial review are reduced to a controlled local delta that accepts new evidence without importing unsafe bidding, value or negative-keyword recommendations.
+- [x] The Lake Buena Vista SEO page converts the observed hotel, handoff and deadline needs into a mobile-first path without unsupported same-day or special-care guarantees; its WhatsApp path carries a static funnel code plus the unique A7 reference.
+- [x] The existing `/laundry-pickup-delivery-orlando` URL is refreshed as the owner of broad commercial Orlando guest-laundry pickup intent without creating a new slug or competing with the Lake Buena Vista, resort-area, International Drive, before-checkout or hotel-guide pages.
+- [x] The refreshed money page uses visible, extractable HTML to answer audience, hotel/resort/vacation-rental pickup, handoff, bag identification, Standard, conditional Express, price, minimum, included pickup/delivery, needed-by requests, coverage, international payment and contact questions with exact FAQ/schema parity.
+- [x] The refreshed money page removes Tailwind CDN and Material Symbols dependencies, uses responsive project-owned imagery with an archived generation ledger, preserves canonical/sitemap/Google Ads anchors and unified tracking, and keeps WhatsApp/SMS as the primary conversion paths.
+- [x] The refreshed money page passes the 390px, tablet and desktop forensic gate with no overlap, inaccessible targets, unsupported claims, false proof, tracking regression or unresolved critical SEO/CRO/AI-search issue.
+- [x] The approved Orlando money page receives a bounded Taste Skill polish that reduces repeated uppercase eyebrow treatment and generic equal-column rhythm without changing its canonical intent, offer, schema, anchors, contact contract or tracking.
+- [x] Hotel, resort and vacation-rental guidance is reweighted into an editorial composition that reflects the hotel-guest priority while keeping all three supported stay types explicit in visible HTML.
+- [x] Guest-facing copy sounds direct and human while every operational dependency remains conditional; FAQ visible text and FAQPage JSON-LD remain byte-for-byte equivalent.
+- [x] WhatsApp, SMS, navigation, local-area, verification and FAQ controls receive restrained hover/pressed feedback with visible focus and reduced-motion support, without adding a framework or runtime dependency.
+- [x] The Taste Skill candidate passes the existing repository gates plus desktop/mobile visual comparison before production; the exact approved preview was promoted only after explicit owner approval.
+- [x] The existing International Drive URL is rebuilt as the owner of hotel, resort and convention-corridor guest intent without competing for broad Orlando, generic resort-next-day, hotel-guide or checkout-day intent.
+- [x] The International Drive source candidate uses the canonical Standard/conditional-Express offer, confirmed-area language, exact FAQ/schema parity, verifiable public evidence and a dedicated `SEO-IDRIVE-V1` WhatsApp/SMS intake contract.
+- [x] The International Drive source candidate removes remote UI dependencies, telephone and overlay CTAs, legacy free-delivery/Normal claims and unqualified property coverage while preserving its URL, rewrite, sitemap and internal hub links.
+- [ ] Complete independent SEO/brand/QA review plus the protected preview gate for the International Drive candidate.
+- [ ] Promote the exact owner-approved International Drive preview without rebuild and record public smoke, hashes, rollback and monitoring.
+- [x] The protected MOS has a canonical registry for every managed SEO/growth funnel, including intent, audience, action, canonical path, attribution codes and truthful active/candidate/legacy release state.
+- [x] The MOS joins live Search Console queries/pages and GA4 landing, interaction, journey and observed-campaign rows to each funnel by exact canonical path while preserving null for unavailable rows.
+- [x] Funnel cards expose source freshness and attribution limits and never treat GA4-linked Google Ads traffic as native campaign, budget, balance or delivery status.
+- [x] The existing Orlando hotel-laundry guide is normalized as educational decision support with a distinct intent boundary, canonical offer, hotel-handoff conditions, exact FAQ/schema parity and `SEO-HOTEL-GUIDE-V1` WhatsApp/SMS intake.
+- [x] The existing before-checkout URL is normalized around a fixed checkout, flight or next-hotel needed-by time with canonical offer, conditional Express, exact FAQ/schema parity and `SEO-BEFORE-CHECKOUT-V1` WhatsApp/SMS intake.
+- [x] The before-checkout candidate removes remote UI dependencies, telephone, legacy 6 PM cutoff, absolute free-delivery language and automatic same-day framing while preserving its URL, indexation and distinct checkout-day intent.
+- [ ] Complete independent QA and protected preview for the MOS funnel catalog and hotel-guide source candidates.
+- [ ] Promote only the exact owner-approved MOS and public-site previews, then record hashes, rollback and production monitoring separately.
 
 ## Tasks
 
@@ -191,9 +218,55 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Implement and validate Measurement V2 Phase 0 business configuration, phone guard and CTA inventory.
 - [x] Implement and validate Measurement V2 Phase 1 attribution/event contracts, shadow API, fail-open WhatsApp builder and masked diagnostics.
 - [x] Document current flow, privacy boundary, rollback and future durable-storage integration without advancing later measurement phases.
+- [x] Audit the live Google Guest Laundry campaign after activation, raise the authorized budget to R$150/day without restarting it, reconcile the primary conversion mix and replace blog-bound sitelinks with commercial landing-page destinations.
+- [x] Audit the live Meta Guest Laundry campaign without changing delivery, reconcile conversation, CPC, creative, age and placement performance, and verify the official WhatsApp destination and current US$20/day budget.
+- [x] Archive and individually audit the 39-file multilingual creative package without publishing it, separating guest rework, future resident concepts and third-party/unsupported rejects.
+- [x] Remove all eight US$3.00/lb creatives from the active intake library, archive them as old material and codify price-free new creative production with the current Normal and Express 8h exceptions.
+- [x] Add and test the read-only Google Ads Gate B reconciliation CLI and canonical redacted input template.
+- [x] Record the owner-confirmed Google → site → WhatsApp commercial signal for Lake Buena Vista without promoting projected revenue to paid attribution.
+- [x] Compare the three Drive audit files with the local baseline and record accepted, rejected and pending deltas without changing campaign delivery.
+- [x] Rebuild the Lake Buena Vista SEO page around hotel pickup, deadline and conditional handoff evidence; add source-page attribution and focused internal links without changing Google Ads delivery.
+- [x] Inventory the live and local Orlando money page, Search Console/GA4 evidence, intent boundaries, offer truth and measurement dependencies before redesign.
+- [x] Rebuild the existing Orlando money page around broad guest-laundry pickup intent, premium hospitality communication, direct answer blocks, safe operational trust and mobile-first WhatsApp/SMS conversion.
+- [x] Generate, inspect, optimize and archive original broad-Orlando handoff and identified-return imagery without third-party marks, PII or unsupported operational claims.
+- [x] Extend automated validation for money-page canonical, funnel code, CTA fields, FAQ parity, pricing/Express qualifiers, asset contracts and removal of production CDN dependencies.
+- [x] Run the full repository gates, render required viewports, complete the money-page forensic audit and update this story's File List and Validation Notes.
+- [x] Apply the bounded Taste Skill anti-template polish to the existing Orlando money page.
+- [x] Validate the Taste Skill candidate and prepare a protected preview for owner comparison.
+- [x] Inventory all 97 sitemap URLs with rewrite-aware source mapping, internal-link counts, schema, funnel codes and provisional actions.
+- [x] Normalize the `/plans` source candidate around the approved Standard/conditional-Express contract, correct price math, self-canonical, verified entity graph and WhatsApp/SMS intake.
+- [x] Add a deterministic regression gate for `/plans` canonical, price example, FAQ/schema parity, funnel code, Stripe payment truth and forbidden legacy claims.
+- [x] Complete independent QA and the protected preview gate for the `/plans` normalization candidate.
+- [x] Promote the exact approved `/plans` preview without rebuild and record public smoke, hashes, rollback and monitoring.
+- [x] Rebuild the International Drive source candidate with a distinct corridor intent, responsive local asset, visible answer blocks, current offer and WhatsApp/SMS-only conversion path.
+- [x] Extend deterministic validation for International Drive canonical, responsive assets, funnel fields, FAQ parity, current offer and forbidden legacy claims/dependencies.
+- [ ] Complete independent QA and the protected preview gate for the International Drive candidate.
+- [ ] Promote the exact approved International Drive preview without rebuild and record public smoke, hashes, rollback and monitoring.
+- [x] Build and test the canonical MOS funnel registry and live GA4/Search Console joins.
+- [x] Render truthful funnel cards in the protected command center with active/candidate/legacy status and null semantics.
+- [x] Verify the current production MOS through the owner-authenticated read-only session and update the Wave 0 data-access boundary.
+- [x] Close the MOS mobile-width and navigation-overlay regressions found by exact 390×844 CDP inspection.
+- [x] Normalize and deterministically validate the Orlando hotel pickup guide without changing its URL.
+- [x] Normalize and deterministically validate the Orlando before-checkout urgency funnel without changing its URL.
+- [x] Deploy one exact protected public preview containing Plans, International Drive, Hotel Guide and Before Checkout; verify hashes, canonical paths, contact contracts, lazy assets and 390px layout without promoting production.
+- [ ] Complete independent review, protected preview and owner approval for the MOS catalog and hotel guide.
 
 ## File List
 
+- `scripts/reconcile-google-ads-gate-b.mjs`
+- `scripts/test-reconcile-google-ads-gate-b.mjs`
+- `marketing/google-ads/2026-07-guest-laundry-search/gate-b-ledger-template.csv`
+- `marketing/google-ads/2026-07-guest-laundry-search/PROMPT-PERPLEXITY-DEMAND-PAIN-GAP-ORLANDO.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/PERPLEXITY-STRATEGIC-DELTA-2026-08-18.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/PROMPT-CODEX-REDESIGN-PREMIUM-LAKE-BUENA-VISTA.md`
+- `blog/laundry-lake-buena-vista.html`
+- `blog/img/lake-buena-vista-hotel-laundry-hero-v2.webp`
+- `blog/index.html`
+- `blog/hotel-laundry-service-orlando.html`
+- `blog/laundry-near-disney-world.html`
+- `blog/orlando-vacation-rental-laundry-guide.html`
+- `marketing/google-ads/2026-07-guest-laundry-search/COMMERCIAL-SIGNAL-LAKE-BUENA-VISTA-2026-08-19.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/DRIVE-FORENSIC-ADVERSARIAL-DELTA-2026-08-20.md`
 - `docs/stories/a7-003-conversion-observability.md`
 - `a7-tracking.js`
 - `comforter-cleaning.html`
@@ -201,6 +274,23 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `guest-payment-confirmation.html`
 - `api/stripe-session.js`
 - `scripts/test-stripe-confirmation.mjs`
+- `mos-app/google-kpis-contract.js`
+- `mos-app/api/google-kpis.js`
+- `mos-app/tests/google-kpis.test.mjs`
+- `mos-app/tests/dashboard.test.mjs`
+- `a7-command-center.html`
+- `marketing/seo-consistency/MOS-FUNNEL-CATALOG-EVIDENCE-2026-08-22.md`
+- `marketing/seo-consistency/DATA-ACCESS-BOUNDARY-2026-08-22.json`
+- `blog/hotel-laundry-service-orlando.html`
+- `blog/img/hotel-laundry-service-orlando-hero-v2.webp`
+- `blog/img/hotel-laundry-service-orlando-hero-v2-mobile.webp`
+- `public/guest-intent-guide-v1.css`
+- `marketing/seo-consistency/HOTEL-GUIDE-NORMALIZATION-EVIDENCE-2026-08-22.md`
+- `blog/laundry-before-checkout-orlando.html`
+- `blog/img/laundry-before-checkout-orlando-hero-v2.webp`
+- `blog/img/laundry-before-checkout-orlando-hero-v2-mobile.webp`
+- `marketing/seo-consistency/BEFORE-CHECKOUT-NORMALIZATION-EVIDENCE-2026-08-22.md`
+- `marketing/seo-consistency/WAVE-1-PUBLIC-PREVIEW-EVIDENCE-2026-08-22.md`
 - `vercel.json`
 - `scripts/build-site.mjs`
 - `sitemap.xml`
@@ -225,12 +315,37 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `docs/DIRECIONAMENTO-AGOSTO-2026.md`
 - `marketing/meta-ads/campaigns/2026-07-comforter-dedicated/`
 - `scripts/validate-site.mjs`
+- `plans.html`
+- `blog/laundry-international-drive-orlando.html`
+- `blog/img/laundry-international-drive-orlando-hero-v2.webp`
+- `blog/img/laundry-international-drive-orlando-hero-v2-mobile.webp`
+- `marketing/seo-consistency/INTERNATIONAL-DRIVE-NORMALIZATION-EVIDENCE-2026-08-22.md`
+- `marketing/SEO-GEO-AI-SEARCH-CONSISTENCY-PLAN-2026-08-22.md`
+- `marketing/seo-consistency/URL-INVENTORY-2026-08-22.tsv`
+- `marketing/seo-consistency/DATA-ACCESS-BOUNDARY-2026-08-22.json`
+- `marketing/seo-consistency/WAVE-0-BASELINE-2026-08-22.md`
+- `marketing/seo-consistency/CANONICAL-TRUTH-DELTA-2026-08-22.md`
+- `marketing/seo-consistency/PLANS-NORMALIZATION-PREFLIGHT-2026-08-22.md`
+- `marketing/seo-consistency/PLANS-RELEASE-EVIDENCE-2026-08-22.md`
+- `scripts/test-validation-context.mjs`
 - `laundry-pickup-delivery-orlando.html`
+- `sitemap.xml`
+- `public/orlando-guest-laundry-handoff-v1.webp`
+- `public/orlando-guest-laundry-handoff-v1-mobile.webp`
+- `public/orlando-laundry-identified-return-v1.webp`
+- `public/orlando-laundry-identified-return-v1-mobile.webp`
+- `marketing/google-ads/2026-07-guest-laundry-search/assets/main-money-page/orlando-guest-laundry-handoff-source-v1.png`
+- `marketing/google-ads/2026-07-guest-laundry-search/assets/main-money-page/orlando-laundry-identified-return-source-v1.png`
+- `marketing/google-ads/2026-07-guest-laundry-search/CREATIVE-LEDGER-ORLANDO-MONEY-PAGE-2026-08-21.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/FORENSIC-AUDIT-ORLANDO-MONEY-PAGE-2026-08-22.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/RELEASE-EVIDENCE-ORLANDO-MONEY-PAGE-2026-08-22.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/monitoring/orlando-money-page-taste-2026-08-22-immediate.json`
 - `a7-carpet-campaign/index.html`
 - `comforter-cleaning-v2.html`
 - `blog/*.html` (Express cutoff and opening-hours consistency)
 - `marketing/organic/instagram-feed/2026-07/2026-07-15-tourist-sameday-en/caption.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/`
+- `marketing/google-ads/2026-07-guest-laundry-search/live-optimization-snapshot-2026-08-16.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/LOVART-HERO-PROMPT.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/assets/hero/A7_GUEST_LAUNDRY_HERO_LOVART_MASTER.png`
 - `marketing/meta-ads/campaigns/2026-08-guest-how-it-works-carousel/`
@@ -259,6 +374,9 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `marketing/meta-ads/campaigns/2026-07-optimization-sprint/`
 - `marketing/meta-ads/campaigns/2026-07-tourist-hotel-geo-leads/`
 - `marketing/meta-ads/campaigns/2026-07-guest-laundry-manual/snapshot-2026-07-28-reactivation.md`
+- `marketing/meta-ads/campaigns/2026-07-guest-laundry-manual/live-audit-2026-08-16.md`
+- `marketing/meta-ads/campaigns/2026-07-guest-laundry-manual/assets/incoming/2026-08-17-multilingual-package/`
+- `marketing/meta-ads/archive/material-antigo/2026-08-17-valores-desatualizados/`
 - `marketing/meta-ads/campaigns/2026-07-tourist-laundry-reinforcement/`
 - `marketing/meta-ads/pricing-rules.md`
 - `marketing/meta-ads/creative-production-standard.md`
@@ -290,6 +408,10 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `scripts/build-site.mjs`
 
 ## Validation Notes
+
+- Aug 22 Plans typography amendment: owner feedback rejected the Georgia treatment on the `/plans` hero hook. Only the H1 font stack, weight, line-height and tracking were refined to a heavy local/system sans; internal editorial headings retain Georgia. The protected preview `dpl_DxfgcRbCLb7TYJnYAjiqQkXxzWBA` is READY, its `/plans` HTML is byte-identical to the tested build (`89fcd22d…`), and 390×844/1440×900 renders plus all repository gates passed. Production remains unchanged pending owner approval.
+- Aug 22 Plans identity correction: the typography preview exposed a legacy `A7 Lavanderia` header/footer asset. Both references now use the official USA `A7 LAUNDRY-05.png`, whose bytes match the owner-supplied Google Drive master (`f59d188a…`). Superseding preview `dpl_CBqG5XWrN1CMV1R7KpY4vG4ygJbb` is READY; protected HTML (`e9505b53…`) and logo are byte-identical to the tested build, and 390×844/1440×900 renders pass without overflow. Production remains unchanged pending owner approval.
+- Aug 22 Plans release: independent QA passed after the review-card contrast correction. Scoped commit `75b5d63` contains only `plans.html`. Protected preview `dpl_ATS8noHnPkQ2A9WvC9qzYxp9Ds9d` was built from the current public-production baseline plus the approved `/plans` artifact only; money page (`53b057e4…`), Universal (`c64bd5e7…`) and sitemap (`f497e059…`) stayed byte-identical to production. Owner approval was followed by exact no-rebuild promotion to READY production `dpl_7KRoef7F2mV3P1WSRV2waxSV5j9t`. Public `/plans` is HTTP 200 and byte-identical to preview/build (`4e62028d…`); canonical, five schema entities, six FAQ entries, WhatsApp/SMS tracking, zero call links, official logo, and 390×844/1440×900 overflow checks passed. Rollback is `dpl_98FASVxTNWedYknntjBgDte5N7mh`.
 
 - On Jul 29, authenticated Google Ads audit found four pre-existing active actions: inactive Stripe purchase, `Calls from ads`, and two locked Business Profile call/contact actions. There was no native website WhatsApp action and no duration-qualified call action for ad visitors who reached the site.
 - Google Ads account `290-113-2891` now contains `A7 - WhatsApp click (site)` (`AW-17146169189/dhI0CO_7xNgcEOWO9-8_`) and `A7 - Website call 60s` (`AW-17146169189/83lbCLK53NgcEOWO9-8_`). The website-call action routes to the official `+1 407-670-8839`, requires 60 seconds and carries no inferred monetary value.
@@ -491,3 +613,37 @@ Make the production conversion funnel observable from acquisition CTA through St
 - The live Google Search preflight now rejects the actual obsolete pre-8h Express variants
   instead of incorrectly rejecting the current 8h language. Landing, attribution and
   commercial checks pass against production.
+- Aug 22 refreshed and released the existing Orlando money page without creating a new slug or
+  changing Google Ads, GA4 or Search Console. The page owns broad traveler pickup/delivery
+  intent, preserves `#how`, `#pricing`, `#care`, `#areas` and `#questions`, and replaces Tailwind,
+  Material Symbols and the stale numeric review claim with extractable offer/operation answers,
+  exact 10-question FAQ/schema parity, original responsive illustrative imagery and the unified
+  `SEO-ORLANDO-MONEY-V2` WhatsApp/SMS path. Exact CDP renders at 390×844 and 768×1024 have no
+  horizontal overflow; the mobile CTA is inside the first viewport and all visible targets meet
+  the 44px gate. Desktop Chrome inspection confirmed the first-view offer/CTA, responsive images,
+  payment badge and five JSON-LD entities. `npm run lint`, `npm run typecheck`, `npm test`,
+  `npm run build` and `git diff --check` pass. Current GA4/GSC URL evidence was unavailable in the
+  active authorized context and is recorded as unavailable rather than zero. Preview
+  `dpl_ENBRJg6vKAtNEndtofH9sMpaqoQj` was promoted to READY production
+  `dpl_8mzMMHy2q6ZFPJV4HKgPMLwtgV6J`; HTML, hero, tracking and sitemap are byte-identical to the
+  approved artifacts. Public Chrome and exact 390×844 CDP smoke passed with no first-party error.
+  Rollback is `dpl_3M8sZ2ytLGBAvr478Ye5gDeJpWY9`. Evidence is archived in the forensic and release
+  reports dated 2026-08-22.
+- Aug 22 Taste Skill candidate applies a bounded anti-template polish to the existing Orlando money
+  page: repeated uppercase eyebrow labels were reduced from eight to three, the equal three-column
+  audience grid became an editorial hotel-led composition, guest copy was humanized, and the trust
+  section now points to public operational channels without inventing reviews or photographic proof.
+  Restrained hover/pressed states and reduced-motion behavior were added without a dependency.
+  Independent QA passed source/dist inspection and Chrome renders at 320×568, 390×844, 768×1024 and
+  1440×900 with no overflow, clipping or overlap. Canonical, anchors, exact 10/10 FAQ/schema parity,
+  Standard/Express pricing and qualifiers, US$50 minimum, three WhatsApp and two SMS paths, complete
+  `SEO-ORLANDO-MONEY-V2` prefills and local tracking remain intact. `npm run lint`,
+  `npm run typecheck`, `npm test`, `npm run build:public` and `git diff --check` pass. Protected
+  preview `dpl_BJWE6BuRG9dkQeVBXVkGmBtkdGvK` is READY at
+  `https://a7-laundry-orlando-ns5o1th4y-dennis-a7s-projects.vercel.app`; authenticated download
+  confirmed HTTP 200 and byte identity with built HTML `53b057e4176bb5b7e28049c8e2921377837ad1dbb3d68e087288f180e0392390`.
+  After explicit owner approval, that exact preview was promoted without rebuild to READY production
+  `dpl_98FASVxTNWedYknntjBgDte5N7mh`. Public HTML, hero, tracking and sitemap match the preview hashes;
+  public 390×844 and 1440×900 smoke passed canonical, anchors, 3 WhatsApp, 2 SMS, complete prefills,
+  five schema entities, exact 10/10 FAQ parity, images, targets and overflow. Rollback is
+  `dpl_8mzMMHy2q6ZFPJV4HKgPMLwtgV6J`.

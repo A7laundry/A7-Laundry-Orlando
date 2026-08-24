@@ -14,6 +14,8 @@
 
 > **Reconciliação 2026-07-23:** o proprietário confirmou **pedido mínimo oficial de $50**. O mínimo de $60 usado em alguns documentos e criativos de campanha era divergente do `MANIFESTO.md` e deve ser corrigido antes de qualquer republicação.
 
+> **Política criativa 2026-08-17:** novos criativos devem ser produzidos **sem preço incorporado na imagem**, salvo autorização específica. Quando uma peça precisar mostrar preço, os únicos valores válidos para hóspedes são **$3.25/lb Normal** ou **$3.95/lb Express 8h**, ambos com **mínimo de $50**; Express deve declarar **“subject to availability”**. Artes com valores antigos ficam em `marketing/meta-ads/archive/material-antigo/` e não podem voltar para `approved/`.
+
 ## Comforter Cleaning (por tamanho — NÃO é per-lb)
 
 | Tamanho | Preço |

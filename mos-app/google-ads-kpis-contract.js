@@ -1,9 +1,10 @@
 const GOOGLE_ADS_CONFIG_KEYS = [
   'GOOGLE_ADS_CUSTOMER_ID',
+  'GOOGLE_ADS_LOGIN_CUSTOMER_ID',
   'GOOGLE_ADS_DEVELOPER_TOKEN'
 ];
 
-const DEFAULT_API_VERSION = 'v24';
+const DEFAULT_API_VERSION = 'v25';
 const DEFAULT_ACCOUNT_TIME_ZONE = 'America/Sao_Paulo';
 const DEFAULT_RETRY_ATTEMPTS = 3;
 const DEFAULT_RETRY_DELAY_MS = 250;
@@ -186,6 +187,9 @@ function wait(milliseconds) {
 }
 
 async function requestRows(authClient, config, query, retryOptions = {}) {
+  if (!/^\s*SELECT\b/i.test(query) || /\bMUTATE\b|:\s*mutate\b/i.test(query)) {
+    throw new Error('Google Ads integration accepts read-only GAQL SELECT queries only.');
+  }
   const url = `https://googleads.googleapis.com/${encodeURIComponent(config.apiVersion)}/customers/${encodeURIComponent(config.customerId)}/googleAds:searchStream`;
   const headers = {
     'Content-Type': 'application/json',

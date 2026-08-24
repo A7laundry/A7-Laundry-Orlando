@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  FUNNEL_REGISTRY,
+  attachGoogleAdsToFunnels,
+  buildFunnelCatalog,
   collectGoogleKpis,
   externalAccountOptions,
   readGoogleKpiConfig,
@@ -156,7 +159,7 @@ test('live contract preserves source, period, freshness and numeric zero returne
   };
   const now = new Date('2026-07-26T13:00:00.000Z');
   const result = await collectGoogleKpis(authClient, config, { now });
-  assert.equal(result.schemaVersion, '1.3');
+  assert.equal(result.schemaVersion, '1.4');
   assert.equal(result.status, 'live');
   assert.equal(result.freshness.state, 'current');
   assert.equal(result.sources.ga4.source, 'Google Analytics Data API');
@@ -177,7 +180,51 @@ test('live contract preserves source, period, freshness and numeric zero returne
   assert.ok(result.marketingGraph.edges.some((edge) => edge.type === 'page_to_event'));
   assert.ok(result.marketingGraph.edges.some((edge) => edge.type === 'query_to_page'));
   assert.ok(result.marketingGraph.nodes.some((node) => node.type === 'organic_query'));
+  assert.equal(result.funnels.length, 0, 'core collector must not infer a manual release catalog');
+  const explicitCatalog = buildFunnelCatalog(result.sources.ga4, result.sources.searchConsole, result.requestedPeriod, result.fetchedAt, FUNNEL_REGISTRY);
+  const moneyFunnel = explicitCatalog.find((funnel) => funnel.id === 'orlando-money');
+  assert.equal(moneyFunnel.releaseStatus, 'unobserved');
+  assert.equal(moneyFunnel.performance.ga4.sessions, 40);
+  assert.equal(moneyFunnel.performance.ga4.contactEvents, 7);
+  assert.equal(moneyFunnel.performance.searchConsole.impressions, 700);
+  assert.equal(moneyFunnel.performance.searchConsole.clicks, 12);
+  assert.equal(moneyFunnel.campaigns[0].campaign, 'A7 Guest Laundry');
+  assert.equal(moneyFunnel.topQueries[0].query, 'guest laundry orlando');
+  const iDriveFunnel = explicitCatalog.find((funnel) => funnel.id === 'international-drive');
+  assert.equal(iDriveFunnel.releaseStatus, 'unobserved');
+  assert.equal(iDriveFunnel.performance.ga4.sessions, null);
+  assert.equal(iDriveFunnel.sources.searchConsole.status, 'not_returned');
+  const beforeCheckoutFunnel = explicitCatalog.find((funnel) => funnel.id === 'before-checkout');
+  assert.equal(beforeCheckoutFunnel.releaseStatus, 'unobserved');
+  assert.deepEqual(beforeCheckoutFunnel.funnelCodes, ['SEO-BEFORE-CHECKOUT-V1']);
+  assert.equal(beforeCheckoutFunnel.performance.ga4.sessions, null);
   assert.deepEqual(result.sources.ga4.requestedPeriod, result.requestedPeriod);
+});
+
+test('native Google Ads final URLs join exactly once and ambiguous ads do not duplicate cost', () => {
+  const funnels = [
+    { id: 'money', canonicalPath: '/laundry-pickup-delivery-orlando', sources: {} },
+    { id: 'plans', canonicalPath: '/plans', sources: {} }
+  ];
+  const report = {
+    status: 'live',
+    ads: [
+      { id: '1', finalUrls: ['https://a7laundry.com/plans?utm_source=google'], performance: { last30: { cost: 10, clicks: 2, impressions: 20, conversions: 1, conversionValue: 30 } } },
+      { id: '2', finalUrls: ['https://a7laundry.com/plans', 'https://a7laundry.com/laundry-pickup-delivery-orlando'], performance: { last30: { cost: 99, clicks: 9, impressions: 90, conversions: 9, conversionValue: 900 } } },
+      { id: '3', finalUrls: ['https://example.com/elsewhere'], performance: { last30: { cost: 50 } } },
+      { id: '4', finalUrls: ['https://example.com/plans'], performance: { last30: { cost: 70 } } },
+      { id: '5', finalUrls: ['https://a7laundry.com/plans', 'https://example.com/elsewhere'], performance: { last30: { cost: 80 } } }
+    ]
+  };
+  const joined = attachGoogleAdsToFunnels(funnels, report);
+  const plans = joined.find((funnel) => funnel.id === 'plans');
+  const money = joined.find((funnel) => funnel.id === 'money');
+  assert.equal(plans.paidMedia.metrics.cost, 10);
+  assert.equal(plans.paidMedia.ads.length, 1);
+  assert.equal(plans.paidMedia.ambiguous.length, 2);
+  assert.equal(money.paidMedia.metrics, null);
+  assert.equal(money.paidMedia.ambiguous.length, 1);
+  assert.equal(plans.paidMedia.unmatchedCount, 2);
 });
 
 test('one incompatible GA4 subreport stays partial without hiding the other live reports', async () => {
@@ -248,6 +295,7 @@ test('upstream failure becomes unavailable and never becomes numeric zero', asyn
   assert.equal(result.status, 'unavailable');
   assert.equal(result.sources.ga4.status, 'unavailable');
   assert.equal(result.sources.searchConsole.status, 'unavailable');
+  assert.equal(result.funnels.length, 0);
   assert.equal('summary' in result.sources.ga4, false);
   assert.equal(JSON.stringify(result).includes('upstream failed'), false);
   assert.deepEqual(result.errors.map((error) => error.code), ['UPSTREAM_ERROR', 'UPSTREAM_ERROR']);

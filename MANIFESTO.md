@@ -1,6 +1,6 @@
 # A7 Laundry Orlando — Manifesto do Projeto
 
-> **Fonte de verdade do projeto.** Em caso de conflito entre páginas, código ou documentos antigos, este arquivo prevalece. Atualizado em 2026-07-25.
+> **Fonte de verdade do projeto.** Em caso de conflito entre páginas, código ou documentos antigos, este arquivo prevalece. Atualizado em 2026-08-22.
 
 ---
 
@@ -10,10 +10,10 @@
 
 **Tagline canônica:** *Enjoy Orlando. We handle your laundry.*
 
-**Descrição curta canônica:** *Hotel & Airbnb laundry pickup. Washed, dried, folded and delivered. From $3.25/lb. $50 minimum. Book on WhatsApp.*
+**Descrição curta canônica:** *Guest laundry pickup for Orlando hotels, resorts and vacation rentals. Standard from $3.25/lb; Express from $3.95/lb when confirmed. $50 minimum. Message A7 on WhatsApp or SMS.*
 
 - **Domínio:** https://a7laundry.com (deploy via Vercel)
-- **WhatsApp / booking:** +1 407-670-8839 — `https://wa.me/14076708839`
+- **WhatsApp / SMS:** +1 407-670-8839 — `https://wa.me/14076708839`
 - **Idiomas:** EN como padrão público; PT-BR e ES em páginas comerciais e campanhas dedicadas. Não alegar paridade trilíngue onde ela não existe.
 
 ---
@@ -24,12 +24,14 @@ Modelo **pay-per-use por libra** — duas velocidades. **Não existe mais assina
 
 | Serviço | Turnaround | Preço | Inclui |
 |---------|-----------|-------|--------|
-| **Normal** | 24h | **$3.25 / lb** | Coleta e entrega grátis, sorting & folding profissional, sabões hipoalergênicos premium |
-| **Express** | 8h (same-day) | **$3.95 / lb** | Tudo do Normal + processamento prioritário, sempre sujeito a disponibilidade confirmada |
+| **Standard** | retorno aproximado em 24h | **$3.25 / lb** | Wash, dry & fold de roupas elegíveis; coleta e entrega incluídas dentro da área confirmada |
+| **Express** | retorno em até 8h somente quando confirmado | **$3.95 / lb** | Processamento prioritário sujeito à confirmação de disponibilidade, capacidade, pickup e needed-by time |
 
-- **Pickup & delivery sempre grátis.**
-- **Pedido mínimo:** **$50 por pedido** (valor, não peso). À tarifa Normal equivale a ~17 lbs.
+- **Pickup & delivery incluídos dentro da área de atendimento confirmada.** Não usar `free`/`grátis` como promessa universal.
+- **Pedido mínimo:** **$50 por pedido** (valor, não peso). À tarifa Standard, o mínimo matemático é atingido em aproximadamente **15,4 lbs** (`50 ÷ 3,25 = 15,38`).
 - **Sem contrato, sem assinatura, sem taxas escondidas.**
+- **Preço final:** confirmado depois da pesagem; o estimador público é apenas uma ajuda de planejamento.
+- **Pagamento:** link seguro em USD hospedado pelo Stripe; Zelle, Venmo, Cash App ou cash podem ser confirmados para o pedido. Nunca solicitar dados de cartão por WhatsApp ou SMS.
 
 > ⚠️ O antigo pilar de **assinatura por bag** (Essentials $59.90 / Family $109.90 / Premium $179.90) está **descontinuado**. Qualquer menção a subscription / membership / planos mensais nas páginas públicas é débito técnico a remover (ver §6).
 
@@ -70,12 +72,12 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 
 | Tipo | Páginas |
 |------|---------|
-| Home / hub | `index.html` (per-lb, Normal/Express) |
+| Home / hub | `index.html` (per-lb, Standard/Express) |
 | Preços | `plans.html` |
 | Serviços (add-ons) | `carpet-cleaning`, `shoe-cleaning`, `upholstery-cleaning`, `vacation-rental` |
 | Comforter (serviço secundário) | `comforter-cleaning.html` + `comforter-thanks` |
 | Campanha SEO | `a7-carpet-campaign/` |
-| Blog SEO | 84 artigos publicados em `/blog/`; novas páginas ficam congeladas até revisão de indexação e qualidade |
+| Blog SEO | 82 URLs de artigos no sitemap em `/blog/`; novas páginas ficam congeladas até revisão de indexação, qualidade e canibalização |
 | Interno (staff only) | `a7-command-center.html`, `criativos/` |
 
 **Convenção:** termos de funil (TOFU/MOFU/BOFU/PILLAR) são **staff-only** — nunca expor na UI pública; usar rótulos amigáveis ("Guide", "Service", "Reviews").
@@ -106,12 +108,12 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 2. **WhatsApp-first.** Toda conversão termina no WhatsApp 407-670-8839.
 3. **Guest Laundry primeiro.** Hóspedes são o núcleo de aquisição até outro segmento provar venda e margem.
 4. **EN como padrão; PT/ES dedicados.** Não misturar idiomas na mesma peça nem prometer cobertura inexistente.
-5. **Grátis o que importa:** pickup & delivery sempre incluídos.
+5. **Conveniência sem claim absoluto:** pickup & delivery incluídos dentro da área confirmada.
 6. **Uma marca pública:** A7 Laundry Orlando. Nomes legais ficam restritos a documentos legais e faturamento.
 7. **Express sem promessa absoluta.** 8h somente quando a disponibilidade for confirmada.
 8. **Prova real.** Reviews, números, tempos, fotos e resultados precisam ter fonte verificável.
 9. **Termos de funil são internos.** Nunca expor na UI pública.
-10. **Atendimento declarado 24/7.** Solicitações podem chegar a qualquer hora; coleta, prazo e
+10. **Solicitações podem chegar a qualquer hora.** Coleta, prazo e
     capacidade só ficam confirmados depois da validação da unidade.
 11. **Cobertura confirmada por endereço.** Operação em um raio de até 40 km de Orlando; o endereço
     precisa ser validado antes do agendamento.
@@ -130,12 +132,12 @@ Cidades atendidas: Orlando, Kissimmee, Reunion, Winter Park, Dr. Phillips, Lake 
 | Categoria | **Guest Laundry Pickup & Delivery** |
 | Promessa emocional | **Enjoy Orlando. We handle your laundry.** |
 | Promessa funcional | Hotel & Airbnb pickup. Washed, dried, folded and delivered. |
-| Oferta Normal | From **$3.25/lb** · 24h · **$50 minimum** |
-| Oferta Express | From **$3.95/lb** · 8h · pedidos até **6 PM**; depois, avaliação da unidade · **subject to availability** · **$50 minimum** |
-| Conveniência | Pickup & delivery included · no app · contactless handoff |
-| Atendimento | **24/7** · disponibilidade e janela confirmadas pela unidade |
+| Oferta Standard | From **$3.25/lb** · retorno aproximado em **24h** · **$50 minimum** |
+| Oferta Express | From **$3.95/lb** · retorno em até **8h somente quando disponibilidade, capacidade e janela forem confirmadas** · **$50 minimum** |
+| Conveniência | Pickup & delivery included in the confirmed area · no A7 app/account · handoff coordinated with the guest/property |
+| Atendimento | Solicitações a qualquer hora; cobertura, pickup, capacidade e retorno confirmados pela unidade |
 | Cobertura | Até **40 km de Orlando**, mediante confirmação do endereço |
-| CTA | Book on WhatsApp · **+1 407-670-8839** |
-| Prova autorizada | 5.0/23 Google reviews enquanto esse número continuar verificado; operação e fotos reais |
+| CTA | Check pickup on WhatsApp or SMS · **+1 407-670-8839** |
+| Prova autorizada | Perfil Google e perfis sociais oficiais; números de reviews/rating só depois de revalidação datada e arquivada |
 
 Serviços secundários podem aparecer como complemento, nunca como a mensagem principal de home, anúncios de aquisição ou atendimento inicial de guest laundry.

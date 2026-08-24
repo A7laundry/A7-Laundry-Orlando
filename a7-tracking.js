@@ -66,13 +66,6 @@
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
-  if (!document.getElementById('ga4-js')) {
-    var script = document.createElement('script');
-    script.async = true;
-    script.id = 'ga4-js';
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
-    document.head.appendChild(script);
-  }
   try {
     gtag('js', new Date());
     gtag('config', GA4_ID);
@@ -81,50 +74,47 @@
   } catch (_) { diagnose('google_tag_init_failed'); }
 
   if (!window.fbq) {
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-      n.queue = []; t = b.createElement(e); t.async = !0; t.src = v;
-      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    try { fbq('init', PIXEL_ID); fbq('track', 'PageView'); } catch (_) { diagnose('meta_init_failed'); }
+    var metaQueue = window.fbq = function () {
+      metaQueue.callMethod ? metaQueue.callMethod.apply(metaQueue, arguments) : metaQueue.queue.push(arguments);
+    };
+    if (!window._fbq) window._fbq = metaQueue;
+    metaQueue.push = metaQueue;
+    metaQueue.loaded = true;
+    metaQueue.version = '2.0';
+    metaQueue.queue = [];
+  }
+  try { fbq('init', PIXEL_ID); fbq('track', 'PageView'); } catch (_) { diagnose('meta_init_failed'); }
+
+  var vendorTagsLoaded = false;
+  function loadVendorTags() {
+    if (vendorTagsLoaded) return;
+    vendorTagsLoaded = true;
+    if (!document.getElementById('ga4-js')) {
+      var googleScript = document.createElement('script');
+      googleScript.async = true;
+      googleScript.id = 'ga4-js';
+      googleScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+      document.head.appendChild(googleScript);
+    }
+    if (!document.getElementById('meta-pixel-js')) {
+      var metaScript = document.createElement('script');
+      metaScript.async = true;
+      metaScript.id = 'meta-pixel-js';
+      metaScript.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      document.head.appendChild(metaScript);
+    }
   }
 
-  var FUNNEL = {
-    'hotel-laundry-service-orlando': 'bofu', 'airbnb-laundry-service-orlando': 'bofu',
-    'laundry-before-checkout-orlando': 'bofu', 'hotel-vs-pickup-laundry-orlando': 'mofu',
-    'family-vacation-laundry-orlando': 'bofu', 'laundry-international-drive-orlando': 'bofu',
-    'laundry-near-universal-orlando': 'bofu', 'laundry-winter-garden-fl': 'geo',
-    'laundry-windermere-fl': 'geo', 'laundry-clermont-fl': 'geo', 'laundry-ocoee-fl': 'geo',
-    'same-day-laundry-tourists-orlando': 'tofu', 'pack-less-orlando-trip-laundry': 'tofu',
-    'no-car-laundry-orlando': 'tofu', 'laundry-tips-orlando-vacation': 'tofu',
-    'laundry-service-orlando': 'tofu', 'how-to-clean-comforter': 'tofu',
-    'vacation-rental-laundry-orlando': 'mofu', 'same-day-laundry-orlando': 'bofu',
-    'laundry-kissimmee': 'geo', 'laundry-near-disney-world': 'geo',
-    'laundry-disney-springs-area': 'geo', 'laundry-champions-gate': 'geo',
-    'reunion-resort-laundry-service': 'geo', 'laundry-for-vacation-rental-guests': 'bofu',
-    'orlando-laundromat-vs-delivery': 'mofu', 'vacation-rental-checklist-orlando': 'tofu',
-    'airbnb-host-laundry-tips-orlando': 'tofu', 'how-often-wash-vacation-rental-linens': 'tofu',
-    'express-laundry-orlando': 'bofu', 'a7-laundry-review': 'bofu',
-    'book-laundry-whatsapp-orlando': 'bofu', 'laundry-subscription-vacation-rental': 'mofu',
-    'comforter-cleaning-service-orlando': 'mofu', 'comforter-cleaning-service-orlando-v2': 'bofu',
-    'orlando-vacation-rental-laundry-guide': 'pillar'
-  };
-  var PERSONA = {
-    'hotel-laundry-service-orlando': 'hotel', 'hotel-vs-pickup-laundry-orlando': 'hotel',
-    'airbnb-laundry-service-orlando': 'airbnb', 'laundry-for-vacation-rental-guests': 'airbnb',
-    'family-vacation-laundry-orlando': 'family', 'airbnb-host-laundry-tips-orlando': 'host',
-    'how-often-wash-vacation-rental-linens': 'host', 'laundry-subscription-vacation-rental': 'host',
-    'vacation-rental-checklist-orlando': 'host', 'a7-laundry-review': 'host',
-    'orlando-vacation-rental-laundry-guide': 'host', 'vacation-rental-laundry-orlando': 'host'
-  };
-  var GEO = {
-    'laundry-international-drive-orlando': 'i-drive', 'laundry-near-universal-orlando': 'universal',
-    'laundry-winter-garden-fl': 'winter-garden', 'laundry-windermere-fl': 'windermere',
-    'laundry-clermont-fl': 'clermont', 'laundry-ocoee-fl': 'ocoee', 'laundry-kissimmee': 'kissimmee',
-    'laundry-near-disney-world': 'disney', 'laundry-disney-springs-area': 'disney-springs',
-    'laundry-champions-gate': 'champions-gate', 'reunion-resort-laundry-service': 'reunion'
-  };
+  if (window.__A7_DEFER_VENDOR_TAGS__ === true) {
+    var releaseVendorTags = function () {
+      loadVendorTags();
+      document.removeEventListener('pointerdown', releaseVendorTags, true);
+      document.removeEventListener('keydown', releaseVendorTags, true);
+    };
+    document.addEventListener('pointerdown', releaseVendorTags, true);
+    document.addEventListener('keydown', releaseVendorTags, true);
+    window.addEventListener('load', function () { setTimeout(releaseVendorTags, 8000); }, { once: true });
+  } else loadVendorTags();
 
   function getSlug() {
     var parts = location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
@@ -145,6 +135,8 @@
 
   var SLUG = getSlug();
   var PATH = location.pathname;
+  var NORMALIZED_PATH = PATH.length > 1 ? PATH.replace(/\/$/, '').replace(/\.html$/, '') : '/';
+  var GROWTH = window.A7_GROWTH_MAP && window.A7_GROWTH_MAP[NORMALIZED_PATH] || null;
   var isBlog = /^\/blog\//.test(PATH) || SLUG === 'blog-index';
   var isMoney = /laundry-pickup-delivery-orlando/.test(PATH);
   var isThankYou = /comforter-thanks/.test(PATH);
@@ -159,9 +151,14 @@
     var params = {
       page_path: PATH,
       article_slug: SLUG,
-      funnel_stage: FUNNEL[SLUG] || (isMoney ? 'bofu' : 'other'),
-      persona: PERSONA[SLUG] || 'general',
-      geo: GEO[SLUG] || 'orlando',
+      asset_id: GROWTH && GROWTH.asset_id || 'unmapped',
+      funnel_stage: GROWTH && GROWTH.funnel_stage_legacy || (isMoney ? 'bofu' : 'other'),
+      funnel_stage_v2: GROWTH && GROWTH.journey_stage_v2 || 'unmapped',
+      cluster_id: GROWTH && GROWTH.cluster_id || 'unmapped',
+      content_role: GROWTH && GROWTH.content_role || 'unmapped',
+      persona: GROWTH && GROWTH.persona || 'general',
+      geo: GROWTH && GROWTH.geo_key || 'orlando',
+      asset_match_method: GROWTH ? 'exact_canonical_path' : 'unmatched',
       landing_page: state && state.first_touch && state.first_touch.landing_page || PATH,
       lead_reference: state && state.short_ref || '',
       origin_class: touch && touch.entry_type || 'unknown',

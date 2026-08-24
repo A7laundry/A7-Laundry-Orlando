@@ -17,18 +17,18 @@
   </url>
   <url>
     <loc>https://a7laundry.com/laundry-pickup-delivery-orlando</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://a7laundry.com/public/guest-laundry-hero.webp</image:loc>
-      <image:title>Guest laundry pickup and delivery at an Orlando resort</image:title>
-      <image:caption>A family hands a laundry bag to a pickup professional at an Orlando resort.</image:caption>
+      <image:loc>https://a7laundry.com/public/orlando-guest-laundry-handoff-v1.webp</image:loc>
+      <image:title>Orlando guest laundry pickup and delivery</image:title>
+      <image:caption>Illustrative scene of Orlando travelers handing a closed laundry bag to a pickup attendant.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://a7laundry.com/plans</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -82,9 +82,14 @@
   <!-- Blog articles -->
   <url>
     <loc>https://a7laundry.com/blog/hotel-laundry-service-orlando</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://a7laundry.com/blog/img/hotel-laundry-service-orlando-hero-v2.webp</image:loc>
+      <image:title>Orlando hotel laundry pickup guide</image:title>
+      <image:caption>Illustrative folded-laundry scene explaining pickup, handoff, timing and pricing for Orlando hotel guests.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://a7laundry.com/blog/airbnb-laundry-service-orlando</loc>
@@ -94,9 +99,14 @@
   </url>
   <url>
     <loc>https://a7laundry.com/blog/laundry-before-checkout-orlando</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://a7laundry.com/blog/img/laundry-before-checkout-orlando-hero-v2.webp</image:loc>
+      <image:title>Laundry before checkout in Orlando</image:title>
+      <image:caption>Illustrative packed suitcase and folded clothes for an Orlando guest planning laundry around checkout, a flight or the next hotel.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://a7laundry.com/blog/hotel-vs-pickup-laundry-orlando</loc>
@@ -112,15 +122,25 @@
   </url>
   <url>
     <loc>https://a7laundry.com/blog/laundry-international-drive-orlando</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://a7laundry.com/blog/img/laundry-international-drive-orlando-hero-v2.webp</image:loc>
+      <image:title>International Drive guest laundry pickup</image:title>
+      <image:caption>Illustrative folded-laundry scene representing guest service near Orlando's International Drive corridor.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://a7laundry.com/blog/laundry-near-universal-orlando</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://a7laundry.com/blog/img/orlando-resort-area-hero-v1.webp</image:loc>
+      <image:title>Orlando resort guest laundry for tomorrow's plans</image:title>
+      <image:caption>Illustrative scene of an independent laundry pickup worker receiving a hotel guest's bag while the family keeps its plans.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://a7laundry.com/blog/laundry-winter-garden-fl</loc>
@@ -580,9 +600,14 @@
   </url>
   <url>
     <loc>https://a7laundry.com/blog/laundry-lake-buena-vista</loc>
-    <lastmod>2026-07-16</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://a7laundry.com/blog/img/lbv-vacation-time-hero-v5.webp</image:loc>
+      <image:title>Hotel laundry pickup in Lake Buena Vista</image:title>
+      <image:caption>A7 Laundry collects a hotel guest's laundry while the family continues its Lake Buena Vista vacation day</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://a7laundry.com/blog/laundry-convention-center-orlando</loc>

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "24h",
+  "windowStart": "2026-08-21T00:23:00-04:00",
+  "windowEnd": "2026-08-22T00:23:00-04:00",
+  "technicalEvidence": "marketing/google-ads/2026-07-guest-laundry-search/monitoring/lbv-2026-08-22-24h.json",
+  "sourceStatus": {
+    "ga4": "unavailable",
+    "gsc": "insufficient_lag",
+    "whatsappOperations": "not_inspected",
+    "orders": "not_reconciled",
+    "finance": "not_reconciled"
+  },
+  "metrics": {
+    "landingSessions": null,
+    "whatsappOpens": null,
+    "qualifiedLeads": null,
+    "paidOrders": null,
+    "revenueUsd": null,
+    "contributionMarginUsd": null
+  },
+  "deadlineHandoffStatus": "unavailable",
+  "attributionStatus": "unavailable",
+  "sourceBreakdown": {
+    "organicSearch": null,
+    "googleAds": null,
+    "direct": null,
+    "referral": null,
+    "unattributed": null
+  },
+  "sampleStatus": "unavailable",
+  "sampleRationale": "Commercial sources have not yet been reconciled for this checkpoint.",
+  "decision": "continue",
+  "decisionBasis": "continue_monitoring",
+  "decisionRationale": "Keep the release live while technical checks pass and commercial evidence remains unavailable.",
+  "ownerRole": "joint review",
+  "evidenceRefs": [
+    "marketing/google-ads/2026-07-guest-laundry-search/monitoring/LBV-COMMERCIAL-RECONCILIATION.md"
+  ]
+}

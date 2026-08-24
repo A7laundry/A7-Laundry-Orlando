@@ -1,0 +1,32 @@
+{
+  "capturedAt": "2026-08-22",
+  "scope": "SEO/GEO/E-E-A-T/AI Search consistency program — Wave 0",
+  "ga4": {
+    "expectedProperty": "543807649",
+    "status": "live_read_only_via_mos",
+    "period": "2026-07-21–2026-08-19",
+    "verifiedAt": "2026-08-22T13:19:00-04:00",
+    "reason": "The owner-authenticated MOS visibly reported Google Analytics Data API as live and read-only for the stated finalized period. The current production dashboard exposes aggregate acquisition and landing-page relationships; it does not yet expose the new per-funnel catalog.",
+    "historicalEvidence": "Repository evidence remains historical context and is not substituted for the live API response."
+  },
+  "gsc": {
+    "expectedProperty": "sc-domain:a7laundry.com",
+    "status": "live_read_only_via_mos",
+    "period": "2026-07-21–2026-08-19",
+    "verifiedAt": "2026-08-22T13:19:00-04:00",
+    "totalsObserved": {
+      "clicks": 35,
+      "impressions": 1960,
+      "ctr": 0.018,
+      "averagePosition": 13.7
+    },
+    "reason": "The owner-authenticated MOS visibly reported the Google Search Console API as live and read-only. Page rows were observed for the Orlando money page, Lake Buena Vista, International Drive and plans. These aggregate values are evidence for prioritization, not proof of revenue or causal uplift.",
+    "historicalEvidence": "Repository exports remain dated evidence and are not substituted for the live API response."
+  },
+  "commercialReconciliation": {
+    "status": "unavailable",
+    "reason": "No WhatsApp conversation, order ledger or Stripe customer record was inspected in this Wave 0 pass."
+  },
+  "interpretation": "A missing URL or query row is not zero. GA4 and Search Console counts are not deduplicated across sources and do not prove sales. No redirect, noindex, merge or causal performance conclusion is authorized from these aggregates alone.",
+  "requiredNextEvidence": "Deploy the tested MOS funnel catalog, preserve canonical-path joins and null semantics, then reconcile aggregate contact and purchase outcomes without customer PII. Native Google Ads remains a separate unavailable source until its API succeeds."
+}

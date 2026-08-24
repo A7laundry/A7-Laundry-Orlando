@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-21T00:44:41-04:00",
+  "source": "Google Search Console web interface",
+  "property": "sc-domain:a7laundry.com",
+  "mode": "read-only access probe",
+  "status": "access_denied",
+  "urlInspectionPerformed": false,
+  "indexationStatus": "unavailable",
+  "piiStored": false,
+  "limitation": "The active Google session does not have access to this Search Console property. This result does not mean the landing is unindexed and must not be represented as zero data.",
+  "requiredNextEvidence": "A property-authorized Search Console session or the protected MOS GSC source is required for URL inspection and query/page reporting."
+}

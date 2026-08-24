@@ -130,12 +130,12 @@ test('public validator keeps all public checks active without repository-private
     assert.equal(partialInternals.status, 0, partialInternals.stderr);
     assert.match(partialInternals.stdout, /Static site validation passed/);
 
-    fs.rmSync(path.join(fixtureRoot, 'public/guest-laundry-hero.webp'));
+    fs.rmSync(path.join(fixtureRoot, 'public/orlando-guest-laundry-handoff-v1.webp'));
     const missingPublicHero = runPublicValidation();
     assert.notEqual(missingPublicHero.status, 0);
     assert.match(
       missingPublicHero.stderr,
-      /Guest Laundry landing: optimized Lovart hero is missing/
+      /Guest Laundry landing: optimized image is missing: public\/orlando-guest-laundry-handoff-v1\.webp/
     );
   } finally {
     fs.rmSync(fixtureRoot, { recursive: true, force: true });

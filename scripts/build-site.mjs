@@ -4,6 +4,8 @@ import { execFileSync } from 'node:child_process';
 import { PUBLIC_TEXT_ARTIFACTS } from './public-artifacts.mjs';
 import { resolveValidationContext } from './validation-context.mjs';
 import { scanBusinessDestinations } from './guard-business-destinations.mjs';
+import { buildGrowthManifest } from './build-growth-manifest.mjs';
+import { isPublicBlogHtml, isPublicRootHtml } from './lib/content-corpora.mjs';
 
 const root = process.cwd();
 const output = path.join(root, 'dist');
@@ -22,6 +24,9 @@ execFileSync(
   { stdio: 'inherit' }
 );
 execFileSync(process.execPath, [path.join(root, 'scripts/validate-ai-search.mjs')], { stdio: 'inherit' });
+execFileSync(process.execPath, [path.join(root, 'scripts/validate-content-registry.mjs')], { stdio: 'inherit' });
+execFileSync(process.execPath, [path.join(root, 'scripts/growth-content.mjs'), 'compile'], { stdio: 'inherit' });
+execFileSync(process.execPath, [path.join(root, 'scripts/growth-content.mjs'), 'check-generated'], { stdio: 'inherit' });
 
 // dist is generated output owned by this script.
 fs.rmSync(output, { recursive: true, force: true });
@@ -57,7 +62,8 @@ function listFiles(relativeDirectory, include) {
 
 const rootFiles = fs.readdirSync(root, { withFileTypes: true });
 for (const entry of rootFiles) {
-  if (!entry.isFile() || entry.name === 'a7-command-center.html' || entry.name === 'mos-kpis.js' || /^_preview-.*\.html$/.test(entry.name) || /^comforter-cleaning-v[2-6]\.html$/.test(entry.name)) continue;
+  if (!entry.isFile() || entry.name === 'mos-kpis.js') continue;
+  if (entry.name.endsWith('.html') && !isPublicRootHtml(entry.name)) continue;
   if (/\.html$/i.test(entry.name) || /\.(?:js|png|jpg|jpeg|webp|ico)$/i.test(entry.name)) copy(entry.name);
 }
 
@@ -73,9 +79,11 @@ const supersededPublicAssets = new Set([
 
 copyTree('public', (relativePath) => !supersededPublicAssets.has(relativePath));
 copyTree('blog', (relativePath) => {
-  if (relativePath === 'blog/_TEMPLATE.html' || relativePath === 'blog/TEMPLATE-GUIDE.md') return false;
+  if (relativePath.endsWith('.html') && !isPublicBlogHtml(path.basename(relativePath))) return false;
+  if (relativePath === 'blog/TEMPLATE-GUIDE.md') return false;
   return /\.(?:html|png|jpg|jpeg|webp|svg|ico)$/i.test(relativePath);
 });
+fs.copyFileSync(path.join(root, 'mos-app/generated/a7-growth-map.js'), path.join(output, 'a7-growth-map.js'));
 
 // Foundation modules are injected at build time to avoid a risky mechanical
 // edit across every static source page. Unified tracking retains safe fallbacks.
@@ -89,6 +97,7 @@ for (const relativePath of listFiles('', (file) => file.endsWith('.html'))) {
     '<script src="/a7-business-config.js" defer></script>\n'
       + '<script src="/a7-attribution.js" defer></script>\n'
       + '<script src="/a7-events.js" defer></script>\n'
+      + '<script src="/a7-growth-map.js" defer></script>\n'
       + '<script src="/a7-tracking.js" defer></script>'
   );
   fs.writeFileSync(absolutePath, html);
@@ -297,5 +306,7 @@ const businessDestinationFailures = scanBusinessDestinations(output);
 if (businessDestinationFailures.length) {
   throw new Error(`Production business destination guard failed:\n${businessDestinationFailures.join('\n')}`);
 }
+
+buildGrowthManifest({ root, output });
 
 console.log(`Production bundle created at dist/ with ${creativeAssets.size} legacy creative asset(s).`);

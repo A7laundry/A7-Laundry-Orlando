@@ -7,7 +7,7 @@ import {
 } from '../google-ads-kpis-contract.js';
 
 const config = {
-  apiVersion: 'v24',
+  apiVersion: 'v25',
   customerId: '2901132891',
   loginCustomerId: '1234567890',
   developerToken: 'developer-token-must-never-leak',
@@ -17,7 +17,7 @@ const config = {
 test('native Google Ads configuration fails closed and normalizes account IDs', () => {
   assert.deepEqual(readGoogleAdsKpiConfig({}), {
     ok: false,
-    missing: ['GOOGLE_ADS_CUSTOMER_ID', 'GOOGLE_ADS_DEVELOPER_TOKEN']
+    missing: ['GOOGLE_ADS_CUSTOMER_ID', 'GOOGLE_ADS_LOGIN_CUSTOMER_ID', 'GOOGLE_ADS_DEVELOPER_TOKEN']
   });
   assert.deepEqual(readGoogleAdsKpiConfig({
     GOOGLE_ADS_CUSTOMER_ID: '290-113-2891',
@@ -25,7 +25,7 @@ test('native Google Ads configuration fails closed and normalizes account IDs', 
     GOOGLE_ADS_DEVELOPER_TOKEN: 'token'
   }), {
     ok: true,
-    apiVersion: 'v24',
+    apiVersion: 'v25',
     customerId: '2901132891',
     loginCustomerId: '1234567890',
     developerToken: 'token',
@@ -184,6 +184,8 @@ test('native Google Ads contract reports current delivery, creatives, terms and 
   assert.ok(requests.every((request) => request.headers['Content-Type'] === 'application/json'));
   assert.ok(requests.every((request) => request.headers['developer-token'] === config.developerToken));
   assert.ok(requests.every((request) => request.headers['login-customer-id'] === config.loginCustomerId));
+  assert.ok(requests.every((request) => /^\s*SELECT\b/i.test(request.data.query)));
+  assert.ok(requests.every((request) => !/\bMUTATE\b|:\s*mutate\b/i.test(request.data.query)));
   assert.equal(JSON.stringify(result).includes(config.developerToken), false);
 });
 
