@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-08-24-google-ads-purchase-led-goal",
+  "auditDate": "2026-08-24",
+  "title": "Google Ads WhatsApp moved to secondary observation",
+  "type": "google_ads_conversion_governance",
+  "status": "complete",
+  "scope": [
+    "Google Ads account 290-113-2891",
+    "conversion actions",
+    "bid optimization",
+    "rollback"
+  ],
+  "summary": "The WhatsApp click action was changed from primary to secondary and verified after reload. Stripe purchase remains primary. Click intent stays available in All conversions but no longer optimizes bidding by default.",
+  "sources": [
+    {
+      "name": "Google Ads owner-authenticated account UI",
+      "status": "verified",
+      "period": "changed and reloaded 2026-08-24; visible performance window 2026-07-25 to 2026-08-23"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "google_ads_primary_stripe_purchases",
+      "label": "Primary Stripe purchase all conversions",
+      "value": 11,
+      "format": "integer",
+      "source": "Google Ads account UI",
+      "period": "2026-07-25/2026-08-23",
+      "status": "prechange_observed"
+    },
+    {
+      "id": "google_ads_secondary_whatsapp_clicks",
+      "label": "WhatsApp clicks retained as secondary observations",
+      "value": 47,
+      "format": "integer",
+      "source": "Google Ads account UI",
+      "period": "2026-07-25/2026-08-23",
+      "status": "prechange_observed"
+    },
+    {
+      "id": "google_ads_purchase_value_brl",
+      "label": "Stripe purchase all-conversion value",
+      "value": 5750.46,
+      "format": "brl",
+      "source": "Google Ads account UI",
+      "period": "2026-07-25/2026-08-23",
+      "status": "prechange_observed"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "marketing/google-ads/2026-07-guest-laundry-search/GOOGLE-ADS-CONVERSION-GOAL-CHANGE-2026-08-24.md",
+      "sha256": "1c729ee3832c8e9caabe1d22843aff7ddc2c164d0331ac2642ad8940e50a2428"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-08-24-growth-forensic-checkpoint",
+  "previousRecordSha256": "da3999117ab66285074c928fdc15d5127994caa8952bbb92b68d3aae6c2ccbf0"
+}

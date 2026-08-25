@@ -74,7 +74,12 @@ test('payment-link endpoint creates a bounded one-use Stripe link with verified 
     try {
       const res = await invoke({
         token: 'operator-secret',
-        body: {amount_usd: 81.255, description: 'A7\u0000 Laundry   order', reference: 'guest\n123'}
+        body: {
+          amount_usd: 81.255,
+          description: 'A7\u0000 Laundry   order',
+          a7_reference: '7kq9w3m2hx',
+          reference: 'guest\n123'
+        }
       });
       assert.equal(res.statusCode, 200);
       assert.equal(res.body.amount_usd, 81.26);
@@ -87,8 +92,23 @@ test('payment-link endpoint creates a bounded one-use Stripe link with verified 
       assert.equal(calls[1].params.get('line_items[0][price]'), 'price_test');
       assert.equal(calls[1].params.get('restrictions[completed_sessions][limit]'), '1');
       assert.equal(calls[1].params.get('after_completion[redirect][url]'), handler.CONFIRMATION_URL);
-      assert.equal(calls[1].params.get('metadata[a7_reference]'), 'guest 123');
+      assert.equal(calls[1].params.get('metadata[a7_reference]'), '7KQ9W3M2HX');
+      assert.equal(calls[1].params.get('metadata[operator_reference]'), 'guest 123');
       assert.match(calls[0].options.headers.Authorization, /^Bearer sk_test_only$/);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+});
+
+test('payment-link endpoint rejects a malformed A7 Ref before calling Stripe', async () => {
+  await withEnvironment({PAYMENT_LINK_TOKEN: 'operator-secret', STRIPE_SECRET_KEY: 'sk_test_only'}, async () => {
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async () => { throw new Error('Stripe must not be called'); };
+    try {
+      const res = await invoke({token: 'operator-secret', body: {amount_usd: 50, a7_reference: 'SEO-LBV'}});
+      assert.equal(res.statusCode, 400);
+      assert.match(res.body.error, /10-character code/);
     } finally {
       globalThis.fetch = originalFetch;
     }
@@ -114,4 +134,5 @@ test('payment-link helpers use fixed-length token comparison and bounded cleaned
   assert.equal(handler.tokenMatches('same', 'other'), false);
   assert.equal(handler.cleanText(`  ${'x'.repeat(140)}  `, 'fallback').length, 120);
   assert.equal(handler.cleanText('\u0000\n', 'fallback'), 'fallback');
+  assert.equal(handler.A7_REFERENCE_PATTERN.test('7KQ9W3M2HX'), true);
 });

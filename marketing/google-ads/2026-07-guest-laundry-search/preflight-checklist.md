@@ -31,8 +31,8 @@
 - [ ] Final URL suffix is installed exactly as specified; the Final URL itself is not replaced by a tracking template.
 - [ ] Test click preserves GCLID and UTM values across the landing page.
 - [ ] Attributed WhatsApp message contains `A7 Ref`.
-- [ ] `whatsapp_click`, `sms_click`, `call_click` and page views are secondary.
-- [ ] Verified Stripe `purchase` is the only immediately available primary conversion.
+- [ ] `sms_click`, `call_click` and page views are secondary; `whatsapp_click` is never labeled as a conversation, qualified lead or sale.
+- [ ] Website WhatsApp is the primary mandatory-entry proxy; Stripe `purchase` remains secondary financial evidence until end-to-end attribution coverage is proven.
 - [ ] Qualified-lead import remains OFF until the full click identifier is stored durably.
 - [ ] Raw calls are not counted as sales.
 

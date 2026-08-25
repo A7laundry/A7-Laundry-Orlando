@@ -72,7 +72,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] OpenAI SearchBot and standard search crawlers can access the public site, while a controlled IndexNow workflow can notify supported search engines after verified releases.
 - [x] Near-duplicate local/resort pages are excluded from production indexation until each page has distinct local evidence and useful first-hand content.
 - [x] A public About/operations page explains the service-area model, official offer, coverage, contact path and fact-verification date without implying a walk-in storefront.
-- [ ] The Google Ads Guest Laundry campaign contains the four approved intent groups, exact/phrase inventory, shared negatives, paused RSAs and purchase-led measurement before activation.
+- [ ] The Google Ads Guest Laundry campaign contains the four approved intent groups, exact/phrase inventory, shared negatives, paused RSAs and WhatsApp-entry-led measurement before activation.
 - [x] The verified Stripe confirmation emits the native Google Ads purchase action with dynamic value, currency and transaction ID only after server-side paid-session verification.
 - [x] The proven guest-laundry campaign is reinforced by a new English 4:5 feed carousel that explains the hotel/Airbnb pickup flow, uses official pricing and ends in a WhatsApp CTA.
 - [x] MOS reads GA4 and Search Console through protected server-side APIs while preserving the dated KPI snapshot only as explicit historical context, never as a current fallback.
@@ -132,6 +132,10 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] The before-checkout candidate removes remote UI dependencies, telephone, legacy 6 PM cutoff, absolute free-delivery language and automatic same-day framing while preserving its URL, indexation and distinct checkout-day intent.
 - [ ] Complete independent QA and protected preview for the MOS funnel catalog and hotel-guide source candidates.
 - [ ] Promote only the exact owner-approved MOS and public-site previews, then record hashes, rollback and production monitoring separately.
+- [x] The Aug 24 attribution remediation prevents Stripe from becoming a new GA4 acquisition referrer on the transactional confirmation route, carries a validated opaque `A7 Ref` from one-use payment-link metadata into the verified purchase event, and never exposes raw click IDs or customer PII.
+- [x] The legacy `/blog/laundry-lake-buena-vista.html` route permanently redirects to the clean canonical path so GA4 and Search Console can converge on one Lake Buena Vista URL without changing page content.
+- [x] The Aug 1–24 live GA4/GSC/Google Ads/Meta forensic checkpoint is appended to the MOS audit ledger with exact periods, source boundaries and explicit attribution uncertainty.
+- [x] Google Ads uses the website WhatsApp action as the primary mandatory-entry proxy and keeps Stripe purchase as secondary financial evidence; both the superseded purchase-led change and the owner-corrected WhatsApp-first state remain append-only in the MOS audit ledger.
 
 ## Tasks
 
@@ -250,6 +254,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Normalize and deterministically validate the Orlando before-checkout urgency funnel without changing its URL.
 - [x] Deploy one exact protected public preview containing Plans, International Drive, Hotel Guide and Before Checkout; verify hashes, canonical paths, contact contracts, lazy assets and 390px layout without promoting production.
 - [ ] Complete independent review, protected preview and owner approval for the MOS catalog and hotel guide.
+- [x] Implement and test the Aug 24 Stripe attribution, Lake Buena Vista canonical and MOS evidence remediations before any external conversion-action change.
 
 ## File List
 
@@ -274,6 +279,26 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `guest-payment-confirmation.html`
 - `api/stripe-session.js`
 - `scripts/test-stripe-confirmation.mjs`
+- `payment-link.html`
+- `api/create-payment-link.js`
+- `scripts/test-payment-link.mjs`
+- `vercel.json`
+- `marketing/google-ads/2026-07-guest-laundry-search/FORENSIC-CHECKPOINT-2026-08-24.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/GOOGLE-ADS-CONVERSION-GOAL-CHANGE-2026-08-24.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/GOOGLE-ADS-WHATSAPP-FIRST-CORRECTION-2026-08-24.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/CLAUDE-AUDIT-WHATSAPP-FIRST-ADJUDICATION-2026-08-24.md`
+- `mos-data/audits/2026-08-24-growth-forensic-checkpoint.json`
+- `mos-data/audits/2026-08-24-google-ads-purchase-led-goal.json`
+- `mos-data/audits/2026-08-24-google-ads-whatsapp-first-correction.json`
+- `mos-data/audits/2026-08-24-attribution-canonical-release.json`
+- `mos-app/generated/audit-registry.js`
+- `mos-app/tests/dashboard.test.mjs`
+- `marketing/google-ads/2026-07-guest-laundry-search/RELEASE-EVIDENCE-ATTRIBUTION-CANONICAL-2026-08-24.md`
+- `marketing/seo-consistency/MOS-FORENSIC-LEDGER-RELEASE-2026-08-24.md`
+- `marketing/seo-consistency/MOS-WHATSAPP-FIRST-RELEASE-2026-08-24.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/activation-runbook.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/preflight-checklist.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/campaign-spec.yaml`
 - `mos-app/google-kpis-contract.js`
 - `mos-app/api/google-kpis.js`
 - `mos-app/tests/google-kpis.test.mjs`
@@ -549,7 +574,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - Homepage structured data now connects the canonical `LocalBusiness`/`LaundryService`, `WebSite` and `WebPage` entities without self-serving `aggregateRating` markup. The 5.0/23 review reference remains visible and dated to its last project verification rather than represented as immutable.
 - OpenAI `OAI-SearchBot` access remains explicitly allowed. The production IndexNow key and five core URLs were validated, then accepted by the IndexNow endpoint with HTTP 202.
 - AI/search production deployment `dpl_7LwSKTYLxUrW7R1Ap4M6A8Fqssfp` is Ready and aliased to `https://a7laundry.com`. Live probes returned HTTP 200 for `/about`, `/llms.txt`, `/sitemap.xml`, the IndexNow key and a quarantined page; the quarantined page contains `noindex, follow`.
-- Native Google Ads purchase action `A7 Guest Laundry - Stripe purchase` is configured as a primary Website purchase with dynamic value, all-conversions counting, 90-day click window and data-driven attribution. Enhanced conversions remain unconfigured.
+- Native Google Ads purchase action `A7 Guest Laundry - Stripe purchase` retains dynamic value, all-conversions counting, a 90-day click window and data-driven attribution, but is secondary for acquisition after the owner confirmed that every sale begins in WhatsApp. Enhanced conversions remain unconfigured.
 - Production deployment `dpl_3zPStP1tRFhX5WMJW98rq9FqxBR9` is Ready and aliased to `https://a7laundry.com`. Live source verifies Google tag `AW-17146169189` and the purchase destination `AW-17146169189/dkpRCJyC19YcEOWO9-8_`; the event is emitted only after a paid Stripe session and carries Stripe session ID, value and currency.
 - Search campaign `24072699595` was created with a future Aug 1 start, then immediately paused before any impression or spend. Search Partners, Display and AI Max resource optimization remain off; English, presence-only Orlando-area targeting, R$70/day and R$18 max CPC remain configured.
 - Google required account reauthentication while saving the Airbnb group. The campaign remains paused with only the Hotel group fully persisted until the owner completes the Google identity challenge.
@@ -647,3 +672,43 @@ Make the production conversion funnel observable from acquisition CTA through St
   public 390×844 and 1440×900 smoke passed canonical, anchors, 3 WhatsApp, 2 SMS, complete prefills,
   five schema entities, exact 10/10 FAQ parity, images, targets and overflow. Rollback is
   `dpl_8mzMMHy2q6ZFPJV4HKgPMLwtgV6J`.
+- Aug 24 live forensic remediation compares GA4/Search Console for Aug 1–24 against Jul 8–31,
+  preserves the Jul 25–Aug 23 Google Ads period separately and excludes the wrong-country Meta
+  organic asset. The Stripe confirmation now ignores payment-processor referrer acquisition,
+  returns only a validated opaque `A7 Ref` from paid-session metadata and emits it as
+  `lead_reference`; operator notes, click IDs and PII remain excluded. The one-use payment-link
+  tool validates that reference, while the legacy Lake Buena Vista `.html` route permanently
+  redirects to the clean canonical. In Google Ads account `290-113-2891`, the owner-authenticated
+  UI confirmed 11 primary Stripe purchases and 47 primary WhatsApp clicks for Jul 25–Aug 23;
+  WhatsApp was temporarily changed to secondary observation-only and remained secondary after
+  reload. After the owner clarified that every customer must enter through WhatsApp before Stripe,
+  the change was superseded: WhatsApp was restored to primary and Stripe was changed to secondary,
+  with both states confirmed after reload. No campaign, budget, bid, keyword, ad, billing or
+  delivery setting changed. Append-only MOS audits preserve the checkpoint, superseded change and
+  WhatsApp-first correction. `npm run lint`,
+  `npm run typecheck`, `npm test`, `npm run build` and `git diff --check` pass; 44 root TAP tests,
+  62 MOS tests and 14 immutable MOS audits validate. The existing comforter canonical
+  adjudication warning remains open and unrelated. Public-site and MOS deployment are pending the
+  project DevOps release boundary.
+- Aug 24 DevOps continuation promoted the exact prebuilt public Preview
+  `dpl_FxwDkGsbSMrVqLkm3z5uaF9GEBUD` without rebuild to production
+  `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`; local, Preview and production hashes match for tracking,
+  guest confirmation and payment-link artifacts. Public HTTP smoke passed the LBV 308, clean
+  canonical, noindex confirmation, referral-ignore tracking and fail-closed API contracts.
+  Public rollback is `dpl_7KRoef7F2mV3P1WSRV2waxSV5j9t`. The MOS compiled 15 immutable audits,
+  passed 62/62 tests, deployed protected Preview `dpl_3hbMZkLrrP2BjN5BKAReriAVS4vs` and promoted
+  it to production `dpl_5kTgmvXEacvMcGcr5X2kGSqnhfWB`. Anonymous production requests to the
+  ledger and Google KPI API redirect to login; the login remains private/no-store, noindex and
+  frame-denied. MOS rollback is `dpl_FKnLn5W8vrLH9drFXk66jXRgoXGq`. The prior authenticated MOS
+  browser session had expired, so no credential was recovered or bypassed; authenticated live-data
+  smoke remains a monitoring follow-up rather than being represented as passed.
+- Aug 24 WhatsApp-first correction superseded the temporary purchase-led account state after the
+  owner confirmed that every sale begins in WhatsApp. `A7 - WhatsApp click (site)` is primary and
+  `A7 Guest Laundry - Stripe purchase` is secondary; both persisted after reload. The Claude
+  30-day audit was adjudicated item by item, and no recommended bid, schedule, device, geography,
+  keyword, negative, budget or RSA mutation was applied from its small mixed-conversion sample.
+  The 16-audit MOS ledger passed 44 root TAP and 62 MOS tests. Protected Preview
+  `dpl_HbzBqyGTUfZz42Tv5XssD2KWAZ9V` was promoted without rebuild to READY production
+  `dpl_35XV8TDcfi46KokAdDtAkwQtDgj8`; anonymous login, ledger and API boundaries passed. Rollback
+  is `dpl_5kTgmvXEacvMcGcr5X2kGSqnhfWB`. Authenticated dashboard data smoke remains unclaimed
+  because no active MOS session was available.

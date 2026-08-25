@@ -68,7 +68,10 @@
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   try {
     gtag('js', new Date());
-    gtag('config', GA4_ID);
+    gtag('config', GA4_ID, location.pathname === '/guest-payment-confirmation'
+      || location.pathname === '/guest-payment-confirmation.html'
+      ? { ignore_referrer: true }
+      : {});
     gtag('config', GOOGLE_ADS_ID);
     gtag('config', GOOGLE_ADS_PHONE_DESTINATION, { phone_conversion_number: OFFICIAL_PHONE });
   } catch (_) { diagnose('google_tag_init_failed'); }

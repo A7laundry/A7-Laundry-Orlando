@@ -53,10 +53,13 @@ for (const required of [
   'setting: "PRESENCE_ONLY"',
   'enabled: false',
   'final_url_suffix: "utm_source=google&utm_medium=cpc&utm_campaign=guest_search_orlando&utm_content={adgroupid}_{creative}&utm_term={keyword}&device={device}&matchtype={matchtype}&network={network}"',
-  '"purchase — verified Stripe payment with value"'
+  '"whatsapp_click — current mandatory funnel-entry proxy; never label as a sale"',
+  '"purchase — verified Stripe payment with value, retained for financial reconciliation"',
+  '"Stripe purchase as the sole acquisition goal before session-continuity coverage is proven"'
 ]) {
   assert.ok(spec.includes(required), `Campaign spec is missing ${required}`);
 }
+assert.doesNotMatch(spec, /^\s+- "unqualified WhatsApp click"$/m, 'The current mandatory WhatsApp-entry proxy cannot remain forbidden as primary');
 assert.doesNotMatch(spec, /^\s*tracking_template:/m, 'Use a Final URL suffix; do not replace the landing URL with a tracking template');
 for (const requiredSitelink of ['#how', '#pricing', '#care', '/service-areas']) {
   assert.ok(spec.includes(requiredSitelink), `Campaign spec is missing sitelink ${requiredSitelink}`);
@@ -93,5 +96,7 @@ for (const requiredNegative of ['jobs', 'dating', 'laundromat', 'comforter clean
 const preflight = read('preflight-checklist.md');
 assert.match(preflight, /NO-GO for activation/);
 assert.match(preflight, /Owner explicitly approves R\$70\/day/);
+assert.match(preflight, /Website WhatsApp is the primary mandatory-entry proxy/);
+assert.match(preflight, /Stripe `purchase` remains secondary financial evidence/);
 
 console.log('Google Ads Phase 1 package valid: 16 controlled keywords, 4 paused RSAs and activation gates present.');

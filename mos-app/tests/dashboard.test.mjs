@@ -116,14 +116,19 @@ test('MOS filters produce decision-grade paid, creative and revenue views', () =
 
 test('MOS preserves and exposes the complete immutable audit timeline', () => {
   const {api, element} = dashboardRuntime();
+  const auditCount = globalThis.A7_MOS_AUDIT_REGISTRY.auditCount;
   api.renderMosKpis();
-  assert.match(element('mosAuditRegistrySummary').innerHTML, /12 auditorias imutáveis preservadas/);
+  assert.match(element('mosAuditRegistrySummary').innerHTML, new RegExp(`${auditCount} auditorias imutáveis preservadas`));
   assert.match(element('mosAuditRegistrySummary').innerHTML, /Mais recente.*apenas um ponteiro/);
-  assert.equal((element('mosAuditTimeline').innerHTML.match(/<button/g) || []).length, 12);
+  assert.equal((element('mosAuditTimeline').innerHTML.match(/<button/g) || []).length, auditCount);
   assert.match(element('mosAuditTimeline').innerHTML, /2026-07-10/);
   assert.match(element('mosAuditTimeline').innerHTML, /2026-08-06/);
+  assert.match(element('mosAuditTimeline').innerHTML, /2026-08-24/);
   assert.match(element('mosAuditTimeline').innerHTML, /auditoria de mensagem e conversão/i);
   assert.match(element('mosAuditTimeline').innerHTML, /auditoria de atendimento/i);
+  assert.match(element('mosAuditDetail').innerHTML, /24-day GA4, GSC and paid-media forensic checkpoint/);
+  element('mosAuditSelect').value = '2026-08-06-seo-tracking-cleanup';
+  api.renderMosAuditRegistry();
   assert.match(element('mosAuditDetail').innerHTML, /SEO e tracking/);
   assert.match(element('mosAuditDetail').innerHTML, /SHA-256/);
   assert.match(element('mosAuditComparison').innerHTML, /não inventa valores/);

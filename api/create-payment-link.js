@@ -19,6 +19,7 @@ const CONFIRMATION_URL =
 // conferência humana antes de virar cobrança.
 const MIN_USD = 5;
 const MAX_USD = 2000;
+const A7_REFERENCE_PATTERN = /^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{10}$/i;
 
 function sendJson(res, statusCode, body) {
   res.status(statusCode).json(body);
@@ -117,6 +118,11 @@ async function handler(req, res) {
   const unitAmount = Math.round(amountUsd * 100);
   const description = cleanText(body.description, 'A7 Laundry — pickup & delivery');
   const reference = cleanText(body.reference, '');
+  const requestedA7Reference = cleanText(body.a7_reference, '').toUpperCase();
+  if (requestedA7Reference && !A7_REFERENCE_PATTERN.test(requestedA7Reference)) {
+    sendJson(res, 400, { error: 'A7 Ref must contain the 10-character code from the customer conversation.' });
+    return;
+  }
 
   try {
     const price = await stripePost(
@@ -137,7 +143,8 @@ async function handler(req, res) {
       // Um link por cotação: impede que a mesma URL seja paga repetidamente.
       'restrictions[completed_sessions][limit]': '1'
     };
-    if (reference) linkParams['metadata[a7_reference]'] = reference;
+    if (reference) linkParams['metadata[operator_reference]'] = reference;
+    if (requestedA7Reference) linkParams['metadata[a7_reference]'] = requestedA7Reference;
 
     const link = await stripePost('/payment_links', linkParams, stripeSecretKey);
 
@@ -156,5 +163,6 @@ module.exports = handler;
 module.exports.MIN_USD = MIN_USD;
 module.exports.MAX_USD = MAX_USD;
 module.exports.CONFIRMATION_URL = CONFIRMATION_URL;
+module.exports.A7_REFERENCE_PATTERN = A7_REFERENCE_PATTERN;
 module.exports.tokenMatches = tokenMatches;
 module.exports.cleanText = cleanText;

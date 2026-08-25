@@ -2,6 +2,7 @@
 
 const STRIPE_API_BASE = 'https://api.stripe.com/v1';
 const CHECKOUT_SESSION_PATTERN = /^cs_(?:live|test)_[A-Za-z0-9]+$/;
+const A7_REFERENCE_PATTERN = /^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{10}$/i;
 
 function sendJson(res, statusCode, body) {
   res.status(statusCode).json(body);
@@ -26,6 +27,7 @@ function sanitizeSession(session) {
     : session.payment_link && typeof session.payment_link.id === 'string'
       ? session.payment_link.id
       : null;
+  const metadataReference = cleanText(session.metadata && session.metadata.a7_reference, '').toUpperCase();
 
   return {
     id: session.id,
@@ -34,7 +36,8 @@ function sanitizeSession(session) {
     currency: cleanText(session.currency, 'usd').toUpperCase(),
     amount_total: amountTotal,
     service: cleanText(firstLineItem && firstLineItem.description, 'A7 Guest Laundry'),
-    payment_link_id: paymentLink
+    payment_link_id: paymentLink,
+    a7_reference: A7_REFERENCE_PATTERN.test(metadataReference) ? metadataReference : null
   };
 }
 
@@ -105,3 +108,4 @@ async function handler(req, res) {
 module.exports = handler;
 module.exports.sanitizeSession = sanitizeSession;
 module.exports.CHECKOUT_SESSION_PATTERN = CHECKOUT_SESSION_PATTERN;
+module.exports.A7_REFERENCE_PATTERN = A7_REFERENCE_PATTERN;

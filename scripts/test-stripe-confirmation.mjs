@@ -67,6 +67,7 @@ try {
           currency: 'usd',
           amount_total: 5000,
           payment_link: 'plink_a7guest',
+          metadata: { a7_reference: '7kq9w3m2hx', operator_reference: 'must-not-leak' },
           customer_details: { email: 'must-not-leak@example.com' },
           line_items: {
             data: [{ description: 'Guest Laundry — Wash, Dry & Fold' }]
@@ -82,6 +83,8 @@ try {
   assert.equal(paidResponse.body.currency, 'USD');
   assert.equal(paidResponse.body.service, 'Guest Laundry — Wash, Dry & Fold');
   assert.equal(paidResponse.body.payment_link_id, 'plink_a7guest');
+  assert.equal(paidResponse.body.a7_reference, '7KQ9W3M2HX');
+  assert.equal('operator_reference' in paidResponse.body, false);
   assert.equal('customer_details' in paidResponse.body, false);
   assert.match(requestedUrl, /checkout\/sessions\/cs_test_A7Guest123/);
   assert.equal(requestedAuthorization, 'Bearer sk_test_server_only');
@@ -122,12 +125,24 @@ try {
     'a7_verified_purchase_',
     "send_to: 'AW-17146169189/dkpRCJyC19YcEOWO9-8_'",
     'transaction_id: session.id',
+    'lead_reference: session.a7_reference || undefined',
     "window.history.replaceState(null, '', window.location.pathname)",
+    '<link rel="canonical" href="https://a7laundry.com/guest-payment-confirmation">',
     'https://wa.me/14076708839'
   ]) {
     assert.ok(page.includes(requiredToken), `confirmation page is missing ${requiredToken}`);
   }
   assert.equal(/fbq\(['"]init['"]/.test(page), false);
+
+  const tracking = fs.readFileSync(path.join(root, 'a7-tracking.js'), 'utf8');
+  assert.match(tracking, /guest-payment-confirmation[\s\S]+ignore_referrer: true/);
+
+  const vercel = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
+  assert.deepEqual(vercel.redirects.find((route) => route.source === '/blog/laundry-lake-buena-vista.html'), {
+    source: '/blog/laundry-lake-buena-vista.html',
+    destination: '/blog/laundry-lake-buena-vista',
+    permanent: true
+  });
 
   console.log('Stripe guest payment confirmation security tests passed.');
 } finally {

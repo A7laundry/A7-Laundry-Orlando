@@ -406,6 +406,11 @@
   ],
   "redirects": [
     {
+      "source": "/blog/laundry-lake-buena-vista.html",
+      "destination": "/blog/laundry-lake-buena-vista",
+      "permanent": true
+    },
+    {
       "source": "/carpet-campaign",
       "destination": "/carpet",
       "permanent": true

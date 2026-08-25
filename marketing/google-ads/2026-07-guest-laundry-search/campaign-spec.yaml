@@ -10,7 +10,7 @@ campaign:
   name: "A7 | Search | Guest Laundry | Orlando | EN | JUL26"
   type: "SEARCH"
   status_on_create: "PAUSED"
-  objective: "Verified guest-laundry revenue"
+  objective: "WhatsApp conversations that become qualified guest-laundry leads"
   daily_budget_brl: 70
   test_days: 7
   maximum_test_spend_brl: 490
@@ -57,17 +57,17 @@ assets:
 
 conversion_policy:
   primary:
-    - "purchase — verified Stripe payment with value"
-    - "qualified_guest_lead — offline import only after operational qualification"
+    - "whatsapp_click — current mandatory funnel-entry proxy; never label as a sale"
+    - "qualified_guest_lead — future replacement after deduplicated offline import is proven"
   secondary:
-    - "whatsapp_click"
+    - "purchase — verified Stripe payment with value, retained for financial reconciliation"
     - "sms_click"
     - "call_click"
     - "money_page_view"
   forbidden_primary:
     - "raw call from ad"
     - "page view"
-    - "unqualified WhatsApp click"
+    - "Stripe purchase as the sole acquisition goal before session-continuity coverage is proven"
 
 stop_rules:
   - "Pause for review after 20 clicks and zero qualified leads"

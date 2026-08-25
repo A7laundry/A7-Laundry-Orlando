@@ -99,9 +99,15 @@ button{
   </div>
 
   <div class="field">
-    <label for="reference">Referência interna (opcional)</label>
+    <label for="a7Reference">A7 Ref da conversa</label>
+    <input type="text" id="a7Reference" maxlength="10" pattern="[23456789A-HJ-NP-Z]{10}" autocomplete="off" placeholder="7KQ9W3M2HX">
+    <p class="hint">Código de 10 caracteres no fim da mensagem do cliente. Permite ligar contato e pagamento sem expor dados pessoais.</p>
+  </div>
+
+  <div class="field">
+    <label for="reference">Referência operacional (opcional)</label>
     <input type="text" id="reference" maxlength="120" placeholder="lead ·959-7959 / hotel X">
-    <p class="hint">Fica no metadata do Stripe. Use pra cruzar com o leads.csv.</p>
+    <p class="hint">Nota interna separada da atribuição técnica.</p>
   </div>
 
   <button type="button" class="primary" id="generate">Gerar link</button>
@@ -128,6 +134,7 @@ button{
   var calcOut = $('calcOut');
   var amount = $('amount');
   var description = $('description');
+  var a7Reference = $('a7Reference');
   var reference = $('reference');
   var generate = $('generate');
   var result = $('result');
@@ -205,6 +212,11 @@ button{
 
     var value = parseFloat(amount.value);
     if (!isFinite(value) || value < 5) { show('Valor inválido.', true); return; }
+    var attributionReference = a7Reference.value.trim().toUpperCase();
+    if (attributionReference && !/^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{10}$/.test(attributionReference)) {
+      show('A7 Ref inválida. Use exatamente os 10 caracteres enviados na conversa.', true);
+      return;
+    }
 
     generate.disabled = true;
     generate.textContent = 'Gerando…';
@@ -216,6 +228,7 @@ button{
         body: JSON.stringify({
           amount_usd: value,
           description: description.value.trim(),
+          a7_reference: attributionReference,
           reference: reference.value.trim()
         })
       });

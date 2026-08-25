@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-08-24-google-ads-whatsapp-first-correction",
+  "auditDate": "2026-08-24",
+  "title": "Google Ads corrected to WhatsApp-first funnel entry",
+  "type": "google_ads_conversion_governance",
+  "status": "complete",
+  "scope": [
+    "Google Ads account 290-113-2891",
+    "conversion actions",
+    "WhatsApp-first acquisition",
+    "Stripe financial observation",
+    "Claude audit adjudication"
+  ],
+  "summary": "After the owner confirmed that every sale begins in WhatsApp, the temporary purchase-led goal state was superseded. WhatsApp was restored to primary as the mandatory funnel-entry proxy and Stripe purchase was changed to secondary financial observation; both persisted after reload. The external 30-day audit was adjudicated without applying its weak-sample bid, schedule, device, geography, keyword or budget mutations.",
+  "sources": [
+    {
+      "name": "Google Ads owner-authenticated account UI",
+      "status": "verified",
+      "period": "changed and reloaded 2026-08-24; visible performance window 2026-07-25 to 2026-08-23"
+    },
+    {
+      "name": "Owner-confirmed mandatory WhatsApp funnel entry",
+      "status": "owner_reported",
+      "period": "confirmed 2026-08-24"
+    },
+    {
+      "name": "Claude Code artifact 71a7a261-585f-4318-83a4-bd92e606546c",
+      "status": "verified",
+      "period": "audit window 2026-07-25 to 2026-08-23; read 2026-08-24"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "google_ads_primary_whatsapp_clicks",
+      "label": "WhatsApp clicks represented by current primary action",
+      "value": 47,
+      "format": "integer",
+      "source": "Google Ads account UI",
+      "period": "2026-07-25/2026-08-23",
+      "status": "prechange_observed"
+    },
+    {
+      "id": "google_ads_secondary_stripe_purchases",
+      "label": "Stripe purchases retained as secondary financial observations",
+      "value": 11,
+      "format": "integer",
+      "source": "Google Ads account UI",
+      "period": "2026-07-25/2026-08-23",
+      "status": "prechange_observed"
+    },
+    {
+      "id": "google_ads_secondary_stripe_value_brl",
+      "label": "Stripe purchase all-conversion value retained for reconciliation",
+      "value": 5750.46,
+      "format": "brl",
+      "source": "Google Ads account UI",
+      "period": "2026-07-25/2026-08-23",
+      "status": "prechange_observed"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "marketing/google-ads/2026-07-guest-laundry-search/CLAUDE-AUDIT-WHATSAPP-FIRST-ADJUDICATION-2026-08-24.md",
+      "sha256": "3f6db370485a85d4e7992dbbd54a02fe8589ce96d8d04774eaa734414998a7e0"
+    },
+    {
+      "path": "marketing/google-ads/2026-07-guest-laundry-search/GOOGLE-ADS-WHATSAPP-FIRST-CORRECTION-2026-08-24.md",
+      "sha256": "c29a4a8b04e26803b81f97c74d43a504dccb5ebce26689aa2df526289623a1fd"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-08-24-attribution-canonical-release",
+  "previousRecordSha256": "90094e2b365a0dcda0fd76df60446559a57cfc7703ef03636586968b07cbb878"
+}

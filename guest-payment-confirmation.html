@@ -6,6 +6,7 @@
 <title>Payment Confirmation — A7 Guest Laundry Orlando</title>
 <meta name="description" content="Secure payment confirmation and pickup handoff for A7 Guest Laundry in Orlando.">
 <meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="canonical" href="https://a7laundry.com/guest-payment-confirmation">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -249,13 +250,15 @@ body::before{
         transaction_id: session.id,
         value: session.amount_total,
         currency: session.currency,
+        lead_reference: session.a7_reference || undefined,
         items: [item]
       });
       window.gtag('event', 'conversion', {
         send_to: 'AW-17146169189/dkpRCJyC19YcEOWO9-8_',
         transaction_id: session.id,
         value: session.amount_total,
-        currency: session.currency
+        currency: session.currency,
+        lead_reference: session.a7_reference || undefined
       });
     }
     if (typeof window.fbq === 'function') {

@@ -1,9 +1,9 @@
 globalThis.A7_MOS_AUDIT_REGISTRY = Object.freeze({
   "schemaVersion": "1.0",
   "storageMode": "append_only_repository",
-  "latestAuditId": "2026-08-06-seo-tracking-cleanup",
-  "ledgerTipAuditId": "2026-07-30-whatsapp-audit",
-  "auditCount": 12,
+  "latestAuditId": "2026-08-24-growth-forensic-checkpoint",
+  "ledgerTipAuditId": "2026-08-24-google-ads-whatsapp-first-correction",
+  "auditCount": 16,
   "audits": [
     {
       "schemaVersion": "1.0",
@@ -689,6 +689,355 @@ globalThis.A7_MOS_AUDIT_REGISTRY = Object.freeze({
       "previousAuditId": "2026-07-31-whatsapp-reconciliation",
       "previousRecordSha256": "9ee2a94056a8cec7837a0680aaf30309f05e56ca1bf8924f4e7525e62d4a5e4e",
       "recordSha256": "0db0b89481efb3da92c29309cbb529e626882d37fe0f58a95b4ad1abb66df568"
+    },
+    {
+      "schemaVersion": "1.0",
+      "auditId": "2026-08-24-attribution-canonical-release",
+      "auditDate": "2026-08-24",
+      "title": "Attribution and Lake Buena Vista canonical production release",
+      "type": "production_release",
+      "status": "complete",
+      "scope": [
+        "public deployment",
+        "Stripe attribution",
+        "GA4 referral handling",
+        "Lake Buena Vista redirect",
+        "rollback"
+      ],
+      "summary": "The exact tested Preview was promoted without rebuild. Production hashes match local and Preview artifacts; the legacy Lake Buena Vista HTML route redirects permanently, the transactional page is noindex and APIs fail closed.",
+      "sources": [
+        {
+          "name": "Vercel Preview and production deployments",
+          "status": "verified",
+          "period": "2026-08-24"
+        },
+        {
+          "name": "Public a7laundry.com HTTP smoke",
+          "status": "verified",
+          "period": "2026-08-24"
+        }
+      ],
+      "metrics": [],
+      "evidence": [
+        {
+          "path": "marketing/google-ads/2026-07-guest-laundry-search/RELEASE-EVIDENCE-ATTRIBUTION-CANONICAL-2026-08-24.md",
+          "sha256": "18b07f6a3fcdb98728737db4ab63e5cf02578ef2983f73b0d4f7d0abb90cd9d0"
+        }
+      ],
+      "snapshot": null,
+      "previousAuditId": "2026-08-24-google-ads-purchase-led-goal",
+      "previousRecordSha256": "edb9615b4f0876c1743ce4ac6fc636029a25e6a70b62f9df7b111b073aa535a7",
+      "recordSha256": "90094e2b365a0dcda0fd76df60446559a57cfc7703ef03636586968b07cbb878"
+    },
+    {
+      "schemaVersion": "1.0",
+      "auditId": "2026-08-24-google-ads-purchase-led-goal",
+      "auditDate": "2026-08-24",
+      "title": "Google Ads WhatsApp moved to secondary observation",
+      "type": "google_ads_conversion_governance",
+      "status": "complete",
+      "scope": [
+        "Google Ads account 290-113-2891",
+        "conversion actions",
+        "bid optimization",
+        "rollback"
+      ],
+      "summary": "The WhatsApp click action was changed from primary to secondary and verified after reload. Stripe purchase remains primary. Click intent stays available in All conversions but no longer optimizes bidding by default.",
+      "sources": [
+        {
+          "name": "Google Ads owner-authenticated account UI",
+          "status": "verified",
+          "period": "changed and reloaded 2026-08-24; visible performance window 2026-07-25 to 2026-08-23"
+        }
+      ],
+      "metrics": [
+        {
+          "id": "google_ads_primary_stripe_purchases",
+          "label": "Primary Stripe purchase all conversions",
+          "value": 11,
+          "format": "integer",
+          "source": "Google Ads account UI",
+          "period": "2026-07-25/2026-08-23",
+          "status": "prechange_observed"
+        },
+        {
+          "id": "google_ads_secondary_whatsapp_clicks",
+          "label": "WhatsApp clicks retained as secondary observations",
+          "value": 47,
+          "format": "integer",
+          "source": "Google Ads account UI",
+          "period": "2026-07-25/2026-08-23",
+          "status": "prechange_observed"
+        },
+        {
+          "id": "google_ads_purchase_value_brl",
+          "label": "Stripe purchase all-conversion value",
+          "value": 5750.46,
+          "format": "brl",
+          "source": "Google Ads account UI",
+          "period": "2026-07-25/2026-08-23",
+          "status": "prechange_observed"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "marketing/google-ads/2026-07-guest-laundry-search/GOOGLE-ADS-CONVERSION-GOAL-CHANGE-2026-08-24.md",
+          "sha256": "1c729ee3832c8e9caabe1d22843aff7ddc2c164d0331ac2642ad8940e50a2428"
+        }
+      ],
+      "snapshot": null,
+      "previousAuditId": "2026-08-24-growth-forensic-checkpoint",
+      "previousRecordSha256": "da3999117ab66285074c928fdc15d5127994caa8952bbb92b68d3aae6c2ccbf0",
+      "recordSha256": "edb9615b4f0876c1743ce4ac6fc636029a25e6a70b62f9df7b111b073aa535a7"
+    },
+    {
+      "schemaVersion": "1.0",
+      "auditId": "2026-08-24-google-ads-whatsapp-first-correction",
+      "auditDate": "2026-08-24",
+      "title": "Google Ads corrected to WhatsApp-first funnel entry",
+      "type": "google_ads_conversion_governance",
+      "status": "complete",
+      "scope": [
+        "Google Ads account 290-113-2891",
+        "conversion actions",
+        "WhatsApp-first acquisition",
+        "Stripe financial observation",
+        "Claude audit adjudication"
+      ],
+      "summary": "After the owner confirmed that every sale begins in WhatsApp, the temporary purchase-led goal state was superseded. WhatsApp was restored to primary as the mandatory funnel-entry proxy and Stripe purchase was changed to secondary financial observation; both persisted after reload. The external 30-day audit was adjudicated without applying its weak-sample bid, schedule, device, geography, keyword or budget mutations.",
+      "sources": [
+        {
+          "name": "Google Ads owner-authenticated account UI",
+          "status": "verified",
+          "period": "changed and reloaded 2026-08-24; visible performance window 2026-07-25 to 2026-08-23"
+        },
+        {
+          "name": "Owner-confirmed mandatory WhatsApp funnel entry",
+          "status": "owner_reported",
+          "period": "confirmed 2026-08-24"
+        },
+        {
+          "name": "Claude Code artifact 71a7a261-585f-4318-83a4-bd92e606546c",
+          "status": "verified",
+          "period": "audit window 2026-07-25 to 2026-08-23; read 2026-08-24"
+        }
+      ],
+      "metrics": [
+        {
+          "id": "google_ads_primary_whatsapp_clicks",
+          "label": "WhatsApp clicks represented by current primary action",
+          "value": 47,
+          "format": "integer",
+          "source": "Google Ads account UI",
+          "period": "2026-07-25/2026-08-23",
+          "status": "prechange_observed"
+        },
+        {
+          "id": "google_ads_secondary_stripe_purchases",
+          "label": "Stripe purchases retained as secondary financial observations",
+          "value": 11,
+          "format": "integer",
+          "source": "Google Ads account UI",
+          "period": "2026-07-25/2026-08-23",
+          "status": "prechange_observed"
+        },
+        {
+          "id": "google_ads_secondary_stripe_value_brl",
+          "label": "Stripe purchase all-conversion value retained for reconciliation",
+          "value": 5750.46,
+          "format": "brl",
+          "source": "Google Ads account UI",
+          "period": "2026-07-25/2026-08-23",
+          "status": "prechange_observed"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "marketing/google-ads/2026-07-guest-laundry-search/CLAUDE-AUDIT-WHATSAPP-FIRST-ADJUDICATION-2026-08-24.md",
+          "sha256": "3f6db370485a85d4e7992dbbd54a02fe8589ce96d8d04774eaa734414998a7e0"
+        },
+        {
+          "path": "marketing/google-ads/2026-07-guest-laundry-search/GOOGLE-ADS-WHATSAPP-FIRST-CORRECTION-2026-08-24.md",
+          "sha256": "c29a4a8b04e26803b81f97c74d43a504dccb5ebce26689aa2df526289623a1fd"
+        }
+      ],
+      "snapshot": null,
+      "previousAuditId": "2026-08-24-attribution-canonical-release",
+      "previousRecordSha256": "90094e2b365a0dcda0fd76df60446559a57cfc7703ef03636586968b07cbb878",
+      "recordSha256": "f65222660aba27a40972076d248802fedddc9d41bb9fd762eed108f8232952f4"
+    },
+    {
+      "schemaVersion": "1.0",
+      "auditId": "2026-08-24-growth-forensic-checkpoint",
+      "auditDate": "2026-08-24",
+      "title": "24-day GA4, GSC and paid-media forensic checkpoint",
+      "type": "growth_measurement_forensic",
+      "status": "partial",
+      "scope": [
+        "GA4",
+        "Search Console",
+        "Google Ads",
+        "Meta Ads",
+        "canonical URLs",
+        "Stripe attribution"
+      ],
+      "summary": "Traffic and verified purchase volume increased, but GA4 channel revenue is not decision-grade because the Stripe confirmation route appears as acquisition and Organic Shopping owns all reported revenue. Lake Buena Vista traffic is split across clean and .html paths. Meta organic Orlando remains unavailable.",
+      "sources": [
+        {
+          "name": "GA4 property 543807649",
+          "status": "verified",
+          "period": "2026-08-01 to 2026-08-24 compared with 2026-07-08 to 2026-07-31"
+        },
+        {
+          "name": "Search Console sc-domain:a7laundry.com",
+          "status": "verified",
+          "period": "2026-08-01 to 2026-08-24 compared with 2026-07-08 to 2026-07-31"
+        },
+        {
+          "name": "Google Ads owner-supplied Claude Code artifact",
+          "status": "partial",
+          "period": "2026-07-25 to 2026-08-23"
+        },
+        {
+          "name": "Meta Ads USA account state",
+          "status": "verified",
+          "period": "observed 2026-08-24"
+        },
+        {
+          "name": "Meta organic Orlando",
+          "status": "unavailable",
+          "period": "2026-08-01 to 2026-08-24"
+        }
+      ],
+      "metrics": [
+        {
+          "id": "ga4_active_users",
+          "label": "GA4 active users",
+          "value": 334,
+          "format": "integer",
+          "source": "GA4",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "ga4_sessions",
+          "label": "GA4 sessions",
+          "value": 444,
+          "format": "integer",
+          "source": "GA4",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "ga4_engagement_rate",
+          "label": "GA4 engagement rate",
+          "value": 68.92,
+          "format": "percent",
+          "source": "GA4",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "ga4_whatsapp_clicks",
+          "label": "GA4 WhatsApp clicks",
+          "value": 110,
+          "format": "integer",
+          "source": "GA4",
+          "period": "2026-08-01/2026-08-24",
+          "status": "contact_intent_only"
+        },
+        {
+          "id": "ga4_purchase_events",
+          "label": "GA4 verified purchase events",
+          "value": 30,
+          "format": "integer",
+          "source": "GA4",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "ga4_revenue_usd",
+          "label": "GA4 reported revenue",
+          "value": 3445.8,
+          "format": "usd",
+          "source": "GA4",
+          "period": "2026-08-01/2026-08-24",
+          "status": "channel_attribution_unreliable"
+        },
+        {
+          "id": "gsc_clicks",
+          "label": "Search Console clicks",
+          "value": 28,
+          "format": "integer",
+          "source": "Search Console",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "gsc_impressions",
+          "label": "Search Console impressions",
+          "value": 1661,
+          "format": "integer",
+          "source": "Search Console",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "gsc_ctr",
+          "label": "Search Console CTR",
+          "value": 1.7,
+          "format": "percent",
+          "source": "Search Console",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "gsc_average_position",
+          "label": "Search Console average position",
+          "value": 11.7,
+          "format": "decimal",
+          "source": "Search Console",
+          "period": "2026-08-01/2026-08-24",
+          "status": "observed_readonly"
+        },
+        {
+          "id": "google_ads_spend_brl",
+          "label": "Google Ads spend",
+          "value": 3055.46,
+          "format": "brl",
+          "source": "Owner-supplied Google Ads artifact",
+          "period": "2026-07-25/2026-08-23",
+          "status": "period_mismatch_partial"
+        },
+        {
+          "id": "google_ads_stripe_purchases",
+          "label": "Google Ads Stripe purchases",
+          "value": 11,
+          "format": "integer",
+          "source": "Owner-supplied Google Ads artifact",
+          "period": "2026-07-25/2026-08-23",
+          "status": "artifact_reported"
+        },
+        {
+          "id": "meta_ads_active_campaigns",
+          "label": "Meta Ads active campaigns",
+          "value": 0,
+          "format": "integer",
+          "source": "Meta Ads USA account state",
+          "period": "observed 2026-08-24",
+          "status": "observed_readonly"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "marketing/google-ads/2026-07-guest-laundry-search/FORENSIC-CHECKPOINT-2026-08-24.md",
+          "sha256": "88067e9133013d411d0213c90c66c873f1efa5fbea23c3bb544978532f1817a1"
+        }
+      ],
+      "snapshot": null,
+      "previousAuditId": "2026-07-30-whatsapp-audit",
+      "previousRecordSha256": "b261677de8a71736f2ddf24b17a1da6580484300e776bcec6dce6da50da8d71b",
+      "recordSha256": "da3999117ab66285074c928fdc15d5127994caa8952bbb92b68d3aae6c2ccbf0"
     }
   ]
 });

@@ -32,7 +32,7 @@ After saving, confirm the campaign, all four ad groups and all four ads still sh
 2. Confirm the query parameters remain in the browser URL.
 3. Open WhatsApp from the hero and confirm the draft includes `A7 Ref: google|guest_search_orlando|...`.
 4. In GA4 DebugView or Realtime, confirm one `money_page_view` and one `whatsapp_click` for the test interaction.
-5. Confirm page views and contact clicks are secondary; only verified paid Stripe purchases are immediately eligible as primary.
+5. Confirm the website WhatsApp action is primary as the mandatory funnel-entry proxy; Stripe purchase, page views, SMS and raw call clicks remain observational until conversation/qualified-lead import is proven.
 6. Record the test timestamp and result in the launch log or MOS.
 
 Do not use the compact `A7 Ref` as an offline Google conversion identifier.
@@ -60,4 +60,4 @@ Until then, the operational state remains **NO-GO / PAUSED**.
 - Pause for review at R$350 with zero verified orders.
 - Do not broaden keywords, add PMax or raise budget during the initial envelope.
 
-The success event is verified guest-laundry revenue. A raw WhatsApp click, phone click or call is not a sale.
+The bidding proxy is WhatsApp entry; the business success event remains a qualified guest lead that becomes verified guest-laundry revenue. A raw WhatsApp click, phone click or call is not a sale.
