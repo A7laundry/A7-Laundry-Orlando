@@ -24,7 +24,7 @@ function anchor(href, textContent, placement = 'inline') {
   };
 }
 
-async function trackingRuntime({pathname = '/', search = '', referrer = '', initialStorage = {}, pageLinks = [], apiFailure = false, gtagFailure = false, deferVendorTags = false} = {}) {
+async function trackingRuntime({pathname = '/', search = '', hostname = 'a7laundry.com', referrer = '', initialStorage = {}, pageLinks = [], apiFailure = false, gtagFailure = false, deferVendorTags = false} = {}) {
   const gaEvents = [];
   const metaEvents = [];
   const listeners = {};
@@ -38,23 +38,37 @@ async function trackingRuntime({pathname = '/', search = '', referrer = '', init
   const location = {
     pathname,
     search,
-    hostname: 'a7laundry.com',
-    href: `https://a7laundry.com${pathname}${search}`
+    hostname,
+    href: `https://${hostname}${pathname}${search}`
   };
   const gtag = (...args) => {
     if (gtagFailure && args[0] === 'event') throw new Error('synthetic gtag failure');
     gaEvents.push(args);
   };
   const fbq = (...args) => metaEvents.push(args);
+  const metaNodes = new Map();
   const document = {
     referrer,
-    head: {appendChild(node) { appendedScripts.push(node); }},
+    head: {appendChild(node) {
+      if (node.tagName === 'META') metaNodes.set(node.getAttribute('name'), node);
+      else appendedScripts.push(node);
+    }},
     getElementById() { return null; },
-    createElement() { return {}; },
+    createElement(tagName) {
+      const attributes = {};
+      return {
+        tagName: String(tagName).toUpperCase(),
+        getAttribute(name) { return Object.hasOwn(attributes, name) ? attributes[name] : null; },
+        setAttribute(name, value) { attributes[name] = String(value); }
+      };
+    },
     getElementsByTagName() { return [{parentNode: {insertBefore() {}}}]; },
     addEventListener(type, handler) { (listeners[type] ||= []).push(handler); },
     removeEventListener(type, handler) {
       if (listeners[type]) listeners[type] = listeners[type].filter((candidate) => candidate !== handler);
+    },
+    querySelector(selector) {
+      return selector === 'meta[name="a7-measurement-debug"]' ? metaNodes.get('a7-measurement-debug') || null : null;
     },
     querySelectorAll(selector) { return selector.includes('wa.me/') ? pageLinks : []; }
   };
@@ -89,7 +103,7 @@ async function trackingRuntime({pathname = '/', search = '', referrer = '', init
   vm.runInContext(trackingSource, context);
   vm.runInContext(trackingSource, context); // repeated inclusion must be idempotent
   await new Promise((resolve) => setTimeout(resolve, 0));
-  return {window, gaEvents, metaEvents, listeners, windowListeners, appendedScripts, storage};
+  return {window, gaEvents, metaEvents, listeners, windowListeners, appendedScripts, storage, metaNodes};
 }
 
 function click(runtime, target, event = {target}) {
@@ -98,8 +112,35 @@ function click(runtime, target, event = {target}) {
 }
 
 {
+  const preview = await trackingRuntime({
+    pathname: '/laundry-pickup-delivery-orlando',
+    search: '?a7_debug=1&utm_source=qa&utm_medium=synthetic&gclid=SECRET_CLICK_ID',
+    hostname: 'a7-laundry-orlando-preview.vercel.app'
+  });
+  const debugNode = preview.metaNodes.get('a7-measurement-debug');
+  assert.ok(debugNode, 'An explicitly requested Vercel Preview exposes the sanitized measurement diagnostic.');
+  const diagnostic = JSON.parse(debugNode.getAttribute('content'));
+  assert.equal(diagnostic.attribution_id, 'at_0123…cdef');
+  assert.equal(diagnostic.short_ref, '7KQ9W3M2HX');
+  assert.equal(diagnostic.source, 'google');
+  assert.equal(diagnostic.medium, 'cpc');
+  assert.equal(diagnostic.click_id_present.gclid, true);
+  assert.doesNotMatch(debugNode.getAttribute('content'), /SECRET_CLICK_ID/);
+
+  const production = await trackingRuntime({
+    pathname: '/laundry-pickup-delivery-orlando',
+    search: '?a7_debug=1&utm_source=qa&utm_medium=synthetic'
+  });
+  assert.equal(production.metaNodes.has('a7-measurement-debug'), false, 'Production hostname must not expose the diagnostic meta tag.');
+}
+
+{
   const whatsapp = anchor('https://wa.me/14076708839?text=Hello', 'WhatsApp', 'hero');
   const runtime = await trackingRuntime({pathname: '/laundry-pickup-delivery-orlando', search: '?utm_source=google&utm_medium=cpc&utm_campaign=guest&gclid=SYNTHETIC', pageLinks: [whatsapp]});
+  assert.equal(typeof runtime.window.__A7_ATTRIBUTION_READY__?.then, 'function');
+  const readyState = await runtime.window.__A7_ATTRIBUTION_READY__;
+  assert.equal(readyState.attribution_id, 'at_0123456789abcdef0123456789abcdef');
+  assert.match(runtime.storage.a7_attribution_v2, /7KQ9W3M2HX/);
   assert.equal(runtime.listeners.click.length, 1, 'Repeated script inclusion must install one click listener.');
   assert.match(new URL(whatsapp.getAttribute('href')).searchParams.get('text'), /A7 Ref: 7KQ9W3M2HX$/);
   assert.ok(!whatsapp.getAttribute('href').includes('SYNTHETIC'), 'Click ID must not enter the WhatsApp URL.');

@@ -19,6 +19,11 @@ import {
   observeGrowthManifest
 } from '../growth-manifest-contract.js';
 import { loadEmbeddedReleaseLedger } from '../release-ledger-contract.js';
+import {
+  attachOperationsToFunnels,
+  collectOperationalKpis,
+  readOperationalKpiConfig
+} from '../operational-kpis-contract.js';
 
 function json(body, status = 200) {
   return Response.json(body, {
@@ -37,6 +42,7 @@ export async function GET(request) {
 
   const growthRegistry = await observeGrowthManifest(fetch, { releaseLedger: loadEmbeddedReleaseLedger() });
   const observedFunnelDefinitions = definitionsFromGrowthManifest(growthRegistry);
+  const operational = await collectOperationalKpis(fetch, readOperationalKpiConfig());
 
   const config = readGoogleKpiConfig();
   if (!config.ok) {
@@ -46,13 +52,15 @@ export async function GET(request) {
       status: 'unavailable',
       fetchedAt,
       growthRegistry,
-      funnels: buildFunnelCatalog(
+      operationalFunnel: operational,
+      sources: {operational},
+      funnels: attachOperationsToFunnels(buildFunnelCatalog(
         { status: 'unavailable' },
         { status: 'unavailable' },
         null,
         fetchedAt,
         observedFunnelDefinitions
-      ),
+      ), operational),
       error: {
         code: 'CONFIGURATION_INCOMPLETE',
         message: 'A conexão de leitura do Google ainda não está completamente configurada.'
@@ -82,6 +90,9 @@ export async function GET(request) {
         observedFunnelDefinitions
       );
     }
+    result.sources.operational = operational;
+    result.operationalFunnel = operational;
+    result.funnels = attachOperationsToFunnels(result.funnels, operational);
     result.schemaVersion = '1.4';
     result.periods = {
       googleOrganic: result.requestedPeriod,
@@ -141,13 +152,15 @@ export async function GET(request) {
       status: 'unavailable',
       fetchedAt,
       growthRegistry,
-      funnels: buildFunnelCatalog(
+      operationalFunnel: operational,
+      sources: {operational},
+      funnels: attachOperationsToFunnels(buildFunnelCatalog(
         { status: 'unavailable' },
         { status: 'unavailable' },
         null,
         fetchedAt,
         observedFunnelDefinitions
-      ),
+      ), operational),
       error: {
         code: 'GOOGLE_CONNECTION_FAILED',
         message: 'A conexão temporária com o Google falhou; os indicadores atuais devem permanecer indisponíveis.'

@@ -40,12 +40,33 @@
 
   var debugAllowed = location.hostname === 'localhost'
     || location.hostname === '127.0.0.1'
+    || /\.vercel\.app$/i.test(location.hostname)
     || window.__A7_DEBUG_AUTHORIZED__ === true;
+  var debugRequested = /(?:^|[?&])a7_debug=1(?:&|$)/.test(location.search || '');
   var debugLog = [];
+  function renderDebug() {
+    if (!debugAllowed || !debugRequested || !document.head) return;
+    var node = document.querySelector('meta[name="a7-measurement-debug"]');
+    if (!node) {
+      node = document.createElement('meta');
+      node.setAttribute('name', 'a7-measurement-debug');
+      document.head.appendChild(node);
+    }
+    var state = attributionClient && attributionClient.getState();
+    node.setAttribute('content', JSON.stringify({
+      event_types: debugLog.map(function (entry) { return entry.type; }),
+      attribution_id: window.A7_ATTRIBUTION ? window.A7_ATTRIBUTION.maskId(state && state.attribution_id) : 'unavailable',
+      short_ref: state && state.short_ref || '',
+      source: state && state.last_touch && state.last_touch.source || '',
+      medium: state && state.last_touch && state.last_touch.medium || '',
+      click_id_present: state && state.click_id_present || { gclid: false, gbraid: false, wbraid: false }
+    }));
+  }
   function diagnose(type, detail) {
     if (!debugAllowed) return;
     debugLog.push({ at: new Date().toISOString(), type: type, detail: detail || {} });
     if (debugLog.length > 100) debugLog.shift();
+    renderDebug();
   }
   if (debugAllowed) {
     window.__A7_MEASUREMENT_DEBUG__ = {
@@ -145,6 +166,7 @@
   var isThankYou = /comforter-thanks/.test(PATH);
   var isService = /(service-areas|comforter|carpet|shoe|upholstery|vacation|plans)/.test(PATH) && !isMoney && !isThankYou;
   var attributionClient = null;
+  window.__A7_ATTRIBUTION_READY__ = Promise.resolve(null);
 
   function attributionState() { return attributionClient && attributionClient.getState(); }
 
@@ -207,7 +229,7 @@
       if (state && state.last_touch) diagnose('last_touch', { source: state.last_touch.source, medium: state.last_touch.medium });
       if (state && state.short_ref) decorateWhatsAppLinks();
     });
-    attributionClient.initialize({
+    window.__A7_ATTRIBUTION_READY__ = attributionClient.initialize({
       url: location.href,
       referrer: document.referrer || '',
       timestamp: new Date().toISOString()

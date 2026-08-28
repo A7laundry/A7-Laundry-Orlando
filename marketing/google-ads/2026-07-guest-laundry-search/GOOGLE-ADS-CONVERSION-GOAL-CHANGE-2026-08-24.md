@@ -1,7 +1,7 @@
 # Google Ads — purchase-led conversion goal change
 
-**Account:** A7 Laundry - 01 (`290-113-2891`)
-**Observed and changed:** 2026-08-24
+**Account:** A7 Laundry - 01 (`290-113-2891`)  
+**Observed and changed:** 2026-08-24  
 **Google Ads report window visible during change:** 2026-07-25–2026-08-23
 
 ## Before

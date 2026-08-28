@@ -94,20 +94,15 @@ button{
   </div>
 
   <div class="field">
-    <label for="description">Descrição (aparece no checkout)</label>
-    <input type="text" id="description" maxlength="120" placeholder="A7 Laundry — Wash, dry &amp; fold">
+    <label for="orderId">Order ID aprovado</label>
+    <input type="text" id="orderId" maxlength="36" autocomplete="off" placeholder="00000000-0000-4000-8000-000000000000">
+    <p class="hint">Identificador opaco criado quando o pedido é aceito.</p>
   </div>
 
   <div class="field">
-    <label for="a7Reference">A7 Ref da conversa</label>
-    <input type="text" id="a7Reference" maxlength="10" pattern="[23456789A-HJ-NP-Z]{10}" autocomplete="off" placeholder="7KQ9W3M2HX">
-    <p class="hint">Código de 10 caracteres no fim da mensagem do cliente. Permite ligar contato e pagamento sem expor dados pessoais.</p>
-  </div>
-
-  <div class="field">
-    <label for="reference">Referência operacional (opcional)</label>
-    <input type="text" id="reference" maxlength="120" placeholder="lead ·959-7959 / hotel X">
-    <p class="hint">Nota interna separada da atribuição técnica.</p>
+    <label for="leadId">Lead ID</label>
+    <input type="text" id="leadId" maxlength="36" autocomplete="off" placeholder="00000000-0000-4000-8000-000000000000">
+    <p class="hint">Identificador opaco do lead ligado ao pedido. Não insira nome, telefone, hotel ou endereço.</p>
   </div>
 
   <button type="button" class="primary" id="generate">Gerar link</button>
@@ -133,9 +128,8 @@ button{
   var rate = $('rate');
   var calcOut = $('calcOut');
   var amount = $('amount');
-  var description = $('description');
-  var a7Reference = $('a7Reference');
-  var reference = $('reference');
+  var orderId = $('orderId');
+  var leadId = $('leadId');
   var generate = $('generate');
   var result = $('result');
   var resultMsg = $('resultMsg');
@@ -148,13 +142,13 @@ button{
       + '<span style="font-size:13px;color:var(--muted);flex:1">Token salvo neste aparelho</span>'
       + '<button type="button" id="clearToken">Trocar</button>';
     document.getElementById('clearToken').addEventListener('click', function () {
-      try { localStorage.removeItem('a7_payment_token'); } catch (_) {}
+      try { sessionStorage.removeItem('a7_payment_token'); } catch (_) {}
       location.reload();
     });
   }
 
   function storedToken() {
-    try { return localStorage.getItem('a7_payment_token') || ''; } catch (_) { return ''; }
+    try { return sessionStorage.getItem('a7_payment_token') || ''; } catch (_) { return ''; }
   }
 
   if (storedToken()) markTokenSaved();
@@ -164,7 +158,7 @@ button{
     saveButton.addEventListener('click', function () {
       var value = tokenInput.value.trim();
       if (!value) return;
-      try { localStorage.setItem('a7_payment_token', value); } catch (_) {}
+      try { sessionStorage.setItem('a7_payment_token', value); } catch (_) {}
       markTokenSaved();
     });
   }
@@ -188,15 +182,10 @@ button{
     }
     amount.value = charged.toFixed(2);
 
-    var label = perLb === 3.95 ? 'Express 8h' : 'Normal 24h';
-    if (!description.dataset.touched) {
-      description.value = 'A7 Laundry — Wash, dry & fold ' + pounds + ' lb (' + label + ')';
-    }
   }
 
   lbs.addEventListener('input', recalc);
   rate.addEventListener('change', recalc);
-  description.addEventListener('input', function () { description.dataset.touched = '1'; });
 
   function show(message, isError) {
     result.className = 'result show' + (isError ? ' err' : '');
@@ -212,9 +201,11 @@ button{
 
     var value = parseFloat(amount.value);
     if (!isFinite(value) || value < 5) { show('Valor inválido.', true); return; }
-    var attributionReference = a7Reference.value.trim().toUpperCase();
-    if (attributionReference && !/^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{10}$/.test(attributionReference)) {
-      show('A7 Ref inválida. Use exatamente os 10 caracteres enviados na conversa.', true);
+    var uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    var requestedOrderId = orderId.value.trim().toLowerCase();
+    var requestedLeadId = leadId.value.trim().toLowerCase();
+    if (!uuidPattern.test(requestedOrderId) || !uuidPattern.test(requestedLeadId)) {
+      show('Informe Order ID e Lead ID válidos antes de gerar a cobrança.', true);
       return;
     }
 
@@ -227,9 +218,8 @@ button{
         headers: { 'Content-Type': 'application/json', 'x-a7-token': token },
         body: JSON.stringify({
           amount_usd: value,
-          description: description.value.trim(),
-          a7_reference: attributionReference,
-          reference: reference.value.trim()
+          order_id: requestedOrderId,
+          lead_id: requestedLeadId
         })
       });
       var payload = await response.json().catch(function () { return {}; });
@@ -266,7 +256,7 @@ button{
     if (!lastUrl) return;
     var value = parseFloat(amount.value).toFixed(2);
     var message = 'Here is your secure payment link for $' + value + ':\n' + lastUrl
-      + '\n\nOnce you pay, just send us your pickup address and we\'ll confirm the time.';
+      + '\n\nOnce payment is confirmed, we will continue with the agreed delivery handoff.';
     copyText(message, this, 'Copiado ✓');
   });
 })();

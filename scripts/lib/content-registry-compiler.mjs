@@ -5,7 +5,7 @@ import {
   CONTENT_REGISTRY,
   CONTENT_REGISTRY_SCHEMA_VERSION,
   SYSTEM_ROUTE_EXCLUSIONS
-} from '../../marketing/growth/content-registry.mjs';
+} from '../../governance/content-registry.mjs';
 import { validateContentRegistry } from '../validate-content-registry.mjs';
 
 export const GENERATED_CATALOG_PATH = 'mos-app/generated/content-catalog.json';
@@ -69,7 +69,7 @@ export function compileTrackingMap({ registry = CONTENT_REGISTRY } = {}) {
     persona: trackingPersona(entry),
     geo_key: entry.geography?.area ? entry.geography.area.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : 'orlando'
   }]));
-  return `/* Generated from marketing/growth/content-registry.mjs. Do not edit. */\nwindow.A7_GROWTH_MAP = Object.freeze(${JSON.stringify(stable(map), null, 2)});\n`;
+  return `/* Generated from governance/content-registry.mjs. Do not edit. */\nwindow.A7_GROWTH_MAP = Object.freeze(${JSON.stringify(stable(map), null, 2)});\n`;
 }
 
 export function writeContentCatalog({ root = process.cwd() } = {}) {

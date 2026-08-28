@@ -1,4 +1,4 @@
-/* Generated from marketing/growth/content-registry.mjs. Do not edit. */
+/* Generated from governance/content-registry.mjs. Do not edit. */
 window.A7_GROWTH_MAP = Object.freeze({
   "/": {
     "asset_id": "asset_home",

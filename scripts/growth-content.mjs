@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CONTENT_REGISTRY, SYSTEM_ROUTE_EXCLUSIONS } from '../marketing/growth/content-registry.mjs';
+import { CONTENT_REGISTRY, SYSTEM_ROUTE_EXCLUSIONS } from '../governance/content-registry.mjs';
 import { buildContentCorpora } from './lib/content-corpora.mjs';
 import { checkGeneratedContentCatalog, writeContentCatalog } from './lib/content-registry-compiler.mjs';
 import { validateContentRegistry } from './validate-content-registry.mjs';

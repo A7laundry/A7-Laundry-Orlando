@@ -288,14 +288,21 @@ for (const requiredPurchaseToken of ["gtag('event', 'purchase'", "fbq('track', '
 const guestConfirmationHtml = fs.readFileSync(path.join(output, 'guest-payment-confirmation.html'), 'utf8');
 for (const requiredSecurityToken of [
   '/api/stripe-session?session_id=',
-  "session.payment_status !== 'paid'",
-  'a7_verified_purchase_',
-  "send_to: 'AW-17146169189/dkpRCJyC19YcEOWO9-8_'",
-  'transaction_id: session.id',
+  "payload.payment_status !== 'paid'",
   "window.history.replaceState(null, '', window.location.pathname)"
 ]) {
   if (!guestConfirmationHtml.includes(requiredSecurityToken)) {
     throw new Error(`Payment confirmation gate failed: guest-payment-confirmation.html is missing ${requiredSecurityToken}`);
+  }
+}
+for (const forbiddenBrowserPurchaseToken of [
+  'a7_verified_purchase_',
+  "gtag('event', 'purchase'",
+  "fbq('track', 'Purchase'",
+  'transaction_id: session.id'
+]) {
+  if (guestConfirmationHtml.includes(forbiddenBrowserPurchaseToken)) {
+    throw new Error(`Payment confirmation gate failed: browser payment authority found (${forbiddenBrowserPurchaseToken})`);
   }
 }
 if (/fbq\(['"]init['"]/.test(guestConfirmationHtml)) {

@@ -373,7 +373,7 @@ Codex GPT-5
 
 - `docs/stories/a7-013-site-mos-growth-governance.md`
 - `docs/architecture/site-mos-growth-governance.md`
-- `marketing/growth/content-registry.mjs`
+- `governance/content-registry.mjs`
 - `marketing/seo-consistency/PROMPT-MESTRE-MOS-GROWTH-NO-REGRESSION-2026-08-23.md`
 - `scripts/validate-content-registry.mjs`
 - `scripts/build-growth-manifest.mjs`

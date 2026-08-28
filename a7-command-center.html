@@ -535,6 +535,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
   <div id="mosKpiAlert" class="mos-alert">Carregando o retrato versionado dos indicadores…</div>
   <div id="mosLiveSources" class="g g-4" style="margin:0 0 16px"></div>
+  <section id="mosOperationalFunnelSection" style="margin:0 0 22px">
+    <div class="section-header"><div class="section-title"><span class="section-icon" style="background:rgba(139,92,246,.15);color:var(--purple)">O</span> Pedido e receita reconciliados</div></div>
+    <p style="font-size:13px;color:var(--gray-500);margin:-10px 0 14px">Etapas deduplicadas por lead, pedido e pagamento no ledger operacional. Sessões e cliques continuam sob autoridade do GA4 e não são somados como se fossem a mesma entidade.</p>
+    <div id="mosOperationalFunnel" class="network-funnel"></div>
+    <div id="mosOperationalRates" class="mos-alert" style="margin:14px 0 0"></div>
+  </section>
   <section id="mosFunnelCatalogSection" style="margin:0 0 22px">
     <div class="section-header"><div class="section-title"><span class="section-icon" style="background:rgba(34,197,94,.15);color:var(--green)">↗</span> Funis de growth por intenção</div></div>
     <p style="font-size:13px;color:var(--gray-500);margin:-10px 0 14px">Cada funil mostra função, público, ação e desempenho observado. “Campanhas” nesta seção vêm do percurso GA4, não da Google Ads API nativa. Ausência de linha permanece nula, nunca zero fabricado.</p>
@@ -1579,7 +1585,7 @@ function renderMosLiveSources(){
   var state=globalThis.A7_MOS_LIVE_STATE;
   var live=globalThis.A7_MOS_LIVE;
   if(!live&&!state){container.innerHTML='';return}
-  var names=[['ga4','GA4'],['searchConsole','Search Console'],['googleAds','Google Ads'],['metaAds','Meta Ads']];
+  var names=[['operational','Pedidos / receita'],['ga4','GA4'],['searchConsole','Search Console'],['googleAds','Google Ads'],['metaAds','Meta Ads']];
   container.innerHTML=names.map(function(pair){
     var source=live&&live.sources?live.sources[pair[0]]:null;
     var nativeGoogleMissing=pair[0]==='googleAds'&&source&&source.source!=='Google Ads API';
@@ -1590,6 +1596,30 @@ function renderMosLiveSources(){
     var detail=source?(nativeGoogleMissing?'Google Ads API · '+(nativeLimitation||'credencial nativa não configurada')+' · vínculo GA4 preservado como parcial':source.source+' · '+mosLivePeriod(source)+(source.limitation?' · '+source.limitation:'')):(state&&state.status==='loading'?'Conectando à fonte somente leitura…':'Sem contrato ao vivo');
     return '<div class="card"><div class="source-line"><div><strong>'+pair[1]+'</strong><div class="source-detail">'+escapeMosHtml(detail)+'</div></div><span class="data-status '+statusClass+'">'+statusLabel+'</span></div></div>';
   }).join('');
+}
+
+function renderMosOperationalFunnel(){
+  var source=globalThis.A7_MOS_LIVE&&globalThis.A7_MOS_LIVE.sources&&globalThis.A7_MOS_LIVE.sources.operational;
+  var container=document.getElementById('mosOperationalFunnel');
+  var boundary=document.getElementById('mosOperationalRates');
+  if(!source||source.status!=='live'||!source.stages){
+    container.innerHTML='<div class="mos-empty" style="grid-column:1/-1">Ledger operacional indisponível. Nenhuma etapa foi convertida em zero.</div>';
+    boundary.innerHTML='<strong>INDISPONÍVEL</strong> A conexão protegida com pedidos e Stripe ainda não respondeu.';
+    return;
+  }
+  var s=source.stages;
+  var stages=[
+    ['Leads',s.leads_created,'context'],['Qualificados',s.qualified_leads,'attention'],
+    ['Pedidos aceitos',s.accepted_orders,'good'],['Coletas',s.pickups_completed,'good'],
+    ['Pesados',s.orders_weighed,'good'],['Faturas',s.invoices_created,'good'],
+    ['Pagos',s.paid_orders,'good'],['Entregues',s.delivered_orders,'good'],
+    ['Repetidos',s.repeat_accepted_orders,'context']
+  ];
+  container.innerHTML=stages.map(function(stage,index){
+    return '<div class="network-funnel-stage '+stage[2]+'"><span class="data-status '+stage[2]+'">ETAPA '+(index+1)+'</span><span class="stage-number">'+formatMosValue(stage[1],'integer')+'</span><strong>'+stage[0]+'</strong><p>A7 operational ledger · IDs duráveis</p></div>';
+  }).join('');
+  var rate=source.rates||{};
+  boundary.innerHTML='<strong>Receita líquida confirmada: '+formatMosValue(s.service_revenue,'usd')+'</strong> · lead → qualificado '+formatMosValue(rate.lead_to_qualified===null?null:rate.lead_to_qualified*100,'percent')+' · qualificado → aceito '+formatMosValue(rate.qualified_to_accepted===null?null:rate.qualified_to_accepted*100,'percent')+' · aceito → pago '+formatMosValue(rate.accepted_to_paid===null?null:rate.accepted_to_paid*100,'percent')+' · aceito → entregue '+formatMosValue(rate.accepted_to_delivered===null?null:rate.accepted_to_delivered*100,'percent')+'. <span class="kpi-meta">'+escapeMosHtml(mosLivePeriod(source))+' · receita desconta reembolsos registrados.</span>';
 }
 
 function renderMosFunnelCatalog(){
@@ -1622,6 +1652,7 @@ function renderMosFunnelCatalog(){
     var ga4=item.performance&&item.performance.ga4||{};
     var gsc=item.performance&&item.performance.searchConsole||{};
     var paid=item.paidMedia&&item.paidMedia.metrics||{};
+    var operations=item.operations||{};
     var campaigns=(item.campaigns||[]).slice(0,3);
     var queries=(item.topQueries||[]).slice(0,5);
     var codes=(item.funnelCodes||[]).length?item.funnelCodes.join(', '):'código pendente de normalização';
@@ -1630,7 +1661,7 @@ function renderMosFunnelCatalog(){
     return '<article class="funnel-card '+item.releaseStatus+'">'+
       '<div class="funnel-card-head"><div><span class="data-status '+(statusHealth[item.releaseStatus]||'unavailable')+'">'+escapeMosHtml(statusLabels[item.releaseStatus]||String(item.releaseStatus||'NÃO VERIFICADO').toUpperCase())+'</span><h3>'+escapeMosHtml(item.name)+'</h3><a class="funnel-card-path" href="https://a7laundry.com'+escapeMosHtml(item.canonicalPath)+'" target="_blank" rel="noopener">'+escapeMosHtml(item.canonicalPath)+'</a></div><span class="data-status '+(item.sources&&item.sources.searchConsole.status==='observed'?'good':'unavailable')+'">GSC '+escapeMosHtml(item.sources&&item.sources.searchConsole.status||'unavailable')+'</span></div>'+
       '<div class="funnel-card-flow"><div><span>Intenção</span><strong>'+escapeMosHtml(item.intent)+'</strong></div><div><span>Público</span><strong>'+escapeMosHtml(item.audience)+'</strong></div><div><span>Ação</span><strong>'+escapeMosHtml(item.action)+'</strong></div></div>'+
-      '<div class="funnel-card-metrics"><div><strong>'+formatMosValue(gsc.impressions,'integer')+'</strong><span>GSC impressões</span></div><div><strong>'+formatMosValue(gsc.clicks,'integer')+'</strong><span>GSC cliques</span></div><div><strong>'+formatMosValue(ga4.sessions,'integer')+'</strong><span>GA4 entradas</span></div><div><strong>'+formatMosValue(ga4.contactEvents,'integer')+'</strong><span>Eventos contato</span></div><div><strong>'+formatMosValue(paid.cost,'brl')+'</strong><span>Ads custo · destino exato</span></div></div>'+
+      '<div class="funnel-card-metrics"><div><strong>'+formatMosValue(gsc.impressions,'integer')+'</strong><span>GSC impressões</span></div><div><strong>'+formatMosValue(gsc.clicks,'integer')+'</strong><span>GSC cliques</span></div><div><strong>'+formatMosValue(ga4.sessions,'integer')+'</strong><span>GA4 entradas</span></div><div><strong>'+formatMosValue(ga4.contactEvents,'integer')+'</strong><span>Eventos contato</span></div><div><strong>'+formatMosValue(operations.accepted_orders,'integer')+'</strong><span>Pedidos aceitos</span></div><div><strong>'+formatMosValue(operations.paid_orders,'integer')+'</strong><span>Pedidos pagos</span></div><div><strong>'+formatMosValue(operations.service_revenue,'usd')+'</strong><span>Receita líquida</span></div><div><strong>'+formatMosValue(paid.cost,'brl')+'</strong><span>Ads custo · destino exato</span></div></div>'+
       '<div class="funnel-card-evidence"><strong>Papel na campanha:</strong> '+escapeMosHtml(item.campaignRole)+'<br><strong>Código(s):</strong> '+escapeMosHtml(codes)+'<br><strong>Google Ads por URL final:</strong> '+escapeMosHtml(item.sources&&item.sources.googleAds&&item.sources.googleAds.status||'unavailable')+' · '+escapeMosHtml(item.sources&&item.sources.googleAds&&item.sources.googleAds.matchMethod||'unmatched')+'<br><strong>Campanhas observadas no GA4:</strong><br>'+campaignText+'<br><strong>Consultas vivas do Search Console:</strong><br>'+queryText+'<br><strong>Limite:</strong> '+escapeMosHtml(item.limitation)+'</div>'+
     '</article>';
   }).join('');
@@ -2145,6 +2176,7 @@ function renderMosKpis(){
   document.getElementById('mosSignalsSection').style.display='none';
   document.getElementById('mosFunnel').innerHTML='';
   renderMosFunnelCatalog();
+  renderMosOperationalFunnel();
   renderMosMarketingGraph(filters);
   renderMosArticleFunnel(filters,data);
 

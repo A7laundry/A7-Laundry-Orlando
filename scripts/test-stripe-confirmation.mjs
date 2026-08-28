@@ -6,8 +6,12 @@ import { createRequire } from 'node:module';
 const root = process.cwd();
 const require = createRequire(import.meta.url);
 const stripeSessionHandler = require(path.join(root, 'api/stripe-session.js'));
+const { MemoryOperationalStore } = require(path.join(root, 'lib/operational-store.js'));
 const originalFetch = globalThis.fetch;
 const originalStripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const originalOperationalStore = globalThis.__A7_OPERATIONAL_STORE__;
+const ORDER_ID = '22222222-2222-4222-8222-222222222222';
+const LEAD_ID = '11111111-1111-4111-8111-111111111111';
 
 function responseRecorder() {
   return {
@@ -37,6 +41,12 @@ async function callHandler({ method = 'GET', sessionId = 'cs_test_A7Guest123' } 
 
 try {
   process.env.STRIPE_SECRET_KEY = 'sk_test_server_only';
+  const operationalStore = new MemoryOperationalStore();
+  operationalStore.orders.set(ORDER_ID, {
+    id: ORDER_ID, lead_id: LEAD_ID, invoice_id: 'inv-confirmation', service_amount: 50,
+    currency: 'USD', payment_status: 'paid', payment_id: 'pi_a7guest', order_status: 'invoice_created'
+  });
+  globalThis.__A7_OPERATIONAL_STORE__ = operationalStore;
 
   const methodResponse = await callHandler({ method: 'POST' });
   assert.equal(methodResponse.statusCode, 405);
@@ -67,7 +77,9 @@ try {
           currency: 'usd',
           amount_total: 5000,
           payment_link: 'plink_a7guest',
-          metadata: { a7_reference: '7kq9w3m2hx', operator_reference: 'must-not-leak' },
+          payment_intent: 'pi_a7guest',
+          metadata: { order_id: ORDER_ID, lead_id: LEAD_ID, contract_version: '1',
+            a7_reference: '7kq9w3m2hx', operator_reference: 'must-not-leak' },
           customer_details: { email: 'must-not-leak@example.com' },
           line_items: {
             data: [{ description: 'Guest Laundry — Wash, Dry & Fold' }]
@@ -83,7 +95,8 @@ try {
   assert.equal(paidResponse.body.currency, 'USD');
   assert.equal(paidResponse.body.service, 'Guest Laundry — Wash, Dry & Fold');
   assert.equal(paidResponse.body.payment_link_id, 'plink_a7guest');
-  assert.equal(paidResponse.body.a7_reference, '7KQ9W3M2HX');
+  assert.equal(paidResponse.body.reconciliation_status, 'reconciled');
+  assert.equal('a7_reference' in paidResponse.body, false);
   assert.equal('operator_reference' in paidResponse.body, false);
   assert.equal('customer_details' in paidResponse.body, false);
   assert.match(requestedUrl, /checkout\/sessions\/cs_test_A7Guest123/);
@@ -107,6 +120,20 @@ try {
   assert.equal(unpaidResponse.statusCode, 409);
   assert.deepEqual(unpaidResponse.body, { error: 'Payment is not confirmed yet.' });
 
+  operationalStore.orders.get(ORDER_ID).payment_status = 'invoice_created';
+  operationalStore.orders.get(ORDER_ID).payment_id = null;
+  globalThis.fetch = async () => ({ok: true, status: 200, async json() { return {
+    id: 'cs_test_A7Guest123', payment_status: 'paid', status: 'complete', currency: 'usd',
+    amount_total: 5000, payment_intent: 'pi_a7guest', payment_link: 'plink_a7guest',
+    metadata: {order_id: ORDER_ID, lead_id: LEAD_ID, contract_version: '1'},
+    line_items: {data: [{description: 'Guest Laundry'}]}
+  }; }});
+  const pendingResponse = await callHandler();
+  assert.equal(pendingResponse.statusCode, 202);
+  assert.equal(pendingResponse.body.reconciliation_status, 'pending');
+  operationalStore.orders.get(ORDER_ID).payment_status = 'paid';
+  operationalStore.orders.get(ORDER_ID).payment_id = 'pi_a7guest';
+
   globalThis.fetch = async () => ({
     ok: false,
     status: 401,
@@ -121,16 +148,16 @@ try {
   const page = fs.readFileSync(path.join(root, 'guest-payment-confirmation.html'), 'utf8');
   for (const requiredToken of [
     '/api/stripe-session?session_id=',
-    "session.payment_status !== 'paid'",
-    'a7_verified_purchase_',
-    "send_to: 'AW-17146169189/dkpRCJyC19YcEOWO9-8_'",
-    'transaction_id: session.id',
-    'lead_reference: session.a7_reference || undefined',
+    "payload.payment_status !== 'paid'",
+    "payload.reconciliation_status !== 'reconciled'",
     "window.history.replaceState(null, '', window.location.pathname)",
     '<link rel="canonical" href="https://a7laundry.com/guest-payment-confirmation">',
     'https://wa.me/14076708839'
   ]) {
     assert.ok(page.includes(requiredToken), `confirmation page is missing ${requiredToken}`);
+  }
+  for (const forbiddenToken of ['a7_verified_purchase_', "gtag('event', 'purchase'", "fbq('track', 'Purchase'", 'transaction_id: session.id']) {
+    assert.equal(page.includes(forbiddenToken), false, `confirmation page must not contain ${forbiddenToken}`);
   }
   assert.equal(/fbq\(['"]init['"]/.test(page), false);
 
@@ -149,4 +176,7 @@ try {
   globalThis.fetch = originalFetch;
   if (typeof originalStripeSecretKey === 'undefined') delete process.env.STRIPE_SECRET_KEY;
   else process.env.STRIPE_SECRET_KEY = originalStripeSecretKey;
+  originalOperationalStore
+    ? globalThis.__A7_OPERATIONAL_STORE__ = originalOperationalStore
+    : delete globalThis.__A7_OPERATIONAL_STORE__;
 }

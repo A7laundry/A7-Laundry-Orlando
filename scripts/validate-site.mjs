@@ -176,7 +176,7 @@ if (!syntaxOnly) {
     'How can international guests pay?',
     'Never send card details through WhatsApp or SMS.',
     'primaryImageOfPage',
-    '"dateModified":"2026-08-22"',
+    '"dateModified":"2026-08-26"',
     'max-image-preview:large',
     'prefers-reduced-motion',
     'id="how"',
@@ -205,6 +205,25 @@ if (!syntaxOnly) {
   }
   if (/onclick="gtag\('event','(?:whatsapp_click|sms_click|call_click|pickup_cta|special_item_quote)'/i.test(guestLanding)) {
     fail('Guest Laundry landing: inline contact tracking would fragment or duplicate unified events');
+  }
+  const guestWhatsappLinks = [...guestLanding.matchAll(/href="https:\/\/wa\.me\/14076708839\?text=[^"]+"/g)];
+  const guestSmsLinks = [...guestLanding.matchAll(/href="sms:\+14076708839\?&body=[^"]+"/g)];
+  if (guestWhatsappLinks.length !== 4) {
+    fail(`Guest Laundry landing: expected four WhatsApp paths after mobile recovery, found ${guestWhatsappLinks.length}`);
+  }
+  if (guestSmsLinks.length !== 2) {
+    fail(`Guest Laundry landing: expected two SMS paths, found ${guestSmsLinks.length}`);
+  }
+  for (const requiredMobileRecoveryToken of [
+    'class="wa-fab mobile-intent-cta"',
+    'id="hero-whatsapp"',
+    "new IntersectionObserver(([entry]) =>",
+    'bottom:calc(10px + env(safe-area-inset-bottom))',
+    'body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}'
+  ]) {
+    if (!guestLanding.includes(requiredMobileRecoveryToken)) {
+      fail(`Guest Laundry landing: mobile WhatsApp recovery contract missing ${requiredMobileRecoveryToken}`);
+    }
   }
   if (!exists('A7 LAUNDRY-06.png')) {
     fail('Guest Laundry landing: official dark-background A7 wordmark is missing');

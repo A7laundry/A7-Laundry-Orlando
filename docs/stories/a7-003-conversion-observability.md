@@ -136,6 +136,10 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] The legacy `/blog/laundry-lake-buena-vista.html` route permanently redirects to the clean canonical path so GA4 and Search Console can converge on one Lake Buena Vista URL without changing page content.
 - [x] The Aug 1–24 live GA4/GSC/Google Ads/Meta forensic checkpoint is appended to the MOS audit ledger with exact periods, source boundaries and explicit attribution uncertainty.
 - [x] Google Ads uses the website WhatsApp action as the primary mandatory-entry proxy and keeps Stripe purchase as secondary financial evidence; both the superseded purchase-led change and the owner-corrected WhatsApp-first state remain append-only in the MOS audit ledger.
+- [x] The Orlando operational attribution contract defines durable lead/order identities, separate operational and financial states, `order_accepted` and `purchase` macro outcomes, Stripe linkage, PII boundaries and an end-to-end QA gate without changing campaign goals.
+- [x] The local P0 implementation creates durable lead/order/event/payment contracts, freezes an attribution snapshot at acceptance, requires an invoiced `order_id` for Stripe, ingests payment/refund webhooks idempotently and keeps the browser confirmation informational.
+- [x] The protected branch Preview uses durable Supabase storage, branch-isolated runtime credentials and a Stripe test-mode signed webhook; synthetic QA proves failed, void, paid, delivered, refunded and repeat-order paths, webhook idempotency and safe analytics payloads, then removes all synthetic business records and deactivates the test payment objects.
+- [ ] Complete contract §16 check 13 in GA4 DebugView and separately approve/configure the Production cutover before release. `money_page_view` was removed from GA4 key events on 2026-08-28 and verified absent after reload; `purchase` remained enabled. The tagged deterministic journey and browser/WhatsApp evidence are complete.
 
 ## Tasks
 
@@ -255,9 +259,56 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Deploy one exact protected public preview containing Plans, International Drive, Hotel Guide and Before Checkout; verify hashes, canonical paths, contact contracts, lazy assets and 390px layout without promoting production.
 - [ ] Complete independent review, protected preview and owner approval for the MOS catalog and hotel guide.
 - [x] Implement and test the Aug 24 Stripe attribution, Lake Buena Vista canonical and MOS evidence remediations before any external conversion-action change.
+- [x] Prepare the Aug 26 mobile WhatsApp recovery candidate, matched-period baseline, deterministic CTA guard, clean Google Ads image pair and protected rollback evidence without changing production or campaign settings.
+- [x] Specify the lead → accepted order → pickup → weighing → invoice → payment → delivery attribution contract and align the SEO Core 15 measurement gate.
+- [x] Implement and validate the local P0 server candidate, then apply only the additive reviewed migration remotely; do not deploy the application or change Google Ads goals.
+- [x] Configure the branch-isolated protected Preview, register the Stripe test webhook, execute the synthetic operational/financial lifecycle and remove its Supabase and Stripe test data.
+- [x] Isolate Stripe Preview transport behind a dedicated `Stripe-QA` Vercel bypass, validate a signed non-financial probe on the unique deployment and stable alias, then remove the superseded test endpoint without changing the project-wide bypass.
+- [x] Create and protect the GA4 Measurement Protocol secret after the owner confirms Google's user-data collection attestation, validate the server events in DebugView and preserve the separate authorization gate for any Production cutover. Editor-capable access through `a7laundry.usa@gmail.com` is confirmed; `money_page_view` was removed from key events, `purchase` remained enabled, all three server events passed strict validation and DebugView, and both Preview debug flags were returned to `false` on 2026-08-28.
 
 ## File List
 
+- `docs/blueprints/A7-ORLANDO-OPERATIONAL-ATTRIBUTION-CONTRACT-2026-08-28.md`
+- `docs/runbooks/a7-orlando-operational-attribution-p0-release.md`
+- `docs/audits/2026-08-28-operational-attribution-completion-audit.md`
+- `docs/audits/2026-08-28-forensic-seo-geo-eeat-ai-search-audit.md`
+- `marketing/seo-consistency/SEO-CORE-15-OPERATIONAL-PLAN-2026-08-28.md`
+- `supabase/migrations/20260828020000_orlando_operational_attribution_p0.sql`
+- `supabase/migrations/20260828030000_orlando_payment_order_uniqueness.sql`
+- `supabase/migrations/20260828110000_orlando_ga4_event_time_fidelity.sql`
+- `supabase/migrations/20260828120000_orlando_ga4_expired_outbox.sql`
+- `supabase/migrations/20260828040000_orlando_order_intake_customer.sql`
+- `supabase/migrations/20260828050000_orlando_payment_failure_states.sql`
+- `supabase/migrations/20260828060000_orlando_financial_event_fidelity.sql`
+- `supabase/migrations/20260828070000_orlando_state_transition_completion.sql`
+- `supabase/migrations/20260828080000_orlando_idempotency_contract_hardening.sql`
+- `supabase/migrations/20260828090000_orlando_operational_funnel_reporting.sql`
+- `supabase/migrations/20260828100000_orlando_lead_idempotency_hardening.sql`
+- `lib/operational-store.js`
+- `lib/operational-lifecycle.js`
+- `lib/operational-release-preflight.js`
+- `lib/ga4-server.js`
+- `api/order-intake.js`
+- `api/operations/lifecycle.js`
+- `api/stripe-webhook.js`
+- `api/create-payment-link.js`
+- `api/stripe-session.js`
+- `payment-link.html`
+- `order.html`
+- `guest-payment-confirmation.html`
+- `scripts/a7-order-lifecycle.mjs`
+- `scripts/test-operational-attribution-p0.mjs`
+- `scripts/preflight-operational-attribution.mjs`
+- `scripts/test-operational-release-preflight.mjs`
+- `scripts/test-operational-attribution-p0.sql`
+- `scripts/test-payment-link.mjs`
+- `scripts/test-stripe-confirmation.mjs`
+- `scripts/test-tracking.mjs`
+- `mos-app/operational-kpis-contract.js`
+- `mos-app/tests/operational-kpis.test.mjs`
+- `mos-app/api/google-kpis.js`
+- `a7-command-center.html`
+- `package.json`
 - `scripts/reconcile-google-ads-gate-b.mjs`
 - `scripts/test-reconcile-google-ads-gate-b.mjs`
 - `marketing/google-ads/2026-07-guest-laundry-search/gate-b-ledger-template.csv`
@@ -365,6 +416,11 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `marketing/google-ads/2026-07-guest-laundry-search/FORENSIC-AUDIT-ORLANDO-MONEY-PAGE-2026-08-22.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/RELEASE-EVIDENCE-ORLANDO-MONEY-PAGE-2026-08-22.md`
 - `marketing/google-ads/2026-07-guest-laundry-search/monitoring/orlando-money-page-taste-2026-08-22-immediate.json`
+- `marketing/google-ads/2026-07-guest-laundry-search/MOBILE-CTA-RECOVERY-2026-08-26.md`
+- `marketing/google-ads/2026-07-guest-laundry-search/monitoring/orlando-mobile-cta-recovery-2026-08-26.json`
+- `marketing/google-ads/2026-07-guest-laundry-search/assets/image-extension/a7-guest-laundry-handoff-landscape-1200x628.jpg`
+- `marketing/google-ads/2026-07-guest-laundry-search/assets/image-extension/a7-guest-laundry-handoff-square-1200x1200.jpg`
+- `marketing/google-ads/2026-07-guest-laundry-search/evidence/a7-mobile-sticky-recovery-390x844.png`
 - `a7-carpet-campaign/index.html`
 - `comforter-cleaning-v2.html`
 - `blog/*.html` (Express cutoff and opening-hours consistency)
@@ -712,3 +768,161 @@ Make the production conversion funnel observable from acquisition CTA through St
   `dpl_35XV8TDcfi46KokAdDtAkwQtDgj8`; anonymous login, ledger and API boundaries passed. Rollback
   is `dpl_5kTgmvXEacvMcGcr5X2kGSqnhfWB`. Authenticated dashboard data smoke remains unclaimed
   because no active MOS session was available.
+- Aug 26–27 recovery work preserved the live Vercel production deployment
+  `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9` and prepared a bounded source candidate instead of changing
+  campaign economics. On screens up to 620px, one `wa-fab` WhatsApp path now appears only after
+  the original hero CTA leaves the viewport; it retains the official number, complete intake
+  prefill and `SEO-ORLANDO-MONEY-V2`, while desktop remains unchanged. Chrome checks at 390×844
+  and 1440×900 passed visibility, safe-area, no-overlap and no-overflow conditions. The candidate
+  has four WhatsApp and two SMS paths, and the site validator now fails closed on that contract.
+  Two visually inspected, text-free Google Ads derivatives were prepared at 1200×628 and
+  1200×1200. Account `290-113-2891` and the active campaign were selected, but Chrome blocked the
+  file transfer because the ChatGPT extension lacks file-URL access; no asset was uploaded or
+  saved and no account setting changed. `npm run lint`, `npm run typecheck`, `npm run build`, the
+  static/public validators, destination guard, 44 root TAP tests, tracking/attribution tests and
+  62 MOS TAP tests pass. The complete `npm test`/MOS compile remains blocked by a pre-existing
+  immutable-ledger mismatch: audit `2026-08-24-attribution-canonical-release` expects SHA-256
+  `18b07f6a...`, while the tracked evidence file at HEAD hashes to `a8a878d1...`; this recovery did
+  not modify either immutable artifact.
+- Aug 28 P0 operational attribution implementation applied additive Supabase migration
+  `20260828020000` after two isolated PostgreSQL 15 smoke passes. The local server candidate now
+  separates `order_accepted` from `purchase`, freezes the attribution snapshot, binds Payment
+  Links to an invoiced order, verifies raw Stripe webhook signatures and deduplicates payments by
+  stable PaymentIntent ID. Browser confirmation is informational and Stripe metadata is limited
+  to `order_id`, `lead_id` and `contract_version`. Root lint, typecheck, focused 11-test P0 suite,
+  confirmation security test, build and diff check pass. The full root test reaches 55 passing
+  tests and then stops at the same pre-existing immutable-ledger hash mismatch. No application
+  deployment or Google Ads change was made. Release remains blocked on Vercel webhook/API/GA4
+  secrets, Stripe test-mode QA and GA4 editor access for removing `money_page_view` as a key event.
+- Later on Aug 28, the owner authorized the five isolated Preview actions. Additive migrations
+  `20260828020000` through `20260828050000` are applied, and protected branch Preview deployment
+  `dpl_EDvRQCc1tfVLNUJMuKpaiPjk8jF3` is READY at
+  `https://a7-laundry-orlando-n0nqul2j8-dennis-a7s-projects.vercel.app`. Its runtime contains the
+  seven required branch/deployment-scoped variable names without exposing their values. Stripe
+  endpoint `we_1U9VJ8DcFmXJh57PFy7UUfT3` is test-mode only and subscribes to completed,
+  asynchronous success/failure, expiration and refund lifecycle events. Authorized `/order`
+  returns 200, the protected route redirects without authorization and an invalid webhook
+  signature returns 400. Synthetic run `QA-A7-1787945074393` passed durable lead creation,
+  qualification, acceptance, pickup, weighing, invoice, test Payment Link, failed → void → paid
+  reconciliation, duplicate-webhook idempotency, delivery, full refund and repeat-order continuity.
+  The analytics ledger/outbox PII scan passed. Cleanup left zero matching leads, orders and contacts;
+  the Payment Link was deactivated, products archived and all 16 related test prices deactivated.
+  `npm run lint`, `npm run typecheck`, the focused 11/11 operational suite, attribution V2,
+  `npm test` (63/63 root and 62/62 MOS) and `npm run build` pass. This supersedes only the stale
+  Preview/test blocker statements above: Production remains unchanged and unauthorized, GA4
+  Editor/Measurement Protocol access remains unavailable, `money_page_view` has not been changed,
+  and no Google Ads goal, bid, budget or campaign setting changed. Contract §16 therefore remains
+  partially open for deterministic tagged-entry attribution, browser CTA evidence and GA4
+  DebugView/no-PII evidence.
+- The final Aug 28 Preview hardening applied migrations `20260828060000` through
+  `20260828100000`, completing financial event fidelity, lifecycle transitions, semantic
+  idempotency, privacy-safe operational reporting and lead collision protection. Protected
+  Preview `dpl_7SjMtjZF31iDpbrHhsEBzoL1v9La` is READY; test-mode Stripe endpoint
+  `we_1U9WD0DcFmXJh57PM4SlnexS` is enabled for the six exact checkout/refund events handled by
+  the server. A tagged real-browser entry created a durable A7 reference, and exactly one
+  WhatsApp activation produced one sanitized `whatsapp_click`. Synthetic run
+  `QA-A7-1787949500000` then proved deterministic snapshot freezing, order creation before weight
+  or revenue, acceptance retry idempotency, and the landing-page row 1 lead → 1 qualified → 1
+  accepted → 0 paid / $0 revenue. Independent cleanup verification returned zero matching leads,
+  orders, events and attribution sessions. The opt-in Preview diagnostic is unavailable on the
+  production hostname and exposes only masked IDs, source/medium, boolean click-ID presence and
+  event names. Production, GA4 key-event configuration and Google Ads remain unchanged; contract
+  §16 now has only check 13 partial, pending GA4 Measurement Protocol/DebugView evidence. Final
+  gates pass with 71/71 root tests, 66/66 MOS tests, lint, typecheck and repository build. The
+  attribution change scope passes `git diff --check`; five unrelated Aug 24 Ads evidence files
+  retain their pre-existing whitespace findings and were not modified for this phase.
+- Security cleanup removed obsolete Stripe test endpoint `we_1U9VJ8DcFmXJh57PFy7UUfT3` after
+  confirming that its old URL embedded the project-wide Vercel automation bypass. The final
+  endpoint has the exact six-event scope, but its protected alias deliberately omits that legacy
+  token and is not yet claimed as externally reachable. Vercel shows one unnoted bypass added Jul
+  24, and its other consumers are unknown. A dedicated Stripe-QA bypass plus explicit authorization
+  to revoke the legacy token are required before the final signed-delivery probe.
+- The owner then authorized a dedicated Stripe-QA bypass. Vercel now shows two masked bypasses:
+  the Jul 24 project-wide system entry and a separate non-system entry labeled `Stripe-QA`.
+  Protected Preview `dpl_GvKKuXdVHKrvucSDn4b2hjrNzjdq` is READY at
+  `https://a7-laundry-orlando-p193prhv8-dennis-a7s-projects.vercel.app`, and the stable test-only
+  alias remains `https://a7-attribution-qa-dennis-a7s-projects.vercel.app`. Test-mode Stripe
+  endpoint `we_1U9WaIDcFmXJh57PGw4oFeVX` subscribes only to the six supported checkout/refund
+  events. A correctly signed non-financial ignored-event probe returned HTTP 200 first on the
+  unique deployment and then on the stable alias; only after both checks passed was endpoint
+  `we_1U9WD0DcFmXJh57PM4SlnexS` deleted. Secret values were transferred ephemerally, excluded from
+  logs/evidence and cleared after the cutover. The project-wide bypass remains intact because
+  repository consumers use `VERCEL_AUTOMATION_BYPASS_SECRET`; its migration/revocation requires
+  separate authorization. Production, GA4 and Google Ads remain unchanged.
+- Completion auditing found one event-time fidelity defect: analytics retries did not carry the
+  immutable lifecycle `occurred_at` into GA4. Additive migration `20260828110000` now synchronizes
+  a mandatory outbox timestamp from the event ledger, and `lib/ga4-server.js` emits it as
+  `timestamp_micros`. The complete migration chain and functional SQL suite passed fail-fast in a
+  clean PostgreSQL 15 container; isolated verification returned zero event/outbox timestamp
+  mismatches and `is_nullable=NO`. The migration was applied remotely, and local/remote histories
+  align through `20260828120000`. Official-protocol reconciliation also corrected
+  `timestamp_micros` to the required numeric type, rejects stale/future timestamps rather than
+  accepting GA4's silent 72-hour shift, and distinguishes strict validation from collected
+  `debug_mode` events. Out-of-window events now become terminally `expired` instead of retrying
+  forever. The focused Node suite passes 18/18. These corrections do not satisfy the
+  still-open GA4 Editor/DebugView gate. The final post-correction repository run also passes lint,
+  typecheck, all 71 root tests, all 66 MOS tests and the production bundle build; the scoped diff
+  check and secret-value scan are clean.
+- The authorized browser session switched to `a7laundry.usa@gmail.com` and confirmed access to
+  GA4 property `543807649`; the earlier missing-permissions result belonged to the wrong Google
+  account context. `money_page_view` was removed from key events and verified absent after a fresh
+  reload while `purchase` remained enabled. Measurement Protocol secret creation is paused at
+  Google's user-data collection attestation, which requires owner confirmation. A read-only Vercel
+  parity audit also confirmed that Production lacks
+  `OPERATIONS_API_TOKEN`, `STRIPE_WEBHOOK_SECRET` and `GA4_MEASUREMENT_PROTOCOL_SECRET`; these
+  remain hard cutover gates.
+- Public alias inspection identifies `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9` as the actual live rollback
+  baseline. Production route probes return 200 for `/` and 404 for the candidate-only `/order`,
+  Stripe webhook and operations lifecycle routes, proving there is no partial activation. The
+  previously validated Stripe-QA Preview predates the final GA4 timestamp/expiry correction and
+  must not be promoted as the final artifact; a fresh exact-worktree Preview remains required.
+- Environment-parity review found that the operational and attribution stores selected Supabase
+  URLs and keys from independent fallback chains. Both now resolve one complete credential pair
+  atomically, preventing cross-namespace credential mixing under partial configuration. The
+  focused operational suite passes 19/19 and Attribution V2 covers its own fallback chain;
+  the final repository gates pass lint, typecheck, 76/76 root tests, 66/66 MOS tests and build.
+- A three-profile release preflight now gates strict Preview validation, collected DebugView and
+  steady-state Production independently. It checks configuration without printing values and
+  fails closed for missing variables, mixed Supabase namespaces, wrong Stripe mode, wrong GA4
+  stream or crossed debug flags. Four focused preflight tests pass, and a clean-shell Production
+  invocation correctly exits nonzero with sanitized reasons only.
+- The owner confirmed Google's user-data collection attestation and explicitly authorized storing
+  the Measurement Protocol secret in Vercel Preview. The secret was created for GA4 property
+  `543807649` / stream `G-JLQNRC7MK4` and stored as one encrypted, Preview-only variable scoped to
+  branch `feat/meta-ads-ops-structure`; its value never entered repository files, URLs, logs or
+  evidence. Strict Preview `dpl_6QHzZHLB6Tcwfy1Toz1TUbykDeHJ` accepted `order_accepted`,
+  `purchase` and `refund` with zero `/debug/mp/collect` validation errors. Collected DebugView
+  Preview `dpl_3Ucdu5tEm38YpQuH7M9r5pNDn6P6` displayed one of each event for probe
+  `84efedd55e1b4806aaee`; inspected parameters contained only approved opaque IDs, categorical
+  service/attribution fields, currency and value, with no customer PII or raw click IDs.
+- Deduplication probe `9a23fbaf717a4515a6cb` on Preview
+  `dpl_2ZyqCUncgRu35nvcGKY4KucDQyAF` sent the purchase once and rejected the second attempt as
+  `already_sent`, leaving the outbox state `sent`. The focused suite now includes all three GA4
+  payload semantics/PII allowlists and passes 20/20. Both GA4 debug flags were reset to `false`,
+  and final clean Preview `dpl_9B8qsLHKiE82J25uDSc62CZmFAQf` is READY with the staging-only QA
+  endpoint removed (HTTP 404).
+- The normal Vercel remote build remains blocked because `.vercelignore` excludes `marketing/`
+  while the build imports `marketing/growth/content-registry.mjs`; the GA4 proof therefore used a
+  constrained prebuilt QA staging copy and is not a Production-ready artifact. Preview also
+  resolves a live-mode Stripe key, so no Stripe financial call was attempted and a test-mode key
+  remains mandatory for further financial QA. Production still resolves to
+  `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`; `/` is 200 while `/order`, `/api/stripe-webhook` and
+  `/api/operations/lifecycle` are 404. No Google Ads goal, bid, budget, campaign or billing setting
+  changed. Production cutover remains explicitly unauthorized.
+- The subsequent pipeline correction moved the governed authorial registry from the ignored
+  `marketing/` tree to `governance/content-registry.mjs`; `marketing/` remains completely excluded
+  and `build-site.mjs` still fails if any private path enters `dist/`. Standard Vercel Preview
+  `dpl_4rvoSZHwTywrZPmVGbesJTjzV3mA` passed the normal remote `build:public` path. The Stripe CLI
+  test credential was confirmed with `livemode:false` and transferred without disclosure to the
+  exact branch-scoped `STRIPE_SECRET_KEY` sensitive variable. Runtime `/api/operations/preflight`
+  returned HTTP 200, `ready=true` and 10/10 sanitized checks, including test-mode Stripe, GA4
+  secret/stream, durable storage/tokens and both debug flags disabled. This supersedes the two
+  blockers in the preceding chronological note; an exact committed-SHA Preview and the separate
+  Production authorization gate remain.
+- Exact commit `9a7bb0512f8d21f7c7996785407ef437a36c7401` then passed the standard Vercel
+  pipeline as READY Preview `dpl_4ckN44QVvdaB8MTvjVA661ZyJvRp`. The branch-only runtime preflight
+  passed 10/10, `/order` returned 200 and `/api/qa/ga4-probe` returned 404. Read-only Production
+  inspection remained on `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`; `/` stayed 200 and all candidate-only
+  operational routes stayed 404. Production preflight is therefore NO-GO pending its own secrets,
+  webhook/runtime configuration and separate owner authorization; no Production or Google Ads
+  mutation occurred.

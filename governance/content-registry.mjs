@@ -122,7 +122,8 @@ export const CONTENT_CLUSTERS = [
 export const SYSTEM_ROUTE_EXCLUSIONS = [
   { route: '/comforter-thanks', sourceFile: 'comforter-thanks.html', exclusionClass: 'conversion_confirmation', reason: 'Post-submit confirmation is not an acquisition asset.' },
   { route: '/guest-payment-confirmation', sourceFile: 'guest-payment-confirmation.html', exclusionClass: 'payment_confirmation', reason: 'Stripe-verified payment confirmation is transactional.' },
-  { route: '/payment-link', sourceFile: 'payment-link.html', exclusionClass: 'operator_tool', reason: 'Authenticated operator payment-link tool is not a marketing funnel.' }
+  { route: '/payment-link', sourceFile: 'payment-link.html', exclusionClass: 'operator_tool', reason: 'Authenticated operator payment-link tool is not a marketing funnel.' },
+  { route: '/order', sourceFile: 'order.html', exclusionClass: 'structured_order_intake', reason: 'Protected conversion intake is transactional and intentionally noindex.' }
 ];
 
 const foundation = {

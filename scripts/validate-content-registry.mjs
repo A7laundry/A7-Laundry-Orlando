@@ -7,7 +7,7 @@ import {
   CONTENT_CLUSTERS,
   SYSTEM_ROUTE_EXCLUSIONS,
   MANAGED_FUNNEL_PATHS
-} from '../marketing/growth/content-registry.mjs';
+} from '../governance/content-registry.mjs';
 import { buildContentCorpora, canonicalFromHtml, sitemapRoutes } from './lib/content-corpora.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');

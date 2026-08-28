@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import {
   CONTENT_REGISTRY,
   CONTENT_REGISTRY_SCHEMA_VERSION
-} from '../marketing/growth/content-registry.mjs';
+} from '../governance/content-registry.mjs';
 import { validateContentRegistry } from './validate-content-registry.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');

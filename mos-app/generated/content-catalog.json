@@ -2820,6 +2820,12 @@
       "sourceFile": "guest-payment-confirmation.html"
     },
     {
+      "exclusionClass": "structured_order_intake",
+      "reason": "Protected conversion intake is transactional and intentionally noindex.",
+      "route": "/order",
+      "sourceFile": "order.html"
+    },
+    {
       "exclusionClass": "operator_tool",
       "reason": "Authenticated operator payment-link tool is not a marketing funnel.",
       "route": "/payment-link",

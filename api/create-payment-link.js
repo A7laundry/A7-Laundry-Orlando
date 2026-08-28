@@ -10,16 +10,20 @@
  */
 
 const crypto = require('node:crypto');
+const {
+  createOperationalStore,
+  OperationalStoreError
+} = require('../lib/operational-store');
 
 const STRIPE_API_BASE = 'https://api.stripe.com/v1';
-const CONFIRMATION_URL =
-  'https://a7laundry.com/guest-payment-confirmation?session_id={CHECKOUT_SESSION_ID}';
+const PRODUCTION_ORIGIN = 'https://a7laundry.com';
 
 // Faixa defensiva: abaixo disso é engano de digitação, acima é pedido que merece
 // conferência humana antes de virar cobrança.
 const MIN_USD = 5;
 const MAX_USD = 2000;
-const A7_REFERENCE_PATTERN = /^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{10}$/i;
+const MAX_BODY_BYTES = 16_384;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function sendJson(res, statusCode, body) {
   res.status(statusCode).json(body);
@@ -51,24 +55,29 @@ function tokenMatches(provided, expected) {
 
 /** O Vercel parseia JSON automaticamente, mas não quando o Content-Type vem ausente. */
 function readBody(req) {
-  if (req.body && typeof req.body === 'object') return req.body;
-  if (typeof req.body === 'string') {
+  if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
+    try { return Buffer.byteLength(JSON.stringify(req.body)) <= MAX_BODY_BYTES ? req.body : null; } catch (_) { return null; }
+  }
+  if (typeof req.body === 'string' || Buffer.isBuffer(req.body)) {
+    const raw = String(req.body);
+    if (Buffer.byteLength(raw) > MAX_BODY_BYTES) return null;
     try {
-      return JSON.parse(req.body);
+      return JSON.parse(raw);
     } catch (_) {
-      return {};
+      return null;
     }
   }
-  return {};
+  return null;
 }
 
-async function stripePost(path, params, secretKey) {
+async function stripePost(path, params, secretKey, idempotencyKey) {
   const response = await fetch(`${STRIPE_API_BASE}${path}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${secretKey}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'application/json'
+      Accept: 'application/json',
+      'Idempotency-Key': idempotencyKey
     },
     body: new URLSearchParams(params).toString()
   });
@@ -79,6 +88,28 @@ async function stripePost(path, params, secretKey) {
     throw new Error(reason || 'Stripe rejected the request.');
   }
   return payload;
+}
+
+function confirmationUrl(env = process.env) {
+  const configured = cleanText(env.A7_PUBLIC_BASE_URL, '');
+  const previewHost = cleanText(env.VERCEL_URL, '');
+  const candidate = configured || (env.VERCEL_ENV === 'preview' && previewHost
+    ? `https://${previewHost}`
+    : PRODUCTION_ORIGIN);
+  let origin;
+  try {
+    const parsed = new URL(candidate);
+    const allowed = parsed.protocol === 'https:' && (
+      parsed.hostname === 'a7laundry.com'
+      || parsed.hostname.endsWith('.vercel.app')
+      || parsed.hostname === 'localhost'
+    );
+    if (!allowed || parsed.username || parsed.password) throw new Error('invalid');
+    origin = parsed.origin;
+  } catch (_) {
+    throw new Error('The public confirmation origin is invalid.');
+  }
+  return `${origin}/guest-payment-confirmation?session_id={CHECKOUT_SESSION_ID}`;
 }
 
 async function handler(req, res) {
@@ -107,24 +138,51 @@ async function handler(req, res) {
   }
 
   const body = readBody(req);
-
-  const amountUsd = Number(body.amount_usd);
-  if (!Number.isFinite(amountUsd) || amountUsd < MIN_USD || amountUsd > MAX_USD) {
-    sendJson(res, 400, { error: `Amount must be between $${MIN_USD} and $${MAX_USD}.` });
+  if (!body) {
+    sendJson(res, 400, { error: 'Invalid request body.' });
     return;
   }
-
-  // Centavos inteiros: evita que 82.999 vire cobrança com fração perdida.
-  const unitAmount = Math.round(amountUsd * 100);
-  const description = cleanText(body.description, 'A7 Laundry — pickup & delivery');
-  const reference = cleanText(body.reference, '');
-  const requestedA7Reference = cleanText(body.a7_reference, '').toUpperCase();
-  if (requestedA7Reference && !A7_REFERENCE_PATTERN.test(requestedA7Reference)) {
-    sendJson(res, 400, { error: 'A7 Ref must contain the 10-character code from the customer conversation.' });
+  // Nome canônico: texto livre de operador não entra em objetos do Stripe.
+  const description = 'A7 Laundry — pickup & delivery';
+  const orderId = cleanText(body.order_id, '').toLowerCase();
+  const leadId = cleanText(body.lead_id, '').toLowerCase();
+  if (!UUID_PATTERN.test(orderId) || !UUID_PATTERN.test(leadId)) {
+    sendJson(res, 400, { error: 'A valid order_id and lead_id are required.' });
     return;
   }
 
   try {
+    const operations = createOperationalStore();
+    const order = await operations.getOrder(orderId);
+    if (!order || order.lead_id !== leadId) {
+      sendJson(res, 404, { error: 'The payable order was not found.' });
+      return;
+    }
+    if (order.order_status !== 'invoice_created' || !['invoice_created', 'failed', 'void'].includes(order.payment_status)) {
+      sendJson(res, 409, { error: 'The order is not ready for payment.' });
+      return;
+    }
+    if (String(order.currency || '').toUpperCase() !== 'USD') {
+      sendJson(res, 409, { error: 'The order currency is not supported.' });
+      return;
+    }
+    const amountUsd = Number(order.service_amount);
+    if (!Number.isFinite(amountUsd) || amountUsd < MIN_USD || amountUsd > MAX_USD) {
+      sendJson(res, 409, { error: 'The approved invoice amount is outside the payable range.' });
+      return;
+    }
+    // Centavos inteiros: evita cobrança com fração perdida e usa a fatura como autoridade.
+    const unitAmount = Math.round(amountUsd * 100);
+    const suppliedAmount = body.amount_usd == null || body.amount_usd === '' ? null : Number(body.amount_usd);
+    if (suppliedAmount !== null && (!Number.isFinite(suppliedAmount)
+      || Math.round(suppliedAmount * 100) !== unitAmount)) {
+      sendJson(res, 409, { error: 'The amount does not match the approved invoice.' });
+      return;
+    }
+
+    const invoiceKey = cleanText(order.invoice_id, orderId);
+    const attemptVersion = Number.isInteger(Number(order.version)) && Number(order.version) > 0
+      ? Number(order.version) : 1;
     const price = await stripePost(
       '/prices',
       {
@@ -132,37 +190,50 @@ async function handler(req, res) {
         currency: 'usd',
         'product_data[name]': description
       },
-      stripeSecretKey
+      stripeSecretKey,
+      `a7-price-${orderId}-${invoiceKey}-v${attemptVersion}`
     );
 
     const linkParams = {
       'line_items[0][price]': price.id,
       'line_items[0][quantity]': '1',
       'after_completion[type]': 'redirect',
-      'after_completion[redirect][url]': CONFIRMATION_URL,
+      'after_completion[redirect][url]': confirmationUrl(),
       // Um link por cotação: impede que a mesma URL seja paga repetidamente.
-      'restrictions[completed_sessions][limit]': '1'
+      'restrictions[completed_sessions][limit]': '1',
+      'metadata[order_id]': orderId,
+      'metadata[lead_id]': leadId,
+      'metadata[contract_version]': '1',
+      'payment_intent_data[metadata][order_id]': orderId,
+      'payment_intent_data[metadata][lead_id]': leadId,
+      'payment_intent_data[metadata][contract_version]': '1'
     };
-    if (reference) linkParams['metadata[operator_reference]'] = reference;
-    if (requestedA7Reference) linkParams['metadata[a7_reference]'] = requestedA7Reference;
 
-    const link = await stripePost('/payment_links', linkParams, stripeSecretKey);
+    const link = await stripePost(
+      '/payment_links',
+      linkParams,
+      stripeSecretKey,
+      `a7-payment-link-${orderId}-${invoiceKey}-v${attemptVersion}`
+    );
 
     sendJson(res, 200, {
       url: link.url,
       amount_usd: unitAmount / 100,
       description,
-      payment_link_id: link.id
+      payment_link_id: link.id,
+      order_id: orderId
     });
   } catch (error) {
-    sendJson(res, 502, { error: error.message || 'Could not create the payment link.' });
+    const status = error instanceof OperationalStoreError ? 503 : 502;
+    sendJson(res, status, { error: error.message || 'Could not create the payment link.' });
   }
 }
 
 module.exports = handler;
 module.exports.MIN_USD = MIN_USD;
 module.exports.MAX_USD = MAX_USD;
-module.exports.CONFIRMATION_URL = CONFIRMATION_URL;
-module.exports.A7_REFERENCE_PATTERN = A7_REFERENCE_PATTERN;
+module.exports.PRODUCTION_ORIGIN = PRODUCTION_ORIGIN;
+module.exports.confirmationUrl = confirmationUrl;
+module.exports.UUID_PATTERN = UUID_PATTERN;
 module.exports.tokenMatches = tokenMatches;
 module.exports.cleanText = cleanText;

@@ -1,7 +1,7 @@
 # Google Ads — correção WhatsApp-first
 
-**Conta:** A7 Laundry - 01 (`290-113-2891`)
-**Aplicada e verificada:** 2026-08-24
+**Conta:** A7 Laundry - 01 (`290-113-2891`)  
+**Aplicada e verificada:** 2026-08-24  
 **Motivo:** o proprietário confirmou que toda venda começa obrigatoriamente no WhatsApp; o link Stripe é enviado depois dessa conversa e não representa, sozinho, a entrada atribuível do funil.
 
 ## Estado anterior temporário
@@ -30,3 +30,4 @@ Se o funil mudar para checkout direto, ou se a importação de lead qualificado/
 ## Escopo da mutação
 
 Somente as duas configurações de otimização acima foram alteradas. Campanha, orçamento, tCPA, keywords, anúncios, assets, agenda, geografia, billing, saldo e entrega permaneceram intactos.
+

@@ -11,7 +11,44 @@ const attribution = require('../a7-attribution.js');
 const business = require('../a7-business-config.js');
 const events = require('../a7-events.js');
 const handler = require('../api/attribution/session.js');
-const {RETENTION_DAYS} = require('../lib/attribution-store.js');
+const {
+  RETENTION_DAYS,
+  createAttributionStore,
+  resetAttributionStoreForTests,
+  SupabaseAttributionStore,
+  UnavailableAttributionStore,
+  resolveAttributionSupabaseConfig
+} = require('../lib/attribution-store.js');
+
+assert.deepEqual(resolveAttributionSupabaseConfig({
+  A7_ATTRIBUTION_SUPABASE_URL: 'https://partial-attribution.supabase.co',
+  A7_OPERATIONS_SUPABASE_URL: 'https://operations.supabase.co',
+  A7_OPERATIONS_SUPABASE_SERVICE_ROLE_KEY: 'operations-key',
+  WHATSAPP_SUPABASE_URL: 'https://whatsapp.supabase.co',
+  WHATSAPP_SUPABASE_SERVICE_ROLE_KEY: 'whatsapp-key'
+}), {
+  source: 'operations',
+  url: 'https://operations.supabase.co',
+  serviceRoleKey: 'operations-key'
+});
+assert.equal(resolveAttributionSupabaseConfig({
+  A7_ATTRIBUTION_SUPABASE_URL: 'https://attribution.supabase.co',
+  A7_OPERATIONS_SUPABASE_SERVICE_ROLE_KEY: 'wrong-namespace-key'
+}), null, 'Attribution storage must never combine a URL and key from different namespaces.');
+
+resetAttributionStoreForTests();
+const sharedSupabaseStore = createAttributionStore({env: {
+  NODE_ENV: 'production',
+  WHATSAPP_SUPABASE_URL: 'https://example.supabase.co',
+  WHATSAPP_SUPABASE_SERVICE_ROLE_KEY: 'test-service-role'
+}});
+assert.ok(sharedSupabaseStore instanceof SupabaseAttributionStore, 'Production attribution should reuse the protected WhatsApp Supabase configuration when dedicated variables are absent.');
+assert.equal(sharedSupabaseStore.url, 'https://example.supabase.co');
+
+resetAttributionStoreForTests();
+const unavailableProductionStore = createAttributionStore({env: {NODE_ENV: 'production'}});
+assert.ok(unavailableProductionStore instanceof UnavailableAttributionStore, 'Production must fail closed when no durable store is configured.');
+resetAttributionStoreForTests();
 
 function deterministicCrypto(seed = 0) {
   return {getRandomValues(bytes) { for (let index = 0; index < bytes.length; index += 1) bytes[index] = (seed + index * 37) & 255; return bytes; }};

@@ -3,7 +3,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { authoredAssetId, CONTENT_REGISTRY } from '../marketing/growth/content-registry.mjs';
+import { authoredAssetId, CONTENT_REGISTRY } from '../governance/content-registry.mjs';
 import { assertPublicManifestSafety } from './build-growth-manifest.mjs';
 import { buildContentCorpora } from './lib/content-corpora.mjs';
 import { validateContentRegistry } from './validate-content-registry.mjs';

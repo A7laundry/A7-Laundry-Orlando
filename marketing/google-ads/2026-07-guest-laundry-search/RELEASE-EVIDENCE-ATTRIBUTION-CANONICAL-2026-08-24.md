@@ -1,7 +1,7 @@
 # Release evidence — attribution and Lake Buena Vista canonical remediation
 
-**Release date:** 2026-08-24 (America/New_York)
-**Public site:** `https://a7laundry.com`
+**Release date:** 2026-08-24 (America/New_York)  
+**Public site:** `https://a7laundry.com`  
 **Scope:** Stripe/GA4 attribution, one-use payment-link reference, Lake Buena Vista canonical redirect
 
 ## Exact deployment chain

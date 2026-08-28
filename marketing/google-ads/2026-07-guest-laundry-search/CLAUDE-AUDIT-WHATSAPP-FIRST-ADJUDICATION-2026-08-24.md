@@ -1,9 +1,9 @@
 # Auditoria Claude — adjudicação WhatsApp-first
 
-**Conta:** A7 Laundry - 01 (`290-113-2891`)
-**Data da adjudicação:** 2026-08-24
-**Artefato analisado:** `71a7a261-585f-4318-83a4-bd92e606546c`, “A7 Laundry — Raio-X de 30 dias”
-**Janela do artefato:** 2026-07-25–2026-08-23, fuso da conta GMT-3, moeda BRL
+**Conta:** A7 Laundry - 01 (`290-113-2891`)  
+**Data da adjudicação:** 2026-08-24  
+**Artefato analisado:** `71a7a261-585f-4318-83a4-bd92e606546c`, “A7 Laundry — Raio-X de 30 dias”  
+**Janela do artefato:** 2026-07-25–2026-08-23, fuso da conta GMT-3, moeda BRL  
 **Autoridade operacional nova:** o proprietário confirmou que todo cliente precisa iniciar a jornada no WhatsApp antes de receber o link de pagamento.
 
 ## Veredito
@@ -75,3 +75,4 @@ O Google informa que Smart Bidding considera dispositivo, localização e hora e
 - Enhanced conversions: não configuradas.
 - Saldo observado: R$783,78; alerta de saldo baixo continua visível.
 - Alterações adicionais: nenhuma.
+

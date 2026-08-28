@@ -22,7 +22,7 @@
 
 ## Single-source outputs
 
-- `marketing/growth/content-registry.mjs` is the authorial classification source.
+- `governance/content-registry.mjs` is the authorial classification source.
 - `mos-app/generated/content-catalog.json` is the deterministic authenticated catalog.
 - `mos-app/generated/a7-growth-map.js` is the deterministic browser tracking map.
 - `dist/.well-known/a7-growth-manifest.json` is build-only public evidence (`artifactState: built`); it contains 98 assets and no deployment observation.

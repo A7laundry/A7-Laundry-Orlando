@@ -1,8 +1,14 @@
 'use strict';
 
+const {
+  createOperationalStore,
+  OperationalStoreError
+} = require('../lib/operational-store');
+
 const STRIPE_API_BASE = 'https://api.stripe.com/v1';
 const CHECKOUT_SESSION_PATTERN = /^cs_(?:live|test)_[A-Za-z0-9]+$/;
-const A7_REFERENCE_PATTERN = /^[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{10}$/i;
+const PAYMENT_INTENT_PATTERN = /^pi_[A-Za-z0-9_]+$/;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function sendJson(res, statusCode, body) {
   res.status(statusCode).json(body);
@@ -14,11 +20,11 @@ function cleanText(value, fallback) {
   return cleaned ? cleaned.slice(0, 120) : fallback;
 }
 
-function sanitizeSession(session) {
+function sanitizeSession(session, reconciliationStatus) {
   const amountInCents = Number(session.amount_total);
-  const amountTotal = Number.isFinite(amountInCents) && amountInCents >= 0
+  const amountTotal = Number.isFinite(amountInCents) && amountInCents > 0
     ? amountInCents / 100
-    : 0;
+    : null;
   const firstLineItem = session.line_items
     && Array.isArray(session.line_items.data)
     && session.line_items.data[0];
@@ -27,7 +33,6 @@ function sanitizeSession(session) {
     : session.payment_link && typeof session.payment_link.id === 'string'
       ? session.payment_link.id
       : null;
-  const metadataReference = cleanText(session.metadata && session.metadata.a7_reference, '').toUpperCase();
 
   return {
     id: session.id,
@@ -37,7 +42,7 @@ function sanitizeSession(session) {
     amount_total: amountTotal,
     service: cleanText(firstLineItem && firstLineItem.description, 'A7 Guest Laundry'),
     payment_link_id: paymentLink,
-    a7_reference: A7_REFERENCE_PATTERN.test(metadataReference) ? metadataReference : null
+    reconciliation_status: reconciliationStatus
   };
 }
 
@@ -102,10 +107,40 @@ async function handler(req, res) {
     return;
   }
 
-  sendJson(res, 200, sanitizeSession(session));
+  const metadata = session.metadata && typeof session.metadata === 'object' ? session.metadata : {};
+  const orderId = String(metadata.order_id || '').toLowerCase();
+  const leadId = String(metadata.lead_id || '').toLowerCase();
+  const transactionId = typeof session.payment_intent === 'string'
+    ? session.payment_intent : session.payment_intent?.id;
+  const amount = Number(session.amount_total) / 100;
+  const currency = String(session.currency || '').toUpperCase();
+  if (String(metadata.contract_version || '') !== '1' || !UUID_PATTERN.test(orderId)
+    || !UUID_PATTERN.test(leadId) || !PAYMENT_INTENT_PATTERN.test(transactionId || '')
+    || !Number.isFinite(amount) || amount <= 0 || currency !== 'USD') {
+    sendJson(res, 409, { error: 'Checkout is not linked to a valid A7 order.' });
+    return;
+  }
+
+  try {
+    const order = await createOperationalStore().getOrder(orderId);
+    if (!order || order.lead_id !== leadId || !order.invoice_id
+      || Number(order.service_amount) !== amount || String(order.currency || '').toUpperCase() !== 'USD') {
+      sendJson(res, 409, { error: 'Checkout does not match the accepted A7 order.' });
+      return;
+    }
+    const reconciled = order.payment_id === transactionId
+      && ['paid', 'partially_refunded', 'refunded'].includes(order.payment_status);
+    sendJson(res, reconciled ? 200 : 202, sanitizeSession(session, reconciled ? 'reconciled' : 'pending'));
+  } catch (error) {
+    const status = error instanceof OperationalStoreError ? 503 : 500;
+    sendJson(res, status, { error: status === 503
+      ? 'Order reconciliation is temporarily unavailable.'
+      : 'Order reconciliation failed.' });
+  }
 }
 
 module.exports = handler;
 module.exports.sanitizeSession = sanitizeSession;
 module.exports.CHECKOUT_SESSION_PATTERN = CHECKOUT_SESSION_PATTERN;
-module.exports.A7_REFERENCE_PATTERN = A7_REFERENCE_PATTERN;
+module.exports.PAYMENT_INTENT_PATTERN = PAYMENT_INTENT_PATTERN;
+module.exports.UUID_PATTERN = UUID_PATTERN;

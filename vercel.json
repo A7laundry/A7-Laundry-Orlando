@@ -56,6 +56,10 @@
       "destination": "/payment-link.html"
     },
     {
+      "source": "/order",
+      "destination": "/order.html"
+    },
+    {
       "source": "/laundry-pickup-delivery-orlando",
       "destination": "/laundry-pickup-delivery-orlando.html"
     },

@@ -162,15 +162,15 @@ body::before{
       </div>
 
       <div class="steps" id="nextSteps">
-        <div class="step"><div class="step-number">1</div><div><strong>Send your pickup location</strong><p>Tell us your hotel, resort or Airbnb and the best pickup window.</p></div></div>
-        <div class="step"><div class="step-number">2</div><div><strong>Leave the bag with the front desk or at the agreed spot</strong><p>We confirm the handoff by WhatsApp, with no unnecessary interruption to your day.</p></div></div>
-        <div class="step"><div class="step-number">3</div><div><strong>Go enjoy Orlando</strong><p>Your clothes come back professionally washed, dried and folded.</p></div></div>
+        <div class="step"><div class="step-number">1</div><div><strong>Payment is linked to your accepted order</strong><p>Your confirmed total is now reconciled with the order already collected and weighed.</p></div></div>
+        <div class="step"><div class="step-number">2</div><div><strong>We continue with the agreed return</strong><p>Your delivery handoff follows the details already confirmed with our team.</p></div></div>
+        <div class="step"><div class="step-number">3</div><div><strong>Need to update anything?</strong><p>Message us on WhatsApp and reference the same order conversation.</p></div></div>
       </div>
 
       <div class="actions">
-        <a class="button button-primary" id="whatsappButton" href="https://wa.me/14076708839?text=Hi!%20I%20just%20paid%20for%20A7%20Guest%20Laundry%20and%20want%20to%20confirm%20my%20pickup%20location." target="_blank" rel="noopener">
+        <a class="button button-primary" id="whatsappButton" href="https://wa.me/14076708839?text=Hi!%20My%20A7%20Guest%20Laundry%20payment%20is%20confirmed.%20I%20have%20a%20question%20about%20the%20agreed%20return%20handoff." target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-1.75-.87-2.9-1.56-4.06-3.55-.31-.53.31-.49.87-1.63.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-2.72 2.98.68 7.39 1.07 7.91 2.1 2.86 5.07 4.1 7.03 4.62 1.96.52 3.75.45 5.16.27 1.57-.23 4.83-1.97 5.51-3.88.68-1.91.68-3.54.48-3.88-.2-.34-.74-.54-1.04-.69z"/></svg>
-          Confirm pickup on WhatsApp
+          Message A7 on WhatsApp
         </a>
         <a class="button button-secondary" href="/">Back to A7</a>
       </div>
@@ -232,46 +232,7 @@ body::before{
     }).format(amount);
   }
 
-  function emitVerifiedPurchase(session) {
-    if (!session || session.payment_status !== 'paid') return;
-    var dedupeKey = 'a7_verified_purchase_' + session.id;
-    try {
-      if (localStorage.getItem(dedupeKey)) return;
-    } catch (_) {}
-
-    var item = {
-      item_id: session.payment_link_id || 'guest-laundry',
-      item_name: session.service || 'A7 Guest Laundry',
-      price: session.amount_total,
-      quantity: 1
-    };
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'purchase', {
-        transaction_id: session.id,
-        value: session.amount_total,
-        currency: session.currency,
-        lead_reference: session.a7_reference || undefined,
-        items: [item]
-      });
-      window.gtag('event', 'conversion', {
-        send_to: 'AW-17146169189/dkpRCJyC19YcEOWO9-8_',
-        transaction_id: session.id,
-        value: session.amount_total,
-        currency: session.currency,
-        lead_reference: session.a7_reference || undefined
-      });
-    }
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'Purchase', {
-        value: session.amount_total,
-        currency: session.currency,
-        content_name: item.item_name,
-        content_category: 'Guest Laundry',
-        content_type: 'product'
-      }, { eventID: 'stripe_' + session.id });
-    }
-    try { localStorage.setItem(dedupeKey, '1'); } catch (_) {}
-  }
+  function wait(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
 
   async function verifyPayment() {
     var sessionId = window.__A7_GUEST_CHECKOUT_SESSION || '';
@@ -281,24 +242,22 @@ body::before{
     }
 
     try {
-      var response = await fetch('/api/stripe-session?session_id=' + encodeURIComponent(sessionId), {
-        headers: { Accept: 'application/json' },
-        credentials: 'same-origin'
-      });
-      var payload = await response.json().catch(function () { return {}; });
-      if (!response.ok || payload.payment_status !== 'paid') {
-        throw new Error(payload.error || 'Payment could not be verified.');
+      var payload={};var response;for(var attempt=0;attempt<5;attempt+=1){response=await fetch('/api/stripe-session?session_id='+encodeURIComponent(sessionId),{headers:{Accept:'application/json'},credentials:'same-origin'});payload=await response.json().catch(function(){return{}});if(response.status!==202)break;message.textContent='Stripe confirmed the payment. We are linking it to your accepted order…';await wait(1000)}
+      if (!response || !response.ok || payload.payment_status !== 'paid'
+        || payload.reconciliation_status !== 'reconciled') {
+        throw new Error(payload.error || (payload.reconciliation_status === 'pending'
+          ? 'Stripe confirmed the payment, but order reconciliation is still pending. Please wait a moment or message A7.'
+          : 'Payment could not be verified.'));
       }
 
       clearSkeletons();
       showIcon('verified');
       title.textContent = 'Payment confirmed. Your Orlando moment is back on.';
-      message.textContent = 'Laundry is officially off your itinerary. Send us your hotel, resort or Airbnb pickup details and go enjoy the day.';
+      message.textContent = 'Laundry is officially off your itinerary. Your payment is linked to the accepted order, and we’ll continue with the return handoff already agreed with you.';
       serviceName.textContent = payload.service || 'A7 Guest Laundry';
       paymentState.textContent = 'Paid';
       amountPaid.textContent = formatMoney(payload.amount_total, payload.currency);
       confirmationId.textContent = '••••' + payload.id.slice(-8);
-      emitVerifiedPurchase(payload);
     } catch (error) {
       showError(error && error.message);
     }

@@ -1,7 +1,7 @@
 # A7 Laundry Orlando — forensic growth checkpoint
 
-**Observed on:** 2026-08-24 (America/New_York)
-**Primary comparison:** 2026-08-01–2026-08-24 versus 2026-07-08–2026-07-31
+**Observed on:** 2026-08-24 (America/New_York)  
+**Primary comparison:** 2026-08-01–2026-08-24 versus 2026-07-08–2026-07-31  
 **Mode:** read-only observation; no campaign, budget, bid or delivery setting changed
 
 ## Source boundary
