@@ -140,6 +140,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] The local P0 implementation creates durable lead/order/event/payment contracts, freezes an attribution snapshot at acceptance, requires an invoiced `order_id` for Stripe, ingests payment/refund webhooks idempotently and keeps the browser confirmation informational.
 - [x] The protected branch Preview uses durable Supabase storage, branch-isolated runtime credentials and a Stripe test-mode signed webhook; synthetic QA proves failed, void, paid, delivered, refunded and repeat-order paths, webhook idempotency and safe analytics payloads, then removes all synthetic business records and deactivates the test payment objects.
 - [ ] Complete contract §16 check 13 in GA4 DebugView and separately approve/configure the Production cutover before release. `money_page_view` was removed from GA4 key events on 2026-08-28 and verified absent after reload; `purchase` remained enabled. The tagged deterministic journey and browser/WhatsApp evidence are complete.
+- [ ] Every privileged Supabase consumer uses a validated `sb_secret_` key through the `apikey` header only; the compromised legacy `service_role` key is deactivated only after Core, MOS and the separate WhatsApp Bridge have deployed the compatible code and zero legacy consumers are confirmed.
 
 ## Tasks
 
@@ -265,6 +266,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Configure the branch-isolated protected Preview, register the Stripe test webhook, execute the synthetic operational/financial lifecycle and remove its Supabase and Stripe test data.
 - [x] Isolate Stripe Preview transport behind a dedicated `Stripe-QA` Vercel bypass, validate a signed non-financial probe on the unique deployment and stable alias, then remove the superseded test endpoint without changing the project-wide bypass.
 - [x] Create and protect the GA4 Measurement Protocol secret after the owner confirms Google's user-data collection attestation, validate the server events in DebugView and preserve the separate authorization gate for any Production cutover. Editor-capable access through `a7laundry.usa@gmail.com` is confirmed; `money_page_view` was removed from key events, `purchase` remained enabled, all three server events passed strict validation and DebugView, and both Preview debug flags were returned to `false` on 2026-08-28.
+- [ ] Complete the Supabase key incident cutover: replace the masked placeholder with a validated secret value, deploy compatible Core/MOS and Bridge runtimes, prove zero legacy consumers, then separately deactivate the compromised legacy key with rollback ready.
 
 ## File List
 
@@ -290,6 +292,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `lib/ga4-server.js`
 - `api/order-intake.js`
 - `api/operations/lifecycle.js`
+- `api/operations/preflight.js`
 - `api/stripe-webhook.js`
 - `api/create-payment-link.js`
 - `api/stripe-session.js`
@@ -926,3 +929,22 @@ Make the production conversion funnel observable from acquisition CTA through St
   operational routes stayed 404. Production preflight is therefore NO-GO pending its own secrets,
   webhook/runtime configuration and separate owner authorization; no Production or Google Ads
   mutation occurred.
+- Aug 29 incident response found that commit `1f37b57fcb6613788598edeff9a4ec63a77ea429`
+  reached READY Preview, but real attribution and order-intake calls failed because the configured
+  Supabase project URL was stale. It also proved the runtime preflight was configuration-only and
+  could falsely report 10/10. The corrective candidate now makes the existing storage gate perform
+  read-only attribution-health and operational-table probes, returning sanitized
+  `runtime_unavailable` on failure without adding a new gate. Core attribution, operational storage
+  and MOS now omit `Authorization: Bearer` for `sb_secret_` keys while retaining temporary legacy
+  JWT compatibility; focused header and connectivity tests pass. The separate unlinked WhatsApp
+  Bridge active deployment remains a legacy-Bearer consumer and was not deployed. Its exact local
+  source was minimally adapted with the same header rule and passes 8/8 Bridge tests; a read-only
+  source comparison proves the active deployment still equals that local source before the fix.
+  Vercel Preview and
+  both Production project scopes were updated without deploy, but the installed Supabase CLI had
+  returned a masked default key that the gateway rejected with HTTP 401. Those environment values
+  are therefore not releaseable and must be replaced with a validated revealed key before any new
+  deployment. Existing deployments remain on their immutable legacy environment. The compromised
+  legacy key remains active because zero consumers is not yet true. Root lint, typecheck, 77/77
+  root tests, 67/67 MOS tests and repository build pass; no Production deploy, Stripe financial
+  action, Google Ads mutation or legacy-key deactivation occurred.

@@ -28,6 +28,12 @@ function unavailable(period, code) {
   };
 }
 
+export function supabaseHeaders(key) {
+  const headers = {apikey: key};
+  if (!String(key).startsWith('sb_secret_')) headers.Authorization = `Bearer ${key}`;
+  return headers;
+}
+
 export async function collectOperationalKpis(fetchImpl, config, options = {}) {
   const period = options.period || requestedOperationalPeriod(options.now);
   if (!config?.ok) return unavailable(period, 'CONFIGURATION_INCOMPLETE');
@@ -35,8 +41,7 @@ export async function collectOperationalKpis(fetchImpl, config, options = {}) {
     const response = await fetchImpl(`${config.url}/rest/v1/rpc/a7_orlando_operational_funnel`, {
       method: 'POST',
       headers: {
-        apikey: config.key,
-        Authorization: `Bearer ${config.key}`,
+        ...supabaseHeaders(config.key),
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },

@@ -113,24 +113,54 @@ function mockResponse() {
   };
 }
 
-test('runtime preflight is Preview-branch-only and returns sanitized readiness', () => {
+test('runtime preflight is Preview-branch-only and returns sanitized readiness', async () => {
   const previous = process.env;
+  const originalFetch = globalThis.fetch;
   try {
     process.env = {
       ...baseEnv(), STRIPE_SECRET_KEY: 'sk_test_runtime',
       VERCEL_ENV: 'preview', VERCEL_GIT_COMMIT_REF: 'feat/meta-ads-ops-structure'
     };
     const ready = mockResponse();
-    preflightHandler({method: 'GET'}, ready);
+    globalThis.fetch = async (url) => ({
+      ok: true,
+      async json() {
+        return String(url).includes('a7_attribution_health') ? {ok: true} : [];
+      }
+    });
+    await preflightHandler({method: 'GET'}, ready);
     assert.equal(ready.statusCode, 200);
     assert.equal(ready.body.ready, true);
     assert.doesNotMatch(JSON.stringify(ready.body), /runtime|ga-secret|payment-token|service-role-key/);
 
     process.env.VERCEL_ENV = 'production';
     const production = mockResponse();
-    preflightHandler({method: 'GET'}, production);
+    await preflightHandler({method: 'GET'}, production);
     assert.equal(production.statusCode, 404);
   } finally {
+    globalThis.fetch = originalFetch;
+    process.env = previous;
+  }
+});
+
+test('runtime preflight fails the existing storage gate when Supabase is unreachable', async () => {
+  const previous = process.env;
+  const originalFetch = globalThis.fetch;
+  try {
+    process.env = {
+      ...baseEnv(), STRIPE_SECRET_KEY: 'sk_test_runtime',
+      VERCEL_ENV: 'preview', VERCEL_GIT_COMMIT_REF: 'feat/meta-ads-ops-structure'
+    };
+    globalThis.fetch = async () => { throw new Error('synthetic unavailable'); };
+    const response = mockResponse();
+    await preflightHandler({method: 'GET'}, response);
+    assert.equal(response.statusCode, 503);
+    assert.equal(response.body.ready, false);
+    assert.equal(response.body.checks.find((item) => item.name === 'operational_store_pair').reason,
+      'runtime_unavailable');
+    assert.equal(response.body.checks.length, 10);
+  } finally {
+    globalThis.fetch = originalFetch;
     process.env = previous;
   }
 });

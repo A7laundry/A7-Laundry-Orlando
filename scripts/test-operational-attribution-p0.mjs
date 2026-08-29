@@ -6,7 +6,7 @@ import {createRequire} from 'node:module';
 import {Readable} from 'node:stream';
 
 const require = createRequire(import.meta.url);
-const {MemoryOperationalStore, resolveSupabaseConfig} = require('../lib/operational-store.js');
+const {MemoryOperationalStore, resolveSupabaseConfig, supabaseHeaders} = require('../lib/operational-store.js');
 const {service} = require('../lib/operational-lifecycle.js');
 const {safeAnalyticsContext} = require('../lib/operational-lifecycle.js');
 const {sendGa4Event, retryOutbox, timestampMicros} = require('../lib/ga4-server.js');
@@ -22,6 +22,13 @@ const ATTRIBUTION = {
   first_touch: {source: 'google-organic', medium: 'organic', landing_page: '/laundry-pickup-delivery-orlando'},
   last_touch: {source: 'google-organic', medium: 'organic', landing_page: '/laundry-pickup-delivery-orlando'}
 };
+
+test('operational Supabase headers support sb_secret without a Bearer JWT', () => {
+  assert.deepEqual(supabaseHeaders('sb_secret_example'), {apikey: 'sb_secret_example'});
+  assert.deepEqual(supabaseHeaders('legacy-jwt'), {
+    apikey: 'legacy-jwt', Authorization: 'Bearer legacy-jwt'
+  });
+});
 
 function attributionStore(record = ATTRIBUTION) {
   return {
