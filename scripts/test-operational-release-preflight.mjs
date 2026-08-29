@@ -23,6 +23,10 @@ test('production preflight requires live Stripe and disables every GA4 debug mod
   assert.equal(result.ready, true);
   assert.equal(result.storage_source, 'whatsapp');
   assert.ok(result.checks.every((item) => item.status === 'pass'));
+
+  const restricted = evaluateOperationalRelease({...baseEnv(), STRIPE_SECRET_KEY: 'rk_live_x'}, 'production');
+  assert.equal(restricted.ready, true);
+  assert.ok(restricted.checks.every((item) => item.status === 'pass'));
 });
 
 test('production preflight fails closed without secrets and never reports their values', () => {
