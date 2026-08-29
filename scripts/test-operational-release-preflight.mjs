@@ -113,7 +113,7 @@ function mockResponse() {
   };
 }
 
-test('runtime preflight is Preview-branch-only and returns sanitized readiness', async () => {
+test('runtime preflight supports the authorized Preview branch and hides Production from anonymous callers', async () => {
   const previous = process.env;
   const originalFetch = globalThis.fetch;
   try {
@@ -135,8 +135,43 @@ test('runtime preflight is Preview-branch-only and returns sanitized readiness',
 
     process.env.VERCEL_ENV = 'production';
     const production = mockResponse();
-    await preflightHandler({method: 'GET'}, production);
+    await preflightHandler({method: 'GET', headers: {}}, production);
     assert.equal(production.statusCode, 404);
+
+    const wrongToken = mockResponse();
+    await preflightHandler({method: 'GET', headers: {authorization: 'Bearer wrong-token'}}, wrongToken);
+    assert.equal(wrongToken.statusCode, 404);
+  } finally {
+    globalThis.fetch = originalFetch;
+    process.env = previous;
+  }
+});
+
+test('authenticated Production runtime preflight returns sanitized 10/10 readiness', async () => {
+  const previous = process.env;
+  const originalFetch = globalThis.fetch;
+  try {
+    process.env = {
+      ...baseEnv(), STRIPE_SECRET_KEY: 'sk_live_runtime',
+      VERCEL_ENV: 'production'
+    };
+    globalThis.fetch = async (url) => ({
+      ok: true,
+      async json() {
+        return String(url).includes('a7_attribution_health') ? {ok: true} : [];
+      }
+    });
+    const response = mockResponse();
+    await preflightHandler({
+      method: 'GET', headers: {authorization: 'Bearer operations-token'}
+    }, response);
+    assert.equal(response.statusCode, 200);
+    assert.equal(response.body.profile, 'production');
+    assert.equal(response.body.ready, true);
+    assert.equal(response.body.checks.length, 10);
+    assert.ok(response.body.checks.every((item) => item.status === 'pass'));
+    assert.doesNotMatch(JSON.stringify(response.body),
+      /operations-token|ga-secret|payment-token|service-role-key|sk_live_runtime/);
   } finally {
     globalThis.fetch = originalFetch;
     process.env = previous;

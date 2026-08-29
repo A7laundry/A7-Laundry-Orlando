@@ -948,3 +948,15 @@ Make the production conversion funnel observable from acquisition CTA through St
   legacy key remains active because zero consumers is not yet true. Root lint, typecheck, 77/77
   root tests, 67/67 MOS tests and repository build pass; no Production deploy, Stripe financial
   action, Google Ads mutation or legacy-key deactivation occurred.
+- The first authorized Core Production cutover reached READY deployment
+  `dpl_8hLcyTMYX2SnMUzmQYP1pr4Qg3Sm`, and public smoke checks returned 200 for `/` and `/order`
+  with the expected method guards on the operational APIs. The mandatory Production preflight
+  could not be proven because Vercel excludes Sensitive values from both `env pull` and
+  `env run`, while the runtime preflight was intentionally Preview-only. The stop condition was
+  enforced before any financial action, and Production was restored to rollback deployment
+  `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`. The minimal corrective successor keeps anonymous Production
+  requests indistinguishable as HTTP 404, permits the existing sanitized 10-check preflight only
+  with a valid `OPERATIONS_API_TOKEN`, and reuses the existing read-only Supabase connectivity
+  probe. The focused preflight suite passes 9/9; lint, typecheck, the complete root/MOS test suite
+  and the repository Production build also pass. No new gate, event, field, state or integration
+  was introduced.

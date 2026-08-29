@@ -1,5 +1,6 @@
 'use strict';
 
+const crypto = require('node:crypto');
 const { evaluateOperationalRelease } = require('../../lib/operational-release-preflight.js');
 const {
   SupabaseOperationalStore,
@@ -16,6 +17,23 @@ function respond(res, status, body) {
   res.setHeader('Cache-Control', 'private, no-store, max-age=0');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   return res.status(status).json(body);
+}
+
+function safeEqual(provided, expected) {
+  if (typeof provided !== 'string' || typeof expected !== 'string' || !provided || !expected) return false;
+  const a = crypto.createHash('sha256').update(provided).digest();
+  const b = crypto.createHash('sha256').update(expected).digest();
+  return crypto.timingSafeEqual(a, b);
+}
+
+function bearer(req) {
+  const authorization = Array.isArray(req.headers?.authorization)
+    ? req.headers.authorization[0] : req.headers?.authorization;
+  if (typeof authorization === 'string' && /^Bearer\s+/i.test(authorization)) {
+    return authorization.replace(/^Bearer\s+/i, '').trim();
+  }
+  const header = req.headers?.['x-a7-token'];
+  return Array.isArray(header) ? header[0] : header;
 }
 
 async function storageIsReachable(env, fetchImpl = globalThis.fetch) {
@@ -36,8 +54,13 @@ async function storageIsReachable(env, fetchImpl = globalThis.fetch) {
 }
 
 async function handler(req, res) {
-  if (process.env.VERCEL_ENV !== 'preview'
-    || process.env.VERCEL_GIT_COMMIT_REF !== AUTHORIZED_PREVIEW_BRANCH) {
+  const preview = process.env.VERCEL_ENV === 'preview'
+    && process.env.VERCEL_GIT_COMMIT_REF === AUTHORIZED_PREVIEW_BRANCH;
+  const production = process.env.VERCEL_ENV === 'production';
+  if (!preview && !production) {
+    return respond(res, 404, { error: 'not_found' });
+  }
+  if (production && !safeEqual(bearer(req), process.env.OPERATIONS_API_TOKEN)) {
     return respond(res, 404, { error: 'not_found' });
   }
   if (req.method !== 'GET') {
@@ -45,7 +68,7 @@ async function handler(req, res) {
     return respond(res, 405, { error: 'method_not_allowed' });
   }
 
-  const result = evaluateOperationalRelease(process.env, 'preview-steady');
+  const result = evaluateOperationalRelease(process.env, production ? 'production' : 'preview-steady');
   const storageCheck = result.checks.find((item) => item.name === 'operational_store_pair');
   if (storageCheck?.status === 'pass' && !await storageIsReachable(process.env)) {
     storageCheck.status = 'fail';
@@ -57,4 +80,5 @@ async function handler(req, res) {
 
 module.exports = handler;
 module.exports.AUTHORIZED_PREVIEW_BRANCH = AUTHORIZED_PREVIEW_BRANCH;
+module.exports.safeEqual = safeEqual;
 module.exports.storageIsReachable = storageIsReachable;
