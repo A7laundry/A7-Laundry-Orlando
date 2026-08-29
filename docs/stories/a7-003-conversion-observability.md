@@ -267,6 +267,9 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Isolate Stripe Preview transport behind a dedicated `Stripe-QA` Vercel bypass, validate a signed non-financial probe on the unique deployment and stable alias, then remove the superseded test endpoint without changing the project-wide bypass.
 - [x] Create and protect the GA4 Measurement Protocol secret after the owner confirms Google's user-data collection attestation, validate the server events in DebugView and preserve the separate authorization gate for any Production cutover. Editor-capable access through `a7laundry.usa@gmail.com` is confirmed; `money_page_view` was removed from key events, `purchase` remained enabled, all three server events passed strict validation and DebugView, and both Preview debug flags were returned to `false` on 2026-08-28.
 - [ ] Complete the Supabase key incident cutover: replace the masked placeholder with a validated secret value, deploy compatible Core/MOS and Bridge runtimes, prove zero legacy consumers, then separately deactivate the compromised legacy key with rollback ready.
+- [x] Rotate the exposed Production Stripe signing secret, rotate the unavailable operations token,
+  redeploy the exact approved Core SHA, pass the authenticated Production preflight 10/10 and
+  complete one signed non-financial ignored-event probe while keeping the live webhook disabled.
 
 ## File List
 
@@ -960,3 +963,15 @@ Make the production conversion funnel observable from acquisition CTA through St
   probe. The focused preflight suite passes 9/9; lint, typecheck, the complete root/MOS test suite
   and the repository Production build also pass. No new gate, event, field, state or integration
   was introduced.
+- Final Production credential remediation retained exact Core commit
+  `718797bd4dca4bd910353d806e52c38b55c3a79b`. The exposed Stripe signing secret and unavailable
+  `OPERATIONS_API_TOKEN` were rotated as Sensitive Production variables, and READY deployment
+  `dpl_C5S8sFqPnNd9hA7NMGmDR4ys7doa` was aliased to `a7laundry.com`. Anonymous Production
+  preflight remains indistinguishable as HTTP 404; the authenticated runtime preflight returned
+  HTTP 200, `ready=true` and 10/10 checks with no failures. Only after that gate passed, a signed
+  synthetic `a7.qa.ignored` event returned HTTP 200 with `received=true`, `ignored=true` and
+  `duplicate=false`. The event carried no order, customer, payment or value and follows the
+  unsupported-event path without an operational write. Stripe endpoint
+  `we_1U9af6DcFmXJh57POBb10Nz9` remained disabled before and after the probe. Temporary credential
+  files and named in-memory secret variables were removed. No financial flow, live webhook,
+  Google Ads goal, bid, budget, campaign or billing setting was enabled or changed.
