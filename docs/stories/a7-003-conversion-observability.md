@@ -270,6 +270,8 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Rotate the exposed Production Stripe signing secret, rotate the unavailable operations token,
   redeploy the exact approved Core SHA, pass the authenticated Production preflight 10/10 and
   complete one signed non-financial ignored-event probe while keeping the live webhook disabled.
+- [x] After the signed probe and a separate owner authorization, enable only the reviewed
+  Production Stripe endpoint and verify its exact six-event scope and fail-closed public guards.
 
 ## File List
 
@@ -975,3 +977,12 @@ Make the production conversion funnel observable from acquisition CTA through St
   `we_1U9af6DcFmXJh57POBb10Nz9` remained disabled before and after the probe. Temporary credential
   files and named in-memory secret variables were removed. No financial flow, live webhook,
   Google Ads goal, bid, budget, campaign or billing setting was enabled or changed.
+- After that closed probe gate, the owner separately authorized live webhook activation. Stripe
+  endpoint `we_1U9af6DcFmXJh57POBb10Nz9` changed from `Desativados` to `Ativo` without changing
+  its URL, signing secret or six-event scope: `checkout.session.completed`,
+  `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`,
+  `checkout.session.expired`, `refund.created` and `refund.updated`. Post-activation public smoke
+  returned 200 for `/` and `/order`, anonymous preflight remained 404, webhook GET remained 405
+  and an unsigned synthetic POST was rejected with 400. No signed financial event, payment,
+  refund, order mutation, Google Ads change or additional deployment was executed during
+  activation; Production remains deployment `dpl_C5S8sFqPnNd9hA7NMGmDR4ys7doa`.
