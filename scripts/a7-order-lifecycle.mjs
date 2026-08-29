@@ -26,6 +26,9 @@ if (!action || !inputPath) {
   let payload;
   try {
     payload = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
+    if (!payload || Array.isArray(payload) || typeof payload !== 'object') {
+      throw new Error('Payload must be a JSON object.');
+    }
   } catch (_) {
     fail('Input must be a readable JSON file.');
   }

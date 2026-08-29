@@ -408,6 +408,17 @@ test('GA4 server delivery fails closed instead of silently shifting stale or fut
   assert.equal(fetches, 0);
 });
 
+test('GA4 server delivery has a bounded timeout and leaves the outbox retryable', async () => {
+  const result = await sendGa4Event({event_id: 'order_accepted:timeout', event_name: 'order_accepted',
+    client_id: '123.456', session_id: '987', occurred_at: '2026-08-28T15:45:12.345Z',
+    safe_payload: {order_id: 'opaque-order'}}, {
+    env: {GA4_MEASUREMENT_ID: 'G-TEST', GA4_MEASUREMENT_PROTOCOL_SECRET: 'test-secret'},
+    nowMillis: Date.parse('2026-08-28T16:00:00.000Z'), ga4TimeoutMs: 100,
+    fetch: async () => new Promise(() => {})
+  });
+  assert.deepEqual(result, {sent: false, status: 'failed', reason: 'request_timeout'});
+});
+
 test('GA4 outbox makes stale events terminal instead of retrying them forever', async () => {
   const store = new MemoryOperationalStore();
   store.outbox.set('evt-stale', {event_id: 'evt-stale', event_name: 'order_accepted',

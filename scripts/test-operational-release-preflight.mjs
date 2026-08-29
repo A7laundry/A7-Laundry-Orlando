@@ -12,6 +12,7 @@ function baseEnv() {
     WHATSAPP_SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
     OPERATIONS_API_TOKEN: 'operations-token',
     PAYMENT_LINK_TOKEN: 'payment-token',
+    NODE_ENV: 'production',
     STRIPE_WEBHOOK_SECRET: 'whsec_x',
     GA4_MEASUREMENT_ID: 'G-JLQNRC7MK4',
     GA4_MEASUREMENT_PROTOCOL_SECRET: 'ga-secret'
@@ -37,6 +38,22 @@ test('production preflight fails closed without secrets and never reports their 
   const failed = result.checks.filter((item) => item.status === 'fail').map((item) => item.name);
   assert.deepEqual(failed, ['operations_api_token', 'stripe_secret_key', 'ga4_debugview_mode']);
   assert.doesNotMatch(JSON.stringify(result), /private-value|ga-secret|payment-token|service-role-key/);
+});
+
+test('production preflight rejects every effective in-memory store selection', () => {
+  for (const overrides of [
+    {NODE_ENV: 'development'},
+    {NODE_ENV: undefined},
+    {A7_OPERATIONS_STORAGE_MODE: 'memory'},
+    {A7_ATTRIBUTION_STORAGE_MODE: 'memory'}
+  ]) {
+    const env = {...baseEnv(), STRIPE_SECRET_KEY: 'sk_live_x', ...overrides};
+    if (overrides.NODE_ENV === undefined) delete env.NODE_ENV;
+    const result = evaluateOperationalRelease(env, 'production');
+    assert.equal(result.ready, false);
+    assert.equal(result.checks.find((item) => item.name === 'memory_storage_forbidden').reason,
+      'durable_storage_required_in_production');
+  }
 });
 
 test('preflight rejects cross-namespace Supabase credentials', () => {
