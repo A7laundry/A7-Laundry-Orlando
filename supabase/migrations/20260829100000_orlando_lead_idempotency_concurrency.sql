@@ -82,6 +82,7 @@ begin
   return jsonb_build_object('created', v_created, 'lead', to_jsonb(v_lead));
 end;
 $$;
+
 revoke all on function public.a7_orlando_create_lead(text,text,text,uuid,uuid,text,text,text,text,text,text,text,text,jsonb,timestamptz)
   from public, anon, authenticated;
 grant execute on function public.a7_orlando_create_lead(text,text,text,uuid,uuid,text,text,text,text,text,text,text,text,jsonb,timestamptz)

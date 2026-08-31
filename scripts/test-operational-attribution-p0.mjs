@@ -6,7 +6,7 @@ import {createRequire} from 'node:module';
 import {Readable} from 'node:stream';
 
 const require = createRequire(import.meta.url);
-const {MemoryOperationalStore, resolveSupabaseConfig} = require('../lib/operational-store.js');
+const {MemoryOperationalStore, resolveSupabaseConfig, supabaseHeaders} = require('../lib/operational-store.js');
 const {service} = require('../lib/operational-lifecycle.js');
 const {safeAnalyticsContext} = require('../lib/operational-lifecycle.js');
 const {sendGa4Event, retryOutbox, timestampMicros} = require('../lib/ga4-server.js');
@@ -22,6 +22,13 @@ const ATTRIBUTION = {
   first_touch: {source: 'google-organic', medium: 'organic', landing_page: '/laundry-pickup-delivery-orlando'},
   last_touch: {source: 'google-organic', medium: 'organic', landing_page: '/laundry-pickup-delivery-orlando'}
 };
+
+test('operational Supabase headers support sb_secret without a Bearer JWT', () => {
+  assert.deepEqual(supabaseHeaders('sb_secret_example'), {apikey: 'sb_secret_example'});
+  assert.deepEqual(supabaseHeaders('legacy-jwt'), {
+    apikey: 'legacy-jwt', Authorization: 'Bearer legacy-jwt'
+  });
+});
 
 function attributionStore(record = ATTRIBUTION) {
   return {
@@ -408,6 +415,17 @@ test('GA4 server delivery fails closed instead of silently shifting stale or fut
   assert.equal(fetches, 0);
 });
 
+test('GA4 server delivery has a bounded timeout and leaves the outbox retryable', async () => {
+  const result = await sendGa4Event({event_id: 'order_accepted:timeout', event_name: 'order_accepted',
+    client_id: '123.456', session_id: '987', occurred_at: '2026-08-28T15:45:12.345Z',
+    safe_payload: {order_id: 'opaque-order'}}, {
+    env: {GA4_MEASUREMENT_ID: 'G-TEST', GA4_MEASUREMENT_PROTOCOL_SECRET: 'test-secret'},
+    nowMillis: Date.parse('2026-08-28T16:00:00.000Z'), ga4TimeoutMs: 100,
+    fetch: async () => new Promise(() => {})
+  });
+  assert.deepEqual(result, {sent: false, status: 'failed', reason: 'request_timeout'});
+});
+
 test('GA4 outbox makes stale events terminal instead of retrying them forever', async () => {
   const store = new MemoryOperationalStore();
   store.outbox.set('evt-stale', {event_id: 'evt-stale', event_name: 'order_accepted',
@@ -469,7 +487,7 @@ test('structured order intake stores PII only in the protected lead and returns 
     pickup_window_start: new Date(now + 3_600_000).toISOString(),
     pickup_window_end: new Date(now + 7_200_000).toISOString(),
     needed_by: new Date(now + 86_400_000).toISOString(), estimated_lbs: 18,
-    service_tier_preference: 'standard', minimum_acknowledged: true, privacy_consent: true,
+    service_tier_preference: 'normal', minimum_acknowledged: true, privacy_consent: true,
     attribution_id: ATTRIBUTION_ID, lead_reference: SHORT_REF,
     analytics_context: {client_id: '123456789.987654321', session_id: '987654321'}, website: ''
   };
@@ -492,12 +510,33 @@ test('structured order intake stores PII only in the protected lead and returns 
     }
     const lead = store.leads.get(res.body.lead_id);
     assert.equal(lead.operational_data.whatsapp_number, '14075550199');
+    assert.equal(lead.operational_data.service_tier_preference, 'normal');
     assert.equal(lead.operational_data.analytics_context.client_id, '123456789.987654321');
     assert.ok(lead.customer_id);
   } finally {
     previousStore ? globalThis.__A7_OPERATIONAL_STORE__ = previousStore : delete globalThis.__A7_OPERATIONAL_STORE__;
     previousAttribution ? globalThis.__A7_ATTRIBUTION_STORE__ = previousAttribution : delete globalThis.__A7_ATTRIBUTION_STORE__;
   }
+});
+
+test('structured order intake normalizes tiers and requires needed-by at or after pickup end', () => {
+  const now = Date.now();
+  const valid = {
+    submission_id: '55555555-5555-4555-8555-555555555555',
+    service_type: 'wash_fold_guest', accommodation_type: 'hotel', language: 'en',
+    name: 'Test Guest', whatsapp_number: '+1 407 555 0199', property: 'Test Hotel',
+    pickup_address: 'Protected test pickup address',
+    pickup_window_start: new Date(now + 3_600_000).toISOString(),
+    pickup_window_end: new Date(now + 7_200_000).toISOString(),
+    needed_by: new Date(now + 7_200_000).toISOString(),
+    minimum_acknowledged: true, privacy_consent: true
+  };
+  assert.equal(orderIntake.validated({...valid, service_tier_preference: 'express'}).service_tier_preference,
+    'express');
+  assert.equal(orderIntake.validated({...valid, service_tier_preference: 'priority'}).service_tier_preference,
+    'normal');
+  assert.throws(() => orderIntake.validated({...valid,
+    needed_by: new Date(now + 7_199_000).toISOString()}), /timing are inconsistent/);
 });
 
 test('one order cannot be bound to two different Stripe PaymentIntents', async () => {

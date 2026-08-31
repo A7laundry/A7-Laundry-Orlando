@@ -93,17 +93,22 @@ async function stripePost(path, params, secretKey, idempotencyKey) {
 function confirmationUrl(env = process.env) {
   const configured = cleanText(env.A7_PUBLIC_BASE_URL, '');
   const previewHost = cleanText(env.VERCEL_URL, '');
+  const preview = env.VERCEL_ENV === 'preview';
+  const production = env.VERCEL_ENV === 'production' || (!env.VERCEL_ENV && env.NODE_ENV === 'production');
   const candidate = configured || (env.VERCEL_ENV === 'preview' && previewHost
     ? `https://${previewHost}`
     : PRODUCTION_ORIGIN);
   let origin;
   try {
     const parsed = new URL(candidate);
-    const allowed = parsed.protocol === 'https:' && (
-      parsed.hostname === 'a7laundry.com'
-      || parsed.hostname.endsWith('.vercel.app')
-      || parsed.hostname === 'localhost'
-    );
+    const normalizedPreviewHost = previewHost.replace(/^https?:\/\//, '').split('/')[0].split(':')[0].toLowerCase();
+    const productionHosts = new Set(['a7laundry.com', 'www.a7laundry.com']);
+    const allowed = preview
+      ? parsed.protocol === 'https:' && Boolean(normalizedPreviewHost) && parsed.hostname === normalizedPreviewHost
+      : production
+        ? parsed.protocol === 'https:' && productionHosts.has(parsed.hostname)
+        : (parsed.protocol === 'https:' && productionHosts.has(parsed.hostname))
+          || (parsed.hostname === 'localhost' && (parsed.protocol === 'http:' || parsed.protocol === 'https:'));
     if (!allowed || parsed.username || parsed.password) throw new Error('invalid');
     origin = parsed.origin;
   } catch (_) {

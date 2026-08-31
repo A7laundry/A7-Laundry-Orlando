@@ -17,8 +17,14 @@ const {
   resetAttributionStoreForTests,
   SupabaseAttributionStore,
   UnavailableAttributionStore,
-  resolveAttributionSupabaseConfig
+  resolveAttributionSupabaseConfig,
+  supabaseHeaders
 } = require('../lib/attribution-store.js');
+
+assert.deepEqual(supabaseHeaders('sb_secret_example'), {apikey: 'sb_secret_example'});
+assert.deepEqual(supabaseHeaders('legacy-jwt'), {
+  apikey: 'legacy-jwt', Authorization: 'Bearer legacy-jwt'
+});
 
 assert.deepEqual(resolveAttributionSupabaseConfig({
   A7_ATTRIBUTION_SUPABASE_URL: 'https://partial-attribution.supabase.co',

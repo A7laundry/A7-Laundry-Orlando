@@ -1,7 +1,7 @@
 'use strict';
 
 const crypto = require('node:crypto');
-const { service, safeAnalyticsContext } = require('../lib/operational-lifecycle.js');
+const { service, safeAnalyticsContext, SERVICE_TIERS } = require('../lib/operational-lifecycle.js');
 const {
   createOperationalStore,
   OperationalStoreError,
@@ -104,7 +104,7 @@ function validated(payload) {
   const pickupStart = isoFuture(payload.pickup_window_start, 'Pickup window');
   const pickupEnd = isoFuture(payload.pickup_window_end, 'Pickup window');
   const neededBy = isoFuture(payload.needed_by, 'Needed-by time');
-  if (Date.parse(pickupEnd) <= Date.parse(pickupStart) || Date.parse(neededBy) <= Date.parse(pickupStart)) {
+  if (Date.parse(pickupEnd) <= Date.parse(pickupStart) || Date.parse(neededBy) < Date.parse(pickupEnd)) {
     throw new InvalidTransitionError('Pickup and needed-by timing are inconsistent.');
   }
   const estimated = payload.estimated_lbs === '' || payload.estimated_lbs == null ? null : Number(payload.estimated_lbs);
@@ -130,7 +130,8 @@ function validated(payload) {
     pickup_window_end: pickupEnd,
     needed_by: neededBy,
     estimated_lbs: estimated,
-    service_tier_preference: clean(payload.service_tier_preference, 20) || 'standard',
+    service_tier_preference: SERVICE_TIERS.has(clean(payload.service_tier_preference, 20))
+      ? clean(payload.service_tier_preference, 20) : 'normal',
     attribution_id: clean(payload.attribution_id, 64) || null,
     lead_reference: clean(payload.lead_reference, 10).toUpperCase() || null,
     analytics_context: safeAnalyticsContext(payload.analytics_context)

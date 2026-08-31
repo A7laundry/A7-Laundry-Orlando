@@ -2,13 +2,20 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   attachOperationsToFunnels, collectOperationalKpis, readOperationalKpiConfig,
-  requestedOperationalPeriod
+  requestedOperationalPeriod, supabaseHeaders
 } from '../operational-kpis-contract.js';
 
 test('operational configuration fails closed without exposing secrets', () => {
   assert.deepEqual(readOperationalKpiConfig({}).missing, [
     'A7_OPERATIONS_SUPABASE_URL', 'A7_OPERATIONS_SUPABASE_SERVICE_ROLE_KEY'
   ]);
+});
+
+test('Supabase secret keys use apikey only while legacy JWTs retain Bearer compatibility', () => {
+  assert.deepEqual(supabaseHeaders('sb_secret_example'), {apikey: 'sb_secret_example'});
+  assert.deepEqual(supabaseHeaders('legacy-jwt'), {
+    apikey: 'legacy-jwt', Authorization: 'Bearer legacy-jwt'
+  });
 });
 
 test('operational period is a bounded moving 30-day window', () => {

@@ -139,7 +139,8 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] The Orlando operational attribution contract defines durable lead/order identities, separate operational and financial states, `order_accepted` and `purchase` macro outcomes, Stripe linkage, PII boundaries and an end-to-end QA gate without changing campaign goals.
 - [x] The local P0 implementation creates durable lead/order/event/payment contracts, freezes an attribution snapshot at acceptance, requires an invoiced `order_id` for Stripe, ingests payment/refund webhooks idempotently and keeps the browser confirmation informational.
 - [x] The protected branch Preview uses durable Supabase storage, branch-isolated runtime credentials and a Stripe test-mode signed webhook; synthetic QA proves failed, void, paid, delivered, refunded and repeat-order paths, webhook idempotency and safe analytics payloads, then removes all synthetic business records and deactivates the test payment objects.
-- [ ] Complete the separately authorized Production application cutover and observation window before release. Contract §16 check 13 is complete; `money_page_view` was removed from GA4 key events, `purchase` remained enabled, and the Production credential/dependency predeploy passed 10/10 with the live webhook disabled. Runtime preflight, activation and any financial smoke remain separate gates.
+- [ ] Complete contract §16 check 13 in GA4 DebugView and separately approve/configure the Production cutover before release. `money_page_view` was removed from GA4 key events on 2026-08-28 and verified absent after reload; `purchase` remained enabled. The tagged deterministic journey and browser/WhatsApp evidence are complete.
+- [ ] Every privileged Supabase consumer uses a validated `sb_secret_` key through the `apikey` header only; the compromised legacy `service_role` key is deactivated only after Core, MOS and the separate WhatsApp Bridge have deployed the compatible code and zero legacy consumers are confirmed.
 
 ## Tasks
 
@@ -265,6 +266,12 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] Configure the branch-isolated protected Preview, register the Stripe test webhook, execute the synthetic operational/financial lifecycle and remove its Supabase and Stripe test data.
 - [x] Isolate Stripe Preview transport behind a dedicated `Stripe-QA` Vercel bypass, validate a signed non-financial probe on the unique deployment and stable alias, then remove the superseded test endpoint without changing the project-wide bypass.
 - [x] Create and protect the GA4 Measurement Protocol secret after the owner confirms Google's user-data collection attestation, validate the server events in DebugView and preserve the separate authorization gate for any Production cutover. Editor-capable access through `a7laundry.usa@gmail.com` is confirmed; `money_page_view` was removed from key events, `purchase` remained enabled, all three server events passed strict validation and DebugView, and both Preview debug flags were returned to `false` on 2026-08-28.
+- [ ] Complete the Supabase key incident cutover: replace the masked placeholder with a validated secret value, deploy compatible Core/MOS and Bridge runtimes, prove zero legacy consumers, then separately deactivate the compromised legacy key with rollback ready.
+- [x] Rotate the exposed Production Stripe signing secret, rotate the unavailable operations token,
+  redeploy the exact approved Core SHA, pass the authenticated Production preflight 10/10 and
+  complete one signed non-financial ignored-event probe while keeping the live webhook disabled.
+- [x] After the signed probe and a separate owner authorization, enable only the reviewed
+  Production Stripe endpoint and verify its exact six-event scope and fail-closed public guards.
 
 ## File List
 
@@ -290,6 +297,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - `lib/ga4-server.js`
 - `api/order-intake.js`
 - `api/operations/lifecycle.js`
+- `api/operations/preflight.js`
 - `api/stripe-webhook.js`
 - `api/create-payment-link.js`
 - `api/stripe-session.js`
@@ -926,13 +934,55 @@ Make the production conversion funnel observable from acquisition CTA through St
   operational routes stayed 404. Production preflight is therefore NO-GO pending its own secrets,
   webhook/runtime configuration and separate owner authorization; no Production or Google Ads
   mutation occurred.
-- The owner subsequently authorized Production credential preparation and a no-deploy preflight.
-  Vercel Production now contains the missing operational token, live webhook secret, exact Orlando
-  GA4 stream/Measurement Protocol secret and both GA4 debug flags set to `false`; the existing live
-  Stripe key, payment token and durable Supabase pair were preserved. Live Stripe endpoint
-  `we_1U9af6DcFmXJh57POBb10Nz9` targets the future Production route, listens to the exact six
-  checkout/refund events and is disabled. The sanitized `production-predeploy` gate passed 10/10,
-  including a read-only Supabase probe and strict non-reporting GA4 validation. Production remains
-  unchanged on `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`; `/` is 200 and `/order`, the Stripe webhook,
-  operations lifecycle and runtime preflight routes are all 404. No deployment, webhook activation,
-  payment or Google Ads mutation occurred; application cutover remains a separate authorization.
+- Aug 29 incident response found that commit `1f37b57fcb6613788598edeff9a4ec63a77ea429`
+  reached READY Preview, but real attribution and order-intake calls failed because the configured
+  Supabase project URL was stale. It also proved the runtime preflight was configuration-only and
+  could falsely report 10/10. The corrective candidate now makes the existing storage gate perform
+  read-only attribution-health and operational-table probes, returning sanitized
+  `runtime_unavailable` on failure without adding a new gate. Core attribution, operational storage
+  and MOS now omit `Authorization: Bearer` for `sb_secret_` keys while retaining temporary legacy
+  JWT compatibility; focused header and connectivity tests pass. The separate unlinked WhatsApp
+  Bridge active deployment remains a legacy-Bearer consumer and was not deployed. Its exact local
+  source was minimally adapted with the same header rule and passes 8/8 Bridge tests; a read-only
+  source comparison proves the active deployment still equals that local source before the fix.
+  Vercel Preview and
+  both Production project scopes were updated without deploy, but the installed Supabase CLI had
+  returned a masked default key that the gateway rejected with HTTP 401. Those environment values
+  are therefore not releaseable and must be replaced with a validated revealed key before any new
+  deployment. Existing deployments remain on their immutable legacy environment. The compromised
+  legacy key remains active because zero consumers is not yet true. Root lint, typecheck, 77/77
+  root tests, 67/67 MOS tests and repository build pass; no Production deploy, Stripe financial
+  action, Google Ads mutation or legacy-key deactivation occurred.
+- The first authorized Core Production cutover reached READY deployment
+  `dpl_8hLcyTMYX2SnMUzmQYP1pr4Qg3Sm`, and public smoke checks returned 200 for `/` and `/order`
+  with the expected method guards on the operational APIs. The mandatory Production preflight
+  could not be proven because Vercel excludes Sensitive values from both `env pull` and
+  `env run`, while the runtime preflight was intentionally Preview-only. The stop condition was
+  enforced before any financial action, and Production was restored to rollback deployment
+  `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`. The minimal corrective successor keeps anonymous Production
+  requests indistinguishable as HTTP 404, permits the existing sanitized 10-check preflight only
+  with a valid `OPERATIONS_API_TOKEN`, and reuses the existing read-only Supabase connectivity
+  probe. The focused preflight suite passes 9/9; lint, typecheck, the complete root/MOS test suite
+  and the repository Production build also pass. No new gate, event, field, state or integration
+  was introduced.
+- Final Production credential remediation retained exact Core commit
+  `718797bd4dca4bd910353d806e52c38b55c3a79b`. The exposed Stripe signing secret and unavailable
+  `OPERATIONS_API_TOKEN` were rotated as Sensitive Production variables, and READY deployment
+  `dpl_C5S8sFqPnNd9hA7NMGmDR4ys7doa` was aliased to `a7laundry.com`. Anonymous Production
+  preflight remains indistinguishable as HTTP 404; the authenticated runtime preflight returned
+  HTTP 200, `ready=true` and 10/10 checks with no failures. Only after that gate passed, a signed
+  synthetic `a7.qa.ignored` event returned HTTP 200 with `received=true`, `ignored=true` and
+  `duplicate=false`. The event carried no order, customer, payment or value and follows the
+  unsupported-event path without an operational write. Stripe endpoint
+  `we_1U9af6DcFmXJh57POBb10Nz9` remained disabled before and after the probe. Temporary credential
+  files and named in-memory secret variables were removed. No financial flow, live webhook,
+  Google Ads goal, bid, budget, campaign or billing setting was enabled or changed.
+- After that closed probe gate, the owner separately authorized live webhook activation. Stripe
+  endpoint `we_1U9af6DcFmXJh57POBb10Nz9` changed from `Desativados` to `Ativo` without changing
+  its URL, signing secret or six-event scope: `checkout.session.completed`,
+  `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`,
+  `checkout.session.expired`, `refund.created` and `refund.updated`. Post-activation public smoke
+  returned 200 for `/` and `/order`, anonymous preflight remained 404, webhook GET remained 405
+  and an unsigned synthetic POST was rejected with 400. No signed financial event, payment,
+  refund, order mutation, Google Ads change or additional deployment was executed during
+  activation; Production remains deployment `dpl_C5S8sFqPnNd9hA7NMGmDR4ys7doa`.

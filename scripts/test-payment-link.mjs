@@ -157,7 +157,13 @@ test('payment-link helpers use fixed-length token comparison and strict UUIDs', 
 test('payment-link confirmation origin follows Preview without trusting arbitrary hosts', () => {
   assert.equal(handler.confirmationUrl({VERCEL_ENV: 'preview', VERCEL_URL: 'a7-preview-123.vercel.app'}),
     'https://a7-preview-123.vercel.app/guest-payment-confirmation?session_id={CHECKOUT_SESSION_ID}');
+  assert.throws(() => handler.confirmationUrl({VERCEL_ENV: 'preview', VERCEL_URL: 'a7-preview-123.vercel.app',
+    A7_PUBLIC_BASE_URL: 'https://unrelated-tenant.vercel.app'}));
   assert.equal(handler.confirmationUrl({VERCEL_ENV: 'production'}),
     'https://a7laundry.com/guest-payment-confirmation?session_id={CHECKOUT_SESSION_ID}');
+  assert.equal(handler.confirmationUrl({VERCEL_ENV: 'production', A7_PUBLIC_BASE_URL: 'https://www.a7laundry.com'}),
+    'https://www.a7laundry.com/guest-payment-confirmation?session_id={CHECKOUT_SESSION_ID}');
+  assert.throws(() => handler.confirmationUrl({VERCEL_ENV: 'production',
+    A7_PUBLIC_BASE_URL: 'https://a7-preview-123.vercel.app'}));
   assert.throws(() => handler.confirmationUrl({A7_PUBLIC_BASE_URL: 'https://evil.example'}));
 });
