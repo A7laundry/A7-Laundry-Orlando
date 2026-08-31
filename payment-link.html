@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gerar link de pagamento — A7 Laundry</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<style>
+:root{
+  --ink:#071523; --navy:#09233a; --blue:#0f8acb; --aqua:#62d7df;
+  --gold:#f5bd63; --cream:#fffaf0; --muted:#5d6d7b;
+  --success:#1d9a69; --error:#bc4b4b; --line:rgba(7,21,35,.12);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100svh;color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:linear-gradient(145deg,#061421 0%,#0a2943 48%,#124765 100%);
+  padding:16px;
+}
+.card{
+  width:min(520px,100%);margin:0 auto;background:var(--cream);
+  border-radius:20px;padding:26px 22px 22px;box-shadow:0 24px 70px rgba(4,30,52,.3);
+}
+h1{font-size:20px;margin:0 0 4px;letter-spacing:-.02em}
+.sub{font-size:13px;color:var(--muted);margin:0 0 22px}
+label{display:block;font-size:12px;font-weight:700;margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--navy)}
+input,select{
+  width:100%;min-height:50px;border:1px solid var(--line);border-radius:12px;
+  padding:0 14px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink);
+}
+input:focus,select:focus{outline:2px solid var(--blue);outline-offset:1px}
+.field{margin-bottom:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.calc{background:rgba(15,138,203,.07);border:1px solid rgba(15,138,203,.18);border-radius:14px;padding:16px;margin-bottom:18px}
+.calc-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:0 0 12px}
+.calc-out{font-size:13px;color:var(--muted);margin:10px 0 0;min-height:20px}
+.calc-out strong{color:var(--ink);font-size:15px}
+.warn{color:var(--error);font-weight:600}
+button{
+  width:100%;min-height:54px;border:0;border-radius:14px;font-size:15px;font-weight:800;
+  font-family:inherit;cursor:pointer;transition:.15s;
+}
+.primary{background:#1cba6f;color:#fff;box-shadow:0 10px 24px rgba(28,186,111,.26)}
+.primary:disabled{background:#b9c4cb;box-shadow:none;cursor:not-allowed}
+.ghost{background:#fff;border:1px solid var(--line);color:var(--navy);margin-top:10px}
+.result{margin-top:20px;padding:16px;border-radius:14px;background:rgba(29,154,105,.09);border:1px solid rgba(29,154,105,.25);display:none}
+.result.show{display:block}
+.result.err{background:rgba(188,75,75,.08);border-color:rgba(188,75,75,.3)}
+.link-box{
+  word-break:break-all;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+  background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;
+}
+.msg{font-size:13px;margin:0 0 4px;font-weight:700}
+.token-bar{display:flex;gap:8px;align-items:center;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.token-bar input{min-height:42px;font-size:13px}
+.token-bar button{width:auto;min-height:42px;padding:0 16px;font-size:13px;background:var(--navy);color:#fff}
+.ok-dot{width:8px;height:8px;border-radius:50%;background:var(--success);flex:0 0 8px}
+.hint{font-size:11px;color:var(--muted);margin:6px 0 0}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Link de pagamento</h1>
+  <p class="sub">Gera o link do Stripe já com a confirmação configurada.</p>
+
+  <div class="token-bar" id="tokenBar">
+    <input type="password" id="token" placeholder="Token de acesso" autocomplete="current-password">
+    <button type="button" id="saveToken">Salvar</button>
+  </div>
+
+  <div class="calc">
+    <p class="calc-title">Calculadora por libra</p>
+    <div class="row">
+      <div>
+        <label for="lbs">Libras</label>
+        <input type="number" id="lbs" inputmode="decimal" min="0" step="0.5" placeholder="25">
+      </div>
+      <div>
+        <label for="rate">Tarifa</label>
+        <select id="rate">
+          <option value="3.25">Normal · $3.25/lb</option>
+          <option value="3.95">Express · $3.95/lb</option>
+        </select>
+      </div>
+    </div>
+    <p class="calc-out" id="calcOut">Informe as libras para calcular.</p>
+  </div>
+
+  <div class="field">
+    <label for="amount">Valor a cobrar (USD)</label>
+    <input type="number" id="amount" inputmode="decimal" min="5" max="2000" step="0.01" placeholder="81.25">
+    <p class="hint">Preenchido pela calculadora. Pode editar à mão.</p>
+  </div>
+
+  <div class="field">
+    <label for="orderId">Order ID aprovado</label>
+    <input type="text" id="orderId" maxlength="36" autocomplete="off" placeholder="00000000-0000-4000-8000-000000000000">
+    <p class="hint">Identificador opaco criado quando o pedido é aceito.</p>
+  </div>
+
+  <div class="field">
+    <label for="leadId">Lead ID</label>
+    <input type="text" id="leadId" maxlength="36" autocomplete="off" placeholder="00000000-0000-4000-8000-000000000000">
+    <p class="hint">Identificador opaco do lead ligado ao pedido. Não insira nome, telefone, hotel ou endereço.</p>
+  </div>
+
+  <button type="button" class="primary" id="generate">Gerar link</button>
+
+  <div class="result" id="result">
+    <p class="msg" id="resultMsg"></p>
+    <div class="link-box" id="linkBox"></div>
+    <button type="button" class="ghost" id="copy">Copiar link</button>
+    <button type="button" class="ghost" id="copyMsg">Copiar com mensagem pronta</button>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var MIN_ORDER = 50;
+  var $ = function (id) { return document.getElementById(id); };
+
+  var tokenInput = $('token');
+  var tokenBar = $('tokenBar');
+  var lbs = $('lbs');
+  var rate = $('rate');
+  var calcOut = $('calcOut');
+  var amount = $('amount');
+  var orderId = $('orderId');
+  var leadId = $('leadId');
+  var generate = $('generate');
+  var result = $('result');
+  var resultMsg = $('resultMsg');
+  var linkBox = $('linkBox');
+
+  var lastUrl = '';
+
+  function markTokenSaved() {
+    tokenBar.innerHTML = '<span class="ok-dot"></span>'
+      + '<span style="font-size:13px;color:var(--muted);flex:1">Token salvo neste aparelho</span>'
+      + '<button type="button" id="clearToken">Trocar</button>';
+    document.getElementById('clearToken').addEventListener('click', function () {
+      try { sessionStorage.removeItem('a7_payment_token'); } catch (_) {}
+      location.reload();
+    });
+  }
+
+  function storedToken() {
+    try { return sessionStorage.getItem('a7_payment_token') || ''; } catch (_) { return ''; }
+  }
+
+  if (storedToken()) markTokenSaved();
+
+  var saveButton = $('saveToken');
+  if (saveButton) {
+    saveButton.addEventListener('click', function () {
+      var value = tokenInput.value.trim();
+      if (!value) return;
+      try { sessionStorage.setItem('a7_payment_token', value); } catch (_) {}
+      markTokenSaved();
+    });
+  }
+
+  function recalc() {
+    var pounds = parseFloat(lbs.value);
+    if (!isFinite(pounds) || pounds <= 0) {
+      calcOut.textContent = 'Informe as libras para calcular.';
+      return;
+    }
+    var perLb = parseFloat(rate.value);
+    var raw = pounds * perLb;
+    var charged = Math.max(raw, MIN_ORDER);
+
+    var text = pounds + ' lb × $' + perLb.toFixed(2) + ' = $' + raw.toFixed(2);
+    if (charged > raw) {
+      calcOut.innerHTML = text + ' → <strong>$' + charged.toFixed(2) + '</strong> '
+        + '<span class="warn">(mínimo $' + MIN_ORDER + ')</span>';
+    } else {
+      calcOut.innerHTML = text + ' → <strong>$' + charged.toFixed(2) + '</strong>';
+    }
+    amount.value = charged.toFixed(2);
+
+  }
+
+  lbs.addEventListener('input', recalc);
+  rate.addEventListener('change', recalc);
+
+  function show(message, isError) {
+    result.className = 'result show' + (isError ? ' err' : '');
+    resultMsg.textContent = message;
+    linkBox.style.display = isError ? 'none' : 'block';
+    document.getElementById('copy').style.display = isError ? 'none' : 'block';
+    document.getElementById('copyMsg').style.display = isError ? 'none' : 'block';
+  }
+
+  generate.addEventListener('click', async function () {
+    var token = storedToken() || tokenInput.value.trim();
+    if (!token) { show('Informe o token de acesso primeiro.', true); return; }
+
+    var value = parseFloat(amount.value);
+    if (!isFinite(value) || value < 5) { show('Valor inválido.', true); return; }
+    var uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    var requestedOrderId = orderId.value.trim().toLowerCase();
+    var requestedLeadId = leadId.value.trim().toLowerCase();
+    if (!uuidPattern.test(requestedOrderId) || !uuidPattern.test(requestedLeadId)) {
+      show('Informe Order ID e Lead ID válidos antes de gerar a cobrança.', true);
+      return;
+    }
+
+    generate.disabled = true;
+    generate.textContent = 'Gerando…';
+
+    try {
+      var response = await fetch('/api/create-payment-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-a7-token': token },
+        body: JSON.stringify({
+          amount_usd: value,
+          order_id: requestedOrderId,
+          lead_id: requestedLeadId
+        })
+      });
+      var payload = await response.json().catch(function () { return {}; });
+
+      if (!response.ok) {
+        show(payload.error || 'Não foi possível gerar o link.', true);
+        return;
+      }
+
+      lastUrl = payload.url;
+      linkBox.textContent = payload.url;
+      show('Link criado — $' + payload.amount_usd.toFixed(2), false);
+    } catch (_) {
+      show('Falha de conexão. Tente de novo.', true);
+    } finally {
+      generate.disabled = false;
+      generate.textContent = 'Gerar link';
+    }
+  });
+
+  function copyText(text, button, label) {
+    navigator.clipboard.writeText(text).then(function () {
+      var original = button.textContent;
+      button.textContent = label;
+      setTimeout(function () { button.textContent = original; }, 1600);
+    });
+  }
+
+  $('copy').addEventListener('click', function () {
+    if (lastUrl) copyText(lastUrl, this, 'Copiado ✓');
+  });
+
+  $('copyMsg').addEventListener('click', function () {
+    if (!lastUrl) return;
+    var value = parseFloat(amount.value).toFixed(2);
+    var message = 'Here is your secure payment link for $' + value + ':\n' + lastUrl
+      + '\n\nOnce payment is confirmed, we will continue with the agreed delivery handoff.';
+    copyText(message, this, 'Copiado ✓');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,851 @@
+{
+  "availability": {
+    "reason": "Sales, contribution and retention are unavailable until explicitly reconciled.",
+    "status": "partial"
+  },
+  "briefs": [
+    {
+      "advanceEvidence": "Provenanced conversation linked to this hypothesis.",
+      "audience": "hotel_guest",
+      "concept": "A vacation clock advances while the laundry task disappears from the guest itinerary.",
+      "externalMetaAdId": null,
+      "id": "gwf-time-back",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "Compare qualified conversations in the same reconciled wave; attention metrics remain diagnostic.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does quantifying time lost to laundry generate more qualified guest conversations than a service-led control?",
+      "reason": "Makes opportunity cost visible without claiming a guaranteed number of hours.",
+      "signature": "persona:hotel_guest|pain:lost_vacation_time|awareness:problem_aware|angle:time_back|hook:vacation_clock|format:clock_demo|promise:less_time_on_laundry|cta:send_hotel",
+      "sourceIds": [
+        "src-mrbeast-lex",
+        "src-youtube-retention",
+        "src-tiktok-creative-codes",
+        "src-a7-ecosystem"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns the opportunity-cost territory.",
+      "taxonomy": {
+        "angle": "time_back",
+        "awareness": "problem_aware",
+        "cta": "send_hotel",
+        "format": "clock_demo",
+        "hook": "vacation_clock",
+        "pain": "lost_vacation_time",
+        "persona": "hotel_guest",
+        "promise": "less_time_on_laundry"
+      },
+      "title": "Buy back a vacation afternoon"
+    },
+    {
+      "advanceEvidence": "Provenanced qualifying conversation.",
+      "audience": "business_traveler",
+      "concept": "POV: the final clean outfit is used, then pickup becomes the resolution.",
+      "externalMetaAdId": null,
+      "id": "gwf-trip-rescue",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "A conversation must mention current-trip need or timing to count as qualified.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does a specific mid-trip wardrobe emergency create more qualified conversations?",
+      "reason": "Dramatizes a concrete problem rather than generic convenience.",
+      "signature": "persona:business_traveler|pain:limited_clean_clothes|awareness:problem_aware|angle:trip_rescue|hook:last_clean_outfit|format:pov_story|promise:clean_clothes_rescue|cta:send_location",
+      "sourceIds": [
+        "src-mrbeast-lex",
+        "src-a7-ecosystem"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns urgent wardrobe rescue.",
+      "taxonomy": {
+        "angle": "trip_rescue",
+        "awareness": "problem_aware",
+        "cta": "send_location",
+        "format": "pov_story",
+        "hook": "last_clean_outfit",
+        "pain": "limited_clean_clothes",
+        "persona": "business_traveler",
+        "promise": "clean_clothes_rescue"
+      },
+      "title": "The last clean outfit"
+    },
+    {
+      "advanceEvidence": "Provenanced qualifying conversation.",
+      "audience": "vacation_rental_guest",
+      "concept": "Split-screen suitcase math: more outfits versus a smaller bag plus one pickup.",
+      "externalMetaAdId": null,
+      "id": "gwf-pack-less",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "Qualifying conversation references an upcoming or ongoing stay and pickup feasibility.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does pre-trip packing utility create demand before the laundry pile becomes urgent?",
+      "reason": "Reaches a different awareness moment and value frame.",
+      "signature": "persona:vacation_rental_guest|pain:packing_overload|awareness:solution_aware|angle:pack_less|hook:suitcase_math|format:split_screen|promise:lighter_suitcase|cta:estimate_bag",
+      "sourceIds": [
+        "src-meta-diversification",
+        "src-motion-frameworks",
+        "src-a7-ecosystem"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns packing simplification before urgency.",
+      "taxonomy": {
+        "angle": "pack_less",
+        "awareness": "solution_aware",
+        "cta": "estimate_bag",
+        "format": "split_screen",
+        "hook": "suitcase_math",
+        "pain": "packing_overload",
+        "persona": "vacation_rental_guest",
+        "promise": "lighter_suitcase"
+      },
+      "title": "Pack less, rewear clean"
+    },
+    {
+      "advanceEvidence": "Provenanced qualifying conversation.",
+      "audience": "hotel_guest",
+      "concept": "Bag at front desk, professional wash-and-fold, return delivery in three labeled steps.",
+      "externalMetaAdId": null,
+      "id": "gwf-doorstep",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "Qualifying conversation includes hotel/location and requested pickup window.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does removing process uncertainty increase qualified hotel conversations?",
+      "reason": "Shows logistics instead of relying on a generic convenience claim.",
+      "signature": "persona:hotel_guest|pain:no_in_unit_laundry|awareness:solution_aware|angle:doorstep_convenience|hook:door_handoff|format:three_step_demo|promise:pickup_wash_delivery|cta:book_pickup",
+      "sourceIds": [
+        "src-tiktok-creative-codes",
+        "src-acquisition-leads",
+        "src-a7-production",
+        "src-a7-ecosystem"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns operational simplicity and handoff.",
+      "taxonomy": {
+        "angle": "doorstep_convenience",
+        "awareness": "solution_aware",
+        "cta": "book_pickup",
+        "format": "three_step_demo",
+        "hook": "door_handoff",
+        "pain": "no_in_unit_laundry",
+        "persona": "hotel_guest",
+        "promise": "pickup_wash_delivery"
+      },
+      "title": "Three-step hotel handoff"
+    },
+    {
+      "advanceEvidence": "Provenanced qualifying conversation.",
+      "audience": "family_traveler",
+      "concept": "A realistic family laundry pile becomes neatly folded stacks through a visible service transition.",
+      "externalMetaAdId": null,
+      "id": "gwf-family-relief",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "Qualifying conversation includes family/group laundry and an estimated bag or load.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does showing family-scale volume outperform individual-traveler framing?",
+      "reason": "Changes persona, load size and emotional relief.",
+      "signature": "persona:family_traveler|pain:family_laundry_pile|awareness:problem_aware|angle:family_relief|hook:laundry_mountain|format:before_after|promise:family_load_removed|cta:ask_family_pickup",
+      "sourceIds": [
+        "src-meta-diversification",
+        "src-motion-frameworks",
+        "src-a7-production"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns family-scale relief rather than speed.",
+      "taxonomy": {
+        "angle": "family_relief",
+        "awareness": "problem_aware",
+        "cta": "ask_family_pickup",
+        "format": "before_after",
+        "hook": "laundry_mountain",
+        "pain": "family_laundry_pile",
+        "persona": "family_traveler",
+        "promise": "family_load_removed"
+      },
+      "title": "Make the family laundry pile vanish"
+    },
+    {
+      "advanceEvidence": "Provenanced qualifying conversation plus feasible service window.",
+      "audience": "vacation_rental_guest",
+      "concept": "A checkout countdown asks whether clean clothes are ready for the next leg of the trip.",
+      "externalMetaAdId": null,
+      "id": "gwf-checkout",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "Qualifying conversation supplies departure time; availability is confirmed operationally.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does a departure deadline create higher-intent conversations without an unsupported speed guarantee?",
+      "reason": "Frames availability around a real deadline while keeping fulfillment conditional.",
+      "signature": "persona:vacation_rental_guest|pain:checkout_pressure|awareness:product_aware|angle:before_checkout|hook:checkout_countdown|format:countdown|promise:departure_window_checked|cta:check_availability",
+      "sourceIds": [
+        "src-youtube-retention",
+        "src-youtube-recommendations",
+        "src-a7-production"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns deadline-aware intent without guaranteed turnaround.",
+      "taxonomy": {
+        "angle": "before_checkout",
+        "awareness": "product_aware",
+        "cta": "check_availability",
+        "format": "countdown",
+        "hook": "checkout_countdown",
+        "pain": "checkout_pressure",
+        "persona": "vacation_rental_guest",
+        "promise": "departure_window_checked"
+      },
+      "title": "Checkout countdown"
+    },
+    {
+      "advanceEvidence": "Provenanced qualifying conversation.",
+      "audience": "hotel_guest",
+      "concept": "A labeled bag journey from handoff to folded return, with no fabricated tracking capability.",
+      "externalMetaAdId": null,
+      "id": "gwf-trust",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "Track qualified conversations that ask about handling, identity or return process.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does making every handoff visible reduce trust objections?",
+      "reason": "Targets perceived risk rather than price or speed.",
+      "signature": "persona:hotel_guest|pain:trust_handoff|awareness:product_aware|angle:visible_process|hook:bag_journey|format:process_reveal|promise:visible_handoff_process|cta:see_how_it_works",
+      "sourceIds": [
+        "src-mrbeast-lex",
+        "src-youtube-recommendations",
+        "src-a7-production"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns trust and process transparency.",
+      "taxonomy": {
+        "angle": "visible_process",
+        "awareness": "product_aware",
+        "cta": "see_how_it_works",
+        "format": "process_reveal",
+        "hook": "bag_journey",
+        "pain": "trust_handoff",
+        "persona": "hotel_guest",
+        "promise": "visible_handoff_process"
+      },
+      "title": "Follow the bag"
+    },
+    {
+      "advanceEvidence": "Provenanced qualifying conversation acknowledging price/minimum.",
+      "audience": "hotel_guest",
+      "concept": "A plain price card explains per-pound pricing and the documented minimum before the CTA.",
+      "externalMetaAdId": null,
+      "id": "gwf-price",
+      "itemId": "guest-wash-fold",
+      "learningCriterion": "Compare the share of conversations that accept the minimum in the same wave; no sale inference.",
+      "primaryMetric": {
+        "name": "qualified_conversation",
+        "period": null,
+        "source": "WhatsApp manual reconciliation",
+        "status": "unavailable"
+      },
+      "question": "Does leading with documented price reduce low-fit conversations and improve qualification?",
+      "reason": "Trades raw conversation volume for clearer commercial intent.",
+      "signature": "persona:hotel_guest|pain:price_uncertainty|awareness:most_aware|angle:transparent_price|hook:price_first|format:price_card|promise:known_per_pound_price|cta:get_estimate",
+      "sourceIds": [
+        "src-meta-diversification",
+        "src-acquisition-leads",
+        "src-a7-production"
+      ],
+      "stage": "idea",
+      "strategicDifference": "Owns price qualification rather than persuasion.",
+      "taxonomy": {
+        "angle": "transparent_price",
+        "awareness": "most_aware",
+        "cta": "get_estimate",
+        "format": "price_card",
+        "hook": "price_first",
+        "pain": "price_uncertainty",
+        "persona": "hotel_guest",
+        "promise": "known_per_pound_price"
+      },
+      "title": "Price first: US$3.25/lb"
+    }
+  ],
+  "catalog": {
+    "capacity": 10,
+    "expansionGate": "Add an item only with reconciled observed sales or explicit owner confirmation; capacity is not a requirement to invent ten items.",
+    "items": [
+      {
+        "eligibleAudiences": [
+          "hotel_guest",
+          "vacation_rental_guest",
+          "family_traveler",
+          "business_traveler"
+        ],
+        "id": "guest-wash-fold",
+        "name": "Guest wash-and-fold",
+        "operationalConstraints": [
+          "US$50 minimum",
+          "Pickup window and turnaround depend on operational availability"
+        ],
+        "origin": {
+          "source": "Owner statement in A7-004 discovery, July 2026",
+          "status": "owner_reported",
+          "type": "owner_reported"
+        },
+        "price": {
+          "currency": "USD",
+          "source": "marketing/meta-ads/pricing-rules.md",
+          "status": "documented",
+          "unit": "lb",
+          "value": 3.25
+        },
+        "service": "pickup_delivery_laundry",
+        "topSeller": null,
+        "validationStatus": "pilot_eligible"
+      },
+      {
+        "eligibleAudiences": [
+          "unknown"
+        ],
+        "id": "sneakers",
+        "name": "Sneakers",
+        "operationalConstraints": [
+          "Demand rank unknown",
+          "Unit economics unavailable"
+        ],
+        "origin": {
+          "source": "Owner idea in A7-004 discovery, 2026-07-30",
+          "status": "owner_reported",
+          "type": "owner_idea"
+        },
+        "price": {
+          "currency": "USD",
+          "source": null,
+          "status": "unavailable",
+          "unit": "item",
+          "value": null
+        },
+        "service": "shoe_cleaning",
+        "topSeller": null,
+        "validationStatus": "candidate"
+      },
+      {
+        "eligibleAudiences": [
+          "unknown"
+        ],
+        "id": "pants",
+        "name": "Pants",
+        "operationalConstraints": [
+          "Demand rank unknown",
+          "Standalone item pricing unavailable"
+        ],
+        "origin": {
+          "source": "Owner idea in A7-004 discovery, 2026-07-30",
+          "status": "owner_reported",
+          "type": "owner_idea"
+        },
+        "price": {
+          "currency": "USD",
+          "source": null,
+          "status": "unavailable",
+          "unit": "item",
+          "value": null
+        },
+        "service": "garment_laundry",
+        "topSeller": null,
+        "validationStatus": "candidate"
+      }
+    ],
+    "schemaVersion": "1.0"
+  },
+  "evidence": {
+    "evidence": [],
+    "schemaVersion": "1.0",
+    "semantics": {
+      "acquisitionSignals": [
+        "click",
+        "session",
+        "call"
+      ],
+      "attentionSignals": [
+        "reach",
+        "view",
+        "hook_hold",
+        "video_retention"
+      ],
+      "conversationSignals": [
+        "conversation",
+        "qualified_conversation"
+      ],
+      "retentionSignals": [
+        "repeat_order"
+      ],
+      "rule": "Signals never inherit the meaning of a later stage. Missing values remain null with partial or unavailable status.",
+      "saleSignals": [
+        "completed_order",
+        "reconciled_contribution"
+      ]
+    }
+  },
+  "experiments": {
+    "allowedStages": [
+      "research",
+      "idea",
+      "production",
+      "organic",
+      "paid_challenger",
+      "conversation",
+      "sale",
+      "retention"
+    ],
+    "decisions": [],
+    "history": [],
+    "promotionRule": "PROMOTE requires a reconciled completed_order and reconciled_contribution linked to the same brief and cohort.",
+    "requiredEvidence": {
+      "conversation": [
+        "conversation"
+      ],
+      "retention": [
+        "repeat_order"
+      ],
+      "sale": [
+        "completed_order"
+      ]
+    },
+    "schemaVersion": "1.0",
+    "transitionRules": {
+      "conversation": [
+        "sale"
+      ],
+      "idea": [
+        "production"
+      ],
+      "organic": [
+        "paid_challenger",
+        "conversation"
+      ],
+      "paid_challenger": [
+        "conversation"
+      ],
+      "production": [
+        "organic"
+      ],
+      "research": [
+        "idea"
+      ],
+      "retention": [],
+      "sale": [
+        "retention"
+      ]
+    },
+    "waves": [
+      {
+        "id": "wave-gwf-001",
+        "itemId": "guest-wash-fold",
+        "members": [
+          {
+            "briefId": "gwf-time-back",
+            "role": "control"
+          },
+          {
+            "briefId": "gwf-doorstep",
+            "role": "challenger"
+          },
+          {
+            "briefId": "gwf-price",
+            "role": "challenger"
+          }
+        ],
+        "note": "Internal learning wave only. The control is the proven A4 time-lost territory, not a claim that this new brief or asset is published. Selection does not mean any ad is active.",
+        "status": "selected_internal"
+      }
+    ]
+  },
+  "generatedFrom": [
+    "marketing/funnel-intelligence/sources.json",
+    "marketing/funnel-intelligence/items.json",
+    "marketing/funnel-intelligence/taxonomy.json",
+    "marketing/funnel-intelligence/briefs.json",
+    "marketing/funnel-intelligence/evidence.json",
+    "marketing/funnel-intelligence/experiments.json"
+  ],
+  "inventory": {
+    "backlogCount": 5,
+    "briefCount": 8,
+    "capacity": 80,
+    "coverage": {
+      "angle": {
+        "before_checkout": 1,
+        "doorstep_convenience": 1,
+        "family_relief": 1,
+        "pack_less": 1,
+        "time_back": 1,
+        "transparent_price": 1,
+        "trip_rescue": 1,
+        "visible_process": 1
+      },
+      "awareness": {
+        "most_aware": 1,
+        "problem_aware": 3,
+        "product_aware": 2,
+        "solution_aware": 2,
+        "unaware": 0
+      },
+      "pain": {
+        "checkout_pressure": 1,
+        "family_laundry_pile": 1,
+        "limited_clean_clothes": 1,
+        "lost_vacation_time": 1,
+        "no_in_unit_laundry": 1,
+        "packing_overload": 1,
+        "price_uncertainty": 1,
+        "trust_handoff": 1
+      },
+      "persona": {
+        "business_traveler": 1,
+        "family_traveler": 1,
+        "hotel_guest": 4,
+        "vacation_rental_guest": 2
+      }
+    },
+    "incompleteItemSlots": 7,
+    "itemCount": 3,
+    "selectedWaveCount": 3,
+    "stages": {
+      "conversation": 0,
+      "idea": 8,
+      "organic": 0,
+      "paid_challenger": 0,
+      "production": 0,
+      "research": 0,
+      "retention": 0,
+      "sale": 0
+    }
+  },
+  "platformMutation": false,
+  "readOnly": true,
+  "research": {
+    "cutoffDate": "2026-07-30",
+    "findings": [
+      {
+        "a7Translation": "Test strategically distinct territories, not cosmetic variants; keep each wave small enough to learn at the current budget.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "Meta recommends creative diversification so the delivery system can match distinct messages and formats to people.",
+        "evidenceType": "platform_guidance",
+        "freshness": "potentially_outdated",
+        "id": "src-meta-diversification",
+        "limitation": "Platform guidance does not prove that eight variants improve A7 sales, and the page has no verified publication date.",
+        "organization": "Meta",
+        "publishedAt": null,
+        "title": "Performance 5: Creative diversification",
+        "url": "https://www.facebook.com/business/ads/performance-marketing?locale=en_GB"
+      },
+      {
+        "a7Translation": "Use one control and at most two challengers per wave; do not launch all eight hypotheses together.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "Meta recommends consolidating similar ad sets so learning is not fragmented.",
+        "evidenceType": "platform_guidance",
+        "freshness": "potentially_outdated",
+        "id": "src-meta-structure",
+        "limitation": "This is delivery guidance, not evidence that any specific creative will produce conversations or sales.",
+        "organization": "Meta",
+        "publishedAt": null,
+        "title": "Simplify your ad set structure",
+        "url": "https://www.facebook.com/business/ads/ad-set-structure"
+      },
+      {
+        "a7Translation": "Treat first-frame hold and completion as creative diagnostics while keeping WhatsApp conversations and reconciled sales separate.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "Audience-retention reporting separates the intro, spikes and dips so creators can diagnose where attention is gained or lost.",
+        "evidenceType": "platform_guidance",
+        "freshness": "potentially_outdated",
+        "id": "src-youtube-retention",
+        "limitation": "Video retention is an attention signal, not a sale or proof of local-service demand.",
+        "organization": "YouTube",
+        "publishedAt": null,
+        "title": "Measure key moments for audience retention",
+        "url": "https://support.google.com/youtube/answer/9314415"
+      },
+      {
+        "a7Translation": "Diagnose whether a concept earns attention, sustains it and satisfies the viewer without collapsing any of those signals into commercial conversion.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "YouTube describes appeal, engagement and satisfaction as distinct groups of signals used to understand content performance and recommendations.",
+        "evidenceType": "platform_guidance",
+        "freshness": "potentially_outdated",
+        "id": "src-youtube-recommendations",
+        "limitation": "Recommendation signals belong to YouTube consumption and do not establish local-service demand, a WhatsApp conversation or a sale.",
+        "organization": "YouTube",
+        "publishedAt": null,
+        "title": "How YouTube recommendations work",
+        "url": "https://support.google.com/youtube/answer/16559650?hl=en"
+      },
+      {
+        "a7Translation": "Give every short-form concept an immediately legible opening, a concrete service body and one explicit WhatsApp close; validate commercial quality separately.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "TikTok packages short-form creative as hook, body and close, and reports that the first six seconds account for 90% of ad-recall impact.",
+        "evidenceType": "platform_guidance",
+        "freshness": "potentially_outdated",
+        "id": "src-tiktok-creative-codes",
+        "limitation": "The reported result concerns recall in TikTok's research, not qualified conversations, sales or incremental revenue for A7.",
+        "organization": "TikTok for Business",
+        "publishedAt": null,
+        "title": "TikTok Creative Codes",
+        "url": "https://ads.tiktok.com/business/en-US/creative-codes"
+      },
+      {
+        "a7Translation": "Use persona × pain × awareness × angle as an anti-copy signature, then require an explicit strategic difference and A7 evidence.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "Motion presents creative territory as combinations of customer persona, pain, awareness and angle to structure diversity and analysis.",
+        "evidenceType": "commercial_vendor_framework",
+        "freshness": "potentially_outdated",
+        "id": "src-motion-frameworks",
+        "limitation": "Motion sells creative analytics software; its framework is commercially motivated and does not causally validate a taxonomy or media result.",
+        "organization": "Motion",
+        "publishedAt": null,
+        "title": "Creative strategy frameworks",
+        "url": "https://motionapp.com/library/frameworks/"
+      },
+      {
+        "a7Translation": "Make the operational offer concrete before optimizing hooks, while preserving documented price, availability and attribution boundaries.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "The material argues that the offer and its value proposition precede lead-generation mechanics.",
+        "evidenceType": "creator_vendor_claim",
+        "freshness": "potentially_outdated",
+        "id": "src-acquisition-leads",
+        "limitation": "This is creator/vendor guidance, not independent causal evidence; A7 must test whether a clearer offer improves qualified demand and contribution.",
+        "organization": "Acquisition.com / Alex Hormozi",
+        "publishedAt": null,
+        "title": "$100M Leads",
+        "url": "https://shop.acquisition.com/"
+      },
+      {
+        "a7Translation": "Borrow the discipline of an instantly legible promise and visual progression, then validate it against qualified conversations.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "Jimmy Donaldson describes packaging, immediate clarity and retention as engineered parts of content performance.",
+        "evidenceType": "creator_opinion",
+        "freshness": "dated_but_attributable",
+        "id": "src-mrbeast-lex",
+        "limitation": "Long-form entertainment at massive scale is not a causal model for a small Orlando laundry service.",
+        "organization": "Lex Fridman Podcast / Jimmy Donaldson",
+        "publishedAt": "2023-01-11",
+        "title": "MrBeast: Future of YouTube, Twitter, TikTok, and Instagram",
+        "url": "https://www.youtube.com/watch?v=Z3_PwvvfxIU"
+      },
+      {
+        "a7Translation": "Design each territory for a native surface and use conversation as a distinct stage before sale.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "Paid, feed and stories use native formats and converge on human WhatsApp support.",
+        "evidenceType": "internal_operating_standard",
+        "freshness": "potentially_outdated",
+        "id": "src-a7-ecosystem",
+        "limitation": "Internal operating doctrine is a testable hypothesis, not independent evidence of incremental sales.",
+        "organization": "A7 Laundry Orlando",
+        "publishedAt": null,
+        "title": "A7 Communication Ecosystem",
+        "url": "marketing/ECOSYSTEM.md"
+      },
+      {
+        "a7Translation": "A brief may enter production, but paid_challenger remains an internal eligibility state until preflight and explicit authorization.",
+        "accessedAt": "2026-07-30",
+        "claimSummary": "Paid eligibility requires safe-zone compliance and previews for six placements.",
+        "evidenceType": "internal_operating_standard",
+        "freshness": "potentially_outdated",
+        "id": "src-a7-production",
+        "limitation": "Production correctness does not establish commercial performance.",
+        "organization": "A7 Laundry Orlando",
+        "publishedAt": null,
+        "title": "Meta creative production standard",
+        "url": "marketing/meta-ads/creative-production-standard.md"
+      }
+    ],
+    "market": "United States",
+    "protocol": {
+      "exclusion": "Unsourced summaries, popularity rankings and claims of causal lift without an A7 test.",
+      "freshnessRule": "A source without a verifiable publication or update date is marked potentially_outdated.",
+      "inclusion": "Primary platform guidance or directly attributable creator material with a stable URL.",
+      "scope": "Acquisition, hooks, packaging, retention and creative experimentation for local-service demand generation."
+    },
+    "schemaVersion": "1.0",
+    "stageMetrics": [
+      {
+        "saleEquivalent": false,
+        "signals": [
+          "source freshness",
+          "claim traceability"
+        ],
+        "stage": "research"
+      },
+      {
+        "saleEquivalent": false,
+        "signals": [
+          "reach",
+          "views",
+          "hook hold",
+          "video retention",
+          "appeal",
+          "engagement",
+          "satisfaction",
+          "clicks"
+        ],
+        "stage": "organic"
+      },
+      {
+        "saleEquivalent": false,
+        "signals": [
+          "impressions",
+          "link clicks",
+          "qualified conversations"
+        ],
+        "stage": "paid_challenger"
+      },
+      {
+        "saleEquivalent": false,
+        "signals": [
+          "provenanced WhatsApp conversation"
+        ],
+        "stage": "conversation"
+      },
+      {
+        "saleEquivalent": true,
+        "signals": [
+          "reconciled completed order",
+          "reconciled contribution"
+        ],
+        "stage": "sale"
+      },
+      {
+        "saleEquivalent": true,
+        "signals": [
+          "reconciled repeat order"
+        ],
+        "stage": "retention"
+      }
+    ]
+  },
+  "schemaVersion": "1.0",
+  "semanticWarnings": [],
+  "taxonomy": {
+    "dimensions": {
+      "angle": [
+        "time_back",
+        "trip_rescue",
+        "pack_less",
+        "doorstep_convenience",
+        "family_relief",
+        "before_checkout",
+        "visible_process",
+        "transparent_price"
+      ],
+      "awareness": [
+        "unaware",
+        "problem_aware",
+        "solution_aware",
+        "product_aware",
+        "most_aware"
+      ],
+      "cta": [
+        "send_hotel",
+        "send_location",
+        "estimate_bag",
+        "book_pickup",
+        "ask_family_pickup",
+        "check_availability",
+        "see_how_it_works",
+        "get_estimate"
+      ],
+      "format": [
+        "clock_demo",
+        "pov_story",
+        "split_screen",
+        "three_step_demo",
+        "before_after",
+        "countdown",
+        "process_reveal",
+        "price_card"
+      ],
+      "hook": [
+        "vacation_clock",
+        "last_clean_outfit",
+        "suitcase_math",
+        "door_handoff",
+        "laundry_mountain",
+        "checkout_countdown",
+        "bag_journey",
+        "price_first"
+      ],
+      "pain": [
+        "lost_vacation_time",
+        "limited_clean_clothes",
+        "packing_overload",
+        "no_in_unit_laundry",
+        "family_laundry_pile",
+        "checkout_pressure",
+        "trust_handoff",
+        "price_uncertainty"
+      ],
+      "persona": [
+        "hotel_guest",
+        "vacation_rental_guest",
+        "family_traveler",
+        "business_traveler"
+      ],
+      "promise": [
+        "less_time_on_laundry",
+        "clean_clothes_rescue",
+        "lighter_suitcase",
+        "pickup_wash_delivery",
+        "family_load_removed",
+        "departure_window_checked",
+        "visible_handoff_process",
+        "known_per_pound_price"
+      ]
+    },
+    "requiredDimensions": [
+      "persona",
+      "pain",
+      "awareness",
+      "angle",
+      "hook",
+      "format",
+      "promise",
+      "cta"
+    ],
+    "schemaVersion": "1.0",
+    "semanticOverlap": {
+      "blockThreshold": 0.84,
+      "keyDimensions": [
+        "persona",
+        "pain",
+        "awareness",
+        "angle",
+        "promise",
+        "cta"
+      ],
+      "reviewThreshold": 0.67
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# ----------------------------------------
+# Detalhes de tecnologia: Navegador
+# Conta: A7 Laundry USA
+# Propriedade: A7 Laundry USA
+# ----------------------------------------
+# 
+# Todos os usuários
+# Data de início: 20260622
+# Data de término: 20260721
+Navegador,Usuários ativos,Novos usuários,Sessões engajadas,Taxa de engajamento,Sessões engajadas por usuário ativo,Tempo médio de engajamento por usuário ativo,Contagem de eventos,Eventos principais,Receita total
+Chrome,31,31,21,0.40384615384615385,0.6774193548387096,21,265,4,0
+Safari,30,30,24,0.6486486486486487,0.8,30.966666666666665,203,10,0
+Edge,5,5,2,0.2,0.4,57,66,2,0
+Opera,1,1,0,0,0,0,4,0,0
+Safari (in-app),1,1,1,1,1,5,8,1,0

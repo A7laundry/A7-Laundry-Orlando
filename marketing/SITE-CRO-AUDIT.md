@@ -26,7 +26,7 @@
 1. **Menor fricção de compra da lista.** 6 dos 7 forçam app + conta. Só a Express chega perto — e usa telefone, não WhatsApp. "Sem app, é só mandar mensagem, respondemos em minutos" é uma **vantagem própria e defensável**.
 2. **Turista/vacation rental é nossa identidade** (não um apêndice B2B como nos outros). Whitespace real — ninguém possui o turista no meio da viagem.
 3. **Design editorial premium + gancho emocional** ("Enjoy Orlando. We handle the laundry.") — os outros são utilitários ("get your laundry done").
-4. **Velocidade como prova** — "respondemos em minutos" + Express 6h batem o "next-day" de todos.
+4. **Velocidade como prova** — "respondemos em minutos" + Express 8h batem o "next-day" de todos.
 
 ## Onde ERRAMOS
 

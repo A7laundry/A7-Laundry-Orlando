@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0",
+  "capacity": 10,
+  "expansionGate": "Add an item only with reconciled observed sales or explicit owner confirmation; capacity is not a requirement to invent ten items.",
+  "items": [
+    {
+      "id": "guest-wash-fold",
+      "name": "Guest wash-and-fold",
+      "service": "pickup_delivery_laundry",
+      "eligibleAudiences": ["hotel_guest", "vacation_rental_guest", "family_traveler", "business_traveler"],
+      "origin": {"type": "owner_reported", "source": "Owner statement in A7-004 discovery, July 2026", "status": "owner_reported"},
+      "price": {"value": 3.25, "currency": "USD", "unit": "lb", "source": "marketing/meta-ads/pricing-rules.md", "status": "documented"},
+      "operationalConstraints": ["US$50 minimum", "Pickup window and turnaround depend on operational availability"],
+      "validationStatus": "pilot_eligible",
+      "topSeller": null
+    },
+    {
+      "id": "sneakers",
+      "name": "Sneakers",
+      "service": "shoe_cleaning",
+      "eligibleAudiences": ["unknown"],
+      "origin": {"type": "owner_idea", "source": "Owner idea in A7-004 discovery, 2026-07-30", "status": "owner_reported"},
+      "price": {"value": null, "currency": "USD", "unit": "item", "source": null, "status": "unavailable"},
+      "operationalConstraints": ["Demand rank unknown", "Unit economics unavailable"],
+      "validationStatus": "candidate",
+      "topSeller": null
+    },
+    {
+      "id": "pants",
+      "name": "Pants",
+      "service": "garment_laundry",
+      "eligibleAudiences": ["unknown"],
+      "origin": {"type": "owner_idea", "source": "Owner idea in A7-004 discovery, 2026-07-30", "status": "owner_reported"},
+      "price": {"value": null, "currency": "USD", "unit": "item", "source": null, "status": "unavailable"},
+      "operationalConstraints": ["Demand rank unknown", "Standalone item pricing unavailable"],
+      "validationStatus": "candidate",
+      "topSeller": null
+    }
+  ]
+}

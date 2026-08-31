@@ -1,0 +1,19 @@
+{
+  "name": "a7-laundry-mos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs && npm run build",
+    "audit:list": "node ../scripts/mos-audits.mjs list",
+    "audit:show": "node ../scripts/mos-audits.mjs show",
+    "audit:compare": "node ../scripts/mos-audits.mjs compare",
+    "audit:validate": "node ../scripts/mos-audits.mjs validate",
+    "audit:create": "node ../scripts/mos-audits.mjs create"
+  },
+  "dependencies": {
+    "@vercel/oidc": "^3.8.1",
+    "google-auth-library": "^10.9.1"
+  }
+}

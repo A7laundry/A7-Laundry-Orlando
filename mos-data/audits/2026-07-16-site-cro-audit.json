@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-16-site-cro-audit",
+  "auditDate": "2026-07-16",
+  "title": "Site — auditoria de mensagem e conversão",
+  "type": "audit_report",
+  "status": "partial",
+  "scope": [
+    "site",
+    "cro",
+    "conversion"
+  ],
+  "summary": "Relatório de CRO datado de 16 de julho, localizado durante a auditoria final do registro e acrescentado sem reescrever os registros anteriores.",
+  "sources": [
+    {
+      "name": "Site CRO audit report",
+      "status": "verified",
+      "period": "16 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "marketing/SITE-CRO-AUDIT.md",
+      "sha256": "eb245e1df8d0edaed5dd9ca4f71d50b6ff379a2aa628f7841ff9339cdb04dd03"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-08-06-seo-tracking-cleanup",
+  "previousRecordSha256": "0db0b89481efb3da92c29309cbb529e626882d37fe0f58a95b4ad1abb66df568"
+}

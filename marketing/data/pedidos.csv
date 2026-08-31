@@ -1,0 +1,4 @@
+# CONTRIBUICAO POR PEDIDO — receita menos TODOS os custos variaveis diretos
+# contribuicao = receita - lavagem_secagem - embalagem - taxa_pagamento - combustivel - mao_de_obra
+# taxa_pagamento Stripe ~= receita*0.029 + 0.30
+id_lead,data,cliente,servico,libras,receita,lavagem_secagem,embalagem,taxa_pagamento,combustivel,mao_de_obra,contribuicao,margem_pct

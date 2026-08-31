@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-08-24-growth-forensic-checkpoint",
+  "auditDate": "2026-08-24",
+  "title": "24-day GA4, GSC and paid-media forensic checkpoint",
+  "type": "growth_measurement_forensic",
+  "status": "partial",
+  "scope": [
+    "GA4",
+    "Search Console",
+    "Google Ads",
+    "Meta Ads",
+    "canonical URLs",
+    "Stripe attribution"
+  ],
+  "summary": "Traffic and verified purchase volume increased, but GA4 channel revenue is not decision-grade because the Stripe confirmation route appears as acquisition and Organic Shopping owns all reported revenue. Lake Buena Vista traffic is split across clean and .html paths. Meta organic Orlando remains unavailable.",
+  "sources": [
+    {
+      "name": "GA4 property 543807649",
+      "status": "verified",
+      "period": "2026-08-01 to 2026-08-24 compared with 2026-07-08 to 2026-07-31"
+    },
+    {
+      "name": "Search Console sc-domain:a7laundry.com",
+      "status": "verified",
+      "period": "2026-08-01 to 2026-08-24 compared with 2026-07-08 to 2026-07-31"
+    },
+    {
+      "name": "Google Ads owner-supplied Claude Code artifact",
+      "status": "partial",
+      "period": "2026-07-25 to 2026-08-23"
+    },
+    {
+      "name": "Meta Ads USA account state",
+      "status": "verified",
+      "period": "observed 2026-08-24"
+    },
+    {
+      "name": "Meta organic Orlando",
+      "status": "unavailable",
+      "period": "2026-08-01 to 2026-08-24"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "ga4_active_users",
+      "label": "GA4 active users",
+      "value": 334,
+      "format": "integer",
+      "source": "GA4",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "ga4_sessions",
+      "label": "GA4 sessions",
+      "value": 444,
+      "format": "integer",
+      "source": "GA4",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "ga4_engagement_rate",
+      "label": "GA4 engagement rate",
+      "value": 68.92,
+      "format": "percent",
+      "source": "GA4",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "ga4_whatsapp_clicks",
+      "label": "GA4 WhatsApp clicks",
+      "value": 110,
+      "format": "integer",
+      "source": "GA4",
+      "period": "2026-08-01/2026-08-24",
+      "status": "contact_intent_only"
+    },
+    {
+      "id": "ga4_purchase_events",
+      "label": "GA4 verified purchase events",
+      "value": 30,
+      "format": "integer",
+      "source": "GA4",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "ga4_revenue_usd",
+      "label": "GA4 reported revenue",
+      "value": 3445.8,
+      "format": "usd",
+      "source": "GA4",
+      "period": "2026-08-01/2026-08-24",
+      "status": "channel_attribution_unreliable"
+    },
+    {
+      "id": "gsc_clicks",
+      "label": "Search Console clicks",
+      "value": 28,
+      "format": "integer",
+      "source": "Search Console",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "gsc_impressions",
+      "label": "Search Console impressions",
+      "value": 1661,
+      "format": "integer",
+      "source": "Search Console",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "gsc_ctr",
+      "label": "Search Console CTR",
+      "value": 1.7,
+      "format": "percent",
+      "source": "Search Console",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "gsc_average_position",
+      "label": "Search Console average position",
+      "value": 11.7,
+      "format": "decimal",
+      "source": "Search Console",
+      "period": "2026-08-01/2026-08-24",
+      "status": "observed_readonly"
+    },
+    {
+      "id": "google_ads_spend_brl",
+      "label": "Google Ads spend",
+      "value": 3055.46,
+      "format": "brl",
+      "source": "Owner-supplied Google Ads artifact",
+      "period": "2026-07-25/2026-08-23",
+      "status": "period_mismatch_partial"
+    },
+    {
+      "id": "google_ads_stripe_purchases",
+      "label": "Google Ads Stripe purchases",
+      "value": 11,
+      "format": "integer",
+      "source": "Owner-supplied Google Ads artifact",
+      "period": "2026-07-25/2026-08-23",
+      "status": "artifact_reported"
+    },
+    {
+      "id": "meta_ads_active_campaigns",
+      "label": "Meta Ads active campaigns",
+      "value": 0,
+      "format": "integer",
+      "source": "Meta Ads USA account state",
+      "period": "observed 2026-08-24",
+      "status": "observed_readonly"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "marketing/google-ads/2026-07-guest-laundry-search/FORENSIC-CHECKPOINT-2026-08-24.md",
+      "sha256": "88067e9133013d411d0213c90c66c873f1efa5fbea23c3bb544978532f1817a1"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-30-whatsapp-audit",
+  "previousRecordSha256": "b261677de8a71736f2ddf24b17a1da6580484300e776bcec6dce6da50da8d71b"
+}

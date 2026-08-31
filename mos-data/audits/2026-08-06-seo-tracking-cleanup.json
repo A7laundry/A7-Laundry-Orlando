@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-08-06-seo-tracking-cleanup",
+  "auditDate": "2026-08-06",
+  "title": "SEO e tracking — auditoria de limpeza",
+  "type": "audit_report",
+  "status": "partial",
+  "scope": [
+    "seo",
+    "tracking"
+  ],
+  "summary": "Relatório da limpeza de SEO e tracking, preservado como checkpoint posterior à auditoria consolidada.",
+  "sources": [
+    {
+      "name": "SEO/tracking audit report",
+      "status": "verified",
+      "period": "6 ago 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "docs/audits/2026-08-06-seo-tracking-cleanup.md",
+      "sha256": "38376d41fd57a48a1abbc6feb30d3a1c2ca4ff5175cc998cf94477c82ebd5ac8"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-31-whatsapp-reconciliation",
+  "previousRecordSha256": "9ee2a94056a8cec7837a0680aaf30309f05e56ca1bf8924f4e7525e62d4a5e4e"
+}

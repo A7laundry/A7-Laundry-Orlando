@@ -1,11 +1,11 @@
-# Campaign Spec — Tourist Laundry Reinforcement (RASCUNHO — não criado no Meta)
+# Campaign Spec — Tourist Laundry Reinforcement (ARQUIVO DE ORIGEM — não implantar)
 # Whitespace confirmado: ~0 anúncios de tourist/Airbnb laundry em Orlando no Meta.
 # ⚠️ DRAFT. Nenhum objeto existe no Meta. Build futuro (só c/ aprovação) nasce status:PAUSED.
 
 meta:
   slug: "2026-07-tourist-laundry-reinforcement"
   created: "2026-07-02"
-  status: "DRAFT — não deployado"
+  status: "ARCHIVED — substituído pela campanha manual Guest Laundry; não implantar"
   rationale: "Whitespace tourist/Airbnb no Meta. Reforça/pode isolar o público turista (hoje = AS2 da JUL26)."
   relation_to_jul26: "Pode rodar como campanha própria OU o conteúdo alimenta o AS2 existente. Decidir na revisão."
 
@@ -29,7 +29,7 @@ ad_sets:
     prefilled_message: "Hi A7! I'm at a hotel/Airbnb in Orlando & need laundry pickup. My location is:"
     offer:
       price: "From $3.25/lb"
-      minimum: "$60"
+      minimum: "$50"
       includes: "Pickup & delivery included · Hotel & Airbnb pickup"
     ad_concepts: ["tourist-laundry-parks", "tourist-pack-less"]
 
@@ -37,12 +37,12 @@ ad_sets:
     prefilled_message: "Hi A7! Need same-day laundry pickup at my Orlando hotel/Airbnb. My location is:"
     offer:
       price: "From $3.95/lb"
-      minimum: "$75"
+      minimum: "$50"
       note: "Subject to availability · Ask for today's availability (NUNCA 'guaranteed')"
     ad_concepts: ["tourist-express-checkout"]
 
 # Pipeline de criativos: 3 conceitos × 3 formatos = 9 slots. Detalhe em MANIFEST.md + creatives-map.csv.
-# Status: PENDING — 0/9 assets produzidos. Fluxo: assets/originals → optimized → approved.
+# Status histórico da biblioteca. Revalidar preço incorporado, formato e destino antes de qualquer reuso.
 creatives_planned:
   - concept: "tourist-laundry-parks"
     ad_set: "TOURIST"

@@ -1,0 +1,223 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-27-mos-kpi-snapshot",
+  "auditDate": "2026-07-27",
+  "title": "MOS — snapshot completo de KPIs",
+  "type": "kpi_snapshot",
+  "status": "complete",
+  "scope": [
+    "mos",
+    "ga4",
+    "search_console",
+    "google_ads",
+    "meta_ads",
+    "meta_organic",
+    "revenue"
+  ],
+  "summary": "Snapshot completo e datado que antes era o único estado histórico carregado pelo MOS.",
+  "sources": [
+    {
+      "name": "MOS versioned KPI snapshot",
+      "status": "verified",
+      "period": "períodos individuais preservados por métrica"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "search_clicks",
+      "label": "Cliques orgânicos",
+      "value": 17,
+      "format": "integer",
+      "source": "Google Search Console",
+      "period": "30 jun–17 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "search_impressions",
+      "label": "Impressões na busca",
+      "value": 1145,
+      "format": "compact",
+      "source": "Google Search Console",
+      "period": "30 jun–17 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "search_ctr",
+      "label": "CTR orgânico",
+      "value": 1.5,
+      "format": "percent",
+      "source": "Google Search Console",
+      "period": "30 jun–17 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "search_position",
+      "label": "Posição média",
+      "value": 19.1,
+      "format": "decimal",
+      "source": "Google Search Console",
+      "period": "30 jun–17 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "meta_organic_feed_pieces",
+      "label": "Conteúdos únicos de feed",
+      "value": 12,
+      "format": "integer",
+      "source": "Meta Business Suite · exportações orgânicas",
+      "period": "24 jun–24 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "meta_organic_ig_views",
+      "label": "Visualizações orgânicas no Instagram",
+      "value": 562,
+      "format": "integer",
+      "source": "Meta Business Suite · Instagram",
+      "period": "24 jun–24 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "meta_organic_fb_views",
+      "label": "Visualizações orgânicas no Facebook",
+      "value": 206,
+      "format": "integer",
+      "source": "Meta Business Suite · Facebook",
+      "period": "24 jun–24 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "meta_organic_ig_likes",
+      "label": "Curtidas orgânicas no Instagram",
+      "value": 35,
+      "format": "integer",
+      "source": "Meta Business Suite · Instagram",
+      "period": "24 jun–24 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "meta_spend",
+      "label": "Investimento no Meta Ads",
+      "value": 543.17,
+      "format": "usd",
+      "source": "Meta Ads · conta 650201661142284",
+      "period": "22 jun–21 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "meta_conversations",
+      "label": "Conversas no WhatsApp",
+      "value": 27,
+      "format": "integer",
+      "source": "Meta Ads · conversas por mensagem iniciadas",
+      "period": "22 jun–21 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "revenue",
+      "label": "Receita bruta informada",
+      "value": 491,
+      "format": "usd",
+      "source": "Relato do proprietário",
+      "period": "22 jun–21 jul de 2026",
+      "status": "owner_reported"
+    },
+    {
+      "id": "roas",
+      "label": "ROAS bruto mesclado",
+      "value": 0.9,
+      "format": "ratio",
+      "source": "Meta Ads + relato do proprietário",
+      "period": "22 jun–21 jul de 2026",
+      "status": "owner_reported"
+    },
+    {
+      "id": "ga4_active_users",
+      "label": "Usuários ativos no GA4",
+      "value": 68,
+      "format": "integer",
+      "source": "Google Analytics 4",
+      "period": "22 jun–21 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "ga4_sessions",
+      "label": "Sessões no GA4",
+      "value": 101,
+      "format": "integer",
+      "source": "Google Analytics 4",
+      "period": "22 jun–21 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "ga4_engagement",
+      "label": "Taxa de engajamento",
+      "value": 47.52,
+      "format": "percent",
+      "source": "Google Analytics 4",
+      "period": "22 jun–21 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "ga4_key_events",
+      "label": "Eventos principais do GA4",
+      "value": 17,
+      "format": "integer",
+      "source": "Google Analytics 4",
+      "period": "22 jun–21 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "google_ads_spend",
+      "label": "Investimento histórico no Google Ads",
+      "value": 4714.27,
+      "format": "brl",
+      "source": "Google Ads · conta 290-113-2891",
+      "period": "2 jun de 2025–24 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "google_ads_calls",
+      "label": "Chamadas registradas como conversão",
+      "value": 18,
+      "format": "integer",
+      "source": "Google Ads · conversões usadas pelas campanhas",
+      "period": "2 jun de 2025–24 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "google_ads_cpa",
+      "label": "CPA médio por chamada",
+      "value": 261.9,
+      "format": "brl",
+      "source": "Google Ads · conta 290-113-2891",
+      "period": "2 jun de 2025–24 jul de 2026",
+      "status": "verified"
+    },
+    {
+      "id": "google_ads_revenue",
+      "label": "Receita atribuída ao Google Ads",
+      "value": null,
+      "format": "brl",
+      "source": "Google Ads · metas de vendas",
+      "period": "2 jun de 2025–24 jul de 2026",
+      "status": "not_integrated"
+    },
+    {
+      "id": "google_ads_roas",
+      "label": "ROAS do Google Ads",
+      "value": null,
+      "format": "ratio",
+      "source": "Google Ads · metas de vendas",
+      "period": "2 jun de 2025–24 jul de 2026",
+      "status": "not_integrated"
+    }
+  ],
+  "evidence": [],
+  "snapshot": {
+    "path": "mos-data/snapshots/2026-07-27-mos-kpis.js",
+    "sha256": "fc3d0b6c82544eaef801e37a087d2099b01c9b72f73ebfaf4857f5fe17a6c380"
+  },
+  "previousAuditId": "2026-07-24-google-ads-meta-organic",
+  "previousRecordSha256": "d3f1ca627dcc15da03546ea59403ff68325dd31908e06d3c3fce91ac7ef34115"
+}

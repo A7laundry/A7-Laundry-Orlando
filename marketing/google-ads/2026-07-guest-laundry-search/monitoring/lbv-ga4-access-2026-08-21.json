@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-21T00:46:51-04:00",
+  "source": "Google Analytics web interface",
+  "targetPropertyId": "543807649",
+  "mode": "read-only property access probe",
+  "status": "target_property_unavailable",
+  "landingReportPerformed": false,
+  "lbvMetricsStatus": "unavailable",
+  "otherPropertyMetricsRejected": true,
+  "piiStored": false,
+  "limitation": "The active Google session can open Analytics but does not expose the A7 Laundry USA property required by the project contract. Metrics visible in other properties belong to a different scope and were not recorded or reused.",
+  "requiredNextEvidence": "Access to GA4 property 543807649 through an authorized Analytics session or the protected MOS source is required for LBV landing and CTA reporting."
+}

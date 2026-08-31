@@ -1,0 +1,17 @@
+ad_group,keyword,match_type,intent,status
+Hotel Guest Laundry,[hotel laundry service orlando],EXACT,guest hotel pickup,READY
+Hotel Guest Laundry,"laundry pickup hotel orlando",PHRASE,guest hotel pickup,READY
+Hotel Guest Laundry,[hotel laundry pickup orlando],EXACT,guest hotel pickup,READY
+Hotel Guest Laundry,"laundry service for hotel guests orlando",PHRASE,guest hotel pickup,READY
+Airbnb Guest Laundry,[airbnb laundry service orlando],EXACT,guest Airbnb pickup,READY
+Airbnb Guest Laundry,"laundry pickup airbnb orlando",PHRASE,guest Airbnb pickup,READY
+Airbnb Guest Laundry,[vacation rental guest laundry orlando],EXACT,guest vacation-rental pickup,READY
+Airbnb Guest Laundry,"vacation laundry pickup orlando",PHRASE,guest vacation-rental pickup,READY
+Pickup Delivery Orlando,[laundry pickup and delivery orlando],EXACT,pickup and delivery,READY
+Pickup Delivery Orlando,"wash and fold pickup delivery orlando",PHRASE,pickup and delivery,READY
+Pickup Delivery Orlando,[laundry delivery service orlando],EXACT,pickup and delivery,READY
+Pickup Delivery Orlando,"wash and fold delivery near me",PHRASE,pickup and delivery,READY
+Express Guest Laundry,[same day laundry service orlando],EXACT,urgent guest laundry,READY
+Express Guest Laundry,"same day laundry pickup orlando",PHRASE,urgent guest laundry,READY
+Express Guest Laundry,[express laundry service orlando],EXACT,urgent guest laundry,READY
+Express Guest Laundry,[laundry before checkout orlando],EXACT,checkout deadline,READY

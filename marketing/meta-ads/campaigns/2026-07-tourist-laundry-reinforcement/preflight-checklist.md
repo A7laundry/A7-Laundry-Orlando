@@ -16,8 +16,8 @@
 - [ ] Página = A7 Laundry & Carpet Cleaning (625129510685107)
 
 ## Pricing (pricing-rules.md)
-- [ ] Tourist: From $3.25/lb · min $60
-- [ ] Express: From $3.95/lb · min $75 · "subject to availability"
+- [ ] Tourist: From $3.25/lb · min $50
+- [ ] Express: From $3.95/lb · min $50 · "subject to availability"
 
 ## Criativos
 - [ ] pack-less produzido (9:16)

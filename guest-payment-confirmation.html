@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payment Confirmation — A7 Guest Laundry Orlando</title>
+<meta name="description" content="Secure payment confirmation and pickup handoff for A7 Guest Laundry in Orlando.">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="canonical" href="https://a7laundry.com/guest-payment-confirmation">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<script>
+(function () {
+  var querySession = new URLSearchParams(window.location.search).get('session_id') || '';
+  if (querySession) {
+    try { sessionStorage.setItem('a7_guest_checkout_session', querySession); } catch (_) {}
+    window.history.replaceState(null, '', window.location.pathname);
+  }
+  try {
+    window.__A7_GUEST_CHECKOUT_SESSION = querySession || sessionStorage.getItem('a7_guest_checkout_session') || '';
+  } catch (_) {
+    window.__A7_GUEST_CHECKOUT_SESSION = querySession;
+  }
+})();
+</script>
+<style>
+:root{
+  --ink:#071523;
+  --navy:#09233a;
+  --blue:#0f8acb;
+  --aqua:#62d7df;
+  --gold:#f5bd63;
+  --cream:#fffaf0;
+  --white:#fff;
+  --muted:#5d6d7b;
+  --success:#1d9a69;
+  --error:#bc4b4b;
+  --shadow:0 30px 90px rgba(4,30,52,.22);
+}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--ink)}
+body{
+  margin:0;min-height:100svh;color:var(--ink);
+  font-family:"DM Sans",sans-serif;
+  background:
+    radial-gradient(circle at 78% 16%,rgba(245,189,99,.34),transparent 25%),
+    radial-gradient(circle at 10% 88%,rgba(98,215,223,.24),transparent 28%),
+    linear-gradient(145deg,#061421 0%,#0a2943 48%,#124765 100%);
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.48;
+  background-image:
+    radial-gradient(circle at 12% 24%,#fff 0 1px,transparent 1.7px),
+    radial-gradient(circle at 68% 8%,#fff 0 1.3px,transparent 2px),
+    radial-gradient(circle at 84% 34%,#f5bd63 0 1px,transparent 2px),
+    radial-gradient(circle at 26% 72%,#62d7df 0 1px,transparent 2px);
+  background-size:190px 190px,240px 240px,280px 280px,320px 320px;
+}
+.shell{width:min(1180px,calc(100% - 32px));min-height:100svh;margin:auto;padding:28px 0;display:grid;place-items:center}
+.experience{
+  width:100%;min-height:720px;background:var(--cream);border:1px solid rgba(255,255,255,.45);
+  border-radius:30px;overflow:hidden;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(0,1.02fr) minmax(420px,.98fr);
+}
+.visual{position:relative;min-height:720px;background:#0a304c;overflow:hidden}
+.visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.visual::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(4,18,31,.08) 15%,rgba(4,18,31,.2) 50%,rgba(4,18,31,.86) 100%);
+}
+.visual-copy{position:absolute;z-index:2;left:48px;right:48px;bottom:44px;color:var(--white)}
+.eyebrow{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--gold);border-radius:2px}
+.visual-copy h2{font-family:Manrope,sans-serif;font-size:clamp(34px,4.5vw,60px);line-height:.98;letter-spacing:-.05em;margin:14px 0 14px;max-width:590px}
+.visual-copy p{margin:0;color:rgba(255,255,255,.78);font-size:15px;line-height:1.55;max-width:500px}
+.magic-orbit{position:absolute;z-index:2;top:34px;right:36px;width:76px;height:76px;border:1px solid rgba(255,255,255,.42);border-radius:50%}
+.magic-orbit::before,.magic-orbit::after{content:"";position:absolute;border-radius:50%;background:var(--gold);box-shadow:0 0 16px rgba(245,189,99,.8)}
+.magic-orbit::before{width:7px;height:7px;top:6px;left:11px}
+.magic-orbit::after{width:4px;height:4px;right:3px;bottom:17px}
+.panel{padding:42px 46px 38px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:34px}
+.brand img{width:166px;height:auto;display:block}
+.secure{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);font-weight:700}
+.secure svg{width:16px;height:16px;color:var(--success)}
+.status-icon{width:64px;height:64px;border-radius:22px;display:grid;place-items:center;background:rgba(15,138,203,.1);color:var(--blue);margin-bottom:22px;transition:.25s ease}
+.status-icon svg{width:31px;height:31px}
+.status-icon.verified{background:rgba(29,154,105,.12);color:var(--success)}
+.status-icon.error{background:rgba(188,75,75,.1);color:var(--error)}
+.panel h1{font-family:Manrope,sans-serif;font-size:clamp(32px,4vw,49px);line-height:1.02;letter-spacing:-.05em;margin:0 0 12px}
+.lede{font-size:16px;line-height:1.6;color:var(--muted);margin:0 0 26px;max-width:520px}
+.order{border:1px solid rgba(7,21,35,.09);border-radius:18px;background:rgba(255,255,255,.72);padding:6px 20px;margin-bottom:24px}
+.order-row{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid rgba(7,21,35,.07);font-size:13px}
+.order-row:last-child{border-bottom:0}
+.order-row span{color:var(--muted)}
+.order-row strong{text-align:right}
+.order-row .amount{font-family:Manrope,sans-serif;font-size:20px;color:var(--success)}
+.steps{display:grid;gap:10px;margin-bottom:26px}
+.step{display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:start}
+.step-number{width:32px;height:32px;border-radius:11px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800}
+.step strong{display:block;font-size:13px;margin:1px 0 2px}.step p{margin:0;font-size:12px;line-height:1.45;color:var(--muted)}
+.actions{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:auto}
+.button{min-height:52px;border-radius:14px;padding:0 20px;display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;font-size:13px;font-weight:800;transition:.2s ease}
+.button:hover{transform:translateY(-1px)}
+.button-primary{background:#1cba6f;color:#fff;box-shadow:0 12px 26px rgba(28,186,111,.24)}
+.button-secondary{border:1px solid rgba(7,21,35,.12);color:var(--navy);background:#fff}
+.button svg{width:18px;height:18px}
+.fine-print{font-size:10px;line-height:1.5;color:#83909b;margin:15px 0 0}
+.is-hidden{display:none!important}
+.skeleton{position:relative;overflow:hidden;color:transparent!important;background:#e7ecee;border-radius:6px;min-width:90px}
+.skeleton::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);animation:shimmer 1.4s infinite}
+@keyframes shimmer{to{transform:translateX(100%)}}
+@media(max-width:900px){
+  .shell{width:min(680px,calc(100% - 20px));padding:10px 0}
+  .experience{grid-template-columns:1fr;border-radius:22px}
+  .visual{min-height:360px}.visual-copy{left:28px;right:28px;bottom:28px}.visual-copy h2{font-size:40px}
+  .panel{padding:30px 26px}.brand{margin-bottom:26px}
+}
+@media(max-width:520px){
+  .visual{min-height:310px}.visual-copy h2{font-size:34px}.visual-copy p{font-size:13px}
+  .panel{padding:26px 20px}.brand img{width:142px}.secure{font-size:9px}
+  .actions{grid-template-columns:1fr}.order-row{align-items:flex-start;padding:13px 0;min-height:0}
+}
+</style>
+</head>
+<body>
+<main class="shell">
+  <section class="experience" aria-live="polite">
+    <div class="visual">
+      <img src="/public/familia-orlando-sem-preocupacoes.webp" alt="Family enjoying a relaxed Orlando resort pool while A7 handles their guest laundry" width="1920" height="1072">
+      <div class="magic-orbit" aria-hidden="true"></div>
+      <div class="visual-copy">
+        <div class="eyebrow">The Orlando moment</div>
+        <h2>Laundry is off your itinerary.</h2>
+        <p>Pool time, park days, dinner plans — your vacation keeps moving. We’ll take it from here.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="brand">
+        <img src="/A7 LAUNDRY-05.png" alt="A7 Laundry">
+        <span class="secure">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          Secure Stripe verification
+        </span>
+      </div>
+
+      <div class="status-icon" id="statusIcon">
+        <svg id="loadingIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12a8 8 0 10-3.1 6.3"/><path d="M20 4v6h-6"/></svg>
+        <svg id="successIcon" class="is-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <svg id="errorIcon" class="is-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 8v5"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      </div>
+
+      <h1 id="statusTitle">Confirming your payment…</h1>
+      <p class="lede" id="statusMessage">Just a moment while we securely confirm your Stripe checkout.</p>
+
+      <div class="order" id="orderCard">
+        <div class="order-row"><span>Service</span><strong id="serviceName" class="skeleton">Guest Laundry</strong></div>
+        <div class="order-row"><span>Payment</span><strong id="paymentState" class="skeleton">Verifying</strong></div>
+        <div class="order-row"><span>Total paid</span><strong id="amountPaid" class="amount skeleton">$0.00</strong></div>
+        <div class="order-row"><span>Confirmation</span><strong id="confirmationId" class="skeleton">••••••••</strong></div>
+      </div>
+
+      <div class="steps" id="nextSteps">
+        <div class="step"><div class="step-number">1</div><div><strong>Payment is linked to your accepted order</strong><p>Your confirmed total is now reconciled with the order already collected and weighed.</p></div></div>
+        <div class="step"><div class="step-number">2</div><div><strong>We continue with the agreed return</strong><p>Your delivery handoff follows the details already confirmed with our team.</p></div></div>
+        <div class="step"><div class="step-number">3</div><div><strong>Need to update anything?</strong><p>Message us on WhatsApp and reference the same order conversation.</p></div></div>
+      </div>
+
+      <div class="actions">
+        <a class="button button-primary" id="whatsappButton" href="https://wa.me/14076708839?text=Hi!%20My%20A7%20Guest%20Laundry%20payment%20is%20confirmed.%20I%20have%20a%20question%20about%20the%20agreed%20return%20handoff." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-1.75-.87-2.9-1.56-4.06-3.55-.31-.53.31-.49.87-1.63.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-2.72 2.98.68 7.39 1.07 7.91 2.1 2.86 5.07 4.1 7.03 4.62 1.96.52 3.75.45 5.16.27 1.57-.23 4.83-1.97 5.51-3.88.68-1.91.68-3.54.48-3.88-.2-.34-.74-.54-1.04-.69z"/></svg>
+          Message A7 on WhatsApp
+        </a>
+        <a class="button button-secondary" href="/">Back to A7</a>
+      </div>
+      <p class="fine-print" id="finePrint">Your payment status is checked directly with Stripe. Never share card details through WhatsApp.</p>
+    </div>
+  </section>
+</main>
+
+<script src="/a7-tracking.js" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  var title = document.getElementById('statusTitle');
+  var message = document.getElementById('statusMessage');
+  var statusIcon = document.getElementById('statusIcon');
+  var loadingIcon = document.getElementById('loadingIcon');
+  var successIcon = document.getElementById('successIcon');
+  var errorIcon = document.getElementById('errorIcon');
+  var serviceName = document.getElementById('serviceName');
+  var paymentState = document.getElementById('paymentState');
+  var amountPaid = document.getElementById('amountPaid');
+  var confirmationId = document.getElementById('confirmationId');
+  var nextSteps = document.getElementById('nextSteps');
+  var whatsappButton = document.getElementById('whatsappButton');
+  var finePrint = document.getElementById('finePrint');
+
+  function clearSkeletons() {
+    [serviceName, paymentState, amountPaid, confirmationId].forEach(function (element) {
+      element.classList.remove('skeleton');
+    });
+  }
+
+  function showIcon(state) {
+    loadingIcon.classList.toggle('is-hidden', state !== 'loading');
+    successIcon.classList.toggle('is-hidden', state !== 'verified');
+    errorIcon.classList.toggle('is-hidden', state !== 'error');
+    statusIcon.className = 'status-icon' + (state === 'verified' ? ' verified' : state === 'error' ? ' error' : '');
+  }
+
+  function showError(reason) {
+    clearSkeletons();
+    showIcon('error');
+    title.textContent = 'Let’s confirm this together.';
+    message.textContent = reason || 'We could not confirm this checkout automatically. If Stripe charged you, your payment is safe — message our team and we’ll verify it.';
+    serviceName.textContent = 'Guest Laundry';
+    paymentState.textContent = 'Needs verification';
+    amountPaid.textContent = '—';
+    confirmationId.textContent = 'Not available';
+    nextSteps.classList.add('is-hidden');
+    whatsappButton.textContent = 'Verify payment on WhatsApp';
+    finePrint.textContent = 'Do not share your card number, security code or banking password through WhatsApp.';
+  }
+
+  function formatMoney(amount, currency) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: String(currency || 'USD').toUpperCase()
+    }).format(amount);
+  }
+
+  function wait(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
+
+  async function verifyPayment() {
+    var sessionId = window.__A7_GUEST_CHECKOUT_SESSION || '';
+    if (!sessionId) {
+      showError('This page needs the secure confirmation link provided after your Stripe payment.');
+      return;
+    }
+
+    try {
+      var payload={};var response;for(var attempt=0;attempt<5;attempt+=1){response=await fetch('/api/stripe-session?session_id='+encodeURIComponent(sessionId),{headers:{Accept:'application/json'},credentials:'same-origin'});payload=await response.json().catch(function(){return{}});if(response.status!==202)break;message.textContent='Stripe confirmed the payment. We are linking it to your accepted order…';await wait(1000)}
+      if (!response || !response.ok || payload.payment_status !== 'paid'
+        || payload.reconciliation_status !== 'reconciled') {
+        throw new Error(payload.error || (payload.reconciliation_status === 'pending'
+          ? 'Stripe confirmed the payment, but order reconciliation is still pending. Please wait a moment or message A7.'
+          : 'Payment could not be verified.'));
+      }
+
+      clearSkeletons();
+      showIcon('verified');
+      title.textContent = 'Payment confirmed. Your Orlando moment is back on.';
+      message.textContent = 'Laundry is officially off your itinerary. Your payment is linked to the accepted order, and we’ll continue with the return handoff already agreed with you.';
+      serviceName.textContent = payload.service || 'A7 Guest Laundry';
+      paymentState.textContent = 'Paid';
+      amountPaid.textContent = formatMoney(payload.amount_total, payload.currency);
+      confirmationId.textContent = '••••' + payload.id.slice(-8);
+    } catch (error) {
+      showError(error && error.message);
+    }
+  }
+
+  window.addEventListener('load', verifyPayment);
+})();
+</script>
+</body>
+</html>

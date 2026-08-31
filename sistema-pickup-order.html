@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Pickup Order · A7 Laundry Orlando</title>
+  <link rel="stylesheet" href="/sistema-pickup-order.css">
+</head>
+<body>
+  <header class="toolbar no-print">
+    <a href="/sistema">← Back to system</a>
+    <button id="printButton" type="button" disabled>Print</button>
+  </header>
+
+  <p id="loadingState" class="state-message" role="status">Loading Pickup Order…</p>
+  <p id="errorState" class="state-message error" role="alert" hidden></p>
+
+  <main id="pickupOrder" class="document" hidden>
+    <header class="document-head">
+      <div class="identity"><span class="mark">A7</span><div><strong>A7 Laundry Orlando</strong><small>Pickup &amp; Delivery</small></div></div>
+      <div class="document-title"><p>PICKUP ORDER</p><h1 id="orderNumber"></h1><span id="orderStatus" class="status"></span></div>
+    </header>
+
+    <section class="two-column">
+      <article class="block">
+        <h2>Customer</h2>
+        <dl>
+          <div><dt>Name</dt><dd id="customerName"></dd></div>
+          <div><dt>WhatsApp</dt><dd id="customerPhone"></dd></div>
+          <div id="customerLanguageRow"><dt>Language</dt><dd id="customerLanguage"></dd></div>
+          <div id="customerRoomRow"><dt>Room</dt><dd id="customerRoom"></dd></div>
+        </dl>
+      </article>
+      <article class="block">
+        <h2>Property</h2>
+        <dl>
+          <div><dt>Type</dt><dd id="propertyType"></dd></div>
+          <div><dt>Property</dt><dd id="propertyName"></dd></div>
+          <div id="propertyAddressRow"><dt>Address</dt><dd id="propertyAddress"></dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section class="block service-block">
+      <div class="section-heading"><h2>Service</h2><strong id="serviceTier" class="tier"></strong></div>
+      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Expected</th><th>Price basis</th><th>Minimum</th></tr></thead><tbody id="serviceItems"></tbody></table></div>
+    </section>
+
+    <section class="two-column logistics">
+      <article class="block">
+        <h2>Pickup</h2>
+        <dl>
+          <div><dt>Window</dt><dd id="pickupWindow"></dd></div>
+          <div><dt>Location</dt><dd id="pickupLocation"></dd></div>
+          <div id="bagsExpectedRow"><dt>Bags expected</dt><dd id="bagsExpected"></dd></div>
+          <div id="pickupInstructionsRow"><dt>Instructions</dt><dd id="pickupInstructions"></dd></div>
+        </dl>
+      </article>
+      <article class="block delivery-block">
+        <h2>Delivery</h2>
+        <dl><div><dt>Needed by</dt><dd id="neededBy"></dd></div></dl>
+        <p id="expressNotice" class="express-notice" hidden>EXPRESS · Confirmed availability and deadline apply.</p>
+      </article>
+    </section>
+
+    <section id="specialSection" class="block special-block" hidden>
+      <h2>Special Instructions</h2>
+      <ul id="careOptions"></ul>
+      <p id="customerNotes"></p>
+    </section>
+
+    <footer><span id="footerOrderNumber"></span><span>Internal operational document · A7 Laundry Orlando</span></footer>
+  </main>
+
+  <script src="/sistema-pickup-order.js" defer></script>
+</body>
+</html>

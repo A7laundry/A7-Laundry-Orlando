@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-08-24-attribution-canonical-release",
+  "auditDate": "2026-08-24",
+  "title": "Attribution and Lake Buena Vista canonical production release",
+  "type": "production_release",
+  "status": "complete",
+  "scope": [
+    "public deployment",
+    "Stripe attribution",
+    "GA4 referral handling",
+    "Lake Buena Vista redirect",
+    "rollback"
+  ],
+  "summary": "The exact tested Preview was promoted without rebuild. Production hashes match local and Preview artifacts; the legacy Lake Buena Vista HTML route redirects permanently, the transactional page is noindex and APIs fail closed.",
+  "sources": [
+    {
+      "name": "Vercel Preview and production deployments",
+      "status": "verified",
+      "period": "2026-08-24"
+    },
+    {
+      "name": "Public a7laundry.com HTTP smoke",
+      "status": "verified",
+      "period": "2026-08-24"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "marketing/google-ads/2026-07-guest-laundry-search/RELEASE-EVIDENCE-ATTRIBUTION-CANONICAL-2026-08-24.md",
+      "sha256": "18b07f6a3fcdb98728737db4ab63e5cf02578ef2983f73b0d4f7d0abb90cd9d0"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-08-24-google-ads-purchase-led-goal",
+  "previousRecordSha256": "edb9615b4f0876c1743ce4ac6fc636029a25e6a70b62f9df7b111b073aa535a7"
+}

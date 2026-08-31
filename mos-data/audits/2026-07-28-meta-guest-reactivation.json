@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-28-meta-guest-reactivation",
+  "auditDate": "2026-07-28",
+  "title": "Meta Ads — guest laundry reactivation checkpoint",
+  "type": "campaign_snapshot",
+  "status": "partial",
+  "scope": [
+    "meta_ads",
+    "guest_laundry"
+  ],
+  "summary": "Checkpoint documental da tentativa de reativação da campanha manual de guest laundry.",
+  "sources": [
+    {
+      "name": "Meta Ads campaign snapshot",
+      "status": "partial",
+      "period": "28 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "marketing/meta-ads/campaigns/2026-07-guest-laundry-manual/snapshot-2026-07-28-reactivation.md",
+      "sha256": "245178cc1aa75518df8df8aa1a9aee234a708cdc899e1cc2494dc5fbeeab232e"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-27-mos-kpi-snapshot",
+  "previousRecordSha256": "2d5e3586374e9e503904ca9dbf8102ae6b95efe7487cdd5a2a5ae2af3e9447ea"
+}

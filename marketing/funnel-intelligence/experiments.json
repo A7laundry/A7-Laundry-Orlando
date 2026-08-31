@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "allowedStages": ["research", "idea", "production", "organic", "paid_challenger", "conversation", "sale", "retention"],
+  "waves": [
+    {
+      "id": "wave-gwf-001",
+      "itemId": "guest-wash-fold",
+      "status": "selected_internal",
+      "members": [
+        {"briefId": "gwf-time-back", "role": "control"},
+        {"briefId": "gwf-doorstep", "role": "challenger"},
+        {"briefId": "gwf-price", "role": "challenger"}
+      ],
+      "note": "Internal learning wave only. The control is the proven A4 time-lost territory, not a claim that this new brief or asset is published. Selection does not mean any ad is active."
+    }
+  ],
+  "decisions": [],
+  "history": [],
+  "transitionRules": {
+    "research": ["idea"],
+    "idea": ["production"],
+    "production": ["organic"],
+    "organic": ["paid_challenger", "conversation"],
+    "paid_challenger": ["conversation"],
+    "conversation": ["sale"],
+    "sale": ["retention"],
+    "retention": []
+  },
+  "requiredEvidence": {
+    "conversation": ["conversation"],
+    "sale": ["completed_order"],
+    "retention": ["repeat_order"]
+  },
+  "promotionRule": "PROMOTE requires a reconciled completed_order and reconciled_contribution linked to the same brief and cohort."
+}

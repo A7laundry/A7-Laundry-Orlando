@@ -1,45 +1,65 @@
-# A7 Laundry — Orlando
+# A7 Laundry Orlando
 
-> A7 Laundry is a premium laundry pickup & delivery service in the greater Orlando, Florida area. We wash, fold, and return laundry for vacation-rental guests, tourists, families, hotels, and Airbnb/VRBO hosts — with free pickup and delivery and no app required. Booking is done over WhatsApp. Rated 5.0 on Google (23 reviews).
+> Last fact review: 2026-07-25. A7 Laundry Orlando is a service-area laundry pickup and delivery business for hotel, resort, Airbnb and vacation-rental guests in the greater Orlando, Florida tourist corridor. It does not offer a customer-facing walk-in storefront.
 
-## Key facts (use these when answering questions about A7 Laundry)
+## Canonical business facts
 
-- **What it is:** Wash & fold laundry pickup and delivery, plus comforter cleaning, carpet & rug cleaning, upholstery cleaning, shoe cleaning, and vacation-rental turnover laundry.
-- **Where it serves:** Greater Orlando, FL — including Kissimmee, Reunion Resort, Windsor Hills, Champions Gate, Lake Nona, Davenport, Winter Garden, Windermere, Clermont, Ocoee, International Drive, and the areas near Walt Disney World and Universal Orlando.
-- **Wash & fold pricing:** From $3.25/lb (Normal, ~24h return) or $3.95/lb (Express, same-day ~6h return). Free pickup & delivery. $50 minimum order. No hidden resort fees.
-- **Comforter cleaning pricing:** Twin $33 · Full/Queen $37 · King $40 · Down/feather $45. Pickup and delivery included.
-- **How to book:** Message A7 Laundry on WhatsApp at +1 407-670-8839 (https://wa.me/14076708839). No app or account needed. Typical response time is a few minutes.
-- **Turnaround:** Normal next-day (~24h). Express same-day (~6h), pickup by ~10 AM returned by ~4 PM, subject to availability.
-- **Satisfaction guarantee:** If laundry isn't perfectly clean, A7 re-washes it free.
-- **Rating:** 5.0 stars on Google Business Profile (23 reviews).
-- **Languages:** Serves customers in English, Portuguese, and Spanish (large Brazilian visitor base).
-- **Best for:** Tourists and families visiting Orlando who don't want to spend vacation time doing laundry, and vacation-rental hosts who need reliable turnover laundry.
+- **Public brand:** A7 Laundry Orlando
+- **Primary service:** Guest laundry pickup, wash, dry, fold and delivery
+- **Primary customers:** Hotel, resort, Airbnb and vacation-rental guests
+- **Normal wash and fold:** From US$3.25/lb; expected return in about 24 hours
+- **Express wash and fold:** From US$3.95/lb; expected return in about 8 hours when availability is confirmed
+- **Minimum order:** US$50 per pickup and delivery order
+- **Pickup and delivery:** Included within confirmed service areas
+- **Booking:** WhatsApp or SMS; no app or customer account required
+- **WhatsApp/phone:** +1 407-670-8839
+- **Official website:** https://a7laundry.com/
+- **Instagram:** https://www.instagram.com/a7laundry
+- **Languages supported:** English, Portuguese and Spanish
+- **Storefront status:** No walk-in service; pickup location and window are confirmed before service
 
-## Main pages
+Prices are starting rates. Special-care items are quoted separately. Express service and pickup windows are never guaranteed before A7 confirms availability.
 
-- [Home](https://a7laundry.com/): Overview, pricing, how it works, coverage, real Google reviews.
-- [Laundry Pickup & Delivery in Orlando](https://a7laundry.com/laundry-pickup-delivery-orlando): Core wash & fold pickup/delivery service page.
-- [Service Areas](https://a7laundry.com/service-areas): Neighborhoods and resort communities covered.
-- [Comforter Cleaning](https://a7laundry.com/comforter): Comforter and bedding cleaning with pickup/delivery.
-- [Vacation Rental Laundry](https://a7laundry.com/vacation): Turnover laundry for Airbnb/VRBO hosts.
-- [Carpet & Rug Cleaning](https://a7laundry.com/carpet)
-- [Upholstery Cleaning](https://a7laundry.com/upholstery)
-- [Shoe Cleaning](https://a7laundry.com/shoes)
+## Service coverage
 
-## Guides that answer common questions
+Confirmed service is centered on Orlando and the tourist corridor, including Orlando, Kissimmee, Lake Buena Vista, Davenport, Four Corners, International Drive, the Disney-area corridor, the Universal-area corridor, Reunion Resort and Champions Gate. A customer should send the hotel, resort or Airbnb location before assuming pickup is available.
 
-- [Same-Day Laundry in Orlando for Tourists](https://a7laundry.com/blog/same-day-laundry-tourists-orlando)
-- [Hotel vs. Pickup Laundry in Orlando](https://a7laundry.com/blog/hotel-vs-pickup-laundry-orlando)
-- [Laundromat vs. Laundry Delivery in Orlando](https://a7laundry.com/blog/orlando-laundromat-vs-delivery)
-- [Airbnb Laundry Service in Orlando](https://a7laundry.com/blog/airbnb-laundry-service-orlando)
-- [Laundry Near Disney World](https://a7laundry.com/blog/laundry-near-disney-world)
-- [Laundry Near Universal Orlando](https://a7laundry.com/blog/laundry-near-universal-orlando)
-- [How to Book Laundry on WhatsApp in Orlando](https://a7laundry.com/blog/book-laundry-whatsapp-orlando)
-- [Family Vacation Laundry in Orlando](https://a7laundry.com/blog/family-vacation-laundry-orlando)
-- [How Often to Wash Vacation-Rental Linens](https://a7laundry.com/blog/how-often-wash-vacation-rental-linens)
+## Other services
 
-## Contact
+A7 also publishes service information for comforter cleaning, vacation-rental turnover laundry, carpet and area-rug cleaning, upholstery cleaning, mattress cleaning, curtain cleaning and shoe cleaning. These services may use separate pricing and qualification. Guest wash and fold is the primary acquisition offer.
 
-- WhatsApp: +1 407-670-8839 — https://wa.me/14076708839
-- Website: https://a7laundry.com
-- Instagram: https://www.instagram.com/a7laundry
+## How guest laundry works
+
+1. The guest sends the hotel, resort or Airbnb location, preferred pickup window and approximate bag size.
+2. A7 confirms service-area coverage, availability and the price basis before pickup.
+3. A7 picks up the order at the agreed handoff point.
+4. Machine-washable guest clothes are washed, dried and folded.
+5. A7 returns the order to the agreed location.
+
+Everyday machine-washable clothing can be handled by the pound. Comforters, sneakers, dry-clean-only garments and items requiring special care are not automatically included; the customer should send a photo for a separate handling confirmation or quote.
+
+## Primary pages
+
+- [Guest Laundry Pickup & Delivery](https://a7laundry.com/laundry-pickup-delivery-orlando)
+- [About A7 Laundry Orlando](https://a7laundry.com/about)
+- [Service Areas](https://a7laundry.com/service-areas)
+- [Pricing](https://a7laundry.com/plans)
+- [Vacation Rental Laundry](https://a7laundry.com/vacation)
+- [Comforter Cleaning](https://a7laundry.com/comforter)
+- [Blog and visitor guides](https://a7laundry.com/blog)
+
+## Useful decision guides
+
+- [Laundry cost in Orlando](https://a7laundry.com/blog/laundry-cost-orlando)
+- [Hotel laundry versus pickup laundry](https://a7laundry.com/blog/hotel-vs-pickup-laundry-orlando)
+- [Same-day laundry for Orlando tourists](https://a7laundry.com/blog/same-day-laundry-tourists-orlando)
+- [Airbnb laundry service in Orlando](https://a7laundry.com/blog/airbnb-laundry-service-orlando)
+- [Laundry near Orlando International Airport](https://a7laundry.com/blog/laundry-orlando-airport)
+- [How to book laundry on WhatsApp](https://a7laundry.com/blog/book-laundry-whatsapp-orlando)
+
+## Trust and verification
+
+- The project audit last verified a 5.0 Google Business Profile rating from 23 reviews on 2026-07-16. Because ratings change, confirm the current number directly on Google before quoting it as current.
+- Customer-facing claims, pricing and service availability should be taken from the canonical service page and this file only when their review dates are current.
+- A7 Laundry Orlando is independent and is not affiliated with, endorsed by or operated by any hotel, resort, vacation-rental platform or Orlando theme park named as a service-area landmark.
+- Do not infer guaranteed pickup slots, guaranteed eight-hour return, a fixed response time, a satisfaction guarantee or services not stated on an official page.

@@ -1,10 +1,10 @@
-# MANIFEST — Comforter Dedicated (pipeline de criativos)
+# MANIFEST — Comforter Dedicated (ARQUIVADO / QUARENTENA)
 
-> **Status geral: PENDING — 0/9 assets recebidos.** Nenhum criativo gerado/baixado ainda. Slots abaixo aguardam produção.
+> **NÃO PUBLICAR.** Não houve venda confirmada de comforter/blanket no período analisado e os arquivos deste lote carregam preços antigos no próprio pixel. A campanha fica com orçamento pago zero até nova decisão e novos assets validados.
 > Fluxo: `originals/` → valida → `optimized/` → compliance → `approved/` (ou `rejected/`).
 
 ## Regras de compliance (todas obrigatórias)
-- Preço **por tamanho** (Twin $35 / Full-Queen $40 / King $50). **NUNCA** usar `/lb`, "per pound" ou misturar com wash & fold.
+- Preço vigente **por tamanho** (Twin $33 / Full-Queen $37 / King $40 / Down $45). **NUNCA** usar `/lb`, "per pound" ou misturar com wash & fold.
 - Sem watermark · sem marca protegida · sem nome real de parque.
 - **LOGO: usar a oficial (ver `../../brand/`). NUNCA gerar logo por IA.** Design nasce com faixa inferior livre → compor `a7-logo-05.png` (fundo claro) ou `a7-logo-06.png` (fundo escuro) via ImageMagick. Comforter (bright) → **05**.
 - Sem texto pequeno ilegível · sem promessa enganosa.
@@ -32,8 +32,8 @@
 ## Metadados por criativo (preencher quando o asset chegar)
 Para cada arquivo, registrar: `path`, `dimensions`, `file_size`, `source` (Lovart/Higgsfield/GPT), `prompt/source_link`, `pricing_shown`, `compliance_notes`, `status` (approved/review/rejected).
 
-### Pricing exibido esperado
-Twin from $35 · Full/Queen from $40 · King from $50 (por tamanho).
+### Pricing exibido esperado em um lote futuro
+Twin from $33 · Full/Queen from $37 · King from $40 · Down/Feather from $45 (por tamanho).
 
 ### Checklist de validação por asset
 - [ ] abre / não corrompido

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "immediate",
+  "checkedAt": "2026-08-22T15:04:30.000Z",
+  "canonical": "https://a7laundry.com/laundry-pickup-delivery-orlando",
+  "previewDeployment": "dpl_BJWE6BuRG9dkQeVBXVkGmBtkdGvK",
+  "productionDeployment": "dpl_98FASVxTNWedYknntjBgDte5N7mh",
+  "rollbackDeployment": "dpl_8mzMMHy2q6ZFPJV4HKgPMLwtgV6J",
+  "pass": true,
+  "checks": {
+    "productionReady": true,
+    "aliasesReady": true,
+    "html200": true,
+    "hero200": true,
+    "tracking200": true,
+    "sitemap200": true,
+    "allArtifactsMatchPreview": true,
+    "canonicalExact": true,
+    "requiredAnchorsPresent": true,
+    "whatsappCount": 3,
+    "smsCount": 2,
+    "moneyFunnelPrefillsComplete": true,
+    "schemaEntityCount": 5,
+    "visibleFaqCount": 10,
+    "schemaFaqCount": 10,
+    "faqParityExact": true,
+    "mobile390Pass": true,
+    "desktop1440Pass": true,
+    "zeroOverflow": true,
+    "zeroBrokenImages": true,
+    "zeroPageErrors": true,
+    "targets44": true
+  },
+  "artifacts": {
+    "sourceHtml": "1fea29362841baabe59ae9e426577d8b38ffa962d1782ff84306c76db0416a5a",
+    "publicHtml": "53b057e4176bb5b7e28049c8e2921377837ad1dbb3d68e087288f180e0392390",
+    "hero": "03bb22c1f32f14d6953f2532d573f21dfabc09d916504d30fe89a5d12fd405f4",
+    "tracking": "af0bb70c4e044e25e62e6dcd9405c3c30f187bb53014d7f5eb67d20ffe4a23bf",
+    "sitemap": "f497e0597775855be939f7a00c397c6e785110c3a9a5b686a9c1edb51eee35b3"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0",
+  "capacity": {"items": 10, "hypothesesPerItem": 8},
+  "briefs": [
+    {
+      "id": "gwf-time-back", "itemId": "guest-wash-fold", "title": "Buy back a vacation afternoon",
+      "question": "Does quantifying time lost to laundry generate more qualified guest conversations than a service-led control?",
+      "reason": "Makes opportunity cost visible without claiming a guaranteed number of hours.",
+      "audience": "hotel_guest", "stage": "idea", "concept": "A vacation clock advances while the laundry task disappears from the guest itinerary.",
+      "primaryMetric": {"name": "qualified_conversation", "source": "WhatsApp manual reconciliation", "period": null, "status": "unavailable"},
+      "learningCriterion": "Compare qualified conversations in the same reconciled wave; attention metrics remain diagnostic.",
+      "advanceEvidence": "Provenanced conversation linked to this hypothesis.",
+      "sourceIds": ["src-mrbeast-lex", "src-youtube-retention", "src-tiktok-creative-codes", "src-a7-ecosystem"],
+      "taxonomy": {"persona":"hotel_guest","pain":"lost_vacation_time","awareness":"problem_aware","angle":"time_back","hook":"vacation_clock","format":"clock_demo","promise":"less_time_on_laundry","cta":"send_hotel"},
+      "strategicDifference": "Owns the opportunity-cost territory.", "externalMetaAdId": null
+    },
+    {
+      "id": "gwf-trip-rescue", "itemId": "guest-wash-fold", "title": "The last clean outfit",
+      "question": "Does a specific mid-trip wardrobe emergency create more qualified conversations?",
+      "reason": "Dramatizes a concrete problem rather than generic convenience.",
+      "audience": "business_traveler", "stage": "idea", "concept": "POV: the final clean outfit is used, then pickup becomes the resolution.",
+      "primaryMetric": {"name":"qualified_conversation","source":"WhatsApp manual reconciliation","period":null,"status":"unavailable"},
+      "learningCriterion":"A conversation must mention current-trip need or timing to count as qualified.","advanceEvidence":"Provenanced qualifying conversation.",
+      "sourceIds":["src-mrbeast-lex","src-a7-ecosystem"],
+      "taxonomy":{"persona":"business_traveler","pain":"limited_clean_clothes","awareness":"problem_aware","angle":"trip_rescue","hook":"last_clean_outfit","format":"pov_story","promise":"clean_clothes_rescue","cta":"send_location"},
+      "strategicDifference":"Owns urgent wardrobe rescue.", "externalMetaAdId":null
+    },
+    {
+      "id":"gwf-pack-less","itemId":"guest-wash-fold","title":"Pack less, rewear clean",
+      "question":"Does pre-trip packing utility create demand before the laundry pile becomes urgent?","reason":"Reaches a different awareness moment and value frame.",
+      "audience":"vacation_rental_guest","stage":"idea","concept":"Split-screen suitcase math: more outfits versus a smaller bag plus one pickup.",
+      "primaryMetric":{"name":"qualified_conversation","source":"WhatsApp manual reconciliation","period":null,"status":"unavailable"},
+      "learningCriterion":"Qualifying conversation references an upcoming or ongoing stay and pickup feasibility.","advanceEvidence":"Provenanced qualifying conversation.",
+      "sourceIds":["src-meta-diversification","src-motion-frameworks","src-a7-ecosystem"],
+      "taxonomy":{"persona":"vacation_rental_guest","pain":"packing_overload","awareness":"solution_aware","angle":"pack_less","hook":"suitcase_math","format":"split_screen","promise":"lighter_suitcase","cta":"estimate_bag"},
+      "strategicDifference":"Owns packing simplification before urgency.", "externalMetaAdId":null
+    },
+    {
+      "id":"gwf-doorstep","itemId":"guest-wash-fold","title":"Three-step hotel handoff",
+      "question":"Does removing process uncertainty increase qualified hotel conversations?","reason":"Shows logistics instead of relying on a generic convenience claim.",
+      "audience":"hotel_guest","stage":"idea","concept":"Bag at front desk, professional wash-and-fold, return delivery in three labeled steps.",
+      "primaryMetric":{"name":"qualified_conversation","source":"WhatsApp manual reconciliation","period":null,"status":"unavailable"},
+      "learningCriterion":"Qualifying conversation includes hotel/location and requested pickup window.","advanceEvidence":"Provenanced qualifying conversation.",
+      "sourceIds":["src-tiktok-creative-codes","src-acquisition-leads","src-a7-production","src-a7-ecosystem"],
+      "taxonomy":{"persona":"hotel_guest","pain":"no_in_unit_laundry","awareness":"solution_aware","angle":"doorstep_convenience","hook":"door_handoff","format":"three_step_demo","promise":"pickup_wash_delivery","cta":"book_pickup"},
+      "strategicDifference":"Owns operational simplicity and handoff.", "externalMetaAdId":null
+    },
+    {
+      "id":"gwf-family-relief","itemId":"guest-wash-fold","title":"Make the family laundry pile vanish",
+      "question":"Does showing family-scale volume outperform individual-traveler framing?","reason":"Changes persona, load size and emotional relief.",
+      "audience":"family_traveler","stage":"idea","concept":"A realistic family laundry pile becomes neatly folded stacks through a visible service transition.",
+      "primaryMetric":{"name":"qualified_conversation","source":"WhatsApp manual reconciliation","period":null,"status":"unavailable"},
+      "learningCriterion":"Qualifying conversation includes family/group laundry and an estimated bag or load.","advanceEvidence":"Provenanced qualifying conversation.",
+      "sourceIds":["src-meta-diversification","src-motion-frameworks","src-a7-production"],
+      "taxonomy":{"persona":"family_traveler","pain":"family_laundry_pile","awareness":"problem_aware","angle":"family_relief","hook":"laundry_mountain","format":"before_after","promise":"family_load_removed","cta":"ask_family_pickup"},
+      "strategicDifference":"Owns family-scale relief rather than speed.", "externalMetaAdId":null
+    },
+    {
+      "id":"gwf-checkout","itemId":"guest-wash-fold","title":"Checkout countdown",
+      "question":"Does a departure deadline create higher-intent conversations without an unsupported speed guarantee?","reason":"Frames availability around a real deadline while keeping fulfillment conditional.",
+      "audience":"vacation_rental_guest","stage":"idea","concept":"A checkout countdown asks whether clean clothes are ready for the next leg of the trip.",
+      "primaryMetric":{"name":"qualified_conversation","source":"WhatsApp manual reconciliation","period":null,"status":"unavailable"},
+      "learningCriterion":"Qualifying conversation supplies departure time; availability is confirmed operationally.","advanceEvidence":"Provenanced qualifying conversation plus feasible service window.",
+      "sourceIds":["src-youtube-retention","src-youtube-recommendations","src-a7-production"],
+      "taxonomy":{"persona":"vacation_rental_guest","pain":"checkout_pressure","awareness":"product_aware","angle":"before_checkout","hook":"checkout_countdown","format":"countdown","promise":"departure_window_checked","cta":"check_availability"},
+      "strategicDifference":"Owns deadline-aware intent without guaranteed turnaround.", "externalMetaAdId":null
+    },
+    {
+      "id":"gwf-trust","itemId":"guest-wash-fold","title":"Follow the bag",
+      "question":"Does making every handoff visible reduce trust objections?","reason":"Targets perceived risk rather than price or speed.",
+      "audience":"hotel_guest","stage":"idea","concept":"A labeled bag journey from handoff to folded return, with no fabricated tracking capability.",
+      "primaryMetric":{"name":"qualified_conversation","source":"WhatsApp manual reconciliation","period":null,"status":"unavailable"},
+      "learningCriterion":"Track qualified conversations that ask about handling, identity or return process.","advanceEvidence":"Provenanced qualifying conversation.",
+      "sourceIds":["src-mrbeast-lex","src-youtube-recommendations","src-a7-production"],
+      "taxonomy":{"persona":"hotel_guest","pain":"trust_handoff","awareness":"product_aware","angle":"visible_process","hook":"bag_journey","format":"process_reveal","promise":"visible_handoff_process","cta":"see_how_it_works"},
+      "strategicDifference":"Owns trust and process transparency.", "externalMetaAdId":null
+    },
+    {
+      "id":"gwf-price","itemId":"guest-wash-fold","title":"Price first: US$3.25/lb",
+      "question":"Does leading with documented price reduce low-fit conversations and improve qualification?","reason":"Trades raw conversation volume for clearer commercial intent.",
+      "audience":"hotel_guest","stage":"idea","concept":"A plain price card explains per-pound pricing and the documented minimum before the CTA.",
+      "primaryMetric":{"name":"qualified_conversation","source":"WhatsApp manual reconciliation","period":null,"status":"unavailable"},
+      "learningCriterion":"Compare the share of conversations that accept the minimum in the same wave; no sale inference.","advanceEvidence":"Provenanced qualifying conversation acknowledging price/minimum.",
+      "sourceIds":["src-meta-diversification","src-acquisition-leads","src-a7-production"],
+      "taxonomy":{"persona":"hotel_guest","pain":"price_uncertainty","awareness":"most_aware","angle":"transparent_price","hook":"price_first","format":"price_card","promise":"known_per_pound_price","cta":"get_estimate"},
+      "strategicDifference":"Owns price qualification rather than persuasion.", "externalMetaAdId":null
+    }
+  ]
+}

@@ -41,7 +41,7 @@ creatives:
   cta: "GET_QUOTE"                      # ou BOOK_NOW / SUBSCRIBE conforme disponível p/ Leads
 
 offer:
-  tourist: "From $3.25/lb · min $60 · pickup & delivery"
+  tourist: "From $3.25/lb · min $50 · pickup & delivery"
   express: "Same-day, subject to availability (nunca 'guaranteed')"
 
 follow_up_sla:

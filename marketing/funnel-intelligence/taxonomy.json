@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0",
+  "requiredDimensions": ["persona", "pain", "awareness", "angle", "hook", "format", "promise", "cta"],
+  "dimensions": {
+    "persona": ["hotel_guest", "vacation_rental_guest", "family_traveler", "business_traveler"],
+    "pain": ["lost_vacation_time", "limited_clean_clothes", "packing_overload", "no_in_unit_laundry", "family_laundry_pile", "checkout_pressure", "trust_handoff", "price_uncertainty"],
+    "awareness": ["unaware", "problem_aware", "solution_aware", "product_aware", "most_aware"],
+    "angle": ["time_back", "trip_rescue", "pack_less", "doorstep_convenience", "family_relief", "before_checkout", "visible_process", "transparent_price"],
+    "hook": ["vacation_clock", "last_clean_outfit", "suitcase_math", "door_handoff", "laundry_mountain", "checkout_countdown", "bag_journey", "price_first"],
+    "format": ["clock_demo", "pov_story", "split_screen", "three_step_demo", "before_after", "countdown", "process_reveal", "price_card"],
+    "promise": ["less_time_on_laundry", "clean_clothes_rescue", "lighter_suitcase", "pickup_wash_delivery", "family_load_removed", "departure_window_checked", "visible_handoff_process", "known_per_pound_price"],
+    "cta": ["send_hotel", "send_location", "estimate_bag", "book_pickup", "ask_family_pickup", "check_availability", "see_how_it_works", "get_estimate"]
+  },
+  "semanticOverlap": {
+    "keyDimensions": ["persona", "pain", "awareness", "angle", "promise", "cta"],
+    "blockThreshold": 0.84,
+    "reviewThreshold": 0.67
+  }
+}

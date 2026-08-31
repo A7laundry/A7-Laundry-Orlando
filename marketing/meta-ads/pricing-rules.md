@@ -7,10 +7,14 @@
 | Público / oferta | Preço no anúncio | Observação |
 |---|---|---|
 | **Local Laundry** (residentes Orlando) | **From $2.90/lb** | **promo residente** — ABAIXO do site (desconto segmentado) |
-| **Tourist Laundry** (hotel/Airbnb) | **From $3.25/lb** | = **preço do site** (MANIFESTO Normal 24h) |
-| **Tourist Express** (same-day) | **From $3.95/lb** | = **site Express 6h** + "Subject to availability" |
+| **Tourist Laundry** (hotel/Airbnb) | **From $3.25/lb · minimum $50** | = **preço do site** (MANIFESTO Normal 24h) |
+| **Tourist Express** (same-day) | **From $3.95/lb · minimum $50** | = **site Express 8h** + "Subject to availability" |
 
 > **Mudança 2026-07-06:** o site/MANIFESTO subiu de $2.90/$3.20 → **$3.25 Normal / $3.95 Express** (alinhado às campanhas de turista). O **$2.90 sobrevive só como promo Local** (residente), abaixo do preço público.
+
+> **Reconciliação 2026-07-23:** o proprietário confirmou **pedido mínimo oficial de $50**. O mínimo de $60 usado em alguns documentos e criativos de campanha era divergente do `MANIFESTO.md` e deve ser corrigido antes de qualquer republicação.
+
+> **Política criativa 2026-08-17:** novos criativos devem ser produzidos **sem preço incorporado na imagem**, salvo autorização específica. Quando uma peça precisar mostrar preço, os únicos valores válidos para hóspedes são **$3.25/lb Normal** ou **$3.95/lb Express 8h**, ambos com **mínimo de $50**; Express deve declarar **“subject to availability”**. Artes com valores antigos ficam em `marketing/meta-ads/archive/material-antigo/` e não podem voltar para `approved/`.
 
 ## Comforter Cleaning (por tamanho — NÃO é per-lb)
 
@@ -26,7 +30,7 @@
 ## Regras de validação (usadas por `*validate` e `*preflight`)
 
 - Anúncio de **público local** → preço **$2.90/lb** (nunca o preço turista).
-- Anúncio de **turista** → **$3.25/lb**; **express** → **$3.95/lb** + "subject to availability".
+- Anúncio de **turista** → **$3.25/lb + mínimo de $50**; **express** → **$3.95/lb + mínimo de $50** + "subject to availability".
 - Anúncio de **comforter** → preços por tamanho, **sem** "/lb".
 - Qualquer preço fora desta tabela = **flag** (rever antes de publicar).
 

@@ -1,0 +1,2 @@
+# Preserve byte-for-byte platform exports; integrity tests verify their recorded hashes.
+docs/audits/evidence/** whitespace=-trailing-space,-blank-at-eof

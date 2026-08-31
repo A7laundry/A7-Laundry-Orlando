@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-30-whatsapp-audit",
+  "auditDate": "2026-07-30",
+  "title": "WhatsApp — auditoria de atendimento",
+  "type": "audit_report",
+  "status": "partial",
+  "scope": [
+    "whatsapp",
+    "conversion",
+    "customer_service"
+  ],
+  "summary": "Auditoria de atendimento com errata e direcionamento corretivo preservados; acrescentada como backfill sem alterar a cadeia anterior.",
+  "sources": [
+    {
+      "name": "WhatsApp audit report",
+      "status": "partial",
+      "period": "30–31 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "docs/DIRECIONAMENTO-AGOSTO-2026.md",
+      "sha256": "136c0893894dc95610872ea9a3a8929fb3693103ff4ed18b3e844383445b4eae"
+    },
+    {
+      "path": "marketing/AUDITORIA-WHATSAPP-2026-07-30.md",
+      "sha256": "bd0ae437dd3c4549ca6646b4fef8c51efd1625c47ad5ea2835d4ffa2bb9e6e50"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-16-site-cro-audit",
+  "previousRecordSha256": "8379d0b0bf0f9300560bed41d996417b161350bf04c4cc7e43cf8cf3b7d28608"
+}

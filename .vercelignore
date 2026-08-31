@@ -1,0 +1,30 @@
+# Internal operations — never publish with the customer-facing site
+a7-command-center.html
+marketing/
+
+# Keep image assets used by legacy comforter variants, but exclude internal creative galleries
+criativos/*.html
+
+# Repository/process files are not runtime assets
+docs/
+AGENTS.md
+MANIFESTO.md
+README.md
+STRATEGY-PROMPT.md
+_archive/
+*.rtf
+modelo paleta de cores.jpeg
+
+# Superseded full-resolution sources (optimized WebP derivatives are public)
+public/1775625968812.png
+public/Hero - Familia em Alegria.png
+public/Família em Orlando - Sem Preocupações.png
+public/Como Funciona - Entrega Profissional.jpg
+public/hero-resort-pool.jpg
+.aios-core/
+.aiox-core/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.github/

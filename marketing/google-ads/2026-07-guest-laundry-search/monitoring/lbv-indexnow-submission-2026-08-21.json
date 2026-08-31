@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "submittedAt": "2026-08-21T00:43:32-04:00",
+  "endpoint": "https://api.indexnow.org/indexnow",
+  "host": "a7laundry.com",
+  "urlList": [
+    "https://a7laundry.com/blog/laundry-lake-buena-vista"
+  ],
+  "keyLocation": "https://a7laundry.com/d0f3f6cfc2be4b1f74ba4baba5000145.txt",
+  "keyVerifiedPublicly": true,
+  "httpStatus": 200,
+  "accepted": true,
+  "scope": "One released Lake Buena Vista URL only",
+  "limitation": "IndexNow acceptance confirms receipt by the protocol endpoint; it does not prove crawling, indexing, ranking or Google Search Console status."
+}

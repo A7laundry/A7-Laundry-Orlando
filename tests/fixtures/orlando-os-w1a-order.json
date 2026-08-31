@@ -1,0 +1,20 @@
+{
+  "name": "Customer QA",
+  "whatsapp_number": "+1 407 555 0199",
+  "language": "en",
+  "customer_type": "guest",
+  "accommodation_type": "hotel",
+  "property": "Preview Test Hotel",
+  "property_address": "QA-only address",
+  "room": "QA-12",
+  "pickup_location": "bell_services",
+  "bags_expected": 2,
+  "location_notes": "Synthetic only",
+  "service_tier": "express",
+  "order_notes": "Synthetic W1A test",
+  "care_options": ["hypoallergenic", "no_dryer"],
+  "items": [
+    { "code": "wash_fold", "estimated_lbs": 18 },
+    { "code": "comforter_king", "quantity": 1 }
+  ]
+}

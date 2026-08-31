@@ -22,7 +22,7 @@
 
 ## Criativo & pricing
 - [ ] Reaproveita tourist aprovados; CTA = Get Quote / Book Pickup
-- [ ] Tourist $3.25/lb (min $60) · Express $3.95/lb "subject to availability"
+- [ ] Tourist $3.25/lb (min $50) · Express $3.95/lb "subject to availability"
 - [ ] Sem "guaranteed", sem $2.90, sem parque/logo
 
 ## Operação (make-or-break)

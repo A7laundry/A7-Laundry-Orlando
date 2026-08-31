@@ -1,0 +1,8 @@
+test_id,control,challenger,audience,primary_metric,guardrail,status,publication_gate
+OPT-C3,C2 Comforter,Comforter Não é só a capa,COMF_LOCAL,none,0 confirmed sales; no paid test authorized,BACKLOG,DO_NOT_PUBLISH
+OPT-C4,C2 Comforter,Comforter Fresh bed proof,COMF_LOCAL,none,0 confirmed sales; no paid test authorized,BACKLOG,DO_NOT_PUBLISH
+OPT-T5,A4 Tourist PT,Turista PT Sacola na recepção,TOURIST_PT,cost_per_conversation < 19.79 USD,minimum 3 conversations before winner,STALE_PRICE_PAUSED,REGENERATE_MIN_50
+OPT-T6,A3 Tourist EN,Tourist EN Pack less,TOURIST_EN,cost_per_conversation <= 20 USD,CTR >= 1.70%; pause at 30 USD with 0 conversations,STALE_PRICE_PAUSED,REGENERATE_MIN_50
+OPT-LA7,A4 Tourist PT,Hóspede sem roupa suja Feed 1x1,TOURIST_PT,cost_per_confirmed_sale,minimum 3 conversations and owner sale reconciliation,ACTIVE,LAUNCHED_2026-07-22
+OPT-LA8,A3 Tourist EN,Vacation not laundry Feed 1x1,TOURIST_EN,cost_per_confirmed_sale,CTR >= 1.70%; minimum 3 conversations and owner sale reconciliation,ACTIVE,LAUNCHED_2026-07-22
+OPT-OP1,A4 Tourist PT,Discrição e operação real 9x16,TOURIST_PT,cost_per_qualified_conversation,minimum 3 qualified conversations and 1 confirmed sale,APPROVED_NOT_PUBLISHED,REPLACE_LA7_AFTER_INITIAL_WINDOW

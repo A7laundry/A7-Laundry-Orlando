@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>A7 Orlando OS</title>
+  <link rel="stylesheet" href="/sistema.css">
+  <link rel="stylesheet" href="/sistema-state.css">
+  <link rel="stylesheet" href="/sistema-w1a1.css">
+  <link rel="stylesheet" href="/sistema-w1b.css">
+</head>
+<body>
+  <main id="app" aria-live="polite">
+    <section class="login-shell" id="loginView" hidden>
+      <div class="brand"><span>A7</span><div><strong>Orlando OS</strong><small>Operação de lavanderia</small></div></div>
+      <form id="loginForm" class="panel login-panel">
+        <p class="eyebrow">ACESSO INTERNO</p>
+        <h1>Bom dia.</h1>
+        <p>Entre para registrar e acompanhar pedidos da operação.</p>
+        <label>E-mail<input name="email" type="email" autocomplete="username" required></label>
+        <label>Senha<input name="password" type="password" autocomplete="current-password" required></label>
+        <p class="error" id="loginError" role="alert"></p>
+        <button class="primary" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section id="systemView" hidden>
+      <header class="topbar">
+        <div class="brand"><span>A7</span><div><strong>Orlando OS</strong><small id="userLabel"></small></div></div>
+        <button id="logoutButton" class="quiet" type="button">Sair</button>
+      </header>
+      <div class="workspace">
+        <nav aria-label="Sistema">
+          <button id="todayNav" type="button" class="active">Hoje</button>
+          <button id="attendanceNav" type="button">Atendimento</button>
+          <button id="ordersNav" type="button">Pedidos</button>
+          <button id="customersNav" type="button">Clientes <small>Lite</small></button>
+          <button type="button" disabled>Rotas <small>W3</small></button>
+        </nav>
+        <section class="content">
+          <div id="todayView">
+            <div class="page-head">
+              <div><p class="eyebrow">HOJE</p><h1>O que precisa acontecer agora</h1>
+                <p id="todayFreshness">Carregando operação…</p></div>
+              <button id="refreshTodayButton" class="quiet bordered" type="button">Atualizar</button>
+            </div>
+            <p class="error" id="todayError" role="alert"></p>
+            <section id="todayTiles" class="today-tiles" aria-label="Filas de hoje"></section>
+            <section class="operations-section">
+              <div class="section-head"><div><p class="eyebrow">PRIORIDADE</p><h2 id="todayQueueTitle">Fila operacional</h2></div><button id="todayOpenOrders" class="quiet" type="button">Ver todos os pedidos →</button></div>
+              <div id="todayOrders" class="operation-list" aria-live="polite"></div>
+            </section>
+          </div>
+
+          <div id="ordersView" hidden>
+            <div class="page-head"><div><p class="eyebrow">PEDIDOS</p><h1>Buscar e trabalhar pedidos</h1><p>Filtre a fila ou procure pelo número, cliente, propriedade ou final do WhatsApp.</p></div></div>
+            <section class="panel order-search-panel">
+              <form id="operationalSearchForm" class="inline-form"><div class="lookup-input"><input name="query" maxlength="160" placeholder="MCO 1002, cliente, hotel ou final 8839" autocomplete="off" spellcheck="false"><small>Pedidos QA aparecem somente por busca direta do número completo.</small></div><button type="submit">Buscar</button></form>
+              <div class="axis-filters">
+                <label>Custódia<select id="custodyFilter"><option value="">Todas</option><option value="with_customer">Com o cliente</option><option value="awaiting_pickup">Aguardando coleta</option><option value="with_driver_pickup">Com motorista</option><option value="at_laundry">Na lavanderia</option><option value="with_driver_delivery">Com motorista para entrega</option><option value="bell_desk">Na recepção / Bell Desk</option><option value="delivered">Entregue</option></select></label>
+                <label>Produção<select id="productionFilter"><option value="">Todas</option><option value="awaiting_intake">Aguardando chegada</option><option value="awaiting_weight">Aguardando pesagem</option><option value="awaiting_processing">Aguardando processamento</option><option value="processing">Em processamento</option><option value="ready">Pronto</option></select></label>
+              </div>
+              <div id="queueFilters" class="queue-filters" aria-label="Filtrar pedidos"></div>
+              <p class="error" id="ordersError" role="alert"></p>
+            </section>
+            <div id="ordersResults" class="operation-list" aria-live="polite"></div>
+          </div>
+
+          <div id="orderDetailView" hidden>
+            <div class="page-head compact"><div><button id="backToOrdersButton" class="back" type="button">← Voltar</button><p class="eyebrow">PEDIDO</p><h1 id="detailNumber">—</h1><p id="detailHeadline"></p></div><a id="detailPickupLink" class="secondary action-link" target="_blank" rel="noopener">Pickup Order</a></div>
+            <p class="error" id="detailError" role="alert"></p>
+            <div id="detailContent"></div>
+          </div>
+
+          <div id="attendanceView">
+            <div class="page-head">
+              <div><p class="eyebrow">ATENDIMENTO</p><h1>Vendas confirmadas no WhatsApp</h1>
+                <p>Registre somente o que já foi combinado. A conversa continua no WhatsApp Business.</p></div>
+              <button id="newOrderButton" class="primary" type="button">+ Novo atendimento</button>
+            </div>
+            <section class="panel empty-state">
+              <span class="status-dot"></span>
+              <div><strong>Pronto para operar</strong><p>Crie um pedido quando o cliente aceitar serviço, horário e mínimo.</p></div>
+            </section>
+            <section class="panel lookup-panel">
+              <h2>Reabrir pedido</h2>
+              <form id="lookupForm" class="inline-form"><div class="lookup-input"><input name="order_number" placeholder="1002" aria-describedby="lookupHint" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="search" required><small id="lookupHint">Digite apenas 1002 ou o código completo, como MCO 1002.</small></div><button type="submit">Buscar</button></form>
+              <p class="error" id="lookupError" role="alert"></p>
+              <div id="lookupResult"></div>
+            </section>
+          </div>
+
+          <div id="customersView" hidden>
+            <div class="page-head">
+              <div><p class="eyebrow">CLIENTES</p><h1>Encontre quem já comprou</h1>
+                <p>Veja contato, pedidos e receita de serviço confirmada — sem CRM.</p></div>
+            </div>
+            <section class="panel customer-search-panel">
+              <form id="customerSearchForm" class="inline-form">
+                <div class="lookup-input"><input name="customer_query" minlength="3" maxlength="160" placeholder="Nome, telefone, email ou MCO 1002" autocomplete="off" spellcheck="false" required><small>A busca é privada e não aparece na URL. Para pedido, use o código completo.</small></div>
+                <button type="submit">Buscar cliente</button>
+              </form>
+              <p class="error" id="customerSearchError" role="alert"></p>
+            </section>
+            <div id="customerResults" class="customer-results" aria-live="polite"></div>
+            <section id="customerDetail" class="panel customer-detail" hidden aria-live="polite"></section>
+          </div>
+
+          <div id="newOrderView" hidden>
+            <div class="page-head compact"><div><button id="backButton" class="back" type="button">← Atendimento</button><h1>Novo atendimento</h1><p>Venda recebida fora do sistema</p></div></div>
+            <section id="knownCustomerBanner" class="panel known-customer-banner" hidden>
+              <div><p class="eyebrow">CLIENTE CADASTRADO</p><strong id="knownCustomerSummary"></strong><p>Nome e WhatsApp vêm do cadastro. Revise local, prazo e itens antes de confirmar.</p></div>
+              <button id="clearKnownCustomerButton" class="secondary" type="button">Remover vínculo</button>
+            </section>
+            <form id="orderForm">
+              <section class="panel form-section"><p class="step">1</p><div><h2>Cliente</h2><div class="grid">
+                <label>Nome<input name="name" maxlength="100" autocomplete="off" required></label>
+                <label>WhatsApp<input name="whatsapp_number" inputmode="tel" placeholder="+1 407 000 0000" autocomplete="off" required></label>
+                <label>Idioma<select name="language"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option><option value="other">Outro</option></select></label>
+                <label>Tipo de cliente<select name="customer_type"><option value="guest">Guest</option><option value="resident">Resident</option><option value="host">Host</option></select></label>
+              </div></div></section>
+              <section class="panel form-section"><p class="step">2</p><div><h2>Local</h2><div class="grid">
+                <label>Tipo<select name="accommodation_type"><option value="hotel">Hotel</option><option value="airbnb">Airbnb</option><option value="residence">Residence</option></select></label>
+                <label>Hotel / propriedade<input name="property" maxlength="180" autocomplete="off" required></label>
+                <label class="wide">Endereço, se necessário para a coleta<input name="property_address" maxlength="240" autocomplete="off"></label>
+                <label>Quarto, se houver<input name="room" maxlength="40" autocomplete="off"></label>
+                <label>Local da coleta<select name="pickup_location" required><option value="bell_services">Bell Services</option><option value="front_desk">Front Desk</option><option value="guest_room">Guest Room</option><option value="airbnb_residence">Airbnb / Residence</option><option value="meet_customer">Meet Customer</option><option value="other">Other</option></select></label>
+                <label>Bags esperadas<input name="bags_expected" type="number" min="1" max="100" step="1" placeholder="Opcional"></label>
+                <label class="wide">Notas de acesso / handoff<textarea name="location_notes" maxlength="500"></textarea></label>
+              </div></div></section>
+              <section class="panel form-section"><p class="step">3</p><div><h2>Serviço e prazo</h2>
+                <div class="tier-choice"><label><input type="radio" name="service_tier" value="normal" checked><span><strong>Normal</strong><small id="normalPrice">Carregando…</small></span></label><label><input type="radio" name="service_tier" value="express"><span><strong>Express</strong><small id="expressPrice">Carregando…</small></span></label></div>
+                <div class="grid"><label>Início da coleta<input name="pickup_window_start" type="datetime-local" required></label><label>Fim da coleta<input name="pickup_window_end" type="datetime-local" required></label><label>Needed by<input name="needed_by" type="datetime-local" required></label><label>A7 Ref, se veio na mensagem<input name="lead_reference" maxlength="10" placeholder="Opcional" autocomplete="off"></label></div>
+              </div></section>
+              <section class="panel form-section"><p class="step">4</p><div><h2>Itens</h2>
+                <label class="item-row"><input type="checkbox" name="wash_fold" checked><span><strong>Wash & Fold</strong><small id="washRule"></small></span><input name="estimated_lbs" type="number" min="1" max="500" step="0.1" placeholder="lb estimadas"></label>
+                <div class="special-row"><label>Item especial<select name="special_code"><option value="">Nenhum</option></select></label><label>Quantidade<input name="special_quantity" type="number" min="1" max="100" value="1"></label></div>
+                <fieldset class="care-options"><legend>Cuidados especiais, se combinados</legend><label><input type="checkbox" name="care_options" value="no_dryer">No dryer</label><label><input type="checkbox" name="care_options" value="hand_wash">Hand wash</label><label><input type="checkbox" name="care_options" value="hypoallergenic">Hypoallergenic</label><label><input type="checkbox" name="care_options" value="custom_care">Custom Care</label></fieldset>
+                <label>Observações do pedido<textarea name="order_notes" maxlength="500"></textarea></label>
+                <div class="commercial" id="commercialSummary">O sistema carregará preço, unidade e mínimo.</div>
+              </div></section>
+              <p class="error" id="orderError" role="alert"></p>
+              <div class="submit-row"><button id="cancelButton" type="button" class="quiet">Cancelar</button><button class="primary" type="submit">Confirmar venda e criar pedido</button></div>
+            </form>
+          </div>
+
+          <div id="successView" hidden>
+            <section class="panel success-card"><div class="check">✓</div><p class="eyebrow">PEDIDO CRIADO</p><h1 id="successNumber"></h1><div id="successDetails"></div><div class="next-action"><small>PRÓXIMA AÇÃO</small><strong id="successNext"></strong></div><div class="success-actions"><a id="successPickupLink" class="primary action-link" target="_blank" rel="noopener">Abrir Pickup Order</a><a id="successPrintLink" class="secondary action-link" target="_blank" rel="noopener">Imprimir</a></div><button id="doneButton" class="quiet" type="button">Voltar para Atendimento</button></section>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="/sistema.js" defer></script>
+</body>
+</html>

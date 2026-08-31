@@ -1,0 +1,274 @@
+.care-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+}
+
+.care-options legend {
+  grid-column: 1 / -1;
+  margin-bottom: 7px;
+  color: #30445b;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.care-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.care-options input {
+  width: 18px;
+  min-height: 18px;
+}
+
+.success-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.action-link {
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
+
+.secondary {
+  min-height: 46px;
+  padding: 12px 18px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.pickup-inline-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.lookup-input {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+}
+
+.lookup-input small {
+  color: var(--muted);
+  font-size: .76rem;
+}
+
+.inline-form > button {
+  align-self: start;
+  min-height: 46px;
+}
+
+.customer-search-panel {
+  padding: 22px;
+}
+
+.customer-results {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.customer-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, .7fr) auto;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  text-align: left;
+}
+
+.customer-result:hover,
+.customer-result:focus-visible {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(18, 89, 213, .12);
+}
+
+.customer-result-identity,
+.customer-result-context,
+.customer-order > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.customer-result small,
+.customer-order small,
+.customer-contact,
+.customer-empty {
+  color: var(--muted);
+}
+
+.customer-chevron {
+  color: var(--blue);
+  font-size: 1.7rem;
+}
+
+.customer-detail {
+  margin-top: 20px;
+  padding: 24px;
+}
+
+.customer-detail-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.customer-detail-head h2,
+.customer-detail-head p {
+  margin-bottom: 5px;
+}
+
+.known-customer-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+  padding: 18px 20px;
+  border-color: #a9c7f7;
+  background: #f2f7ff;
+}
+
+.known-customer-banner[hidden] {
+  display: none;
+}
+
+.known-customer-banner p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+#orderForm input[readonly] {
+  border-color: #b9c7d8;
+  background: #edf2f7;
+  color: #40536a;
+}
+
+.customer-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.customer-facts > div {
+  padding: 13px;
+  border-radius: 11px;
+  background: var(--bg);
+}
+
+.customer-facts dt {
+  color: var(--muted);
+  font-size: .7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.customer-facts dd {
+  margin: 4px 0 0;
+  font-weight: 800;
+}
+
+.customer-orders {
+  display: grid;
+  gap: 8px;
+}
+
+.customer-order {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+}
+
+.customer-order-status {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #edf4ff;
+  color: #24466e;
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.customer-order-status.qa {
+  background: #fff1d6;
+  color: #76520c;
+}
+
+@media (max-width: 720px) {
+  .care-options,
+  .success-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .customer-result,
+  .customer-order {
+    grid-template-columns: 1fr auto;
+  }
+
+  .customer-result-context,
+  .customer-order .customer-order-status {
+    grid-column: 1;
+  }
+
+  .customer-chevron,
+  .customer-order .pickup-inline-link {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .customer-detail-head {
+    display: grid;
+  }
+
+  .known-customer-banner {
+    display: grid;
+  }
+
+  .customer-detail-head .primary {
+    width: 100%;
+  }
+
+  .known-customer-banner .secondary {
+    width: 100%;
+  }
+
+  .customer-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 390px) {
+  .care-options,
+  .success-actions {
+    grid-template-columns: 1fr;
+  }
+}

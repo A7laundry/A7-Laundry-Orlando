@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "auditId": "2026-07-29-google-ads-conversion-tracking",
+  "auditDate": "2026-07-29",
+  "title": "Google Ads — auditoria de conversion tracking",
+  "type": "audit_report",
+  "status": "partial",
+  "scope": [
+    "google_ads",
+    "conversion_tracking"
+  ],
+  "summary": "Relatório de auditoria do rastreamento de conversões do Google Ads.",
+  "sources": [
+    {
+      "name": "Audit report",
+      "status": "verified",
+      "period": "29 jul 2026"
+    }
+  ],
+  "metrics": [],
+  "evidence": [
+    {
+      "path": "docs/audits/2026-07-29-google-ads-conversion-tracking.md",
+      "sha256": "98aa23ee52a107bc91a6fb26bb0009d70272b7c5afd43da7b7d6bc19b271844a"
+    }
+  ],
+  "snapshot": null,
+  "previousAuditId": "2026-07-28-meta-guest-reactivation",
+  "previousRecordSha256": "d93a7887afda95f7cbf17c07117b496b0fdf4fda643508acfc07fd18029bcd47"
+}

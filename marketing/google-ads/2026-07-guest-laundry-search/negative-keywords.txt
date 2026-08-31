@@ -1,0 +1,33 @@
+# Shared negative list — phrase negatives unless the Google Ads UI requires another match type.
+job
+jobs
+hiring
+career
+salary
+application for laundry service
+girlfriend
+boyfriend
+dating
+novia
+novio
+coin laundry
+self service
+laundromat
+washing machine
+washer repair
+dryer repair
+appliance repair
+laundry equipment
+laundry machine for sale
+used washer
+free laundry
+cheap laundromat
+coupon
+dry cleaning
+carpet cleaning
+upholstery cleaning
+shoe cleaning
+comforter cleaning
+blanket cleaning
+housekeeping jobs
+commercial linen service

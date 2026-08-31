@@ -34,8 +34,10 @@ Auditoria pré-publicação (somente leitura). Verifica:
 - erros de entrega (`ads_get_errors`)
 - opportunity score (`ads_get_opportunity_score`) — lista, **não aplica**
 - previews dos anúncios (`ads_get_ad_preview`)
+- **prévia individual obrigatória** de Instagram/Facebook Feed, Stories e Reels; qualquer corte de headline, preço, logo ou CTA produz veredito **NO-GO**
 - **pricing por público** vs `pricing-rules.md` (local $2.90 / turista $3.25 / express $3.95 / comforter por tamanho)
 - **WhatsApp**: destino `WHATSAPP_MESSAGE` + número (`+1 407-670-8839`, não o teste `+1 555…`)
+- **Marca e GEO**: usar `@a7laundry` e a área atendida de Orlando; nunca misturar `@a7lavanderia`, Jacareí, Miami ou mercados não comprovados
 - **Advantage+ OFF** (público/posicionamento manual quando exigido)
 - **tradução automática OFF**
 - destino/CTA correto

@@ -1,0 +1,33 @@
+# A7 Laundry Orlando — hard gates for every Meta Ads build or publication.
+# Public identifiers only. No access tokens or customer data belong here.
+
+whatsapp:
+  official_e164: "+14076708839"
+  blocked_test_e164: "+15556287241"
+  require_official_destination: true
+  fail_when_destination_unverified: true
+
+brand_and_geo:
+  official_instagram_handle: "@a7laundry"
+  paid_service_area: "Orlando area"
+  forbid_cross_brand_handles: true
+  forbidden_unsupported_markets:
+    - "Miami"
+
+creative:
+  require_placement_preview_attestation: true
+  required_previews:
+    - "Instagram Feed"
+    - "Facebook Feed"
+    - "Instagram Stories"
+    - "Facebook Stories"
+    - "Instagram Reels"
+    - "Facebook Reels"
+  universal_canvas: "1080x1920"
+  critical_content_safe_zone_y: "420-1500"
+  forbid_automatic_crop_for_critical_copy: true
+
+publication:
+  create_paused: true
+  publish_only_after_preflight: true
+  publish_only_after_owner_approval: true
