@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "currency": "USD",
+  "services": [
+    {
+      "code": "wash_fold_normal",
+      "service_type": "wash_fold_guest",
+      "tier": "normal",
+      "label": "Wash & Fold — Normal",
+      "unit": "lb",
+      "unit_price": 3.25,
+      "minimum_amount": 50,
+      "requires_manual_review": false,
+      "active": true
+    },
+    {
+      "code": "wash_fold_express",
+      "service_type": "wash_fold_guest",
+      "tier": "express",
+      "label": "Wash & Fold — Express",
+      "unit": "lb",
+      "unit_price": 3.95,
+      "minimum_amount": 50,
+      "requires_manual_review": false,
+      "rule": "Subject to confirmed availability, capacity, pickup and needed-by time.",
+      "active": true
+    },
+    {
+      "code": "comforter_twin",
+      "service_type": "comforter",
+      "tier": null,
+      "label": "Comforter — Twin",
+      "unit": "unit",
+      "unit_price": 33,
+      "minimum_amount": 0,
+      "requires_manual_review": false,
+      "active": true
+    },
+    {
+      "code": "comforter_full_queen",
+      "service_type": "comforter",
+      "tier": null,
+      "label": "Comforter — Full / Queen",
+      "unit": "unit",
+      "unit_price": 37,
+      "minimum_amount": 0,
+      "requires_manual_review": false,
+      "active": true
+    },
+    {
+      "code": "comforter_king",
+      "service_type": "comforter",
+      "tier": null,
+      "label": "Comforter — King",
+      "unit": "unit",
+      "unit_price": 40,
+      "minimum_amount": 0,
+      "requires_manual_review": false,
+      "active": true
+    },
+    {
+      "code": "comforter_down",
+      "service_type": "comforter",
+      "tier": null,
+      "label": "Comforter — Down / Feather",
+      "unit": "unit",
+      "unit_price": 45,
+      "minimum_amount": 0,
+      "requires_manual_review": false,
+      "active": true
+    },
+    {
+      "code": "special_item_review",
+      "service_type": "special_item",
+      "tier": null,
+      "label": "Other special item — review required",
+      "unit": "unit",
+      "unit_price": null,
+      "minimum_amount": 0,
+      "requires_manual_review": true,
+      "active": true
+    }
+  ]
+}

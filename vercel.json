@@ -60,6 +60,14 @@
       "destination": "/order.html"
     },
     {
+      "source": "/sistema",
+      "destination": "/sistema.html"
+    },
+    {
+      "source": "/sistema/orders/:orderNumber/pickup-order",
+      "destination": "/sistema-pickup-order.html"
+    },
+    {
       "source": "/laundry-pickup-delivery-orlando",
       "destination": "/laundry-pickup-delivery-orlando.html"
     },
@@ -447,6 +455,37 @@
   ],
   "headers": [
     {
+      "source": "/sistema",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" }
+      ]
+    },
+    {
+      "source": "/sistema.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" }
+      ]
+    },
+    {
+      "source": "/sistema/orders/:orderNumber/pickup-order",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" }
+      ]
+    },
+    {
+      "source": "/api/system/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -474,6 +513,14 @@
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
         }
+      ]
+    },
+    {
+      "source": "/sistema(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'" }
       ]
     },
     {

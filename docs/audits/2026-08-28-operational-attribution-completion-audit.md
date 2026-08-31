@@ -4,7 +4,7 @@
 **Scope authority:** `docs/blueprints/A7-ORLANDO-OPERATIONAL-ATTRIBUTION-CONTRACT-2026-08-28.md`
 **Branch / inspected HEAD:** `feat/meta-ads-ops-structure` / `23c108d13f558083facc5cf8a736f86cccb23ea4`
 **Worktree boundary:** reviewed with pre-existing unrelated changes preserved; no Production promotion performed
-**Current verdict:** `GA4 PREVIEW PROVEN / PRODUCTION CUTOVER NOT AUTHORIZED`
+**Current verdict:** `PRODUCTION PREDEPLOY READY / APPLICATION CUTOVER NOT AUTHORIZED`
 
 This audit is intentionally fail-closed. A requirement is complete only when the current code,
 durable schema and relevant runtime evidence prove it. Passing unit tests do not substitute for an
@@ -32,8 +32,8 @@ external configuration or observation-window requirement.
 All 15 checks have code, SQL and/or protected Preview evidence. The authorized browser session used
 `a7laundry.usa@gmail.com` with Editor-capable access to property `543807649`, accepted the owner-
 confirmed user-data collection attestation and created the API secret without exposing its value.
-The secret is stored only in the Vercel Preview environment for branch
-`feat/meta-ads-ops-structure`. Strict `/debug/mp/collect` validation accepted `order_accepted`,
+The Preview secret remains branch-scoped, and a separate Production secret is now stored in the
+protected Production environment. Strict `/debug/mp/collect` validation accepted `order_accepted`,
 `purchase` and `refund` with zero validation errors. A collected DebugView run then displayed each
 event once with only the approved opaque/categorical/financial parameters.
 
@@ -66,10 +66,13 @@ event once with only the approved opaque/categorical/financial parameters.
   `GA4_MEASUREMENT_PROTOCOL_SECRET`, `GA4_MEASUREMENT_PROTOCOL_DEBUG` and `GA4_DEBUG_MODE` entry.
   Each targets Preview only and branch `feat/meta-ads-ops-structure`; no value is recorded here.
   Both debug flags were returned to `false` before the final clean Preview deployment.
-- Production environment inventory has the approved Supabase fallback variables,
-  `PAYMENT_LINK_TOKEN` and `STRIPE_SECRET_KEY`, but lacks `OPERATIONS_API_TOKEN`,
-  `STRIPE_WEBHOOK_SECRET` and `GA4_MEASUREMENT_PROTOCOL_SECRET`; Production is therefore not
-  cutover-ready.
+- Production environment inventory now has the approved Supabase fallback variables,
+  `PAYMENT_LINK_TOKEN`, the preserved `STRIPE_SECRET_KEY`, and dedicated
+  `OPERATIONS_API_TOKEN`, `STRIPE_WEBHOOK_SECRET`, `GA4_MEASUREMENT_ID`,
+  `GA4_MEASUREMENT_PROTOCOL_SECRET` plus both GA4 debug flags set to `false`.
+- Live Stripe endpoint `we_1U9af6DcFmXJh57POBb10Nz9` targets the future Production webhook route,
+  listens to exactly the six contract events and is disabled. It cannot deliver events before the
+  separately authorized cutover.
 - The public aliases resolve to rollback baseline `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`, not to a
   newer unaliased Production-target deployment. Read-only probes return 200 for `/` and 404 for
   `/order`, `/api/stripe-webhook` and `/api/operations/lifecycle`, confirming that the candidate is
@@ -84,8 +87,9 @@ event once with only the approved opaque/categorical/financial parameters.
   Preview `dpl_4rvoSZHwTywrZPmVGbesJTjzV3mA` passed `npm run build:public` through the normal Vercel
   pipeline. Its runtime `preview-steady` preflight returned HTTP 200 and 10/10 sanitized checks,
   including Stripe test mode and both GA4 debug flags disabled.
-- Production application, webhook and Google Ads are unchanged. The authorized GA4-only change
-  removed `money_page_view` from key events; no Ads conversion goal or bidding setting was changed.
+- Production application and Google Ads are unchanged. The live webhook configuration now exists
+  but is disabled. The authorized GA4 change removed `money_page_view` from key events; no Ads
+  conversion goal or bidding setting was changed.
 
 ## Audit correction: event-time fidelity
 
@@ -176,11 +180,12 @@ runtime preflight returned `ready=true` with 10/10 checks passing. Production re
 `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`; public probes returned 200 for `/` and 404 for `/order`,
 `/api/stripe-webhook`, `/api/operations/lifecycle` and `/api/operations/preflight`.
 
-Production remains a separate NO-GO until all of the following
-occur:
+The credential/dependency `production-predeploy` gate passed 10/10 with a read-only Supabase probe,
+strict non-reporting GA4 validation and protected Vercel metadata. Production remains a separate
+NO-GO until all of the following occur:
 
-1. obtain separate authorization for a Production cutover and configure its webhook/runtime with
-   rollback evidence;
+1. obtain separate authorization for a Production application cutover, run its runtime preflight,
+   activate the already configured webhook and retain rollback evidence;
 2. run the Production runtime preflight and one explicitly approved financial smoke only under its own
    authorization;
 3. observe a clean window proving ≥95% snapshot-record coverage and truthful quality mix;

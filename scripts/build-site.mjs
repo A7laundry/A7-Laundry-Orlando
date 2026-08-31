@@ -67,6 +67,12 @@ for (const entry of rootFiles) {
   if (/\.html$/i.test(entry.name) || /\.(?:js|png|jpg|jpeg|webp|ico)$/i.test(entry.name)) copy(entry.name);
 }
 
+// Private operator shell: deliberately copied outside the governed acquisition corpus.
+for (const internalAsset of [
+  'sistema.html', 'sistema.css', 'sistema-state.css', 'sistema-w1a1.css', 'sistema-w1b.css', 'sistema.js',
+  'sistema-pickup-order.html', 'sistema-pickup-order.css', 'sistema-pickup-order.js'
+]) copy(internalAsset);
+
 for (const file of PUBLIC_TEXT_ARTIFACTS) copy(file);
 
 const supersededPublicAssets = new Set([
@@ -213,7 +219,10 @@ const productionHtmlFiles = listFiles('', (file) => file.endsWith('.html'));
 const acquisitionTrackingExemptions = new Set([
   // Pre-existing internal operator tool. It is not an acquisition landing page
   // and intentionally must not create customer attribution or ad conversions.
-  'payment-link.html'
+  'payment-link.html',
+  // Private authenticated operator surfaces. They must not create acquisition attribution.
+  'sistema.html',
+  'sistema-pickup-order.html'
 ]);
 for (const relativePath of productionHtmlFiles) {
   const html = fs.readFileSync(path.join(output, relativePath), 'utf8');

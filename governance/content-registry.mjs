@@ -123,7 +123,9 @@ export const SYSTEM_ROUTE_EXCLUSIONS = [
   { route: '/comforter-thanks', sourceFile: 'comforter-thanks.html', exclusionClass: 'conversion_confirmation', reason: 'Post-submit confirmation is not an acquisition asset.' },
   { route: '/guest-payment-confirmation', sourceFile: 'guest-payment-confirmation.html', exclusionClass: 'payment_confirmation', reason: 'Stripe-verified payment confirmation is transactional.' },
   { route: '/payment-link', sourceFile: 'payment-link.html', exclusionClass: 'operator_tool', reason: 'Authenticated operator payment-link tool is not a marketing funnel.' },
-  { route: '/order', sourceFile: 'order.html', exclusionClass: 'structured_order_intake', reason: 'Protected conversion intake is transactional and intentionally noindex.' }
+  { route: '/order', sourceFile: 'order.html', exclusionClass: 'structured_order_intake', reason: 'Protected conversion intake is transactional and intentionally noindex.' },
+  { route: '/sistema', sourceFile: 'sistema.html', exclusionClass: 'private_operator_system', reason: 'Authenticated Orlando operations system is private, noindex and outside acquisition tracking.' },
+  { route: '/sistema/orders/:orderNumber/pickup-order', sourceFile: 'sistema-pickup-order.html', exclusionClass: 'private_operator_document', reason: 'Authenticated Pickup Order is a private operational representation of an existing order.' }
 ];
 
 const foundation = {

@@ -139,7 +139,7 @@ Make the production conversion funnel observable from acquisition CTA through St
 - [x] The Orlando operational attribution contract defines durable lead/order identities, separate operational and financial states, `order_accepted` and `purchase` macro outcomes, Stripe linkage, PII boundaries and an end-to-end QA gate without changing campaign goals.
 - [x] The local P0 implementation creates durable lead/order/event/payment contracts, freezes an attribution snapshot at acceptance, requires an invoiced `order_id` for Stripe, ingests payment/refund webhooks idempotently and keeps the browser confirmation informational.
 - [x] The protected branch Preview uses durable Supabase storage, branch-isolated runtime credentials and a Stripe test-mode signed webhook; synthetic QA proves failed, void, paid, delivered, refunded and repeat-order paths, webhook idempotency and safe analytics payloads, then removes all synthetic business records and deactivates the test payment objects.
-- [ ] Complete contract §16 check 13 in GA4 DebugView and separately approve/configure the Production cutover before release. `money_page_view` was removed from GA4 key events on 2026-08-28 and verified absent after reload; `purchase` remained enabled. The tagged deterministic journey and browser/WhatsApp evidence are complete.
+- [ ] Complete the separately authorized Production application cutover and observation window before release. Contract §16 check 13 is complete; `money_page_view` was removed from GA4 key events, `purchase` remained enabled, and the Production credential/dependency predeploy passed 10/10 with the live webhook disabled. Runtime preflight, activation and any financial smoke remain separate gates.
 
 ## Tasks
 
@@ -926,3 +926,13 @@ Make the production conversion funnel observable from acquisition CTA through St
   operational routes stayed 404. Production preflight is therefore NO-GO pending its own secrets,
   webhook/runtime configuration and separate owner authorization; no Production or Google Ads
   mutation occurred.
+- The owner subsequently authorized Production credential preparation and a no-deploy preflight.
+  Vercel Production now contains the missing operational token, live webhook secret, exact Orlando
+  GA4 stream/Measurement Protocol secret and both GA4 debug flags set to `false`; the existing live
+  Stripe key, payment token and durable Supabase pair were preserved. Live Stripe endpoint
+  `we_1U9af6DcFmXJh57POBb10Nz9` targets the future Production route, listens to the exact six
+  checkout/refund events and is disabled. The sanitized `production-predeploy` gate passed 10/10,
+  including a read-only Supabase probe and strict non-reporting GA4 validation. Production remains
+  unchanged on `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`; `/` is 200 and `/order`, the Stripe webhook,
+  operations lifecycle and runtime preflight routes are all 404. No deployment, webhook activation,
+  payment or Google Ads mutation occurred; application cutover remains a separate authorization.

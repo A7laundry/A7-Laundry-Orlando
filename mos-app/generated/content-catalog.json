@@ -2830,6 +2830,18 @@
       "reason": "Authenticated operator payment-link tool is not a marketing funnel.",
       "route": "/payment-link",
       "sourceFile": "payment-link.html"
+    },
+    {
+      "exclusionClass": "private_operator_system",
+      "reason": "Authenticated Orlando operations system is private, noindex and outside acquisition tracking.",
+      "route": "/sistema",
+      "sourceFile": "sistema.html"
+    },
+    {
+      "exclusionClass": "private_operator_document",
+      "reason": "Authenticated Pickup Order is a private operational representation of an existing order.",
+      "route": "/sistema/orders/:orderNumber/pickup-order",
+      "sourceFile": "sistema-pickup-order.html"
     }
   ],
   "registryVersion": "2026-08-23.1",

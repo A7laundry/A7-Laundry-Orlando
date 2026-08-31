@@ -1,7 +1,7 @@
 # A7 Orlando — Operational Attribution P0 Release Runbook
 
 **Date:** 2026-08-28
-**Status:** `GA4 + STRIPE TEST-MODE PREVIEW VALIDATED / PRODUCTION CUTOVER NOT AUTHORIZED`
+**Status:** `PRODUCTION PREDEPLOY 10/10 / APPLICATION CUTOVER NOT AUTHORIZED`
 **Contract:** `docs/blueprints/A7-ORLANDO-OPERATIONAL-ATTRIBUTION-CONTRACT-2026-08-28.md`
 
 ## Current state
@@ -14,11 +14,16 @@
   not currently own the public aliases and must not be mistaken for the live rollback point.
 - Google Ads goals, bids, budgets and campaigns are unchanged.
 - GA4 property `543807649` no longer treats `money_page_view` as a key event; `purchase` remains a
-  key event. The Measurement Protocol secret is stored only in the branch-isolated Preview runtime.
+  key event. Separate Measurement Protocol secrets are stored in protected Preview and Production
+  scopes; neither value is present in repository files or evidence.
 - Strict GA4 validation, collected DebugView and outbox deduplication passed. Both Preview debug
   flags are now `false`, and the staging-only QA endpoint was removed before the final clean Preview.
 
-Do not deploy the candidate to Production until the Production webhook, operational environment and GA4 server-delivery gate are configured and separately authorized. The candidate deliberately removes browser-authoritative purchase emission; deploying it without a working webhook would create a financial measurement gap.
+The Production credentials and disabled live webhook are prepared, but application promotion is
+still not authorized. Do not deploy until a separate cutover authorization covers the runtime
+preflight, endpoint activation, rollback checks and any financial smoke. The candidate deliberately
+removes browser-authoritative purchase emission; deploying it without the complete cutover sequence
+would create a financial measurement gap.
 
 ## Required protected configuration
 
@@ -161,13 +166,17 @@ cutover or an observation-window result.
 
 ## Current blockers
 
-- No Production configuration, webhook or application deployment is authorized by the five Preview actions.
+- Production predeploy configuration is complete, but no application deployment, webhook activation
+  or financial smoke is authorized by this preparation step.
 - Vercel now has two masked bypasses: the pre-existing project-wide system bypass added 2026-07-24 and the dedicated non-system `Stripe-QA` bypass. The dedicated bypass is attached only to the test-mode webhook URL and its value is excluded from evidence. The project-wide bypass remains in place because repository consumers still reference `VERCEL_AUTOMATION_BYPASS_SECRET`; revoke or rotate it only after those consumers are migrated and explicit authorization is received.
 - GA4 property `543807649` is accessible through the authorized `a7laundry.usa@gmail.com` account.
   The owner confirmed Google's user-data collection attestation. The API secret was created and
   stored in the exact Preview branch scope without exposing its value. `money_page_view` remains a
   normal event and is no longer a key event; `purchase` remains enabled.
-- Read-only Vercel inventory confirms that Production has the durable Supabase fallback variables, `PAYMENT_LINK_TOKEN` and `STRIPE_SECRET_KEY`, but it does not yet have `OPERATIONS_API_TOKEN`, `STRIPE_WEBHOOK_SECRET` or `GA4_MEASUREMENT_PROTOCOL_SECRET`. These are hard cutover blockers, not values to infer or copy from Preview. `GA4_MEASUREMENT_PROTOCOL_DEBUG` and `GA4_DEBUG_MODE` must be explicitly false or absent in steady-state Production.
+- Vercel Production now has the durable Supabase fallback variables, `PAYMENT_LINK_TOKEN`, the
+  pre-existing `STRIPE_SECRET_KEY`, and dedicated `OPERATIONS_API_TOKEN`,
+  `STRIPE_WEBHOOK_SECRET`, `GA4_MEASUREMENT_ID`, `GA4_MEASUREMENT_PROTOCOL_SECRET`,
+  `GA4_MEASUREMENT_PROTOCOL_DEBUG=false` and `GA4_DEBUG_MODE=false`. Values remain protected.
 - Public route probes confirm the old live baseline: `/` returns 200 while `/order`,
   `/api/stripe-webhook` and `/api/operations/lifecycle` return 404. This is expected before cutover
   and proves that the new operational surface is not partially active in Production.
@@ -182,11 +191,27 @@ cutover or an observation-window result.
   HTTP 200 with `ready=true` and all 10 sanitized checks passing.
 - Exact operational commit `9a7bb0512f8d21f7c7996785407ef437a36c7401` passed the normal pipeline
   again in Preview `dpl_4ckN44QVvdaB8MTvjVA661ZyJvRp`: deployment READY, runtime preflight 10/10,
-  `/order` HTTP 200 and the removed GA4 QA probe HTTP 404. The read-only Production inventory still
-  lacks `OPERATIONS_API_TOKEN`, `STRIPE_WEBHOOK_SECRET` and `GA4_MEASUREMENT_PROTOCOL_SECRET`, so
-  Production preflight remains NO-GO and no cutover was performed.
+  `/order` HTTP 200 and the removed GA4 QA probe HTTP 404. The later Production predeploy gate
+  passed independently as documented below; no cutover was performed.
 - The ≥95% attributed/partial order threshold requires a clean observation window after GA4 and Production authorization.
 - Google Ads conversion goals, bidding and campaign settings remain outside this release and unchanged.
+
+### Production predeploy evidence — 2026-08-28
+
+- Live Stripe endpoint `we_1U9af6DcFmXJh57POBb10Nz9` targets
+  `https://a7laundry.com/api/stripe-webhook`, subscribes to exactly the six contract events and is
+  confirmed **disabled** until an owner-approved cutover.
+- Vercel metadata confirms one Production-scoped entry for each newly required operational/GA4
+  variable. The existing Production Stripe server key, payment token and Supabase pair were
+  preserved rather than rotated or copied from Preview.
+- The Supabase service-role probe was read-only and passed. GA4 `/debug/mp/collect` strict
+  validation passed with zero messages and did not report/collect the probe event.
+- Sanitized `production-predeploy` result: `ready=true`, 10/10 checks passed. This is a credential
+  and dependency gate, not the post-deploy runtime preflight required by release step 12.
+- Public Production is unchanged on `dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9`: `/` returns 200 while
+  `/order`, `/api/stripe-webhook`, `/api/operations/lifecycle` and
+  `/api/operations/preflight` return 404. No promotion, webhook activation, payment or Ads mutation
+  occurred.
 
 ### GA4 Measurement Protocol evidence
 
