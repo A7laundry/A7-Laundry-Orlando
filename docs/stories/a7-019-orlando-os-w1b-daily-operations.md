@@ -1,6 +1,6 @@
 # Story A7-019 — A7 Orlando OS W1B Daily Operations
 
-**Status:** Blocked — former Preview evidence invalidated after cross-project database incident; Production remains on healthy rollback
+**Status:** Production deployed — public and authorization gates passed; authenticated Owner smoke pending
 
 **Created:** 2026-08-30
 
@@ -206,3 +206,23 @@ operational ledger remains the audit source for `schedule_pickup`.
 - `scripts/a7-system-w1b-smoke.mjs`
 - `supabase/rollbacks/incidents/20260830_zquefo_orlando_objects.rollback.sql`
 - `docs/audits/2026-08-30-zquefo-orlando-cross-project-cleanup.md`
+
+## Direct Production cutover — 2026-08-30
+
+At the Owner's direction, the project resumed with Production as the controlled pilot environment. The invalid
+cross-project Preview was not reused. The official Orlando Supabase project remains `wiwawtpaxnrueugppasi`, whose
+migration ledger is aligned through W1B `20260830041000`; W1C-A, W2-A, W3-A and W1C-B1 remain local-only.
+
+The repository checkpoint was integrated without rewriting remote history and pushed at exact SHA
+`11ed37a53aaaad90bcf60145d8817728d4ffa096`. The deployment used the isolated post-fix W1B artifact, not the full
+later-wave workspace. Production deployment `dpl_DJwLXwcQZb1asYxCeBBMjZ4WMPTP` is `READY` and aliased to
+`a7laundry.com`; rollback deployment `dpl_CoZjpjTWoZknZnMSz8rpwm26TZ6B` remains `READY`.
+
+Public smoke passed for `/`, `/order`, `/sistema` and `/sistema.js` (HTTP 200). An unauthenticated request to
+`/api/system/today` returned the required HTTP 401. The deployed `sistema.js` SHA-256 exactly matches the isolated
+W1B artifact (`6caf39906487a60b970722e53ecc2a75f576fdc70c040c48897df54d948eff1c`) and exposes no W1C invoice/weight or
+W2 message endpoints. Full source and isolated-artifact lint, typecheck, tests and builds passed.
+
+The remaining gate is an authenticated Owner smoke of Hoje, Pedidos, direct lookup and the zero-residue W1B
+transactional probe. No credential was invented, copied from another environment or bypassed; the controlled
+Chrome tab is waiting at the Production login screen.

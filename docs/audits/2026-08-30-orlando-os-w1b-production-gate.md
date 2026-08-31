@@ -11,7 +11,15 @@
 **Date:** 2026-08-30
 **Scope:** Hoje, operational queues, order detail, custody, production, next action and Express SLA
 **Production mutation performed:** Yes — additive migration applied; application release rolled back
-**Gate verdict:** **PREVIEW EVIDENCE INVALIDATED / PRODUCTION CUTOVER NO-GO**
+**Gate verdict:** **PRODUCTION DEPLOYED / PUBLIC GATES PASS / OWNER SMOKE PENDING**
+
+> Direct Production cutover — 2026-08-30: the Owner explicitly selected Production as the controlled pilot
+> environment. Repository SHA `11ed37a53aaaad90bcf60145d8817728d4ffa096` was pushed without force; isolated
+> post-fix W1B deployment `dpl_DJwLXwcQZb1asYxCeBBMjZ4WMPTP` is `READY` and aliased to `a7laundry.com`.
+> `/`, `/order`, `/sistema` and `/sistema.js` return 200, unauthenticated `/api/system/today` returns 401, and the
+> deployed system JavaScript exactly matches the isolated W1B artifact. Rollback deployment
+> `dpl_CoZjpjTWoZknZnMSz8rpwm26TZ6B` remains `READY`. The authenticated Owner smoke is pending because the fresh
+> controlled Chrome tab is at the login screen; no authentication bypass or credential substitution was used.
 
 > Readiness refresh — 2026-08-30 12:59 EDT: Vercel reinspection confirms candidate
 > `dpl_8srFy22wWj8jJdn7q8eL9J85dPZ2` and rollback `dpl_CoZjpjTWoZknZnMSz8rpwm26TZ6B` are both `Ready`.
