@@ -77,15 +77,17 @@ test('W2-A exposes only state-eligible templates and never the full phone', asyn
 
 test('W2-A draft, approval and copy are separate, idempotent and append-only audited', async () => {
   const store = new MemoryOperationalStore();
-  addOrder(store, { order_number:'MCO 2103', order_status:'picked_up', custody_state:'at_laundry', production_state:'processing' });
+  const order = addOrder(store, { order_number:'MCO 2103', order_status:'picked_up', custody_state:'at_laundry', production_state:'processing' });
   const service = systemMessageService({ operationalStore:store, now:() => NOW });
   const createId = crypto.randomUUID();
   const created = await service.create({ order_number:'MCO 2103', template_key:'received_at_laundry', request_id:createId }, OWNER);
   assert.equal(created.draft.status, 'drafted');
   assert.equal(store.messageDraftEvents.size, 1);
+  order.order_status = 'cancelled';
   const retry = await service.create({ order_number:'MCO 2103', template_key:'received_at_laundry', request_id:createId }, OWNER);
   assert.equal(retry.duplicate, true);
   assert.equal(store.messageDraftEvents.size, 1);
+  order.order_status = 'picked_up';
   await assert.rejects(() => service.create({
     order_number:'MCO 2103', template_key:'pickup_confirmed', request_id:createId
   }, OWNER), /Idempotency key conflicts/);
@@ -171,7 +173,12 @@ test('W2-A static contract keeps manual copy private and contains no automatic W
   const js = fs.readFileSync(new URL('../sistema.js', import.meta.url), 'utf8');
   const service = fs.readFileSync(new URL('../lib/system-message-service.js', import.meta.url), 'utf8');
   const api = fs.readFileSync(new URL('../api/system/order-messages.js', import.meta.url), 'utf8');
+  const migration = fs.readFileSync(new URL('../supabase/migrations/20260830060000_orlando_os_w2_a_whatsapp_drafts.sql', import.meta.url), 'utf8');
   assert.doesNotMatch(`${html}\n${js}\n${service}\n${api}`, /graph\.facebook|WHATSAPP_BRIDGE_TOKEN|wa\.me\/|window\.open\(/i);
   assert.doesNotMatch(`${html}\n${js}`, /dataLayer|googletagmanager|localStorage|sessionStorage/);
   assert.doesNotMatch(js, /customer_id|whatsapp_number.*(?:location|URLSearchParams)/i);
+  assert.match(service, /resolveSystemMessageCreateRetry/);
+  assert.match(migration, /a7_orlando_w2_a_resolve_create_retry/);
+  assert.ok(migration.indexOf('where idempotency_key = p_idempotency_key')
+    < migration.indexOf("v_order.order_status = 'cancelled'"));
 });

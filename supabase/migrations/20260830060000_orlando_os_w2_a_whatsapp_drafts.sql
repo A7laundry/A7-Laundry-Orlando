@@ -127,6 +127,31 @@ returns jsonb language sql stable security definer set search_path = public as $
   where o.unit_key = 'orlando' and o.order_number = p_order_number;
 $$;
 
+create or replace function public.a7_orlando_w2_a_resolve_create_retry(
+  p_order_number text,
+  p_template_key text,
+  p_idempotency_key text
+) returns jsonb language plpgsql stable security definer set search_path = public as $$
+declare
+  v_order public.a7_orlando_orders;
+  v_draft public.a7_orlando_order_message_drafts;
+  v_event public.a7_orlando_order_message_events;
+begin
+  if coalesce(p_idempotency_key, '') = '' then raise exception 'Message retry identity is invalid'; end if;
+  select * into v_order from public.a7_orlando_orders
+    where unit_key = 'orlando' and order_number = p_order_number;
+  if v_order.id is null then raise exception 'Order not found'; end if;
+  select * into v_event from public.a7_orlando_order_message_events where idempotency_key = p_idempotency_key;
+  if v_event.id is null then return null; end if;
+  select * into v_draft from public.a7_orlando_order_message_drafts where id = v_event.draft_id;
+  if v_event.action <> 'draft_created' or v_event.order_id <> v_order.id
+    or v_draft.template_key <> p_template_key then
+    raise exception 'Idempotency key conflicts with another message draft';
+  end if;
+  return jsonb_build_object('duplicate', true, 'draft', to_jsonb(v_draft));
+end;
+$$;
+
 create or replace function public.a7_orlando_w2_a_create_draft(
   p_order_number text,
   p_template_key text,
@@ -159,9 +184,6 @@ begin
     where unit_key = 'orlando' and order_number = p_order_number for update;
   if v_order.id is null then raise exception 'Order not found'; end if;
   if public.a7_orlando_order_is_qa(v_order.id) then raise exception 'QA orders cannot create customer messages'; end if;
-  if v_order.order_status = 'cancelled' or not public.a7_orlando_w2_a_template_available(p_template_key, v_order) then
-    raise exception 'Message template is not available for the current order state';
-  end if;
 
   select * into v_event from public.a7_orlando_order_message_events where idempotency_key = p_idempotency_key;
   if v_event.id is not null then
@@ -172,6 +194,10 @@ begin
       raise exception 'Idempotency key conflicts with another message draft';
     end if;
     return jsonb_build_object('duplicate', true, 'draft', to_jsonb(v_draft));
+  end if;
+
+  if v_order.order_status = 'cancelled' or not public.a7_orlando_w2_a_template_available(p_template_key, v_order) then
+    raise exception 'Message template is not available for the current order state';
   end if;
 
   insert into public.a7_orlando_order_message_drafts(
@@ -253,10 +279,12 @@ $$;
 revoke all on function public.a7_orlando_w2_a_template_available(text, public.a7_orlando_orders) from public, anon, authenticated;
 revoke all on function public.a7_orlando_w2_a_context(text) from public, anon, authenticated;
 revoke all on function public.a7_orlando_w2_a_drafts(text) from public, anon, authenticated;
+revoke all on function public.a7_orlando_w2_a_resolve_create_retry(text,text,text) from public, anon, authenticated;
 revoke all on function public.a7_orlando_w2_a_create_draft(text,text,text,text,text,text,text,text,timestamptz) from public, anon, authenticated;
 revoke all on function public.a7_orlando_w2_a_act_on_draft(uuid,text,integer,text,text,text,text,timestamptz) from public, anon, authenticated;
 grant execute on function public.a7_orlando_w2_a_template_available(text, public.a7_orlando_orders) to service_role;
 grant execute on function public.a7_orlando_w2_a_context(text) to service_role;
 grant execute on function public.a7_orlando_w2_a_drafts(text) to service_role;
+grant execute on function public.a7_orlando_w2_a_resolve_create_retry(text,text,text) to service_role;
 grant execute on function public.a7_orlando_w2_a_create_draft(text,text,text,text,text,text,text,text,timestamptz) to service_role;
 grant execute on function public.a7_orlando_w2_a_act_on_draft(uuid,text,integer,text,text,text,text,timestamptz) to service_role;

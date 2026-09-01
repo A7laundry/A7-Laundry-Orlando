@@ -14,6 +14,7 @@ $$;
 
 drop function if exists public.a7_orlando_w2_a_act_on_draft(uuid,text,integer,text,text,text,text,timestamptz);
 drop function if exists public.a7_orlando_w2_a_create_draft(text,text,text,text,text,text,text,text,timestamptz);
+drop function if exists public.a7_orlando_w2_a_resolve_create_retry(text,text,text);
 drop function if exists public.a7_orlando_w2_a_drafts(text);
 drop function if exists public.a7_orlando_w2_a_context(text);
 drop function if exists public.a7_orlando_w2_a_template_available(text, public.a7_orlando_orders);

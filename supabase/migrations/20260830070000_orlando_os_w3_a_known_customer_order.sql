@@ -1,6 +1,42 @@
 -- A7 Orlando OS W3-A — reuse one known customer without mutating customer identity.
 -- Additive RPC only. Existing W1A/W1A.1 creation functions remain unchanged.
 
+create or replace function public.a7_orlando_resolve_known_customer_order_retry(
+  p_submission_id uuid,
+  p_request_fingerprint text,
+  p_customer_id uuid
+) returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare
+  v_existing public.a7_orlando_manual_order_requests;
+  v_customer public.a7_wa_contacts;
+  v_order_number text;
+  v_repeat boolean;
+begin
+  if p_submission_id is null or coalesce(p_request_fingerprint, '') = '' or p_customer_id is null then
+    raise exception 'Invalid known-customer retry contract';
+  end if;
+  select * into v_customer from public.a7_wa_contacts
+    where id = p_customer_id and unit_key = 'orlando';
+  if v_customer.id is null then raise exception 'Known customer was not found'; end if;
+  select * into v_existing from public.a7_orlando_manual_order_requests
+    where submission_id = p_submission_id;
+  if v_existing.submission_id is null then return null; end if;
+  if v_existing.request_fingerprint <> p_request_fingerprint
+    or v_existing.customer_id <> v_customer.id then
+    raise exception 'Idempotency key conflicts with another known-customer order';
+  end if;
+  select order_number, is_repeat_customer into v_order_number, v_repeat
+    from public.a7_orlando_orders where id = v_existing.order_id;
+  return jsonb_build_object(
+    'duplicate', true, 'customer_id', v_existing.customer_id,
+    'lead_id', v_existing.lead_id, 'order_id', v_existing.order_id,
+    'order_number', v_order_number, 'customer_reused', true,
+    'is_repeat_customer', v_repeat
+  );
+end;
+$$;
+
 create or replace function public.a7_orlando_create_known_customer_order(
   p_submission_id uuid,
   p_request_fingerprint text,
@@ -56,12 +92,6 @@ begin
   select * into v_customer from public.a7_wa_contacts
     where id = p_customer_id and unit_key = 'orlando' for update;
   if v_customer.id is null then raise exception 'Known customer was not found'; end if;
-  if not exists (
-    select 1 from public.a7_orlando_orders o
-    where o.customer_id = v_customer.id and o.order_number is not null
-      and o.order_status <> 'cancelled' and not public.a7_orlando_order_is_qa(o.id)
-  ) then raise exception 'Known customer requires prior real order history'; end if;
-
   select * into v_existing from public.a7_orlando_manual_order_requests
     where submission_id = p_submission_id for update;
   if v_existing.submission_id is not null then
@@ -78,6 +108,12 @@ begin
       'is_repeat_customer', v_repeat
     );
   end if;
+
+  if not exists (
+    select 1 from public.a7_orlando_orders o
+    where o.customer_id = v_customer.id and o.order_number is not null
+      and o.order_status <> 'cancelled' and not public.a7_orlando_order_is_qa(o.id)
+  ) then raise exception 'Known customer requires prior real order history'; end if;
 
   if v_ref is not null then
     select attribution_id into v_attribution_id from public.a7_attribution_sessions
@@ -144,6 +180,14 @@ begin
   );
 end;
 $$;
+
+revoke all on function public.a7_orlando_resolve_known_customer_order_retry(
+  uuid,text,uuid
+) from public, anon, authenticated;
+
+grant execute on function public.a7_orlando_resolve_known_customer_order_retry(
+  uuid,text,uuid
+) to service_role;
 
 revoke all on function public.a7_orlando_create_known_customer_order(
   uuid,text,text,text,uuid,text,text,text,text,jsonb,text,text,text,text,

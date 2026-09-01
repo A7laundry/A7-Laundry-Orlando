@@ -1,0 +1,38 @@
+{
+  "invoiceTemplateVersion": "A7_ORLANDO_INVOICE_V4",
+  "asset": "A7_ORLANDO_INVOICE_V4.png",
+  "width": 1024,
+  "height": 1536,
+  "sha256": "fbcde47e06f63f27e66c0d6f416574e11cfc1787b4dc515d6c19be192e14f9fe",
+  "status": "APPROVED",
+  "approvedAt": "2026-09-01",
+  "approvedBy": "Owner",
+  "derivedFrom": "A7_ORLANDO_INVOICE_V2",
+  "change": "Reduced and recentered the supplied official A7 Laundry horizontal logo while preserving the Ferris wheel and skyline illustrations.",
+  "logoAsset": "A7_LOGO_OFFICIAL_LIGHT_HORIZONTAL_V1.png",
+  "logoSha256": "f59d188ab833a76c0dfb193d29c4395337540be62cf9543252d947e62ce37b06",
+  "logoPlate": {
+    "left": 140,
+    "top": 20,
+    "width": 515,
+    "height": 145
+  },
+  "logoPlacement": {
+    "left": 165,
+    "top": 50,
+    "width": 460,
+    "height": 82,
+    "fit": "contain",
+    "background": "#ffffff"
+  },
+  "qrAsset": "A7_GOOGLE_REVIEW_QR_V1.png",
+  "qrSha256": "17460b644dcac11fca0b17c4bafd5066f36d67d653c5d802ffe286f3b51db418",
+  "qrPlacement": {
+    "left": 536,
+    "top": 1388,
+    "width": 111,
+    "height": 111,
+    "resizeKernel": "nearest"
+  },
+  "immutability": "The PNG is a versioned blank background. Renderers compose dynamic order data without modifying this file."
+}

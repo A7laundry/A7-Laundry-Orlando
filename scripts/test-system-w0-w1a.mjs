@@ -95,6 +95,27 @@ test('Production pilot fails closed to Owner-only access', () => {
   assert.equal(auth.accessMode({ NODE_ENV: 'production' }), 'owner_only');
 });
 
+test('Team access adds operators without replacing the protected Owner credential', () => {
+  const ownerSalt = 'owner-salt';
+  const operatorSalt = 'operator-salt';
+  const env = {
+    NODE_ENV: 'production',
+    A7_SYSTEM_ACCESS_MODE: 'team',
+    A7_SYSTEM_SESSION_SECRET: 'production-team-session-secret-123456789012345',
+    A7_SYSTEM_USERS_JSON: JSON.stringify([{
+      email: 'owner@example.test', display_name: 'Owner', role: 'owner',
+      password_salt: ownerSalt, password_hash: auth.passwordHash('owner-password', ownerSalt)
+    }]),
+    A7_SYSTEM_TEAM_USERS_JSON: JSON.stringify([{
+      email: 'operator@example.test', display_name: 'Operator', role: 'operator',
+      password_salt: operatorSalt, password_hash: auth.passwordHash('operator-password', operatorSalt)
+    }])
+  };
+  assert.equal(auth.authenticate('owner@example.test', 'owner-password', env)?.role, 'owner');
+  assert.equal(auth.authenticate('operator@example.test', 'operator-password', env)?.role, 'operator');
+  assert.equal(auth.usersFromEnv(env).length, 2);
+});
+
 test('W0 sends new Supabase secret keys only through apikey', () => {
   assert.deepEqual(supabaseHeaders('sb_secret_preview'), { apikey: 'sb_secret_preview' });
   assert.deepEqual(supabaseHeaders('legacy-service-role-jwt'), {
@@ -447,6 +468,17 @@ test('W1A rejects semantic idempotency collisions and operator price injection',
   assert.equal(created.items[0].minimum_amount, 50);
 });
 
+test('W1A freezes the approved sale-time minimum without accepting arbitrary values', async () => {
+  const store = new MemoryOperationalStore();
+  const service = systemOrderService({ operationalStore:store,
+    attributionStore:{ async get() { return null; }, async getByShortRef() { return null; } } });
+  const payload = { ...input(), agreed_minimum_amount:60 };
+  const created = await service.createManualOrder(payload, { actor_id:'actor_owner', role:'owner' });
+  assert.equal(created.items.find((item) => item.unit === 'lb').minimum_amount, 60);
+  await assert.rejects(() => service.createManualOrder({ ...input(), agreed_minimum_amount:55 },
+    { actor_id:'actor_owner', role:'owner' }), /approved sale-time value/);
+});
+
 test('catalog and operator shell preserve governed pricing and browser boundary', () => {
   const catalog = publicCatalog();
   assert.equal(catalog.services.find((row) => row.code === 'wash_fold_normal').unit_price, 3.25);
@@ -477,6 +509,7 @@ test('W1A.1 Pickup Order returns the same governed order without internal IDs', 
   assert.equal(pickup.property.name, 'Preview Test Hotel');
   assert.equal(pickup.property.address, 'QA-only address');
   assert.equal(pickup.service.tier, 'express');
+  assert.equal(pickup.service.code, 'EXPRESS_8H');
   assert.equal(pickup.service.items[0].unit_price, 3.95);
   assert.equal(pickup.service.items[0].minimum_amount, 50);
   assert.equal(pickup.pickup.location, 'bell_services');

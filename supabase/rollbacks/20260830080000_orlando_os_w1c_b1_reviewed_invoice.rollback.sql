@@ -12,6 +12,7 @@ $$;
 
 drop function if exists public.a7_orlando_w1c_b1_void_invoice(text,integer,text,text,text,text,timestamptz);
 drop function if exists public.a7_orlando_w1c_b1_review_invoice(text,integer,integer,text,text,text,text,timestamptz);
+drop function if exists public.a7_orlando_w1c_b1_resolve_action_retry(text,text,integer,text,text);
 drop function if exists public.a7_orlando_w1c_b1_invoices(text);
 drop function if exists public.a7_orlando_w1c_b1_invoice_payload(uuid);
 drop function if exists public.a7_orlando_w1c_b1_preview(uuid);

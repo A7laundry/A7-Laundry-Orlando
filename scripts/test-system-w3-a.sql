@@ -68,6 +68,11 @@ begin
   if (select count(*) from public.a7_orlando_orders where customer_id = v_customer) <> 2 then
     raise exception 'W3-A order count failed';
   end if;
+  update public.a7_orlando_orders set
+    order_status = 'cancelled',
+    cancellation_reason = 'W3-A delayed retry fixture',
+    cancelled_at = now()
+  where id in (v_prior_order, v_new_order);
   if (public.a7_orlando_create_known_customer_order(
     v_submission, repeat('f', 64), 'actor_w3_sql_owner', 'owner', v_customer,
     'pt', 'guest', 'hotel', 'orlando_pending_route',

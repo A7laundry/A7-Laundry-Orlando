@@ -29,8 +29,9 @@ Stripe, Google Ads and `/order` changes remain outside this story.
 
 - [x] Atendimento explains that it records a sale received outside the system.
 - [x] The short form captures only the approved customer, location, service, timing, item and notes fields.
-- [x] Price, unit, minimum and service rules come from one server-governed catalog.
-- [x] Operators cannot enter price, minimum, UUIDs, attribution IDs or idempotency keys.
+- [x] Price, unit and service rules come from one server-governed catalog. The sale-time minimum is selected only
+      from the Owner-approved values US$50 or US$60 and is frozen on the order item.
+- [x] Operators cannot enter arbitrary price/minimum values, UUIDs, attribution IDs or idempotency keys.
 - [x] One server operation normalizes input, finds/creates the customer, creates and qualifies the lead,
       accepts the order, freezes available attribution, creates items, writes audit evidence and returns
       the next action. Historical W1A orders retain `A7-ORL-XXXX`; W1A.1 orders receive `MCO 1002+`.
@@ -68,6 +69,15 @@ Stripe, Google Ads and `/order` changes remain outside this story.
 - [x] After a successful lookup, the input displays the canonical human number.
 - [x] The search field explains the shortest supported format without changing stored numbers.
 - [x] Production deployment and Owner smoke are completed after an explicit deployment gate.
+
+## Sale-time minimum refinement — 2026-08-31
+
+- [x] Wash & Fold accepts only the bounded commercial choices US$50 or US$60 at sale confirmation.
+- [x] The selected minimum is validated server-side and frozen in the existing order-item snapshot.
+- [x] Omitted legacy input defaults to the current US$50 minimum; arbitrary values fail closed.
+- [x] Price per pound and all remaining service rules continue to come from the governed catalog.
+- [x] No schema migration is required for the minimum because `minimum_amount` already belongs to the frozen item.
+- [ ] Production publication and authenticated smoke require a separate explicit cutover GO.
 
 ### Production smoke and rollback — 2026-08-30
 

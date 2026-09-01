@@ -19,6 +19,7 @@ const w1bSmokeApi = require('../api/system/w1b-smoke.js');
 
 const NOW = new Date('2026-08-30T14:00:00.000Z');
 const OWNER = { actor_id:'actor_test_owner', display_name:'Owner QA', role:'owner' };
+const OPERATOR = { actor_id:'actor_test_operator', display_name:'Operator QA', role:'operator' };
 
 function addOrder(store, values = {}) {
   const customerId = crypto.randomUUID();
@@ -171,6 +172,20 @@ test('W1B production ready never forces payment and delivery still requires paid
     /cannot start/);
 });
 
+test('W1B operator can mark a processing order ready and no other transition', async () => {
+  const store = new MemoryOperationalStore();
+  addOrder(store, { order_number:'MCO 1305', order_status:'invoice_created', payment_status:'paid',
+    custody_state:'at_laundry', production_state:'processing' });
+  addOrder(store, { order_number:'MCO 1306', order_status:'accepted', custody_state:'with_customer',
+    production_state:'awaiting_intake' });
+  const operations = systemOperationsService({ operationalStore:store, now:() => NOW });
+  const ready = await operations.transition({ order_number:'MCO 1305', action:'mark_ready',
+    request_id:crypto.randomUUID() }, OPERATOR);
+  assert.equal(ready.order.production_state, 'ready');
+  await assert.rejects(() => operations.transition({ order_number:'MCO 1306', action:'schedule_pickup',
+    request_id:crypto.randomUUID() }, OPERATOR), /Owner authorization/);
+});
+
 test('W1B Express promise requires an Express order and correction reason', async () => {
   const store = new MemoryOperationalStore();
   addOrder(store, { order_number:'MCO 1303', service_tier:'express' });
@@ -202,7 +217,7 @@ test('W1B transition validation accepts only bounded actions, human numbers and 
   assert.throws(() => validateTransition({ order_number:'MCO 1002', action:'schedule_pickup', request_id:'retry' }, settings), /identity/);
 });
 
-test('W1B private APIs return 401 without auth and 403 to authenticated non-Owner', async () => {
+test('W1B private APIs return 401 without auth and allow authenticated operator read access', async () => {
   const prior = { secret:process.env.A7_SYSTEM_SESSION_SECRET, mode:process.env.A7_SYSTEM_ACCESS_MODE };
   process.env.A7_SYSTEM_SESSION_SECRET = 'w1b-test-session-secret-at-least-32-bytes';
   process.env.A7_SYSTEM_ACCESS_MODE = 'team';
@@ -211,10 +226,17 @@ test('W1B private APIs return 401 without auth and 403 to authenticated non-Owne
     await todayApi({ method:'GET', headers:{} }, unauth);
     assert.equal(unauth.statusCode, 401);
     const token = signSession({ actor_id:'actor_operator', display_name:'Operator', role:'operator' });
-    const forbidden = response();
+    const allowed = response();
     await operationalApi({ method:'POST', headers:{ cookie:`${COOKIE_NAME}=${encodeURIComponent(token)}` },
-      body:{ action:'list', queue:'all' } }, forbidden);
-    assert.equal(forbidden.statusCode, 403);
+      body:{ action:'list', queue:'all' } }, allowed);
+    assert.equal(allowed.statusCode, 200);
+    const today = response();
+    await todayApi({ method:'GET', headers:{ cookie:`${COOKIE_NAME}=${encodeURIComponent(token)}` } }, today);
+    assert.equal(today.statusCode, 200);
+    const draft = response();
+    await operationDraftApi({ method:'POST', headers:{ cookie:`${COOKIE_NAME}=${encodeURIComponent(token)}`,
+      origin:'http://localhost:3000' } }, draft);
+    assert.equal(draft.statusCode, 201);
   } finally {
     if (prior.secret == null) delete process.env.A7_SYSTEM_SESSION_SECRET; else process.env.A7_SYSTEM_SESSION_SECRET = prior.secret;
     if (prior.mode == null) delete process.env.A7_SYSTEM_ACCESS_MODE; else process.env.A7_SYSTEM_ACCESS_MODE = prior.mode;

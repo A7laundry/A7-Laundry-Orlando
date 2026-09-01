@@ -1,0 +1,23 @@
+{
+  "labelTemplateVersion": "A7_ORLANDO_LABEL_V1",
+  "asset": "A7_ORLANDO_LABEL_V1.png",
+  "width": 1024,
+  "height": 1536,
+  "physicalSize": "4x6in",
+  "sourceDensity": 256,
+  "sha256": "2d9d0bccd5415d9c926fee7585312e35952b916cd8e40f3271cd4cb942f0b63f",
+  "status": "PENDING_USER_ACCEPTANCE",
+  "change": "Registered the Owner-supplied A7 Orlando laundry form as the governed 4x6 thermal-label background.",
+  "dynamicFields": [
+    "invoiceNumber",
+    "guestName",
+    "propertyName",
+    "room",
+    "date",
+    "bags",
+    "service",
+    "returnTime",
+    "specialInstructions"
+  ],
+  "immutability": "The PNG is a versioned blank background. The renderer composes order data without modifying this file."
+}

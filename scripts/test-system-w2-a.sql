@@ -47,11 +47,21 @@ begin
     raise exception 'W2-A draft creation failed';
   end if;
 
+  update public.a7_orlando_orders set
+    order_status = 'cancelled',
+    cancellation_reason = 'W2-A delayed retry fixture',
+    cancelled_at = now()
+  where id = v_order;
   if (public.a7_orlando_w2_a_create_draft(
     'MCO 9911', 'received_at_laundry', 'pt',
     'O pedido MCO 9911 da A7 Laundry chegou à lavanderia.',
     repeat('a', 64), 'actor_sql_owner', 'owner', 'w2-a-sql-create', now()
   )->>'duplicate') <> 'true' then raise exception 'W2-A create retry failed'; end if;
+  update public.a7_orlando_orders set
+    order_status = 'picked_up',
+    cancellation_reason = null,
+    cancelled_at = null
+  where id = v_order;
 
   v_approved := public.a7_orlando_w2_a_act_on_draft(
     v_draft, 'approve', 1, repeat('a', 64),

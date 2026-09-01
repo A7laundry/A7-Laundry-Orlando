@@ -59,10 +59,24 @@ begin
       and service_amount = 50 and tip_amount = 0 and currency = 'USD') then
     raise exception 'W1C-B1 order header compatibility failed';
   end if;
+  update public.a7_orlando_order_items set quantity = 9
+    where order_id = v_order and catalog_code = 'comforter';
+  update public.a7_orlando_orders set
+    order_status = 'cancelled',
+    cancellation_reason = 'W1C-B1 delayed retry fixture',
+    cancelled_at = now()
+  where id = v_order;
   if (public.a7_orlando_w1c_b1_review_invoice(
       'MCO 9981', 0, v_version, 'actor_w1c_b1_sql_owner', 'owner',
       'w1c-b1-sql-review-one', null, now()
     )->>'duplicate') <> 'true' then raise exception 'W1C-B1 retry failed'; end if;
+  update public.a7_orlando_order_items set quantity = 1
+    where order_id = v_order and catalog_code = 'comforter';
+  update public.a7_orlando_orders set
+    order_status = 'invoice_created',
+    cancellation_reason = null,
+    cancelled_at = null
+  where id = v_order;
   if (select count(*) from public.a7_orlando_invoices where order_id = v_order) <> 1 then
     raise exception 'W1C-B1 retry created a duplicate invoice';
   end if;
@@ -124,6 +138,20 @@ begin
       and current_invoice_id is null and invoice_id is null and payment_status = 'void') then
     raise exception 'W1C-B1 void did not clear the payable header';
   end if;
+  update public.a7_orlando_orders set
+    order_status = 'cancelled',
+    cancellation_reason = 'W1C-B1 delayed void retry fixture',
+    cancelled_at = now()
+  where id = v_order;
+  if (public.a7_orlando_w1c_b1_void_invoice(
+      'MCO 9981', 2, 'actor_w1c_b1_sql_owner', 'owner',
+      'w1c-b1-sql-void', 'Customer cancelled before payment', now()
+    )->>'duplicate') <> 'true' then raise exception 'W1C-B1 delayed void retry failed'; end if;
+  update public.a7_orlando_orders set
+    order_status = 'invoice_created',
+    cancellation_reason = null,
+    cancelled_at = null
+  where id = v_order;
   if exists (select 1 from public.a7_orlando_invoice_lines
       where label ilike '%14075550801%' or label ilike '%Synthetic Guest%') then
     raise exception 'W1C-B1 invoice lines contain customer PII';

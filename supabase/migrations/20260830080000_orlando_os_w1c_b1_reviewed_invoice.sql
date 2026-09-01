@@ -212,6 +212,36 @@ returns jsonb language sql stable security definer set search_path = public as $
   where o.unit_key = 'orlando' and o.order_number = p_order_number;
 $$;
 
+create or replace function public.a7_orlando_w1c_b1_resolve_action_retry(
+  p_order_number text,
+  p_action text,
+  p_expected_invoice_version integer,
+  p_idempotency_key text,
+  p_reason text
+) returns jsonb language plpgsql stable security definer set search_path = public as $$
+declare
+  v_existing public.a7_orlando_invoice_events;
+  v_order public.a7_orlando_orders;
+  v_reason text := nullif(btrim(coalesce(p_reason, '')), '');
+begin
+  if p_action not in ('invoice_issued', 'invoice_voided')
+    or coalesce(p_idempotency_key, '') = '' then
+    raise exception 'Invalid invoice retry contract';
+  end if;
+  select * into v_existing from public.a7_orlando_invoice_events
+    where idempotency_key = p_idempotency_key;
+  if v_existing.id is null then return null; end if;
+  select * into v_order from public.a7_orlando_orders where id = v_existing.order_id;
+  if v_existing.action <> p_action or v_order.order_number <> p_order_number
+    or v_existing.requested_version <> p_expected_invoice_version
+    or v_existing.reason is distinct from v_reason then
+    raise exception 'Idempotency key conflicts with another invoice action';
+  end if;
+  return jsonb_build_object('duplicate', true,
+    'invoice', public.a7_orlando_w1c_b1_invoice_payload(v_existing.invoice_id));
+end;
+$$;
+
 create or replace function public.a7_orlando_w1c_b1_review_invoice(
   p_order_number text,
   p_expected_invoice_version integer,
@@ -226,8 +256,8 @@ declare
   v_order public.a7_orlando_orders;
   v_current public.a7_orlando_invoices;
   v_invoice public.a7_orlando_invoices;
-  v_existing public.a7_orlando_invoice_events;
   v_preview jsonb;
+  v_retry jsonb;
   v_when timestamptz := coalesce(p_occurred_at, now());
   v_reason text := nullif(btrim(coalesce(p_reason, '')), '');
   v_line jsonb;
@@ -236,24 +266,13 @@ begin
     raise exception 'Owner authorization is required';
   end if;
   if coalesce(length(v_reason), 0) > 240 then raise exception 'Invoice reason is too long'; end if;
-  select * into v_existing from public.a7_orlando_invoice_events
-    where idempotency_key = p_idempotency_key;
-  if v_existing.id is not null then
-    select * into v_order from public.a7_orlando_orders where id = v_existing.order_id;
-    v_preview := public.a7_orlando_w1c_b1_preview(v_order.id);
-    if v_existing.action <> 'invoice_issued' or v_order.order_number <> p_order_number
-      or v_existing.requested_version <> p_expected_invoice_version
-      or v_existing.facts_hash <> v_preview->>'facts_hash'
-      or v_existing.reason is distinct from v_reason then
-      raise exception 'Idempotency key conflicts with another invoice action';
-    end if;
-    return jsonb_build_object('duplicate', true,
-      'invoice', public.a7_orlando_w1c_b1_invoice_payload(v_existing.invoice_id));
-  end if;
-
   select * into v_order from public.a7_orlando_orders
     where unit_key = 'orlando' and order_number = p_order_number for update;
   if v_order.id is null then raise exception 'Order not found'; end if;
+  v_retry := public.a7_orlando_w1c_b1_resolve_action_retry(
+    p_order_number, 'invoice_issued', p_expected_invoice_version, p_idempotency_key, v_reason
+  );
+  if v_retry is not null then return v_retry; end if;
   if public.a7_orlando_order_is_qa(v_order.id) then raise exception 'QA orders are read-only'; end if;
   if v_order.version <> p_expected_order_version then raise exception 'Order changed before invoice review'; end if;
   if v_order.order_status = 'cancelled' or v_order.production_state <> 'ready' then
@@ -351,7 +370,7 @@ create or replace function public.a7_orlando_w1c_b1_void_invoice(
 declare
   v_order public.a7_orlando_orders;
   v_current public.a7_orlando_invoices;
-  v_existing public.a7_orlando_invoice_events;
+  v_retry jsonb;
   v_when timestamptz := coalesce(p_occurred_at, now());
   v_reason text := nullif(btrim(coalesce(p_reason, '')), '');
 begin
@@ -359,20 +378,13 @@ begin
     raise exception 'Owner authorization is required';
   end if;
   if v_reason is null or length(v_reason) > 240 then raise exception 'A valid void reason is required'; end if;
-  select * into v_existing from public.a7_orlando_invoice_events where idempotency_key = p_idempotency_key;
-  if v_existing.id is not null then
-    select * into v_order from public.a7_orlando_orders where id = v_existing.order_id;
-    if v_existing.action <> 'invoice_voided' or v_order.order_number <> p_order_number
-      or v_existing.requested_version <> p_expected_invoice_version or v_existing.reason <> v_reason then
-      raise exception 'Idempotency key conflicts with another invoice action';
-    end if;
-    return jsonb_build_object('duplicate', true,
-      'invoice', public.a7_orlando_w1c_b1_invoice_payload(v_existing.invoice_id));
-  end if;
-
   select * into v_order from public.a7_orlando_orders
     where unit_key = 'orlando' and order_number = p_order_number for update;
   if v_order.id is null then raise exception 'Order not found'; end if;
+  v_retry := public.a7_orlando_w1c_b1_resolve_action_retry(
+    p_order_number, 'invoice_voided', p_expected_invoice_version, p_idempotency_key, v_reason
+  );
+  if v_retry is not null then return v_retry; end if;
   if public.a7_orlando_order_is_qa(v_order.id) then raise exception 'QA orders are read-only'; end if;
   if v_order.payment_status in ('paid', 'partially_refunded', 'refunded') then
     raise exception 'Paid invoice is immutable';
@@ -407,6 +419,8 @@ $$;
 revoke all on function public.a7_orlando_w1c_b1_preview(uuid) from public, anon, authenticated;
 revoke all on function public.a7_orlando_w1c_b1_invoice_payload(uuid) from public, anon, authenticated;
 revoke all on function public.a7_orlando_w1c_b1_invoices(text) from public, anon, authenticated;
+revoke all on function public.a7_orlando_w1c_b1_resolve_action_retry(text,text,integer,text,text)
+  from public, anon, authenticated;
 revoke all on function public.a7_orlando_w1c_b1_review_invoice(text,integer,integer,text,text,text,text,timestamptz)
   from public, anon, authenticated;
 revoke all on function public.a7_orlando_w1c_b1_void_invoice(text,integer,text,text,text,text,timestamptz)
@@ -414,6 +428,8 @@ revoke all on function public.a7_orlando_w1c_b1_void_invoice(text,integer,text,t
 grant execute on function public.a7_orlando_w1c_b1_preview(uuid) to service_role;
 grant execute on function public.a7_orlando_w1c_b1_invoice_payload(uuid) to service_role;
 grant execute on function public.a7_orlando_w1c_b1_invoices(text) to service_role;
+grant execute on function public.a7_orlando_w1c_b1_resolve_action_retry(text,text,integer,text,text)
+  to service_role;
 grant execute on function public.a7_orlando_w1c_b1_review_invoice(text,integer,integer,text,text,text,text,timestamptz)
   to service_role;
 grant execute on function public.a7_orlando_w1c_b1_void_invoice(text,integer,text,text,text,text,timestamptz)

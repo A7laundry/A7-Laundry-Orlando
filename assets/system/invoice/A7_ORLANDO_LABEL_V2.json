@@ -1,0 +1,42 @@
+{
+  "labelTemplateVersion": "A7_ORLANDO_LABEL_V2",
+  "asset": "A7_ORLANDO_LABEL_V2.png",
+  "width": 1024,
+  "height": 1536,
+  "physicalSize": "4x6in",
+  "sourceDensity": 256,
+  "sha256": "3a82de77474f7eea69cad141018218d5152f87fee9292576d7f05c0d977e4397",
+  "status": "APPROVED",
+  "approvedAt": "2026-09-01",
+  "approvedBy": "Owner",
+  "derivedFrom": "A7_ORLANDO_LABEL_V1",
+  "change": "Replaced the broken decorative booking QR with the supplied official Google review QR and corrected the CTA to SCAN TO REVIEW.",
+  "qrAsset": "A7_GOOGLE_REVIEW_QR_V1.png",
+  "qrSha256": "17460b644dcac11fca0b17c4bafd5066f36d67d653c5d802ffe286f3b51db418",
+  "qrPlacement": {
+    "left": 740,
+    "top": 1090,
+    "width": 185,
+    "height": 185,
+    "resizeKernel": "nearest"
+  },
+  "cta": "SCAN TO REVIEW",
+  "ctaPlacement": {
+    "left": 255,
+    "top": 1242,
+    "width": 230,
+    "height": 44
+  },
+  "dynamicFields": [
+    "invoiceNumber",
+    "guestName",
+    "propertyName",
+    "room",
+    "date",
+    "bags",
+    "service",
+    "returnTime",
+    "specialInstructions"
+  ],
+  "immutability": "The PNG is a versioned blank background. The renderer composes order data without modifying this file."
+}

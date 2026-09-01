@@ -48,7 +48,7 @@ automation, Stripe, routes, W3-B and W3-C remain unchanged.
 - [x] Server ignores browser attempts to replace stored name/WhatsApp.
 - [x] A new accepted order preserves customer identity and creates new lead/order identities.
 - [x] Repeat truth is derived from prior real history; QA-only/cancelled-only history cannot use W3-A.
-- [x] Same retry returns the original order and conflicting reuse fails closed.
+- [x] Same retry returns the original order even after commercial history changes; conflicting reuse fails closed.
 - [x] Operator/unauthenticated/wrong-origin requests fail closed.
 - [x] No contact row, attribution snapshot or historical order is changed.
 - [x] No Stripe, WhatsApp, Google Ads, `/order` or lifecycle contract changes.
@@ -63,12 +63,12 @@ through it remain ordinary governed orders with their complete lead, audit, attr
 
 ## Validation evidence
 
-- Focused W3-A tests: 5/5 PASS.
-- Orlando OS pretest: 58/58 PASS.
-- Repository suite: 80/80 PASS; protected MOS suite: 66/66 PASS.
+- Focused W3-A tests: 5/5 PASS, including an exact retry after all current commercial orders become cancelled.
+- Orlando OS pretest: 67/67 PASS.
+- Repository suite: 86/86 PASS; protected MOS suite: 67/67 PASS.
 - `npm run lint`, `npm run typecheck`, `npm run build`, `npm run validate:structure` and `git diff --check`: PASS.
 - Agent validation: PASS with 121 pre-existing dependency warnings and zero errors.
-- PostgreSQL 15 additive migration chain, transactional SQL smoke and rollback: PASS.
+- PostgreSQL 15 additive migration chain, delayed-retry transactional SQL smoke and rollback: PASS.
 - Desktop 1440 px and mobile 390 px visual QA: no horizontal overflow; stored name/WhatsApp remain readonly; no console warnings/errors.
 - Production/Supabase/Vercel mutation for W3-A: not performed.
 

@@ -7,8 +7,10 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { MemoryOperationalStore } = require('../lib/operational-store.js');
 const { systemOperationsService, normalizeSettings, validateTransition } = require('../lib/system-operations-service.js');
+const { systemW1cASmokeService } = require('../lib/system-w1c-a-smoke-service.js');
 const { signSession, issueSubmission, COOKIE_NAME, SUBMISSION_COOKIE_NAME } = require('../lib/system-auth.js');
 const operationalApi = require('../api/system/operational-orders.js');
+const w1cASmokeApi = require('../api/system/w1c-a-smoke.js');
 
 const NOW = new Date('2026-08-30T15:00:00.000Z');
 const OWNER = { actor_id:'actor_w1c_owner', display_name:'Owner QA', role:'owner' };
@@ -112,6 +114,26 @@ test('W1C-A correction requires reason, respects version and never emits a secon
   assert.equal([...store.itemWeightEvents.values()].filter((event) => event.previous_actual_lbs != null).length, 1);
 });
 
+test('W1C-A exact retry remains idempotent after the workflow advances', async () => {
+  const store = new MemoryOperationalStore();
+  const onlyItem = { id:crypto.randomUUID(), catalog_code:'wash_fold_guest', service_type:'wash_fold_guest',
+    label:'Wash & Fold', unit:'lb', quantity:null, estimated_lbs:8, unit_price:3.25,
+    minimum_amount:50, requires_manual_review:false, actual_lbs:null, weighed_at:null, subtotal:null, weight_version:0 };
+  const { order } = addOrder(store, { order_number:'MCO 2107', items:[onlyItem] });
+  onlyItem.order_id = order.id;
+  const operations = systemOperationsService({ operationalStore:store, now:() => NOW });
+  const requestId = crypto.randomUUID();
+  const first = await operations.transition({ order_number:order.order_number, action:'record_weight',
+    order_item_id:onlyItem.id, actual_lbs:8, expected_weight_version:0, request_id:requestId }, OWNER);
+  assert.equal(first.duplicate, false);
+  order.production_state = 'processing';
+  const retry = await operations.transition({ order_number:order.order_number, action:'record_weight',
+    order_item_id:onlyItem.id, actual_lbs:8, expected_weight_version:0, request_id:requestId }, OWNER);
+  assert.equal(retry.duplicate, true);
+  assert.equal([...store.itemWeightEvents.values()].length, 1);
+  assert.equal([...store.events.values()].filter((event) => event.event_name === 'order_weighed').length, 1);
+});
+
 test('W1C-A fixed items reject weight and fixed-only orders skip the weight queue', async () => {
   const store = new MemoryOperationalStore();
   const { order, items } = addOrder(store, { order_number:'MCO 2103' });
@@ -170,6 +192,77 @@ test('W1C-A API rejects a wrong origin before any operational mutation', async (
   }
 });
 
+test('W1C-A transactional smoke proves weight idempotency and lifecycle with zero residue', async () => {
+  const store = new MemoryOperationalStore();
+  const result = await systemW1cASmokeService({ operationalStore:store, now:() => NOW })
+    .run(OWNER, crypto.randomUUID());
+  assert.deepEqual(result, {
+    passed:true,
+    first_duplicate:false,
+    retry_duplicate:true,
+    weight_event_count:1,
+    lifecycle_event_count:1,
+    final_order_status:'weighed',
+    final_production_state:'awaiting_processing',
+    actual_lbs:5,
+    residue_count:0
+  });
+  assert.equal(store.orders.size, 0);
+  await assert.rejects(
+    () => systemW1cASmokeService({ operationalStore:store }).run(
+      { ...OWNER, role:'operator' }, crypto.randomUUID()
+    ),
+    /Owner authorization/
+  );
+});
+
+test('W1C-A transactional smoke endpoint is Owner-only, same-origin and submission-bound', async () => {
+  const prior = {
+    secret:process.env.A7_SYSTEM_SESSION_SECRET,
+    mode:process.env.A7_SYSTEM_ACCESS_MODE,
+    store:globalThis.__A7_OPERATIONAL_STORE__
+  };
+  process.env.A7_SYSTEM_SESSION_SECRET = 'w1c-a-smoke-session-secret-at-least-32-bytes';
+  process.env.A7_SYSTEM_ACCESS_MODE = 'team';
+  globalThis.__A7_OPERATIONAL_STORE__ = new MemoryOperationalStore();
+  try {
+    const unauth = response();
+    await w1cASmokeApi({ method:'POST', headers:{}, body:{ confirm:'W1C_A_TRANSACTIONAL_SMOKE' } }, unauth);
+    assert.equal(unauth.statusCode, 401);
+
+    const session = signSession(OWNER);
+    const missing = response();
+    await w1cASmokeApi({
+      method:'POST',
+      headers:{ cookie:`${COOKIE_NAME}=${encodeURIComponent(session)}` },
+      body:{ confirm:'W1C_A_TRANSACTIONAL_SMOKE' }
+    }, missing);
+    assert.equal(missing.statusCode, 409);
+
+    const submission = issueSubmission();
+    const success = response();
+    await w1cASmokeApi({
+      method:'POST',
+      headers:{
+        origin:'https://a7laundry.com',
+        cookie:`${COOKIE_NAME}=${encodeURIComponent(session)}; ${SUBMISSION_COOKIE_NAME}=${encodeURIComponent(submission.token)}`
+      },
+      body:{ confirm:'W1C_A_TRANSACTIONAL_SMOKE' }
+    }, success);
+    assert.equal(success.statusCode, 200);
+    assert.equal(success.payload.result.passed, true);
+    assert.equal(success.payload.result.residue_count, 0);
+    assert.match(String(success.headers['set-cookie']), /Max-Age=0/);
+  } finally {
+    if (prior.secret == null) delete process.env.A7_SYSTEM_SESSION_SECRET;
+    else process.env.A7_SYSTEM_SESSION_SECRET = prior.secret;
+    if (prior.mode == null) delete process.env.A7_SYSTEM_ACCESS_MODE;
+    else process.env.A7_SYSTEM_ACCESS_MODE = prior.mode;
+    if (prior.store == null) delete globalThis.__A7_OPERATIONAL_STORE__;
+    else globalThis.__A7_OPERATIONAL_STORE__ = prior.store;
+  }
+});
+
 test('W1C-A static contract is additive, private and isolated from finance and analytics', () => {
   const migration = fs.readFileSync(new URL('../supabase/migrations/20260830050000_orlando_os_w1c_a_item_weight.sql', import.meta.url), 'utf8');
   const rollback = fs.readFileSync(new URL('../supabase/rollbacks/20260830050000_orlando_os_w1c_a_item_weight.rollback.sql', import.meta.url), 'utf8');
@@ -179,7 +272,13 @@ test('W1C-A static contract is additive, private and isolated from finance and a
   assert.match(migration, /for update/);
   assert.match(migration, /QA orders are read-only/);
   assert.match(migration, /Only per-pound items can be weighed/);
+  assert.ok(migration.indexOf('where idempotency_key = p_idempotency_key')
+    < migration.indexOf("v_order.custody_state <> 'at_laundry'"));
   assert.match(migration, /a7_orlando_record_transition[\s\S]*'order_weighed'/);
+  assert.match(migration, /a7_orlando_w1c_a_transactional_smoke/);
+  assert.match(migration, /pg_advisory_xact_lock/);
+  assert.match(migration, /residue_count/);
+  assert.match(migration, /grant execute[^;]+service_role/s);
   assert.doesNotMatch(migration, /insert into public\.a7_orlando_(payments|refunds|stripe_events)/);
   assert.match(rollback, /weight evidence exists; keep additive schema/);
   assert.match(js, /Registre o peso real em cada item acima/);

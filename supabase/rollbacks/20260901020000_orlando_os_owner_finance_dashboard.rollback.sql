@@ -1,0 +1,3 @@
+-- Application rollback leaves this additive read function inert.
+-- Destructive database rollback requires separate authorization.
+-- drop function if exists public.a7_orlando_owner_finance(date,date);

@@ -4,13 +4,13 @@
 
 **Data:** 2026-08-29
 
-**Atualizado:** 2026-08-30
+**Atualizado:** 2026-08-31
 
 **URL proposta:** `https://a7laundry.com/sistema`
 
 **Escopo:** A7 Laundry Orlando; atendimento, orçamento, pedido, custódia, produção, cobrança, cliente e entrega
 
-**Status:** `IMPLEMENTED THROUGH W1A.1 / LATER WAVES GATED`
+**Status:** `W1B LIVE WITH RELEASE-HARNESS CAVEAT / LATER WAVES GATED`
 
 **Story:** `docs/stories/a7-015-orlando-laundry-operations-system.md`
 

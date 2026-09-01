@@ -68,6 +68,8 @@ test('W1C-B1 derives immutable lines and applies the governed minimum exactly on
   assert.match(firstInvoiceId, /^[0-9a-f-]{36}$/i);
   assert.equal(store.orders.get(order.id).payment_status, 'invoice_created');
   assert.equal([...store.events.values()].filter((event) => event.event_name === 'invoice_created').length, 1);
+  store.orderItems.get(order.id)[1].quantity = 9;
+  store.orders.get(order.id).order_status = 'cancelled';
   const retry = await service.review({ order_number:order.order_number, expected_invoice_version:0,
     request_id:requestId }, OWNER);
   assert.equal(retry.duplicate, true);
@@ -117,8 +119,10 @@ test('W1C-B1 void preserves history and paid or linked invoices remain immutable
   assert.equal(voided.invoice.status, 'void');
   assert.equal(store.orders.get(order.id).invoice_id, null);
   assert.equal(store.orders.get(order.id).payment_status, 'void');
+  store.orders.get(order.id).order_status = 'cancelled';
   assert.equal((await service.void({ order_number:order.order_number, expected_invoice_version:1,
     reason:'Customer cancelled before payment', request_id:requestId }, OWNER)).duplicate, true);
+  store.orders.get(order.id).order_status = 'invoice_created';
   await assert.rejects(() => service.review({ order_number:order.order_number, expected_invoice_version:0,
     request_id:crypto.randomUUID() }, OWNER), /Voided invoice cannot be reissued/);
   const paidStore = new MemoryOperationalStore();
@@ -176,11 +180,15 @@ test('W1C-B1 static contract is additive and isolated from Stripe, WhatsApp and 
   assert.match(migration, /a7_orlando_invoice_lines/);
   assert.match(migration, /tip_amount numeric not null default 0 check \(tip_amount = 0\)/);
   assert.match(migration, /enable row level security/);
+  assert.match(migration, /a7_orlando_w1c_b1_resolve_action_retry/);
   assert.match(rollback, /invoice evidence exists; keep additive schema/);
   assert.doesNotMatch(`${migration}\n${api}\n${service}`, /graph\.facebook|WHATSAPP_BRIDGE_TOKEN|STRIPE_SECRET|googletagmanager|dataLayer/);
   assert.doesNotMatch(service, /raw\.service_amount|raw\.tip_amount|raw\.invoice_id|raw\.unit_price|raw\.minimum_amount/);
   assert.match(ui, /\/api\/system\/invoice-draft/);
   assert.match(ui, /\/api\/system\/order-invoices/);
+  assert.match(ui, /document_type:'invoice_preview'/);
+  assert.match(ui, /Prévia gerada com o template oficial A7_ORLANDO_INVOICE_V4/);
+  assert.doesNotMatch(ui, /invoiceFactsCard\(context\.preview, context\.current_invoice/);
   assert.doesNotMatch(ui, /service_amount\s*:\s*.*invoice|tip_amount\s*:\s*.*invoice|invoice_id\s*:\s*.*invoice/);
   assert.deepEqual(nextActionFor({ order_status:'weighed', payment_status:'pending', service_tier:'normal',
     custody_state:'at_laundry', production_state:'ready', items:[] }),

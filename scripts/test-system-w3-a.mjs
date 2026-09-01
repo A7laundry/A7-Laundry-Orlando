@@ -102,6 +102,9 @@ test('W3-A retry is stable and conflicting customer reuse fails closed', async (
   const submissionId = crypto.randomUUID();
   const firstPayload = payload(customerReference(first.customerId, ENV), submissionId);
   const created = await orders.createKnownCustomerOrder(firstPayload, OWNER);
+  store.orders.get(first.orderId).order_status = 'cancelled';
+  const createdOrder = [...store.orders.values()].find((row) => row.order_number === created.order_number);
+  createdOrder.order_status = 'cancelled';
   const retry = await orders.createKnownCustomerOrder(firstPayload, OWNER);
   assert.equal(retry.duplicate, true);
   assert.equal(retry.order_number, created.order_number);
@@ -184,5 +187,8 @@ test('W3-A static contract keeps the opaque reference in POST memory and preserv
   assert.doesNotMatch(`${js}\n${html}`, /localStorage|sessionStorage|dataLayer|googletagmanager/i);
   assert.doesNotMatch(js, /customer_ref.*(?:location|URLSearchParams)|(?:location|URLSearchParams).*customer_ref/i);
   assert.doesNotMatch(migration, /update\s+public\.a7_wa_contacts|delete\s+from\s+public\.a7_wa_contacts/i);
+  assert.match(migration, /a7_orlando_resolve_known_customer_order_retry/);
+  assert.ok(migration.indexOf('where submission_id = p_submission_id for update')
+    < migration.indexOf("Known customer requires prior real order history"));
   assert.doesNotMatch(`${js}\n${migration}`, /graph\.facebook|stripe|google ads|whatsapp_bridge_token/i);
 });

@@ -1,6 +1,6 @@
 # Story A7-020 — A7 Orlando OS W1C-A Item Weight
 
-**Status:** Ready for Review — local gates passed; Production not authorized
+**Status:** Blocked — Production smoke returned `PGRST202`; application rolled back to W1B
 
 **Created:** 2026-08-30
 
@@ -82,6 +82,7 @@ at_laundry + awaiting_weight
 - [x] No invoice, payment, Stripe, tip, delivery, WhatsApp, `/order`, GA4 or Ads behavior changes.
 - [x] Desktop and 390 px show a concise weight form only when `record_weight` is the next action.
 - [x] Migration/rollback dry-run, lint, typecheck, focused tests, full tests and build pass.
+- [x] Owner-only transactional release probe exercises the real SQL write twice and proves zero committed residue.
 - [x] Production gate is documented and stops before mutation.
 
 ## Rollback contract
@@ -94,24 +95,98 @@ weight or weight event exists.
 
 - `docs/stories/a7-020-orlando-os-w1c-a-item-weight.md`
 - `docs/audits/2026-08-30-orlando-os-w1c-a-item-weight-gate.md`
+- `docs/runbooks/A7-ORLANDO-OS-W1C-A-CUTOVER-RUNBOOK-2026-08-31.md`
 - `supabase/migrations/20260830050000_orlando_os_w1c_a_item_weight.sql`
+- `supabase/migrations/20260830050001_orlando_os_w1c_a_release_probe_repair.sql`
 - `supabase/rollbacks/20260830050000_orlando_os_w1c_a_item_weight.rollback.sql`
+- `supabase/rollbacks/20260830050001_orlando_os_w1c_a_release_probe_repair.rollback.sql`
 - `lib/operational-store.js`
+- `lib/system-w1c-a-smoke-service.js`
 - `lib/system-order-service.js`
 - `lib/system-operations-service.js`
 - `scripts/a7-system-operations.mjs`
+- `scripts/a7-system-w1c-a-smoke.mjs`
 - `scripts/test-system-w1c-a.mjs`
+- `scripts/test-system-w1c-a.sql`
+- `scripts/verify-orlando-os-release-scope.mjs`
+- `scripts/test-system-release-scope.mjs`
 - `sistema.js`
 - `sistema-w1b.css`
+- `api/system/w1c-a-smoke.js`
 - `package.json`
 
 ## Validation evidence
 
 - `supabase db push --dry-run --include-all`: only migration `20260830050000` would be applied; no remote mutation.
 - Isolated PostgreSQL migration smoke: partial/final weight, idempotent retry, correction, fixed-only transition and single `order_weighed` passed.
-- Focused W1B + W1C-A tests: 21/21 passed.
-- System pretests: 47/47 passed.
-- Full repository tests: 66/66 passed.
+- Focused W1C-A tests: 10/10 passed, including the Owner-only API and transactional release probe.
+- Post-review regression: an exact retry remains idempotent after the order advances beyond the writable weight
+  state; SQL now resolves the immutable event before evaluating mutable workflow state.
+- PostgreSQL 15 regression: delayed exact retry after `production_state=processing` returns `duplicate=true`, while
+  one weight event and one `order_weighed` lifecycle event remain; conflicting key reuse fails closed.
+- PostgreSQL 15 release probe: first write `duplicate=false`, exact retry `duplicate=true`, one item-weight event,
+  one `order_weighed`, final `weighed + awaiting_processing`, `actual_lbs=5` and `residue_count=0`.
+- Exceptional rollback test removed the probe/function/schema on an empty isolated database and preserved the
+  evidence-loss guard.
+- Current private OS pretests: 71/71 passed, including release-scope isolation.
+- Current repository tests: 86/86 passed; protected MOS tests: 67/67 passed.
 - `npm run lint`, `npm run typecheck`, `npm run build`, `npm run validate:structure` and `npm run validate:agents`: passed.
 - Authenticated-state UI harness with synthetic QA data: desktop and exact 390 px visual checks passed; temporary harness removed.
 - `git diff --check`: passed.
+
+## Production cutover attempt — 2026-08-31
+
+- The authenticated Supabase ledger for Orlando Production `wiwawtpaxnrueugppasi` ended at
+  `20260830041000`; the isolated dry-run contained only `20260830050000_orlando_os_w1c_a_item_weight.sql`.
+- Migration `20260830050000` was applied successfully and remains as an additive, inert schema extension.
+- The isolated W1B + W1C-A artifact was published as `dpl_Fu8fp328bEEiaX5Pmgqqm8pbDj4F` and redeployed
+  after the authorized Owner-password rotation as `dpl_JvPy5uYosXyGLZST2LXen28AF2kK`.
+- Owner authentication passed, but the transactional smoke stopped at the storage boundary with HTTP 503 and
+  PostgREST code `PGRST202`; no financial flow ran and the smoke RPC did not return a committed result.
+- Per the pre-authorized stop rule, the application was rolled back to W1B. The final W1B redeploy with the
+  rotated Owner credential is `dpl_9SnpipfkSBkKbqBCyTAStgLaVDLM`, Ready and aliased to `a7laundry.com`.
+- Public probes after rollback: `/`, `/order` and `/sistema` HTTP 200; unauthenticated `/api/system/today` HTTP 401.
+- The rotated Owner login passed on W1B. The new password was copied to the Owner clipboard and all temporary
+  runner files and in-memory credential bindings were removed.
+- W1C-A is not complete and must not be promoted again until `PGRST202` is diagnosed and a new gate/GO is issued.
+
+## `PGRST202` diagnosis and local repair — 2026-08-31
+
+- The authenticated CLI remained linked to the official Orlando project `wiwawtpaxnrueugppasi`; no other
+  Supabase project was queried or changed.
+- The remote ledger confirms `20260830050000` is applied.
+- A read-only `pg_dump` of the remote `public` schema confirms the W1C-A columns, event table, order/snapshot RPCs
+  and `a7_orlando_w1c_a_record_item_weight(...)` exist with `service_role` grants.
+- The same authoritative schema export confirms
+  `a7_orlando_w1c_a_transactional_smoke(text,text,uuid)` is absent. This directly explains PostgREST `PGRST202`;
+  a schema-cache reload alone cannot expose a function that does not exist.
+- Repository diff proves the release probe and the final retry-first ordering were added locally after the version
+  of `20260830050000` recorded by Production. The applied migration is not rewritten or replayed.
+- Additive repair `20260830050001` now creates the missing service-role-only probe, installs the final retry-first
+  weight function, and requests a PostgREST schema reload. Its rollback drops only the probe and leaves the safer
+  retry behavior in place.
+- The repair is local-only. No database mutation, W1C-A deployment or smoke was executed during diagnosis.
+- Isolated validation restored the read-only Production schema dump, applied `20260830050001`, and executed the
+  probe through PostgREST: HTTP 200, first write non-duplicate, retry duplicate, one weight event, one lifecycle
+  event, final `weighed + awaiting_processing`, and `residue_count=0`.
+- Post-repair gates passed: focused W1C-A 10/10, release-scope 2/2, lint, typecheck, full `npm test`, build,
+  structure validation and agent validation (warnings only, zero errors).
+- An isolated authenticated remote dry-run reports exactly one pending migration:
+  `20260830050001_orlando_os_w1c_a_release_probe_repair.sql`; W2, W3 and W1C-B1 are absent.
+
+## Production repair attempt — 2026-08-31
+
+- Owner authorized only `20260830050001`, W1C-A redeploy, Owner smoke without charging, and rollback to the exact
+  W1B deployment if any gate failed.
+- Final remote dry-run reported only `20260830050001`; the migration was applied successfully to
+  `wiwawtpaxnrueugppasi` and is present in the remote ledger. W2, W3 and W1C-B1 remain unapplied.
+- W1C-A source deployment `dpl_JvPy5uYosXyGLZST2LXen28AF2kK` was redeployed with current Production secrets and
+  reached Ready.
+- The smoke stopped at its first gate: Owner login returned HTTP 401 because the clipboard no longer contained the
+  active Owner password. No submission identity was created, the W1C-A RPC was not called and no synthetic or
+  financial row was written.
+- Per the explicit stop rule, the application was immediately rolled back by redeploying W1B
+  `dpl_9dh6YN8infLK6FP3E3AcyYCaVLXu`. Final deployment `dpl_7ugBe2i12dSC2fM8Nx8VAfSf2FtS` is Ready and owns
+  `a7laundry.com`; `/`, `/order` and `/sistema` return HTTP 200.
+- The additive W1C-A schema and repair remain inert under W1B. A new credential-validation gate is required before
+  any further W1C-A cutover attempt.

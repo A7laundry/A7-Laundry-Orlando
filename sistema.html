@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="/sistema-state.css">
   <link rel="stylesheet" href="/sistema-w1a1.css">
   <link rel="stylesheet" href="/sistema-w1b.css">
+  <link rel="stylesheet" href="/sistema-hotels.css">
+  <link rel="stylesheet" href="/sistema-finance.css">
+  <link rel="stylesheet" href="/sistema-home.css">
 </head>
 <body>
   <main id="app" aria-live="polite">
@@ -37,20 +40,43 @@
           <button id="attendanceNav" type="button">Atendimento</button>
           <button id="ordersNav" type="button">Pedidos</button>
           <button id="customersNav" type="button">Clientes <small>Lite</small></button>
+          <button id="hotelsNav" type="button">Hotéis</button>
+          <button id="financeNav" class="owner-only" type="button">Faturamento</button>
           <button type="button" disabled>Rotas <small>W3</small></button>
         </nav>
         <section class="content">
-          <div id="todayView">
-            <div class="page-head">
-              <div><p class="eyebrow">HOJE</p><h1>O que precisa acontecer agora</h1>
-                <p id="todayFreshness">Carregando operação…</p></div>
+          <div id="todayView" class="home-v2" aria-busy="true">
+            <div class="page-head home-head">
+              <div><p class="eyebrow">A7 ORLANDO · HOJE</p><h1>Visão do dia</h1>
+                <p id="todayFreshness">Carregando fatos operacionais…</p></div>
               <button id="refreshTodayButton" class="quiet bordered" type="button">Atualizar</button>
             </div>
             <p class="error" id="todayError" role="alert"></p>
-            <section id="todayTiles" class="today-tiles" aria-label="Filas de hoje"></section>
-            <section class="operations-section">
-              <div class="section-head"><div><p class="eyebrow">PRIORIDADE</p><h2 id="todayQueueTitle">Fila operacional</h2></div><button id="todayOpenOrders" class="quiet" type="button">Ver todos os pedidos →</button></div>
+            <section id="homeLoading" class="panel home-state" aria-live="polite"><span class="home-loader"></span><div><strong>Preparando sua operação</strong><p>Conferindo pedidos, prioridades e disponibilidade dos dados.</p></div></section>
+
+            <section id="homeAttentionSection" class="home-section home-attention-section" hidden>
+              <div class="home-section-head"><div><p class="eyebrow">PRECISA DE ATENÇÃO</p><h2>Resolva antes que vire atraso</h2></div></div>
+              <div id="homeAttention" class="home-attention" aria-live="polite"></div>
+            </section>
+
+            <section id="homeOperationSection" class="home-section" hidden>
+              <div class="home-section-head"><div><p class="eyebrow">OPERAÇÃO DE HOJE</p><h2>Onde estão os pedidos</h2></div><p id="homeAtLaundry"></p></div>
+              <div id="homeOperation" class="home-metric-grid home-operation-grid" aria-label="Operação de hoje"></div>
+            </section>
+
+            <section id="homeActionsSection" class="home-section" hidden>
+              <div class="home-section-head"><div><p class="eyebrow">AGORA</p><h2 id="todayQueueTitle">O que precisa acontecer</h2></div><button id="todayOpenOrders" class="quiet" type="button">Ver todos os pedidos →</button></div>
               <div id="todayOrders" class="operation-list" aria-live="polite"></div>
+            </section>
+
+            <section id="homeBusinessSection" class="home-section owner-only" hidden>
+              <div class="home-section-head"><div><p class="eyebrow">NEGÓCIO HOJE</p><h2>Resultado confirmado</h2></div><p>Receita conciliada; Cash/Zelle não confirmados não entram.</p></div>
+              <div id="homeBusiness" class="home-metric-grid" aria-label="Resultado do negócio hoje"></div>
+            </section>
+
+            <section id="homeSevenDaysSection" class="home-section owner-only" hidden>
+              <div class="home-section-head"><div><p class="eyebrow">ÚLTIMOS 7 DIAS</p><h2>Ritmo do negócio</h2></div><button id="homeOpenFinance" class="quiet" type="button">Abrir faturamento →</button></div>
+              <div id="homeSevenDays" class="home-seven-days" aria-live="polite"></div>
             </section>
           </div>
 
@@ -108,12 +134,78 @@
             <section id="customerDetail" class="panel customer-detail" hidden aria-live="polite"></section>
           </div>
 
+          <div id="hotelsView" hidden>
+            <div class="page-head">
+              <div><p class="eyebrow">HOTÉIS</p><h1>Diretório e desempenho</h1>
+                <p>Cadastre uma vez, selecione sem erro e acompanhe os atendimentos por hotel.</p></div>
+              <button id="newHotelButton" class="primary owner-only" type="button">+ Novo hotel</button>
+            </div>
+            <section class="panel hotel-search-panel">
+              <form id="hotelSearchForm" class="inline-form">
+                <div class="lookup-input"><input name="hotel_query" maxlength="160" placeholder="Nome, endereço, região ou alias" autocomplete="off" spellcheck="false"><small>Os KPIs excluem pedidos QA e cancelados.</small></div>
+                <button type="submit">Buscar hotel</button>
+              </form>
+              <label class="hotel-inactive-toggle owner-only"><input id="includeInactiveHotels" type="checkbox"> Incluir hotéis inativos</label>
+              <p class="error" id="hotelSearchError" role="alert"></p>
+            </section>
+            <section id="hotelEditor" class="panel hotel-editor owner-only" hidden>
+              <h2 id="hotelEditorTitle">Novo hotel</h2>
+              <form id="hotelForm">
+                <input name="hotel_id" type="hidden">
+                <div class="grid">
+                  <label>Nome oficial<input name="canonical_name" maxlength="180" required></label>
+                  <label>Região / corredor<input name="region" maxlength="100" placeholder="Bonnet Creek"></label>
+                  <label class="wide">Endereço<input name="address_line" maxlength="240" required></label>
+                  <label class="wide">Aliases, separados por vírgula<input name="aliases" maxlength="1000" placeholder="Signia Bonnet Creek, Hilton Bonnet Creek"></label>
+                  <label class="wide">Instruções de handoff<textarea name="handoff_notes" maxlength="500"></textarea></label>
+                  <label class="hotel-active"><input name="active" type="checkbox" checked> Hotel ativo</label>
+                </div>
+                <p class="error" id="hotelEditorError" role="alert"></p>
+                <div class="submit-row"><button id="cancelHotelButton" class="quiet" type="button">Cancelar</button><button class="primary" type="submit">Salvar hotel</button></div>
+              </form>
+            </section>
+            <div id="hotelResults" class="hotel-results" aria-live="polite"></div>
+          </div>
+
+          <div id="financeView" hidden>
+            <div class="page-head">
+              <div><p class="eyebrow">FATURAMENTO</p><h1>Visão financeira da operação</h1>
+                <p>Receita confirmada, recebimentos e gorjetas permanecem separados.</p></div>
+              <button id="refreshFinanceButton" class="quiet bordered" type="button">Atualizar</button>
+            </div>
+            <section class="panel finance-filter-panel" aria-label="Período financeiro">
+              <div id="financePresetButtons" class="finance-presets">
+                <button type="button" data-finance-period="today">Hoje</button>
+                <button type="button" data-finance-period="7d">7 dias</button>
+                <button type="button" data-finance-period="30d" class="active">30 dias</button>
+                <button type="button" data-finance-period="month">Este mês</button>
+              </div>
+              <form id="financeCustomForm" class="finance-custom-form">
+                <label>De<input name="start_date" type="date" required></label>
+                <label>Até<input name="end_date" type="date" required></label>
+                <button type="submit">Aplicar período</button>
+              </form>
+            </section>
+            <p class="error" id="financeError" role="alert"></p>
+            <div id="financeLoading" class="panel finance-loading">Carregando verdade financeira…</div>
+            <section id="financeContent" hidden aria-live="polite">
+              <div id="financePeriod" class="finance-period"></div>
+              <section id="financeKpis" class="finance-kpis" aria-label="Indicadores financeiros"></section>
+              <section class="finance-breakdown-grid">
+                <article class="panel finance-breakdown"><h2>Por serviço</h2><div id="financeServiceBreakdown"></div></article>
+                <article class="panel finance-breakdown"><h2>Por origem</h2><div id="financeAcquisitionBreakdown"></div></article>
+                <article class="panel finance-breakdown finance-breakdown-wide"><h2>Por hotel</h2><div id="financeHotelBreakdown"></div></article>
+              </section>
+              <section class="panel finance-governance">
+                <div><p class="eyebrow">CONTRATO</p><h2>Como estes números são formados</h2></div>
+                <dl id="financeAvailability"></dl>
+                <p id="financeSources"></p>
+              </section>
+            </section>
+          </div>
+
           <div id="newOrderView" hidden>
             <div class="page-head compact"><div><button id="backButton" class="back" type="button">← Atendimento</button><h1>Novo atendimento</h1><p>Venda recebida fora do sistema</p></div></div>
-            <section id="knownCustomerBanner" class="panel known-customer-banner" hidden>
-              <div><p class="eyebrow">CLIENTE CADASTRADO</p><strong id="knownCustomerSummary"></strong><p>Nome e WhatsApp vêm do cadastro. Revise local, prazo e itens antes de confirmar.</p></div>
-              <button id="clearKnownCustomerButton" class="secondary" type="button">Remover vínculo</button>
-            </section>
             <form id="orderForm">
               <section class="panel form-section"><p class="step">1</p><div><h2>Cliente</h2><div class="grid">
                 <label>Nome<input name="name" maxlength="100" autocomplete="off" required></label>
@@ -123,6 +215,7 @@
               </div></div></section>
               <section class="panel form-section"><p class="step">2</p><div><h2>Local</h2><div class="grid">
                 <label>Tipo<select name="accommodation_type"><option value="hotel">Hotel</option><option value="airbnb">Airbnb</option><option value="residence">Residence</option></select></label>
+                <label id="hotelDirectoryField">Hotel cadastrado<select id="hotelSelect" name="hotel_id"><option value="">Hotel não cadastrado</option></select></label>
                 <label>Hotel / propriedade<input name="property" maxlength="180" autocomplete="off" required></label>
                 <label class="wide">Endereço, se necessário para a coleta<input name="property_address" maxlength="240" autocomplete="off"></label>
                 <label>Quarto, se houver<input name="room" maxlength="40" autocomplete="off"></label>
@@ -132,7 +225,7 @@
               </div></div></section>
               <section class="panel form-section"><p class="step">3</p><div><h2>Serviço e prazo</h2>
                 <div class="tier-choice"><label><input type="radio" name="service_tier" value="normal" checked><span><strong>Normal</strong><small id="normalPrice">Carregando…</small></span></label><label><input type="radio" name="service_tier" value="express"><span><strong>Express</strong><small id="expressPrice">Carregando…</small></span></label></div>
-                <div class="grid"><label>Início da coleta<input name="pickup_window_start" type="datetime-local" required></label><label>Fim da coleta<input name="pickup_window_end" type="datetime-local" required></label><label>Needed by<input name="needed_by" type="datetime-local" required></label><label>A7 Ref, se veio na mensagem<input name="lead_reference" maxlength="10" placeholder="Opcional" autocomplete="off"></label></div>
+                <div class="grid"><label>Mínimo acordado<select name="agreed_minimum_amount" required><option value="50">US$50</option><option value="60">US$60</option></select></label><label>Início da coleta<input name="pickup_window_start" type="datetime-local" required></label><label>Fim da coleta<input name="pickup_window_end" type="datetime-local" required></label><label>Needed by<input name="needed_by" type="datetime-local" required></label><label>A7 Ref, se veio na mensagem<input name="lead_reference" maxlength="10" placeholder="Opcional" autocomplete="off"></label></div>
               </div></section>
               <section class="panel form-section"><p class="step">4</p><div><h2>Itens</h2>
                 <label class="item-row"><input type="checkbox" name="wash_fold" checked><span><strong>Wash & Fold</strong><small id="washRule"></small></span><input name="estimated_lbs" type="number" min="1" max="500" step="0.1" placeholder="lb estimadas"></label>
@@ -154,5 +247,6 @@
     </section>
   </main>
   <script src="/sistema.js" defer></script>
+  <script src="/sistema-hotels.js" defer></script>
 </body>
 </html>

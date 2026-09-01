@@ -1,12 +1,12 @@
 'use strict';
 
-const { systemOperationsService } = require('../../lib/system-operations-service.js');
+const { systemOperationsService, orderForActor } = require('../../lib/system-operations-service.js');
 const { OperationalStoreError, InvalidTransitionError } = require('../../lib/operational-store.js');
 const { json, bodyOf, allowedOrigin, requireSession } = require('../../lib/system-http.js');
 const { submissionFromRequest } = require('../../lib/system-auth.js');
 
 module.exports = async function handler(req, res) {
-  const actor = requireSession(req, res, ['owner']);
+  const actor = requireSession(req, res, ['owner', 'operator']);
   if (!actor) return;
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -18,12 +18,14 @@ module.exports = async function handler(req, res) {
   try {
     const operations = systemOperationsService();
     if (body.action === 'list') {
-      return json(res, 200, { ok:true, ...(await operations.list({ queue:body.queue, query:body.query,
-        custody_state:body.custody_state, production_state:body.production_state })) });
+      const result = await operations.list({ queue:body.queue, query:body.query,
+        custody_state:body.custody_state, production_state:body.production_state });
+      return json(res, 200, { ok:true, ...result,
+        orders:result.orders.map((order) => orderForActor(order, actor)) });
     }
     if (body.action === 'detail') {
       const order = await operations.detail(body.order_number);
-      return order ? json(res, 200, { ok:true, order })
+      return order ? json(res, 200, { ok:true, order:orderForActor(order, actor) })
         : json(res, 404, { ok:false, code:'not_found', error:'Order not found.' });
     }
     if (body.action === 'transition') {

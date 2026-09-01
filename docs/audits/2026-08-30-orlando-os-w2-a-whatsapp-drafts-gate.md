@@ -36,9 +36,9 @@ a migration push, deployment or cutover.
 | Check | Result |
 |---|---|
 | `node --test scripts/test-system-w2-a.mjs` | 6/6 PASS |
-| OS pretest | 53/53 PASS |
-| Root repository tests | 80/80 PASS |
-| MOS tests | 66/66 PASS |
+| OS pretest | 67/67 PASS |
+| Root repository tests | 86/86 PASS |
+| MOS tests | 67/67 PASS |
 | Lint | PASS |
 | Typecheck | PASS |
 | Build | PASS |
@@ -75,12 +75,26 @@ Generate preview → review exact text → approve → copy approved text
 
 ## Release sequencing
 
-W2-A depends on the operational order detail delivered by W1B. The current safe order is:
+W2-A depends on the operational order detail delivered by W1B. The current migration/release order is:
 
-1. approve and complete the already prepared W1B cutover and authenticated smoke;
-2. separately review/release W1C-A if still desired;
-3. build a new isolated W2-A candidate from the accepted baseline;
-4. re-run Preview/migration/auth/privacy gates;
-5. obtain a new exact Production GO for that artifact.
+1. preserve the current W1B Production baseline;
+2. separately release W1C-A migration `20260830050000` only after its exact GO;
+3. build W2-A from that accepted baseline and apply only `20260830060000` after an independent gate;
+4. release W3-A `20260830070000` and W1C-B1 `20260830080000` only in their own later gates;
+5. never use `--include-all`, renumber migrations or bundle future slices into W2-A.
 
 Until then, W2-A stays local. No remote state was changed by this gate.
+
+## Post-gate delayed-retry correction — 2026-08-30
+
+A final source review found that draft creation evaluated current template eligibility before resolving an exact
+prior request. A delayed retry could therefore fail after the order advanced or was cancelled, even though the
+immutable draft already existed. W2-A now resolves the server-derived idempotency identity through a narrow
+service-role RPC before regenerating facts or evaluating new-write eligibility. It validates the same order and
+template, returns only the prior draft for an exact retry, and rejects conflicting reuse. The lower SQL and memory
+stores also resolve the prior event before mutable state. No message was sent and Production was not changed.
+
+The corrected contract passed 6/6 focused tests and the full `67/67 → 86/86 → 67/67` validation chain. An isolated
+PostgreSQL 15 transaction created the draft, cancelled the order with valid cancellation evidence, returned the
+original draft with `duplicate=true`, retained exactly three governed draft/action events through approval and copy,
+and rolled every synthetic row back. This closes the delayed-retry defect locally; it does not authorize W2-A release.

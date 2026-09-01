@@ -1,0 +1,9 @@
+{
+  "invoiceTemplateVersion": "A7_ORLANDO_INVOICE_V1",
+  "asset": "A7_ORLANDO_INVOICE_V1.png",
+  "width": 1024,
+  "height": 1536,
+  "sha256": "9eb9db4ddc39e47e54b406807ce21a12e9b5db96a2a295ca46939cc2faf9e94d",
+  "status": "PENDING_USER_ACCEPTANCE",
+  "immutability": "The PNG is the approved blank background. Renderers compose dynamic order data without modifying this file."
+}

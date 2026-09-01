@@ -10,8 +10,13 @@
 
 **Date:** 2026-08-30
 **Scope:** Hoje, operational queues, order detail, custody, production, next action and Express SLA
-**Production mutation performed:** Yes — additive migration applied; application release rolled back
-**Gate verdict:** **PRODUCTION DEPLOYED / PUBLIC GATES PASS / OWNER SMOKE PENDING**
+**Production mutation performed:** Yes — additive migrations applied and the isolated W1B application released
+**Gate verdict:** **W1B READY COM RESSALVA / PRODUCTION KEEP / ROLLBACK NOT REQUIRED**
+
+> Current-state note — 2026-08-30: later execution evidence supersedes the historical cutover/rollback notes below.
+> Production is on `dpl_DJwLXwcQZb1asYxCeBBMjZ4WMPTP`, `Ready`, with authenticated Owner smoke for Hoje,
+> Pedidos, direct lookup and authorization already passed. The sole W1B caveat is the absence of a supported
+> server-side Production harness for the already-implemented zero-residue transactional probe.
 
 > Direct Production cutover — 2026-08-30: the Owner explicitly selected Production as the controlled pilot
 > environment. Repository SHA `11ed37a53aaaad90bcf60145d8817728d4ffa096` was pushed without force; isolated
@@ -302,3 +307,43 @@ They were not fabricated, backported or tested through Production. Consequently:
 - the expanded multi-wave cutover gate is **NO-GO**;
 - this Preview must not be promoted until the later-wave requirements are implemented, independently reviewed and
   explicitly authorized, or the Owner formally narrows the cutover gate back to W1B scope.
+
+## Forensic gate reclassification — 2026-08-30
+
+The expanded gate above was later reclassified against the authoritative W1B story and blueprint. It mixed W1B
+operations with future financial and delivery criteria and therefore cannot be used as the current W1B verdict.
+
+| Criterion | Correct scope | Implemented? | Published? | Testable now? | Current result | Blocks W1B? | Evidence |
+|---|---|---:|---:|---:|---|---:|---|
+| Owner authentication | W0/W1B | Yes | Yes | Yes | PASS | Yes | Authenticated UI rendered `Dennis Arruda · owner`; unauthenticated private API returns 401. |
+| Hoje | W1B-A | Yes | Yes | Yes | PASS | Yes | Owner smoke rendered the eleven governed counters from the real safe snapshot. |
+| Pedidos | W1B-A | Yes | Yes | Yes | PASS | Yes | Owner smoke opened queues and operational order detail. |
+| Direct lookup | W1A.2/W1B | Yes | Yes | Yes | PASS | Yes | `MCO 1002` and legacy `A7-ORL-1000` resolved under the read-only QA contract. |
+| Authorization | W0/W1B | Yes | Yes | Yes | PASS | Yes | Owner allowed; unauthenticated 401 and non-Owner 403 covered by contract tests. |
+| Transactional probe | W1B-B | Yes | Yes | No supported Production runner | NOT TESTABLE — TEST HARNESS MISSING | No | Focused contract 16/16 PASS; SQL probe proves transition, duplicate retry, one event and zero residue outside the unsupported Production invocation path. |
+| Invoice correction/versioning | W1C-B1 | No | No | No | NOT IMPLEMENTED — FUTURE WAVE | No | Invoice endpoints are intentionally absent from the isolated W1B artifact. |
+| Paid-invoice immutability | W1C-B1 | No | No | No | NOT IMPLEMENTED — FUTURE WAVE | No | Defined for W1C-B1, not in Story A7-019 acceptance criteria. |
+| Tip zero | W1C-B1/W1C-B | No | No | No | NOT IMPLEMENTED — FUTURE WAVE | No | Financial payload/rules are outside W1B. |
+| Bell Desk final confirmation | Pre-W3 decision | No | No | No | NOT APPLICABLE | No | Not defined as an approved W1B acceptance criterion. |
+
+Current verdict: **W1B READY COM RESSALVA / PRODUCTION KEEP / ROLLBACK NOT REQUIRED**. The only residual action is a
+server-side release harness for the already-implemented zero-residue probe. It must not add a Production UI control,
+expose credentials, create a real order or pull W1C into W1B.
+
+### Safe harness investigation — 2026-08-30
+
+The remaining probe path was rechecked without mutating Production:
+
+- the repository CLI defaults to the in-memory store outside a Production runtime, so a local `--execute` result
+  cannot be presented as Production database evidence;
+- importing the complete Vercel Production environment into a local file was rejected because it would persist a
+  broad secret set. No environment file was created and the empty temporary directory was removed;
+- an existing Chrome tab was confirmed as an authenticated Owner session, but the published W1B UI intentionally
+  exposes no smoke control. Browser cookies were not inspected/exported and no JavaScript, bookmarklet or ad-hoc
+  request was injected into the Owner tab;
+- the official focused contract remains 16/16 PASS and the service-role SQL function remains the correct
+  zero-residue implementation.
+
+This confirms **NOT TESTABLE — TEST HARNESS MISSING**, not a functional W1B failure. Closing the caveat requires a
+bounded server-side runner that can invoke the existing RPC from the deployed environment with an explicit Owner
+authorization, return only the safe result envelope and expose no general-purpose credential or arbitrary RPC path.

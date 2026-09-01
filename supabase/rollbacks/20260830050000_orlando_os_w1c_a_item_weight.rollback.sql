@@ -10,6 +10,7 @@ begin
 end;
 $$;
 
+drop function if exists public.a7_orlando_w1c_a_transactional_smoke(text,text,uuid);
 drop function if exists public.a7_orlando_w1c_a_record_item_weight(text,uuid,numeric,integer,text,text,text,text,timestamptz);
 drop function if exists public.a7_orlando_w1c_a_snapshot();
 drop function if exists public.a7_orlando_w1c_a_order(text);

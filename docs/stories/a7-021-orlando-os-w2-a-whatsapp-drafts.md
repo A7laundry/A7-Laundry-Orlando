@@ -81,13 +81,15 @@ to drop message data after any non-QA draft or audit event exists. Earlier W1B/W
 
 ## Validation evidence
 
-- Focused W2-A tests: `6/6` passed, including explicit same-request/different-template idempotency conflict.
-- OS pretest: `53/53` passed across W0, W1A, W1B, W1C-A and W2-A.
-- Repository suite: `80/80` root tests and `66/66` MOS tests passed.
+- Focused W2-A tests include delayed same-request retry after state advancement and explicit
+  same-request/different-template idempotency conflict.
+- Current OS pretest: `67/67` passed across the governed private-system slices.
+- Current repository suite: `86/86` root tests and `67/67` MOS tests passed.
 - `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run validate:structure` and
   `npm run validate:agents` passed. Agent validation retained 121 pre-existing dependency warnings and zero errors.
 - Isolated PostgreSQL 15 chain from the Orlando bridge/P0 baseline through W2-A applied successfully.
-- Transactional SQL smoke returned `BEGIN / DO / ROLLBACK`; unused-schema rollback completed successfully.
+- Transactional SQL smoke returned `BEGIN / DO / ROLLBACK`, including an exact retry after cancellation;
+  unused-schema rollback completed successfully.
 - Browser QA passed at 1440 px and 390 px: no document-level horizontal overflow, all message controls visible,
   no console errors/warnings, and the temporary visual harness was removed after inspection.
 - No Supabase remote migration, Vercel deployment, Meta send, WhatsApp automation or Production mutation occurred.

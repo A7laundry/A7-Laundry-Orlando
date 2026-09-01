@@ -1,0 +1,20 @@
+{
+  "invoiceTemplateVersion": "A7_ORLANDO_INVOICE_V2",
+  "asset": "A7_ORLANDO_INVOICE_V2.png",
+  "width": 1024,
+  "height": 1536,
+  "sha256": "33505e829831aaeeae97f384fabf64225f770750cbf2858669585bc3051c6e07",
+  "status": "PENDING_USER_ACCEPTANCE",
+  "derivedFrom": "A7_ORLANDO_INVOICE_V1",
+  "change": "Replaced the decorative footer QR with the supplied A7 Google review QR.",
+  "qrAsset": "A7_GOOGLE_REVIEW_QR_V1.png",
+  "qrSha256": "17460b644dcac11fca0b17c4bafd5066f36d67d653c5d802ffe286f3b51db418",
+  "qrPlacement": {
+    "left": 536,
+    "top": 1388,
+    "width": 111,
+    "height": 111,
+    "resizeKernel": "nearest"
+  },
+  "immutability": "The PNG is a versioned blank background. Renderers compose dynamic order data without modifying this file."
+}

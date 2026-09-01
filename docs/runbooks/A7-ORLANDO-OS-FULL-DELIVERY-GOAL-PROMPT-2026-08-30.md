@@ -1,6 +1,6 @@
 # Prompt-mestre — concluir o A7 Laundry Orlando OS com segurança
 
-**Data:** 2026-08-30
+**Data:** 2026-08-31
 **Owner indicado:** Dennis Leandro Arruda
 **Uso:** iniciar e sustentar um goal completo de implementação do sistema operacional da A7 Laundry Orlando
 **Fonte principal:** `docs/blueprints/A7-ORLANDO-LAUNDRY-OPERATIONS-SYSTEM-BLUEPRINT-2026-08-29.md`
@@ -10,27 +10,46 @@
 
 ---
 
-## Runtime checkpoint — 2026-08-30
+## Runtime checkpoint — 2026-08-30 (reconciliado após o cutover W1B)
 
 Read-only verification performed against the linked Vercel project and Supabase database:
 
 | Evidence | Verified state |
 |---|---|
-| `https://a7laundry.com` | Production deployment `dpl_CoZjpjTWoZknZnMSz8rpwm26TZ6B`, `Ready` |
-| W0/W1A/Clientes application | Live in the verified Production deployment |
-| W1B migration `20260830040000` | Present in the remote Supabase ledger; additive schema remains inert under the rollback application |
+| `https://a7laundry.com` | Production deployment `dpl_DJwLXwcQZb1asYxCeBBMjZ4WMPTP`, `Ready` |
+| W0/W1A/Clientes/W1B application | Live in the verified Production deployment |
+| W1B migrations | Remote ledger aligned through `20260830041000`, including schedule fix and zero-residue probe |
 | W1C-A `20260830050000` | Local only; absent from the remote ledger |
 | W2-A `20260830060000` | Local only; absent from the remote ledger |
 | W3-A `20260830070000` | Local only; absent from the remote ledger |
 | W1C-B1 `20260830080000` | Local only; absent from the remote ledger |
-| W1B application candidate | `dpl_8srFy22wWj8jJdn7q8eL9J85dPZ2`; not promoted during this checkpoint |
+| W1B rollback application | `dpl_CoZjpjTWoZknZnMSz8rpwm26TZ6B`, `Ready` |
+| Current private OS focused tests | 71/71 PASS: W0/W1A/W1B/W1C-A/W1C-B1/W2-A/W3-A/release isolation |
 
-Operational consequence: the next release dependency remains W1B application cutover plus authenticated Owner
-smoke. Do not publish W1C, W2 or W3 ahead of that proof. W1C-B2 also requires a bounded story created by `@sm` or
-`@po`; the story-ready contract is recorded in
-`docs/audits/2026-08-30-orlando-os-w1c-b-financial-readiness.md`.
+Operational consequence: W1B is `READY COM RESSALVA`. Owner auth, Hoje, Pedidos, busca direta and authorization
+passed in Production. The existing transactional probe is covered by the official 16/16 focused suite, but no
+supported server-side Production release harness currently invokes it with the Owner identity. This is a harness
+gap, not a missing W1B feature, and later-wave invoice/tip/Bell Desk criteria must not be used to fail W1B.
+
+The next bounded release is W1C-A. The already-versioned, still-unapplied migration chronology then requires W2-A,
+W3-A and W1C-B1 in that order (`050000 → 060000 → 070000 → 080000`). W2-A and W3-A are independent additive
+slices and may safely precede invoice; they are not substitutes for Cloud API sending or complete customer upgrades.
+W1C-B2 has a bounded draft story at
+`docs/stories/a7-024-orlando-os-w1c-b2-current-payment-link.md`, but still requires the explicit financial policy
+gates recorded there.
 
 No Production, Stripe, WhatsApp, Google Ads, GA4 or database mutation occurred during this checkpoint.
+
+Local hardening on 2026-08-31 revalidated the full ordered migration chain through `080000`. W1C-A, W2-A, W3-A
+and W1C-B1 now resolve exact prior requests before mutable workflow eligibility, and isolated PostgreSQL tests prove
+delayed retries with zero persisted synthetic data. W1C-A also has a local Owner-only transactional release harness
+that exercises the real weight RPC twice and deletes every synthetic row before commit. The full local gates are
+`71/71`, `86/86` and `67/67`.
+This strengthens the candidates but does not make any of them live or widen their release authorization.
+
+All later Owner policy gates are consolidated, without granting implementation or external-action authority, in
+`docs/runbooks/A7-ORLANDO-OS-OWNER-DECISION-PACK-2026-08-31.md`. Use its exact approval blocks instead of
+inferring finance, Bell Desk, customer, route, WhatsApp or AI policy.
 
 ```text
 # GOAL — Entregar o A7 Laundry Orlando OS completo, enxuto e operacional
@@ -101,14 +120,13 @@ cliente, disponibilidade, prazo ou integração.
 
 Na elaboração deste prompt, o estado era:
 
-- W0, W1A, W1A.1, W1A.2 e Clientes Lite publicados;
+- W0, W1A, W1A.1, W1A.2, Clientes Lite e W1B publicados;
 - `/sistema` Owner-only;
-- migration W1B `20260830040000` aplicada em Production;
-- aplicação W1B revertida porque o smoke Owner ficou sem evidência;
-- release saudável atual: `dpl_CoZjpjTWoZknZnMSz8rpwm26TZ6B`;
-- candidato W1B imutável: `dpl_8srFy22wWj8jJdn7q8eL9J85dPZ2`;
+- migrations W1B aplicadas em Production até `20260830041000`;
+- release saudável atual: `dpl_DJwLXwcQZb1asYxCeBBMjZ4WMPTP`;
+- rollback W1B: `dpl_CoZjpjTWoZknZnMSz8rpwm26TZ6B`;
 - SLA Express aprovado: atenção em 4 horas, risco em 2 horas, timezone `America/New_York`;
-- Stripe, `/order`, GA4, Google Ads e WhatsApp permaneceram preservados no rollback.
+- Stripe, `/order`, GA4, Google Ads e WhatsApp permaneceram preservados no cutover.
 
 Antes de reutilizar qualquer ID ou afirmação acima, confirme de forma somente leitura:
 
@@ -136,9 +154,10 @@ Para cada onda:
 8. rode testes focados e regressão completa;
 9. faça QA visual em 390 px e desktop;
 10. prepare artefato isolado; nunca publique o worktree sujo inteiro;
-11. apresente gate GO/NO-GO antes de Production;
-12. após GO explícito, execute cutover, smoke autenticado e rollback imediato se qualquer gate falhar ou ficar sem
-    evidência;
+11. como o piloto é Owner-only e o Owner decidiu não manter Staging separado, valide localmente o artefato exato e
+    apresente gate GO/NO-GO antes de Production; nunca conecte banco ou projeto de outro sistema como Preview;
+12. após GO explícito para a fatia nomeada, execute cutover direto controlado, smoke autenticado e rollback imediato
+    se qualquer gate falhar ou ficar sem evidência;
 13. atualize story, file list, audit e runbook com evidência real;
 14. só então avance para a próxima fatia.
 
@@ -199,7 +218,8 @@ independentes e permitidas pelo ambiente; o agente principal mantém responsabil
 - criação/edição local de código, testes, stories, audits e runbooks dentro do escopo;
 - execução de lint, typecheck, testes, build, scans e QA local;
 - criação de fixtures sintéticas claramente marcadas, sem PII real;
-- construção de artefatos isolados temporários;
+- construção de artefatos isolados temporários, exceto quando o gate específico da slice exigir um GO antes da
+  própria montagem do candidato;
 - dry-run de migrations e deploys;
 - correções locais necessárias para passar contratos já aprovados;
 - rollback de aplicação previamente autorizado quando um gate de cutover falhar;
@@ -238,14 +258,64 @@ O GO deve nomear exatamente ação, ambiente, alvo, risco, rollback e smoke. Nã
 
 ## 7. Ordem de execução até o sistema completo
 
-### Onda 0 — concluir W1B já preparado
+### Mapa de releases e dependências
+
+Este mapa é a fronteira de execução. Reconfirme o runtime antes de usá-lo e atualize-o depois de cada cutover.
+
+| Slice | Estado de referência | Depende de | Próximo gate permitido |
+|---|---|---|---|
+| W1B | Live com ressalva de harness | W0/W1A/Clientes | Runner seguro do probe; não bloqueia W1C-A após GO próprio |
+| W1C-A | Local, testado, harness pronto | W1B estável | Migration `20260830050000` + artefato isolado + smoke + rollback W1B |
+| W1C-B1 | Local, testado | W1C-A aceito em Production | Política confirmada + release isolado de invoice |
+| W1C-B2 | Story Draft | W1C-B1 aceito + quatro policy gates | Implementar e provar Payment Link vigente/reconciliação |
+| W1C-B3 | Story Draft/Blocked (A7-027) | W1C-B2 aceito + regra Bell Desk | Aprovar regra; entrega explícita com `delivery_job_id`, sem rotas avançadas |
+| W2-A | Local, testado | W1B estável | Release isolado de draft/aprovação/cópia; zero envio API |
+| W2-B | Story Draft; Bridge técnico existente | decisão de transporte + Coexistence real + W2-A live | A7-025: adapter order-bound, envio humano e recibos |
+| W2-C | Story Draft/Blocked (A7-028) | W2-B estável | Inbound determinístico, inbox mínima e prefill revisável |
+| W2-D | Story Draft/Blocked (A7-029) | W2-C + decisão de privacidade/provedor | Copiloto fail-open; nenhuma autoridade operacional |
+| W3-A | Local, testado | Clientes Lite/W1A | Release isolado de reutilização de cliente |
+| W3-B | Story Draft/Blocked (A7-026) | verdade financeira W1C-B publicada + fórmulas aprovadas | Fatos de recorrência/valor derivados em leitura |
+| W3-C | Story Draft/Blocked (A7-030) | regra de reconciliação aprovada | Conflitos e merge Owner-only append-only |
+| W3-D | Story Draft/Blocked (A7-031) | motoristas + autoridade de rota + W1C-B3 live | Rotas manuais sem GPS/otimizador |
+| W4 | Story Draft/Blocked (A7-032) | slices operacionais necessárias live + plano/GO | Dia real controlado e auditoria final; zero feature nova |
+
+Regras do mapa:
+
+- `Local` nunca significa `Live`;
+- uma migration aplicada e inerte não prova que a aplicação da slice está publicada;
+- cada linha possui GO, artefato, smoke e rollback próprios;
+- não agrupe linhas para reduzir quantidade de cutovers;
+- uma dependência pode estar tecnicamente implementada e ainda não estar aceita em Production.
+
+Before implementing a Draft/Blocked story, resolve only its named policy gate through the Owner Decision Pack. A
+policy approval never substitutes for the separate migration, deploy, live payment, real message or destructive
+action GO.
+
+### Cronologia obrigatória das migrations já versionadas
+
+Não renumere, não aplique fora de ordem e não use `--include-all` para saltar uma slice. Como as quatro migrations
+ainda estão ausentes do ledger oficial, a sequência segura de banco e releases é:
+
+```text
+20260830050000  W1C-A — peso
+→ 20260830060000  W2-A — rascunhos revisados, sem envio
+→ 20260830070000  W3-A — reutilização de cliente conhecido
+→ 20260830080000  W1C-B1 — invoice revisada
+```
+
+Essa cronologia não cria dependência de produto entre WhatsApp draft, cliente conhecido e invoice. Ela apenas evita
+drift no ledger e release forçado. Cada aplicação continua exigindo GO, artefato isolado, smoke e rollback próprios.
+W1C-B2/B3, W2-B/C/D, W3-B/C/D e W4 seguem somente depois das respectivas dependências funcionais.
+
+### Onda 0 — fechar a evidência residual do W1B publicado
 
 Objetivo: deixar `Hoje`, filas, detalhe, próxima ação, custódia, produção e SLA Express realmente live.
 
-1. obter uma aba Owner autenticada e controlável sem receber senha;
-2. reconfirmar deployment saudável, candidato e migration ledger;
-3. promover o candidato W1B ou reconstruir um artefato isolado se houver drift;
-4. executar smoke completo:
+1. reconfirmar deployment saudável, rollback e migration ledger;
+2. preservar o W1B publicado; não fazer rollback por critérios de waves futuras;
+3. executar ou documentar o probe transacional por um release harness server-side suportado, sem botão artificial na
+   UI, sem token no browser e sem resíduo;
+4. manter a evidência do smoke já executado:
    - `/sistema → Hoje`;
    - contadores e fila real de leads;
    - filtros de custódia e produção;
@@ -256,9 +326,9 @@ Objetivo: deixar `Hoje`, filas, detalhe, próxima ação, custódia, produção 
    - Clientes Lite, Pickup Order e busca direta preservados;
    - 401 sem sessão e Owner PASS;
    - `/`, `/order`, Stripe, WhatsApp, GA4 e Google Ads sem regressão;
-5. rollback imediato se qualquer item falhar ou ficar sem evidência.
+5. rollback somente se uma funcionalidade pertencente ao W1B publicado apresentar falha real.
 
-Não avance para W1C enquanto W1B não estiver live e comprovado.
+O harness residual não autoriza ampliar W1B e não exige publicar W1C para satisfazer seu gate.
 
 ### Onda 1 — W1C-A: peso real por item
 
@@ -280,9 +350,18 @@ Gates:
 - total ainda indisponível não vira zero;
 - W1B e atribuição preservados.
 
-### Onda 2 — W1C-B: invoice versionada, Payment Link, pagamento e entrega
+Harness obrigatório do cutover:
 
-Antes de implementar, apresentar para decisão do Owner:
+- usar `/api/system/w1c-a-smoke`, Owner-only, same-origin e submission-bound;
+- o probe interno não é um pedido QA mutável: ele cria uma fixture opaca não comercial, chama o RPC real duas
+  vezes, valida uma escrita + um retry, um único `order_weighed` e remove tudo antes do commit;
+- exigir `residue_count=0`; nunca usar cliente ou pedido real para provar o release;
+- seguir integralmente
+  `docs/runbooks/A7-ORLANDO-OS-W1C-A-CUTOVER-RUNBOOK-2026-08-31.md`.
+
+### Onda 2A — W1C-B1: invoice versionada e revisada
+
+Antes de publicar o candidato local, confirmar com o Owner:
 
 - manter `tip_amount=0` (recomendado para o MVP);
 - correção/cancelamento de invoice: Owner-only, append-only, com motivo; invoice paga nunca é silenciosamente editada.
@@ -292,31 +371,76 @@ Entregar:
 - invoice header/linhas versionadas derivadas de itens confirmados;
 - mínimo e ajustes governados visíveis;
 - revisão humana antes da emissão;
+- correção cria nova versão e preserva as anteriores;
+- invoice paga, parcialmente reembolsada ou reembolsada permanece imutável;
+- nenhum Stripe call, Payment Link, pagamento, entrega ou WhatsApp nesta fatia.
+
+W1C-B1 já existe como candidato local, mas depende de W1C-A aceito em Production e deve possuir migration, artefato,
+smoke e rollback próprios.
+
+### Onda 2B — W1C-B2: Payment Link vigente e pagamento reconciliado
+
+Antes de implementar, obter aprovação explícita dos quatro policy gates da Story A7-024:
+
+- somente Owner emite, desativa ou substitui Payment Link;
+- tip permanece indisponível e exatamente zero;
+- substituir invoice não paga desativa o link antigo antes de criar o novo;
+- invoice paga, parcialmente reembolsada ou reembolsada é imutável e correção financeira usa refund governado.
+
+Entregar:
+
 - um Payment Link vigente por versão pagável;
 - integração com backend Stripe existente, sem caminho financeiro paralelo;
 - webhook assinado/idempotente reconciliando o mesmo `order_id`;
 - estados pending/invoice_created/paid/failed/void/refund sem mistura;
 - tip separada e desabilitada enquanto o contrato exigir zero;
-- pronta/entrega respeitando pagamento antes de `ready_for_delivery`;
-- timeline e próxima ação atualizadas.
+- timeline e próxima ação financeira atualizadas;
+- nenhum envio WhatsApp automático e nenhuma entrega nesta fatia.
 
 Nenhum teste live cobra automaticamente. O Payment Link live só pode ser apresentado após todos os gates
 pré-pagamento e GO específico.
 
-### Onda 3 — W2-A: WhatsApp operacional integrado, sem IA autônoma
+### Onda 2C — W1C-B3: entrega e Bell Desk
+
+Antes de implementar, o Owner deve aprovar a regra de conclusão no Bell Desk. Depois entregar:
+
+- pronta/entrega respeitando pagamento confirmado;
+- saída para entrega e custódia coerentes;
+- entrega direta concluída somente por confirmação operacional explícita;
+- Bell Desk permanece estado intermediário ou final conforme a regra aprovada, nunca por inferência;
+- um `delivery_job_id` opaco e controlado pelo servidor acompanha todas as transições e o evento final;
+- timeline, ator, horário, motivo quando necessário e idempotência;
+- nenhuma otimização de rota nesta fatia.
+
+### Onda 3A — W2-A: rascunho operacional revisado, sem envio por API
 
 Primeiro audite Story A7-014, Bridge atual, Cloud API, Coexistence, número real e políticas Meta.
 
-Entregar uma inbox operacional simples:
+Entregar primeiro a fatia que independe da Meta:
 
-- conversas e não lidas;
-- histórico e mídia protegidos;
-- resolução idempotente de contato/conversa/lead;
-- ligação conversa → cliente → lead → pedido;
-- saúde sanitizada do canal;
-- falha do canal visível e operação manual preservada.
+- templates determinísticos EN/PT/ES derivados somente do estado real do pedido;
+- preview humano, aprovação explícita e congelamento do texto aprovado;
+- copiar o texto aprovado para a conversa existente no WhatsApp Business;
+- draft, approval e copy acknowledgement append-only e idempotentes;
+- nenhuma chamada à Meta, nenhuma automação de WhatsApp Web e nenhuma alegação de envio pelo sistema;
+- QA, pedido cancelado ou estado incompatível falham fechados;
+- fallback manual permanece o canal real enquanto Coexistence não estiver provado.
 
-Entregar envio humano aprovado de atualizações do pedido:
+W2-A já existe como candidato local e deve ser publicado somente por artefato isolado, migration exata, smoke Owner e
+rollback próprios. Não o misture com W1C ou com ativação do canal.
+
+### Onda 3B — W2-B: envio oficial e recibos, ainda sem IA autônoma
+
+Antes de implementar ou publicar W2-B:
+
+1. decidir formalmente entre uma estrutura realmente separada de provider/client e um parceiro listado pela Meta
+   que suporte Coexistence do número Business App existente;
+2. concluir o onboarding do número público `+1 407-670-8839` exclusivamente por Coexistence;
+3. provar que o WhatsApp Business do celular continua enviando e recebendo;
+4. provar ida/volta Cloud API com destinatário QA consentido e recibos correlacionados;
+5. manter migração clássica do número e automação de WhatsApp Web proibidas.
+
+Somente então entregar o envio humano aprovado de atualizações do pedido, estritamente vinculado ao rascunho W2-A:
 
 - confirmação do pedido/coleta;
 - motorista a caminho;
@@ -341,7 +465,23 @@ Regras de envio:
 - QA usa número/test mode aprovado; nunca cliente real;
 - o primeiro envio para cliente real exige GO explícito no momento da ação.
 
-### Onda 4 — W2-B: IA copiloto
+### Onda 3C — W2-C: entrada assistida, ainda sem autonomia
+
+Depois que W2-B estiver estável:
+
+- entregar uma inbox operacional simples com conversas/não lidas, histórico e mídia protegidos;
+- expor saúde sanitizada do canal e preservar a operação manual quando o canal falhar;
+- resolver contato, conversa e lead de forma idempotente;
+- vincular conversa inbound a cliente/lead/pedido apenas por identidade determinística;
+- preservar `A7 Ref`, CTWA referral e origem sem colocar PII em analytics ou URL;
+- mostrar mensagem/mídia no contexto privado necessário;
+- permitir prefill revisável do atendimento;
+- nunca criar pedido, preço, promessa ou confirmação a partir da mensagem sem ação humana.
+
+Seguir a Story A7-028. W2-C não contém IA e não autoriza inferência por nome, hotel, valor, horário ou conteúdo
+parecido. A indisponibilidade do canal preserva o atendimento manual.
+
+### Onda 4 — W2-D: IA copiloto
 
 Antes de habilitar PII, obter decisão do Owner sobre:
 
@@ -371,24 +511,56 @@ IA não pode:
 Todo rascunho exibe fontes/fatos usados, campos ausentes e botão humano de aprovação. Indisponibilidade da IA não
 bloqueia a operação.
 
-### Onda 5 — W3-A: Clientes operacionalmente úteis
+Seguir a Story A7-029. Nenhum dado operacional ou PII pode ser enviado ao provedor antes da aprovação documentada
+de modelo, região, retenção, treinamento, redaction, logs, exclusão, matriz de campos e fallback.
 
-Evoluir Clientes Lite sem criar CRM genérico:
+### Onda 5A — W3-A: reutilizar cliente conhecido
 
-- nome, WhatsApp, email quando disponível, idioma e tipo;
-- hotel/propriedade mais recente com fonte;
-- histórico completo de pedidos;
-- quantidade, receita confirmada, ticket médio e primeira/última compra;
-- cliente novo/repetido;
+Entregar somente o fluxo já aprovado na Story A7-022:
+
+- selecionar cliente real em Clientes Lite;
+- resolver `customer_ref` opaco no servidor;
+- reutilizar identidade confirmada sem redigitar nome/WhatsApp;
+- revisar os fatos operacionais do novo atendimento;
+- preservar `customer_id` e criar novos `lead_id`/`order_id`;
+- retry idempotente e QA/cancelled-only fail closed;
+- nenhuma edição, merge, ticket/LTV, marketing ou automação WhatsApp.
+
+W3-A já existe como candidato local e requer seu próprio gate de Production.
+
+### Onda 5B — W3-B: fatos básicos de recorrência e valor
+
+Somente depois que a verdade financeira W1C-B estiver publicada e comprovada, derivar em leitura:
+
+- quantidade de pedidos reais e pedidos pagos;
+- cliente novo/repetido por histórico durável;
+- receita líquida confirmada;
+- reembolso separado da receita líquida;
+- ticket médio confirmado ou null quando indisponível;
+- primeira/última compra paga e pedido concluído mais recente;
 - origem inicial e confiança da atribuição;
-- conflitos de identidade visíveis para revisão.
+- QA, cancelado, não pago e tip excluídos conforme contrato.
+
+Não persistir score/LTV estimado e não criar gráficos obrigatórios.
+
+Seguir a Story A7-026. Antes de implementar, o Owner deve aprovar a fórmula do ticket médio líquido, a definição de
+pedido reembolsado e a semântica de `null` versus zero confirmado. W3-B permanece read-only e não envia WhatsApp,
+não edita cliente e não cria CRM de marketing.
+
+### Onda 5C — W3-C: conflitos e reconciliação Owner-only
 
 Antes de reconciliação/merge, aprovar regra específica. Default seguro: não fundir automaticamente; preservar IDs e
 mostrar conflito. Stripe pode complementar, nunca sobrescrever silenciosamente.
 
-Não implementar campanhas, tags de marketing, loyalty, scoring ou disparos.
+Se autorizado, entregar inbox de conflitos, preview dos registros afetados, atualização/merge transacional,
+alias/tombstone e ledger append-only. Snapshot de atribuição, pagamentos, mensagens e histórico nunca são reescritos.
 
-### Onda 6 — W3-B: rotas simples
+Não implementar campanhas, tags de marketing, loyalty, scoring, exportação em massa ou disparos.
+
+Seguir a Story A7-030. Nenhum match por nome, hotel, valor, horário ou similaridade autoriza merge. A regra de
+reconciliação precisa ser aprovada pelo Owner antes de qualquer implementação.
+
+### Onda 6 — W3-D: rotas simples
 
 Após aprovação dos motoristas iniciais e da regra Bell Desk, entregar:
 
@@ -402,6 +574,9 @@ Após aprovação dos motoristas iniciais e da regra Bell Desk, entregar:
 - mobile-first.
 
 Não implementar mapa avançado, GPS, otimização ou dispatch engine.
+
+Seguir a Story A7-031. A rota organiza trabalho humano; ela não se torna autoridade financeira, não conclui entrega
+fora do contrato W1C-B3 e não envia WhatsApp automaticamente.
 
 ### Onda 7 — W4: estabilização e um dia real controlado
 
@@ -421,6 +596,10 @@ WhatsApp/venda
 
 O teste exige plano, responsáveis, dados reais mínimos, rollback e GO específico para cada mensagem/pagamento.
 Não use memória, planilha ou WhatsApp como verdade paralela para compensar lacuna do sistema.
+
+Seguir a Story A7-032. W4 não adiciona código, schema, integração ou comportamento: ele prova o artefato integrado
+com um pedido legítimo e participante consentido. Qualquer lacuna funcional descoberta interrompe o piloto e vira
+uma story corretiva separada; nunca é construída durante o dia controlado.
 
 Depois do piloto:
 
@@ -526,7 +705,8 @@ Verificar que permanecem íntegros:
 
 - baseline de Production e rollback ID registrados;
 - artefato isolado/prebuilt, não worktree amplo;
-- Preview apenas com ambiente/test data seguros; nunca conecte Preview a credenciais de escrita Production;
+- sem Staging separado neste piloto: candidato exato validado localmente e cutover direto somente após GO específico;
+- nunca conectar Preview, branch ou projeto de outro sistema a credenciais de escrita do Supabase Orlando;
 - gate final GO/NO-GO antes de mutação;
 - smoke público e autenticado após deploy;
 - rollback imediato em falha ou evidência ausente;

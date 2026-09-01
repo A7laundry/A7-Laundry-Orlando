@@ -1,6 +1,6 @@
 # Story A7-019 — A7 Orlando OS W1B Daily Operations
 
-**Status:** Production deployed — public and authorization gates passed; authenticated Owner smoke pending
+**Status:** Production READY COM RESSALVA — Owner smoke passed; server-side Production probe harness pending
 
 **Created:** 2026-08-30
 
@@ -37,7 +37,7 @@ routes/drivers, `/order`, GA4, Google Ads and advanced Clientes remain unchanged
 | FR-09 | Orders can be filtered by the approved queues and searched privately by number/customer/phone/property. | Goal §10 |
 | FR-10 | Timeline shows safe time/action/actor evidence without UUID or idempotency key. | Goal §12 |
 | NFR-01 | CLI/service contracts precede UI; UI contains no duplicate operational rules. | Constitution I; goal §16 |
-| NFR-02 | Owner-only, same-origin POST writes, 401 unauthenticated, no PII/secrets in URL/analytics/logs. | Goal §15 |
+| NFR-02 | Owner governs all writes except the bounded operator `mark_ready` action; same-origin POST writes, 401 unauthenticated, no PII/secrets in URL/analytics/logs. | Goal §15; Owner refinement 2026-08-31 |
 | NFR-03 | Migration is additive, concurrency-safe, idempotent and leaves historical unknown states unknown. | Goal §17 |
 | CON-01 | Thresholds are not active in Production until separately approved. | Goal §8; blueprint §21.2 |
 | CON-02 | Stop at the Production gate; no migration/deploy without a new explicit GO. | Goal §21 |
@@ -112,6 +112,16 @@ advancing per-pound lifecycle.
 - [x] Standard overdue is visibly labelled `ATRASADO`; Express cards expose the governed countdown state and remaining time.
 - [x] Lint, typecheck, full tests, build, scans and migration dry-run pass.
 - [x] Production gate documents schema, transitions, final SLA rule, history, QA, rollback and GO/NO-GO, then stops.
+
+## Operator readiness refinement — 2026-08-31
+
+- [x] An authenticated `operator` may read Hoje, Pedidos and safe order detail.
+- [x] An operator may execute only `mark_ready`, and only from `at_laundry + processing`.
+- [x] Every other custody/production transition remains Owner-only and fails closed for an operator.
+- [x] Weight, invoice, payment, message and administrative controls remain Owner-only.
+- [x] The operator transition is idempotent, records actor role and preserves the complete W1C order payload.
+- [x] QA orders remain read-only and excluded from real operational totals.
+- [ ] Additive migration `20260831213000` and isolated application publication require an explicit Production GO.
 
 ## Rollback contract
 
@@ -206,6 +216,8 @@ operational ledger remains the audit source for `schedule_pickup`.
 - `scripts/a7-system-w1b-smoke.mjs`
 - `supabase/rollbacks/incidents/20260830_zquefo_orlando_objects.rollback.sql`
 - `docs/audits/2026-08-30-zquefo-orlando-cross-project-cleanup.md`
+- `supabase/migrations/20260831213000_orlando_os_operator_ready.sql`
+- `supabase/rollbacks/20260831213000_orlando_os_operator_ready.rollback.sql`
 
 ## Direct Production cutover — 2026-08-30
 
@@ -223,6 +235,18 @@ Public smoke passed for `/`, `/order`, `/sistema` and `/sistema.js` (HTTP 200). 
 W1B artifact (`6caf39906487a60b970722e53ecc2a75f576fdc70c040c48897df54d948eff1c`) and exposes no W1C invoice/weight or
 W2 message endpoints. Full source and isolated-artifact lint, typecheck, tests and builds passed.
 
-The remaining gate is an authenticated Owner smoke of Hoje, Pedidos, direct lookup and the zero-residue W1B
-transactional probe. No credential was invented, copied from another environment or bypassed; the controlled
-Chrome tab is waiting at the Production login screen.
+The authenticated Owner smoke passed for Hoje, Pedidos, direct lookup and authorization. The remaining evidence gap
+is limited to invoking the existing zero-residue transactional probe through a supported server-side Production
+release harness. The official focused test exercises the same transition contract twice and passes; the missing
+harness is not a missing W1B feature and does not authorize adding UI or publishing W1C.
+
+The safe-harness investigation confirmed that the current CLI cannot be treated as Production proof when executed
+outside the deployed runtime: without `NODE_ENV=production` it deliberately selects the memory store, while pulling
+the complete Production secret set to a local file is an unacceptable credential boundary. The authenticated Owner
+Chrome session was verified without inspecting cookies, but the UI correctly contains no probe button and no
+arbitrary request was injected into the page. No Production probe ran and no residue or secret file was created.
+The remaining action is therefore a narrowly governed deployed runner for the existing zero-residue RPC, not a W1B
+feature repair and not permission to publish W1C.
+
+Invoice versioning, paid-invoice immutability and tip-zero enforcement belong to W1C-B1/W1C. A later confirmation
+after Bell Desk remains an unresolved pre-W3 product decision. None of these criteria blocks the published W1B.

@@ -13,6 +13,27 @@ the public number today.
 The successful WhatsApp Web message to the Owner proves only the manual reserve channel. It does not prove Cloud API,
 order linkage, delivery receipts or Coexistence.
 
+## Current official-platform verification — 2026-08-30
+
+Current Meta-owned WhatsApp partner material and Meta's official WhatsApp Business Platform Postman collection
+confirm the product boundary exposed by the Orlando onboarding:
+
+- Embedded Signup is used by Solution Partners, Tech Providers and Tech Partners to onboard **business customers**;
+- a Tech Provider is positioned as a third-party solution provider that manages WhatsApp capabilities on behalf of
+  client businesses;
+- Coexistence remains the required product behavior when the public number must continue operating in the WhatsApp
+  Business app while the official Cloud API is connected.
+
+The Meta screen saying the Orlando portfolio cannot be selected because it owns the provider app is therefore
+consistent with the provider/client model. It must not be treated as a transient UI bug or bypassed with a Brazilian
+portfolio. The exact same-portfolio restriction was observed in the authenticated Meta flow, while the public
+documentation establishes the surrounding provider/customer contract.
+
+Official references reviewed:
+
+- `https://www.postman.com/meta/whatsapp-business-platform/collection/du6gzjv/embedded-signup`
+- `https://www.whatsappbusiness.com/partners/become-a-partner/`
+
 The lean delivery path is:
 
 ```text
@@ -22,6 +43,27 @@ W2-C  inbound conversation → safe order/lead linkage and assisted prefill
 ```
 
 No autonomous sales agent is needed to make order updates useful.
+
+### Lean implementation decision
+
+For the current single-business Orlando operation, maintaining a multi-client Tech Provider structure is not the
+default recommendation. It adds provider/client portfolio governance, app review and onboarding responsibilities
+that do not improve the morning laundry workflow.
+
+The practical sequence is:
+
+1. release W2-A independently after its exact Production gate so the team can generate, approve and copy truthful
+   order updates into the existing WhatsApp Business conversation;
+2. preserve the official Bridge and the W2-B transport interface behind a single adapter;
+3. obtain a bounded comparison between (a) a genuinely separate A7 provider/client structure and (b) a Meta-listed
+   partner that explicitly supports Business App Coexistence for the existing US number;
+4. choose the official route with the lower operational burden before implementing W2-B credentials and send
+   activation;
+5. keep classic number migration and WhatsApp Web automation prohibited.
+
+This is not permission to contract a vendor, create another Meta portfolio, transfer the app, migrate the number or
+activate sending. Those remain explicit Owner decisions. It is a scope decision that prevents the OS from becoming a
+general WhatsApp platform when A7 needs reviewed order updates and reliable delivery/read evidence.
 
 ## What already works
 
@@ -169,8 +211,57 @@ This release gives the team useful, consistent messages even while Coexistence i
 - kill switch and manual fallback are demonstrated;
 - no Google Ads or autonomous agent change is bundled.
 
+## Isolated W2-A release boundary
+
+W2-A is already implemented and locally tested, but it remains absent from Production. Its database migration is
+`20260830060000`, immediately after W1C-A `20260830050000`; it must therefore follow an accepted W1C-A cutover and
+must precede W3-A `20260830070000` and W1C-B1 `20260830080000` in the official ledger.
+
+The isolated application artifact must start from the accepted W1C-A runtime, not from the full worktree. It may add
+whole files that do not exist in the W1B base:
+
+- `lib/system-message-service.js`;
+- `api/system/message-draft.js`;
+- `api/system/order-messages.js`;
+- `scripts/a7-system-messages.mjs`.
+
+These shared files require a W2-A-only patch because the current worktree also contains later local slices:
+
+- `sistema.js`;
+- `sistema-w1b.css`;
+- `lib/operational-store.js`;
+- `package.json`.
+
+`vercel.json` is byte-identical to the accepted W1B base and does not require a W2-A route change. Base hashes used
+for future assembly verification are:
+
+| File | Accepted W1B base SHA-256 |
+|---|---|
+| `sistema.js` | `6caf39906487a60b970722e53ecc2a75f576fdc70c040c48897df54d948eff1c` |
+| `sistema-w1b.css` | `efd049b38b3b9b967722e74d488f71a39ef6c7b76bc622cffb968a214b997ce9` |
+| `lib/operational-store.js` | `97dfec69a4cf02762954a94109aaab8bbc4434d41472775419e2da8bd5475886` |
+| `package.json` | `db3bca4e8a39ed8c461a893d588df144e7aad417cfdd7fbd2c51f0a6552d3c2b` |
+| `vercel.json` | `fdd8df716d08fb1a6f4c62fd6a504a8219e54d0c8f0aa6ebfa49ee59e972da2d` |
+
+Release-negative checks must prove that the artifact contains:
+
+- no invoice endpoint/service or migration `20260830080000`;
+- no W3 known-customer branch or migration `20260830070000`;
+- no `/api/whatsapp/send`, Graph API call, bridge token or WhatsApp Web automation;
+- no `wa.me`/automatic conversation opening;
+- no PII, message body or recipient in URL, analytics or logs;
+- no Stripe, Ads, GA4, `/order` or attribution change.
+
 ## Current decision
 
-W2-A can be specified after the financial/cutover sequence without waiting for Meta. W2-B and W2-C remain blocked by
-the real-number Coexistence gate. The correct next operational release remains W1B, followed by W1C-A and the bounded
-financial slices. WhatsApp automation must not bypass those order facts.
+W2-A can be released after W1C-A without waiting for Meta and provides immediate manual-copy value. W2-B and W2-C
+remain blocked by the real-number Coexistence gate. W2-A does not prove official sending, and WhatsApp automation
+must not bypass order truth or human review.
+
+## W2-B story handoff — 2026-08-31
+
+The bounded implementation contract now exists as
+`docs/stories/a7-025-orlando-os-w2-b-reviewed-whatsapp-send.md`. It is deliberately `Draft` and adds no code or
+activation authority. It fixes the lean boundary as one approved order update, one official Bridge send, one
+provider identity/status trail and visible manual fallback. Coexistence, Business-app continuity, consented QA
+round-trip and separate real-send authorization remain mandatory external gates.

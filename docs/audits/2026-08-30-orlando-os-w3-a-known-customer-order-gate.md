@@ -21,7 +21,7 @@ Production remains unchanged. This gate is not authorization to migrate or deplo
 | Protected identity | PASS | Browser carries only opaque `customer_ref`; stored name and WhatsApp are resolved server-side and rendered readonly. |
 | New commercial identities | PASS | New `lead_id` and `order_id`; stable `customer_id`; `is_repeat_customer=true`. |
 | No customer mutation | PASS | RPC locks and reads the contact but contains no contact update or merge. |
-| Idempotency | PASS | Same submission returns the original result; different-customer collision fails closed. |
+| Idempotency | PASS | Same submission returns the original result after later commercial-state changes; different-customer collision fails closed. |
 | Authorization | PASS | Unauthenticated, wrong-origin and authenticated non-Owner requests are rejected. |
 | PII/secrets boundary | PASS | No PII/customer UUID in URL, analytics, local/session storage, Stripe metadata or logs. |
 | External-system isolation | PASS | No Stripe, WhatsApp, Google Ads or public `/order` behavior changed. |
@@ -31,7 +31,7 @@ Production remains unchanged. This gate is not authorization to migrate or deplo
 ## Test evidence
 
 - `node --test scripts/test-system-w3-a.mjs`: 5/5 PASS.
-- `npm test`: Orlando OS pretest 58/58 PASS; repository suite 80/80 PASS; MOS suite 66/66 PASS.
+- `npm test`: Orlando OS pretest 67/67 PASS; repository suite 86/86 PASS; MOS suite 67/67 PASS.
 - `npm run lint`: PASS.
 - `npm run typecheck`: PASS.
 - `npm run build`: PASS.
@@ -39,7 +39,7 @@ Production remains unchanged. This gate is not authorization to migrate or deplo
 - `npm run validate:agents`: PASS, zero errors and 121 pre-existing dependency warnings.
 - `git diff --check`: PASS.
 - PostgreSQL 15 chain through `20260830070000_orlando_os_w3_a_known_customer_order.sql`: PASS.
-- `scripts/test-system-w3-a.sql` in a transaction: PASS, then ROLLBACK.
+- `scripts/test-system-w3-a.sql` in a transaction: PASS after cancelling both existing orders, then ROLLBACK.
 - `20260830070000_orlando_os_w3_a_known_customer_order.rollback.sql`: PASS.
 
 ## Visual evidence
@@ -57,11 +57,21 @@ name/WhatsApp. Browser console warnings/errors: none.
 ## Rollback readiness
 
 1. Application rollback removes the W3-A entry action and known-customer create path.
-2. SQL rollback drops only `a7_orlando_create_known_customer_order`.
+2. SQL rollback drops only the W3-A retry resolver and `a7_orlando_create_known_customer_order`.
 3. Already-created legitimate orders remain governed records and are never silently deleted.
 
 ## Release sequencing
 
-W1B remains the next authorized release boundary and still requires its exact cutover GO. W1C-A, W2-A and W3-A are
-separate local candidates. None should be bundled into a W1B promotion or published without an independent gate and
-explicit Production authorization.
+W1B is the current accepted Production baseline. The next eligible boundary is W1C-A migration `20260830050000`,
+but it remains local until its exact GO. W2-A `060000`, W3-A `070000` and W1C-B1 `080000` are separate later
+candidates in that existing migration order. None may be skipped, renumbered or bundled without its independent gate
+and explicit Production authorization.
+
+## Post-gate delayed-retry correction — 2026-08-31
+
+The final audit found that the service and SQL RPC checked current commercial-history eligibility before resolving
+an exact prior submission. If the original and newly created orders were later cancelled, a legitimate retry could
+be rejected even though the immutable request already existed. W3-A now resolves the protected submission identity
+before current-history eligibility, validates the same opaque customer and request fingerprint, returns only the
+original order for an exact retry and rejects conflicting reuse. Both memory and PostgreSQL tests reproduce the
+later cancellation and prove one new order only. Production was not changed.

@@ -139,13 +139,14 @@ approves the final Bell Desk rule, W1C-B3 should require an explicit `complete_d
 No W1C-B implementation should start until a bounded implementation story exists and these three decisions are
 recorded. W1B Production cutover and W1C-A release remain earlier dependencies.
 
-## W1C-B2 story-ready handoff
+## W1C-B2 story reconciliation
 
-**Governance status:** `READY FOR @SM/@PO STORY CREATION / NO CODE AUTHORIZED`
+**Governance status:** `STORY CREATED / POLICY APPROVAL PENDING / NO CODE AUTHORIZED`
 
-The repository contains no bounded W1C-B2 implementation story. Under the AIOS Constitution, story creation is
-exclusive to `@sm`/`@po`, and no financial code may be written without clear acceptance criteria. The following
-contract is therefore a handoff, not an implementation authorization.
+The bounded implementation story now exists at
+`docs/stories/a7-024-orlando-os-w1c-b2-current-payment-link.md`. It incorporates the handoff below and remains
+`Draft`: W1C-A and W1C-B1 must first be accepted in Production and the Owner must approve the four financial-policy
+gates. This section is retained as traceability, not as a claim that story creation or implementation is authorized.
 
 ### Traceable objective
 

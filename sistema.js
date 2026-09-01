@@ -2,12 +2,12 @@
 
 (() => {
   const $ = (id) => document.getElementById(id);
-  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'newOrderView', 'successView'];
+  let activeUserRole = null;
+  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'financeView', 'newOrderView', 'successView'];
   let catalog = null;
   let activeQueue = 'all';
   let priorOperationalView = 'todayView';
-  let activeCustomerRef = null;
-  let newOrderReturnView = 'attendanceView';
+  let activeFinanceRequest = { preset:'30d' };
 
   async function request(url, options = {}) {
     const response = await fetch(url, { credentials: 'same-origin', ...options,
@@ -17,12 +17,85 @@
     return payload;
   }
 
+  async function downloadOrderDocument(documentType, orderNumber, button, feedback) {
+    const priorLabel = button.textContent;
+    button.disabled = true;
+    button.textContent = documentType === 'invoice_png' ? 'Gerando PNG…' : 'Gerando PDF…';
+    if (feedback) feedback.textContent = '';
+    try {
+      const response = await fetch('/api/system/order-documents', {
+        method:'POST', credentials:'same-origin',
+        headers:{ Accept:documentType === 'invoice_png' ? 'image/png' : 'application/pdf', 'Content-Type':'application/json' },
+        body:JSON.stringify({ document_type:documentType, order_number:orderNumber })
+      });
+      if (!response.ok) {
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(payload.error || 'Não foi possível gerar o documento.');
+      }
+      const blob = await response.blob();
+      const disposition = response.headers.get('Content-Disposition') || '';
+      const filename = disposition.match(/filename="([^"]+)"/)?.[1]
+        || `A7-${documentType}-${String(orderNumber).replace(/\s+/g, '-')}.${documentType === 'invoice_png' ? 'png' : 'pdf'}`;
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url; anchor.download = filename; anchor.rel = 'noopener';
+      document.body.append(anchor); anchor.click(); anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      if (feedback) feedback.textContent = documentType === 'label'
+        ? 'Etiqueta 4×6 pronta. Imprima em tamanho real (100%).'
+        : documentType === 'invoice_png'
+          ? 'Invoice PNG pronta, gerada com o template oficial A7_ORLANDO_INVOICE_V4.'
+          : 'Invoice PDF pronta para enviar ao cliente, gerada com o template oficial A7_ORLANDO_INVOICE_V4.';
+    } catch (error) {
+      if (feedback) feedback.textContent = error.message;
+    } finally {
+      button.disabled = false;
+      button.textContent = priorLabel;
+    }
+  }
+
+  async function loadInvoiceTemplatePreview(orderNumber, image, feedback) {
+    const response = await fetch('/api/system/order-documents', {
+      method:'POST', credentials:'same-origin',
+      headers:{ Accept:'image/png', 'Content-Type':'application/json' },
+      body:JSON.stringify({ document_type:'invoice_preview', order_number:orderNumber })
+    });
+    if (!response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      throw new Error(payload.error || 'Não foi possível gerar a prévia oficial.');
+    }
+    const blob = await response.blob();
+    const priorUrl = image.dataset.objectUrl;
+    if (priorUrl) URL.revokeObjectURL(priorUrl);
+    const url = URL.createObjectURL(blob);
+    image.dataset.objectUrl = url;
+    image.src = url;
+    image.hidden = false;
+    feedback.textContent = 'Prévia gerada com o template oficial A7_ORLANDO_INVOICE_V4.';
+  }
+
+  function invoiceTemplatePreview(orderNumber, feedback, title) {
+    const figure = node('figure', 'invoice-template-preview');
+    figure.append(node('figcaption', '', title));
+    const image = node('img', 'invoice-template-preview-image');
+    image.alt = `Prévia oficial da invoice do pedido ${orderNumber}`;
+    image.hidden = true;
+    image.loading = 'lazy';
+    figure.append(image);
+    loadInvoiceTemplatePreview(orderNumber, image, feedback).catch((error) => {
+      feedback.textContent = error.message;
+    });
+    return figure;
+  }
+
   function show(view) {
     for (const id of views) $(id).hidden = id !== view;
     $('todayNav').classList.toggle('active', view === 'todayView');
     $('ordersNav').classList.toggle('active', ['ordersView', 'orderDetailView'].includes(view));
     $('attendanceNav').classList.toggle('active', ['attendanceView', 'newOrderView', 'successView'].includes(view));
     $('customersNav').classList.toggle('active', view === 'customersView');
+    $('hotelsNav').classList.toggle('active', view === 'hotelsView');
+    $('financeNav').classList.toggle('active', view === 'financeView');
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
@@ -48,10 +121,11 @@
     const wash = service(tier === 'express' ? 'wash_fold_express' : 'wash_fold_normal');
     $('normalPrice').textContent = `${money(service('wash_fold_normal').unit_price)}/lb · ${money(service('wash_fold_normal').minimum_amount)} minimum`;
     $('expressPrice').textContent = `${money(service('wash_fold_express').unit_price)}/lb · subject to availability`;
-    $('washRule').textContent = `${money(wash.unit_price)}/lb · ${money(wash.minimum_amount)} minimum`;
     const data = new FormData($('orderForm'));
+    const agreedMinimum = Number(data.get('agreed_minimum_amount') || wash.minimum_amount);
+    $('washRule').textContent = `${money(wash.unit_price)}/lb · ${money(agreedMinimum)} minimum agreed`;
     const lines = [];
-    if (data.get('wash_fold')) lines.push(`Wash & Fold ${tier}: ${money(wash.unit_price)}/lb; ${money(wash.minimum_amount)} minimum.`);
+    if (data.get('wash_fold')) lines.push(`Wash & Fold ${tier}: ${money(wash.unit_price)}/lb; ${money(agreedMinimum)} minimum agreed for this sale.`);
     if (data.get('special_code')) {
       const special = service(data.get('special_code'));
       lines.push(`${special.label}: ${money(special.unit_price)} per ${special.unit}.`);
@@ -83,42 +157,12 @@
     $('orderForm').elements.needed_by.value = field(needed);
   }
 
-  function applyKnownCustomer(customer) {
-    const form = $('orderForm');
-    const name = form.elements.name;
-    const whatsapp = form.elements.whatsapp_number;
-    activeCustomerRef = customer?.customer_ref || null;
-    name.readOnly = Boolean(customer);
-    whatsapp.readOnly = Boolean(customer);
-    $('knownCustomerBanner').hidden = !customer;
-    if (!customer) {
-      $('knownCustomerSummary').textContent = '';
-      return;
-    }
-    name.value = customer.name || '';
-    whatsapp.value = customer.whatsapp_number || '';
-    const language = ['en', 'pt', 'es', 'other'].includes(customer.language) ? customer.language : 'other';
-    const type = ['guest', 'resident', 'host'].includes(customer.customer_type) ? customer.customer_type : 'guest';
-    const accommodation = ['hotel', 'airbnb', 'residence'].includes(customer.latest_accommodation_type)
-      ? customer.latest_accommodation_type : 'hotel';
-    form.elements.language.value = language;
-    form.elements.customer_type.value = type;
-    form.elements.accommodation_type.value = accommodation;
-    form.elements.property.value = customer.latest_property || '';
-    const last4 = String(customer.whatsapp_number || '').replace(/\D/g, '').slice(-4) || '—';
-    $('knownCustomerSummary').textContent = `${customer.name || 'Cliente'} · WhatsApp final ${last4}`;
-  }
-
-  async function openNew(customer = null) {
+  async function openNew() {
     await request('/api/system/order-draft', { method: 'POST' });
     $('orderForm').reset();
-    applyKnownCustomer(null);
     $('orderError').textContent = '';
     defaultTimes();
     if (!catalog) await loadCatalog();
-    if (customer) applyKnownCustomer(customer);
-    newOrderReturnView = customer ? 'customersView' : 'attendanceView';
-    $('backButton').textContent = customer ? '← Clientes' : '← Atendimento';
     refreshCommercial();
     show('newOrderView');
   }
@@ -146,7 +190,8 @@
     all:'Todos', new:'Novos', pickups_today:'Coletas', with_driver:'Com motorista',
     at_laundry:'Na lavanderia', awaiting_weight:'Para pesar', processing:'Processando', ready:'Prontos',
     charge:'Para cobrar', awaiting_payment:'Aguardando pagamento', deliveries:'Entregas', express:'Express',
-    express_attention:'Express em atenção', late:'Atrasados'
+    express_attention:'Express em atenção', late:'Atrasados', home_pickups:'Aguardando coleta',
+    payment_attention:'Pagamento requer atenção', ready_dispatch:'Prontos para sair', blockers:'Bloqueios'
   };
   const STATE_LABELS = {
     with_customer:'Com o cliente', awaiting_pickup:'Aguardando coleta', with_driver_pickup:'Com motorista',
@@ -240,41 +285,112 @@
     }
   }
 
-  async function loadToday(queue = null) {
-    $('todayError').textContent = '';
-    $('custodyFilter').value = ''; $('productionFilter').value = '';
-    const payload = await request('/api/system/today');
-    const today = payload.today;
-    $('todayFreshness').textContent = `Atualizado ${dateTime(today.as_of)} · ${today.timezone}`;
-    const definitions = [
-      ['waiting_confirmation', 'Esperando confirmação', 'attendance'], ['pickups', 'Coletas', 'pickups_today'],
-      ['with_driver', 'Com motorista', 'with_driver'], ['at_laundry', 'Na lavanderia', 'at_laundry'],
-      ['awaiting_weight', 'Para pesar', 'awaiting_weight'], ['processing', 'Processando', 'processing'],
-      ['ready', 'Prontos', 'ready'], ['charge', 'Para cobrar', 'charge'],
-      ['awaiting_payment', 'Aguardando pagamento', 'awaiting_payment'], ['deliveries', 'Entregas', 'deliveries'],
-      ['express_attention', 'Express em atenção', 'express_attention']
-    ];
-    const tiles = $('todayTiles'); tiles.replaceChildren();
-    for (const [key, label, targetQueue] of definitions) {
-      const button = node('button', `today-tile${key === 'express_attention' ? ' express' : ''}`);
-      button.type = 'button'; button.append(node('strong', '', today.counters[key] == null ? '—' : String(today.counters[key])), node('span', '', label));
-      button.addEventListener('click', async () => {
-        if (targetQueue === 'attendance') {
-          $('todayQueueTitle').textContent = label;
-          renderWaitingLeads($('todayOrders'), today.waiting_leads || []);
-          return;
-        }
-        const orders = await loadOperationalOrders(targetQueue, '');
-        $('todayQueueTitle').textContent = label;
-        renderOperationList($('todayOrders'), orders);
-      });
-      tiles.append(button);
+  function homeValue(value, formatter = String) { return value == null ? '—' : formatter(value); }
+
+  async function openHomeTarget(target) {
+    if (!target) return;
+    if (target.view === 'attendance') return show('attendanceView');
+    if (target.view === 'finance') return openFinance(target.period || { preset:'7d' });
+    show('ordersView');
+    return loadOperationalOrders(target.queue || 'all', '');
+  }
+
+  function metricCard(label, value, detail, target = null) {
+    const card = node(target ? 'button' : 'article', 'home-metric');
+    if (target) { card.type = 'button'; card.addEventListener('click', () => openHomeTarget(target).catch((error) => { $('todayError').textContent = error.message; })); }
+    card.append(node('span', 'home-metric-label', label));
+    const result = node('div'); result.append(node('strong', '', value), node('small', '', detail)); card.append(result);
+    return card;
+  }
+
+  function renderHomeActions(actions) {
+    const target = $('todayOrders'); target.replaceChildren();
+    if (!actions.length) return target.append(node('section', 'panel operation-empty', 'Nenhuma ação operacional pendente agora.'));
+    for (const action of actions) {
+      const button = node('button', `operation-card${action.sla_status ? ` sla-${action.sla_status}` : ' lead-card'}`); button.type = 'button';
+      const top = node('span', 'operation-card-top');
+      top.append(node('strong', '', action.kind === 'order' ? action.order_number : 'ATENDIMENTO'),
+        node('span', 'tier-badge', action.kind === 'order' ? String(action.service_tier || '').toUpperCase() : 'LEAD'));
+      const who = node('span', 'operation-card-who'); who.append(node('strong', '', action.customer_name), node('small', '', action.property || 'Local não informado'));
+      const facts = node('span', 'operation-card-facts');
+      if (action.kind === 'order') facts.append(node('span', 'state-pill', stateLabel(action.payment_status)), node('span', `sla-pill ${action.sla_status || ''}`, action.deadline ? shortDate(action.deadline) : 'Sem prazo registrado'));
+      const next = node('span', 'operation-card-next'); next.append(node('small', '', 'PRÓXIMA AÇÃO'), node('strong', '', action.next_action.label));
+      button.append(top, who, facts, next);
+      button.addEventListener('click', () => action.kind === 'order' ? openOperationalDetail(action.order_number) : show('attendanceView'));
+      target.append(button);
     }
-    const selected = queue || 'all';
-    const orders = selected === 'all' ? today.orders.filter((order) => !order.is_qa).slice(0, 12)
-      : await loadOperationalOrders(selected, '');
-    $('todayQueueTitle').textContent = selected === 'all' ? 'Fila operacional' : QUEUE_LABELS[selected];
-    renderOperationList($('todayOrders'), orders, 'Nenhuma ação pendente agora.');
+  }
+
+  function renderHome(home) {
+    const operation = $('homeOperation'); operation.replaceChildren();
+    operation.append(
+      metricCard('Coletas', String(home.operation.pickups.count), home.operation.pickups.next_window ? `Próxima ${dateTime(home.operation.pickups.next_window)}` : 'Sem próxima janela registrada', home.operation.pickups.target),
+      metricCard('Com motorista', String(home.operation.with_driver.count), `${home.operation.with_driver.pickup} coleta · ${home.operation.with_driver.delivery} entrega`, home.operation.with_driver.target),
+      metricCard('Processando', String(home.operation.processing.count), `${homeValue(home.operation.processing.actual_lbs, (value) => `${value} lb`)} confirmadas`, home.operation.processing.target),
+      metricCard('Prontos', String(home.operation.ready.count), `${home.operation.ready.at_laundry} lavanderia · ${home.operation.ready.with_driver_delivery} rota · ${home.operation.ready.bell_desk} bell desk`, home.operation.ready.target)
+    );
+    const secondary = home.operation.at_laundry_secondary;
+    $('homeAtLaundry').textContent = `${secondary.count} na lavanderia · ${secondary.awaiting_weight} para pesar · ${secondary.awaiting_processing} aguardando · ${secondary.processing} processando · ${secondary.ready} prontos`;
+
+    const attention = $('homeAttention'); attention.replaceChildren();
+    for (const item of home.needs_attention) {
+      const button = node('button', `home-alert ${item.tone || ''}`); button.type = 'button';
+      const copy = node('span', 'home-alert-copy'); copy.append(node('strong', '', item.label));
+      const detail = item.key === 'express_attention' ? `${item.late} atrasado(s) · ${item.risk} em risco`
+        : item.key === 'payments_pending' ? 'Valor não disponível neste resumo' : 'Abrir fila correspondente';
+      copy.append(node('small', '', detail));
+      button.append(node('span', 'home-alert-mark'), copy, node('span', 'home-alert-count', String(item.count)));
+      button.addEventListener('click', () => openHomeTarget(item.target).catch((error) => { $('todayError').textContent = error.message; }));
+      attention.append(button);
+    }
+    $('homeAttentionSection').hidden = home.needs_attention.length === 0;
+    renderHomeActions(home.next_actions);
+
+    if (home.business_today) {
+      const business = $('homeBusiness'); business.replaceChildren();
+      const data = home.business_today;
+      if (data.availability === 'current') business.append(
+        metricCard('Receita hoje', homeValue(data.revenue, money), 'Receita de serviço confirmada'),
+        metricCard('Pedidos hoje', String(data.orders_accepted), 'Vendas aceitas hoje'),
+        metricCard('Ticket médio pago', homeValue(data.average_paid_order, money), 'Mesmo grupo de pedidos pagos'),
+        metricCard('Libras pesadas', homeValue(data.pounds, (value) => `${value} lb`), data.orders_weighed ? `${data.orders_weighed} pedido(s) · média ${data.average_lbs_per_weighed_order} lb` : 'Nenhum peso confirmado hoje')
+      );
+      else business.append(node('div', 'home-unavailable', 'Faturamento temporariamente indisponível. Os dados operacionais continuam atuais.'));
+      $('homeBusinessSection').hidden = false;
+    }
+
+    if (home.last_7_days) {
+      const target = $('homeSevenDays'); target.replaceChildren();
+      const data = home.last_7_days;
+      if (data.availability === 'current') {
+        const summary = node('article', 'home-period-summary'); summary.append(node('span', '', 'Receita confirmada'), node('strong', '', money(data.current.revenue)), node('small', '', `${data.current.paid_orders} pedidos pagos · ${data.current.period.start_date} a ${data.current.period.end_date}`)); target.append(summary);
+        for (const [key, label, formatter] of [['average_paid_order', 'Ticket médio', money], ['paying_customers', 'Clientes pagantes', String], ['repeat_orders', 'Pedidos recorrentes', String]]) {
+          const card = node('article', 'home-trend'); card.append(node('span', '', label), node('strong', '', homeValue(data.current[key], formatter)));
+          const change = data.delta_percent[key];
+          card.append(node('small', `home-delta${change > 0 ? ' positive' : change < 0 ? ' negative' : ''}`, change == null ? 'Comparação indisponível' : `${change > 0 ? '+' : ''}${change}% vs. 7 dias anteriores`)); target.append(card);
+        }
+      } else target.append(node('div', 'home-unavailable', 'Comparativo financeiro indisponível. Nenhum valor foi inferido.'));
+      $('homeSevenDaysSection').hidden = false;
+    }
+    $('homeOperationSection').hidden = false; $('homeActionsSection').hidden = false;
+  }
+
+  async function loadToday() {
+    $('todayError').textContent = ''; $('todayView').setAttribute('aria-busy', 'true');
+    $('homeLoading').hidden = false;
+    for (const id of ['homeAttentionSection', 'homeOperationSection', 'homeActionsSection', 'homeBusinessSection', 'homeSevenDaysSection']) $(id).hidden = true;
+    try {
+      const payload = await request('/api/system/home');
+      const home = payload.home;
+      $('todayFreshness').textContent = `Atualizado ${dateTime(home.meta.as_of)} · ${home.meta.timezone}${home.meta.availability === 'partial' ? ' · dados financeiros parciais' : ''}`;
+      renderHome(home);
+    } catch (error) {
+      $('todayError').textContent = error.message;
+      $('todayFreshness').textContent = 'Não foi possível atualizar a Home. Nenhum zero foi presumido.';
+      throw error;
+    } finally {
+      $('homeLoading').hidden = true; $('todayView').setAttribute('aria-busy', 'false');
+    }
   }
 
   function renderCustomerResults(customers) {
@@ -308,14 +424,6 @@
     identity.append(node('p', 'eyebrow', 'CLIENTE'), node('h2', '', customer.name));
     identity.append(node('p', 'customer-contact', customer.whatsapp_number || 'WhatsApp não informado'));
     heading.append(identity);
-    if (Number(customer.summary?.order_count) > 0) {
-      const reuse = node('button', 'primary', 'Novo pedido para este cliente');
-      reuse.type = 'button';
-      reuse.addEventListener('click', () => openNew(customer).catch((error) => {
-        $('customerSearchError').textContent = error.message;
-      }));
-      heading.append(reuse);
-    }
     const facts = node('dl', 'customer-facts');
     for (const [label, value] of [
       ['Email', customer.email || 'Não informado'], ['Idioma', customer.language || 'Não informado'],
@@ -357,6 +465,97 @@
     } catch (error) { $('customerSearchError').textContent = error.message; }
   }
 
+  function financeAvailabilityLabel(value) {
+    return ({ current:'Confirmado', partial:'Parcial', unavailable:'Indisponível', no_data:'Sem dados' })[value] || 'Indisponível';
+  }
+
+  function financePeriodDate(value) {
+    if (!value) return '—';
+    return new Intl.DateTimeFormat('pt-BR', { dateStyle:'short', timeZone:'UTC' })
+      .format(new Date(`${value}T12:00:00.000Z`));
+  }
+
+  function financeKpi(label, value, note, primary = false) {
+    const card = node('article', `finance-kpi${primary ? ' primary-finance' : ''}`);
+    card.append(node('small', '', label), node('strong', '', String(value)), node('span', '', note));
+    return card;
+  }
+
+  function renderFinanceBreakdown(target, rows) {
+    target.replaceChildren();
+    if (!rows.length) return target.append(node('p', 'finance-empty', 'Sem receita confirmada neste período.'));
+    const table = node('table', 'finance-table');
+    const head = node('thead');
+    const headRow = node('tr');
+    for (const label of ['Grupo', 'Pedidos', 'Receita']) headRow.append(node('th', '', label));
+    head.append(headRow); table.append(head);
+    const body = node('tbody');
+    for (const row of rows) {
+      const tr = node('tr');
+      tr.append(node('td', '', row.bucket), node('td', '', String(row.paid_order_count)),
+        node('td', '', money(row.confirmed_service_revenue)));
+      body.append(tr);
+    }
+    table.append(body); target.append(table);
+  }
+
+  function renderFinance(report) {
+    const { summary, availability, period } = report;
+    $('financePeriod').replaceChildren(
+      node('strong', '', `${financePeriodDate(period.start_date)} a ${financePeriodDate(period.end_date)}`),
+      node('span', '', `Base: pagamento confirmado · ${period.timezone}`)
+    );
+    $('financeCustomForm').elements.start_date.value = period.start_date;
+    $('financeCustomForm').elements.end_date.value = period.end_date;
+    for (const button of $('financePresetButtons').querySelectorAll('button')) {
+      button.classList.toggle('active', button.dataset.financePeriod === period.preset);
+    }
+    const kpis = $('financeKpis'); kpis.replaceChildren();
+    kpis.append(
+      financeKpi('Receita de serviço confirmada', money(summary.confirmed_service_revenue), 'Sem gorjetas; refunds confirmados deduzidos', true),
+      financeKpi('Total recebido', money(summary.gross_received), 'Pagamento reconciliado, líquido de refunds'),
+      financeKpi('Gorjetas confirmadas', summary.confirmed_tips == null ? 'Indisponível' : money(summary.confirmed_tips), financeAvailabilityLabel(availability.tips)),
+      financeKpi('Pedidos pagos', summary.paid_order_count, `${summary.normal_paid_orders} Normal · ${summary.express_paid_orders} Express`),
+      financeKpi('Ticket médio do serviço', summary.average_service_ticket == null ? 'Sem pagamentos' : money(summary.average_service_ticket), 'Receita de serviço ÷ pedidos pagos'),
+      financeKpi('Clientes identificados', summary.customer_count, 'Identidade operacional durável'),
+      financeKpi('Novos / recorrentes', `${summary.new_customer_orders} / ${summary.repeat_customer_orders}`, 'Classificação no momento do pedido'),
+      financeKpi('Pagamentos pendentes', summary.pending_payment_count,
+        summary.pending_payment_value == null ? financeAvailabilityLabel(availability.pending_payment_value) : `${money(summary.pending_payment_value)} conhecido`)
+    );
+    renderFinanceBreakdown($('financeServiceBreakdown'), report.breakdowns.service);
+    renderFinanceBreakdown($('financeAcquisitionBreakdown'), report.breakdowns.acquisition);
+    renderFinanceBreakdown($('financeHotelBreakdown'), report.breakdowns.hotel);
+    const facts = $('financeAvailability'); facts.replaceChildren();
+    for (const [label, value] of [
+      ['Receita', availability.service_revenue], ['Gorjetas', availability.tips],
+      ['Pendências', availability.pending_payment_value], ['Tarifas do processador', availability.processing_fees],
+      ['Repasse líquido', availability.net_payout], ['Atualizado', dateTime(report.freshness.generated_at)]
+    ]) {
+      const item = node('div'); item.append(node('dt', '', label), node('dd', '', label === 'Atualizado' ? value : financeAvailabilityLabel(value))); facts.append(item);
+    }
+    $('financeSources').textContent = `Fontes: ${report.sources.join(' · ') || 'Indisponíveis'}.`;
+  }
+
+  async function loadFinance(requestBody = activeFinanceRequest) {
+    if (activeUserRole !== 'owner') throw new Error('Owner authorization is required.');
+    const nextRequest = { ...requestBody };
+    $('financeError').textContent = '';
+    $('financeLoading').hidden = false;
+    $('financeContent').hidden = true;
+    const payload = await request('/api/system/finance', {
+      method:'POST', body:JSON.stringify(nextRequest)
+    });
+    activeFinanceRequest = nextRequest;
+    renderFinance(payload.finance);
+    $('financeLoading').hidden = true;
+    $('financeContent').hidden = false;
+  }
+
+  async function openFinance() {
+    show('financeView');
+    await loadFinance(activeFinanceRequest);
+  }
+
   function factGrid(rows) {
     const facts = node('dl', 'detail-facts');
     for (const [label, value] of rows) {
@@ -368,121 +567,6 @@
   function detailSection(title) {
     const section = node('section', 'panel detail-section');
     section.append(node('h2', '', title));
-    return section;
-  }
-
-  function messageStatusLabel(status) {
-    return ({ drafted:'Rascunho', approved:'Aprovada', copied:'Copiada', void:'Cancelada' })[status] || 'Revisar';
-  }
-
-  function messageDraftCard(orderNumber, draft, reload, errorTarget) {
-    const card = node('article', 'message-draft-card');
-    const head = node('div', 'message-draft-head');
-    head.append(node('strong', '', draft.template_label), node('span', `message-status ${draft.status}`, messageStatusLabel(draft.status)));
-    const meta = node('small', '', `${String(draft.language || 'en').toUpperCase()} · ${dateTime(draft.created_at)}`);
-    const text = node('textarea', 'message-preview'); text.readOnly = true; text.value = draft.rendered_text || '';
-    text.setAttribute('aria-label', `Prévia: ${draft.template_label}`);
-    const actions = node('div', 'message-actions');
-    if (draft.status === 'drafted') {
-      const approve = node('button', 'primary', 'Aprovar texto'); approve.type = 'button';
-      approve.addEventListener('click', async () => {
-        approve.disabled = true; errorTarget.textContent = '';
-        try {
-          await request('/api/system/message-draft', { method:'POST' });
-          await request('/api/system/order-messages', { method:'POST', body:JSON.stringify({
-            action:'approve', order_number:orderNumber, draft_id:draft.draft_id, expected_version:draft.version
-          }) });
-          await reload();
-        } catch (error) { errorTarget.textContent = error.message; approve.disabled = false; }
-      });
-      actions.append(approve);
-    }
-    if (['approved', 'copied'].includes(draft.status)) {
-      const copy = node('button', 'primary', draft.status === 'copied' ? 'Copiar novamente' : 'Copiar mensagem');
-      copy.type = 'button';
-      copy.addEventListener('click', async () => {
-        copy.disabled = true; errorTarget.textContent = '';
-        try {
-          if (!navigator.clipboard?.writeText) throw new Error('Clipboard indisponível neste navegador.');
-          await navigator.clipboard.writeText(draft.rendered_text);
-        } catch (error) {
-          errorTarget.textContent = `A mensagem não foi copiada: ${error.message}`;
-          copy.disabled = false;
-          return;
-        }
-        try {
-          await request('/api/system/message-draft', { method:'POST' });
-          await request('/api/system/order-messages', { method:'POST', body:JSON.stringify({
-            action:'copied', order_number:orderNumber, draft_id:draft.draft_id, expected_version:draft.version
-          }) });
-          errorTarget.textContent = 'Mensagem aprovada copiada. Cole na conversa correta do WhatsApp Business.';
-          await reload();
-        } catch (error) {
-          errorTarget.textContent = `Mensagem copiada, mas a auditoria não foi confirmada: ${error.message}`;
-          copy.disabled = false;
-        }
-      });
-      actions.append(copy);
-    }
-    card.append(head, meta, text, actions);
-    return card;
-  }
-
-  async function loadOrderMessages(orderNumber, section) {
-    const payload = await request('/api/system/order-messages', {
-      method:'POST', body:JSON.stringify({ action:'context', order_number:orderNumber })
-    });
-    if (!section.isConnected || section.dataset.orderNumber !== orderNumber) return;
-    const context = payload.context;
-    const body = section.querySelector('.message-section-body'); body.replaceChildren();
-    const error = node('p', 'message-feedback'); error.setAttribute('role', 'status');
-    const intro = node('p', 'message-intro', `WhatsApp final ${context.whatsapp_last4 || '—'} · idioma ${String(context.language || 'en').toUpperCase()}. Gere, revise e aprove antes de copiar.`);
-    body.append(intro);
-    const reload = () => loadOrderMessages(orderNumber, section);
-    if (context.is_qa) {
-      body.append(node('p', 'message-empty', 'Pedido QA: mensagens para cliente estão bloqueadas.'));
-      return;
-    }
-    if (context.available_templates.length) {
-      const form = node('form', 'message-create-form');
-      const label = node('label', '', 'Atualização');
-      const select = node('select'); select.name = 'template_key';
-      for (const template of context.available_templates) {
-        const option = node('option', '', template.label); option.value = template.key; select.append(option);
-      }
-      label.append(select);
-      const create = node('button', 'secondary', 'Gerar prévia'); create.type = 'submit';
-      form.append(label, create);
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault(); create.disabled = true; error.textContent = '';
-        try {
-          await request('/api/system/message-draft', { method:'POST' });
-          await request('/api/system/order-messages', { method:'POST', body:JSON.stringify({
-            action:'create', order_number:orderNumber, template_key:select.value
-          }) });
-          await reload();
-        } catch (requestError) { error.textContent = requestError.message; create.disabled = false; }
-      });
-      body.append(form);
-    } else {
-      body.append(node('p', 'message-empty', 'Nenhuma atualização está disponível para o estado atual.'));
-    }
-    body.append(error);
-    const drafts = node('div', 'message-draft-list');
-    for (const draft of context.drafts || []) drafts.append(messageDraftCard(orderNumber, draft, reload, error));
-    if (!context.drafts?.length) drafts.append(node('p', 'message-empty', 'Nenhum rascunho criado para este pedido.'));
-    body.append(drafts);
-  }
-
-  function messageSection(orderNumber) {
-    const section = detailSection('Atualização por WhatsApp');
-    section.classList.add('message-section'); section.dataset.orderNumber = orderNumber;
-    const body = node('div', 'message-section-body');
-    body.append(node('p', 'message-empty', 'Carregando mensagens…'));
-    section.append(body);
-    loadOrderMessages(orderNumber, section).catch((error) => {
-      if (section.isConnected) body.replaceChildren(node('p', 'error', error.message));
-    });
     return section;
   }
 
@@ -540,9 +624,27 @@
     const feedback = node('p', 'invoice-feedback'); feedback.setAttribute('role', 'status');
     body.append(node('p', 'invoice-intro', 'Valores calculados pelo sistema a partir dos itens confirmados. Tip permanece em US$0.00.'));
     if (context.blocker) body.append(node('p', 'invoice-blocker', context.blocker));
-    if (context.preview) body.append(invoiceFactsCard(context.preview, context.current_invoice ? 'Prévia da nova versão' : 'Prévia da invoice'));
+    if (context.preview) {
+      body.append(invoiceTemplatePreview(
+        orderNumber,
+        feedback,
+        context.current_invoice ? 'Prévia oficial da nova versão' : 'Prévia oficial da invoice'
+      ));
+      body.append(invoiceFactsCard(context.preview, 'Cálculo financeiro'));
+    }
 
     const current = context.current_invoice;
+    if (current) {
+      const documents = node('div', 'document-actions');
+      const invoicePdf = node('button', 'secondary', 'Baixar invoice PDF');
+      invoicePdf.type = 'button';
+      invoicePdf.addEventListener('click', () => downloadOrderDocument('invoice', orderNumber, invoicePdf, feedback));
+      const invoicePng = node('button', 'secondary', 'Baixar invoice PNG');
+      invoicePng.type = 'button';
+      invoicePng.addEventListener('click', () => downloadOrderDocument('invoice_png', orderNumber, invoicePng, feedback));
+      documents.append(invoicePdf, invoicePng);
+      body.append(documents);
+    }
     if (context.can_review || context.can_replace) {
       const form = node('form', 'invoice-review-form');
       if (context.can_replace) {
@@ -628,10 +730,20 @@
     for (const item of order.items || []) itemList.append(node('li', '', `${item.label || 'Item'}${item.estimated_lbs != null ? ` · ${item.estimated_lbs} lb estimadas` : ''}${item.quantity != null ? ` · ${item.quantity}` : ''}${item.actual_lbs != null ? ` · ${item.actual_lbs} lb confirmadas` : ''}${item.subtotal != null ? ` · ${money(item.subtotal)}` : ''}`));
     if (!order.items?.length) itemList.append(node('li', '', 'Itens não informados'));
     summary.append(node('h3', '', 'Itens'), itemList); target.append(summary);
-    target.append(messageSection(order.order_number));
 
+    if (!order.is_qa) {
+      const documents = detailSection('Documentos');
+      const actions = node('div', 'document-actions');
+      const feedback = node('p', 'document-feedback'); feedback.setAttribute('role', 'status');
+      const labelPdf = node('button', 'secondary', 'Baixar etiqueta térmica 4×6');
+      labelPdf.type = 'button';
+      labelPdf.addEventListener('click', () => downloadOrderDocument('label', order.order_number, labelPdf, feedback));
+      actions.append(labelPdf);
+      documents.append(node('p', 'document-intro', 'Documentos são gerados com os dados atuais do pedido. A etiqueta usa marca vetorial própria para impressora térmica.'), actions, feedback);
+      target.append(documents);
+    }
     const poundItems = (order.items || []).filter((item) => item.unit === 'lb');
-    if (order.weight_editable && poundItems.length) {
+    if (activeUserRole === 'owner' && order.weight_editable && poundItems.length) {
       const weight = detailSection('Pesagem por item');
       const progress = order.weight_progress || {};
       weight.append(node('p', 'weight-progress', `${progress.completed || 0} de ${progress.required || poundItems.length} item(ns) pesados`));
@@ -662,7 +774,7 @@
       weight.append(forms); target.append(weight);
     }
 
-    if (order.production_state === 'ready' || ['invoice_created', 'paid', 'failed', 'void'].includes(order.payment_status)) {
+    if (activeUserRole === 'owner' && (order.production_state === 'ready' || ['invoice_created', 'paid', 'failed', 'void'].includes(order.payment_status))) {
       target.append(invoiceSection(order.order_number));
     }
 
@@ -771,6 +883,7 @@
   });
 
   function activate(user) {
+    activeUserRole = user.role;
     $('loginView').hidden = true; $('systemView').hidden = false;
     $('userLabel').textContent = `${user.display_name} · ${user.role}`;
     show('todayView');
@@ -786,14 +899,32 @@
     $('customerSearchError').textContent = '';
     show('customersView');
   });
-  $('newOrderButton').addEventListener('click', () => openNew().catch((error) => { $('lookupError').textContent = error.message; }));
-  $('backButton').addEventListener('click', () => show(newOrderReturnView));
-  $('cancelButton').addEventListener('click', () => show(newOrderReturnView));
-  $('clearKnownCustomerButton').addEventListener('click', () => openNew().catch((error) => {
-    $('orderError').textContent = error.message;
+  $('financeNav').addEventListener('click', () => openFinance().catch((error) => {
+    $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));
+  $('homeOpenFinance').addEventListener('click', () => openFinance().catch((error) => {
+    $('financeLoading').hidden = true; $('financeError').textContent = error.message;
+  }));
+  $('newOrderButton').addEventListener('click', () => openNew().catch((error) => { $('lookupError').textContent = error.message; }));
+  $('backButton').addEventListener('click', () => show('attendanceView'));
+  $('cancelButton').addEventListener('click', () => show('attendanceView'));
   $('doneButton').addEventListener('click', () => show('attendanceView'));
   $('refreshTodayButton').addEventListener('click', () => loadToday().catch((error) => { $('todayError').textContent = error.message; }));
+  $('refreshFinanceButton').addEventListener('click', () => loadFinance().catch((error) => {
+    $('financeLoading').hidden = true; $('financeError').textContent = error.message;
+  }));
+  for (const button of $('financePresetButtons').querySelectorAll('button')) {
+    button.addEventListener('click', () => loadFinance({ preset:button.dataset.financePeriod }).catch((error) => {
+      $('financeLoading').hidden = true; $('financeError').textContent = error.message;
+    }));
+  }
+  $('financeCustomForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    loadFinance({ preset:'custom', start_date:data.get('start_date'), end_date:data.get('end_date') }).catch((error) => {
+      $('financeLoading').hidden = true; $('financeError').textContent = error.message;
+    });
+  });
   $('todayOpenOrders').addEventListener('click', () => { show('ordersView'); loadOperationalOrders('all', '').catch((error) => { $('ordersError').textContent = error.message; }); });
   $('backToOrdersButton').addEventListener('click', () => show(priorOperationalView));
   $('operationalSearchForm').addEventListener('submit', async (event) => {
@@ -817,7 +948,6 @@
     payload.needed_by = localIso(payload.needed_by);
     payload.items = itemsFromForm(data);
     payload.care_options = data.getAll('care_options');
-    if (activeCustomerRef) payload.customer_ref = activeCustomerRef;
     delete payload.wash_fold; delete payload.special_code; delete payload.special_quantity; delete payload.estimated_lbs;
     try {
       const result = await request('/api/system/orders', { method: 'POST', body: JSON.stringify(payload) });
