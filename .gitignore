@@ -51,6 +51,14 @@ _tmp/
 _preview-*.html
 *-preview.png
 
+# Local generated deliverables and scratch work
+# Keep approved PDFs/images on disk without polluting the source tree.
+output/
+tmp/
+
+# Local AIOS runtime state (not project source)
+.aios/project-status.yaml
+
 # Uncurated source material kept locally
 comforter/
 Ajuste Final A7 Laundry.rtf
