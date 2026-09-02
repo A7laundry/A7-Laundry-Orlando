@@ -29,9 +29,13 @@ test('temporary password is one-time UI state with mandatory change', () => {
 test('Manager compatibility retains truthful role in business audit tables', () => {
   for (const table of [
     'a7_orlando_operator_audit', 'a7_orlando_operational_events',
-    'a7_orlando_item_weight_events', 'a7_orlando_order_message_events',
-    'a7_orlando_invoice_events', 'a7_orlando_hotel_events'
+    'a7_orlando_item_weight_events', 'a7_orlando_invoice_events',
+    'a7_orlando_hotel_events'
   ]) assert.match(managerMigration, new RegExp(`alter table public\\.${table}`));
+  assert.doesNotMatch(managerMigration, /alter table public\.a7_orlando_(?:manual_order_requests|order_message_events)/,
+    'the cutover must not alter a missing W2 table or a table without actor_role');
   assert.match(managerMigration, /p_actor_role not in \(''owner'', ''manager''\)/);
+  assert.doesNotMatch(managerMigration, /a7_orlando_(?:w2_a|create_known_customer_order)/,
+    'the Manager cutover must not depend on unapplied W2/W3 migrations');
   assert.doesNotMatch(managerMigration, /Stripe|Google Ads|attribution snapshot/i);
 });

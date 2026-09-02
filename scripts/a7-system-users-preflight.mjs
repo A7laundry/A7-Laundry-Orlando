@@ -10,11 +10,11 @@ const migrationFiles = [
   'supabase/migrations/20260901030000_orlando_os_team_access.sql',
   'supabase/migrations/20260901030001_orlando_os_manager_business_permissions.sql'
 ];
-const requiredEnvironment = [
-  'SUPABASE_URL',
-  'SUPABASE_SERVICE_ROLE_KEY',
-  'A7_SYSTEM_SESSION_SECRET',
-  'A7_SYSTEM_USERS_JSON'
+const requiredEnvironment = ['A7_SYSTEM_SESSION_SECRET', 'A7_SYSTEM_USERS_JSON'];
+const storageCandidates = [
+  ['operations', 'A7_OPERATIONS_SUPABASE_URL', 'A7_OPERATIONS_SUPABASE_SERVICE_ROLE_KEY'],
+  ['whatsapp', 'WHATSAPP_SUPABASE_URL', 'WHATSAPP_SUPABASE_SERVICE_ROLE_KEY'],
+  ['attribution', 'A7_ATTRIBUTION_SUPABASE_URL', 'A7_ATTRIBUTION_SUPABASE_SERVICE_ROLE_KEY']
 ];
 
 const checks = [];
@@ -34,6 +34,11 @@ for (const relative of migrationFiles) {
 }
 
 for (const name of requiredEnvironment) check(`env:${name}`, Boolean(process.env[name]), process.env[name] ? 'configured' : 'missing');
+const storage = storageCandidates.find(([, urlName, keyName]) => process.env[urlName] && process.env[keyName]);
+check('storage:resolved-pair', Boolean(storage), storage ? `${storage[0]} pair configured` : 'no complete Supabase pair');
+const storageUrl = storage ? String(process.env[storage[1]] || '') : '';
+check('supabase:orlando-production', storageUrl.includes('wiwawtpaxnrueugppasi'),
+  storageUrl.includes('wiwawtpaxnrueugppasi') ? 'expected project reference' : 'wrong or missing project reference');
 check('access-mode:cutover', process.env.A7_SYSTEM_ACCESS_MODE === 'team',
   process.env.A7_SYSTEM_ACCESS_MODE === 'team' ? 'team' : 'must be team for Manager/Operator login');
 check('legacy-owner:fallback', process.env.A7_SYSTEM_LEGACY_OWNER_FALLBACK !== 'disabled',

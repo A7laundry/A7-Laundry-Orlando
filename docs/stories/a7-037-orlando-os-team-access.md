@@ -84,6 +84,7 @@
 ### Controlled Production sequence
 
 1. Confirm the target project is Orlando Production `wiwawtpaxnrueugppasi` and run `npm run system:users:preflight` with Production environment names loaded.
+   The remote migration inventory must show `20260830060000` and `20260830070000` absent; this release deliberately has no dependency on their W2/W3 functions.
 2. Apply only migrations `20260901030000` and `20260901030001`.
 3. Keep the existing Vercel Owner credentials and legacy fallback enabled; set access mode to `team` only for the new deployment.
 4. Deploy the isolated application artifact and verify the legacy Owner first.
@@ -91,6 +92,16 @@
 6. Smoke Owner, Manager, Operator and inactive behavior. Manager must receive `403` from users/security and Operator must receive `403` from finance/invoice management.
 7. If an application gate fails, restore the previous deployment. The additive tables/functions remain inert and no user/audit record is deleted.
 8. Retiring the legacy Owner fallback requires a later, separate authorization after both persistent logins and all authorization gates pass.
+
+### Authoritative pre-cutover inventory — 2026-09-01
+
+- Supabase CLI linked project: `wiwawtpaxnrueugppasi` (Orlando Production).
+- Remote migration history is current through `20260901020000`; `20260901030000` and `20260901030001` are the only authorized pending migrations in the isolated runner.
+- W2/W3 migrations `20260830060000` and `20260830070000` are absent remotely and excluded from the isolated runner and Manager compatibility migration.
+- Isolated `supabase db push --dry-run`: PASS; proposed exactly `20260901030000` and `20260901030001`.
+- Current Production deployment/rollback baseline: `dpl_4YAyCFCfyGi5sPPpvLXfoeN6FUzQ` (`Ready`).
+- Vercel Production exposes `A7_SYSTEM_ACCESS_MODE=team`, legacy user variables and the session secret; the legacy fallback disable switch is absent, so contingency remains active.
+- Safe preflight with a structurally equivalent environment: GO 11/11. Secret values were neither printed nor committed.
 
 ## Local gate evidence
 

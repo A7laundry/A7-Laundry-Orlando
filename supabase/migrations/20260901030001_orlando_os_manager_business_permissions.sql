@@ -2,10 +2,6 @@
 -- Backward-compatible: widens role checks without changing order, invoice,
 -- payment, attribution or analytics semantics.
 
-alter table public.a7_orlando_manual_order_requests drop constraint if exists a7_orlando_manual_order_requests_actor_role_check;
-alter table public.a7_orlando_manual_order_requests add constraint a7_orlando_manual_order_requests_actor_role_check check (actor_role in ('owner', 'manager', 'operator')) not valid;
-alter table public.a7_orlando_manual_order_requests validate constraint a7_orlando_manual_order_requests_actor_role_check;
-
 alter table public.a7_orlando_operator_audit drop constraint if exists a7_orlando_operator_audit_actor_role_check;
 alter table public.a7_orlando_operator_audit add constraint a7_orlando_operator_audit_actor_role_check check (actor_role in ('owner', 'manager', 'operator')) not valid;
 alter table public.a7_orlando_operator_audit validate constraint a7_orlando_operator_audit_actor_role_check;
@@ -18,10 +14,6 @@ alter table public.a7_orlando_item_weight_events drop constraint if exists a7_or
 alter table public.a7_orlando_item_weight_events add constraint a7_orlando_item_weight_events_actor_role_check check (actor_role in ('owner', 'manager')) not valid;
 alter table public.a7_orlando_item_weight_events validate constraint a7_orlando_item_weight_events_actor_role_check;
 
-alter table public.a7_orlando_order_message_events drop constraint if exists a7_orlando_order_message_events_actor_role_check;
-alter table public.a7_orlando_order_message_events add constraint a7_orlando_order_message_events_actor_role_check check (actor_role in ('owner', 'manager')) not valid;
-alter table public.a7_orlando_order_message_events validate constraint a7_orlando_order_message_events_actor_role_check;
-
 alter table public.a7_orlando_invoice_events drop constraint if exists a7_orlando_invoice_events_actor_role_check;
 alter table public.a7_orlando_invoice_events add constraint a7_orlando_invoice_events_actor_role_check check (actor_role in ('owner', 'manager')) not valid;
 alter table public.a7_orlando_invoice_events validate constraint a7_orlando_invoice_events_actor_role_check;
@@ -30,7 +22,9 @@ alter table public.a7_orlando_hotel_events drop constraint if exists a7_orlando_
 alter table public.a7_orlando_hotel_events add constraint a7_orlando_hotel_events_actor_role_check check (actor_role in ('owner', 'manager')) not valid;
 alter table public.a7_orlando_hotel_events validate constraint a7_orlando_hotel_events_actor_role_check;
 
--- Rebuild only the named business functions. The implementation remains
+-- Rebuild only business functions proven present in Orlando Production at this
+-- cutover. W2/W3 migrations 20260830060000 and 20260830070000 are intentionally
+-- absent there and remain outside this release. The implementation remains
 -- unchanged; only the role clause is widened, retaining the real actor in audit.
 do $manager_permissions$
 declare
@@ -40,11 +34,8 @@ declare
 begin
   foreach v_name in array array[
     'a7_orlando_create_manual_order',
-    'a7_orlando_create_known_customer_order',
     'a7_orlando_w1b_transition',
     'a7_orlando_w1c_a_record_item_weight',
-    'a7_orlando_w2_a_create_draft',
-    'a7_orlando_w2_a_act_on_draft',
     'a7_orlando_w1c_b1_review_invoice',
     'a7_orlando_w1c_b1_void_invoice',
     'a7_orlando_upsert_hotel'
