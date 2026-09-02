@@ -69,7 +69,7 @@ for (const entry of rootFiles) {
 
 // Private operator shell: deliberately copied outside the governed acquisition corpus.
 for (const internalAsset of [
-  'sistema.html', 'sistema.css', 'sistema-state.css', 'sistema-w1a1.css', 'sistema-w1b.css', 'sistema-hotels.css', 'sistema-finance.css', 'sistema-home.css', 'sistema-team.css', 'sistema.js', 'sistema-hotels.js', 'sistema-team.js',
+  'sistema.html', 'sistema.css', 'sistema-state.css', 'sistema-w1a1.css', 'sistema-w1b.css', 'sistema-hotels.css', 'sistema-finance.css', 'sistema-home.css', 'sistema-team.css', 'sistema-routes.css', 'sistema.js', 'sistema-hotels.js', 'sistema-team.js',
   'sistema-pickup-order.html', 'sistema-pickup-order.css', 'sistema-pickup-order.js',
   'assets/system/invoice/A7_LOGO_OFFICIAL_LIGHT_HORIZONTAL_V1.png'
 ]) copy(internalAsset);

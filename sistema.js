@@ -3,7 +3,7 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   let activeUserRole = null;
-  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'hotelsView', 'financeView', 'teamView', 'passwordChangeView', 'newOrderView', 'successView'];
+  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'hotelsView', 'financeView', 'teamView', 'routesView', 'passwordChangeView', 'newOrderView', 'successView'];
   let catalog = null;
   let activeQueue = 'all';
   let priorOperationalView = 'todayView';
@@ -100,6 +100,7 @@
     $('hotelsNav').classList.toggle('active', view === 'hotelsView');
     $('financeNav').classList.toggle('active', view === 'financeView');
     $('teamNav').classList.toggle('active', view === 'teamView');
+    $('routesNav').classList.toggle('active', view === 'routesView');
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
@@ -117,6 +118,7 @@
       if (path === '/sistema/orders') { show('ordersView'); return await loadOperationalOrders(activeQueue, ''); }
       if (path === '/sistema/customers') return show('customersView');
       if (path === '/sistema/billing') return await openFinance();
+      if (path === '/sistema/routes') return await openRoutes();
       if (path === '/sistema/attendance') return show('attendanceView');
       if (path === '/sistema/hotels') return $('hotelsNav').click();
       if (path === '/sistema/team' && activeUserRole === 'owner') return $('teamNav').click();
@@ -1358,6 +1360,176 @@
     show('successView');
   }
 
+  async function routeMutation(body) {
+    await request('/api/system/operation-draft', { method:'POST' });
+    return request('/api/system/routes', { method:'POST', body:JSON.stringify(body) });
+  }
+
+  function routeStatusLabel(status) {
+    return ({ draft:'Planejada', active:'Em andamento', completed:'Concluída', cancelled:'Cancelada' })[status] || 'Não informado';
+  }
+
+  function stopTypeLabel(type) { return type === 'pickup' ? 'COLETA' : 'ENTREGA'; }
+
+  async function openRoutes() {
+    if (!['owner', 'manager'].includes(activeUserRole)) throw new Error('Rotas exigem acesso de Owner ou Gestora.');
+    show('routesView'); setRoute('/sistema/routes'); $('routesError').textContent = '';
+    $('routeDetailPanel').hidden = true; $('routesListPanel').hidden = false;
+    const [routePayload, driverPayload] = await Promise.all([
+      request('/api/system/routes', { method:'POST', body:JSON.stringify({ action:'list' }) }),
+      request('/api/system/drivers', { method:'POST', body:JSON.stringify({ action:'list' }) })
+    ]);
+    const select = $('routeDriver'); select.replaceChildren(new Option('Selecione', ''));
+    for (const driver of driverPayload.drivers || []) if (driver.active) select.append(new Option(driver.full_name, driver.driver_id));
+    const list = $('routesList'); list.replaceChildren();
+    for (const route of routePayload.routes || []) {
+      const button = node('button', 'route-row'); button.type = 'button';
+      const identity = node('span', 'route-row-meta');
+      identity.append(node('strong', '', `${route.route_date} · ${route.driver.full_name}`),
+        node('small', '', `${route.stop_count} paradas · ${route.completed_count} concluídas · ${route.exception_count} ocorrências`));
+      button.append(identity, node('span', 'route-chip', routeStatusLabel(route.status)));
+      button.addEventListener('click', () => loadRouteDetail(route.route_id).catch((error) => { $('routesError').textContent = error.message; }));
+      list.append(button);
+    }
+    if (!list.children.length) list.append(node('p', 'route-empty', 'Nenhuma rota criada ainda.'));
+  }
+
+  function routeOrderSummary(order) {
+    const summary = node('div', 'route-stop-meta');
+    summary.append(node('strong', '', `${order.property || 'Local não informado'} · ${stopTypeLabel(order.stop_type)}`));
+    summary.append(node('span', '', `${order.customer_name || 'Cliente não informado'}${order.room ? ` · Quarto ${order.room}` : ''}`));
+    summary.append(node('small', '', `${order.order_number} · ${order.service_tier === 'express' ? 'Express' : 'Normal'}`));
+    const windowValue = order.stop_type === 'pickup' ? order.pickup_window_start : order.promised_by;
+    const facts = [
+      windowValue ? `${order.stop_type === 'pickup' ? 'Janela' : 'Prometido'}: ${dateTime(windowValue)}` : null,
+      order.property_address || null,
+      order.whatsapp_number ? `WhatsApp: ${order.whatsapp_number}` : null,
+      order.bags_expected ? `${order.bags_expected} bag${Number(order.bags_expected) === 1 ? '' : 's'}` : null,
+      order.delivery_handoff?.handoff_point ? `Handoff: ${stateLabel(order.delivery_handoff.handoff_point)}` : null,
+      order.special_instructions ? `Nota: ${order.special_instructions}` : null
+    ].filter(Boolean);
+    if (facts.length) summary.append(node('small', 'route-stop-facts', facts.join(' · ')));
+    return summary;
+  }
+
+  function routeEventLabel(action) {
+    return ({ route_created:'Rota criada', stop_added:'Parada adicionada', stop_removed:'Parada removida',
+      stops_reordered:'Ordem alterada', stop_eta_set:'ETA atualizado', route_started:'Rota iniciada',
+      pickup_completed:'Coleta concluída', delivery_started:'Entrega iniciada', delivery_completed:'Entrega concluída',
+      handoff_recorded:'Handoff registrado', stop_exception:'Ocorrência registrada', route_completed:'Rota concluída',
+      route_cancelled:'Rota cancelada' })[action] || 'Ação registrada';
+  }
+
+  async function loadRouteDetail(routeId) {
+    const payload = await request('/api/system/routes', { method:'POST', body:JSON.stringify({ action:'detail', route_id:routeId }) });
+    renderRouteDetail(payload.route);
+  }
+
+  function renderRouteDetail(route) {
+    $('routesListPanel').hidden = true; const panel = $('routeDetailPanel'); panel.hidden = false; panel.replaceChildren();
+    const terminal = (route.stops || []).filter((stop) => stop.status !== 'pending').length;
+    const head = node('div', 'route-detail-head');
+    const title = node('div'); title.append(node('button', 'back', '← Todas as rotas'), node('p', 'eyebrow', 'ROTA'),
+      node('h2', '', `${route.route_date} · ${route.driver.full_name}`), node('p', 'route-progress', `${terminal} de ${(route.stops || []).length} paradas concluídas`));
+    title.querySelector('button').addEventListener('click', () => openRoutes().catch((error) => { $('routesError').textContent = error.message; }));
+    head.append(title, node('span', 'route-chip', routeStatusLabel(route.status))); panel.append(head);
+
+    const stops = node('section', 'route-stops'); const firstPending = (route.stops || []).find((stop) => stop.status === 'pending');
+    for (const stop of route.stops || []) {
+      const card = node('article', `route-stop${firstPending?.stop_id === stop.stop_id ? ' is-next' : ''}`);
+      card.append(node('span', 'route-stop-sequence', String(stop.sequence)));
+      const order = { ...(stop.order || {}), stop_type:stop.stop_type }; card.append(routeOrderSummary(order));
+      const actions = node('div', 'route-stop-actions');
+      card.append(node('small', 'route-stop-eta', stop.eta_at ? `ETA manual: ${dateTime(stop.eta_at)}` : 'ETA indisponível'));
+      const open = node('button', 'quiet', 'Abrir pedido'); open.type='button';
+      open.addEventListener('click', () => refreshOperationalDetail(order.order_number)); actions.append(open);
+      if (route.status === 'draft' && stop.status === 'pending') {
+        for (const [label, delta] of [['↑',-1],['↓',1]]) {
+          const move=node('button','quiet',label); move.type='button'; move.setAttribute('aria-label', delta<0?'Mover parada para cima':'Mover parada para baixo');
+          move.addEventListener('click', async () => {
+            const pending=(route.stops||[]).filter((item)=>item.status==='pending'); const index=pending.findIndex((item)=>item.stop_id===stop.stop_id); const target=index+delta;
+            if (target<0||target>=pending.length) return; [pending[index],pending[target]]=[pending[target],pending[index]];
+            const result=await routeMutation({action:'reorder',route_id:route.route_id,version:route.version,stop_ids:pending.map((item)=>item.stop_id)});
+            renderRouteDetail(result.result.route);
+          }); actions.append(move);
+        }
+        const remove=node('button','quiet route-danger','Remover'); remove.type='button'; remove.addEventListener('click',async()=>{
+          const result=await routeMutation({action:'remove_stop',route_id:route.route_id,stop_id:stop.stop_id}); renderRouteDetail(result.result.route);
+        }); actions.append(remove);
+      }
+      if (['draft','active'].includes(route.status) && stop.status === 'pending') {
+        const etaForm=node('form','route-eta-form'); const eta=node('input'); eta.type='datetime-local';
+        eta.setAttribute('aria-label',`ETA de ${order.order_number}`); if (stop.eta_at) eta.value=localFieldValue(new Date(stop.eta_at));
+        const save=node('button','quiet bordered',stop.eta_at?'Atualizar ETA':'Definir ETA'); save.type='submit';
+        etaForm.append(eta,save); etaForm.addEventListener('submit',async(event)=>{event.preventDefault();
+          const result=await routeMutation({action:'set_eta',route_id:route.route_id,stop_id:stop.stop_id,
+            version:route.version,eta_at:localIso(eta.value)}); renderRouteDetail(result.result.route);
+        }); actions.append(etaForm);
+      }
+      if (route.status === 'active' && stop.status === 'pending') {
+        const orderAction = stop.stop_type === 'pickup' ? 'confirm_pickup'
+          : order.custody_state === 'at_laundry' ? 'start_delivery' : 'complete_delivery';
+        const execute=node('button','primary', orderAction==='confirm_pickup'?'Confirmar coleta':orderAction==='start_delivery'?'Iniciar entrega':'Confirmar ao hóspede');
+        execute.type='button'; execute.addEventListener('click', async()=>{
+          const result=await routeMutation({action:'execute_stop',route_id:route.route_id,stop_id:stop.stop_id,
+            transition_action:orderAction, handoff_point:orderAction==='complete_delivery'?'guest':null});
+          renderRouteDetail(result.result.route);
+        }); actions.append(execute);
+        if (stop.stop_type==='delivery' && order.custody_state==='with_driver_delivery') {
+          const bell=node('button','secondary','Deixar no Bell Desk'); bell.type='button'; bell.addEventListener('click',async()=>{
+            const result=await routeMutation({action:'execute_stop',route_id:route.route_id,stop_id:stop.stop_id,
+              transition_action:'leave_bell_desk',handoff_point:'bell_desk'}); renderRouteDetail(result.result.route);
+          }); actions.append(bell);
+        }
+        const failed=node('button','quiet route-danger','Não foi possível'); failed.type='button'; failed.addEventListener('click',async()=>{
+          const note=window.prompt('Informe brevemente o motivo:'); if (!note) return;
+          const result=await routeMutation({action:'exception',route_id:route.route_id,stop_id:stop.stop_id,reason:'other',note}); renderRouteDetail(result.result.route);
+        }); actions.append(failed);
+      }
+      card.append(actions); stops.append(card);
+    }
+    if (!stops.children.length) stops.append(node('p','route-empty','Adicione coletas e entregas antes de iniciar.'));
+    panel.append(stops);
+    const routeActions=node('div','route-form-actions');
+    if (route.status==='draft') {
+      const add=node('button','secondary','Adicionar paradas'); add.type='button'; add.addEventListener('click',()=>loadEligibleStops(route));
+      const start=node('button','primary','Iniciar rota'); start.type='button'; start.disabled=!(route.stops||[]).some((stop)=>stop.status==='pending');
+      start.addEventListener('click',async()=>{const result=await routeMutation({action:'start',route_id:route.route_id,version:route.version});renderRouteDetail(result.result.route);});
+      const cancel=node('button','quiet route-danger','Cancelar rota'); cancel.type='button'; cancel.addEventListener('click',async()=>{
+        if (!window.confirm('Cancelar esta rota planejada? Os pedidos continuarão disponíveis para outra rota.')) return;
+        const result=await routeMutation({action:'cancel',route_id:route.route_id,version:route.version}); renderRouteDetail(result.result.route);
+      }); routeActions.append(add,start,cancel);
+    } else if (route.status==='active' && (route.stops||[]).every((stop)=>stop.status!=='pending')) {
+      const complete=node('button','primary','Concluir rota'); complete.type='button'; complete.addEventListener('click',async()=>{
+        const result=await routeMutation({action:'complete',route_id:route.route_id,version:route.version});renderRouteDetail(result.result.route);
+      }); routeActions.append(complete);
+    }
+    panel.append(routeActions);
+    if ((route.events || []).length) {
+      const history=node('section','panel route-history'); history.append(node('h3','','Histórico da rota'));
+      const list=node('ol','route-history-list');
+      for (const event of route.events) list.append(node('li','',`${dateTime(event.occurred_at)} · ${routeEventLabel(event.action)} · ${event.actor_role === 'manager' ? 'Gestora' : 'Owner'}`));
+      history.append(list); panel.append(history);
+    }
+  }
+
+  async function loadEligibleStops(route) {
+    const payload=await request('/api/system/routes',{method:'POST',body:JSON.stringify({action:'eligible',route_id:route.route_id})});
+    const area=node('section','panel route-add-grid');
+    for (const [type,label] of [['pickup','Coletas pendentes'],['delivery','Entregas pendentes']]) {
+      const column=node('div'); column.append(node('h3','',label));
+      for (const order of payload.eligible[type]||[]) {
+        const row=node('div','route-candidate'); row.append(routeOrderSummary({...order,stop_type:type}));
+        const add=node('button','secondary','Adicionar'); add.type='button'; add.addEventListener('click',async()=>{
+          const result=await routeMutation({action:'add_stop',route_id:route.route_id,order_number:order.order_number,stop_type:type}); renderRouteDetail(result.result.route);
+        }); row.append(add); column.append(row);
+      }
+      if (column.children.length===1) column.append(node('p','route-empty','Nenhum pedido elegível.'));
+      area.append(column);
+    }
+    $('routeDetailPanel').append(area);
+  }
+
   function escapeText(value) {
     const node = document.createElement('span');
     node.textContent = String(value || '');
@@ -1405,6 +1577,20 @@
   $('financeNav').addEventListener('click', () => openFinance().catch((error) => {
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));
+  $('routesNav').addEventListener('click', () => openRoutes().catch((error) => { $('routesError').textContent = error.message; }));
+  $('newRouteButton').addEventListener('click', () => {
+    $('routeCreatePanel').hidden = false;
+    if (!$('routeDate').value) $('routeDate').value = new Intl.DateTimeFormat('en-CA', { timeZone:'America/New_York' }).format(new Date());
+  });
+  $('cancelRouteCreate').addEventListener('click', () => { $('routeCreatePanel').hidden = true; });
+  $('routeCreateForm').addEventListener('submit', async (event) => {
+    event.preventDefault(); $('routesError').textContent = '';
+    const data = new FormData(event.currentTarget);
+    try {
+      const payload = await routeMutation({ action:'create', route_date:data.get('route_date'), driver_id:data.get('driver_id') });
+      $('routeCreatePanel').hidden = true; renderRouteDetail(payload.result.route);
+    } catch (error) { $('routesError').textContent = error.message; }
+  });
   $('passwordChangeForm').addEventListener('submit', async (event) => {
     event.preventDefault();
     const form = event.currentTarget; const data = new FormData(form);

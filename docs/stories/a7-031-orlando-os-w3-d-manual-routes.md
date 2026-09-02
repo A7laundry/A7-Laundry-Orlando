@@ -1,6 +1,6 @@
 # Story A7-031 — A7 Orlando OS W3-D Manual Routes
 
-**Status:** In Progress — W3-D.0 forensic discovery passed; local W3-D.1 implementation authorized, release blocked
+**Status:** In Progress — W3-D.0–D.6 implemented and proven locally; staging E2E and release remain blocked
 
 **Created:** 2026-08-31
 
@@ -208,19 +208,21 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
   - [x] Define driver, route, stop, ordering, optional ETA and append-only action contracts.
   - [x] Define deterministic eligibility and the single-active-route rule for each order leg.
   - [x] Require W1B/W1C-B3 canonical action names; no route-owned custody/delivery field exists.
-- [ ] Implement protected application services and API facade (AC: 1–15)
-  - [ ] Add dry-run/list/create/assign/reorder/depart/outcome services with explicit authorization.
-  - [ ] Add stale-version, exact-retry, conflicting-reuse and concurrency controls.
-  - [ ] Keep browser payloads opaque and minimal.
-- [ ] Add the minimum `Rotas` UI (AC: 4, 12, 16)
-  - [ ] Show one driver, manual sequence, stop state, optional ETA and one valid next action.
-  - [ ] Support keyboard, 390 px and desktop without maps, graphs or secondary dashboards.
+- [x] Implement protected application services and API facade (AC: 1–15)
+  - [x] Add dry-run/list/create/assign/reorder/depart/outcome services with explicit authorization.
+  - [x] Add stale-version, exact-retry, conflicting-reuse and concurrency controls.
+  - [x] Keep browser payloads opaque and minimal.
+- [x] Add the minimum `Rotas` UI (AC: 4, 12, 16)
+  - [x] Show one driver, manual sequence, stop state, optional ETA and one valid next action.
+  - [x] Support keyboard, 390 px and desktop without maps, graphs or secondary dashboards.
 - [ ] Prove release safety (AC: all)
-  - [ ] Add focused memory/service/API tests and isolated PostgreSQL fixtures for pickup, direct delivery and the
+  - [x] Add focused memory/service/API tests and isolated PostgreSQL fixtures for pickup, direct delivery and the
         approved Bell Desk flow.
-  - [ ] Exercise duplicate assignment, delayed retry, conflicting reorder, stale version and parallel stop outcomes.
-  - [ ] Prove no route code writes custody/delivery directly and no financial/WhatsApp adapter is invoked.
-  - [ ] Run lint, typecheck, focused/full tests, build, privacy/secret scan, migration/rollback rehearsal and visual QA.
+  - [x] Exercise duplicate assignment, delayed retry, conflicting reorder and stale-version controls locally; retain
+        live parallel-device outcome proof for staging E2E.
+  - [x] Prove no route code writes custody/delivery directly and no financial/WhatsApp adapter is invoked.
+  - [x] Run lint, typecheck, focused/full tests, build, privacy/secret scan, migration/rollback rehearsal and local
+        desktop/exact-390-px visual QA.
   - [ ] Prepare an isolated immutable artifact, authenticated Owner smoke and separately authorized Production GO.
 
 ## Dependencies and release gates
@@ -311,8 +313,16 @@ destructive rollback. No CRITICAL finding may remain open before release.
 - `docs/audits/2026-09-02-orlando-os-w3-d-routes-lite-forensic.md`
 - `lib/system-rbac.js`
 - `lib/system-route-service.js`
+- `lib/operational-store.js`
+- `api/system/routes.js`
+- `sistema.html`
+- `sistema.js`
+- `sistema-routes.css`
+- `scripts/build-site.mjs`
 - `scripts/test-system-routes.mjs`
+- `scripts/test-system-routes.sql`
 - `supabase/migrations/20260902018000_orlando_os_w3d_routes_lite.sql`
+- `supabase/migrations/20260902018001_orlando_os_w3d_route_authority.sql`
 - `package.json`
 
 ## Validation evidence
@@ -321,4 +331,14 @@ destructive rollback. No CRITICAL finding may remain open before release.
   RPC, API or hidden UI implementation exists; the canonical driver/order/Bell Desk base is present.
 - Packet W3-D.1 focused contract suite: `8/8 PASS`; `node --check lib/system-route-service.js` and
   `git diff --check`: PASS.
-- Migration `20260902018000` is local-only and has not been applied to any remote database.
+- Packets W3-D.2–D.6 focused suite: `11/11 PASS`; protected API, Owner/Manager RBAC, canonical transition delegation,
+  optional versioned ETA, cancellation, history and menu gating verified.
+- Disposable PostgreSQL replay used the 2026-09-02 read-only Orlando Production schema dump, then applied only
+  `20260902018000` and `20260902018001`. Transactional fixtures proved create/retry, duplicate-leg rejection,
+  reorder, start-time revalidation, pickup, direct delivery, Bell Desk intermediate custody, exception without order
+  mutation, completion and draft cancellation; fixture transaction ended in `ROLLBACK`.
+- Exact 390 px browser QA: `innerWidth=390`, document `scrollWidth=375`, no horizontal document overflow; next-stop,
+  pickup, delivery, Bell Desk, exception and optional ETA controls remain legible and reachable.
+- Full repository gates after W3-D: lint PASS; typecheck PASS; pretest `95/95 PASS`; MOS `67/67 PASS`; build PASS.
+- Both migrations remain local-only and have not been applied to any remote database. Production and its disabled
+  `Rotas` menu remain unchanged.

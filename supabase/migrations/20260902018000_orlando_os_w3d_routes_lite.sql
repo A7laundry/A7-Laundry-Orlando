@@ -46,7 +46,6 @@ create table if not exists public.a7_orlando_route_stops (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (route_id, order_id, stop_type),
-  unique (route_id, stop_sequence),
   check ((status = 'pending' and result is null and completed_at is null and completed_by is null and assignment_active)
     or (status = 'completed' and result in ('pickup_completed', 'delivery_completed', 'handoff_recorded')
       and completed_at is not null and completed_by is not null and not assignment_active)
@@ -58,6 +57,8 @@ create table if not exists public.a7_orlando_route_stops (
 
 create unique index if not exists a7_orlando_route_stops_active_leg_idx
   on public.a7_orlando_route_stops(order_id, stop_type) where assignment_active;
+create unique index if not exists a7_orlando_route_stops_pending_sequence_idx
+  on public.a7_orlando_route_stops(route_id, stop_sequence) where status = 'pending';
 create index if not exists a7_orlando_route_stops_route_idx
   on public.a7_orlando_route_stops(route_id, stop_sequence);
 
@@ -67,8 +68,8 @@ create table if not exists public.a7_orlando_route_events (
   stop_id uuid references public.a7_orlando_route_stops(id) on delete restrict,
   order_id uuid references public.a7_orlando_orders(id) on delete restrict,
   action text not null check (action in (
-    'route_created', 'stop_added', 'stop_removed', 'stops_reordered', 'route_started',
-    'pickup_completed', 'delivery_completed', 'handoff_recorded', 'stop_exception',
+    'route_created', 'stop_added', 'stop_removed', 'stops_reordered', 'stop_eta_set', 'route_started',
+    'pickup_completed', 'delivery_started', 'delivery_completed', 'handoff_recorded', 'stop_exception',
     'route_completed', 'route_cancelled'
   )),
   actor_id text not null,

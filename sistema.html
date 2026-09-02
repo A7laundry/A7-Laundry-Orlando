@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/sistema-finance.css">
   <link rel="stylesheet" href="/sistema-home.css">
   <link rel="stylesheet" href="/sistema-team.css">
+  <link rel="stylesheet" href="/sistema-routes.css">
 </head>
 <body>
   <main id="app" aria-live="polite">
@@ -50,7 +51,7 @@
           <button id="hotelsNav" type="button">Hotéis</button>
           <button id="financeNav" class="manager-access" type="button">Faturamento</button>
           <button id="teamNav" class="owner-only" type="button">Equipe</button>
-          <button type="button" disabled>Rotas <small>W3</small></button>
+          <button id="routesNav" class="manager-access" type="button" disabled data-permanent-disabled>Rotas <small>W3-D</small></button>
         </nav>
         <section class="content">
           <div id="todayView" class="home-v2" aria-busy="true">
@@ -106,6 +107,22 @@
             <div class="page-head compact"><div><button id="backToOrdersButton" class="back" type="button">← Voltar</button><p class="eyebrow">PEDIDO</p><h1 id="detailNumber">—</h1><p id="detailHeadline"></p></div><a id="detailPickupLink" class="secondary action-link" target="_blank" rel="noopener">Pickup Order</a></div>
             <p class="error" id="detailError" role="alert"></p>
             <div id="detailContent"></div>
+          </div>
+
+          <div id="routesView" class="routes-view" hidden>
+            <div class="page-head"><div><p class="eyebrow">ROTAS LITE</p><h1>Coletas e entregas</h1>
+              <p>Organize as paradas; o pedido continua sendo a verdade operacional.</p></div>
+              <button id="newRouteButton" class="primary" type="button">+ Nova rota</button></div>
+            <p class="error" id="routesError" role="alert"></p>
+            <section id="routeCreatePanel" class="panel route-create" hidden>
+              <form id="routeCreateForm" class="route-create-form">
+                <label>Data<input id="routeDate" name="route_date" type="date" required></label>
+                <label>Motorista<select id="routeDriver" name="driver_id" required><option value="">Selecione</option></select></label>
+                <div class="route-form-actions"><button type="submit" class="primary">Criar rota</button><button id="cancelRouteCreate" type="button" class="quiet">Cancelar</button></div>
+              </form>
+            </section>
+            <section id="routesListPanel" class="panel"><h2>Hoje e anteriores</h2><div id="routesList" class="route-list" aria-live="polite"></div></section>
+            <section id="routeDetailPanel" class="route-detail" hidden aria-live="polite"></section>
           </div>
 
           <div id="attendanceView">
