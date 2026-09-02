@@ -115,20 +115,21 @@ test('W3-A retry is stable and conflicting customer reuse fails closed', async (
   assert.equal(store.orders.size, 3);
 });
 
-test('W3-A is Owner-only and rejects a customer without prior real history', async () => {
+test('W3-A permits trained Operator reuse but rejects a customer without prior real history', async () => {
   const store = new MemoryOperationalStore();
   const real = seedCustomer(store, { order_number:'MCO 2004' });
   const qa = seedCustomer(store, { order_number:'MCO 2005', phone:'14075550201', is_qa:true });
   const orders = systemOrderService({ operationalStore:store, env:ENV });
-  await assert.rejects(() => orders.createKnownCustomerOrder(
+  const reused = await orders.createKnownCustomerOrder(
     payload(customerReference(real.customerId, ENV)), OPERATOR
-  ), /Owner authorization/);
+  );
+  assert.equal(reused.customer_reused, true);
   await assert.rejects(() => orders.createKnownCustomerOrder(
     payload(customerReference(qa.customerId, ENV)), OWNER
   ), /prior real order history/);
 });
 
-test('W3-A API returns 403 to Operator and accepts Owner reuse only through private POST', async () => {
+test('W3-A API accepts safe Operator reuse only through private POST', async () => {
   const prior = {
     secret:process.env.A7_SYSTEM_SESSION_SECRET,
     mode:process.env.A7_SYSTEM_ACCESS_MODE,
@@ -158,15 +159,9 @@ test('W3-A API returns 403 to Operator and accepts Owner reuse only through priv
     const operatorRes = response();
     await ordersApi({ method:'POST', headers:{ cookie:cookie(OPERATOR), origin:'http://localhost:3000' },
       body:payload(ref, submission.id) }, operatorRes);
-    assert.equal(operatorRes.statusCode, 403);
-    assert.equal(store.orders.size, 1);
-
-    const ownerRes = response();
-    await ordersApi({ method:'POST', headers:{ cookie:cookie(OWNER), origin:'http://localhost:3000' },
-      body:payload(ref, submission.id) }, ownerRes);
-    assert.equal(ownerRes.statusCode, 201);
-    assert.equal(ownerRes.payload.order.customer_reused, true);
-    assert.equal(ownerRes.payload.order.is_repeat_customer, true);
+    assert.equal(operatorRes.statusCode, 201);
+    assert.equal(operatorRes.payload.order.customer_reused, true);
+    assert.equal(operatorRes.payload.order.is_repeat_customer, true);
     assert.equal(store.orders.size, 2);
   } finally {
     resetOperationalStoreForTests();
@@ -181,14 +176,20 @@ test('W3-A API returns 403 to Operator and accepts Owner reuse only through priv
 test('W3-A static contract keeps the opaque reference in POST memory and preserves external systems', () => {
   const js = fs.readFileSync(new URL('../sistema.js', import.meta.url), 'utf8');
   const html = fs.readFileSync(new URL('../sistema.html', import.meta.url), 'utf8');
+  const orderApi = fs.readFileSync(new URL('../api/system/orders.js', import.meta.url), 'utf8');
+  const orderService = fs.readFileSync(new URL('../lib/system-order-service.js', import.meta.url), 'utf8');
   const migration = fs.readFileSync(new URL('../supabase/migrations/20260830070000_orlando_os_w3_a_known_customer_order.sql', import.meta.url), 'utf8');
-  assert.match(js, /Novo pedido para este cliente/);
-  assert.match(js, /payload\.customer_ref = activeCustomerRef/);
+  assert.match(js, /Cliente existente selecionado/);
+  assert.match(js, /form\.elements\.customer_ref\.value = customer\.customer_ref/);
+  assert.match(html, /name="customer_ref" type="hidden"/);
   assert.doesNotMatch(`${js}\n${html}`, /localStorage|sessionStorage|dataLayer|googletagmanager/i);
   assert.doesNotMatch(js, /customer_ref.*(?:location|URLSearchParams)|(?:location|URLSearchParams).*customer_ref/i);
   assert.doesNotMatch(migration, /update\s+public\.a7_wa_contacts|delete\s+from\s+public\.a7_wa_contacts/i);
   assert.match(migration, /a7_orlando_resolve_known_customer_order_retry/);
   assert.ok(migration.indexOf('where submission_id = p_submission_id for update')
     < migration.indexOf("Known customer requires prior real order history"));
-  assert.doesNotMatch(`${js}\n${migration}`, /graph\.facebook|stripe|google ads|whatsapp_bridge_token/i);
+  // Scope this boundary to the W3-A backend. The shared operator shell now has
+  // an approved manual-payment method label, so scanning all of sistema.js for
+  // the word "Stripe" would incorrectly couple this test to another module.
+  assert.doesNotMatch(`${orderApi}\n${orderService}\n${migration}`, /graph\.facebook|stripe|google ads|whatsapp_bridge_token/i);
 });

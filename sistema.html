@@ -267,11 +267,12 @@
             <div class="page-head compact"><div><button id="backButton" class="back" type="button">← Atendimento</button><h1>Novo atendimento</h1><p>Venda recebida fora do sistema</p></div></div>
             <form id="orderForm">
               <section class="panel form-section"><p class="step">1</p><div><h2>Cliente</h2><div class="grid">
+                <input name="customer_ref" type="hidden">
                 <label>Nome<input name="name" maxlength="100" autocomplete="off" required></label>
                 <label>WhatsApp<input name="whatsapp_number" inputmode="tel" placeholder="+1 407 000 0000" autocomplete="off" required></label>
                 <label>Idioma<select name="language"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option><option value="other">Outro</option></select></label>
                 <label>Tipo de cliente<select name="customer_type"><option value="guest">Guest</option><option value="resident">Resident</option><option value="host">Host</option></select></label>
-              </div></div></section>
+              </div><div id="customerSuggestions" class="customer-suggestions" hidden aria-live="polite"></div></div></section>
               <section class="panel form-section"><p class="step">2</p><div><h2>Local</h2><div class="grid">
                 <label>Tipo<select name="accommodation_type"><option value="hotel">Hotel</option><option value="airbnb">Airbnb</option><option value="residence">Residence</option></select></label>
                 <label id="hotelDirectoryField">Hotel cadastrado<select id="hotelSelect" name="hotel_id"><option value="">Hotel não cadastrado</option></select></label>
@@ -284,7 +285,7 @@
               </div></div></section>
               <section class="panel form-section"><p class="step">3</p><div><h2>Serviço e prazo</h2>
                 <div class="tier-choice"><label><input type="radio" name="service_tier" value="normal" checked><span><strong>Normal</strong><small id="normalPrice">Carregando…</small></span></label><label><input type="radio" name="service_tier" value="express"><span><strong>Express</strong><small id="expressPrice">Carregando…</small></span></label></div>
-                <div class="grid"><label>Mínimo acordado<select name="agreed_minimum_amount" required><option value="50">US$50</option><option value="60">US$60</option></select></label><label>Início da coleta<input name="pickup_window_start" type="datetime-local" required></label><label>Fim da coleta<input name="pickup_window_end" type="datetime-local" required></label><label>Needed by<input name="needed_by" type="datetime-local" required></label><label>A7 Ref, se veio na mensagem<input name="lead_reference" maxlength="10" placeholder="Opcional" autocomplete="off"></label></div>
+                <div class="grid"><label>Mínimo acordado<select name="agreed_minimum_amount" required><option value="50">US$50</option><option value="60">US$60</option></select></label><label>Início da coleta<input name="pickup_window_start" type="datetime-local" required></label><label>Fim da coleta<input name="pickup_window_end" type="datetime-local" required></label><label>Needed by<input name="needed_by" type="datetime-local" required></label><label id="promisedByField" hidden>Promised Delivery · Express<input name="promised_by" type="datetime-local"><small>Sugestão automática: 8 horas após o início da coleta. Ajuste antes de confirmar.</small></label><label>A7 Ref, se veio na mensagem<input name="lead_reference" maxlength="10" placeholder="Opcional" autocomplete="off"></label></div>
               </div></section>
               <section class="panel form-section"><p class="step">4</p><div><h2>Itens</h2>
                 <label class="item-row"><input type="checkbox" name="wash_fold" checked><span><strong>Wash & Fold</strong><small id="washRule"></small></span><input name="estimated_lbs" type="number" min="1" max="500" step="0.1" placeholder="lb estimadas"></label>

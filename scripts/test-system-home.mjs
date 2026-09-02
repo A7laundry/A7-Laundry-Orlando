@@ -65,7 +65,7 @@ test('Home reconciles operational groups, non-zero exceptions and five determini
     order({ order_number:'MCO 9010', service_tier:'express', promised_by:'2026-09-01T14:00:00.000Z', sla:{ status:'late' }, next_action:{ code:'await_payment', label:'AGUARDAR PAGAMENTO' } }),
     order({ order_number:'MCO 9011', service_tier:'express', promised_by:'2026-09-01T17:00:00.000Z', sla:{ status:'risk' } }),
     order({ order_number:'MCO 9012', custody_state:'awaiting_pickup', production_state:'awaiting_intake', pickup_window_start:null,
-      next_action:{ code:'review_state', label:'REVISAR ESTADO OPERACIONAL' }, items:[] }),
+      next_action:{ code:'operational_blocker', label:'ESTADO OPERACIONAL INVÁLIDO' }, items:[] }),
     order({ order_number:'MCO 9013', custody_state:'with_driver_pickup', production_state:'awaiting_intake', items:[] }),
     order({ order_number:'MCO 9014', custody_state:'at_laundry', production_state:'ready', payment_status:'paid' }),
     order({ order_number:'MCO 9015', custody_state:'bell_desk', production_state:'ready', payment_status:'paid' })

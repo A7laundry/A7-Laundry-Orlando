@@ -8,6 +8,8 @@
   let activeQueue = 'all';
   let priorOperationalView = 'todayView';
   let activeFinanceRequest = { preset:'30d' };
+  let orderFormDirty = false;
+  let customerSuggestionTimer = null;
 
   async function request(url, options = {}) {
     const response = await fetch(url, { credentials: 'same-origin', ...options,
@@ -132,6 +134,29 @@
       lines.push(`${special.label}: ${money(special.unit_price)} per ${special.unit}.`);
     }
     $('commercialSummary').textContent = lines.join(' ') || 'Select at least one service.';
+    syncExpressPromise();
+  }
+
+  function localFieldValue(date) {
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
+  }
+
+  function syncExpressPromise() {
+    const form = $('orderForm');
+    const express = selectedTier() === 'express';
+    const field = $('promisedByField');
+    const input = form.elements.promised_by;
+    field.hidden = !express;
+    input.required = express;
+    if (!express) { input.value = ''; input.dataset.userEdited = ''; return; }
+    const pickup = new Date(form.elements.pickup_window_start.value || '');
+    if (!input.dataset.userEdited && Number.isFinite(pickup.getTime())) {
+      input.value = localFieldValue(new Date(pickup.getTime() + 8 * 60 * 60_000));
+    }
+  }
+
+  function confirmOrderFormExit() {
+    return !orderFormDirty || window.confirm('Há dados ainda não salvos neste atendimento. Deseja sair mesmo assim?');
   }
 
   async function loadCatalog() {
@@ -152,15 +177,18 @@
     now.setMinutes(Math.ceil(now.getMinutes() / 15) * 15, 0, 0);
     const end = new Date(now.getTime() + 60 * 60_000);
     const needed = new Date(now.getTime() + 24 * 60 * 60_000);
-    const field = (date) => new Date(date.getTime() - date.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
-    $('orderForm').elements.pickup_window_start.value = field(now);
-    $('orderForm').elements.pickup_window_end.value = field(end);
-    $('orderForm').elements.needed_by.value = field(needed);
+    $('orderForm').elements.pickup_window_start.value = localFieldValue(now);
+    $('orderForm').elements.pickup_window_end.value = localFieldValue(end);
+    $('orderForm').elements.needed_by.value = localFieldValue(needed);
   }
 
   async function openNew() {
     await request('/api/system/order-draft', { method: 'POST' });
     $('orderForm').reset();
+    orderFormDirty = false;
+    $('orderForm').elements.promised_by.dataset.userEdited = '';
+    $('customerSuggestions').hidden = true;
+    $('customerSuggestions').replaceChildren();
     $('orderError').textContent = '';
     defaultTimes();
     if (!catalog) await loadCatalog();
@@ -173,6 +201,49 @@
     if (data.get('wash_fold')) items.push({ code: 'wash_fold', estimated_lbs: data.get('estimated_lbs') || null });
     if (data.get('special_code')) items.push({ code: data.get('special_code'), quantity: data.get('special_quantity') || 1 });
     return items;
+  }
+
+  function clearKnownCustomer() {
+    $('orderForm').elements.customer_ref.value = '';
+    $('customerSuggestions').classList.remove('customer-suggestion-selected');
+  }
+
+  async function suggestCustomers(query) {
+    const box = $('customerSuggestions');
+    if ($('orderForm').elements.customer_ref.value) return;
+    const source = String(query || '').trim();
+    const digits = source.replace(/\D/g, '');
+    if (source.length < 3 || (/^[\d\s()+.-]+$/.test(source) && digits.length < 10)) {
+      box.hidden = true; box.replaceChildren(); return;
+    }
+    try {
+      const payload = await request('/api/system/customers', {
+        method:'POST', body:JSON.stringify({ action:'search', query:source, limit:5 })
+      });
+      box.replaceChildren();
+      for (const customer of payload.customers || []) {
+        const button = node('button', 'customer-suggestion'); button.type = 'button';
+        const identity = node('span');
+        identity.append(node('strong', '', customer.name), node('small', '', [
+          customer.whatsapp_last4 ? `WhatsApp final ${customer.whatsapp_last4}` : null,
+          customer.latest_property, `${customer.order_count || 0} pedido(s)`
+        ].filter(Boolean).join(' · ')));
+        button.append(identity, node('strong', '', 'Usar cliente'));
+        button.addEventListener('click', () => {
+          const form = $('orderForm');
+          form.elements.customer_ref.value = customer.customer_ref;
+          form.elements.name.value = customer.name;
+          form.elements.whatsapp_number.value = `+•••• ${customer.whatsapp_last4 || ''}`;
+          box.classList.add('customer-suggestion-selected');
+          box.replaceChildren(node('span', '', `Cliente existente selecionado: ${customer.name}. O cadastro protegido será reutilizado.`));
+          box.hidden = false; orderFormDirty = true;
+        });
+        box.append(button);
+      }
+      box.hidden = !box.childElementCount;
+    } catch (_) {
+      box.hidden = true; box.replaceChildren();
+    }
   }
 
   function showOrder(order, target) {
@@ -200,7 +271,8 @@
     awaiting_intake:'Aguardando chegada', awaiting_weight:'Aguardando pesagem', awaiting_processing:'Aguardando processamento',
     processing:'Em processamento', ready:'Pronto', pending:'Pendente', invoice_created:'Fatura criada', paid:'Pago',
     failed:'Falhou', void:'Anulado', issued:'Emitida', superseded:'Substituída', accepted:'Aceito', pickup_scheduled:'Coleta agendada', picked_up:'Coletado',
-    ready_for_delivery:'Pronto para entrega', cancelled:'Cancelado', new:'Novo', qualifying:'Qualificando', qualified:'Qualificado'
+    ready_for_delivery:'Pronto para entrega', cancelled:'Cancelado', new:'Novo', qualifying:'Qualificando', qualified:'Qualificado',
+    not_initialized:'Não informado', operational_blocker:'Bloqueio operacional', cash:'Dinheiro', zelle:'Zelle', stripe:'Stripe', other:'Outro'
   };
   const ACTION_LABELS = {
     order_accepted:'Venda confirmada', pickup_scheduled:'Coleta agendada', pickup_completed:'Coleta concluída',
@@ -210,24 +282,26 @@
     order_ready_for_delivery:'Pronto para entrega', order_delivered:'Pedido entregue', schedule_pickup:'Coleta agendada',
     confirm_pickup:'Coleta confirmada', receive_at_laundry:'Recebido na lavanderia', start_processing:'Processamento iniciado',
     mark_ready:'Marcado como pronto', start_delivery:'Saiu para entrega', leave_bell_desk:'Deixado no Bell Desk',
-    complete_delivery:'Entrega concluída', set_promised_by:'Prazo Express definido'
+    complete_delivery:'Entrega concluída', set_promised_by:'Prazo Express definido',
+    assign_pickup_driver:'Motorista da coleta designado', assign_delivery_driver:'Motorista da entrega designado',
+    manual_payment_recorded:'Pagamento registrado'
   };
 
-  function stateLabel(value) { return STATE_LABELS[value] || String(value || 'Não inicializado').replaceAll('_', ' '); }
+  function stateLabel(value) { return STATE_LABELS[value] || 'Não informado'; }
   function slaLabel(order) {
     const labels = { late:'ATRASADO', risk:'RISCO', attention:'ATENÇÃO', ok:'NO PRAZO', not_set:'PRAZO NÃO DEFINIDO', not_configured:'SLA PENDENTE', not_applicable:'STANDARD' };
-    if (order.standard_overdue) return 'ATRASADO';
+    if (order.obligation?.overdue) return `ATRASADO · ${order.obligation.obligation === 'pickup' ? 'COLETA' : 'ENTREGA'}`;
     const base = labels[order.sla?.status] || 'SEM SLA';
     if (['late', 'risk', 'attention', 'ok'].includes(order.sla?.status) && Number.isFinite(order.sla?.remaining_minutes)) {
       const minutes = Math.abs(order.sla.remaining_minutes);
       const time = minutes >= 60 ? `${Math.floor(minutes / 60)}h${String(minutes % 60).padStart(2, '0')}` : `${minutes}min`;
-      return `${base} · ${order.sla.remaining_minutes < 0 ? '-' : ''}${time}`;
+      return order.sla.remaining_minutes < 0 ? `${base} · ${time}` : `${base} · ${time} restantes`;
     }
     return base;
   }
 
   function operationCard(order) {
-    const visualSla = order.standard_overdue ? 'late' : (order.sla?.status || 'none');
+    const visualSla = order.obligation?.overdue ? 'late' : (order.sla?.status || 'none');
     const button = node('button', `operation-card sla-${visualSla}${order.is_qa ? ' qa' : ''}`);
     button.type = 'button';
     const top = node('span', 'operation-card-top');
@@ -704,6 +778,135 @@
     return section;
   }
 
+  function driverAssignmentSection(order, leg) {
+    const section = detailSection(leg === 'pickup' ? 'Motorista · Coleta' : 'Motorista · Entrega');
+    section.classList.add('driver-assignment-section');
+    const body = node('div', 'driver-assignment-body');
+    body.append(node('p', '', 'Carregando motoristas ativos…'));
+    section.append(body);
+    request('/api/system/drivers', { method:'POST', body:JSON.stringify({
+      action:'list', include_inactive:activeUserRole === 'owner'
+    }) }).then((payload) => {
+      const form = node('form', 'driver-assignment-form');
+      const label = node('label', '', 'Motorista responsável');
+      const select = node('select'); select.name = 'driver_id'; select.required = true;
+      select.append(new Option('Selecione', ''));
+      for (const driver of (payload.drivers || []).filter((row) => row.active)) {
+        select.append(new Option(`${driver.full_name} · +${driver.phone}`, driver.driver_id));
+      }
+      label.append(select); form.append(label);
+      const button = node('button', 'primary', 'Designar motorista'); button.type = 'submit'; form.append(button);
+      const feedback = node('p', 'error'); feedback.setAttribute('role', 'alert'); form.append(feedback);
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault(); button.disabled = true; feedback.textContent = '';
+        try {
+          await request('/api/system/operation-draft', { method:'POST' });
+          await request('/api/system/drivers', { method:'POST', body:JSON.stringify({
+            action:'assign', order_number:order.order_number, driver_id:select.value, leg
+          }) });
+          await refreshOperationalDetail(order.order_number);
+          await loadToday().catch(() => null);
+        } catch (error) { feedback.textContent = error.message; }
+        finally { button.disabled = false; }
+      });
+      body.replaceChildren(form);
+      if (activeUserRole === 'owner') {
+        const details = node('details', 'driver-create-details');
+        details.append(node('summary', '', 'Cadastrar novo motorista'));
+        const create = node('form', 'driver-create-form');
+        const nameLabel = node('label', '', 'Nome completo'); const name = node('input'); name.name = 'full_name'; name.maxLength = 100; name.required = true; nameLabel.append(name);
+        const phoneLabel = node('label', '', 'Telefone internacional'); const phone = node('input'); phone.name = 'phone'; phone.inputMode = 'tel'; phone.placeholder = '+1 407 000 0000'; phone.required = true; phoneLabel.append(phone);
+        const save = node('button', 'secondary', 'Salvar motorista'); save.type = 'submit';
+        const createFeedback = node('p', 'error'); createFeedback.setAttribute('role', 'alert');
+        create.append(nameLabel, phoneLabel, save, createFeedback); details.append(create); body.append(details);
+        create.addEventListener('submit', async (event) => {
+          event.preventDefault(); save.disabled = true; createFeedback.textContent = '';
+          const data = new FormData(create);
+          try {
+            await request('/api/system/operation-draft', { method:'POST' });
+            const created = await request('/api/system/drivers', { method:'POST', body:JSON.stringify({
+              action:'save', full_name:data.get('full_name'), phone:data.get('phone'), active:true
+            }) });
+            const driver = created.result.driver;
+            select.append(new Option(`${driver.full_name} · +${driver.phone}`, driver.driver_id, true, true));
+            create.reset(); details.open = false;
+          } catch (error) { createFeedback.textContent = error.message; }
+          finally { save.disabled = false; }
+        });
+
+        const directory = node('div', 'driver-directory');
+        directory.append(node('h3', '', 'Diretório de motoristas'));
+        for (const driver of payload.drivers || []) {
+          const row = node('div', 'driver-directory-row');
+          const identity = node('span');
+          identity.append(node('strong', '', driver.full_name),
+            node('small', '', `+${driver.phone} · ${driver.active ? 'Ativo' : 'Inativo'}`));
+          const toggle = node('button', 'quiet', driver.active ? 'Desativar' : 'Ativar');
+          toggle.type = 'button';
+          toggle.addEventListener('click', async () => {
+            toggle.disabled = true; createFeedback.textContent = '';
+            try {
+              await request('/api/system/operation-draft', { method:'POST' });
+              await request('/api/system/drivers', { method:'POST', body:JSON.stringify({
+                action:'save', driver_id:driver.driver_id, full_name:driver.full_name,
+                phone:driver.phone, active:!driver.active
+              }) });
+              driver.active = !driver.active;
+              identity.querySelector('small').textContent = `+${driver.phone} · ${driver.active ? 'Ativo' : 'Inativo'}`;
+              toggle.textContent = driver.active ? 'Desativar' : 'Ativar';
+              const option = [...select.options].find((item) => item.value === driver.driver_id);
+              if (driver.active && !option) select.append(new Option(`${driver.full_name} · +${driver.phone}`, driver.driver_id));
+              if (!driver.active && option) option.remove();
+            } catch (error) { createFeedback.textContent = error.message; }
+            finally { toggle.disabled = false; }
+          });
+          row.append(identity, toggle); directory.append(row);
+        }
+        body.append(directory);
+      }
+    }).catch((error) => body.replaceChildren(node('p', 'error', error.message)));
+    return section;
+  }
+
+  function manualPaymentSection(order) {
+    const section = detailSection('Pagamento'); section.classList.add('manual-payment-section');
+    if (order.payment_status === 'paid') {
+      section.append(factGrid([['Status', 'Pago'], ['Método', stateLabel(order.manual_payment?.method || 'stripe')],
+        ['Valor', order.service_amount == null ? null : money(order.service_amount)], ['Pago em', dateTime(order.paid_at)]]));
+      return section;
+    }
+    const form = node('form', 'manual-payment-form');
+    const methodLabel = node('label', '', 'Método');
+    const method = node('select'); method.name = 'method'; method.required = true;
+    for (const [value, label] of [['stripe','Stripe'],['cash','Cash'],['zelle','Zelle'],['other','Outro']]) method.append(new Option(label, value));
+    methodLabel.append(method);
+    const amountLabel = node('label', '', 'Valor'); const amount = node('input');
+    amount.name = 'amount'; amount.type = 'number'; amount.min = '0.01'; amount.step = '0.01'; amount.required = true;
+    if (order.service_amount != null) amount.value = Number(order.service_amount).toFixed(2); amountLabel.append(amount);
+    const paidAtLabel = node('label', '', 'Data e hora'); const paidAt = node('input');
+    paidAt.name = 'paid_at'; paidAt.type = 'datetime-local'; paidAt.required = true; paidAt.value = localFieldValue(new Date()); paidAtLabel.append(paidAt);
+    const noteLabel = node('label', '', 'Observação opcional'); const note = node('input'); note.name = 'note'; note.maxLength = 500; noteLabel.append(note);
+    const submit = node('button', 'primary', 'Registrar pagamento'); submit.type = 'submit';
+    const feedback = node('p', 'error'); feedback.setAttribute('role', 'alert');
+    form.append(methodLabel, amountLabel, paidAtLabel, noteLabel, submit, feedback);
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); submit.disabled = true; feedback.textContent = '';
+      const data = new FormData(form);
+      try {
+        await request('/api/system/operation-draft', { method:'POST' });
+        await request('/api/system/manual-payment', { method:'POST', body:JSON.stringify({
+          order_number:order.order_number, method:data.get('method'), amount:data.get('amount'),
+          paid_at:localIso(data.get('paid_at')), note:data.get('note') || null
+        }) });
+        await refreshOperationalDetail(order.order_number);
+        await Promise.all([loadToday().catch(() => null), loadFinance().catch(() => null)]);
+      } catch (error) { feedback.textContent = error.message; }
+      finally { submit.disabled = false; }
+    });
+    section.append(node('p', 'payment-help', 'A baixa altera somente o eixo financeiro. A invoice emitida permanece imutável.'), form);
+    return section;
+  }
+
   function renderOperationalDetail(order) {
     $('detailNumber').textContent = order.order_number;
     $('detailHeadline').textContent = [order.customer_name, order.property || 'Local não informado',
@@ -725,6 +928,7 @@
       ['Peso estimado', order.estimated_lbs == null ? null : `${order.estimated_lbs} lb`], ['Bags', order.bags_expected],
       ['Coleta', `${dateTime(order.pickup_window_start)} — ${dateTime(order.pickup_window_end)}`],
       ['Needed by', dateTime(order.needed_by)], ['Prometido Express', dateTime(order.promised_by)],
+      ['Motorista · Coleta', order.pickup_driver?.name], ['Motorista · Entrega', order.delivery_driver?.name],
       ['Instruções', order.special_instructions]
     ]));
     const itemList = node('ul', 'detail-items');
@@ -775,8 +979,13 @@
       weight.append(forms); target.append(weight);
     }
 
-    if (['owner', 'manager'].includes(activeUserRole) && (order.production_state === 'ready' || ['invoice_created', 'paid', 'failed', 'void'].includes(order.payment_status))) {
+    if (['owner', 'manager'].includes(activeUserRole)
+      && (order.weight_progress?.complete || ['awaiting_processing', 'processing', 'ready'].includes(order.production_state)
+        || ['invoice_created', 'paid', 'failed', 'void'].includes(order.payment_status))) {
       target.append(invoiceSection(order.order_number));
+    }
+    if (['owner', 'manager'].includes(activeUserRole) && ['invoice_created', 'failed', 'paid'].includes(order.payment_status)) {
+      target.append(manualPaymentSection(order));
     }
 
     const action = detailSection('Próxima ação');
@@ -799,6 +1008,14 @@
       const run = node('button', 'primary', order.next_action.label); run.type = 'button';
       run.addEventListener('click', () => target.querySelector('.invoice-section')?.scrollIntoView({ behavior:'smooth', block:'start' }));
       actionBox.append(run);
+    } else if (order.next_action?.code === 'register_payment' && order.next_action.enabled) {
+      const run = node('button', 'primary', order.next_action.label); run.type = 'button';
+      run.addEventListener('click', () => target.querySelector('.manual-payment-section')?.scrollIntoView({ behavior:'smooth', block:'start' }));
+      actionBox.append(run);
+    } else if (['assign_pickup_driver', 'assign_delivery_driver'].includes(order.next_action?.code) && order.next_action.enabled) {
+      const leg = order.next_action.code === 'assign_pickup_driver' ? 'pickup' : 'delivery';
+      actionBox.append(node('small', '', 'Selecione abaixo quem está fisicamente responsável por esta etapa.'));
+      actionBox.append(driverAssignmentSection(order, leg));
     } else {
       const run = node('button', order.next_action?.enabled ? 'primary' : 'secondary', order.next_action?.label || 'Indisponível');
       run.type = 'button'; run.disabled = !order.next_action?.enabled;
@@ -935,8 +1152,8 @@
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));
   $('newOrderButton').addEventListener('click', () => openNew().catch((error) => { $('lookupError').textContent = error.message; }));
-  $('backButton').addEventListener('click', () => show('attendanceView'));
-  $('cancelButton').addEventListener('click', () => show('attendanceView'));
+  $('backButton').addEventListener('click', () => { if (confirmOrderFormExit()) { orderFormDirty = false; show('attendanceView'); } });
+  $('cancelButton').addEventListener('click', () => { if (confirmOrderFormExit()) { orderFormDirty = false; show('attendanceView'); } });
   $('doneButton').addEventListener('click', () => show('attendanceView'));
   $('refreshTodayButton').addEventListener('click', () => loadToday().catch((error) => { $('todayError').textContent = error.message; }));
   $('refreshFinanceButton').addEventListener('click', () => loadFinance().catch((error) => {
@@ -966,6 +1183,16 @@
     const query = new FormData($('operationalSearchForm')).get('query');
     loadOperationalOrders(activeQueue, query).catch((error) => { $('ordersError').textContent = error.message; });
   });
+  $('orderForm').addEventListener('input', (event) => {
+    orderFormDirty = true;
+    if (event.target.name === 'promised_by') event.target.dataset.userEdited = 'true';
+    if (event.target.name === 'pickup_window_start' || event.target.name === 'service_tier') syncExpressPromise();
+    if (['name', 'whatsapp_number'].includes(event.target.name)) {
+      clearKnownCustomer();
+      clearTimeout(customerSuggestionTimer);
+      customerSuggestionTimer = setTimeout(() => suggestCustomers(event.target.value), 300);
+    }
+  });
   $('orderForm').addEventListener('change', refreshCommercial);
   $('orderForm').addEventListener('submit', async (event) => {
     event.preventDefault(); $('orderError').textContent = '';
@@ -975,14 +1202,20 @@
     payload.pickup_window_start = localIso(payload.pickup_window_start);
     payload.pickup_window_end = localIso(payload.pickup_window_end);
     payload.needed_by = localIso(payload.needed_by);
+    payload.promised_by = localIso(payload.promised_by);
     payload.items = itemsFromForm(data);
     payload.care_options = data.getAll('care_options');
     delete payload.wash_fold; delete payload.special_code; delete payload.special_quantity; delete payload.estimated_lbs;
     try {
       const result = await request('/api/system/orders', { method: 'POST', body: JSON.stringify(payload) });
+      orderFormDirty = false;
       showSuccess(result.order);
     } catch (error) { $('orderError').textContent = error.message; }
     finally { button.disabled = false; }
+  });
+  window.addEventListener('beforeunload', (event) => {
+    if (!orderFormDirty || $('newOrderView').hidden) return;
+    event.preventDefault(); event.returnValue = '';
   });
   $('lookupForm').addEventListener('submit', async (event) => {
     event.preventDefault(); $('lookupError').textContent = ''; $('lookupResult').textContent = '';

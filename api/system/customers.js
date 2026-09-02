@@ -5,7 +5,7 @@ const { OperationalStoreError, InvalidTransitionError } = require('../../lib/ope
 const { json, bodyOf, allowedOrigin, requireSession } = require('../../lib/system-http.js');
 
 module.exports = async function handler(req, res) {
-  const actor = await requireSession(req, res, ['owner', 'manager']);
+  const actor = await requireSession(req, res, ['owner', 'manager', 'operator']);
   if (!actor) return;
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -19,9 +19,16 @@ module.exports = async function handler(req, res) {
     const customers = systemCustomerService();
     if (body.action === 'search') {
       const results = await customers.search(body.query, body.limit);
-      return json(res, 200, { ok: true, customers: results });
+      const safeResults = actor.role === 'operator' ? results.map((row) => ({
+        customer_ref:row.customer_ref, name:row.name, whatsapp_last4:row.whatsapp_last4,
+        latest_property:row.latest_property, order_count:row.order_count
+      })) : results;
+      return json(res, 200, { ok: true, customers: safeResults });
     }
     if (body.action === 'detail') {
+      if (!['owner', 'manager'].includes(actor.role)) {
+        return json(res, 403, { ok:false, code:'forbidden', error:'Customer detail requires management authorization.' });
+      }
       const customer = await customers.getByReference(body.customer_ref);
       return customer ? json(res, 200, { ok: true, customer })
         : json(res, 404, { ok: false, code: 'not_found', error: 'Customer not found.' });

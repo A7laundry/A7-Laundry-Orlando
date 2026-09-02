@@ -85,13 +85,15 @@ test('W1B next action is a single deterministic server rule and blocks W1C weigh
   const base = { is_qa:false, order_status:'accepted', payment_status:'pending', service_tier:'normal',
     custody_state:'with_customer', production_state:'awaiting_intake' };
   assert.equal(nextActionFor(base).code, 'schedule_pickup');
-  assert.equal(nextActionFor({ ...base, order_status:'pickup_scheduled', custody_state:'awaiting_pickup' }).code, 'confirm_pickup');
+  assert.equal(nextActionFor({ ...base, order_status:'pickup_scheduled', custody_state:'awaiting_pickup' }).code, 'assign_pickup_driver');
+  assert.equal(nextActionFor({ ...base, order_status:'pickup_scheduled', custody_state:'awaiting_pickup',
+    pickup_driver:{ driver_id:crypto.randomUUID(), name:'Driver QA' } }).code, 'confirm_pickup');
   assert.equal(nextActionFor({ ...base, order_status:'picked_up', custody_state:'with_driver_pickup' }).code, 'receive_at_laundry');
   assert.deepEqual(nextActionFor({ ...base, order_status:'picked_up', custody_state:'at_laundry', production_state:'awaiting_weight' }),
     { code:'record_weight', label:'REGISTRAR PESO', enabled:false, blocked_by:'W1C' });
   assert.equal(nextActionFor({ ...base, custody_state:'at_laundry', production_state:'processing' }).code, 'mark_ready');
   assert.equal(nextActionFor({ ...base, is_qa:true }).code, 'qa_read_only');
-  assert.equal(nextActionFor({ ...base, custody_state:'not_initialized' }).code, 'review_state');
+  assert.equal(nextActionFor({ ...base, custody_state:'not_initialized' }).code, 'operational_blocker');
 });
 
 test('W1B Today counters exclude QA and priority is late, risk, overdue, promise, window, oldest', async () => {
@@ -205,7 +207,7 @@ test('W1B historical null stays uninitialized and QA is read-only in every store
   const historical = await operations.detail('MCO 1310');
   assert.equal(historical.custody_state, 'not_initialized');
   assert.equal(historical.production_state, 'not_initialized');
-  assert.equal(historical.next_action.code, 'review_state');
+  assert.equal(historical.next_action.code, 'operational_blocker');
   await assert.rejects(() => operations.transition({ order_number:'MCO 1311', action:'schedule_pickup',
     request_id:crypto.randomUUID() }, OWNER), /QA orders are read-only/);
 });

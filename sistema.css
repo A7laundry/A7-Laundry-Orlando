@@ -11,3 +11,17 @@
 .brand-login{justify-content:center}
 .brand-login>.brand-logo-frame{width:180px;padding:9px 11px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 @media(max-width:720px){.topbar .brand{gap:8px}.topbar .brand>.brand-logo-frame{width:122px;padding:6px 7px;border-radius:10px}.topbar .brand-copy strong{font-size:.88rem}.topbar .brand-copy small{max-width:105px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+.driver-assignment-body,.driver-assignment-form,.driver-create-form,.manual-payment-form{display:grid;gap:14px}
+.driver-assignment-form,.driver-create-details,.manual-payment-form,.driver-directory{padding:16px;border:1px solid var(--line);border-radius:14px;background:#f8fafc}
+.driver-create-details{margin-top:14px}.driver-create-details summary{cursor:pointer;font-weight:800;color:var(--blue)}
+.driver-create-form{margin-top:14px;background:#fff}.driver-directory{display:grid;gap:8px;margin-top:14px}
+.driver-directory h3{margin:0 0 4px}.driver-directory-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.driver-directory-row span{display:grid;gap:3px}.driver-directory-row small,.payment-help{color:var(--muted)}
+.manual-payment-form{grid-template-columns:repeat(2,minmax(0,1fr))}.manual-payment-form .primary,.manual-payment-form .error{grid-column:1/-1}
+@media(max-width:720px){.manual-payment-form{grid-template-columns:1fr}.driver-directory-row{align-items:flex-start}}
+.customer-suggestions{display:grid;gap:8px;margin-top:12px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#f8fafc}
+.customer-suggestion{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:11px;border:0;border-radius:10px;background:#fff;text-align:left;color:var(--ink)}
+.customer-suggestion:hover,.customer-suggestion:focus{box-shadow:0 0 0 2px rgba(18,89,213,.18)}
+.customer-suggestion span{display:grid;gap:2px}.customer-suggestion small{color:var(--muted)}
+.customer-suggestion-selected{margin-top:12px;padding:10px 12px;border-radius:10px;background:#e7f6ef;color:var(--green);font-weight:800}

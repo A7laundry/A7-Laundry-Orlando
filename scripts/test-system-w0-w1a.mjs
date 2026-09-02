@@ -39,9 +39,22 @@ function input(id = crypto.randomUUID()) {
     ...structuredClone(orderFixture),
     submission_id: id,
     pickup_window_start: start.toISOString(), pickup_window_end: end.toISOString(),
-    needed_by: needed.toISOString()
+    needed_by: needed.toISOString(),
+    promised_by:new Date(start.getTime() + 8 * 60 * 60_000).toISOString()
   };
 }
+
+test('Express creation requires a confirmed promise after pickup', async () => {
+  const store = new MemoryOperationalStore();
+  const service = systemOrderService({ operationalStore:store,
+    attributionStore:{ async get() { return null; }, async getByShortRef() { return null; } } });
+  const missing = input(); delete missing.promised_by;
+  await assert.rejects(() => service.createManualOrder(missing, { actor_id:'actor_qa', role:'operator' }),
+    /Promised delivery is invalid/);
+  const beforePickup = input(); beforePickup.promised_by = beforePickup.pickup_window_start;
+  await assert.rejects(() => service.createManualOrder(beforePickup, { actor_id:'actor_qa', role:'operator' }),
+    /must be after pickup/);
+});
 
 function response() {
   return {
@@ -383,11 +396,17 @@ test('W1A.3 customer API is private, POST-only and keeps search data out of URLs
     const operatorCookie = auth.sessionCookie(auth.signSession({
       actor_id: 'actor_operator', display_name: 'Operator', role: 'operator'
     }, env)).split(';')[0];
-    const forbidden = response();
+    const operatorSearch = response();
     await customersApi({ method: 'POST', headers: {
       cookie: operatorCookie, origin: 'http://localhost:3000'
-    }, body: { action: 'search', query: 'Customer QA' } }, forbidden);
-    assert.equal(forbidden.statusCode, 403);
+    }, body: { action: 'search', query: 'Customer QA' } }, operatorSearch);
+    assert.equal(operatorSearch.statusCode, 200);
+    assert.equal(operatorSearch.payload.customers.length, 1);
+    assert.equal('confirmed_service_revenue' in operatorSearch.payload.customers[0], false);
+    const operatorDetail = response();
+    await customersApi({ method:'POST', headers:{ cookie:operatorCookie, origin:'http://localhost:3000' },
+      body:{ action:'detail', customer_ref:operatorSearch.payload.customers[0].customer_ref } }, operatorDetail);
+    assert.equal(operatorDetail.statusCode, 403);
   } finally {
     delete globalThis.__A7_OPERATIONAL_STORE__;
     for (const [key, value] of Object.entries(previous)) {
