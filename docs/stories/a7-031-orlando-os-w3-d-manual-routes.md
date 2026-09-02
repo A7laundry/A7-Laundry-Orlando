@@ -312,6 +312,7 @@ destructive rollback. No CRITICAL finding may remain open before release.
 
 - `docs/stories/a7-031-orlando-os-w3-d-manual-routes.md`
 - `docs/audits/2026-09-02-orlando-os-w3-d-routes-lite-forensic.md`
+- `docs/runbooks/A7-ORLANDO-W3D-ROUTES-STAGING-E2E-2026-09-02.md`
 - `lib/system-rbac.js`
 - `lib/system-route-service.js`
 - `lib/operational-store.js`
@@ -359,5 +360,9 @@ destructive rollback. No CRITICAL finding may remain open before release.
 - Dedicated Staging target guard: `NOT READY`. `expected_staging_ref`,
   `linked_ref_is_not_production_or_foreign` and `linked_ref_matches_expected` all failed closed because no approved
   W3-D Staging Supabase ref is configured or linked. No foreign or Production database was substituted.
+- Read-only account inventory reconfirmed that `wiwawtpaxnrueugppasi` is the linked A7 Orlando Production project
+  and `zquefoznqwkfbnnfalmt` is the pre-existing Staging project for another system. It was not relinked or mutated.
+- Read-only Vercel inspection reconfirmed `a7laundry.com` on ready Production deployment
+  `dpl_sfsdCQA69WxZkJaRJfEv2nospB74`; no W3-D deployment or alias mutation occurred.
 - Both migrations remain local-only and have not been applied to any remote database. Production and its disabled
   `Rotas` menu remain unchanged.
