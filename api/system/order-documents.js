@@ -5,7 +5,7 @@ const { OperationalStoreError, InvalidTransitionError } = require('../../lib/ope
 const { json, bodyOf, allowedOrigin, requireSession } = require('../../lib/system-http.js');
 
 module.exports = async function handler(req, res) {
-  if (!requireSession(req, res, ['owner', 'operator'])) return;
+  if (!await requireSession(req, res, ['owner', 'manager', 'operator'])) return;
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return json(res, 405, { ok:false, code:'method_not_allowed' });

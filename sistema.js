@@ -3,7 +3,7 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   let activeUserRole = null;
-  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'financeView', 'newOrderView', 'successView'];
+  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'hotelsView', 'financeView', 'teamView', 'passwordChangeView', 'newOrderView', 'successView'];
   let catalog = null;
   let activeQueue = 'all';
   let priorOperationalView = 'todayView';
@@ -96,6 +96,7 @@
     $('customersNav').classList.toggle('active', view === 'customersView');
     $('hotelsNav').classList.toggle('active', view === 'hotelsView');
     $('financeNav').classList.toggle('active', view === 'financeView');
+    $('teamNav').classList.toggle('active', view === 'teamView');
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
@@ -537,7 +538,7 @@
   }
 
   async function loadFinance(requestBody = activeFinanceRequest) {
-    if (activeUserRole !== 'owner') throw new Error('Owner authorization is required.');
+    if (!['owner', 'manager'].includes(activeUserRole)) throw new Error('Acesso financeiro não autorizado.');
     const nextRequest = { ...requestBody };
     $('financeError').textContent = '';
     $('financeLoading').hidden = false;
@@ -743,7 +744,7 @@
       target.append(documents);
     }
     const poundItems = (order.items || []).filter((item) => item.unit === 'lb');
-    if (activeUserRole === 'owner' && order.weight_editable && poundItems.length) {
+    if (['owner', 'manager'].includes(activeUserRole) && order.weight_editable && poundItems.length) {
       const weight = detailSection('Pesagem por item');
       const progress = order.weight_progress || {};
       weight.append(node('p', 'weight-progress', `${progress.completed || 0} de ${progress.required || poundItems.length} item(ns) pesados`));
@@ -774,7 +775,7 @@
       weight.append(forms); target.append(weight);
     }
 
-    if (activeUserRole === 'owner' && (order.production_state === 'ready' || ['invoice_created', 'paid', 'failed', 'void'].includes(order.payment_status))) {
+    if (['owner', 'manager'].includes(activeUserRole) && (order.production_state === 'ready' || ['invoice_created', 'paid', 'failed', 'void'].includes(order.payment_status))) {
       target.append(invoiceSection(order.order_number));
     }
 
@@ -886,6 +887,18 @@
     activeUserRole = user.role;
     $('loginView').hidden = true; $('systemView').hidden = false;
     $('userLabel').textContent = `${user.display_name} · ${user.role}`;
+    for (const element of document.querySelectorAll('.owner-only')) element.classList.toggle('access-denied', user.role !== 'owner');
+    for (const element of document.querySelectorAll('.manager-access')) element.classList.toggle('access-denied', !['owner', 'manager'].includes(user.role));
+    window.A7SystemSession = { ...user };
+    window.dispatchEvent(new CustomEvent('a7:session', { detail:{ ...user } }));
+    if (user.must_change_password) {
+      for (const button of document.querySelectorAll('.workspace nav button')) button.disabled = true;
+      show('passwordChangeView');
+      return;
+    }
+    for (const button of document.querySelectorAll('.workspace nav button:not([data-permanent-disabled])')) {
+      if (!button.textContent.includes('W3')) button.disabled = false;
+    }
     show('todayView');
     buildQueueFilters();
     loadToday().catch((error) => { $('todayError').textContent = error.message; });
@@ -902,6 +915,22 @@
   $('financeNav').addEventListener('click', () => openFinance().catch((error) => {
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));
+  $('passwordChangeForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget; const data = new FormData(form);
+    $('passwordChangeError').textContent = '';
+    if (data.get('new_password') !== data.get('confirm_password')) {
+      $('passwordChangeError').textContent = 'As novas senhas não coincidem.'; return;
+    }
+    const button = event.submitter; button.disabled = true;
+    try {
+      const payload = await request('/api/system/password', { method:'POST', body:JSON.stringify({
+        current_password:data.get('current_password'), new_password:data.get('new_password')
+      }) });
+      form.reset(); activate(payload.user);
+    } catch (error) { $('passwordChangeError').textContent = error.message; }
+    finally { button.disabled = false; }
+  });
   $('homeOpenFinance').addEventListener('click', () => openFinance().catch((error) => {
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));

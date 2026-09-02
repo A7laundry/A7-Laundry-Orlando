@@ -13,6 +13,7 @@ const invoiceApi = require('../api/system/order-invoices.js');
 
 const NOW = new Date('2026-08-30T18:00:00.000Z');
 const OWNER = { actor_id:'actor_invoice_owner', display_name:'Owner QA', role:'owner' };
+const MANAGER = { actor_id:'actor_invoice_manager', display_name:'Manager QA', role:'manager' };
 
 function addReadyOrder(store, values = {}) {
   const customerId = crypto.randomUUID();
@@ -147,6 +148,15 @@ test('W1C-B1 blocks unresolved facts, QA and non-Owner access', async () => {
     expected_invoice_version:0, request_id:crypto.randomUUID() }, OWNER), /QA orders/);
   await assert.rejects(() => service.review({ order_number:'MCO 2205', expected_invoice_version:0,
     request_id:crypto.randomUUID() }, { actor_id:'operator', role:'operator' }), /Owner authorization/);
+});
+
+test('W1C-B1 permits Manager invoice authority without granting team administration', async () => {
+  const store = new MemoryOperationalStore();
+  const ready = addReadyOrder(store, { order_number:'MCO 2298' });
+  const invoice = await systemInvoiceService({ operationalStore:store, now:() => NOW }).review({
+    order_number:ready.order.order_number, expected_invoice_version:0, request_id:crypto.randomUUID()
+  }, MANAGER);
+  assert.equal(invoice.invoice.status, 'issued');
 });
 
 test('W1C-B1 API is private, same-origin and does not accept browser financial authority', async () => {

@@ -6,7 +6,7 @@ const { json, bodyOf, allowedOrigin, requireSession } = require('../../lib/syste
 const { submissionFromRequest } = require('../../lib/system-auth.js');
 
 module.exports = async function handler(req, res) {
-  const actor = requireSession(req, res);
+  const actor = await requireSession(req, res);
   if (!actor) return;
   try {
     const orders = systemOrderService();
@@ -20,8 +20,8 @@ module.exports = async function handler(req, res) {
       if (!allowedOrigin(req)) return json(res, 403, { ok: false, code: 'origin_not_allowed' });
       const body = bodyOf(req);
       if (!body) return json(res, 400, { ok: false, code: 'invalid_body' });
-      if (body.customer_ref && actor.role !== 'owner') {
-        return json(res, 403, { ok:false, code:'forbidden', error:'Owner authorization is required.' });
+      if (body.customer_ref && !['owner', 'manager'].includes(actor.role)) {
+        return json(res, 403, { ok:false, code:'forbidden', error:'Customer management authorization is required.' });
       }
       const submissionId = submissionFromRequest(req);
       if (!submissionId) return json(res, 409, { ok: false, code: 'submission_required', error: 'Start a new attendance before creating the order.' });

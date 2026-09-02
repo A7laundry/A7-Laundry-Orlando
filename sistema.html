@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/sistema-hotels.css">
   <link rel="stylesheet" href="/sistema-finance.css">
   <link rel="stylesheet" href="/sistema-home.css">
+  <link rel="stylesheet" href="/sistema-team.css">
 </head>
 <body>
   <main id="app" aria-live="polite">
@@ -47,7 +48,8 @@
           <button id="ordersNav" type="button">Pedidos</button>
           <button id="customersNav" type="button">Clientes <small>Lite</small></button>
           <button id="hotelsNav" type="button">Hotéis</button>
-          <button id="financeNav" class="owner-only" type="button">Faturamento</button>
+          <button id="financeNav" class="manager-access" type="button">Faturamento</button>
+          <button id="teamNav" class="owner-only" type="button">Equipe</button>
           <button type="button" disabled>Rotas <small>W3</small></button>
         </nav>
         <section class="content">
@@ -75,12 +77,12 @@
               <div id="todayOrders" class="operation-list" aria-live="polite"></div>
             </section>
 
-            <section id="homeBusinessSection" class="home-section owner-only" hidden>
+            <section id="homeBusinessSection" class="home-section manager-access" hidden>
               <div class="home-section-head"><div><p class="eyebrow">NEGÓCIO HOJE</p><h2>Resultado confirmado</h2></div><p>Receita conciliada; Cash/Zelle não confirmados não entram.</p></div>
               <div id="homeBusiness" class="home-metric-grid" aria-label="Resultado do negócio hoje"></div>
             </section>
 
-            <section id="homeSevenDaysSection" class="home-section owner-only" hidden>
+            <section id="homeSevenDaysSection" class="home-section manager-access" hidden>
               <div class="home-section-head"><div><p class="eyebrow">ÚLTIMOS 7 DIAS</p><h2>Ritmo do negócio</h2></div><button id="homeOpenFinance" class="quiet" type="button">Abrir faturamento →</button></div>
               <div id="homeSevenDays" class="home-seven-days" aria-live="polite"></div>
             </section>
@@ -144,17 +146,17 @@
             <div class="page-head">
               <div><p class="eyebrow">HOTÉIS</p><h1>Diretório e desempenho</h1>
                 <p>Cadastre uma vez, selecione sem erro e acompanhe os atendimentos por hotel.</p></div>
-              <button id="newHotelButton" class="primary owner-only" type="button">+ Novo hotel</button>
+              <button id="newHotelButton" class="primary manager-access" type="button">+ Novo hotel</button>
             </div>
             <section class="panel hotel-search-panel">
               <form id="hotelSearchForm" class="inline-form">
                 <div class="lookup-input"><input name="hotel_query" maxlength="160" placeholder="Nome, endereço, região ou alias" autocomplete="off" spellcheck="false"><small>Os KPIs excluem pedidos QA e cancelados.</small></div>
                 <button type="submit">Buscar hotel</button>
               </form>
-              <label class="hotel-inactive-toggle owner-only"><input id="includeInactiveHotels" type="checkbox"> Incluir hotéis inativos</label>
+              <label class="hotel-inactive-toggle manager-access"><input id="includeInactiveHotels" type="checkbox"> Incluir hotéis inativos</label>
               <p class="error" id="hotelSearchError" role="alert"></p>
             </section>
-            <section id="hotelEditor" class="panel hotel-editor owner-only" hidden>
+            <section id="hotelEditor" class="panel hotel-editor manager-access" hidden>
               <h2 id="hotelEditorTitle">Novo hotel</h2>
               <form id="hotelForm">
                 <input name="hotel_id" type="hidden">
@@ -171,6 +173,57 @@
               </form>
             </section>
             <div id="hotelResults" class="hotel-results" aria-live="polite"></div>
+          </div>
+
+          <div id="teamView" hidden>
+            <div class="page-head">
+              <div><p class="eyebrow">ADMINISTRAÇÃO</p><h1>Equipe e acessos</h1>
+                <p>Cadastre pessoas, defina a camada de acesso e bloqueie o acesso quando necessário.</p></div>
+              <button id="newTeamUserButton" class="primary" type="button">+ Novo usuário</button>
+            </div>
+            <section class="panel team-role-guide" aria-label="Camadas de acesso">
+              <div><strong>Owner</strong><small>Acesso total, usuários e segurança.</small></div>
+              <div><strong>Gestora</strong><small>Operação, clientes, hotéis, invoices e financeiro.</small></div>
+              <div><strong>Operadora</strong><small>Atendimento e execução das etapas permitidas.</small></div>
+              <div><strong>Inativo</strong><small>Acesso revogado imediatamente, sem apagar histórico.</small></div>
+            </section>
+            <p class="error" id="teamError" role="alert"></p>
+            <section id="teamEditor" class="panel team-editor" hidden>
+              <div class="team-editor-head"><div><p class="eyebrow">PERFIL</p><h2 id="teamEditorTitle">Novo usuário</h2></div><button id="cancelTeamUserButton" class="quiet" type="button">Cancelar</button></div>
+              <form id="teamUserForm">
+                <input name="user_id" type="hidden">
+                <div class="grid">
+                  <label>Nome completo<input name="full_name" maxlength="120" autocomplete="off" required></label>
+                  <label>Função<input name="job_title" maxlength="80" placeholder="Ex.: Gestora da operação" autocomplete="off"></label>
+                  <label>E-mail<input name="email" type="email" maxlength="160" autocomplete="off" required></label>
+                  <label>Telefone<input name="phone" type="tel" maxlength="32" autocomplete="off"></label>
+                  <label>Camada de acesso<select name="role" required><option value="operator">Operadora</option><option value="manager">Gestora</option><option value="owner">Owner</option></select></label>
+                  <label id="teamStatusField" hidden>Status<select name="status"><option value="active">Ativo</option><option value="inactive">Inativo</option></select></label>
+                </div>
+                <div class="submit-row"><button class="primary" type="submit">Salvar usuário</button></div>
+              </form>
+            </section>
+            <section id="temporaryPasswordCard" class="panel temporary-password" hidden aria-live="assertive">
+              <div><p class="eyebrow">SENHA TEMPORÁRIA · EXIBIDA UMA VEZ</p><h2>Entregue esta senha com segurança</h2><p>O usuário terá que criar uma senha própria no primeiro acesso.</p></div>
+              <code id="temporaryPasswordValue"></code>
+              <button id="copyTemporaryPasswordButton" class="secondary" type="button">Copiar senha</button>
+              <button id="dismissTemporaryPasswordButton" class="quiet" type="button">Já guardei</button>
+            </section>
+            <div id="teamUsers" class="team-users" aria-live="polite"></div>
+          </div>
+
+          <div id="passwordChangeView" hidden>
+            <section class="panel password-change-card">
+              <p class="eyebrow">PRIMEIRO ACESSO</p><h1>Crie sua senha</h1>
+              <p>A senha temporária só serve para entrar uma vez. Defina agora uma senha pessoal.</p>
+              <form id="passwordChangeForm">
+                <label>Senha temporária<input name="current_password" type="password" autocomplete="current-password" required></label>
+                <label>Nova senha<input name="new_password" type="password" minlength="14" maxlength="128" autocomplete="new-password" required><small>Mínimo de 14 caracteres, com maiúscula, minúscula, número e símbolo.</small></label>
+                <label>Confirmar nova senha<input name="confirm_password" type="password" minlength="14" maxlength="128" autocomplete="new-password" required></label>
+                <p class="error" id="passwordChangeError" role="alert"></p>
+                <button class="primary" type="submit">Salvar nova senha e continuar</button>
+              </form>
+            </section>
           </div>
 
           <div id="financeView" hidden>
@@ -254,5 +307,6 @@
   </main>
   <script src="/sistema.js" defer></script>
   <script src="/sistema-hotels.js" defer></script>
+  <script src="/sistema-team.js" defer></script>
 </body>
 </html>

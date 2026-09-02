@@ -6,7 +6,7 @@ const { json, bodyOf, allowedOrigin, requireSession } = require('../../lib/syste
 const { submissionFromRequest } = require('../../lib/system-auth.js');
 
 module.exports = async function handler(req, res) {
-  const actor = requireSession(req, res, ['owner']);
+  const actor = await requireSession(req, res, ['owner', 'manager']);
   if (!actor) return;
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');

@@ -12,6 +12,7 @@ const { systemOrderService } = require('../lib/system-order-service.js');
 const hotelsApi = require('../api/system/hotels.js');
 
 const OWNER = { actor_id:'actor_hotel_owner', display_name:'Hotel Owner', role:'owner' };
+const MANAGER = { actor_id:'actor_hotel_manager', display_name:'Hotel Manager', role:'manager' };
 const OPERATOR = { actor_id:'actor_hotel_operator', display_name:'Hotel Operator', role:'operator' };
 
 function orderPayload(hotelId) {
@@ -42,6 +43,9 @@ test('hotel directory is Owner-managed, idempotent and duplicate-safe', async ()
   const rows = await hotels.list({ query:'hilton' });
   assert.equal(rows.length, 1);
   assert.equal(rows[0].canonical_name, request.canonical_name);
+  const managerHotel = await hotels.save({ canonical_name:'Manager Hotel', address_line:'100 Manager Way',
+    idempotency_key:'hotel:test:manager' }, MANAGER);
+  assert.equal(managerHotel.canonical_name, 'Manager Hotel');
 });
 
 test('new hotel order freezes governed hotel identity and canonical snapshot', async () => {

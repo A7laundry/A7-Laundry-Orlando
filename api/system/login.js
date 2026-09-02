@@ -1,6 +1,6 @@
 'use strict';
 
-const { authenticate, signSession, sessionCookie } = require('../../lib/system-auth.js');
+const { authenticateHybrid, signSession, sessionCookie } = require('../../lib/system-auth.js');
 const { json, bodyOf, allowedOrigin, requestKey } = require('../../lib/system-http.js');
 
 const attempts = new Map();
@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
   }
   const body = bodyOf(req);
   if (!body) return json(res, 400, { ok: false, code: 'invalid_body' });
-  const actor = authenticate(body.email, body.password);
+  const actor = await authenticateHybrid(body.email, body.password);
   if (!actor) {
     const current = bucket && now - bucket.started_at < WINDOW_MS ? bucket : { started_at: now, count: 0 };
     current.count += 1;
@@ -30,7 +30,8 @@ module.exports = async function handler(req, res) {
   }
   attempts.delete(key);
   res.setHeader('Set-Cookie', sessionCookie(signSession(actor)));
-  return json(res, 200, { ok: true, user: { display_name: actor.display_name, role: actor.role } });
+  return json(res, 200, { ok:true, user:{ display_name:actor.display_name, role:actor.role,
+    must_change_password:Boolean(actor.must_change_password) } });
 };
 
 module.exports.attempts = attempts;

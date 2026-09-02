@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'GET');
     return json(res, 405, { ok: false, code: 'method_not_allowed' });
   }
-  if (!requireSession(req, res)) return;
+  if (!await requireSession(req, res)) return;
   try {
     const orderNumber = Array.isArray(req.query?.order_number)
       ? req.query.order_number[0] : req.query?.order_number;

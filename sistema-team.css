@@ -1,0 +1,16 @@
+.access-denied{display:none!important}
+.team-role-guide{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.team-role-guide div{padding:14px;border:1px solid var(--line,#dbe4ee);border-radius:14px;background:#f8fbfd}
+.team-role-guide strong,.team-role-guide small{display:block}.team-role-guide small{margin-top:5px;color:#566476;line-height:1.4}
+.team-editor{margin-bottom:18px}.team-editor-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.team-users{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.team-user{margin:0;padding:20px}.team-user.inactive{opacity:.7;border-style:dashed}
+.team-user-identity{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.team-user-identity h2{margin:0}.team-user-identity p{margin:4px 0 0;color:#607083}
+.team-role{white-space:nowrap;border-radius:999px;padding:7px 10px;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:#e8f4fb;color:#075b82}
+.team-role.role-owner{background:#fff0d7;color:#844e00}.team-role.role-manager{background:#e8f4fb;color:#075b82}.team-role.role-operator{background:#edf7ee;color:#286237}
+.team-user-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}.team-user-facts div{min-width:0}.team-user-facts dt{font-size:.72rem;text-transform:uppercase;color:#6a7788;font-weight:800}.team-user-facts dd{margin:3px 0 0;overflow-wrap:anywhere}
+.team-user-actions{display:flex;flex-wrap:wrap;gap:8px}.team-history{margin-top:14px;padding-top:12px;border-top:1px solid #e3e9ef}.team-history-list{margin:0;padding-left:20px}.team-history-list li{margin:8px 0}.team-history-list strong,.team-history-list small{display:block}.team-history-list small{color:#687789}
+.temporary-password{border:2px solid #f39a24;background:#fffaf1;margin-bottom:18px}.temporary-password code{display:block;margin:14px 0;padding:14px;border-radius:10px;background:#0a1830;color:#fff;font-size:1.05rem;overflow-wrap:anywhere;user-select:all}
+.password-change-card{max-width:560px;margin:44px auto}.password-change-card form{display:grid;gap:14px;margin-top:20px}.password-change-card label{display:grid;gap:6px}.password-change-card small{color:#617083}
+@media(max-width:850px){.team-role-guide,.team-users{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.team-role-guide,.team-users,.team-user-facts{grid-template-columns:1fr}.team-user-identity{display:block}.team-role{display:inline-block;margin-top:10px}}

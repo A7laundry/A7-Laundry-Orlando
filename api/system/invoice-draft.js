@@ -8,7 +8,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'POST');
     return json(res, 405, { ok:false, code:'method_not_allowed' });
   }
-  if (!requireSession(req, res, ['owner'])) return;
+  if (!await requireSession(req, res, ['owner', 'manager'])) return;
   if (!allowedOrigin(req)) return json(res, 403, { ok:false, code:'origin_not_allowed' });
   const submission = issueSubmission();
   res.setHeader('Set-Cookie', submissionCookie(submission.token));

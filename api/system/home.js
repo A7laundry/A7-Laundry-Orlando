@@ -5,7 +5,7 @@ const { OperationalStoreError, InvalidTransitionError } = require('../../lib/ope
 const { json, requireSession } = require('../../lib/system-http.js');
 
 module.exports = async function handler(req, res) {
-  const actor = requireSession(req, res, ['owner', 'operator']);
+  const actor = await requireSession(req, res, ['owner', 'manager', 'operator']);
   if (!actor) return;
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');

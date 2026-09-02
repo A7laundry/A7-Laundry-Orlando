@@ -11,6 +11,7 @@ const { systemFinanceService, normalizeFinancePeriod } = require('../lib/system-
 const financeApi = require('../api/system/finance.js');
 
 const OWNER = { actor_id:'actor_finance_owner', display_name:'Finance Owner', role:'owner' };
+const MANAGER = { actor_id:'actor_finance_manager', display_name:'Finance Manager', role:'manager' };
 const OPERATOR = { actor_id:'actor_finance_operator', display_name:'Finance Operator', role:'operator' };
 
 function response() {
@@ -154,7 +155,7 @@ test('finance report fails closed when freshness evidence is missing', async () 
   }, OWNER), /freshness timestamp/);
 });
 
-test('finance API is Owner-only, same-origin, POST-only and returns no PII', async () => {
+test('finance API is Owner/Manager-only, same-origin, POST-only and returns no PII', async () => {
   const prior = { secret:process.env.A7_SYSTEM_SESSION_SECRET, mode:process.env.A7_SYSTEM_ACCESS_MODE, node:process.env.NODE_ENV };
   process.env.A7_SYSTEM_SESSION_SECRET = 'finance-local-session-secret-at-least-32-bytes';
   process.env.A7_SYSTEM_ACCESS_MODE = 'team'; process.env.NODE_ENV = 'test';
@@ -180,6 +181,11 @@ test('finance API is Owner-only, same-origin, POST-only and returns no PII', asy
       preset:'custom', start_date:'2026-08-01', end_date:'2026-08-31'
     } }, owner);
     assert.equal(owner.statusCode, 200);
+    const manager = response();
+    await financeApi({ method:'POST', headers:{ cookie:cookie(MANAGER), origin:'http://localhost:3000' }, body:{
+      preset:'custom', start_date:'2026-08-01', end_date:'2026-08-31'
+    } }, manager);
+    assert.equal(manager.statusCode, 200);
     const serialized = JSON.stringify(owner.payload);
     assert.doesNotMatch(serialized, /Private Customer|14075559999|pi_finance|customer_id|order_id/i);
   } finally {
@@ -199,7 +205,7 @@ test('finance release is additive, private, read-only and wired after CLI', () =
   assert.match(sql, /stable security definer/);
   assert.match(sql, /revoke all .* anon, authenticated/s);
   assert.doesNotMatch(sql, /\b(?:insert|update|delete|truncate)\b\s+(?:into\s+|from\s+)?public\./i);
-  assert.match(html, /id="financeNav" class="owner-only"/);
+  assert.match(html, /id="financeNav" class="manager-access"/);
   assert.match(html, /id="financeView"/);
   assert.match(js, /\/api\/system\/finance/);
   assert.match(cli, /systemFinanceService/);

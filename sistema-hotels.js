@@ -81,14 +81,14 @@
     if (role) return role;
     const session = await request('/api/system/session');
     role = session.user.role;
-    for (const element of document.querySelectorAll('.owner-only')) {
-      element.hidden = role !== 'owner' || element.id === 'hotelEditor';
+    for (const element of document.querySelectorAll('.manager-access')) {
+      element.classList.toggle('access-denied', !['owner', 'manager'].includes(role));
     }
     return role;
   }
 
   function editHotel(hotel = null) {
-    if (role !== 'owner') return;
+    if (!['owner', 'manager'].includes(role)) return;
     const form = $('hotelForm');
     form.reset();
     form.elements.hotel_id.value = hotel?.hotel_id || '';
@@ -130,7 +130,7 @@
         kpis.append(item);
       }
       card.append(main, kpis);
-      if (role === 'owner') {
+      if (['owner', 'manager'].includes(role)) {
         const button = node('button', 'quiet bordered hotel-edit', 'Editar');
         button.type = 'button';
         button.addEventListener('click', () => editHotel(hotel));
@@ -152,7 +152,7 @@
     $('hotelSearchError').textContent = '';
     showHotels();
     const query = new FormData($('hotelSearchForm')).get('hotel_query') || '';
-    const rows = await loadHotels(query, role === 'owner' && $('includeInactiveHotels').checked);
+    const rows = await loadHotels(query, ['owner', 'manager'].includes(role) && $('includeInactiveHotels').checked);
     renderResults(rows);
   }
 
