@@ -133,6 +133,8 @@ test('W1B queues search privately and preserve numeric and legacy lookup', async
   const operations = systemOperationsService({ operationalStore:store, now:() => NOW });
   assert.equal((await operations.list({ query:'1002' })).orders[0].order_number, 'MCO 1002');
   assert.equal((await operations.list({ query:'A7-ORL-1000' })).orders[0].order_number, 'A7-ORL-1000');
+  assert.equal((await operations.list({ query:'MCO-1000' })).orders[0].order_number, 'A7-ORL-1000');
+  assert.equal((await operations.detail('MCO-1000')).order_number, 'A7-ORL-1000');
   assert.equal((await operations.list({ query:'Taylor' })).orders.length, 1);
   assert.equal((await operations.list({ query:'Omni' })).orders.length, 1);
   assert.equal((await operations.list({ custody_state:'with_customer', production_state:'awaiting_intake' })).orders.length, 2);

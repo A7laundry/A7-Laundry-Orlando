@@ -1,6 +1,6 @@
 # Story A7-038 — A7 Orlando OS Operational Cycle
 
-**Status:** Ready for Review — corrective Production cutover authorized; migrations applied, application smoke pending
+**Status:** Ready for Review — migrations applied; first corrective application cutover rolled back after a route gate failure; local repair validated and awaiting a new Production GO
 
 **Created:** 2026-09-01
 
@@ -161,6 +161,9 @@ Application rollback restores the immutable deployment recorded before cutover. 
 ## Validation evidence
 
 - Re-audit correction packet on 2026-09-02: focused suites `76/76 PASS`; `npm run lint`, `npm run typecheck`, complete `npm test`, `npm run build` and `git diff --check` all `PASS`. No Production mutation and no test database were created.
+- Authorized migrations `20260902016000` and `20260902017000` were applied atomically to Orlando Production `wiwawtpaxnrueugppasi` and confirmed in `supabase_migrations.schema_migrations`.
+- Application deployment `dpl_sfsdCQA69WxZkJaRJfEv2nospB74` passed public security, Owner authentication, Home, Ready reconciliation and `MCO-1003` search/route gates, but the friendly `MCO-1001` route for stored legacy `A7-ORL-1001` returned `Order not found`. No business write occurred. The application was immediately rolled back to `dpl_6N1nBgQhMASfNTGLT91vxeY4rNMG`; additive migrations remain inert and compatible.
+- The missing alias fallback was repaired in the operational list/detail service. Post-rollback local gates: focused suites `76/76 PASS`, including `MCO-1000` list/detail alias regression coverage; `npm run lint`, `npm run typecheck`, complete `npm test`, `npm run build` and `git diff --check` all `PASS`.
 - Focused operational/customer/order/routing tests: `71/71 PASS`.
 - Canonical Payment Link/Stripe/attribution tests: `44/44 PASS`, including governed service/tip composition and partial-to-full refund boundaries.
 - Repository quality gate: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` — all `PASS` on 2026-09-02.
@@ -278,3 +281,4 @@ Application rollback restores the immutable deployment recorded before cutover. 
 | 2026-09-02 | 1.7 | Repaired the independent-review Staging blockers with deployed runtime selection, exact current-deployment Stripe test binding, GA4 validation-only enforcement and a fail-closed linked-target Supabase wrapper; all local gates and the final independent review pass for isolated Staging only. | GPT-5 Codex |
 | 2026-09-02 | 1.8 | Recorded the Owner-authorized direct Production exception, selective additive migration result, immutable deployment/rollback IDs and live public security/hash smoke; authenticated Owner E2E remains pending. | GPT-5 Codex |
 | 2026-09-02 | 1.9 | Implemented the re-audit correction packet locally: explicit legacy-order initialization, Ready reconciliation, resilient MCO routes/search and the unified human order-number hotfix; Production remains unchanged pending the final gate. | GPT-5 Codex |
+| 2026-09-02 | 1.10 | Applied the two authorized additive migrations, rolled back the first application cutover on a legacy MCO route failure, and validated the missing operational alias fallback locally. | GPT-5 Codex |
