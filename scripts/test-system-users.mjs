@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const auth = require('../lib/system-auth.js');
+const { CAPABILITIES, can } = require('../lib/system-rbac.js');
 const { MemorySystemUserStore } = require('../lib/system-user-store.js');
 const { systemUserService } = require('../lib/system-user-service.js');
 const usersApi = require('../api/system/users.js');
@@ -88,6 +89,13 @@ test('Manager and Operator receive 403 from Owner-only team administration', asy
     await usersApi(request({ action:'list' }, cookieFor(actor)), res);
     assert.equal(res.statusCode, 403); assert.equal(res.payload.code, 'forbidden');
   }
+});
+
+test('Manager contract includes governed payment authority but excludes team, security and unapplied W2 messaging', () => {
+  assert.equal(can('manager', CAPABILITIES.PAYMENT_MANAGE), true);
+  assert.equal(can('manager', CAPABILITIES.TEAM_MANAGE), false);
+  assert.equal(can('manager', CAPABILITIES.SECURITY_MANAGE), false);
+  assert.equal(can('manager', CAPABILITIES.MESSAGE_MANAGE), false);
 });
 
 test('inactive user cannot log in and an existing database session is revoked', async () => {

@@ -26,7 +26,7 @@ Google Ads, alter `/order`, create a customer portal or introduce another paymen
 
 Implementation remains blocked until the Owner confirms:
 
-1. only Owner may issue, deactivate or replace a Payment Link;
+1. Owner or Manager may issue, deactivate or replace a Payment Link; Operator remains forbidden;
 2. tip remains unavailable and exactly zero;
 3. replacing an unpaid invoice requires deactivating its old link before a new invoice/link becomes current;
 4. paid, partially refunded or refunded invoices are immutable and corrections use the existing refund path.
@@ -44,7 +44,7 @@ Implementation remains blocked until the Owner confirms:
 | FR-07 | Replacement deactivates and records the prior unpaid link before a new invoice/link becomes current. | Recommended policy §5 |
 | FR-08 | Payment Link creation never marks an order paid or emits `purchase`. | Attribution contract |
 | FR-09 | Only the signed, idempotent Stripe webhook reconciles payment and analytics outbox delivery. | Attribution contract |
-| NFR-01 | Owner-only, same-origin POST API; Operator is read-only. | Security boundary |
+| NFR-01 | Owner/Manager-only, same-origin POST API; Operator is read-only. | A7-037 RBAC boundary |
 | NFR-02 | No `PAYMENT_LINK_TOKEN`, Stripe secret, raw metadata, PII or protected UUID is exposed to the browser. | Privacy boundary |
 | NFR-03 | Migration is additive; app rollback leaves the new ledger inert. | Release governance |
 | CON-01 | No live Stripe object or charge before synthetic tests, Preview, Owner smoke and explicit financial GO. | Financial readiness |
@@ -73,7 +73,7 @@ Rules:
 ## Acceptance criteria
 
 - [ ] CLI/service dry-run loads the current reviewed invoice and explains the intended action without calling Stripe.
-- [ ] Owner API returns 401 unauthenticated, 403 non-Owner and rejects wrong-origin requests.
+- [ ] Owner/Manager API returns 401 unauthenticated, 403 Operator and rejects wrong-origin requests.
 - [ ] QA orders, non-current invoices, manual-review invoices and paid/refunded orders fail closed.
 - [ ] First synthetic creation records one active link for the exact invoice version and amount.
 - [ ] Exact retry returns the same governed link with `duplicate=true` and no extra Stripe Price/Payment Link.
@@ -82,7 +82,7 @@ Rules:
 - [ ] A Stripe deactivation failure leaves no new current link and exposes a recoverable, audited state.
 - [ ] Signed webhook remains the sole transition to paid and preserves existing attribution/idempotency behavior.
 - [ ] No browser payload, URL, log, analytics event or Stripe metadata contains customer PII or secrets.
-- [ ] Minimal `/sistema` invoice action shows current status and copies the current link only after Owner confirmation.
+- [ ] Minimal `/sistema` invoice action shows current status and copies the current link only after authorized human confirmation.
 - [ ] Desktop and 390 px visual checks pass without adding a parallel finance dashboard.
 - [ ] Focused tests, Stripe regression, lint, typecheck, full tests, build and secret scan pass.
 - [ ] Exact Preview artifact and authenticated Owner synthetic smoke pass before any Production or live financial GO.
@@ -90,7 +90,7 @@ Rules:
 ## Implementation order
 
 ```text
-Owner policy approval
+Owner policy approval for the Owner/Manager boundary
 → additive link-ownership ledger and RPCs
 → service/CLI dry-run
 → synthetic Stripe adapter tests

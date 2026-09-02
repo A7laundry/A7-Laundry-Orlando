@@ -98,6 +98,8 @@
 - Supabase CLI linked project: `wiwawtpaxnrueugppasi` (Orlando Production).
 - Remote migration history is current through `20260901020000`; `20260901030000` and `20260901030001` are the only authorized pending migrations in the isolated runner.
 - W2/W3 migrations `20260830060000` and `20260830070000` are absent remotely and excluded from the isolated runner and Manager compatibility migration.
+- `payment.manage` is reserved for Owner/Manager and the W1C-B2 draft is aligned to that boundary; this access release does not implement or call Stripe, create a Payment Link or claim that W1C-B2 is live.
+- W2 messaging is absent in Production and is not granted to Manager by this release.
 - Isolated `supabase db push --dry-run`: PASS; proposed exactly `20260901030000` and `20260901030001`.
 - Current Production deployment/rollback baseline: `dpl_4YAyCFCfyGi5sPPpvLXfoeN6FUzQ` (`Ready`).
 - Vercel Production exposes `A7_SYSTEM_ACCESS_MODE=team`, legacy user variables and the session secret; the legacy fallback disable switch is absent, so contingency remains active.
@@ -105,7 +107,7 @@
 
 ## Local gate evidence
 
-- Focused system suite: 108/108 passed after the final security and UI hardening; the same suite also runs in `npm test`.
+- Focused system suite: 109/109 passed after the final security, UI and Manager-boundary hardening; the same suite also runs in `npm test`.
 - `npm run lint`: passed.
 - `npm run typecheck`: passed.
 - `npm test`: passed.
