@@ -2,3 +2,12 @@
 :root .invoice-template-preview{margin:1rem 0;max-width:32rem}
 :root .invoice-template-preview figcaption{margin-bottom:.65rem;font-weight:800;color:var(--ink)}
 :root .invoice-template-preview-image{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 14px 30px rgba(7,26,59,.12)}
+
+/* Official A7 identity used by the private system shell. */
+.brand{min-width:0}
+.brand>.brand-logo-frame{display:flex;place-items:initial;align-items:center;flex:0 0 auto;width:154px;height:auto;padding:7px 9px;border:1px solid rgba(16,34,56,.08);border-radius:12px;background:#fff;color:inherit;font-weight:inherit;box-shadow:0 4px 14px rgba(7,27,52,.08)}
+.brand-logo{display:block;width:100%;height:auto}
+.brand-copy{display:grid;min-width:0}
+.brand-login{justify-content:center}
+.brand-login>.brand-logo-frame{width:180px;padding:9px 11px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+@media(max-width:720px){.topbar .brand{gap:8px}.topbar .brand>.brand-logo-frame{width:122px;padding:6px 7px;border-radius:10px}.topbar .brand-copy strong{font-size:.88rem}.topbar .brand-copy small{max-width:105px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}

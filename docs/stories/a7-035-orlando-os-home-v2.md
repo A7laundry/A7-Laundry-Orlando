@@ -142,6 +142,7 @@ Each row contains only the safe operational reference, customer display data alr
 - [x] **AC-13 — Resilient presentation.** Loading, empty, partial/unavailable and error states are explicit; an API failure cannot silently display zero revenue or zero work.
 - [x] **AC-14 — Bounded impact.** Existing Stripe, WhatsApp, Ads, `/order`, attribution, invoice, PDF/label, payment, delivery and finance-dashboard behavior remains unchanged.
 - [x] **AC-15 — Quality gates.** Focused tests, `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; authenticated Owner and Operator read-only smokes demonstrate authorization, reconciliation, responsive behavior and zero operational/financial mutations.
+- [x] **AC-16 — Official system identity.** Login and authenticated shell render the approved A7 Laundry logo asset with accessible alternative text, without changing authentication, navigation, operational or financial behavior and without mobile overflow.
 
 ## 🤖 CodeRabbit Integration
 
@@ -184,6 +185,10 @@ Each row contains only the safe operational reference, customer display data alr
   - [x] Record the immutable pre-cutover deployment ID before any Production promotion.
   - [x] Confirm no migration is pending or required and document zero-mutation smoke evidence.
   - [x] Update this story's checklist, validation evidence and final file list before review.
+- [x] **Task 8 — Apply the approved A7 identity to the system shell** (AC: 14, 16)
+  - [x] Replace the temporary text badge in login and authenticated header with the governed official logo asset.
+  - [x] Copy the asset into the production build and preserve responsive behavior at 390px.
+  - [x] Run focused static/visual checks and all repository quality gates before requesting Production cutover.
 
 ## Dev Notes
 
@@ -247,6 +252,7 @@ Expected files only; the Dev Agent must replace this with the exact final list b
 |---|---:|---|---|
 | 2026-09-01 | 1.0 | Approved implementation story derived from the audited minimum read-only Home v2 contract. | River (@sm) |
 | 2026-09-01 | 1.1 | Isolated Production cutover and authenticated read-only smoke completed. | GPT-5 Codex |
+| 2026-09-01 | 1.2 | Official A7 Laundry logo integrated into login and authenticated shell; local responsive and repository gates passed, Production cutover pending. | GPT-5 Codex |
 
 ## Dev Agent Record
 
@@ -268,6 +274,10 @@ GPT-5 Codex
 - Production deployment — `dpl_4YAyCFCfyGi5sPPpvLXfoeN6FUzQ` (`https://a7laundry.com`).
 - Authenticated Owner Production smoke — PASS: Home rendered current operation, attention, next actions, Business Today and Last 7 Days; queue drill-down and return worked; no horizontal overflow or UI error.
 - Unauthenticated Production API smoke — PASS: `/api/system/home` returned `401`, `Cache-Control: private, no-store`, `X-Robots-Tag: noindex, nofollow, noarchive`.
+- Official identity focused contract — PASS: 29/29 tests, including two governed logo placements, accessible alt text and production-build asset inclusion.
+- Local responsive visual smoke — PASS: official logo rendered clearly on login; 390px viewport reported `scrollWidth=390` for `innerWidth=390`.
+- Official logo artifact integrity — PASS: source and `dist/` SHA-256 both `f59d188ab833a76c0dfb193d29c4395337540be62cf9543252d947e62ce37b06`.
+- Official identity full gates — PASS: `npm run lint`, `npm run typecheck`, `npm test` and `npm run build`.
 
 ### Completion Notes List
 
@@ -294,4 +304,6 @@ GPT-5 Codex
 - `sistema.js` (modified)
 - `sistema-home.css` (new)
 - `scripts/build-site.mjs` (modified)
+- `scripts/test-system-w0-w1a.mjs` (modified)
+- `scripts/test-validation-context.mjs` (modified)
 - `package.json` (modified)

@@ -17,7 +17,10 @@
 <body>
   <main id="app" aria-live="polite">
     <section class="login-shell" id="loginView" hidden>
-      <div class="brand"><span>A7</span><div><strong>Orlando OS</strong><small>Operação de lavanderia</small></div></div>
+      <div class="brand brand-login">
+        <span class="brand-logo-frame"><img class="brand-logo" src="/assets/system/invoice/A7_LOGO_OFFICIAL_LIGHT_HORIZONTAL_V1.png" alt="A7 Laundry"></span>
+        <div class="brand-copy"><strong>Orlando OS</strong><small>Operação de lavanderia</small></div>
+      </div>
       <form id="loginForm" class="panel login-panel">
         <p class="eyebrow">ACESSO INTERNO</p>
         <h1>Bom dia.</h1>
@@ -31,7 +34,10 @@
 
     <section id="systemView" hidden>
       <header class="topbar">
-        <div class="brand"><span>A7</span><div><strong>Orlando OS</strong><small id="userLabel"></small></div></div>
+        <div class="brand">
+          <span class="brand-logo-frame"><img class="brand-logo" src="/assets/system/invoice/A7_LOGO_OFFICIAL_LIGHT_HORIZONTAL_V1.png" alt="A7 Laundry"></span>
+          <div class="brand-copy"><strong>Orlando OS</strong><small id="userLabel"></small></div>
+        </div>
         <button id="logoutButton" class="quiet" type="button">Sair</button>
       </header>
       <div class="workspace">

@@ -16,6 +16,7 @@ const projectRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname)
 function copyPublicValidatorSourceSet(destinationRoot) {
   const publicDirectories = ['a7-carpet-campaign', 'blog', 'public'];
   const privateRootFiles = new Set(['AGENTS.md', 'MANIFESTO.md', 'README.md', 'STRATEGY-PROMPT.md']);
+  const privateShellAssets = ['assets/system/invoice/A7_LOGO_OFFICIAL_LIGHT_HORIZONTAL_V1.png'];
 
   for (const entry of fs.readdirSync(projectRoot, { withFileTypes: true })) {
     const source = path.join(projectRoot, entry.name);
@@ -25,6 +26,12 @@ function copyPublicValidatorSourceSet(destinationRoot) {
     } else if (entry.isDirectory() && publicDirectories.includes(entry.name)) {
       fs.cpSync(source, destination, { recursive: true });
     }
+  }
+
+  for (const relativePath of privateShellAssets) {
+    const destination = path.join(destinationRoot, relativePath);
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.copyFileSync(path.join(projectRoot, relativePath), destination);
   }
 }
 

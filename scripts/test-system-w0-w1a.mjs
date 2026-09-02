@@ -493,6 +493,20 @@ test('catalog and operator shell preserve governed pricing and browser boundary'
   assert.doesNotMatch(js, /submission_id|idempotency_key|analytics_context|crypto\.randomUUID/);
 });
 
+test('operator shell uses the governed official A7 logo in login and authenticated header', () => {
+  const html = fs.readFileSync(new URL('../sistema.html', import.meta.url), 'utf8');
+  const css = fs.readFileSync(new URL('../sistema.css', import.meta.url), 'utf8');
+  const build = fs.readFileSync(new URL('../scripts/build-site.mjs', import.meta.url), 'utf8');
+  const logoRelativePath = 'assets/system/invoice/A7_LOGO_OFFICIAL_LIGHT_HORIZONTAL_V1.png';
+  const logoUrl = `/${logoRelativePath}`;
+  assert.equal((html.match(new RegExp(logoUrl, 'g')) || []).length, 2);
+  assert.equal((html.match(/alt="A7 Laundry"/g) || []).length, 2);
+  assert.match(css, /\.brand-logo-frame/);
+  assert.match(css, /@media\(max-width:720px\)[^\n]*\.topbar \.brand>\.brand-logo-frame/);
+  assert.match(build, new RegExp(logoRelativePath.replaceAll('.', '\\.')));
+  assert.equal(fs.existsSync(new URL(`../${logoRelativePath}`, import.meta.url)), true);
+});
+
 test('W1A.1 Pickup Order returns the same governed order without internal IDs', async () => {
   const store = new MemoryOperationalStore();
   const service = systemOrderService({
