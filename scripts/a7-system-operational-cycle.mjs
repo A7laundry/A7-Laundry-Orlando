@@ -9,6 +9,7 @@ const { systemOperationsService } = require('../lib/system-operations-service.js
 const { systemLeadService } = require('../lib/system-lead-service.js');
 const { systemOrderService } = require('../lib/system-order-service.js');
 const { systemPaymentLinkService } = require('../lib/system-payment-link-service.js');
+const { systemRouteService } = require('../lib/system-route-service.js');
 
 function arg(name) {
   const index = process.argv.indexOf(name);
@@ -28,6 +29,19 @@ function usage() {
   process.stderr.write('  leads:list\n');
   process.stderr.write('  lead:detail --lead-ref <opaque-reference>\n');
   process.stderr.write('  lead:accept --lead-ref <opaque-reference> --payload <json> --execute\n');
+  process.stderr.write('  routes:list [--date <YYYY-MM-DD>]\n');
+  process.stderr.write('  route:detail --route <uuid>\n');
+  process.stderr.write('  route:eligible --route <uuid>\n');
+  process.stderr.write('  route:create --date <YYYY-MM-DD> --driver <uuid> --execute\n');
+  process.stderr.write('  route:add-stop --route <uuid> --order <MCO 1003> --type <pickup|delivery> [--eta <ISO>] --execute\n');
+  process.stderr.write('  route:remove-stop --route <uuid> --stop <uuid> --execute\n');
+  process.stderr.write('  route:reorder --route <uuid> --stops <uuid,uuid,...> --version <n> --execute\n');
+  process.stderr.write('  route:set-eta --route <uuid> --stop <uuid> [--eta <ISO>] --version <n> --execute\n');
+  process.stderr.write('  route:start --route <uuid> --version <n> --execute\n');
+  process.stderr.write('  route:stop --route <uuid> --stop <uuid> --action <confirm_pickup|start_delivery|leave_bell_desk|complete_delivery> [--handoff-point <point>] [--note <text>] --execute\n');
+  process.stderr.write('  route:exception --route <uuid> --stop <uuid> --reason <reason> [--note <text>] --execute\n');
+  process.stderr.write('  route:complete --route <uuid> --version <n> --execute\n');
+  process.stderr.write('  route:cancel --route <uuid> --version <n> --execute\n');
 }
 
 const command = process.argv[2] || '';
@@ -35,8 +49,11 @@ const actor = {
   actor_id:String(process.env.A7_SYSTEM_CLI_ACTOR_ID || ''),
   role:String(process.env.A7_SYSTEM_CLI_ACTOR_ROLE || 'owner').toLowerCase()
 };
-const reads = new Set(['drivers:list', 'leads:list', 'lead:detail', 'payment-link:context']);
-const writes = new Set(['driver:save', 'driver:assign', 'payment:record', 'lead:accept', 'payment-link:create']);
+const reads = new Set(['drivers:list', 'leads:list', 'lead:detail', 'payment-link:context',
+  'routes:list', 'route:detail', 'route:eligible']);
+const writes = new Set(['driver:save', 'driver:assign', 'payment:record', 'lead:accept', 'payment-link:create',
+  'route:create', 'route:add-stop', 'route:remove-stop', 'route:reorder', 'route:set-eta', 'route:start',
+  'route:stop', 'route:exception', 'route:complete', 'route:cancel']);
 
 if (!actor.actor_id || !['owner', 'manager'].includes(actor.role)
   || (!reads.has(command) && !writes.has(command))) {
@@ -46,6 +63,7 @@ if (!actor.actor_id || !['owner', 'manager'].includes(actor.role)
   process.exitCode = 2;
 } else {
   const service = systemOperationalCycleService();
+  const routeService = systemRouteService();
   const request_id = arg('--request-id') || crypto.randomUUID();
   let result;
   if (command === 'drivers:list') {
@@ -74,6 +92,38 @@ if (!actor.actor_id || !['owner', 'manager'].includes(actor.role)
     catch (_) { throw new Error('lead:accept requires a valid JSON --payload.'); }
     result = await systemOrderService().createExistingLeadOrder({ ...payload,
       lead_ref:arg('--lead-ref'), submission_id:request_id }, actor);
+  } else if (command === 'routes:list') {
+    result = await routeService.list({ route_date:arg('--date') || null }, actor);
+  } else if (command === 'route:detail') {
+    result = await routeService.detail(arg('--route'), actor);
+  } else if (command === 'route:eligible') {
+    result = await routeService.eligible({ route_id:arg('--route') }, actor);
+  } else if (command === 'route:create') {
+    result = await routeService.create({ route_date:arg('--date'), driver_id:arg('--driver'), request_id }, actor);
+  } else if (command === 'route:add-stop') {
+    result = await routeService.addStop({ route_id:arg('--route'), order_number:arg('--order'),
+      stop_type:arg('--type'), eta_at:arg('--eta') || null, request_id }, actor);
+  } else if (command === 'route:remove-stop') {
+    result = await routeService.removeStop({ route_id:arg('--route'), stop_id:arg('--stop'), request_id }, actor);
+  } else if (command === 'route:reorder') {
+    result = await routeService.reorder({ route_id:arg('--route'),
+      stop_ids:arg('--stops').split(',').map((value) => value.trim()).filter(Boolean),
+      version:arg('--version'), request_id }, actor);
+  } else if (command === 'route:set-eta') {
+    result = await routeService.setEta({ route_id:arg('--route'), stop_id:arg('--stop'),
+      eta_at:arg('--eta') || null, version:arg('--version'), request_id }, actor);
+  } else if (command === 'route:start') {
+    result = await routeService.start({ route_id:arg('--route'), version:arg('--version'), request_id }, actor);
+  } else if (command === 'route:stop') {
+    result = await routeService.executeStop({ route_id:arg('--route'), stop_id:arg('--stop'), action:arg('--action'),
+      handoff_point:arg('--handoff-point') || null, handoff_note:arg('--note') || null, request_id }, actor);
+  } else if (command === 'route:exception') {
+    result = await routeService.recordException({ route_id:arg('--route'), stop_id:arg('--stop'),
+      reason:arg('--reason'), note:arg('--note') || null, request_id }, actor);
+  } else if (command === 'route:complete') {
+    result = await routeService.complete({ route_id:arg('--route'), version:arg('--version'), request_id }, actor);
+  } else if (command === 'route:cancel') {
+    result = await routeService.cancel({ route_id:arg('--route'), version:arg('--version'), request_id }, actor);
   }
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }

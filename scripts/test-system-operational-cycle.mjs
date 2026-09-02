@@ -251,6 +251,21 @@ test('operational-cycle CLI blocks every write until --execute is explicit', () 
   assert.equal(paymentLink.status, 2);
   assert.match(paymentLink.stderr, /Write blocked/);
   assert.equal(paymentLink.stdout, '');
+  const routeWrites = [
+    ['route:create', '--date', '2026-09-02', '--driver', '11111111-1111-4111-8111-111111111111'],
+    ['route:add-stop', '--route', '11111111-1111-4111-8111-111111111111', '--order', 'MCO 1400', '--type', 'pickup'],
+    ['route:start', '--route', '11111111-1111-4111-8111-111111111111', '--version', '1'],
+    ['route:stop', '--route', '11111111-1111-4111-8111-111111111111', '--stop', '22222222-2222-4222-8222-222222222222', '--action', 'confirm_pickup']
+  ];
+  for (const args of routeWrites) {
+    const routeWrite = spawnSync(process.execPath, ['scripts/a7-system-operational-cycle.mjs', ...args], {
+      cwd:new URL('..', import.meta.url), encoding:'utf8',
+      env:{ ...process.env, A7_SYSTEM_CLI_ACTOR_ID:'actor_cli', A7_SYSTEM_CLI_ACTOR_ROLE:'owner' }
+    });
+    assert.equal(routeWrite.status, 2, `${args[0]} must be blocked without --execute`);
+    assert.match(routeWrite.stderr, /Write blocked/);
+    assert.equal(routeWrite.stdout, '');
+  }
 });
 
 test('independent-review SQL repairs are fail-closed and rollbacks preserve evidence', () => {

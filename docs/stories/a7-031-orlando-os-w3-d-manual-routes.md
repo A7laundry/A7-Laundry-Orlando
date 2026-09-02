@@ -218,8 +218,9 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
 - [ ] Prove release safety (AC: all)
   - [x] Add focused memory/service/API tests and isolated PostgreSQL fixtures for pickup, direct delivery and the
         approved Bell Desk flow.
-  - [x] Exercise duplicate assignment, delayed retry, conflicting reorder and stale-version controls locally; retain
-        live parallel-device outcome proof for staging E2E.
+  - [x] Exercise duplicate assignment, delayed retry, conflicting reorder and stale-version controls locally.
+        A two-session PostgreSQL probe proved one Owner/Manager pickup winner, one updated-state rejection and exactly
+        one canonical order event plus one route event; retain browser/device outcome proof for staging E2E.
   - [x] Prove no route code writes custody/delivery directly and no financial/WhatsApp adapter is invoked.
   - [x] Run lint, typecheck, focused/full tests, build, privacy/secret scan, migration/rollback rehearsal and local
         desktop/exact-390-px visual QA.
@@ -321,8 +322,15 @@ destructive rollback. No CRITICAL finding may remain open before release.
 - `scripts/build-site.mjs`
 - `scripts/test-system-routes.mjs`
 - `scripts/test-system-routes.sql`
+- `scripts/test-system-routes-concurrency.sql`
+- `scripts/test-system-routes-concurrency-verify.sql`
+- `scripts/test-system-routes-concurrency.sh`
+- `scripts/a7-system-operational-cycle.mjs`
+- `scripts/test-system-operational-cycle.mjs`
 - `supabase/migrations/20260902018000_orlando_os_w3d_routes_lite.sql`
 - `supabase/migrations/20260902018001_orlando_os_w3d_route_authority.sql`
+- `supabase/rollbacks/20260902018000_orlando_os_w3d_routes_lite.rollback.sql`
+- `supabase/rollbacks/20260902018001_orlando_os_w3d_route_authority.rollback.sql`
 - `package.json`
 
 ## Validation evidence
@@ -331,14 +339,25 @@ destructive rollback. No CRITICAL finding may remain open before release.
   RPC, API or hidden UI implementation exists; the canonical driver/order/Bell Desk base is present.
 - Packet W3-D.1 focused contract suite: `8/8 PASS`; `node --check lib/system-route-service.js` and
   `git diff --check`: PASS.
-- Packets W3-D.2–D.6 focused suite: `11/11 PASS`; protected API, Owner/Manager RBAC, canonical transition delegation,
-  optional versioned ETA, cancellation, history and menu gating verified.
+- Packets W3-D.2–D.6 focused route suite: `15/15 PASS`; protected API, explicit unauthenticated `401`, Operator
+  `403`, Owner/Manager RBAC, canonical transition delegation, optional versioned ETA, cancellation, history, CLI
+  read/write coverage with `--execute` guarding and menu gating verified.
 - Disposable PostgreSQL replay used the 2026-09-02 read-only Orlando Production schema dump, then applied only
   `20260902018000` and `20260902018001`. Transactional fixtures proved create/retry, duplicate-leg rejection,
   reorder, start-time revalidation, pickup, direct delivery, Bell Desk intermediate custody, exception without order
   mutation, completion and draft cancellation; fixture transaction ended in `ROLLBACK`.
+- A second disposable PostgreSQL replay ran simultaneous Owner and Manager sessions against the same pending pickup.
+  One session succeeded, the other failed closed with `Pending route stop required`; verification found exactly one
+  `pickup_completed` route event, one canonical `confirm_pickup` order event, stop `completed` and custody
+  `with_driver_pickup`. The disposable `a7_w3d_concurrency_20260902` database was removed immediately afterward.
+- Exceptional migration rollback was replayed in the empty disposable `a7_w3d_rollback_20260902` database. The five
+  W3-D authority functions and three route tables were removed, both absence checks returned true, and the canonical
+  `a7_orlando_orders` base remained present. The disposable rollback database was removed immediately afterward.
 - Exact 390 px browser QA: `innerWidth=390`, document `scrollWidth=375`, no horizontal document overflow; next-stop,
   pickup, delivery, Bell Desk, exception and optional ETA controls remain legible and reachable.
 - Full repository gates after W3-D: lint PASS; typecheck PASS; pretest `95/95 PASS`; MOS `67/67 PASS`; build PASS.
+- Dedicated Staging target guard: `NOT READY`. `expected_staging_ref`,
+  `linked_ref_is_not_production_or_foreign` and `linked_ref_matches_expected` all failed closed because no approved
+  W3-D Staging Supabase ref is configured or linked. No foreign or Production database was substituted.
 - Both migrations remain local-only and have not been applied to any remote database. Production and its disabled
   `Rotas` menu remain unchanged.

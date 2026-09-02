@@ -5,11 +5,20 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { createRouteInput, addStopInput, reorderInput, etaInput, stopActionInput, exceptionInput,
   pickupEligible, deliveryEligible, routeIdempotency, requireRouteActor, systemRouteService } = require('../lib/system-route-service.js');
+const auth = require('../lib/system-auth.js');
+const routesApi = require('../api/system/routes.js');
 const owner = { actor_id:'owner-1', role:'owner' };
 const manager = { actor_id:'manager-1', role:'manager' };
 const uuidA = '11111111-1111-4111-8111-111111111111';
 const uuidB = '22222222-2222-4222-8222-222222222222';
 const request = '33333333-3333-4333-8333-333333333333';
+
+function response() {
+  return { statusCode:200, headers:{}, payload:null,
+    setHeader(name, value) { this.headers[String(name).toLowerCase()] = value; },
+    status(value) { this.statusCode = value; return this; },
+    json(value) { this.payload = value; return this; } };
+}
 
 test('W3-D permits Owner and Manager but denies Operator', () => {
   assert.equal(requireRouteActor(owner), owner); assert.equal(requireRouteActor(manager), manager);
@@ -60,6 +69,33 @@ test('W3-D migration is additive, protected and contains no duplicate order fact
   assert.doesNotMatch(sql, /customer_name|phone|address|room|payment_status|production_state|custody_state/);
 });
 
+test('W3-D exceptional rollback is evidence-guarded and ordered behind application rollback', async () => {
+  const fs = await import('node:fs/promises');
+  const [authority, schema] = await Promise.all([
+    fs.readFile(new URL('../supabase/rollbacks/20260902018001_orlando_os_w3d_route_authority.rollback.sql', import.meta.url), 'utf8'),
+    fs.readFile(new URL('../supabase/rollbacks/20260902018000_orlando_os_w3d_routes_lite.rollback.sql', import.meta.url), 'utf8')
+  ]);
+  assert.match(authority, /Rollback blocked: W3-D route evidence exists/);
+  assert.match(authority, /drop function if exists public\.a7_orlando_route_command/);
+  assert.match(schema, /preserve append-only operational history/);
+  assert.match(schema, /drop table if exists public\.a7_orlando_route_events[\s\S]*route_stops[\s\S]*routes/);
+  assert.doesNotMatch(`${authority}\n${schema}`, /delete from|truncate/i);
+});
+
+test('W3-D concurrency probe is disposable-only and verifies one canonical result', async () => {
+  const fs = await import('node:fs/promises');
+  const [setup, verify, runner] = await Promise.all([
+    fs.readFile(new URL('./test-system-routes-concurrency.sql', import.meta.url), 'utf8'),
+    fs.readFile(new URL('./test-system-routes-concurrency-verify.sql', import.meta.url), 'utf8'),
+    fs.readFile(new URL('./test-system-routes-concurrency.sh', import.meta.url), 'utf8')
+  ]);
+  assert.match(setup, /current_database\(\) !~ '\^a7_w3d_'/);
+  assert.match(runner, /owner-concurrency[\s\S]*&[\s\S]*manager-concurrency[\s\S]*&/);
+  assert.match(runner, /wait "\$owner_pid"[\s\S]*wait "\$manager_pid"/);
+  assert.match(verify, /a7_orlando_operational_events[\s\S]*action='confirm_pickup'/);
+  assert.match(verify, /custody_state[\s\S]*with_driver_pickup/);
+});
+
 test('W3-D service sends validated commands and actor evidence to the store', async () => {
   const seen = [];
   const routeStore = {
@@ -95,4 +131,41 @@ test('W3-D API and UI remain private and menu-gated during development', async (
   assert.match(js, /ETA indisponível/);
   assert.match(js, /Histórico da rota/);
   assert.doesNotMatch(api, /\b(?:custody_state|production_state|payment_status)\s*=(?!=)/);
+});
+
+test('W3-D route API denies unauthenticated and Operator requests server-side', async () => {
+  const previous = { secret:process.env.A7_SYSTEM_SESSION_SECRET, mode:process.env.A7_SYSTEM_ACCESS_MODE,
+    node:process.env.NODE_ENV };
+  process.env.A7_SYSTEM_SESSION_SECRET = 'routes-api-session-secret-at-least-32-bytes';
+  process.env.A7_SYSTEM_ACCESS_MODE = 'team';
+  process.env.NODE_ENV = 'test';
+  try {
+    const unauthenticated = response();
+    await routesApi({ method:'POST', headers:{ origin:'http://localhost:3000' }, body:{ action:'list' } }, unauthenticated);
+    assert.equal(unauthenticated.statusCode, 401);
+    assert.equal(unauthenticated.payload.code, 'unauthorized');
+
+    const operatorToken = auth.signSession({ actor_id:'operator-routes', display_name:'Operator', role:'operator' }, process.env);
+    const operator = response();
+    await routesApi({ method:'POST', headers:{
+      cookie:`${auth.COOKIE_NAME}=${encodeURIComponent(operatorToken)}`, origin:'http://localhost:3000'
+    }, body:{ action:'list' } }, operator);
+    assert.equal(operator.statusCode, 403);
+    assert.equal(operator.payload.code, 'forbidden');
+  } finally {
+    for (const [key, value] of Object.entries({ A7_SYSTEM_SESSION_SECRET:previous.secret,
+      A7_SYSTEM_ACCESS_MODE:previous.mode, NODE_ENV:previous.node })) {
+      if (value == null) delete process.env[key]; else process.env[key] = value;
+    }
+  }
+});
+
+test('W3-D CLI exposes route reads and keeps every route mutation behind --execute', async () => {
+  const fs = await import('node:fs/promises');
+  const cli = await fs.readFile(new URL('./a7-system-operational-cycle.mjs', import.meta.url), 'utf8');
+  assert.match(cli, /systemRouteService/);
+  for (const command of ['routes:list', 'route:detail', 'route:eligible', 'route:create', 'route:add-stop',
+    'route:remove-stop', 'route:reorder', 'route:set-eta', 'route:start', 'route:stop', 'route:exception',
+    'route:complete', 'route:cancel']) assert.match(cli, new RegExp(command.replace(':', '\\:')));
+  assert.match(cli, /writes\.has\(command\) && !flag\('--execute'\)/);
 });
