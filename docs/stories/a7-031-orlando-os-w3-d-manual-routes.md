@@ -1,14 +1,14 @@
 # Story A7-031 — A7 Orlando OS W3-D Manual Routes
 
-**Status:** Draft / Blocked — initial drivers, reorder authority and the live Bell Desk rule are not approved
+**Status:** In Progress — W3-D.0 forensic discovery passed; local W3-D.1 implementation authorized, release blocked
 
 **Created:** 2026-08-31
 
 **Sources:** Orlando OS blueprint §§14, 17, 18 and 21.2; Full Delivery Goal Prompt §7 Onda 6;
 Full Delivery Status findings 7 and 11; Stories A7-019 and A7-027
 
-**Depends on:** A7-019 W1B accepted in Production; A7-027 W1C-B3 accepted and proven live under an
-Owner-approved Bell Desk rule; Owner approval of Gates G0–G2 in this story
+**Depends on:** A7-019 W1B accepted in Production; canonical W1C-B3 delivery/Bell Desk authority implemented and
+proven in A7-038; W3-D release gates in this story
 
 ## Story
 
@@ -64,15 +64,15 @@ page, send a message, change a financial fact or create a parallel lifecycle/del
 
 ## Blocking product decisions
 
-Implementation must not begin until all three decisions below are recorded explicitly.
+The 2026-09-02 W3-D Goal and Packet W3-D.0 discovery resolve these decisions as follows.
 
 ### G0 — Initial drivers
 
-The Owner must supply the initial active-driver list. Each approved entry needs only the minimum operational identity
-required to select the correct driver. A driver phone, home address, license document, payroll record, live location
-or vehicle profile is not part of this story.
+The existing canonical active-driver directory is the selectable source. No hard-coded or separately seeded route
+driver list is required. A driver phone, home address, license document, payroll record, live location or vehicle
+profile is not part of this story.
 
-The decision must also state who may activate or deactivate a driver. Deactivation preserves route history and only
+Owner retains the existing authority to activate/deactivate drivers. Deactivation preserves route history and only
 prevents new assignment.
 
 ### G1 — Route and reorder authority
@@ -84,19 +84,19 @@ The Owner must approve which private role may:
 3. reorder pending stops;
 4. mark route departure and stop outcomes.
 
-**Safe default for approval:** Owner-only for the first release. Operator access may be approved explicitly, but the
-browser role alone never authorizes a write; every mutation remains server-authorized. Driver self-service is not in
-scope.
+**Approved authority:** Owner and Manager/Gestora have full operational route access. Operator has no W3-D access.
+The browser role alone never authorizes a write; every mutation remains server-authorized. Driver self-service is not
+in scope.
 
 ### G2 — Bell Desk rule live in W1C-B3
 
-The Bell Desk completion rule must be approved, implemented and proven live through A7-027 before W3-D is
-implemented. W3-D mirrors that rule; it does not define or override it.
+The canonical Bell Desk completion rule is implemented and was proven through the A7-038 Production evidence.
+W3-D mirrors that rule; it does not define or override it.
 
 Under the current recommended A7-027 rule, leaving an order at the Bell Desk records an intermediate custody
 handoff, keeps lifecycle `ready_for_delivery` and does not emit `order_delivered`. A separate explicit final
-confirmation completes the order. The approved decision must also state whether the physical route stop is considered
-visited after the Bell Desk handoff while the order remains pending final confirmation.
+confirmation completes the order. The physical route stop is considered completed with result `handoff_recorded`
+after the canonical Bell Desk handoff succeeds, while the order remains pending its explicit final confirmation.
 
 ## Authority and state boundary
 
@@ -200,10 +200,10 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
 
 ## Tasks / Subtasks
 
-- [ ] Pass product gates before development (AC: all)
-  - [ ] Record the approved active-driver list and driver activation authority.
-  - [ ] Record the exact role matrix for route/stop/reorder actions.
-  - [ ] Prove A7-027 and its approved Bell Desk rule are accepted live, including route-stop semantics for Bell Desk.
+- [x] Pass product gates before development (AC: all)
+  - [x] Reuse the canonical active-driver directory and existing Owner activation authority.
+  - [x] Record Owner/Manager full route authority and Operator denial.
+  - [x] Prove the canonical Bell Desk rule from A7-038 and record route-stop semantics for Bell Desk.
 - [ ] Define route contracts service-first (AC: 1–15)
   - [ ] Define driver, route, stop, ordering, optional ETA and append-only action contracts.
   - [ ] Define deterministic eligibility and the single-active-route rule for each order leg.
@@ -225,19 +225,19 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
 
 ## Dependencies and release gates
 
-### G0 — Initial driver list — BLOCKING
+### G0 — Canonical active-driver directory — PASS
 
 - Owner supplies the initial approved drivers and safe display labels;
 - Owner identifies who may activate/deactivate drivers;
 - no private driver profile, tracking or workforce-management scope is introduced.
 
-### G1 — Role authority — BLOCKING
+### G1 — Role authority — PASS
 
 - Owner approves who may create/assign routes, modify stops, reorder pending stops and record outcomes;
 - initial release remains Owner-private unless Operator permission is explicitly approved and tested;
 - no driver self-service or browser-only authorization.
 
-### G2 — Bell Desk and delivery authority — BLOCKING
+### G2 — Bell Desk and delivery authority — PASS
 
 - A7-027 is accepted and proven live on the official Orlando Production system;
 - the Owner-approved Bell Desk rule defines both order-finalization and route-stop semantics;
@@ -308,3 +308,4 @@ destructive rollback. No CRITICAL finding may remain open before release.
 ## File List
 
 - `docs/stories/a7-031-orlando-os-w3-d-manual-routes.md`
+- `docs/audits/2026-09-02-orlando-os-w3-d-routes-lite-forensic.md`
