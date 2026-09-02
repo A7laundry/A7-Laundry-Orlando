@@ -18,6 +18,8 @@
 | Original A7 backlog | Only A7-01…A7-06 are defined in the supplied Goal | PARTIAL SOURCE |
 | Production | Forbidden until every preceding gate and final audit pass | NO-GO |
 
+The Owner later authorized a controlled direct Production cutover for personal online testing. Deployment `dpl_6N1nBgQhMASfNTGLT91vxeY4rNMG` is live from commit `c585fc0c72ea8a7ea34485c72f9db1d05b825a26`, with `dpl_4YAyCFCfyGi5sPPpvLXfoeN6FUzQ` recorded for application rollback. This explicit operational exception does not satisfy the missing Staging E2E, original EV definitions or final new-employee audit, so the ledger verdict remains `NOT READY`.
+
 ## Known P0 backlog cases
 
 These results are limited to local implementation evidence. They are not a substitute for Staging UI/persistence/reload proof.
@@ -49,7 +51,9 @@ Nominal blockers:
 1. dedicated isolated Orlando Staging does not yet exist;
 2. authenticated Staging E2E and zero-residue proof have not run;
 3. the original EV-01…EV-09 and A7-07…A7-28 definitions have not been supplied;
-4. the current dirty worktree has not been frozen as an identifiable release artifact.
+4. authenticated Production smoke remains pending because the prior Owner browser session was no longer authenticated after deployment.
+
+The earlier artifact-freeze blocker was closed by commit `c585fc0c72ea8a7ea34485c72f9db1d05b825a26`; blockers 1–3 remain for the original audit contract.
 
 No Production promotion is authorized by this ledger.
 
