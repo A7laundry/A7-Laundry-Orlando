@@ -1,6 +1,6 @@
 # A7-036 — Repository cleanup and production baseline consolidation
 
-**Status:** In Progress — remote publication approval pending
+**Status:** Done — repository clean and remotely preserved
 **Date:** 2026-09-01
 **Scope:** Git repository organization only; no Production, database, Stripe, WhatsApp, GA4 or Google Ads mutation.
 
@@ -22,11 +22,11 @@ Leave the A7 Laundry Orlando repository clean and reproducible without losing ap
 |---|---|---|
 | Production baseline + Home v2 | `release/orlando-home-v2-production-20260901` at `5f42d34` | Pushed and validated |
 | Pending Hotels/W2/W3 UI work | `wip/orlando-next-waves-preserved-20260901` at `a0e0a58` | Pushed and validated; not deployed |
-| Historical Stripe reconciliation | `23f3375` on `chore/repository-cleanup-20260901` | Committed locally; push pending approval |
-| SEO and paid-media evidence | `c852bbb` on `chore/repository-cleanup-20260901` | Committed locally; push pending approval |
+| Historical Stripe reconciliation | `23f3375` on `chore/repository-cleanup-20260901` | Pushed and preserved |
+| SEO and paid-media evidence | `c852bbb` on `chore/repository-cleanup-20260901` | Pushed and preserved |
 | Generated PDFs/images and scratch files | Local `output/` and `tmp/` | Preserved byte-for-byte and ignored by Git |
 | AIOS runtime state | Local `.aios/project-status.yaml` | Preserved and ignored by Git |
-| Pre-cleanup complete snapshot | `safety/pre-repository-cleanup-2026-09-01` stash | Retained until cleanup branch is pushed |
+| Pre-cleanup complete snapshot | `safety/pre-repository-cleanup-2026-09-01` stash | Removed after exact remote hash verification |
 | Older operational preview stash | `codex-exact-operational-preview-2026-08-28` | Preserved; outside this cleanup scope |
 
 ## Completed work
@@ -44,12 +44,13 @@ Leave the A7 Laundry Orlando repository clean and reproducible without losing ap
 - [x] Realigned local `feat/meta-ads-ops-structure` with its remote branch.
 - [x] Confirmed the primary worktree is clean.
 
-## Remaining gate
+## Completion gate
 
-- [ ] Receive explicit approval to push `chore/repository-cleanup-20260901`, including internal audit and marketing documents, to `A7laundry/A7-Laundry-Orlando`.
-- [ ] Push the cleanup branch and verify the remote commit.
-- [ ] Drop only `safety/pre-repository-cleanup-2026-09-01` after remote verification.
-- [ ] Confirm the worktree remains clean and mark this story Done.
+- [x] Received explicit approval to push `chore/repository-cleanup-20260901`, including internal audit and marketing documents, to `A7laundry/A7-Laundry-Orlando`.
+- [x] Pushed the cleanup branch and verified local and remote at `db5a7ed8d99ff3860ae725baba6bba16d8e23416`.
+- [x] Dropped only `safety/pre-repository-cleanup-2026-09-01` after remote verification.
+- [x] Preserved the older `codex-exact-operational-preview-2026-08-28` stash.
+- [x] Confirmed the worktree remains clean and marked this story Done.
 
 ## Safety invariants
 
@@ -57,7 +58,7 @@ Leave the A7 Laundry Orlando repository clean and reproducible without losing ap
 - Do not modify Production or any external business system during repository cleanup.
 - Do not remove `output/`, `tmp/` or `.aios/project-status.yaml` from the local filesystem.
 - Do not drop the older 2026-08-28 stash.
-- Do not drop the cleanup safety stash until the cleanup branch is confirmed on the authorized remote.
+- The cleanup safety stash may be dropped only after the cleanup branch is confirmed on the authorized remote. Completed on 2026-09-01.
 
 ## Verification evidence
 
@@ -66,3 +67,4 @@ Leave the A7 Laundry Orlando repository clean and reproducible without losing ap
 - Local artifact verification: 44 checked; zero missing; zero hash mismatches.
 - Secret-shaped scan of committed audit/marketing payload: no matching secret patterns detected.
 - Primary worktree after cleanup: clean on `chore/repository-cleanup-20260901`.
+- Authorized remote verification: local and remote hashes matched at `db5a7ed8d99ff3860ae725baba6bba16d8e23416` before the cleanup stash was dropped.
