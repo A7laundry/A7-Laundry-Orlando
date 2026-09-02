@@ -125,6 +125,8 @@ export const SYSTEM_ROUTE_EXCLUSIONS = [
   { route: '/payment-link', sourceFile: 'payment-link.html', exclusionClass: 'operator_tool', reason: 'Authenticated operator payment-link tool is not a marketing funnel.' },
   { route: '/order', sourceFile: 'order.html', exclusionClass: 'structured_order_intake', reason: 'Protected conversion intake is transactional and intentionally noindex.' },
   { route: '/sistema', sourceFile: 'sistema.html', exclusionClass: 'private_operator_system', reason: 'Authenticated Orlando operations system is private, noindex and outside acquisition tracking.' },
+  { route: '/sistema/:section', sourceFile: 'sistema.html', exclusionClass: 'private_operator_system', reason: 'Authenticated section routes reuse the private Orlando operations shell.' },
+  { route: '/sistema/orders/:orderNumber', sourceFile: 'sistema.html', exclusionClass: 'private_operator_system', reason: 'Authenticated order-detail routes reuse the private Orlando operations shell.' },
   { route: '/sistema/orders/:orderNumber/pickup-order', sourceFile: 'sistema-pickup-order.html', exclusionClass: 'private_operator_document', reason: 'Authenticated Pickup Order is a private operational representation of an existing order.' }
 ];
 

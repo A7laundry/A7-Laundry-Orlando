@@ -3,9 +3,11 @@
 
 do $$
 begin
-  if exists (select 1 from public.a7_orlando_driver_assignments)
+  if exists (select 1 from public.a7_orlando_drivers)
+    or exists (select 1 from public.a7_orlando_driver_events)
+    or exists (select 1 from public.a7_orlando_driver_assignments)
     or exists (select 1 from public.a7_orlando_manual_payments) then
-    raise exception 'A7-038 rollback blocked: driver assignment or manual payment history exists';
+    raise exception 'A7-038 rollback blocked: operational or financial evidence exists';
   end if;
 end;
 $$;

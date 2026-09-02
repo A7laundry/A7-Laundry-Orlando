@@ -65,6 +65,27 @@ test('driver assignment is idempotent, axis-independent and required by guided p
   assert.equal(nextActionFor({ ...row, pickup_driver:row.pickup_driver }).code, 'confirm_pickup');
 });
 
+test('driver writes reject conflicting retries and exact assignment retry survives deactivation', async () => {
+  const { service } = fixture();
+  const saveRequest = rid();
+  const saved = await service.saveDriver({ full_name:'Stable Driver', phone:'+14075550166',
+    active:true, request_id:saveRequest }, OWNER);
+  assert.equal((await service.saveDriver({ full_name:'Stable Driver', phone:'+14075550166',
+    active:true, request_id:saveRequest }, OWNER)).duplicate, true);
+  await assert.rejects(() => service.saveDriver({ full_name:'Conflicting Driver', phone:'+14075550166',
+    active:true, request_id:saveRequest }, OWNER), /idempotency key conflicts/i);
+
+  const assignmentRequest = rid();
+  await service.assignDriver({ order_number:'MCO 1400', driver_id:saved.driver.driver_id,
+    leg:'pickup', request_id:assignmentRequest }, MANAGER);
+  await service.saveDriver({ driver_id:saved.driver.driver_id, full_name:'Stable Driver',
+    phone:'+14075550166', active:false, request_id:rid() }, OWNER);
+  assert.equal((await service.assignDriver({ order_number:'MCO 1400', driver_id:saved.driver.driver_id,
+    leg:'pickup', request_id:assignmentRequest }, MANAGER)).duplicate, true);
+  await assert.rejects(() => service.assignDriver({ order_number:'MCO 1400', driver_id:saved.driver.driver_id,
+    leg:'pickup', request_id:assignmentRequest }, OWNER), /idempotency key conflicts/i);
+});
+
 test('pickup transition fails closed without responsibility and succeeds once after assignment', async () => {
   const { service, store } = fixture();
   await assert.rejects(() => store.transitionSystemOperationalOrder({
@@ -87,12 +108,16 @@ test('manual payment changes only finance and preserves immutable invoice facts'
   const before = { order_status:order.order_status, custody_state:order.custody_state,
     production_state:order.production_state, invoice_id:order.invoice_id, service_amount:order.service_amount };
   const request = rid();
-  const first = await service.registerPayment({ order_number:'MCO 1400', method:'zelle', amount:'60.00',
+  const first = await service.registerPayment({ order_number:'MCO 1400', method:'zelle', amount:'69.00',
+    tip_amount:'9.00', reference:'Zelle confirmation 4821',
     paid_at:'2026-09-02T13:55:00.000Z', note:'Confirmed by manager', request_id:request }, MANAGER);
-  const retry = await service.registerPayment({ order_number:'MCO 1400', method:'zelle', amount:'60.00',
+  const retry = await service.registerPayment({ order_number:'MCO 1400', method:'zelle', amount:'69.00',
+    tip_amount:'9.00', reference:'Zelle confirmation 4821',
     paid_at:'2026-09-02T13:55:00.000Z', note:'Confirmed by manager', request_id:request }, MANAGER);
   assert.equal(first.duplicate, false); assert.equal(retry.duplicate, true);
-  assert.equal(order.payment_status, 'paid'); assert.equal(order.tip_amount, 0);
+  assert.equal(order.payment_status, 'paid'); assert.equal(order.tip_amount, 9);
+  assert.equal(first.payment.service_amount, 60); assert.equal(first.payment.total_amount, 69);
+  assert.equal(first.payment.reference, 'Zelle confirmation 4821');
   assert.deepEqual({ order_status:order.order_status, custody_state:order.custody_state,
     production_state:order.production_state, invoice_id:order.invoice_id, service_amount:order.service_amount }, before);
 });
@@ -100,12 +125,49 @@ test('manual payment changes only finance and preserves immutable invoice facts'
 test('manual payment rejects mismatched value, unauthorized actor and a second payment', async () => {
   const { service } = fixture();
   await assert.rejects(() => service.registerPayment({ order_number:'1400', method:'cash', amount:'59.99',
-    paid_at:NOW.toISOString(), request_id:rid() }, MANAGER), /match the current invoice/);
+    tip_amount:'0', paid_at:NOW.toISOString(), request_id:rid() }, MANAGER), /service amount plus tip/);
+  await assert.rejects(() => service.registerPayment({ order_number:'1400', method:'stripe', amount:'60.00',
+    tip_amount:'0', paid_at:NOW.toISOString(), request_id:rid() }, MANAGER), /reference is required/);
   await assert.rejects(() => service.registerPayment({ order_number:'1400', method:'cash', amount:'60.00',
     paid_at:NOW.toISOString(), request_id:rid() }, OPERATOR), /financial authorization/);
-  await service.registerPayment({ order_number:'1400', method:'cash', amount:'60.00', paid_at:NOW.toISOString(), request_id:rid() }, MANAGER);
+  await service.registerPayment({ order_number:'1400', method:'cash', amount:'60.00', tip_amount:'0', paid_at:NOW.toISOString(), request_id:rid() }, MANAGER);
   await assert.rejects(() => service.registerPayment({ order_number:'1400', method:'cash', amount:'60.00',
     paid_at:NOW.toISOString(), request_id:rid() }, MANAGER), /already paid/);
+});
+
+test('manual payment idempotency includes note and actor evidence', async () => {
+  const { service } = fixture();
+  const request = rid();
+  const payment = { order_number:'MCO 1400', method:'cash', amount:'60.00', tip_amount:'0',
+    paid_at:NOW.toISOString(), note:'Counted by manager', request_id:request };
+  assert.equal((await service.registerPayment(payment, MANAGER)).duplicate, false);
+  assert.equal((await service.registerPayment(payment, MANAGER)).duplicate, true);
+  await assert.rejects(() => service.registerPayment({ ...payment, note:'Different evidence' }, MANAGER),
+    /idempotency key conflicts/i);
+  await assert.rejects(() => service.registerPayment(payment, OWNER), /idempotency key conflicts/i);
+});
+
+test('Stripe event idempotency accepts only the exact original payment facts', async () => {
+  const { store, order } = fixture();
+  const linkId = crypto.randomUUID();
+  store.systemPaymentLinks.set(linkId, {
+    id:linkId, order_id:order.id, invoice_id:order.invoice_id, status:'active',
+    stripe_payment_link_id:'plink_cycle', service_amount:60, tip_amount:9,
+    total_amount:69, currency:'USD'
+  });
+  const payment = {
+    stripe_event_id:'evt_cycle_exact', event_type:'checkout.session.completed',
+    checkout_session_id:'cs_cycle_exact', payment_link_id:'plink_cycle',
+    order_id:order.id, transaction_id:'pi_cycle_exact', amount:69,
+    service_amount:60, tip_amount:9, total_amount:69, currency:'USD',
+    paid_at:NOW.toISOString()
+  };
+  assert.equal((await store.recordPayment(payment)).duplicate, false);
+  assert.equal((await store.recordPayment(payment)).duplicate, true);
+  await assert.rejects(() => store.recordPayment({ ...payment, total_amount:70, amount:70 }),
+    /Stripe event idempotency conflict/i);
+  await assert.rejects(() => store.recordPayment({ ...payment, checkout_session_id:'cs_changed' }),
+    /Stripe event idempotency conflict/i);
 });
 
 test('pickup and delivery obligations become overdue only while unmet', () => {
@@ -143,6 +205,35 @@ test('approved independent-state combinations keep their truthful next action', 
     payment_status:'pending' }).code, 'review_invoice', 'READY + PAYMENT PENDING');
 });
 
+test('delivery handoff records the governed point and keeps final confirmation separate', async () => {
+  const { service, store, order } = fixture();
+  order.order_status = 'ready_for_delivery'; order.payment_status = 'paid';
+  order.production_state = 'ready'; order.custody_state = 'at_laundry';
+  const driver = (await service.saveDriver({ full_name:'Delivery Driver', phone:'+14075550179', request_id:rid() }, OWNER)).driver;
+  await service.assignDriver({ order_number:'MCO 1400', driver_id:driver.driver_id, leg:'delivery', request_id:rid() }, MANAGER);
+  await store.transitionSystemOperationalOrder({ order_number:'MCO 1400', action:'start_delivery',
+    actor_id:MANAGER.actor_id, actor_role:MANAGER.role, idempotency_key:'delivery-start', occurred_at:NOW.toISOString() });
+  await store.transitionSystemOperationalOrder({ order_number:'MCO 1400', action:'leave_bell_desk',
+    handoff_point:'front_desk', handoff_note:'Received by hotel team', actor_id:MANAGER.actor_id,
+    actor_role:MANAGER.role, idempotency_key:'delivery-handoff', occurred_at:NOW.toISOString() });
+  assert.equal(order.custody_state, 'bell_desk');
+  assert.equal(store.operationalRow(order).delivery_handoff.handoff_point, 'front_desk');
+  await store.transitionSystemOperationalOrder({ order_number:'MCO 1400', action:'complete_delivery',
+    actor_id:MANAGER.actor_id, actor_role:MANAGER.role, idempotency_key:'delivery-complete', occurred_at:NOW.toISOString() });
+  assert.equal(order.custody_state, 'delivered'); assert.equal(order.order_status, 'delivered');
+});
+
+test('direct delivery requires a valid handoff and Other requires a note', async () => {
+  const { store, order } = fixture();
+  order.order_status = 'ready_for_delivery'; order.payment_status = 'paid';
+  order.production_state = 'ready'; order.custody_state = 'with_driver_delivery';
+  await assert.rejects(() => store.transitionSystemOperationalOrder({ order_number:'MCO 1400', action:'complete_delivery',
+    actor_id:MANAGER.actor_id, actor_role:MANAGER.role, idempotency_key:'missing-handoff', occurred_at:NOW.toISOString() }), /handoff point/i);
+  await assert.rejects(() => store.transitionSystemOperationalOrder({ order_number:'MCO 1400', action:'complete_delivery',
+    handoff_point:'other', actor_id:MANAGER.actor_id, actor_role:MANAGER.role,
+    idempotency_key:'other-no-note', occurred_at:NOW.toISOString() }), /handoff note/i);
+});
+
 test('operational-cycle CLI blocks every write until --execute is explicit', () => {
   const result = spawnSync(process.execPath, ['scripts/a7-system-operational-cycle.mjs', 'driver:save',
     '--name', 'CLI Driver', '--phone', '+14075550123'], {
@@ -152,6 +243,35 @@ test('operational-cycle CLI blocks every write until --execute is explicit', () 
   assert.equal(result.status, 2);
   assert.match(result.stderr, /Write blocked/);
   assert.equal(result.stdout, '');
+  const paymentLink = spawnSync(process.execPath, ['scripts/a7-system-operational-cycle.mjs',
+    'payment-link:create', '--order', 'MCO 1400', '--tip', '9.00'], {
+    cwd:new URL('..', import.meta.url), encoding:'utf8',
+    env:{ ...process.env, A7_SYSTEM_CLI_ACTOR_ID:'actor_cli', A7_SYSTEM_CLI_ACTOR_ROLE:'owner' }
+  });
+  assert.equal(paymentLink.status, 2);
+  assert.match(paymentLink.stderr, /Write blocked/);
+  assert.equal(paymentLink.stdout, '');
+});
+
+test('independent-review SQL repairs are fail-closed and rollbacks preserve evidence', () => {
+  const lifecycle = fs.readFileSync(new URL('../supabase/migrations/20260902009000_orlando_lifecycle_authority_repair.sql', import.meta.url), 'utf8');
+  const payment = fs.readFileSync(new URL('../supabase/migrations/20260902010000_orlando_os_payment_evidence.sql', import.meta.url), 'utf8');
+  const stripe = fs.readFileSync(new URL('../supabase/migrations/20260902013000_orlando_canonical_payment_link.sql', import.meta.url), 'utf8');
+  const driver = fs.readFileSync(new URL('../supabase/migrations/20260902015000_orlando_idempotency_hardening.sql', import.meta.url), 'utf8');
+  const operationalRollback = fs.readFileSync(new URL('../supabase/rollbacks/20260901040000_orlando_os_operational_cycle.rollback.sql', import.meta.url), 'utf8');
+  const stripeRollback = fs.readFileSync(new URL('../supabase/rollbacks/20260902013000_orlando_canonical_payment_link.rollback.sql', import.meta.url), 'utf8');
+  assert.match(lifecycle, /select \* into v_existing[\s\S]*when 'pickup_scheduled'[\s\S]*version = version \+ 1/);
+  assert.match(lifecycle, /insert into public\.a7_orlando_order_events/);
+  assert.match(driver, /request_fingerprint[\s\S]*Driver idempotency conflict/);
+  assert.match(driver, /result_snapshot[\s\S]*Legacy driver retry cannot be verified/);
+  assert.match(driver, /Resolve an exact retry before inspecting mutable driver activity/);
+  assert.match(payment, /v_existing\.note is distinct from v_note/);
+  assert.match(payment, /v_existing\.recorded_by <> p_actor_id/);
+  assert.match(stripe, /Stripe event idempotency conflict/);
+  assert.match(stripe, /v_existing_event\.sanitized_payload->>'total_amount'/);
+  assert.match(operationalRollback, /exists \(select 1 from public\.a7_orlando_driver_events\)/);
+  assert.match(stripeRollback, /exists \(select 1 from public\.a7_orlando_payment_links\)/);
+  assert.match(stripeRollback, /payment composition evidence exists/);
 });
 
 test('driver and payment APIs enforce session, role, origin and signed submission boundaries', async () => {
@@ -205,4 +325,5 @@ test('new browser contracts keep PII out of URLs, storage and analytics', () => 
   const api = `${fs.readFileSync(new URL('../api/system/drivers.js', import.meta.url), 'utf8')}\n${fs.readFileSync(new URL('../api/system/manual-payment.js', import.meta.url), 'utf8')}`;
   assert.doesNotMatch(`${source}\n${api}`, /localStorage|sessionStorage|dataLayer\.push|googletagmanager/i);
   assert.doesNotMatch(source, /\/api\/system\/(?:drivers|manual-payment)\?/);
+  assert.match(source, /axis === 'Produção' && order\.order_status === 'delivered'\) return 'Concluída'/);
 });

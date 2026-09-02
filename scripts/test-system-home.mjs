@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const { buildHomeProjection, systemHomeService, localDate } = require('../lib/system-home-service.js');
+const { isInQueue } = require('../lib/system-operations-service.js');
 const { MemoryOperationalStore, resetOperationalStoreForTests } = require('../lib/operational-store.js');
 const auth = require('../lib/system-auth.js');
 const homeApi = require('../api/system/home.js');
@@ -78,7 +79,36 @@ test('Home reconciles operational groups, non-zero exceptions and five determini
   assert.equal(home.next_actions.length, 5);
   assert.deepEqual(home.next_actions.slice(0, 3).map((item) => item.order_number), ['MCO 9010', 'MCO 9011', 'MCO 9012']);
   assert.ok(home.needs_attention.every((item) => item.count > 0));
+  assert.equal(home.needs_attention.find((item) => item.key === 'express_late').count, 1);
+  assert.equal(home.needs_attention.find((item) => item.key === 'express_risk').count, 1);
+  assert.equal(home.needs_attention.some((item) => item.key === 'express_attention'), false);
   assert.equal(home.needs_attention.find((item) => item.key === 'ready_for_dispatch').count, 1);
+});
+
+test('every Home order-card count equals the complete queue selected by its target', () => {
+  const orders = [
+    order({ order_number:'MCO 9101', custody_state:'awaiting_pickup', production_state:'awaiting_intake', items:[] }),
+    order({ order_number:'MCO 9102', custody_state:'with_driver_pickup', production_state:'awaiting_intake', items:[] }),
+    order({ order_number:'MCO 9103', custody_state:'at_laundry', production_state:'processing' }),
+    order({ order_number:'MCO 9104', custody_state:'at_laundry', production_state:'processing' }),
+    order({ order_number:'MCO 9105', custody_state:'at_laundry', production_state:'ready', payment_status:'paid' }),
+    order({ order_number:'MCO 9106', custody_state:'bell_desk', production_state:'ready', payment_status:'paid' }),
+    order({ order_number:'MCO 9107', service_tier:'express', promised_by:'2026-09-01T17:00:00.000Z',
+      sla:{ status:'risk' }, payment_status:'invoice_created' })
+  ];
+  const home = buildHomeProjection({ operational:snapshot(orders), actor:OPERATOR, now:NOW });
+  const active = orders.filter((row) => !row.is_qa && !['cancelled', 'delivered'].includes(row.order_status)
+    && row.custody_state !== 'delivered');
+  for (const card of Object.values(home.operation)) {
+    assert.equal(card.count, active.filter((row) => isInQueue(row, card.target.queue, {
+      settings:{ timezone:'America/New_York' }, today:'2026-09-01'
+    })).length, card.target.queue);
+  }
+  for (const card of home.needs_attention.filter((item) => item.target.queue)) {
+    assert.equal(card.count, active.filter((row) => isInQueue(row, card.target.queue, {
+      settings:{ timezone:'America/New_York' }, today:'2026-09-01'
+    })).length, card.target.queue);
+  }
 });
 
 test('Owner metrics use matching paid cohorts, actual weight dates and null delta semantics', () => {

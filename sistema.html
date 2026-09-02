@@ -268,8 +268,9 @@
             <form id="orderForm">
               <section class="panel form-section"><p class="step">1</p><div><h2>Cliente</h2><div class="grid">
                 <input name="customer_ref" type="hidden">
+                <input name="lead_ref" type="hidden">
                 <label>Nome<input name="name" maxlength="100" autocomplete="off" required></label>
-                <label>WhatsApp<input name="whatsapp_number" inputmode="tel" placeholder="+1 407 000 0000" autocomplete="off" required></label>
+                <label>WhatsApp<input name="whatsapp_number" inputmode="tel" placeholder="+1 407 000 0000" autocomplete="off" aria-describedby="whatsappHint" required><small id="whatsappHint">Inclua o código do país. Aceitamos de 8 a 15 dígitos.</small></label>
                 <label>Idioma<select name="language"><option value="en">English</option><option value="pt">Português</option><option value="es">Español</option><option value="other">Outro</option></select></label>
                 <label>Tipo de cliente<select name="customer_type"><option value="guest">Guest</option><option value="resident">Resident</option><option value="host">Host</option></select></label>
               </div><div id="customerSuggestions" class="customer-suggestions" hidden aria-live="polite"></div></div></section>

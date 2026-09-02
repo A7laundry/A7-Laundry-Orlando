@@ -20,6 +20,8 @@ create table if not exists public.a7_orlando_driver_events (
   actor_id text not null,
   actor_role text not null check (actor_role = 'owner'),
   idempotency_key text not null unique,
+  request_fingerprint text not null check (request_fingerprint ~ '^[0-9a-f]{64}$'),
+  result_snapshot jsonb not null check (jsonb_typeof(result_snapshot) = 'object'),
   safe_change jsonb not null default '{}'::jsonb,
   occurred_at timestamptz not null,
   recorded_at timestamptz not null default now()
@@ -114,6 +116,10 @@ declare
   v_previous_active boolean;
   v_when timestamptz := coalesce(p_occurred_at, now());
   v_action text;
+  v_request_fingerprint text := encode(sha256(convert_to(
+    coalesce(p_driver_id::text, 'new') || '|' || btrim(coalesce(p_full_name, '')) || '|' ||
+    coalesce(p_phone, '') || '|' || coalesce(p_active, true)::text || '|' ||
+    coalesce(p_actor_id, '') || '|' || coalesce(p_actor_role, ''), 'UTF8')), 'hex');
 begin
   if p_actor_role <> 'owner' or nullif(btrim(coalesce(p_actor_id, '')), '') is null
     or nullif(btrim(coalesce(p_full_name, '')), '') is null
@@ -122,10 +128,11 @@ begin
   end if;
   select * into v_existing from public.a7_orlando_driver_events where idempotency_key = p_idempotency_key;
   if v_existing.id is not null then
-    select * into v_driver from public.a7_orlando_drivers where id = v_existing.driver_id;
-    return jsonb_build_object('duplicate', true, 'driver', jsonb_build_object(
-      'driver_id', v_driver.id, 'full_name', v_driver.full_name, 'phone', v_driver.phone,
-      'active', v_driver.active, 'created_at', v_driver.created_at, 'updated_at', v_driver.updated_at));
+    if v_existing.request_fingerprint is distinct from v_request_fingerprint
+      or v_existing.actor_id <> p_actor_id or v_existing.actor_role <> p_actor_role then
+      raise exception 'Driver idempotency conflict';
+    end if;
+    return jsonb_build_object('duplicate', true, 'driver', v_existing.result_snapshot);
   end if;
   if exists (select 1 from public.a7_orlando_drivers where phone = p_phone and id is distinct from p_driver_id) then
     raise exception 'Driver phone is already registered';
@@ -145,8 +152,11 @@ begin
       when not v_previous_active and v_driver.active then 'driver_activated' else 'driver_updated' end;
   end if;
   insert into public.a7_orlando_driver_events(driver_id, action, actor_id, actor_role,
-    idempotency_key, safe_change, occurred_at)
-  values (v_driver.id, v_action, p_actor_id, p_actor_role, p_idempotency_key,
+    idempotency_key, request_fingerprint, result_snapshot, safe_change, occurred_at)
+  values (v_driver.id, v_action, p_actor_id, p_actor_role, p_idempotency_key, v_request_fingerprint,
+    jsonb_build_object('driver_id', v_driver.id, 'full_name', v_driver.full_name,
+      'phone', v_driver.phone, 'active', v_driver.active,
+      'created_at', v_driver.created_at, 'updated_at', v_driver.updated_at),
     jsonb_build_object('full_name', v_driver.full_name, 'phone_last4', right(v_driver.phone, 4), 'active', v_driver.active), v_when);
   insert into public.a7_orlando_operator_audit(actor_id, actor_role, action, entity_type, entity_id,
     idempotency_key, safe_change, occurred_at)
@@ -174,17 +184,19 @@ begin
   select * into v_order from public.a7_orlando_orders
     where unit_key = 'orlando' and order_number = p_order_number for update;
   if v_order.id is null or public.a7_orlando_order_is_qa(v_order.id) then raise exception 'Eligible order required'; end if;
-  select * into v_driver from public.a7_orlando_drivers where id = p_driver_id;
-  if v_driver.id is null or not v_driver.active then raise exception 'Active driver required'; end if;
   select * into v_existing from public.a7_orlando_driver_assignments where idempotency_key = p_idempotency_key;
   if v_existing.id is not null then
-    if v_existing.order_id <> v_order.id or v_existing.driver_id <> p_driver_id or v_existing.leg <> p_leg then
+    if v_existing.order_id <> v_order.id or v_existing.driver_id <> p_driver_id or v_existing.leg <> p_leg
+      or v_existing.assigned_by <> p_actor_id or v_existing.actor_role <> p_actor_role then
       raise exception 'Driver assignment idempotency conflict';
     end if;
+    select * into v_driver from public.a7_orlando_drivers where id = v_existing.driver_id;
     return jsonb_build_object('duplicate', true, 'assignment', jsonb_build_object(
       'assignment_id', v_existing.id, 'order_number', v_order.order_number, 'driver_id', v_driver.id,
       'driver_name', v_driver.full_name, 'leg', v_existing.leg, 'assigned_at', v_existing.assigned_at));
   end if;
+  select * into v_driver from public.a7_orlando_drivers where id = p_driver_id;
+  if v_driver.id is null or not v_driver.active then raise exception 'Active driver required'; end if;
   if p_leg = 'pickup' and v_order.order_status not in ('accepted', 'pickup_scheduled') then
     raise exception 'Pickup driver cannot be assigned from current state';
   end if;

@@ -4,6 +4,9 @@ import {createRequire} from 'node:module';
 
 const require = createRequire(import.meta.url);
 const handler = require('../api/create-payment-link.js');
+const webhook = require('../api/stripe-webhook.js');
+const systemHandler = require('../api/system/payment-link.js');
+const {signSession, issueSubmission, submissionCookie, COOKIE_NAME} = require('../lib/system-auth.js');
 const {MemoryOperationalStore} = require('../lib/operational-store.js');
 const LEAD_ID = '11111111-1111-4111-8111-111111111111';
 const ORDER_ID = '22222222-2222-4222-8222-222222222222';
@@ -25,9 +28,35 @@ async function invoke({method = 'POST', token, body = {amount_usd: 50, order_id:
 function payableStore(overrides = {}) {
   const store = new MemoryOperationalStore();
   store.orders.set(ORDER_ID, {id: ORDER_ID, lead_id: LEAD_ID,
+    order_number:'MCO 1001', current_invoice_id:'inv-a7-1001',
     order_status: 'invoice_created', payment_status: 'invoice_created',
     invoice_id: 'inv-a7-1001', service_amount: 50, currency: 'USD', version: 3, ...overrides});
   return store;
+}
+
+async function invokeSystem({role, origin = 'https://a7laundry.com', body, submission = false} = {}) {
+  const env = {A7_SYSTEM_SESSION_SECRET:'s'.repeat(48), A7_SYSTEM_ACCESS_MODE:'team',
+    A7_PUBLIC_BASE_URL:'https://a7laundry.com'};
+  const token = role ? signSession({actor_id:`actor-${role}`, display_name:role, role}, env) : null;
+  const cookies = [];
+  if (token) cookies.push(`${COOKIE_NAME}=${encodeURIComponent(token)}`);
+  if (submission) cookies.push(submissionCookie(issueSubmission(env).token).split(';')[0]);
+  const req = {method:'POST', headers:{origin, cookie:cookies.join('; ')}, body:body || {
+    action:'context', order_number:'MCO 1001'
+  }};
+  const previous = {secret:process.env.A7_SYSTEM_SESSION_SECRET, mode:process.env.A7_SYSTEM_ACCESS_MODE,
+    base:process.env.A7_PUBLIC_BASE_URL};
+  process.env.A7_SYSTEM_SESSION_SECRET = env.A7_SYSTEM_SESSION_SECRET;
+  process.env.A7_SYSTEM_ACCESS_MODE = env.A7_SYSTEM_ACCESS_MODE;
+  process.env.A7_PUBLIC_BASE_URL = env.A7_PUBLIC_BASE_URL;
+  const res = responseRecorder();
+  try { await systemHandler(req, res); return res; }
+  finally {
+    for (const [key, value] of [['A7_SYSTEM_SESSION_SECRET', previous.secret],
+      ['A7_SYSTEM_ACCESS_MODE', previous.mode], ['A7_PUBLIC_BASE_URL', previous.base]]) {
+      value === undefined ? delete process.env[key] : process.env[key] = value;
+    }
+  }
 }
 
 function withEnvironment(values, operation) {
@@ -63,7 +92,7 @@ test('payment-link endpoint rejects authorization, amount and opaque ID errors b
   });
 });
 
-test('payment-link endpoint requires an invoiced order and the exact approved amount', async () => {
+test('payment-link endpoint requires an invoiced order and ignores browser-supplied amount', async () => {
   await withEnvironment({PAYMENT_LINK_TOKEN: 'operator-secret', STRIPE_SECRET_KEY: 'sk_test_only'}, async () => {
     const originalFetch = globalThis.fetch;
     globalThis.fetch = async () => { throw new Error('Stripe must not be called'); };
@@ -71,7 +100,15 @@ test('payment-link endpoint requires an invoiced order and the exact approved am
       globalThis.__A7_OPERATIONAL_STORE__ = payableStore({order_status: 'weighed', payment_status: 'pending'});
       assert.equal((await invoke({token: 'operator-secret'})).statusCode, 409);
       globalThis.__A7_OPERATIONAL_STORE__ = payableStore();
-      assert.equal((await invoke({token: 'operator-secret', body: {amount_usd: 51, order_id: ORDER_ID, lead_id: LEAD_ID}})).statusCode, 409);
+      let calls = 0;
+      globalThis.fetch = async () => {
+        calls += 1;
+        return {ok:true, async json() { return calls === 1 ? {id:'price_exact'}
+          : {id:'plink_exact', url:'https://buy.stripe.com/exact'}; }};
+      };
+      const derived = await invoke({token:'operator-secret', body:{amount_usd:51, order_id:ORDER_ID, lead_id:LEAD_ID}});
+      assert.equal(derived.statusCode, 200);
+      assert.equal(derived.body.amount_usd, 50);
     } finally { globalThis.fetch = originalFetch; }
   });
 });
@@ -94,10 +131,8 @@ test('payment-link endpoint creates an idempotent one-use link with minimal opaq
       assert.equal(res.body.description, 'A7 Laundry — pickup & delivery');
       assert.equal(calls.length, 2);
       assert.equal(calls[0].params.get('unit_amount'), '5000');
-      assert.match(calls[0].options.headers['Idempotency-Key'], /^a7-price-/);
-      assert.match(calls[1].options.headers['Idempotency-Key'], /^a7-payment-link-/);
-      assert.match(calls[0].options.headers['Idempotency-Key'], /-v3$/);
-      assert.match(calls[1].options.headers['Idempotency-Key'], /-v3$/);
+      assert.match(calls[0].options.headers['Idempotency-Key'], /^a7-[0-9a-f]{64}-service$/);
+      assert.match(calls[1].options.headers['Idempotency-Key'], /^a7-[0-9a-f]{64}-link$/);
       assert.equal(calls[1].params.get('restrictions[completed_sessions][limit]'), '1');
       assert.equal(calls[1].params.get('after_completion[redirect][url]'), handler.confirmationUrl({}));
       for (const prefix of ['metadata', 'payment_intent_data[metadata]']) {
@@ -113,7 +148,7 @@ test('payment-link endpoint creates an idempotent one-use link with minimal opaq
   });
 });
 
-test('payment-link endpoint derives value from the invoice and rotates idempotency after a failed attempt', async () => {
+test('payment-link endpoint returns the exact active governed link on retry without new Stripe objects', async () => {
   await withEnvironment({PAYMENT_LINK_TOKEN: 'operator-secret', STRIPE_SECRET_KEY: 'sk_test_only'}, async () => {
     globalThis.__A7_OPERATIONAL_STORE__ = payableStore({payment_status: 'failed', version: 4});
     const calls = [];
@@ -128,8 +163,136 @@ test('payment-link endpoint derives value from the invoice and rotates idempoten
       assert.equal(res.statusCode, 200);
       assert.equal(res.body.amount_usd, 50);
       assert.equal(calls[0].params.get('unit_amount'), '5000');
-      assert.match(calls[0].options.headers['Idempotency-Key'], /-v4$/);
-      assert.match(calls[1].options.headers['Idempotency-Key'], /-v4$/);
+      const retry = await invoke({token: 'operator-secret', body: {order_id: ORDER_ID, lead_id: LEAD_ID}});
+      assert.equal(retry.statusCode, 200);
+      assert.equal(retry.body.payment_link_id, 'plink_retry');
+      assert.equal(calls.length, 2);
+    } finally { globalThis.fetch = originalFetch; }
+  });
+});
+
+test('payment-link endpoint creates separate service and effective-tip lines', async () => {
+  await withEnvironment({PAYMENT_LINK_TOKEN:'operator-secret', STRIPE_SECRET_KEY:'sk_test_only'}, async () => {
+    const calls = [];
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async (url, options) => {
+      calls.push({url, params:new URLSearchParams(options.body)});
+      const payload = calls.length === 1 ? {id:'price_service'} : calls.length === 2
+        ? {id:'price_tip'} : {id:'plink_tip', url:'https://buy.stripe.com/tip'};
+      return {ok:true, async json() { return payload; }};
+    };
+    try {
+      const res = await invoke({token:'operator-secret', body:{order_id:ORDER_ID, lead_id:LEAD_ID, tip_amount:'7.50'}});
+      assert.equal(res.statusCode, 200);
+      assert.equal(res.body.service_amount, 50);
+      assert.equal(res.body.tip_amount, 7.5);
+      assert.equal(res.body.amount_usd, 57.5);
+      assert.equal(calls.length, 3);
+      assert.equal(calls[0].params.get('unit_amount'), '5000');
+      assert.equal(calls[1].params.get('unit_amount'), '750');
+      assert.equal(calls[2].params.get('line_items[0][price]'), 'price_service');
+      assert.equal(calls[2].params.get('line_items[1][price]'), 'price_tip');
+      assert.equal(calls[2].params.has('metadata[tip_amount]'), false);
+    } finally { globalThis.fetch = originalFetch; }
+  });
+});
+
+test('signed webhook reconciles governed service and tip separately without changing invoice value', async () => {
+  await withEnvironment({PAYMENT_LINK_TOKEN:'operator-secret', STRIPE_SECRET_KEY:'sk_test_only'}, async () => {
+    const store = payableStore({current_invoice_id:'inv-a7-1001'});
+    globalThis.__A7_OPERATIONAL_STORE__ = store;
+    let calls = 0;
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async () => {
+      calls += 1;
+      const payload = calls === 1 ? {id:'price_service'} : calls === 2 ? {id:'price_tip'}
+        : {id:'plink_governed', url:'https://buy.stripe.com/governed'};
+      return {ok:true, async json() { return payload; }};
+    };
+    try {
+      assert.equal((await invoke({token:'operator-secret', body:{
+        order_id:ORDER_ID, lead_id:LEAD_ID, tip_amount:'7.50'
+      }})).statusCode, 200);
+      const event = {id:'evt_governed_tip', type:'checkout.session.completed', created:1787911200,
+        data:{object:{object:'checkout.session', id:'cs_test_governed_tip', payment_status:'paid',
+          payment_intent:'pi_governedtip', payment_link:'plink_governed', amount_total:5750, currency:'usd',
+          metadata:{order_id:ORDER_ID, lead_id:LEAD_ID, contract_version:'1'}}}};
+      const result = await webhook.processStripeEvent(event, store);
+      assert.equal(result.duplicate, false);
+      const order = await store.getOrder(ORDER_ID);
+      const payment = store.payments.get('pi_governedtip');
+      assert.equal(order.service_amount, 50);
+      assert.equal(order.tip_amount, 7.5);
+      assert.equal(payment.service_amount, 50);
+      assert.equal(payment.tip_amount, 7.5);
+      assert.equal(payment.total_amount, 57.5);
+      assert.equal(store.events.get('purchase:pi_governedtip').payload.value, 50);
+      assert.equal((await store.getSystemPaymentLinkByStripeId('plink_governed')).status, 'completed');
+    } finally { globalThis.fetch = originalFetch; }
+  });
+});
+
+test('governed payment remains partially refunded until service and tip are both refunded', async () => {
+  const store = payableStore({current_invoice_id:'inv-a7-1001'});
+  globalThis.__A7_OPERATIONAL_STORE__ = store;
+  const originalFetch = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async () => {
+    calls += 1;
+    const payload = calls === 1 ? {id:'price_service_refund'} : calls === 2
+      ? {id:'price_tip_refund'} : {id:'plink_refund', url:'https://buy.stripe.com/refund'};
+    return {ok:true, async json() { return payload; }};
+  };
+  try {
+    await withEnvironment({PAYMENT_LINK_TOKEN:'operator-secret', STRIPE_SECRET_KEY:'sk_test_only'}, async () => {
+      globalThis.__A7_OPERATIONAL_STORE__ = store;
+      assert.equal((await invoke({token:'operator-secret', body:{
+        order_id:ORDER_ID, lead_id:LEAD_ID, tip_amount:'7.50'
+      }})).statusCode, 200);
+      await webhook.processStripeEvent({id:'evt_refund_sale', type:'checkout.session.completed', created:1787911200,
+        data:{object:{object:'checkout.session', id:'cs_test_refund_sale', payment_status:'paid',
+          payment_intent:'pi_refundsale', payment_link:'plink_refund', amount_total:5750, currency:'usd',
+          metadata:{order_id:ORDER_ID, lead_id:LEAD_ID, contract_version:'1'}}}}, store);
+
+      await webhook.processStripeEvent({id:'evt_refund_service', type:'refund.created', created:1787911300,
+        data:{object:{object:'refund', id:'re_refund_service', payment_intent:'pi_refundsale',
+          amount:5000, currency:'usd', status:'succeeded', created:1787911300}}}, store);
+      assert.equal((await store.getOrder(ORDER_ID)).payment_status, 'partially_refunded');
+      assert.equal(store.payments.get('pi_refundsale').status, 'partially_refunded');
+
+      await webhook.processStripeEvent({id:'evt_refund_tip', type:'refund.created', created:1787911400,
+        data:{object:{object:'refund', id:'re_refund_tip', payment_intent:'pi_refundsale',
+          amount:750, currency:'usd', status:'succeeded', created:1787911400}}}, store);
+      assert.equal((await store.getOrder(ORDER_ID)).payment_status, 'refunded');
+      assert.equal(store.payments.get('pi_refundsale').status, 'refunded');
+    });
+  } finally {
+    globalThis.fetch = originalFetch;
+    delete globalThis.__A7_OPERATIONAL_STORE__;
+  }
+});
+
+test('system Payment Link API is Owner/Manager-only, same-origin and submission-bound', async () => {
+  await withEnvironment({STRIPE_SECRET_KEY:'sk_test_only'}, async () => {
+    assert.equal((await invokeSystem()).statusCode, 401);
+    assert.equal((await invokeSystem({role:'operator'})).statusCode, 403);
+    assert.equal((await invokeSystem({role:'owner', origin:'https://evil.example'})).statusCode, 403);
+    assert.equal((await invokeSystem({role:'manager'})).statusCode, 200);
+    assert.equal((await invokeSystem({role:'owner', body:{action:'create', order_number:'MCO 1001', tip_amount:'0'}})).statusCode, 409);
+    let calls = 0;
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async () => {
+      calls += 1;
+      return {ok:true, async json() { return calls === 1 ? {id:'price_system'}
+        : {id:'plink_system', url:'https://buy.stripe.com/system'}; }};
+    };
+    try {
+      const created = await invokeSystem({role:'manager', submission:true,
+        body:{action:'create', order_number:'MCO 1001', tip_amount:'0'}});
+      assert.equal(created.statusCode, 201, JSON.stringify(created.body));
+      assert.equal(created.body.result.total_amount, 50);
+      assert.equal(Object.hasOwn(created.body.result, 'order_id'), false);
+      assert.equal(Object.hasOwn(created.body.result, 'invoice_id'), false);
     } finally { globalThis.fetch = originalFetch; }
   });
 });
@@ -142,6 +305,16 @@ test('payment-link endpoint returns a controlled failure when Stripe rejects the
       const res = await invoke({token: 'operator-secret'});
       assert.equal(res.statusCode, 502);
       assert.deepEqual(res.body, {error: 'Rejected test request'});
+      let calls = 0;
+      globalThis.fetch = async () => {
+        calls += 1;
+        return {ok:true, async json() { return calls === 1 ? {id:'price_recovered'}
+          : {id:'plink_recovered', url:'https://buy.stripe.com/recovered'}; }};
+      };
+      const recovered = await invoke({token:'operator-secret'});
+      assert.equal(recovered.statusCode, 200);
+      assert.equal(recovered.body.payment_link_id, 'plink_recovered');
+      assert.equal(globalThis.__A7_OPERATIONAL_STORE__.systemPaymentLinks.size, 1);
     } finally { globalThis.fetch = originalFetch; }
   });
 });

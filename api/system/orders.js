@@ -22,7 +22,8 @@ module.exports = async function handler(req, res) {
       if (!body) return json(res, 400, { ok: false, code: 'invalid_body' });
       const submissionId = submissionFromRequest(req);
       if (!submissionId) return json(res, 409, { ok: false, code: 'submission_required', error: 'Start a new attendance before creating the order.' });
-      const create = body.customer_ref ? orders.createKnownCustomerOrder.bind(orders) : orders.createManualOrder.bind(orders);
+      const create = body.lead_ref ? orders.createExistingLeadOrder.bind(orders)
+        : body.customer_ref ? orders.createKnownCustomerOrder.bind(orders) : orders.createManualOrder.bind(orders);
       const order = await create({ ...body, submission_id: submissionId, analytics_context: null }, actor);
       return json(res, order.duplicate ? 200 : 201, { ok: true, order });
     }

@@ -12,10 +12,11 @@
 const crypto = require('node:crypto');
 const {
   createOperationalStore,
-  OperationalStoreError
+  OperationalStoreError,
+  InvalidTransitionError
 } = require('../lib/operational-store');
+const { systemPaymentLinkService, confirmationUrl } = require('../lib/system-payment-link-service.js');
 
-const STRIPE_API_BASE = 'https://api.stripe.com/v1';
 const PRODUCTION_ORIGIN = 'https://a7laundry.com';
 
 // Faixa defensiva: abaixo disso é engano de digitação, acima é pedido que merece
@@ -70,53 +71,6 @@ function readBody(req) {
   return null;
 }
 
-async function stripePost(path, params, secretKey, idempotencyKey) {
-  const response = await fetch(`${STRIPE_API_BASE}${path}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${secretKey}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'application/json',
-      'Idempotency-Key': idempotencyKey
-    },
-    body: new URLSearchParams(params).toString()
-  });
-
-  const payload = await response.json().catch(() => null);
-  if (!response.ok || !payload || !payload.id) {
-    const reason = payload && payload.error && payload.error.message;
-    throw new Error(reason || 'Stripe rejected the request.');
-  }
-  return payload;
-}
-
-function confirmationUrl(env = process.env) {
-  const configured = cleanText(env.A7_PUBLIC_BASE_URL, '');
-  const previewHost = cleanText(env.VERCEL_URL, '');
-  const preview = env.VERCEL_ENV === 'preview';
-  const production = env.VERCEL_ENV === 'production' || (!env.VERCEL_ENV && env.NODE_ENV === 'production');
-  const candidate = configured || (env.VERCEL_ENV === 'preview' && previewHost
-    ? `https://${previewHost}`
-    : PRODUCTION_ORIGIN);
-  let origin;
-  try {
-    const parsed = new URL(candidate);
-    const normalizedPreviewHost = previewHost.replace(/^https?:\/\//, '').split('/')[0].split(':')[0].toLowerCase();
-    const productionHosts = new Set(['a7laundry.com', 'www.a7laundry.com']);
-    const allowed = preview
-      ? parsed.protocol === 'https:' && Boolean(normalizedPreviewHost) && parsed.hostname === normalizedPreviewHost
-      : production
-        ? parsed.protocol === 'https:' && productionHosts.has(parsed.hostname)
-        : (parsed.protocol === 'https:' && productionHosts.has(parsed.hostname))
-          || (parsed.hostname === 'localhost' && (parsed.protocol === 'http:' || parsed.protocol === 'https:'));
-    if (!allowed || parsed.username || parsed.password) throw new Error('invalid');
-    origin = parsed.origin;
-  } catch (_) {
-    throw new Error('The public confirmation origin is invalid.');
-  }
-  return `${origin}/guest-payment-confirmation?session_id={CHECKOUT_SESSION_ID}`;
-}
-
 async function handler(req, res) {
   res.setHeader('Cache-Control', 'private, no-store, max-age=0');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -158,78 +112,22 @@ async function handler(req, res) {
 
   try {
     const operations = createOperationalStore();
-    const order = await operations.getOrder(orderId);
-    if (!order || order.lead_id !== leadId) {
-      sendJson(res, 404, { error: 'The payable order was not found.' });
-      return;
-    }
-    if (order.order_status !== 'invoice_created' || !['invoice_created', 'failed', 'void'].includes(order.payment_status)) {
-      sendJson(res, 409, { error: 'The order is not ready for payment.' });
-      return;
-    }
-    if (String(order.currency || '').toUpperCase() !== 'USD') {
-      sendJson(res, 409, { error: 'The order currency is not supported.' });
-      return;
-    }
-    const amountUsd = Number(order.service_amount);
-    if (!Number.isFinite(amountUsd) || amountUsd < MIN_USD || amountUsd > MAX_USD) {
-      sendJson(res, 409, { error: 'The approved invoice amount is outside the payable range.' });
-      return;
-    }
-    // Centavos inteiros: evita cobrança com fração perdida e usa a fatura como autoridade.
-    const unitAmount = Math.round(amountUsd * 100);
-    const suppliedAmount = body.amount_usd == null || body.amount_usd === '' ? null : Number(body.amount_usd);
-    if (suppliedAmount !== null && (!Number.isFinite(suppliedAmount)
-      || Math.round(suppliedAmount * 100) !== unitAmount)) {
-      sendJson(res, 409, { error: 'The amount does not match the approved invoice.' });
-      return;
-    }
-
-    const invoiceKey = cleanText(order.invoice_id, orderId);
-    const attemptVersion = Number.isInteger(Number(order.version)) && Number(order.version) > 0
-      ? Number(order.version) : 1;
-    const price = await stripePost(
-      '/prices',
-      {
-        unit_amount: String(unitAmount),
-        currency: 'usd',
-        'product_data[name]': description
-      },
-      stripeSecretKey,
-      `a7-price-${orderId}-${invoiceKey}-v${attemptVersion}`
-    );
-
-    const linkParams = {
-      'line_items[0][price]': price.id,
-      'line_items[0][quantity]': '1',
-      'after_completion[type]': 'redirect',
-      'after_completion[redirect][url]': confirmationUrl(),
-      // Um link por cotação: impede que a mesma URL seja paga repetidamente.
-      'restrictions[completed_sessions][limit]': '1',
-      'metadata[order_id]': orderId,
-      'metadata[lead_id]': leadId,
-      'metadata[contract_version]': '1',
-      'payment_intent_data[metadata][order_id]': orderId,
-      'payment_intent_data[metadata][lead_id]': leadId,
-      'payment_intent_data[metadata][contract_version]': '1'
-    };
-
-    const link = await stripePost(
-      '/payment_links',
-      linkParams,
-      stripeSecretKey,
-      `a7-payment-link-${orderId}-${invoiceKey}-v${attemptVersion}`
-    );
+    const result = await systemPaymentLinkService({ operationalStore:operations, stripeSecretKey }).create({
+      order_id:orderId, lead_id:leadId, tip_amount:body.tip_amount ?? '0'
+    }, { actor_id:'integration:payment-link', role:'owner' });
 
     sendJson(res, 200, {
-      url: link.url,
-      amount_usd: unitAmount / 100,
+      url:result.url,
+      amount_usd:result.total_amount,
+      service_amount:result.service_amount,
+      tip_amount:result.tip_amount,
       description,
-      payment_link_id: link.id,
+      payment_link_id:result.payment_link_id,
       order_id: orderId
     });
   } catch (error) {
-    const status = error instanceof OperationalStoreError ? 503 : 502;
+    const status = error instanceof InvalidTransitionError ? 409
+      : error instanceof OperationalStoreError ? 503 : 502;
     sendJson(res, status, { error: error.message || 'Could not create the payment link.' });
   }
 }

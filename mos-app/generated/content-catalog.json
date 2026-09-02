@@ -2838,6 +2838,18 @@
       "sourceFile": "sistema.html"
     },
     {
+      "exclusionClass": "private_operator_system",
+      "reason": "Authenticated section routes reuse the private Orlando operations shell.",
+      "route": "/sistema/:section",
+      "sourceFile": "sistema.html"
+    },
+    {
+      "exclusionClass": "private_operator_system",
+      "reason": "Authenticated order-detail routes reuse the private Orlando operations shell.",
+      "route": "/sistema/orders/:orderNumber",
+      "sourceFile": "sistema.html"
+    },
+    {
       "exclusionClass": "private_operator_document",
       "reason": "Authenticated Pickup Order is a private operational representation of an existing order.",
       "route": "/sistema/orders/:orderNumber/pickup-order",

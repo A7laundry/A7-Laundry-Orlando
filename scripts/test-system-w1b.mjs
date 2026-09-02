@@ -111,11 +111,13 @@ test('W1B Today counters exclude QA and priority is late, risk, overdue, promise
   store.customers.set(waitingCustomer, { id:waitingCustomer, wa_id:'14075551234', profile_name:'Waiting Guest' });
   store.leads.set(waitingLead, { id:waitingLead, customer_id:waitingCustomer, status:'qualified', customer_type:'guest',
     created_at:'2026-08-30T12:00:00.000Z', operational_data:{ property:'Waiting Hotel' } });
-  const today = await systemOperationsService({ operationalStore:store, now:() => NOW }).today();
+  const today = await systemOperationsService({ operationalStore:store, now:() => NOW, env:{} }).today();
   assert.equal(today.counters.waiting_confirmation, 1);
-  assert.deepEqual(today.waiting_leads[0], { customer_name:'Waiting Guest', whatsapp_last4:'1234', property:'Waiting Hotel',
+  assert.deepEqual(today.waiting_leads[0], { lead_ref:null, customer_name:'Waiting Guest', whatsapp_last4:'1234', property:'Waiting Hotel',
     customer_type:'guest', created_at:'2026-08-30T12:00:00.000Z', status:'qualified' });
-  assert.equal(today.counters.express_attention, 2);
+  assert.equal(today.counters.express_attention, 0);
+  assert.equal(today.counters.express_risk, 1);
+  assert.equal(today.counters.express_late, 1);
   assert.equal(today.counters.at_laundry, 2);
   assert.equal(today.counters.awaiting_weight, 1);
   assert.equal(today.counters.processing, 1);

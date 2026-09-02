@@ -7,7 +7,9 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const auth = require('../lib/system-auth.js');
 const { MemoryOperationalStore, SupabaseOperationalStore } = require('../lib/operational-store.js');
-const { systemOrderService, normalizeOrderNumber } = require('../lib/system-order-service.js');
+const { systemOrderService, normalizeOrderNumber, validate } = require('../lib/system-order-service.js');
+const { systemLeadService } = require('../lib/system-lead-service.js');
+const { leadIdFromReference } = require('../lib/system-lead-reference.js');
 const {
   systemCustomerService, normalizeCustomerSearch, customerIdFromReference
 } = require('../lib/system-customer-service.js');
@@ -16,6 +18,7 @@ const ordersApi = require('../api/system/orders.js');
 const orderDraftApi = require('../api/system/order-draft.js');
 const pickupOrderApi = require('../api/system/pickup-order.js');
 const customersApi = require('../api/system/customers.js');
+const leadsApi = require('../api/system/leads.js');
 const { supabaseHeaders } = require('../lib/supabase-headers.js');
 const { allowedOrigin } = require('../lib/system-http.js');
 const orderFixture = JSON.parse(fs.readFileSync(new URL('../tests/fixtures/orlando-os-w1a-order.json', import.meta.url), 'utf8'));
@@ -54,6 +57,15 @@ test('Express creation requires a confirmed promise after pickup', async () => {
   const beforePickup = input(); beforePickup.promised_by = beforePickup.pickup_window_start;
   await assert.rejects(() => service.createManualOrder(beforePickup, { actor_id:'actor_qa', role:'operator' }),
     /must be after pickup/);
+});
+
+test('W1A accepts normalized international WhatsApp numbers from 8 to 15 digits', () => {
+  const valid = input(); valid.whatsapp_number = '+376 123 456';
+  assert.equal(validate(valid).whatsapp_number, '376123456');
+  const invalid = input(); invalid.whatsapp_number = '+1 2345';
+  assert.throws(() => validate(invalid), /country code \(8 to 15 digits\)/);
+  const ambiguous = input(); ambiguous.whatsapp_number = '5551234';
+  assert.throws(() => validate(ambiguous), /country code \(8 to 15 digits\)/);
 });
 
 function response() {
@@ -215,6 +227,76 @@ test('W1A creates exactly one governed aggregate and reopens it safely', async (
   assert.equal('lead_id' in reopened, false);
 });
 
+test('public /order lead is accepted once with its original analytics identity and no second lead', async () => {
+  const store = new MemoryOperationalStore();
+  const env = { A7_SYSTEM_SESSION_SECRET:'actionable-lead-test-session-secret-at-least-32-bytes' };
+  const customerId = crypto.randomUUID(); const leadId = crypto.randomUUID();
+  store.customers.set(customerId, { id:customerId, wa_id:'447584209506', profile_name:'Public Guest' });
+  store.leads.set(leadId, { id:leadId, unit_key:'orlando', customer_id:customerId, status:'new',
+    lead_origin:'order_form', service_type:'wash_fold_guest', customer_type:'guest', language:'en',
+    accommodation_type:'hotel', lead_reference:'7KQ9W3M2HX', attribution_resolution:'attribution_id',
+    operational_data:{ name:'Public Guest', whatsapp_number:'447584209506', property:'Public Hotel',
+      pickup_address:'100 Public Way', pickup_window_start:input().pickup_window_start,
+      pickup_window_end:input().pickup_window_end, needed_by:input().needed_by,
+      estimated_lbs:12, service_tier_preference:'normal',
+      analytics_context:{ client_id:'1234567890.1234567890', session_id:'1234567890' } },
+    created_at:new Date().toISOString() });
+  const leads = systemLeadService({ operationalStore:store, env });
+  const reference = require('../lib/system-lead-reference.js').leadReference(leadId, env);
+  const detail = await leads.getByReference(reference);
+  assert.equal(detail.customer_name, 'Public Guest');
+  assert.equal(detail.analytics_identity_present, true);
+  assert.equal(leadIdFromReference(detail.lead_ref, env), leadId);
+  assert.doesNotMatch(JSON.stringify(detail), /"lead_id"|"customer_id"/);
+
+  const payload = input(); payload.lead_ref = detail.lead_ref; payload.service_tier = 'normal'; payload.promised_by = null;
+  const service = systemOrderService({ operationalStore:store, env,
+    attributionStore:{ async get() { return null; }, async getByShortRef() { return null; } } });
+  const first = await service.createExistingLeadOrder(payload, { actor_id:'actor_owner', role:'owner' });
+  const retry = await service.createExistingLeadOrder(payload, { actor_id:'actor_owner', role:'owner' });
+  assert.equal(first.duplicate, false); assert.equal(retry.duplicate, true);
+  assert.equal(store.leads.size, 1); assert.equal(store.orders.size, 1);
+  const order = [...store.orders.values()][0];
+  assert.equal(order.lead_id, leadId);
+  assert.equal(order.attribution_snapshot.ga_client_id, '1234567890.1234567890');
+  assert.equal(store.leads.get(leadId).status, 'order_accepted');
+});
+
+test('actionable lead endpoint is private, same-origin and never returns the durable lead UUID', async () => {
+  const env = authEnv();
+  const prior = { secret:process.env.A7_SYSTEM_SESSION_SECRET, users:process.env.A7_SYSTEM_USERS_JSON };
+  Object.assign(process.env, env);
+  const store = new MemoryOperationalStore(); const customerId = crypto.randomUUID(); const leadId = crypto.randomUUID();
+  store.customers.set(customerId, { id:customerId, wa_id:'14075550199', profile_name:'Lead API Guest' });
+  store.leads.set(leadId, { id:leadId, customer_id:customerId, status:'new', lead_origin:'order_form',
+    service_type:'wash_fold_guest', customer_type:'guest', language:'en', accommodation_type:'hotel',
+    operational_data:{ property:'Lead API Hotel' }, created_at:new Date().toISOString() });
+  globalThis.__A7_OPERATIONAL_STORE__ = store;
+  try {
+    const unauthenticated = response();
+    await leadsApi({ method:'POST', headers:{}, body:{ action:'detail' } }, unauthenticated);
+    assert.equal(unauthenticated.statusCode, 401);
+    const actor = auth.authenticate('owner@example.test', 'valid-password', env);
+    const cookie = auth.sessionCookie(auth.signSession(actor, env)).split(';')[0];
+    const { lead_ref } = require('../lib/system-lead-service.js').safeDetail(
+      await store.getSystemActionableLeadById(leadId), env);
+    const wrongOrigin = response();
+    await leadsApi({ method:'POST', headers:{ cookie, origin:'https://evil.example' },
+      body:{ action:'detail', lead_ref } }, wrongOrigin);
+    assert.equal(wrongOrigin.statusCode, 403);
+    const ok = response();
+    await leadsApi({ method:'POST', headers:{ cookie, origin:'http://localhost:3000' },
+      body:{ action:'detail', lead_ref } }, ok);
+    assert.equal(ok.statusCode, 200);
+    assert.equal(ok.payload.lead.customer_name, 'Lead API Guest');
+    assert.doesNotMatch(JSON.stringify(ok.payload), new RegExp(leadId, 'i'));
+  } finally {
+    delete globalThis.__A7_OPERATIONAL_STORE__;
+    if (prior.secret == null) delete process.env.A7_SYSTEM_SESSION_SECRET; else process.env.A7_SYSTEM_SESSION_SECRET = prior.secret;
+    if (prior.users == null) delete process.env.A7_SYSTEM_USERS_JSON; else process.env.A7_SYSTEM_USERS_JSON = prior.users;
+  }
+});
+
 test('W1A.1 lookup accepts the human number directly and preserves canonical identity', async () => {
   assert.equal(normalizeOrderNumber('1002'), 'MCO 1002');
   assert.equal(normalizeOrderNumber('mco1002'), 'MCO 1002');
@@ -248,12 +330,24 @@ test('W1A.3 normalizes bounded customer search and fails closed for short input'
   assert.deepEqual(normalizeCustomerSearch('8839'), { mode: 'phone_last4', query: '8839' });
   assert.deepEqual(normalizeCustomerSearch('(8839)'), { mode: 'phone_last4', query: '8839' });
   assert.deepEqual(normalizeCustomerSearch('+1 407 670 8839'), { mode: 'phone', query: '14076708839' });
+  assert.deepEqual(normalizeCustomerSearch('+376 123 456'), { mode: 'phone', query: '376123456' });
   assert.deepEqual(normalizeCustomerSearch('Guest@Example.COM'), { mode: 'email', query: 'guest@example.com' });
   assert.deepEqual(normalizeCustomerSearch('mco-1002'), { mode: 'order_number', query: 'MCO 1002' });
   assert.deepEqual(normalizeCustomerSearch('A7-ORL-1000'), { mode: 'order_number', query: 'A7-ORL-1000' });
   assert.throws(() => normalizeCustomerSearch('De'), /at least 3 name characters/);
   assert.throws(() => normalizeCustomerSearch('123'), /exactly the last 4/);
   assert.throws(() => normalizeCustomerSearch('broken@example'), /valid customer email/);
+});
+
+test('Customer detail offers a protected known-customer order path and inline international phone guidance', () => {
+  const html = fs.readFileSync(new URL('../sistema.html', import.meta.url), 'utf8');
+  const js = fs.readFileSync(new URL('../sistema.js', import.meta.url), 'utf8');
+  assert.match(html, /Inclua o código do país\. Aceitamos de 8 a 15 dígitos\./);
+  assert.match(js, /openNewForCustomer\(customer\)/);
+  assert.match(js, /form\.elements\.customer_ref\.value = customer\.customer_ref/);
+  assert.match(js, /\+ Novo pedido/);
+  assert.match(html, /name="lead_ref" type="hidden"/);
+  assert.match(js, /openExistingLead\(lead\.lead_ref\)/);
 });
 
 test('W1A.3 searches customers by name, phone, email or related order and returns safe references', async () => {

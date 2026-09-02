@@ -68,6 +68,14 @@
       "destination": "/sistema-pickup-order.html"
     },
     {
+      "source": "/sistema/orders/:orderNumber",
+      "destination": "/sistema.html"
+    },
+    {
+      "source": "/sistema/:section",
+      "destination": "/sistema.html"
+    },
+    {
       "source": "/laundry-pickup-delivery-orlando",
       "destination": "/laundry-pickup-delivery-orlando.html"
     },

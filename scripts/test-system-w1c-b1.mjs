@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const { MemoryOperationalStore } = require('../lib/operational-store.js');
-const { systemInvoiceService, invoiceFacts } = require('../lib/system-invoice-service.js');
+const { systemInvoiceService, pricingFacts, invoiceFacts } = require('../lib/system-invoice-service.js');
 const { nextActionFor } = require('../lib/system-operations-service.js');
 const { signSession, issueSubmission, COOKIE_NAME, SUBMISSION_COOKIE_NAME } = require('../lib/system-auth.js');
 const invoiceApi = require('../api/system/order-invoices.js');
@@ -77,6 +77,43 @@ test('W1C-B1 derives immutable lines and applies the governed minimum exactly on
   assert.equal(store.systemInvoices.size, 1);
   await assert.rejects(() => service.review({ order_number:order.order_number, expected_invoice_version:1,
     reason:'Conflicting retry', request_id:requestId }, OWNER), /Idempotency key conflicts/);
+});
+
+test('W1C-B1 permits invoice after weight without advancing production or custody', async () => {
+  const store = new MemoryOperationalStore();
+  const { order } = addReadyOrder(store, { order_number:'MCO 2299', production_state:'awaiting_processing', items:[
+    { id:crypto.randomUUID(), label:'Wash & Fold — Express', unit:'lb', quantity:null,
+      unit_price:3.95, minimum_amount:60, actual_lbs:11.9, subtotal:47.01, requires_manual_review:false }
+  ] });
+  const service = systemInvoiceService({ operationalStore:store, now:() => NOW });
+  const context = await service.context(order.order_number);
+  assert.equal(context.can_review, true);
+  assert.equal(context.pricing.item_subtotal, 47.01);
+  assert.equal(context.pricing.minimum_adjustment, 12.99);
+  assert.equal(context.pricing.service_amount, 60);
+  assert.equal(context.pricing.tip_amount, 0);
+  assert.equal(context.preview.service_amount, 60);
+  assert.equal(invoiceFacts(store.operationalRow(order)).service_amount, 60);
+  assert.equal(pricingFacts(store.operationalRow(order)).service_amount, 60);
+  const issued = await service.review({ order_number:order.order_number, expected_invoice_version:0,
+    request_id:crypto.randomUUID() }, OWNER);
+  assert.equal(issued.invoice.service_amount, 60);
+  assert.equal(store.orders.get(order.id).production_state, 'awaiting_processing');
+  assert.equal(store.orders.get(order.id).custody_state, 'at_laundry');
+  assert.equal(store.orders.get(order.id).payment_status, 'invoice_created');
+});
+
+test('W1C-B1 still blocks invoice before governed weight completion', async () => {
+  const store = new MemoryOperationalStore();
+  const { order } = addReadyOrder(store, { order_number:'MCO 2300', production_state:'awaiting_weight', items:[
+    { id:crypto.randomUUID(), label:'Wash & Fold — Express', unit:'lb', quantity:null,
+      unit_price:3.95, minimum_amount:60, actual_lbs:null, subtotal:null, requires_manual_review:false }
+  ] });
+  const context = await systemInvoiceService({ operationalStore:store, now:() => NOW }).context(order.order_number);
+  assert.equal(context.preview, null);
+  assert.equal(context.can_review, false);
+  assert.match(context.blocker, /must be weighed/);
+  assert.throws(() => invoiceFacts(store.operationalRow(order)), /must be weighed/);
 });
 
 test('W1C-B1 replacement requires changed facts, expected version and reason', async () => {
@@ -203,4 +240,17 @@ test('W1C-B1 static contract is additive and isolated from Stripe, WhatsApp and 
   assert.deepEqual(nextActionFor({ order_status:'weighed', payment_status:'pending', service_tier:'normal',
     custody_state:'at_laundry', production_state:'ready', items:[] }),
   { code:'review_invoice', label:'REVISAR INVOICE', enabled:true });
+});
+
+test('W1C-B1 after-weight authority is additive, guarded and independently reversible', () => {
+  const migration = fs.readFileSync(new URL('../supabase/migrations/20260902014000_orlando_invoice_after_weight.sql', import.meta.url), 'utf8');
+  const rollback = fs.readFileSync(new URL('../supabase/rollbacks/20260902014000_orlando_invoice_after_weight.rollback.sql', import.meta.url), 'utf8');
+  assert.match(migration, /create or replace function public\.a7_orlando_w1c_b1_review_invoice_v2/);
+  assert.match(migration, /production_state not in \('awaiting_processing', 'processing', 'ready'\)/);
+  assert.match(migration, /a7_orlando_order_is_qa\(v_order\.id\)/);
+  assert.match(migration, /p_actor_role not in \('owner', 'manager'\)/);
+  assert.match(migration, /Paid invoice is immutable/);
+  assert.match(migration, /grant execute .*service_role/s);
+  assert.doesNotMatch(migration, /drop table|truncate|delete from/i);
+  assert.match(rollback, /drop function if exists public\.a7_orlando_w1c_b1_review_invoice_v2/);
 });

@@ -102,6 +102,26 @@ async function processCheckoutPaid(event, store, deliveryOptions) {
   const amount = Number(session.amount_total) / 100;
   if (!Number.isFinite(amount) || amount <= 0 || currency !== 'USD') throw new Error('Paid checkout amount is invalid.');
 
+  // New governed links persist service/tip composition before Stripe is called.
+  // Legacy zero-tip links remain supported, but may never infer a tip from a total.
+  const governedLink = paymentLinkId
+    ? await store.getSystemPaymentLinkByStripeId(paymentLinkId) : null;
+  let composition = {};
+  if (governedLink) {
+    if (governedLink.order_id !== orderId || governedLink.invoice_id !== (order.current_invoice_id || order.invoice_id)
+      || governedLink.status !== 'active' || Number(governedLink.total_amount) !== amount
+      || Number(governedLink.service_amount) !== Number(order.service_amount)) {
+      throw new Error('Paid checkout does not match its governed Payment Link.');
+    }
+    composition = {
+      service_amount:Number(governedLink.service_amount),
+      tip_amount:Number(governedLink.tip_amount),
+      total_amount:Number(governedLink.total_amount)
+    };
+  } else if (amount !== Number(order.service_amount)) {
+    throw new Error('Legacy checkout cannot carry an inferred tip.');
+  }
+
   const result = await store.recordPayment({
     stripe_event_id: event.id,
     event_type: event.type,
@@ -110,6 +130,7 @@ async function processCheckoutPaid(event, store, deliveryOptions) {
     checkout_session_id: session.id,
     payment_link_id: paymentLinkId,
     amount,
+    ...composition,
     currency,
     paid_at: unixIso(event.created)
   });

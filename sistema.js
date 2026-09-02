@@ -10,6 +10,7 @@
   let activeFinanceRequest = { preset:'30d' };
   let orderFormDirty = false;
   let customerSuggestionTimer = null;
+  let suppressHistory = false;
 
   async function request(url, options = {}) {
     const response = await fetch(url, { credentials: 'same-origin', ...options,
@@ -102,6 +103,28 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
+  function setRoute(path, replace = false) {
+    if (suppressHistory || location.pathname === path) return;
+    history[replace ? 'replaceState' : 'pushState']({ a7System:true }, '', path);
+  }
+
+  async function restoreCurrentRoute() {
+    const path = decodeURIComponent(location.pathname);
+    const orderMatch = path.match(/^\/sistema\/orders\/(A7-ORL-\d{4,}|MCO (?:\d{4,12}))$/i);
+    suppressHistory = true;
+    try {
+      if (orderMatch) return await refreshOperationalDetail(orderMatch[1].toUpperCase(), true);
+      if (path === '/sistema/orders') { show('ordersView'); return await loadOperationalOrders(activeQueue, ''); }
+      if (path === '/sistema/customers') return show('customersView');
+      if (path === '/sistema/billing') return await openFinance();
+      if (path === '/sistema/attendance') return show('attendanceView');
+      if (path === '/sistema/hotels') return $('hotelsNav').click();
+      if (path === '/sistema/team' && activeUserRole === 'owner') return $('teamNav').click();
+      show('todayView');
+      return await loadToday();
+    } finally { suppressHistory = false; }
+  }
+
   function money(value) { return value == null ? 'Review required' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value); }
   function confirmedMoney(value) { return value == null ? 'Não confirmado' : money(value); }
   function shortDate(value) { return value ? new Date(value).toLocaleDateString() : 'Não informado'; }
@@ -185,6 +208,8 @@
   async function openNew() {
     await request('/api/system/order-draft', { method: 'POST' });
     $('orderForm').reset();
+    $('orderForm').elements.name.readOnly = false;
+    $('orderForm').elements.whatsapp_number.readOnly = false;
     orderFormDirty = false;
     $('orderForm').elements.promised_by.dataset.userEdited = '';
     $('customerSuggestions').hidden = true;
@@ -194,6 +219,62 @@
     if (!catalog) await loadCatalog();
     refreshCommercial();
     show('newOrderView');
+    setRoute('/sistema/attendance');
+  }
+
+  async function openExistingLead(leadRef) {
+    if (!leadRef) throw new Error('Este atendimento não possui uma referência segura. Atualize a página.');
+    const payload = await request('/api/system/leads', {
+      method:'POST', body:JSON.stringify({ action:'detail', lead_ref:leadRef })
+    });
+    await openNew();
+    const lead = payload.lead;
+    const form = $('orderForm');
+    form.elements.lead_ref.value = lead.lead_ref;
+    form.elements.customer_ref.value = '';
+    form.elements.name.value = lead.customer_name;
+    form.elements.name.readOnly = true;
+    form.elements.whatsapp_number.value = lead.whatsapp_number || '';
+    form.elements.whatsapp_number.readOnly = true;
+    if (['en', 'pt', 'es', 'other'].includes(lead.language)) form.elements.language.value = lead.language;
+    if (['guest', 'resident', 'host'].includes(lead.customer_type)) form.elements.customer_type.value = lead.customer_type;
+    if (['hotel', 'airbnb', 'residence'].includes(lead.accommodation_type)) form.elements.accommodation_type.value = lead.accommodation_type;
+    form.elements.property.value = lead.property || '';
+    form.elements.property_address.value = lead.property_address || '';
+    form.elements.room.value = lead.room || '';
+    form.elements.location_notes.value = lead.location_notes || '';
+    form.elements.lead_reference.value = lead.lead_reference || '';
+    form.elements.estimated_lbs.value = lead.estimated_lbs || '';
+    if (lead.pickup_window_start) form.elements.pickup_window_start.value = localFieldValue(new Date(lead.pickup_window_start));
+    if (lead.pickup_window_end) form.elements.pickup_window_end.value = localFieldValue(new Date(lead.pickup_window_end));
+    if (lead.needed_by) form.elements.needed_by.value = localFieldValue(new Date(lead.needed_by));
+    const tier = lead.service_tier_preference === 'express' ? 'express' : 'normal';
+    form.querySelector(`[name="service_tier"][value="${tier}"]`).checked = true;
+    $('customerSuggestions').classList.add('customer-suggestion-selected');
+    $('customerSuggestions').replaceChildren(node('span', '',
+      `Solicitação do site selecionada · identidade analítica ${lead.analytics_identity_present ? 'presente' : 'ausente'}. O lead original será preservado.`));
+    $('customerSuggestions').hidden = false;
+    syncExpressPromise();
+    refreshCommercial();
+    orderFormDirty = false;
+  }
+
+  async function openNewForCustomer(customer) {
+    await openNew();
+    const form = $('orderForm');
+    form.elements.customer_ref.value = customer.customer_ref;
+    form.elements.name.value = customer.name;
+    form.elements.whatsapp_number.value = `+•••• ${String(customer.whatsapp_number || '').slice(-4)}`;
+    if (['en', 'pt', 'es', 'other'].includes(customer.language)) form.elements.language.value = customer.language;
+    if (['guest', 'resident', 'host'].includes(customer.customer_type)) form.elements.customer_type.value = customer.customer_type;
+    if (['hotel', 'airbnb', 'residence'].includes(customer.latest_accommodation_type)) {
+      form.elements.accommodation_type.value = customer.latest_accommodation_type;
+    }
+    if (customer.latest_property) form.elements.property.value = customer.latest_property;
+    $('customerSuggestions').classList.add('customer-suggestion-selected');
+    $('customerSuggestions').replaceChildren(node('span', '', `Cliente existente selecionado: ${customer.name}. O contato protegido será reutilizado.`));
+    $('customerSuggestions').hidden = false;
+    orderFormDirty = true;
   }
 
   function itemsFromForm(data) {
@@ -213,7 +294,7 @@
     if ($('orderForm').elements.customer_ref.value) return;
     const source = String(query || '').trim();
     const digits = source.replace(/\D/g, '');
-    if (source.length < 3 || (/^[\d\s()+.-]+$/.test(source) && digits.length < 10)) {
+    if (source.length < 3 || (/^[\d\s()+.-]+$/.test(source) && digits.length < 7)) {
       box.hidden = true; box.replaceChildren(); return;
     }
     try {
@@ -262,7 +343,8 @@
     all:'Todos', new:'Novos', pickups_today:'Coletas', with_driver:'Com motorista',
     at_laundry:'Na lavanderia', awaiting_weight:'Para pesar', processing:'Processando', ready:'Prontos',
     charge:'Para cobrar', awaiting_payment:'Aguardando pagamento', deliveries:'Entregas', express:'Express',
-    express_attention:'Express em atenção', late:'Atrasados', home_pickups:'Aguardando coleta',
+    express_attention:'Express em atenção', express_risk:'Express em risco', express_late:'Express atrasado',
+    late:'Atrasados', home_pickups:'Aguardando coleta',
     payment_attention:'Pagamento requer atenção', ready_dispatch:'Prontos para sair', blockers:'Bloqueios'
   };
   const STATE_LABELS = {
@@ -270,7 +352,7 @@
     at_laundry:'Na lavanderia', with_driver_delivery:'Com motorista para entrega', bell_desk:'Na recepção / Bell Desk', delivered:'Entregue',
     awaiting_intake:'Aguardando chegada', awaiting_weight:'Aguardando pesagem', awaiting_processing:'Aguardando processamento',
     processing:'Em processamento', ready:'Pronto', pending:'Pendente', invoice_created:'Fatura criada', paid:'Pago',
-    failed:'Falhou', void:'Anulado', issued:'Emitida', superseded:'Substituída', accepted:'Aceito', pickup_scheduled:'Coleta agendada', picked_up:'Coletado',
+    failed:'Falhou', void:'Anulado', issued:'Emitida', superseded:'Substituída', accepted:'Aceito', pickup_scheduled:'Coleta agendada', picked_up:'Coletado', weighed:'Pesado',
     ready_for_delivery:'Pronto para entrega', cancelled:'Cancelado', new:'Novo', qualifying:'Qualificando', qualified:'Qualificado',
     not_initialized:'Não informado', operational_blocker:'Bloqueio operacional', cash:'Dinheiro', zelle:'Zelle', stripe:'Stripe', other:'Outro'
   };
@@ -288,6 +370,13 @@
   };
 
   function stateLabel(value) { return STATE_LABELS[value] || 'Não informado'; }
+  function axisStateLabel(axis, order) {
+    if (axis === 'Produção' && order.order_status === 'delivered') return 'Concluída';
+    if (axis === 'Produção' && order.order_status === 'cancelled') return 'Encerrada';
+    return stateLabel(order[axis === 'Lifecycle' ? 'order_status'
+      : axis === 'Custódia' ? 'custody_state'
+        : axis === 'Produção' ? 'production_state' : 'payment_status']);
+  }
   function slaLabel(order) {
     const labels = { late:'ATRASADO', risk:'RISCO', attention:'ATENÇÃO', ok:'NO PRAZO', not_set:'PRAZO NÃO DEFINIDO', not_configured:'SLA PENDENTE', not_applicable:'STANDARD' };
     if (order.obligation?.overdue) return `ATRASADO · ${order.obligation.obligation === 'pickup' ? 'COLETA' : 'ENTREGA'}`;
@@ -332,7 +421,9 @@
       const who = node('span', 'operation-card-who'); who.append(node('strong', '', lead.customer_name), node('small', '', `${lead.property || 'Local não informado'}${lead.whatsapp_last4 ? ` · WhatsApp final ${lead.whatsapp_last4}` : ''}`));
       const next = node('span', 'operation-card-next'); next.append(node('small', '', 'PRÓXIMA AÇÃO'), node('strong', '', 'CONFIRMAR VENDA'));
       button.append(status, who, next);
-      button.addEventListener('click', () => show('attendanceView'));
+      button.addEventListener('click', () => openExistingLead(lead.lead_ref).catch((error) => {
+        $('todayError').textContent = error.message;
+      }));
       target.append(button);
     }
   }
@@ -391,7 +482,8 @@
       if (action.kind === 'order') facts.append(node('span', 'state-pill', stateLabel(action.payment_status)), node('span', `sla-pill ${action.sla_status || ''}`, action.deadline ? shortDate(action.deadline) : 'Sem prazo registrado'));
       const next = node('span', 'operation-card-next'); next.append(node('small', '', 'PRÓXIMA AÇÃO'), node('strong', '', action.next_action.label));
       button.append(top, who, facts, next);
-      button.addEventListener('click', () => action.kind === 'order' ? openOperationalDetail(action.order_number) : show('attendanceView'));
+      button.addEventListener('click', () => action.kind === 'order' ? openOperationalDetail(action.order_number)
+        : openExistingLead(action.lead_ref).catch((error) => { $('todayError').textContent = error.message; }));
       target.append(button);
     }
   }
@@ -411,8 +503,7 @@
     for (const item of home.needs_attention) {
       const button = node('button', `home-alert ${item.tone || ''}`); button.type = 'button';
       const copy = node('span', 'home-alert-copy'); copy.append(node('strong', '', item.label));
-      const detail = item.key === 'express_attention' ? `${item.late} atrasado(s) · ${item.risk} em risco`
-        : item.key === 'payments_pending' ? 'Valor não disponível neste resumo' : 'Abrir fila correspondente';
+      const detail = item.key === 'payments_pending' ? 'Valor não disponível neste resumo' : 'Abrir fila correspondente';
       copy.append(node('small', '', detail));
       button.append(node('span', 'home-alert-mark'), copy, node('span', 'home-alert-count', String(item.count)));
       button.addEventListener('click', () => openHomeTarget(item.target).catch((error) => { $('todayError').textContent = error.message; }));
@@ -498,7 +589,12 @@
     const identity = node('div');
     identity.append(node('p', 'eyebrow', 'CLIENTE'), node('h2', '', customer.name));
     identity.append(node('p', 'customer-contact', customer.whatsapp_number || 'WhatsApp não informado'));
-    heading.append(identity);
+    const newOrder = node('button', 'primary', '+ Novo pedido');
+    newOrder.type = 'button';
+    newOrder.addEventListener('click', () => openNewForCustomer(customer).catch((error) => {
+      $('customerSearchError').textContent = error.message;
+    }));
+    heading.append(identity, newOrder);
     const facts = node('dl', 'customer-facts');
     for (const [label, value] of [
       ['Email', customer.email || 'Não informado'], ['Idioma', customer.language || 'Não informado'],
@@ -628,6 +724,7 @@
 
   async function openFinance() {
     show('financeView');
+    setRoute('/sistema/billing');
     await loadFinance(activeFinanceRequest);
   }
 
@@ -651,7 +748,8 @@
     const lines = node('div', 'invoice-lines');
     for (const line of facts.lines || []) {
       const row = node('div', `invoice-line ${line.line_type || ''}`);
-      const description = node('span'); description.append(node('strong', '', line.label || 'Serviço'));
+      const lineLabel = line.line_type === 'minimum_adjustment' ? 'Ajuste para o mínimo do pedido' : (line.label || 'Serviço');
+      const description = node('span'); description.append(node('strong', '', lineLabel));
       const basis = line.unit === 'lb'
         ? `${line.actual_lbs} lb × ${money(line.unit_price)}`
         : line.line_type === 'minimum_adjustment' ? 'Mínimo do pedido'
@@ -669,6 +767,16 @@
     }
     card.append(lines, totals);
     return card;
+  }
+
+  function invoiceBlockerLabel(value) {
+    const labels = {
+      'Order must be weighed before invoice review.':'A invoice poderá ser emitida após a pesagem.',
+      'Order must be ready before invoice review.':'A invoice poderá ser emitida após a pesagem.',
+      'Paid invoice is immutable.':'Invoice paga é imutável.',
+      'QA orders are read-only.':'Pedidos QA são somente leitura.'
+    };
+    return labels[value] || value;
   }
 
   async function submitInvoiceAction(orderNumber, action, expectedVersion, reason, button, feedback) {
@@ -698,14 +806,19 @@
     const body = section.querySelector('.invoice-section-body'); body.replaceChildren();
     const feedback = node('p', 'invoice-feedback'); feedback.setAttribute('role', 'status');
     body.append(node('p', 'invoice-intro', 'Valores calculados pelo sistema a partir dos itens confirmados. Tip permanece em US$0.00.'));
-    if (context.blocker) body.append(node('p', 'invoice-blocker', context.blocker));
-    if (context.preview) {
-      body.append(invoiceTemplatePreview(
-        orderNumber,
-        feedback,
-        context.current_invoice ? 'Prévia oficial da nova versão' : 'Prévia oficial da invoice'
-      ));
-      body.append(invoiceFactsCard(context.preview, 'Cálculo financeiro'));
+    if (context.blocker) body.append(node('p', 'invoice-blocker', invoiceBlockerLabel(context.blocker)));
+    const pricing = context.preview || context.pricing;
+    if (pricing) {
+      if (context.preview) {
+        body.append(invoiceTemplatePreview(
+          orderNumber,
+          feedback,
+          context.current_invoice ? 'Prévia oficial da nova versão' : 'Prévia oficial da invoice'
+        ));
+      } else if (!context.current_invoice) {
+        body.append(node('p', 'invoice-blocker', 'Cálculo disponível somente para consulta neste estado.'));
+      }
+      body.append(invoiceFactsCard(pricing, 'Cálculo financeiro'));
     }
 
     const current = context.current_invoice;
@@ -719,6 +832,18 @@
       invoicePng.addEventListener('click', () => downloadOrderDocument('invoice_png', orderNumber, invoicePng, feedback));
       documents.append(invoicePdf, invoicePng);
       body.append(documents);
+
+      if (['owner', 'manager'].includes(activeUserRole)
+        && ['invoice_created', 'failed', 'void'].includes(context.payment_status)) {
+        const paymentLink = node('article', 'payment-link-card');
+        paymentLink.append(node('h3', '', 'Link de pagamento Stripe'));
+        const status = node('p', 'payment-help', 'Consultando o link atual…');
+        paymentLink.append(status);
+        body.append(paymentLink);
+        loadPaymentLink(orderNumber, current.service_amount, paymentLink, status).catch((error) => {
+          if (paymentLink.isConnected) status.textContent = error.message;
+        });
+      }
     }
     if (context.can_review || context.can_replace) {
       const form = node('form', 'invoice-review-form');
@@ -764,6 +889,69 @@
       }
       body.append(history);
     }
+  }
+
+  async function loadPaymentLink(orderNumber, serviceAmount, card, status) {
+    const payload = await request('/api/system/payment-link', {
+      method:'POST', body:JSON.stringify({ action:'context', order_number:orderNumber })
+    });
+    const current = payload.context.current;
+    if (current?.url) {
+      status.textContent = `Ativo · Serviço ${money(current.service_amount)} · Gorjeta ${money(current.tip_amount)} · Total ${money(current.total_amount)}`;
+      const actions = node('div', 'document-actions');
+      const open = node('a', 'primary', 'Abrir link'); open.href = current.url;
+      open.target = '_blank'; open.rel = 'noopener noreferrer';
+      const copy = node('button', 'secondary', 'Copiar link'); copy.type = 'button';
+      copy.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(current.url); copy.textContent = 'Link copiado'; }
+        catch (_) { status.textContent = 'Não foi possível copiar. Abra o link e copie pela barra do navegador.'; }
+      });
+      actions.append(open, copy); card.append(actions); return;
+    }
+    if (!payload.context.can_create) {
+      status.textContent = 'Este pedido ainda não está pronto para gerar um link.'; return;
+    }
+    status.textContent = 'Escolha a gorjeta confirmada pelo cliente. A invoice não será alterada.';
+    const form = node('form', 'payment-link-form');
+    const service = Number(serviceAmount);
+    const tipLabel = node('label', '', 'Gorjeta');
+    const tip = node('input'); tip.name = 'tip_amount'; tip.type = 'number'; tip.min = '0'; tip.step = '0.01';
+    tip.required = true; tip.value = Number(current?.tip_amount || 0).toFixed(2); tipLabel.append(tip);
+    const shortcuts = node('div', 'tip-shortcuts');
+    for (const percent of [0, 10, 15, 20]) {
+      const button = node('button', 'secondary', percent ? `${percent}%` : 'Sem gorjeta'); button.type = 'button';
+      button.addEventListener('click', () => {
+        tip.value = (service * percent / 100).toFixed(2);
+        tip.dispatchEvent(new Event('input'));
+      });
+      shortcuts.append(button);
+    }
+    const total = node('strong', 'payment-link-total', `Total: ${money(service + Number(tip.value))}`);
+    tip.addEventListener('input', () => { total.textContent = `Total: ${money(service + Number(tip.value || 0))}`; });
+    const submit = node('button', 'primary', 'Gerar Payment Link'); submit.type = 'submit';
+    form.append(tipLabel, shortcuts, total, submit);
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); submit.disabled = true; status.textContent = '';
+      try {
+        await request('/api/system/invoice-draft', { method:'POST' });
+        const created = await request('/api/system/payment-link', { method:'POST', body:JSON.stringify({
+          action:'create', order_number:orderNumber, tip_amount:tip.value
+        }) });
+        form.remove();
+        const result = created.result;
+        status.textContent = `Ativo · Serviço ${money(result.service_amount)} · Gorjeta ${money(result.tip_amount)} · Total ${money(result.total_amount)}`;
+        const actions = node('div', 'document-actions');
+        const open = node('a', 'primary', 'Abrir link'); open.href = result.url;
+        open.target = '_blank'; open.rel = 'noopener noreferrer';
+        const copy = node('button', 'secondary', 'Copiar link'); copy.type = 'button';
+        copy.addEventListener('click', async () => {
+          try { await navigator.clipboard.writeText(result.url); copy.textContent = 'Link copiado'; }
+          catch (_) { status.textContent = 'Não foi possível copiar. Abra o link e copie pela barra do navegador.'; }
+        });
+        actions.append(open, copy); card.append(actions);
+      } catch (error) { status.textContent = error.message; submit.disabled = false; }
+    });
+    card.append(form);
   }
 
   function invoiceSection(orderNumber) {
@@ -872,7 +1060,10 @@
     const section = detailSection('Pagamento'); section.classList.add('manual-payment-section');
     if (order.payment_status === 'paid') {
       section.append(factGrid([['Status', 'Pago'], ['Método', stateLabel(order.manual_payment?.method || 'stripe')],
-        ['Valor', order.service_amount == null ? null : money(order.service_amount)], ['Pago em', dateTime(order.paid_at)]]));
+        ['Serviço', order.service_amount == null ? null : money(order.service_amount)],
+        ['Gorjeta', money(order.tip_amount || 0)],
+        ['Total pago', money((order.manual_payment?.total_amount ?? order.manual_payment?.amount) || order.service_amount)],
+        ['Referência', order.manual_payment?.reference || null], ['Pago em', dateTime(order.paid_at)]]));
       return section;
     }
     const form = node('form', 'manual-payment-form');
@@ -880,15 +1071,38 @@
     const method = node('select'); method.name = 'method'; method.required = true;
     for (const [value, label] of [['stripe','Stripe'],['cash','Cash'],['zelle','Zelle'],['other','Outro']]) method.append(new Option(label, value));
     methodLabel.append(method);
-    const amountLabel = node('label', '', 'Valor'); const amount = node('input');
-    amount.name = 'amount'; amount.type = 'number'; amount.min = '0.01'; amount.step = '0.01'; amount.required = true;
-    if (order.service_amount != null) amount.value = Number(order.service_amount).toFixed(2); amountLabel.append(amount);
+    const serviceAmount = Number(order.service_amount || 0);
+    const serviceLabel = node('label', '', 'Valor do serviço'); const service = node('input');
+    service.value = serviceAmount.toFixed(2); service.readOnly = true; serviceLabel.append(service);
+    const tipLabel = node('label', '', 'Gorjeta'); const tip = node('input');
+    tip.name = 'tip_amount'; tip.type = 'number'; tip.min = '0'; tip.step = '0.01'; tip.required = true;
+    tip.value = '0.00'; tipLabel.append(tip);
+    const shortcuts = node('div', 'tip-shortcuts');
+    for (const percent of [0, 10, 15, 20]) {
+      const button = node('button', 'secondary', percent ? `${percent}%` : 'Sem gorjeta'); button.type = 'button';
+      button.addEventListener('click', () => {
+        tip.value = (serviceAmount * percent / 100).toFixed(2);
+        tip.dispatchEvent(new Event('input'));
+      });
+      shortcuts.append(button);
+    }
+    const amountLabel = node('label', '', 'Total pago'); const amount = node('input');
+    amount.name = 'amount'; amount.type = 'number'; amount.readOnly = true; amount.value = serviceAmount.toFixed(2);
+    amountLabel.append(amount);
+    tip.addEventListener('input', () => { amount.value = (serviceAmount + Number(tip.value || 0)).toFixed(2); });
+    const referenceLabel = node('label', '', 'Referência do pagamento'); const reference = node('input');
+    reference.name = 'reference'; reference.maxLength = 120; referenceLabel.append(reference);
+    const syncReference = () => {
+      reference.required = ['stripe', 'zelle'].includes(method.value);
+      referenceLabel.firstChild.textContent = reference.required ? 'Referência do pagamento (obrigatória)' : 'Referência do pagamento';
+    };
+    method.addEventListener('change', syncReference); syncReference();
     const paidAtLabel = node('label', '', 'Data e hora'); const paidAt = node('input');
     paidAt.name = 'paid_at'; paidAt.type = 'datetime-local'; paidAt.required = true; paidAt.value = localFieldValue(new Date()); paidAtLabel.append(paidAt);
     const noteLabel = node('label', '', 'Observação opcional'); const note = node('input'); note.name = 'note'; note.maxLength = 500; noteLabel.append(note);
     const submit = node('button', 'primary', 'Registrar pagamento'); submit.type = 'submit';
     const feedback = node('p', 'error'); feedback.setAttribute('role', 'alert');
-    form.append(methodLabel, amountLabel, paidAtLabel, noteLabel, submit, feedback);
+    form.append(methodLabel, serviceLabel, tipLabel, shortcuts, amountLabel, referenceLabel, paidAtLabel, noteLabel, submit, feedback);
     form.addEventListener('submit', async (event) => {
       event.preventDefault(); submit.disabled = true; feedback.textContent = '';
       const data = new FormData(form);
@@ -896,6 +1110,7 @@
         await request('/api/system/operation-draft', { method:'POST' });
         await request('/api/system/manual-payment', { method:'POST', body:JSON.stringify({
           order_number:order.order_number, method:data.get('method'), amount:data.get('amount'),
+          tip_amount:data.get('tip_amount'), reference:data.get('reference') || null,
           paid_at:localIso(data.get('paid_at')), note:data.get('note') || null
         }) });
         await refreshOperationalDetail(order.order_number);
@@ -916,8 +1131,8 @@
     const target = $('detailContent'); target.replaceChildren();
 
     const axes = node('section', 'state-axes');
-    for (const [label, value] of [['Lifecycle', order.order_status], ['Custódia', order.custody_state], ['Produção', order.production_state], ['Financeiro', order.payment_status]]) {
-      const card = node('div', 'panel state-axis'); card.append(node('small', '', label), node('strong', '', stateLabel(value))); axes.append(card);
+    for (const label of ['Lifecycle', 'Custódia', 'Produção', 'Financeiro']) {
+      const card = node('div', 'panel state-axis'); card.append(node('small', '', label), node('strong', '', axisStateLabel(label, order))); axes.append(card);
     }
     target.append(axes);
 
@@ -929,6 +1144,8 @@
       ['Coleta', `${dateTime(order.pickup_window_start)} — ${dateTime(order.pickup_window_end)}`],
       ['Needed by', dateTime(order.needed_by)], ['Prometido Express', dateTime(order.promised_by)],
       ['Motorista · Coleta', order.pickup_driver?.name], ['Motorista · Entrega', order.delivery_driver?.name],
+      ['Handoff', order.delivery_handoff?.handoff_point ? stateLabel(order.delivery_handoff.handoff_point) : null],
+      ['Nota do handoff', order.delivery_handoff?.handoff_note],
       ['Instruções', order.special_instructions]
     ]));
     const itemList = node('ul', 'detail-items');
@@ -1016,6 +1233,29 @@
       const leg = order.next_action.code === 'assign_pickup_driver' ? 'pickup' : 'delivery';
       actionBox.append(node('small', '', 'Selecione abaixo quem está fisicamente responsável por esta etapa.'));
       actionBox.append(driverAssignmentSection(order, leg));
+    } else if (order.next_action?.code === 'leave_bell_desk' && order.next_action.enabled) {
+      const form = node('form', 'handoff-form');
+      const pointLabel = node('label', '', 'Ponto de entrega'); const point = node('select');
+      point.name = 'handoff_point'; point.required = true;
+      point.append(new Option('Selecione', ''), new Option('Bell Desk', 'bell_desk'),
+        new Option('Front Desk', 'front_desk'), new Option('Concierge', 'concierge'));
+      pointLabel.append(point);
+      const noteLabel = node('label', '', 'Observação opcional'); const note = node('input');
+      note.name = 'handoff_note'; note.maxLength = 500; noteLabel.append(note);
+      const submit = node('button', 'primary', 'Registrar handoff'); submit.type = 'submit';
+      form.append(pointLabel, noteLabel, submit);
+      form.addEventListener('submit', (event) => runOperationalTransition(event, order)); actionBox.append(form);
+    } else if (order.next_action?.code === 'complete_delivery' && order.next_action.enabled
+      && order.custody_state === 'with_driver_delivery') {
+      const form = node('form', 'handoff-form');
+      const pointLabel = node('label', '', 'Entrega confirmada com'); const point = node('select');
+      point.name = 'handoff_point'; point.required = true;
+      point.append(new Option('Cliente', 'guest'), new Option('Outro', 'other')); pointLabel.append(point);
+      const noteLabel = node('label', '', 'Observação (obrigatória para Outro)'); const note = node('input');
+      note.name = 'handoff_note'; note.maxLength = 500; noteLabel.append(note);
+      const submit = node('button', 'primary', 'Confirmar entrega'); submit.type = 'submit';
+      form.append(pointLabel, noteLabel, submit);
+      form.addEventListener('submit', (event) => runOperationalTransition(event, order)); actionBox.append(form);
     } else {
       const run = node('button', order.next_action?.enabled ? 'primary' : 'secondary', order.next_action?.label || 'Indisponível');
       run.type = 'button'; run.disabled = !order.next_action?.enabled;
@@ -1036,6 +1276,7 @@
   async function openOperationalDetail(orderNumber) {
     priorOperationalView = $('todayView').hidden ? 'ordersView' : 'todayView';
     await refreshOperationalDetail(orderNumber, true);
+    setRoute(`/sistema/orders/${encodeURIComponent(orderNumber)}`);
   }
 
   async function refreshOperationalDetail(orderNumber, reveal = false) {
@@ -1059,6 +1300,8 @@
     if (event) {
       const data = new FormData(event.currentTarget);
       requestBody.promised_by_local = data.get('promised_by_local'); requestBody.reason = data.get('reason') || null;
+      requestBody.handoff_point = data.get('handoff_point') || null;
+      requestBody.handoff_note = data.get('handoff_note') || null;
       if ((actionCode || order.next_action.code) === 'record_weight') {
         requestBody.order_item_id = event.currentTarget.dataset.itemId;
         requestBody.expected_weight_version = event.currentTarget.dataset.weightVersion;
@@ -1116,18 +1359,18 @@
     for (const button of document.querySelectorAll('.workspace nav button:not([data-permanent-disabled])')) {
       if (!button.textContent.includes('W3')) button.disabled = false;
     }
-    show('todayView');
     buildQueueFilters();
-    loadToday().catch((error) => { $('todayError').textContent = error.message; });
+    restoreCurrentRoute().catch((error) => { $('todayError').textContent = error.message; });
   }
 
   $('logoutButton').addEventListener('click', async () => { await request('/api/system/logout', { method: 'POST' }).catch(() => null); location.reload(); });
-  $('todayNav').addEventListener('click', () => { show('todayView'); loadToday().catch((error) => { $('todayError').textContent = error.message; }); });
-  $('ordersNav').addEventListener('click', () => { show('ordersView'); loadOperationalOrders(activeQueue, '').catch((error) => { $('ordersError').textContent = error.message; }); });
-  $('attendanceNav').addEventListener('click', () => show('attendanceView'));
+  $('todayNav').addEventListener('click', () => { show('todayView'); setRoute('/sistema'); loadToday().catch((error) => { $('todayError').textContent = error.message; }); });
+  $('ordersNav').addEventListener('click', () => { show('ordersView'); setRoute('/sistema/orders'); loadOperationalOrders(activeQueue, '').catch((error) => { $('ordersError').textContent = error.message; }); });
+  $('attendanceNav').addEventListener('click', () => { show('attendanceView'); setRoute('/sistema/attendance'); });
   $('customersNav').addEventListener('click', () => {
     $('customerSearchError').textContent = '';
     show('customersView');
+    setRoute('/sistema/customers');
   });
   $('financeNav').addEventListener('click', () => openFinance().catch((error) => {
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
@@ -1152,9 +1395,9 @@
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));
   $('newOrderButton').addEventListener('click', () => openNew().catch((error) => { $('lookupError').textContent = error.message; }));
-  $('backButton').addEventListener('click', () => { if (confirmOrderFormExit()) { orderFormDirty = false; show('attendanceView'); } });
-  $('cancelButton').addEventListener('click', () => { if (confirmOrderFormExit()) { orderFormDirty = false; show('attendanceView'); } });
-  $('doneButton').addEventListener('click', () => show('attendanceView'));
+  $('backButton').addEventListener('click', () => { if (confirmOrderFormExit()) { orderFormDirty = false; show('attendanceView'); setRoute('/sistema/attendance'); } });
+  $('cancelButton').addEventListener('click', () => { if (confirmOrderFormExit()) { orderFormDirty = false; show('attendanceView'); setRoute('/sistema/attendance'); } });
+  $('doneButton').addEventListener('click', () => { show('attendanceView'); setRoute('/sistema/attendance'); });
   $('refreshTodayButton').addEventListener('click', () => loadToday().catch((error) => { $('todayError').textContent = error.message; }));
   $('refreshFinanceButton').addEventListener('click', () => loadFinance().catch((error) => {
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
@@ -1171,8 +1414,19 @@
       $('financeLoading').hidden = true; $('financeError').textContent = error.message;
     });
   });
-  $('todayOpenOrders').addEventListener('click', () => { show('ordersView'); loadOperationalOrders('all', '').catch((error) => { $('ordersError').textContent = error.message; }); });
-  $('backToOrdersButton').addEventListener('click', () => show(priorOperationalView));
+  $('todayOpenOrders').addEventListener('click', () => { show('ordersView'); setRoute('/sistema/orders'); loadOperationalOrders('all', '').catch((error) => { $('ordersError').textContent = error.message; }); });
+  $('backToOrdersButton').addEventListener('click', () => {
+    show(priorOperationalView); setRoute(priorOperationalView === 'todayView' ? '/sistema' : '/sistema/orders');
+  });
+  $('hotelsNav').addEventListener('click', () => setRoute('/sistema/hotels'));
+  $('teamNav').addEventListener('click', () => setRoute('/sistema/team'));
+  window.addEventListener('popstate', () => {
+    if (orderFormDirty && !$('newOrderView').hidden && !window.confirm('Há dados ainda não salvos. Deseja sair desta tela?')) {
+      history.forward(); return;
+    }
+    orderFormDirty = false;
+    restoreCurrentRoute().catch((error) => { $('todayError').textContent = error.message; });
+  });
   $('operationalSearchForm').addEventListener('submit', async (event) => {
     event.preventDefault();
     const query = new FormData(event.currentTarget).get('query');
