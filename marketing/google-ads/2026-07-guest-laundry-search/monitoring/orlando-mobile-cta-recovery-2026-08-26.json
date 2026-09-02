@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "candidate",
+  "preparedAt": "2026-08-26",
+  "accountTimeZone": "America/Sao_Paulo",
+  "campaign": "A7 | Search | Guest Laundry | Orlando | EN | JUL26",
+  "landingPage": "https://a7laundry.com/laundry-pickup-delivery-orlando",
+  "productionBaselineDeployment": "dpl_BXf9sAAgBTYnmbE7ZF72VY45NaL9",
+  "candidateSourceSha256": "07d041e1e292593178bc7148102026a51c4d3215f597f9a66b4a01a3ea83569d",
+  "comparison": {
+    "currentCompleteDays": {
+      "start": "2026-08-24",
+      "end": "2026-08-25",
+      "impressions": 157,
+      "clicks": 12,
+      "smartphonePaidClicks": 12,
+      "ctrPercent": 7.64,
+      "averageCpcBrl": 17.40,
+      "costBrl": 208.81,
+      "websiteWhatsappClicks": 2,
+      "whatsappRatePerPaidClickPercent": 16.67,
+      "stripePurchases": 0
+    },
+    "matchedPriorCompleteDays": {
+      "start": "2026-08-17",
+      "end": "2026-08-18",
+      "impressions": 282,
+      "clicks": 19,
+      "smartphonePaidClicks": 19,
+      "ctrPercent": 6.74,
+      "averageCpcBrl": 19.27,
+      "costBrl": 366.11,
+      "websiteWhatsappClicks": 5,
+      "whatsappRatePerPaidClickPercent": 26.32,
+      "stripePurchases": 2,
+      "conversionValue": 1434.35
+    }
+  },
+  "postReleaseWindow": {
+    "start": null,
+    "end": null,
+    "requiredCompleteDays": 7,
+    "comparisonRule": "same weekdays immediately before release",
+    "releaseDeployment": null,
+    "releaseHtmlSha256": null
+  },
+  "functionalRollbackChecks": [
+    "wrong WhatsApp destination or prefill",
+    "duplicate whatsapp_click emission for one interaction",
+    "fixed CTA visible above 620px",
+    "horizontal overflow",
+    "fixed CTA obstructs hero CTA",
+    "fixed CTA obstructs final page content"
+  ],
+  "interpretationBoundary": "Website WhatsApp clicks are mandatory-entry proxies, not sales. Small samples do not establish causality."
+}
