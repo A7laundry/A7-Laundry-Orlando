@@ -204,10 +204,10 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
   - [x] Reuse the canonical active-driver directory and existing Owner activation authority.
   - [x] Record Owner/Manager full route authority and Operator denial.
   - [x] Prove the canonical Bell Desk rule from A7-038 and record route-stop semantics for Bell Desk.
-- [ ] Define route contracts service-first (AC: 1–15)
-  - [ ] Define driver, route, stop, ordering, optional ETA and append-only action contracts.
-  - [ ] Define deterministic eligibility and the single-active-route rule for each order leg.
-  - [ ] Reuse W1B/W1C-B3 services for custody/delivery instead of introducing direct state writes.
+- [x] Define route contracts service-first (AC: 1–15)
+  - [x] Define driver, route, stop, ordering, optional ETA and append-only action contracts.
+  - [x] Define deterministic eligibility and the single-active-route rule for each order leg.
+  - [x] Require W1B/W1C-B3 canonical action names; no route-owned custody/delivery field exists.
 - [ ] Implement protected application services and API facade (AC: 1–15)
   - [ ] Add dry-run/list/create/assign/reorder/depart/outcome services with explicit authorization.
   - [ ] Add stale-version, exact-retry, conflicting-reuse and concurrency controls.
@@ -309,3 +309,16 @@ destructive rollback. No CRITICAL finding may remain open before release.
 
 - `docs/stories/a7-031-orlando-os-w3-d-manual-routes.md`
 - `docs/audits/2026-09-02-orlando-os-w3-d-routes-lite-forensic.md`
+- `lib/system-rbac.js`
+- `lib/system-route-service.js`
+- `scripts/test-system-routes.mjs`
+- `supabase/migrations/20260902018000_orlando_os_w3d_routes_lite.sql`
+- `package.json`
+
+## Validation evidence
+
+- Packet W3-D.0 inspected the linked Orlando Production migration ledger and a read-only schema dump. No route table,
+  RPC, API or hidden UI implementation exists; the canonical driver/order/Bell Desk base is present.
+- Packet W3-D.1 focused contract suite: `8/8 PASS`; `node --check lib/system-route-service.js` and
+  `git diff --check`: PASS.
+- Migration `20260902018000` is local-only and has not been applied to any remote database.
