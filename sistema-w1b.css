@@ -87,6 +87,19 @@
 .detail-facts dt { color: var(--muted); font-size: .67rem; font-weight: 800; text-transform: uppercase; }
 .detail-facts dd { margin: 4px 0 0; font-weight: 750; overflow-wrap: anywhere; }
 .detail-items { margin: 0; padding-left: 20px; color: #30445b; }
+.message-section-body { display: grid; gap: 13px; }
+.message-intro, .message-empty, .message-feedback { margin: 0; color: var(--muted); }
+.message-feedback { min-height: 1.2em; color: #315274; font-weight: 700; }
+.message-create-form { display: grid; grid-template-columns: minmax(220px, 1fr) auto; align-items: end; gap: 10px; }
+.message-create-form label { margin: 0; }
+.message-draft-list { display: grid; gap: 10px; }
+.message-draft-card { display: grid; gap: 9px; padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.message-draft-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.message-status { padding: 5px 8px; border-radius: 999px; background: #edf3fa; color: #39526d; font-size: .67rem; font-weight: 850; }
+.message-status.approved { background: #e9f7ef; color: #1f7041; }
+.message-status.copied { background: #edf4ff; color: var(--blue); }
+.message-preview { min-height: 116px; resize: vertical; background: #fff; color: var(--ink); line-height: 1.5; }
+.message-actions { display: flex; justify-content: flex-end; gap: 8px; }
 .weight-progress { margin-top: 0; color: var(--muted); font-weight: 750; }
 .weight-grid { display: grid; gap: 10px; }
 .weight-card {
@@ -141,6 +154,7 @@
   .operation-card-next { grid-column: 2 / -1; }
   .detail-facts { grid-template-columns: repeat(2, 1fr); }
   .promise-form { grid-template-columns: 1fr; }
+  .message-create-form { grid-template-columns: 1fr; }
   .weight-card, .weight-card:not(.correction) { grid-template-columns: 1fr 1fr; }
   .weight-card-head { grid-column: 1 / -1; }
   .invoice-review-form, .invoice-void-form { grid-template-columns: 1fr; }
@@ -160,6 +174,7 @@
   .weight-card, .weight-card:not(.correction) { grid-template-columns: 1fr; }
   .weight-card-head { grid-column: auto; }
   .weight-card .primary { width: 100%; }
+  .message-actions, .message-actions button { width: 100%; }
   .invoice-review-form button, .invoice-void-form button { width: 100%; }
   .document-actions, .document-actions button { width: 100%; }
 }

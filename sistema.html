@@ -136,33 +136,31 @@
 
           <div id="hotelsView" hidden>
             <div class="page-head">
-              <div><p class="eyebrow">HOTÉIS</p><h1>Diretório e desempenho</h1>
-                <p>Cadastre uma vez, selecione sem erro e acompanhe os atendimentos por hotel.</p></div>
-              <button id="newHotelButton" class="primary owner-only" type="button">+ Novo hotel</button>
+              <div><p class="eyebrow">HOTÉIS</p><h1>Diretório operacional</h1>
+                <p>Seleção padronizada e resultados confirmados por hotel.</p></div>
+              <button id="newHotelButton" class="primary owner-only" type="button">+ Cadastrar hotel</button>
             </div>
             <section class="panel hotel-search-panel">
               <form id="hotelSearchForm" class="inline-form">
-                <div class="lookup-input"><input name="hotel_query" maxlength="160" placeholder="Nome, endereço, região ou alias" autocomplete="off" spellcheck="false"><small>Os KPIs excluem pedidos QA e cancelados.</small></div>
+                <div class="lookup-input"><input name="hotel_query" maxlength="160" placeholder="Nome, apelido, endereço ou região" autocomplete="off" spellcheck="false"><small>Pedidos históricos sem vínculo não são associados automaticamente.</small></div>
                 <button type="submit">Buscar hotel</button>
               </form>
-              <label class="hotel-inactive-toggle owner-only"><input id="includeInactiveHotels" type="checkbox"> Incluir hotéis inativos</label>
+              <label class="owner-only hotel-inactive-toggle"><input id="includeInactiveHotels" type="checkbox"> Mostrar inativos</label>
               <p class="error" id="hotelSearchError" role="alert"></p>
             </section>
             <section id="hotelEditor" class="panel hotel-editor owner-only" hidden>
-              <h2 id="hotelEditorTitle">Novo hotel</h2>
-              <form id="hotelForm">
+              <div class="section-head"><div><p class="eyebrow">CADASTRO</p><h2 id="hotelEditorTitle">Novo hotel</h2></div><button id="cancelHotelButton" class="quiet" type="button">Fechar</button></div>
+              <form id="hotelForm" class="grid">
                 <input name="hotel_id" type="hidden">
-                <div class="grid">
-                  <label>Nome oficial<input name="canonical_name" maxlength="180" required></label>
-                  <label>Região / corredor<input name="region" maxlength="100" placeholder="Bonnet Creek"></label>
-                  <label class="wide">Endereço<input name="address_line" maxlength="240" required></label>
-                  <label class="wide">Aliases, separados por vírgula<input name="aliases" maxlength="1000" placeholder="Signia Bonnet Creek, Hilton Bonnet Creek"></label>
-                  <label class="wide">Instruções de handoff<textarea name="handoff_notes" maxlength="500"></textarea></label>
-                  <label class="hotel-active"><input name="active" type="checkbox" checked> Hotel ativo</label>
-                </div>
-                <p class="error" id="hotelEditorError" role="alert"></p>
-                <div class="submit-row"><button id="cancelHotelButton" class="quiet" type="button">Cancelar</button><button class="primary" type="submit">Salvar hotel</button></div>
+                <label>Nome oficial<input name="canonical_name" maxlength="180" required></label>
+                <label>Região / corredor<input name="region" maxlength="100" placeholder="Bonnet Creek, I-Drive…"></label>
+                <label class="wide">Endereço oficial<input name="address_line" maxlength="240" required></label>
+                <label class="wide">Apelidos de busca, separados por vírgula<input name="aliases" maxlength="500" placeholder="Signia Bonnet Creek, Hilton Bonnet Creek"></label>
+                <label class="wide">Notas permanentes de handoff<textarea name="handoff_notes" maxlength="500"></textarea></label>
+                <label class="hotel-active"><input name="active" type="checkbox" checked> Hotel ativo para novos pedidos</label>
+                <div class="wide submit-row"><button class="primary" type="submit">Salvar hotel</button></div>
               </form>
+              <p class="error" id="hotelEditorError" role="alert"></p>
             </section>
             <div id="hotelResults" class="hotel-results" aria-live="polite"></div>
           </div>
@@ -206,6 +204,10 @@
 
           <div id="newOrderView" hidden>
             <div class="page-head compact"><div><button id="backButton" class="back" type="button">← Atendimento</button><h1>Novo atendimento</h1><p>Venda recebida fora do sistema</p></div></div>
+            <section id="knownCustomerBanner" class="panel known-customer-banner" hidden>
+              <div><p class="eyebrow">CLIENTE CADASTRADO</p><strong id="knownCustomerSummary"></strong><p>Nome e WhatsApp vêm do cadastro. Revise local, prazo e itens antes de confirmar.</p></div>
+              <button id="clearKnownCustomerButton" class="secondary" type="button">Remover vínculo</button>
+            </section>
             <form id="orderForm">
               <section class="panel form-section"><p class="step">1</p><div><h2>Cliente</h2><div class="grid">
                 <label>Nome<input name="name" maxlength="100" autocomplete="off" required></label>
@@ -216,7 +218,7 @@
               <section class="panel form-section"><p class="step">2</p><div><h2>Local</h2><div class="grid">
                 <label>Tipo<select name="accommodation_type"><option value="hotel">Hotel</option><option value="airbnb">Airbnb</option><option value="residence">Residence</option></select></label>
                 <label id="hotelDirectoryField">Hotel cadastrado<select id="hotelSelect" name="hotel_id"><option value="">Hotel não cadastrado</option></select></label>
-                <label>Hotel / propriedade<input name="property" maxlength="180" autocomplete="off" required></label>
+                <label id="propertyField">Hotel / propriedade<input name="property" maxlength="180" autocomplete="off" required></label>
                 <label class="wide">Endereço, se necessário para a coleta<input name="property_address" maxlength="240" autocomplete="off"></label>
                 <label>Quarto, se houver<input name="room" maxlength="40" autocomplete="off"></label>
                 <label>Local da coleta<select name="pickup_location" required><option value="bell_services">Bell Services</option><option value="front_desk">Front Desk</option><option value="guest_room">Guest Room</option><option value="airbnb_residence">Airbnb / Residence</option><option value="meet_customer">Meet Customer</option><option value="other">Other</option></select></label>
@@ -247,6 +249,5 @@
     </section>
   </main>
   <script src="/sistema.js" defer></script>
-  <script src="/sistema-hotels.js" defer></script>
 </body>
 </html>

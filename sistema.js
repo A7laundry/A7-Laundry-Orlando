@@ -3,10 +3,13 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   let activeUserRole = null;
-  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'financeView', 'newOrderView', 'successView'];
+  const views = ['todayView', 'ordersView', 'orderDetailView', 'attendanceView', 'customersView', 'hotelsView', 'financeView', 'newOrderView', 'successView'];
   let catalog = null;
+  let hotelDirectory = [];
   let activeQueue = 'all';
   let priorOperationalView = 'todayView';
+  let activeCustomerRef = null;
+  let newOrderReturnView = 'attendanceView';
   let activeFinanceRequest = { preset:'30d' };
 
   async function request(url, options = {}) {
@@ -146,6 +149,49 @@
     refreshCommercial();
   }
 
+  function selectedHotel() {
+    const id = $('hotelSelect').value;
+    return hotelDirectory.find((hotel) => hotel.hotel_id === id) || null;
+  }
+
+  function renderHotelSelector() {
+    const select = $('hotelSelect');
+    const prior = select.value;
+    select.replaceChildren(new Option('Hotel não cadastrado', ''));
+    for (const hotel of hotelDirectory.filter((row) => row.active)) {
+      select.append(new Option(`${hotel.canonical_name}${hotel.region ? ` · ${hotel.region}` : ''}`, hotel.hotel_id));
+    }
+    if ([...select.options].some((option) => option.value === prior)) select.value = prior;
+  }
+
+  function syncLocationFields() {
+    const form = $('orderForm');
+    const isHotel = form.elements.accommodation_type.value === 'hotel';
+    $('hotelDirectoryField').hidden = !isHotel;
+    $('propertyField').querySelector('span')?.remove();
+    if (!isHotel) {
+      form.elements.hotel_id.value = '';
+      form.elements.property.readOnly = false;
+      form.elements.property_address.readOnly = false;
+      return;
+    }
+    const hotel = selectedHotel();
+    form.elements.property.readOnly = Boolean(hotel);
+    form.elements.property_address.readOnly = Boolean(hotel);
+    if (hotel) {
+      form.elements.property.value = hotel.canonical_name;
+      form.elements.property_address.value = hotel.address_line;
+      if (!form.elements.location_notes.value && hotel.handoff_notes) form.elements.location_notes.value = hotel.handoff_notes;
+    }
+  }
+
+  async function loadHotels(query = '', includeInactive = false) {
+    const payload = await request('/api/system/hotels', { method:'POST', body:JSON.stringify({ action:'list', query, include_inactive:includeInactive }) });
+    hotelDirectory = payload.hotels;
+    renderHotelSelector();
+    return hotelDirectory;
+  }
+
   function defaultTimes() {
     const now = new Date();
     now.setMinutes(Math.ceil(now.getMinutes() / 15) * 15, 0, 0);
@@ -157,12 +203,46 @@
     $('orderForm').elements.needed_by.value = field(needed);
   }
 
-  async function openNew() {
+  function applyKnownCustomer(customer) {
+    const form = $('orderForm');
+    const name = form.elements.name;
+    const whatsapp = form.elements.whatsapp_number;
+    activeCustomerRef = customer?.customer_ref || null;
+    name.readOnly = Boolean(customer);
+    whatsapp.readOnly = Boolean(customer);
+    $('knownCustomerBanner').hidden = !customer;
+    if (!customer) {
+      $('knownCustomerSummary').textContent = '';
+      return;
+    }
+    name.value = customer.name || '';
+    whatsapp.value = customer.whatsapp_number || '';
+    const language = ['en', 'pt', 'es', 'other'].includes(customer.language) ? customer.language : 'other';
+    const type = ['guest', 'resident', 'host'].includes(customer.customer_type) ? customer.customer_type : 'guest';
+    const accommodation = ['hotel', 'airbnb', 'residence'].includes(customer.latest_accommodation_type)
+      ? customer.latest_accommodation_type : 'hotel';
+    form.elements.language.value = language;
+    form.elements.customer_type.value = type;
+    form.elements.accommodation_type.value = accommodation;
+    form.elements.hotel_id.value = '';
+    form.elements.property.value = customer.latest_property || '';
+    syncLocationFields();
+    const last4 = String(customer.whatsapp_number || '').replace(/\D/g, '').slice(-4) || '—';
+    $('knownCustomerSummary').textContent = `${customer.name || 'Cliente'} · WhatsApp final ${last4}`;
+  }
+
+  async function openNew(customer = null) {
     await request('/api/system/order-draft', { method: 'POST' });
     $('orderForm').reset();
+    applyKnownCustomer(null);
     $('orderError').textContent = '';
     defaultTimes();
     if (!catalog) await loadCatalog();
+    await loadHotels();
+    if (customer) applyKnownCustomer(customer);
+    syncLocationFields();
+    newOrderReturnView = customer ? 'customersView' : 'attendanceView';
+    $('backButton').textContent = customer ? '← Clientes' : '← Atendimento';
     refreshCommercial();
     show('newOrderView');
   }
@@ -424,6 +504,14 @@
     identity.append(node('p', 'eyebrow', 'CLIENTE'), node('h2', '', customer.name));
     identity.append(node('p', 'customer-contact', customer.whatsapp_number || 'WhatsApp não informado'));
     heading.append(identity);
+    if (Number(customer.summary?.order_count) > 0) {
+      const reuse = node('button', 'primary', 'Novo pedido para este cliente');
+      reuse.type = 'button';
+      reuse.addEventListener('click', () => openNew(customer).catch((error) => {
+        $('customerSearchError').textContent = error.message;
+      }));
+      heading.append(reuse);
+    }
     const facts = node('dl', 'customer-facts');
     for (const [label, value] of [
       ['Email', customer.email || 'Não informado'], ['Idioma', customer.language || 'Não informado'],
@@ -463,6 +551,62 @@
       });
       renderCustomerDetail(payload.customer);
     } catch (error) { $('customerSearchError').textContent = error.message; }
+  }
+
+  function editHotel(hotel = null) {
+    if (activeUserRole !== 'owner') return;
+    const form = $('hotelForm');
+    form.reset();
+    form.elements.hotel_id.value = hotel?.hotel_id || '';
+    form.elements.canonical_name.value = hotel?.canonical_name || '';
+    form.elements.address_line.value = hotel?.address_line || '';
+    form.elements.region.value = hotel?.region || '';
+    form.elements.aliases.value = (hotel?.aliases || []).join(', ');
+    form.elements.handoff_notes.value = hotel?.handoff_notes || '';
+    form.elements.active.checked = hotel ? hotel.active : true;
+    $('hotelEditorTitle').textContent = hotel ? 'Editar hotel' : 'Novo hotel';
+    $('hotelEditorError').textContent = '';
+    $('hotelEditor').hidden = false;
+    $('hotelEditor').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  function renderHotelResults(hotels) {
+    const target = $('hotelResults');
+    target.replaceChildren();
+    if (!hotels.length) {
+      target.append(node('p', 'customer-empty', 'Nenhum hotel encontrado.'));
+      return;
+    }
+    for (const hotel of hotels) {
+      const card = node('article', `hotel-card${hotel.active ? '' : ' inactive'}`);
+      const main = node('div', 'hotel-card-main');
+      main.append(node('h2', '', hotel.canonical_name), node('p', '', hotel.address_line));
+      main.append(node('small', '', [hotel.region, hotel.active ? 'Ativo' : 'Inativo', hotel.aliases?.length ? `Aliases: ${hotel.aliases.join(', ')}` : null].filter(Boolean).join(' · ')));
+      const kpis = node('div', 'hotel-kpis');
+      for (const [label, value] of [
+        ['Pedidos', hotel.order_count], ['Receita confirmada', money(hotel.confirmed_service_revenue)],
+        ['Ticket confirmado', hotel.average_confirmed_ticket == null ? 'Sem pagamento' : money(hotel.average_confirmed_ticket)],
+        ['Normal / Express', `${hotel.normal_orders} / ${hotel.express_orders}`],
+        ['Novos / recorrentes', `${hotel.new_customer_orders} / ${hotel.repeat_customer_orders}`],
+        ['Último serviço', shortDate(hotel.last_service_at)]
+      ]) {
+        const item = node('div', 'hotel-kpi'); item.append(node('strong', '', value), node('small', '', label)); kpis.append(item);
+      }
+      card.append(main, kpis);
+      if (activeUserRole === 'owner') {
+        const edit = node('button', 'quiet bordered hotel-edit', 'Editar');
+        edit.type = 'button'; edit.addEventListener('click', () => editHotel(hotel)); card.append(edit);
+      }
+      target.append(card);
+    }
+  }
+
+  async function openHotels() {
+    $('hotelSearchError').textContent = '';
+    show('hotelsView');
+    const query = new FormData($('hotelSearchForm')).get('hotel_query') || '';
+    const hotels = await loadHotels(query, activeUserRole === 'owner' && $('includeInactiveHotels').checked);
+    renderHotelResults(hotels);
   }
 
   function financeAvailabilityLabel(value) {
@@ -567,6 +711,121 @@
   function detailSection(title) {
     const section = node('section', 'panel detail-section');
     section.append(node('h2', '', title));
+    return section;
+  }
+
+  function messageStatusLabel(status) {
+    return ({ drafted:'Rascunho', approved:'Aprovada', copied:'Copiada', void:'Cancelada' })[status] || 'Revisar';
+  }
+
+  function messageDraftCard(orderNumber, draft, reload, errorTarget) {
+    const card = node('article', 'message-draft-card');
+    const head = node('div', 'message-draft-head');
+    head.append(node('strong', '', draft.template_label), node('span', `message-status ${draft.status}`, messageStatusLabel(draft.status)));
+    const meta = node('small', '', `${String(draft.language || 'en').toUpperCase()} · ${dateTime(draft.created_at)}`);
+    const text = node('textarea', 'message-preview'); text.readOnly = true; text.value = draft.rendered_text || '';
+    text.setAttribute('aria-label', `Prévia: ${draft.template_label}`);
+    const actions = node('div', 'message-actions');
+    if (draft.status === 'drafted') {
+      const approve = node('button', 'primary', 'Aprovar texto'); approve.type = 'button';
+      approve.addEventListener('click', async () => {
+        approve.disabled = true; errorTarget.textContent = '';
+        try {
+          await request('/api/system/message-draft', { method:'POST' });
+          await request('/api/system/order-messages', { method:'POST', body:JSON.stringify({
+            action:'approve', order_number:orderNumber, draft_id:draft.draft_id, expected_version:draft.version
+          }) });
+          await reload();
+        } catch (error) { errorTarget.textContent = error.message; approve.disabled = false; }
+      });
+      actions.append(approve);
+    }
+    if (['approved', 'copied'].includes(draft.status)) {
+      const copy = node('button', 'primary', draft.status === 'copied' ? 'Copiar novamente' : 'Copiar mensagem');
+      copy.type = 'button';
+      copy.addEventListener('click', async () => {
+        copy.disabled = true; errorTarget.textContent = '';
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard indisponível neste navegador.');
+          await navigator.clipboard.writeText(draft.rendered_text);
+        } catch (error) {
+          errorTarget.textContent = `A mensagem não foi copiada: ${error.message}`;
+          copy.disabled = false;
+          return;
+        }
+        try {
+          await request('/api/system/message-draft', { method:'POST' });
+          await request('/api/system/order-messages', { method:'POST', body:JSON.stringify({
+            action:'copied', order_number:orderNumber, draft_id:draft.draft_id, expected_version:draft.version
+          }) });
+          errorTarget.textContent = 'Mensagem aprovada copiada. Cole na conversa correta do WhatsApp Business.';
+          await reload();
+        } catch (error) {
+          errorTarget.textContent = `Mensagem copiada, mas a auditoria não foi confirmada: ${error.message}`;
+          copy.disabled = false;
+        }
+      });
+      actions.append(copy);
+    }
+    card.append(head, meta, text, actions);
+    return card;
+  }
+
+  async function loadOrderMessages(orderNumber, section) {
+    const payload = await request('/api/system/order-messages', {
+      method:'POST', body:JSON.stringify({ action:'context', order_number:orderNumber })
+    });
+    if (!section.isConnected || section.dataset.orderNumber !== orderNumber) return;
+    const context = payload.context;
+    const body = section.querySelector('.message-section-body'); body.replaceChildren();
+    const error = node('p', 'message-feedback'); error.setAttribute('role', 'status');
+    const intro = node('p', 'message-intro', `WhatsApp final ${context.whatsapp_last4 || '—'} · idioma ${String(context.language || 'en').toUpperCase()}. Gere, revise e aprove antes de copiar.`);
+    body.append(intro);
+    const reload = () => loadOrderMessages(orderNumber, section);
+    if (context.is_qa) {
+      body.append(node('p', 'message-empty', 'Pedido QA: mensagens para cliente estão bloqueadas.'));
+      return;
+    }
+    if (context.available_templates.length) {
+      const form = node('form', 'message-create-form');
+      const label = node('label', '', 'Atualização');
+      const select = node('select'); select.name = 'template_key';
+      for (const template of context.available_templates) {
+        const option = node('option', '', template.label); option.value = template.key; select.append(option);
+      }
+      label.append(select);
+      const create = node('button', 'secondary', 'Gerar prévia'); create.type = 'submit';
+      form.append(label, create);
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault(); create.disabled = true; error.textContent = '';
+        try {
+          await request('/api/system/message-draft', { method:'POST' });
+          await request('/api/system/order-messages', { method:'POST', body:JSON.stringify({
+            action:'create', order_number:orderNumber, template_key:select.value
+          }) });
+          await reload();
+        } catch (requestError) { error.textContent = requestError.message; create.disabled = false; }
+      });
+      body.append(form);
+    } else {
+      body.append(node('p', 'message-empty', 'Nenhuma atualização está disponível para o estado atual.'));
+    }
+    body.append(error);
+    const drafts = node('div', 'message-draft-list');
+    for (const draft of context.drafts || []) drafts.append(messageDraftCard(orderNumber, draft, reload, error));
+    if (!context.drafts?.length) drafts.append(node('p', 'message-empty', 'Nenhum rascunho criado para este pedido.'));
+    body.append(drafts);
+  }
+
+  function messageSection(orderNumber) {
+    const section = detailSection('Atualização por WhatsApp');
+    section.classList.add('message-section'); section.dataset.orderNumber = orderNumber;
+    const body = node('div', 'message-section-body');
+    body.append(node('p', 'message-empty', 'Carregando mensagens…'));
+    section.append(body);
+    loadOrderMessages(orderNumber, section).catch((error) => {
+      if (section.isConnected) body.replaceChildren(node('p', 'error', error.message));
+    });
     return section;
   }
 
@@ -742,6 +1001,8 @@
       documents.append(node('p', 'document-intro', 'Documentos são gerados com os dados atuais do pedido. A etiqueta usa marca vetorial própria para impressora térmica.'), actions, feedback);
       target.append(documents);
     }
+    if (activeUserRole === 'owner') target.append(messageSection(order.order_number));
+
     const poundItems = (order.items || []).filter((item) => item.unit === 'lb');
     if (activeUserRole === 'owner' && order.weight_editable && poundItems.length) {
       const weight = detailSection('Pesagem por item');
@@ -884,6 +1145,10 @@
 
   function activate(user) {
     activeUserRole = user.role;
+    for (const element of document.querySelectorAll('.owner-only')) {
+      if (user.role !== 'owner') element.hidden = true;
+      else if (element.id !== 'hotelEditor') element.hidden = false;
+    }
     $('loginView').hidden = true; $('systemView').hidden = false;
     $('userLabel').textContent = `${user.display_name} · ${user.role}`;
     show('todayView');
@@ -899,6 +1164,7 @@
     $('customerSearchError').textContent = '';
     show('customersView');
   });
+  $('hotelsNav').addEventListener('click', () => openHotels().catch((error) => { $('hotelSearchError').textContent = error.message; }));
   $('financeNav').addEventListener('click', () => openFinance().catch((error) => {
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));
@@ -906,8 +1172,11 @@
     $('financeLoading').hidden = true; $('financeError').textContent = error.message;
   }));
   $('newOrderButton').addEventListener('click', () => openNew().catch((error) => { $('lookupError').textContent = error.message; }));
-  $('backButton').addEventListener('click', () => show('attendanceView'));
-  $('cancelButton').addEventListener('click', () => show('attendanceView'));
+  $('backButton').addEventListener('click', () => show(newOrderReturnView));
+  $('cancelButton').addEventListener('click', () => show(newOrderReturnView));
+  $('clearKnownCustomerButton').addEventListener('click', () => openNew().catch((error) => {
+    $('orderError').textContent = error.message;
+  }));
   $('doneButton').addEventListener('click', () => show('attendanceView'));
   $('refreshTodayButton').addEventListener('click', () => loadToday().catch((error) => { $('todayError').textContent = error.message; }));
   $('refreshFinanceButton').addEventListener('click', () => loadFinance().catch((error) => {
@@ -938,6 +1207,8 @@
     loadOperationalOrders(activeQueue, query).catch((error) => { $('ordersError').textContent = error.message; });
   });
   $('orderForm').addEventListener('change', refreshCommercial);
+  $('orderForm').elements.accommodation_type.addEventListener('change', syncLocationFields);
+  $('hotelSelect').addEventListener('change', syncLocationFields);
   $('orderForm').addEventListener('submit', async (event) => {
     event.preventDefault(); $('orderError').textContent = '';
     const button = event.submitter; button.disabled = true;
@@ -948,6 +1219,8 @@
     payload.needed_by = localIso(payload.needed_by);
     payload.items = itemsFromForm(data);
     payload.care_options = data.getAll('care_options');
+    if (!payload.hotel_id) delete payload.hotel_id;
+    if (activeCustomerRef) payload.customer_ref = activeCustomerRef;
     delete payload.wash_fold; delete payload.special_code; delete payload.special_quantity; delete payload.estimated_lbs;
     try {
       const result = await request('/api/system/orders', { method: 'POST', body: JSON.stringify(payload) });
@@ -979,6 +1252,28 @@
       });
       renderCustomerResults(payload.customers);
     } catch (error) { $('customerSearchError').textContent = error.message; }
+  });
+  $('hotelSearchForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    try { await openHotels(); } catch (error) { $('hotelSearchError').textContent = error.message; }
+  });
+  $('includeInactiveHotels').addEventListener('change', () => openHotels().catch((error) => { $('hotelSearchError').textContent = error.message; }));
+  $('newHotelButton').addEventListener('click', () => editHotel());
+  $('cancelHotelButton').addEventListener('click', () => { $('hotelEditor').hidden = true; });
+  $('hotelForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const button = event.submitter; button.disabled = true; $('hotelEditorError').textContent = '';
+    const data = new FormData(event.currentTarget);
+    const payload = Object.fromEntries(data);
+    payload.action = 'save'; payload.active = data.get('active') === 'on';
+    if (!payload.hotel_id) delete payload.hotel_id;
+    try {
+      await request('/api/system/operation-draft', { method:'POST' });
+      await request('/api/system/hotels', { method:'POST', body:JSON.stringify(payload) });
+      $('hotelEditor').hidden = true;
+      await openHotels();
+    } catch (error) { $('hotelEditorError').textContent = error.message; }
+    finally { button.disabled = false; }
   });
 
   request('/api/system/session').then((payload) => activate(payload.user)).catch(() => { $('loginView').hidden = false; $('systemView').hidden = true; });

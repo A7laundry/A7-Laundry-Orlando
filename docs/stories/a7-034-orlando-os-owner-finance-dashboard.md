@@ -1,6 +1,6 @@
 # Story A7-034 — A7 Orlando OS Owner Finance Dashboard
 
-**Status:** Ready for review — local implementation complete; Production requires a separate GO
+**Status:** Done — Production READY
 
 **Created:** 2026-09-01
 
@@ -16,7 +16,7 @@
 
 ## Scope lock
 
-This slice adds a read-only, Owner-only `Faturamento` view to the existing `/sistema`. It implements the same contract first through the service and CLI, then through the private API and UI. It may add one service-role-only SQL read function, but no migration is applied and no artifact is published without a separate Production GO.
+This slice adds a read-only, Owner-only `Faturamento` view to the existing `/sistema`. It implements the same contract first through the service and CLI, then through the private API and UI. Its service-role-only SQL read function and isolated application artifact were published only after the explicit Production GO issued on 2026-09-01.
 
 No chart, accounting ledger, expense model, payout reconciliation, customer export, campaign action or financial mutation is included.
 
@@ -50,7 +50,7 @@ All periods are inclusive calendar dates in `America/New_York`. Financial revenu
 - [x] AC-09 — Period, timezone, source, freshness and availability are visible; an unavailable data source cannot render a false zero or success.
 - [x] AC-10 — Reads are side-effect free and return no customer PII, payment IDs, order UUIDs, click IDs, secrets or raw attribution payloads.
 - [x] AC-11 — No existing Stripe, WhatsApp, Google Ads, `/order`, attribution, invoice, document or lifecycle behavior changes.
-- [x] AC-12 — Focused tests plus lint, typecheck, full tests and build pass locally; Production remains unchanged.
+- [x] AC-12 — Focused tests plus lint, typecheck, full tests and build pass; the isolated Production artifact passes authenticated Owner smoke without financial mutation.
 
 ## Tasks
 
@@ -60,6 +60,8 @@ All periods are inclusive calendar dates in `America/New_York`. Financial revenu
 - [x] Add Owner-only API and `Faturamento` view.
 - [x] Add focused authorization, formula, null-semantics, reconciliation and no-side-effect tests.
 - [x] Run lint, typecheck, full tests and build.
+- [x] Apply only migration `20260901020000` to Supabase Orlando Production `wiwawtpaxnrueugppasi`.
+- [x] Publish only the Owner Finance Dashboard and execute authenticated read-only Production smoke.
 - [x] Update checklist and file list before review.
 
 ## Validation evidence
@@ -73,14 +75,19 @@ All periods are inclusive calendar dates in `America/New_York`. Financial revenu
 - CLI smoke: PASS with a local memory store and correct `no_data`/`null` behavior.
 - Browser QA: PASS on desktop and 390px mobile viewport; no page-level horizontal overflow.
 - Secret/PII review: PASS for the bounded finance files and API response contract.
-- Production mutation: NONE. The migration remains unapplied and no deployment was created or promoted.
+- Supabase Production: PASS. Migration `20260901020000` is recorded; `a7_orlando_owner_finance(date,date)` is executable only by `service_role` and returned current read-only data.
+- Production deployment: PASS. `dpl_DDNGxh8ETp5peds1we5XJE4mHKJ4` is READY and aliased to `a7laundry.com`; the finance API output is present.
+- Authenticated Owner smoke: PASS for Today, 7 days, 30 days, current month and custom `2026-08-01` through `2026-08-31` periods.
+- August custom-period reconciliation: PASS — service revenue `$3,740.34`, total received `$4,077.09`, explicit tips `$336.75` and 36 paid orders; revenue plus tips equals total received.
+- Published asset integrity: PASS. Production `sistema.js`, `sistema.html` and `sistema-finance.css` SHA-1 hashes exactly match the gated isolated artifact.
+- Production financial mutation during smoke: NONE. Every smoke action was an authenticated read/filter operation.
 
 ## Rollback
 
 - Local application rollback: remove the files and bounded wiring listed below.
-- Future application rollback after a separately approved release: restore the prior immutable deployment.
+- Application rollback readiness: restore immutable deployment `dpl_GMmUS57uU8T2expcNArwdU8suHAf` if required.
 - The additive SQL function may remain inert after application rollback; dropping it requires separate database authorization.
-- No rollback or Production action is authorized by this story state.
+- Production smoke passed; rollback was not required.
 
 ## File list
 

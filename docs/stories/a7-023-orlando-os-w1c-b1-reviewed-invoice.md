@@ -308,6 +308,8 @@ evidence exists. Once evidence exists, schema remains and the previous applicati
 - `assets/system/invoice/A7_ORLANDO_LABEL_V1.json`
 - `assets/system/invoice/A7_ORLANDO_LABEL_V2.png`
 - `assets/system/invoice/A7_ORLANDO_LABEL_V2.json`
+- `assets/system/invoice/Inter-Variable.ttf`
+- `assets/system/invoice/Inter-OFL.txt`
 - `lib/system-auth.js`
 - `lib/system-operations-service.js`
 - `lib/operational-store.js`
@@ -344,6 +346,7 @@ evidence exists. Once evidence exists, schema remains and the previous applicati
 - `npm run lint`, `npm run typecheck`, `npm run build`, structure/agent validation and `git diff --check`: PASS.
 - Visual QA: 1440 px and 390 px, no horizontal overflow; primary action height 46 px.
 - PDF visual QA: branded letter invoice PASS; exact 4 x 6 thermal label PASS with vector-only A7 outline and no raster blot.
+- Production-font correction (2026-09-01): the first CSS-embedded-font deployment `dpl_7xpQaZzkQwbWt4rGe85nK4Jkg4WX` was rejected after a newly downloaded Production label still rendered tofu/square glyphs. The renderer now converts every dynamic glyph to SVG vector outlines using the pinned Inter asset, so invoice/label output no longer depends on host fonts or librsvg `@font-face` support. MCO-1003 invoice and label were re-rendered at 144/200 DPI with every dynamic field legible. The focused document contract is 18/18 PASS and the full repository gates remain PASS. Replacement Production deployment `dpl_GMmUS57uU8T2expcNArwdU8suHAf` is READY and aliased to `a7laundry.com`; rollback remains `dpl_7xpQaZzkQwbWt4rGe85nK4Jkg4WX`.
 - Production migration: only `20260830080000` applied to Supabase Orlando `wiwawtpaxnrueugppasi`.
 - Production artifact: `dpl_BcZRqwNyHPRkJWeGC5TrPdqvoC7B`, target Production, aliases `a7laundry.com` and `www.a7laundry.com`, READY.
 - Release-scope verifier: W1B + W1C-A + W1C-B1 + PDFs present; W2/W3 endpoints, migrations and executable symbols absent.

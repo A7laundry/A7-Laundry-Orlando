@@ -93,10 +93,7 @@ test('hotel API allows team reads and fails closed for Operator writes', async (
 test('hotel release remains additive, private and wired into the private UI', () => {
   const sql = fs.readFileSync(new URL('../supabase/migrations/20260901010000_orlando_os_hotel_directory.sql', import.meta.url), 'utf8');
   const html = fs.readFileSync(new URL('../sistema.html', import.meta.url), 'utf8');
-  const js = [
-    fs.readFileSync(new URL('../sistema.js', import.meta.url), 'utf8'),
-    fs.readFileSync(new URL('../sistema-hotels.js', import.meta.url), 'utf8')
-  ].join('\n');
+  const js = fs.readFileSync(new URL('../sistema.js', import.meta.url), 'utf8');
   assert.match(sql, /add column if not exists hotel_id/);
   assert.match(sql, /enable row level security/);
   assert.match(sql, /revoke all .* anon, authenticated/s);

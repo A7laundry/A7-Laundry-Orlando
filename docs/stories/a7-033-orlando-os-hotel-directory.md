@@ -1,6 +1,6 @@
 # Story A7-033 — A7 Orlando OS Hotel Directory and KPIs
 
-**Status:** Ready for Owner Review — local implementation complete; no Production migration or deployment performed
+**Status:** Production deployed — authenticated Owner UI confirmation pending because the Chrome control bridge is unavailable
 
 **Created:** 2026-09-01
 
@@ -28,7 +28,7 @@
 
 ## Out of scope
 
-- Production mutation or deployment;
+- W2/W3 activation or any Production mutation outside the hotel directory package;
 - automatic matching/backfill of historical hotel names;
 - public hotel pages, booking, maps, route optimization or third-party hotel data;
 - changes to Stripe, WhatsApp, Google Ads, `/order`, attribution snapshots, invoice rules or document templates.
@@ -57,7 +57,7 @@
 
 ## Rollback
 
-Before Production approval, rollback is file-only. After a future approved deploy, application rollback hides the feature while the additive table/nullable columns remain inert. Dropping hotel data or columns is not part of application rollback.
+Application rollback target: `dpl_CJESB3UcjpvkDshZx9sHoroEnwpo`. The additive table/nullable columns remain inert after an application rollback. Dropping hotel data or columns is not part of application rollback.
 
 ## Validation
 
@@ -66,7 +66,10 @@ Before Production approval, rollback is file-only. After a future approved deplo
 - `npm test` — PASS
 - `npm run build` — PASS
 - `node --test scripts/test-system-hotels.mjs` — PASS (4/4)
-- Automated visual browser capture — unavailable because the installed browser controller references a removed plugin version; no Production/browser session was used as a workaround.
+- Supabase Orlando Production `wiwawtpaxnrueugppasi` migration `20260901010000` — APPLIED; W2/W3 migrations were explicitly excluded.
+- Vercel Production `dpl_92sAAhxC6uBTGU9uZ4pnPg1gYBFE` — READY and aliased to `a7laundry.com`.
+- Production HTTP smoke — PASS: `/sistema` 200, hotel module 200, unauthenticated hotel API 401, document API 401, excluded W2 endpoints 404.
+- Authenticated browser smoke — pending: installed Chrome extension and native host are healthy, but the controller runtime attempts to import an unavailable older plugin path.
 
 ## File list
 
