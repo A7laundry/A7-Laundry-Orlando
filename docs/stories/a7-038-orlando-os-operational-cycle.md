@@ -1,6 +1,6 @@
 # Story A7-038 — A7 Orlando OS Operational Cycle
 
-**Status:** Ready for Review — migrations applied; first corrective application cutover rolled back after a route gate failure; local repair validated and awaiting a new Production GO
+**Status:** Ready for Review — corrective Production cutover and Owner smoke complete; original final EV audit remains outside this correction packet
 
 **Created:** 2026-09-01
 
@@ -164,6 +164,7 @@ Application rollback restores the immutable deployment recorded before cutover. 
 - Authorized migrations `20260902016000` and `20260902017000` were applied atomically to Orlando Production `wiwawtpaxnrueugppasi` and confirmed in `supabase_migrations.schema_migrations`.
 - Application deployment `dpl_sfsdCQA69WxZkJaRJfEv2nospB74` passed public security, Owner authentication, Home, Ready reconciliation and `MCO-1003` search/route gates, but the friendly `MCO-1001` route for stored legacy `A7-ORL-1001` returned `Order not found`. No business write occurred. The application was immediately rolled back to `dpl_6N1nBgQhMASfNTGLT91vxeY4rNMG`; additive migrations remain inert and compatible.
 - The missing alias fallback was repaired in the operational list/detail service. Post-rollback local gates: focused suites `76/76 PASS`, including `MCO-1000` list/detail alias regression coverage; `npm run lint`, `npm run typecheck`, complete `npm test`, `npm run build` and `git diff --check` all `PASS`.
+- The Owner-authorized retry promoted exact corrective commit `ec4f4e3` as Vercel Production deployment `dpl_142ZWVsbZm9zDvBN2sqDqBQATWGq`. Public assets and security headers passed; private endpoints rejected unauthenticated requests; the authenticated Owner smoke passed Home, Ready reconciliation, `MCO-1001` list/detail alias and recovery-control rendering. A final read-only database check returned `accepted / NULL / NULL / 0 initialization events`, proving no business state was mutated during the smoke. Rollback was not required.
 - Focused operational/customer/order/routing tests: `71/71 PASS`.
 - Canonical Payment Link/Stripe/attribution tests: `44/44 PASS`, including governed service/tip composition and partial-to-full refund boundaries.
 - Repository quality gate: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` — all `PASS` on 2026-09-02.
@@ -282,3 +283,4 @@ Application rollback restores the immutable deployment recorded before cutover. 
 | 2026-09-02 | 1.8 | Recorded the Owner-authorized direct Production exception, selective additive migration result, immutable deployment/rollback IDs and live public security/hash smoke; authenticated Owner E2E remains pending. | GPT-5 Codex |
 | 2026-09-02 | 1.9 | Implemented the re-audit correction packet locally: explicit legacy-order initialization, Ready reconciliation, resilient MCO routes/search and the unified human order-number hotfix; Production remains unchanged pending the final gate. | GPT-5 Codex |
 | 2026-09-02 | 1.10 | Applied the two authorized additive migrations, rolled back the first application cutover on a legacy MCO route failure, and validated the missing operational alias fallback locally. | GPT-5 Codex |
+| 2026-09-02 | 1.11 | Promoted the corrected artifact, completed public and authenticated Owner Production smokes, and confirmed zero business mutations; Production READY. | GPT-5 Codex |
