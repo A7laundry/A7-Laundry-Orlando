@@ -22,7 +22,8 @@
     if (!match) return null;
     try {
       const value = decodeURIComponent(match[1]).toUpperCase();
-      return /^(?:A7-ORL-\d{4,}|MCO \d{4,})$/.test(value) ? value : null;
+      if (/^MCO-\d{4,12}$/.test(value)) return value.replace('MCO-', 'MCO ');
+      return /^(?:A7-ORL-\d{4,}|MCO \d{4,12})$/.test(value) ? value : null;
     } catch (_) {
       return null;
     }

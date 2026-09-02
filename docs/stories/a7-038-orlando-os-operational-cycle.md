@@ -1,6 +1,6 @@
 # Story A7-038 — A7 Orlando OS Operational Cycle
 
-**Status:** In Progress — local recovery, isolated E2E and independent review complete; isolated Staging and final EV audit remain required
+**Status:** Ready for Review — corrective Production cutover authorized; migrations applied, application smoke pending
 
 **Created:** 2026-09-01
 
@@ -57,6 +57,7 @@ Out of scope:
 | FR-12 | Home card counts and their drill-downs use the same full governed universe; ready excludes delivered and leads are actionable. | Goal trust fixes |
 | FR-13 | Phone input is normalized/validated internationally, existing customers are suggested, pickup documents use the real collection location and internal enums never render raw. | Goal trust fixes |
 | FR-14 | Forms warn before losing dirty input, system views do not stack, and the hotel directory reuses existing canonical data. | Goal trust fixes |
+| FR-15 | An accepted pre-W1B order with null operational axes receives an explicit Owner-only, reason-required and audited initialization path; no completed stage is inferred. | Production re-audit, 2026-09-02, A7-01/N-01 |
 | NFR-01 | CLI/service precede API/UI and the browser does not own business rules. | Constitution I; Goal principle |
 | NFR-02 | All writes are same-origin, authenticated, role-authorized, idempotent and audited; PII/secrets stay out of URLs, analytics and logs. | Goal §§1,4,5 |
 | NFR-03 | Database changes are additive; application rollback leaves new objects inert and preserves historical truth. | Goal architecture principle |
@@ -124,7 +125,7 @@ Payment is deliberately independent from production. It may be recorded before o
 - [ ] **AC-12 — Input trust.** International phone validation, existing-customer suggestion, real pickup location, friendly enum labels, dirty-form protection and single-view rendering pass desktop and 390px checks.
 - [ ] **AC-13 — Hotel reuse.** Existing canonical hotel records populate the selection source without duplicating known hotel aliases.
 - [ ] **AC-14 — Security/privacy.** Role, same-origin, PII, secret and audit gates pass for every new endpoint and payload.
-- [ ] **AC-15 — Quality.** Focused tests, lint, typecheck, full tests and build pass; story checklist and file list are current.
+- [x] **AC-15 — Quality.** Focused tests, lint, typecheck, full tests and build pass; story checklist and file list are current.
 - [ ] **AC-16 — Staging E2E.** A trained user completes the exact Goal scenario with a full timeline, updated Home/Finance and no test residue or external financial mutation.
 
 ## Tasks
@@ -143,6 +144,10 @@ Payment is deliberately independent from production. It may be recorded before o
 - [x] Separate Express attention/risk/late counters and exact queues.
 - [x] Complete actionable lead, customer reuse, phone feedback and minimal routing gaps.
 - [x] Permit invoice issuance immediately after governed weight capture without coupling Finance to Production.
+- [x] Keep technical historical reconciliation references out of operator-facing order labels and preserve the canonical stored key for links/actions.
+- [x] Route future `/order` acceptance through the canonical MCO sequence without renumbering historical reconciliation records.
+- [x] Replace the dead legacy-state blocker with an explicit Owner-only audited initialization action that preserves unknown historical stages.
+- [x] Exclude delivered orders from Ready and repair `MCO-1003` deep links plus repeated-search guidance.
 - [x] Complete a browser-driven isolated E2E through payment, processing, Bell Desk handoff and delivery; remove every synthetic fixture afterward.
 - [x] Execute independent review, repair every blocking finding and obtain independent GO for isolated Staging only.
 - [x] Add a fail-closed Staging preflight and publish the isolated replay/E2E/cleanup runbook plus final-audit ledger.
@@ -155,6 +160,7 @@ Application rollback restores the immutable deployment recorded before cutover. 
 
 ## Validation evidence
 
+- Re-audit correction packet on 2026-09-02: focused suites `76/76 PASS`; `npm run lint`, `npm run typecheck`, complete `npm test`, `npm run build` and `git diff --check` all `PASS`. No Production mutation and no test database were created.
 - Focused operational/customer/order/routing tests: `71/71 PASS`.
 - Canonical Payment Link/Stripe/attribution tests: `44/44 PASS`, including governed service/tip composition and partial-to-full refund boundaries.
 - Repository quality gate: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` — all `PASS` on 2026-09-02.
@@ -222,7 +228,9 @@ Application rollback restores the immutable deployment recorded before cutover. 
 - `scripts/test-system-w3-a.mjs`
 - `sistema.html`
 - `sistema.js`
+- `sistema-pickup-order.js`
 - `sistema.css`
+- `sistema-w1b.css`
 - `supabase/migrations/20260901040000_orlando_os_operational_cycle.sql`
 - `supabase/migrations/20260902009000_orlando_lifecycle_authority_repair.sql`
 - `supabase/migrations/20260902010000_orlando_os_payment_evidence.sql`
@@ -231,6 +239,10 @@ Application rollback restores the immutable deployment recorded before cutover. 
 - `supabase/migrations/20260902013000_orlando_canonical_payment_link.sql`
 - `supabase/migrations/20260902014000_orlando_invoice_after_weight.sql`
 - `supabase/migrations/20260902015000_orlando_idempotency_hardening.sql`
+- `supabase/migrations/20260902016000_orlando_unified_mco_order_numbers.sql`
+- `supabase/migrations/20260902017000_orlando_legacy_operational_recovery.sql`
+- `supabase/rollbacks/20260902016000_orlando_unified_mco_order_numbers.rollback.sql`
+- `supabase/rollbacks/20260902017000_orlando_legacy_operational_recovery.rollback.sql`
 - `supabase/rollbacks/20260901040000_orlando_os_operational_cycle.rollback.sql`
 - `supabase/rollbacks/20260902009000_orlando_lifecycle_authority_repair.rollback.sql`
 - `supabase/rollbacks/20260902010000_orlando_os_payment_evidence.rollback.sql`
@@ -265,3 +277,4 @@ Application rollback restores the immutable deployment recorded before cutover. 
 | 2026-09-02 | 1.6 | Added fail-closed Staging isolation checks, exact E2E/cleanup runbook and non-invented final-audit ledger. | GPT-5 Codex |
 | 2026-09-02 | 1.7 | Repaired the independent-review Staging blockers with deployed runtime selection, exact current-deployment Stripe test binding, GA4 validation-only enforcement and a fail-closed linked-target Supabase wrapper; all local gates and the final independent review pass for isolated Staging only. | GPT-5 Codex |
 | 2026-09-02 | 1.8 | Recorded the Owner-authorized direct Production exception, selective additive migration result, immutable deployment/rollback IDs and live public security/hash smoke; authenticated Owner E2E remains pending. | GPT-5 Codex |
+| 2026-09-02 | 1.9 | Implemented the re-audit correction packet locally: explicit legacy-order initialization, Ready reconciliation, resilient MCO routes/search and the unified human order-number hotfix; Production remains unchanged pending the final gate. | GPT-5 Codex |

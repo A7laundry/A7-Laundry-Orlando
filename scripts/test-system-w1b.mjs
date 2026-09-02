@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 const { MemoryOperationalStore, InvalidTransitionError } = require('../lib/operational-store.js');
 const {
   systemOperationsService, normalizeSettings, slaFor, nextActionFor, comparePriority,
-  zonedLocalToUtc, validateTransition, decorateSnapshot
+  zonedLocalToUtc, validateTransition, decorateSnapshot, isInQueue, orderForActor
 } = require('../lib/system-operations-service.js');
 const { systemW1bSmokeService } = require('../lib/system-w1b-smoke-service.js');
 const { signSession, issueSubmission, COOKIE_NAME, SUBMISSION_COOKIE_NAME } = require('../lib/system-auth.js');
@@ -209,9 +209,57 @@ test('W1B historical null stays uninitialized and QA is read-only in every store
   const historical = await operations.detail('MCO 1310');
   assert.equal(historical.custody_state, 'not_initialized');
   assert.equal(historical.production_state, 'not_initialized');
-  assert.equal(historical.next_action.code, 'operational_blocker');
+  assert.equal(historical.next_action.code, 'initialize_legacy_order');
+  assert.equal(historical.next_action.enabled, true);
   await assert.rejects(() => operations.transition({ order_number:'MCO 1311', action:'schedule_pickup',
     request_id:crypto.randomUUID() }, OWNER), /QA orders are read-only/);
+});
+
+test('Owner explicitly initializes an accepted legacy order without inferring completed stages', async () => {
+  const store = new MemoryOperationalStore();
+  const legacy = addOrder(store, { order_number:'A7-ORL-1001', service_tier:'express' });
+  legacy.custody_state = null; legacy.production_state = null; legacy.promised_by = null;
+  const operations = systemOperationsService({ operationalStore:store, now:() => NOW });
+  const requestId = crypto.randomUUID();
+
+  await assert.rejects(() => operations.transition({ order_number:'A7-ORL-1001',
+    action:'initialize_legacy_order', request_id:crypto.randomUUID(), reason:'Still active' },
+  { actor_id:'manager', role:'manager' }), /Owner authorization/);
+  await assert.rejects(() => operations.transition({ order_number:'A7-ORL-1001',
+    action:'initialize_legacy_order', request_id:crypto.randomUUID() }, OWNER), /reason is required/i);
+
+  const initialized = await operations.transition({ order_number:'A7-ORL-1001',
+    action:'initialize_legacy_order', request_id:requestId,
+    reason:'Active order confirmed after W1B release' }, OWNER);
+  assert.equal(initialized.duplicate, false);
+  assert.equal(initialized.order.order_status, 'accepted');
+  assert.equal(initialized.order.custody_state, 'with_customer');
+  assert.equal(initialized.order.production_state, 'awaiting_intake');
+  assert.equal(initialized.order.promised_by, null);
+  assert.equal(initialized.order.next_action.code, 'set_promised_by');
+  assert.deepEqual(initialized.order.timeline.map((event) => event.action), ['initialize_legacy_order']);
+
+  const retry = await operations.transition({ order_number:'A7-ORL-1001',
+    action:'initialize_legacy_order', request_id:requestId,
+    reason:'Active order confirmed after W1B release' }, OWNER);
+  assert.equal(retry.duplicate, true);
+  assert.equal(store.operationalEvents.size, 1);
+});
+
+test('legacy initialization is presented as Owner-only to every role', () => {
+  const order = { next_action:{ code:'initialize_legacy_order', label:'INICIAR CONTROLE OPERACIONAL', enabled:true } };
+  assert.equal(orderForActor(order, OWNER).next_action.enabled, true);
+  assert.deepEqual(orderForActor(order, { actor_id:'manager', role:'manager' }).next_action,
+    { code:'initialize_legacy_order', label:'INICIAR CONTROLE OPERACIONAL', enabled:false, blocked_by:'Owner' });
+  assert.equal(orderForActor(order, OPERATOR).next_action.enabled, false);
+  assert.equal(orderForActor(order, OPERATOR).next_action.blocked_by, 'Owner');
+});
+
+test('Ready queue excludes completed deliveries while preserving active ready orders', () => {
+  const context = { settings:normalizeSettings(), today:'2026-08-30' };
+  const active = { production_state:'ready', order_status:'ready_for_delivery', custody_state:'at_laundry' };
+  assert.equal(isInQueue(active, 'ready', context), true);
+  assert.equal(isInQueue({ ...active, order_status:'delivered', custody_state:'delivered' }, 'ready', context), false);
 });
 
 test('W1B transition validation accepts only bounded actions, human numbers and UUID request identity', () => {
@@ -219,6 +267,8 @@ test('W1B transition validation accepts only bounded actions, human numbers and 
   assert.throws(() => validateTransition({ order_number:'MCO 1002', action:'fly', request_id:crypto.randomUUID() }, settings), /action/);
   assert.throws(() => validateTransition({ order_number:'unknown', action:'schedule_pickup', request_id:crypto.randomUUID() }, settings), /number/);
   assert.throws(() => validateTransition({ order_number:'MCO 1002', action:'schedule_pickup', request_id:'retry' }, settings), /identity/);
+  assert.throws(() => validateTransition({ order_number:'MCO 1002', action:'initialize_legacy_order',
+    request_id:crypto.randomUUID() }, settings), /reason is required/i);
 });
 
 test('W1B private APIs return 401 without auth and allow authenticated operator read access', async () => {

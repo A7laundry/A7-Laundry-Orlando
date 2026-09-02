@@ -110,7 +110,7 @@
 
   async function restoreCurrentRoute() {
     const path = decodeURIComponent(location.pathname);
-    const orderMatch = path.match(/^\/sistema\/orders\/(A7-ORL-\d{4,}|MCO (?:\d{4,12}))$/i);
+    const orderMatch = path.match(/^\/sistema\/orders\/(A7-ORL-\d{4,}|MCO[ -](?:\d{4,12}))$/i);
     suppressHistory = true;
     try {
       if (orderMatch) return await refreshOperationalDetail(orderMatch[1].toUpperCase(), true);
@@ -140,6 +140,19 @@
   function selectedTier() { return new FormData($('orderForm')).get('service_tier') || 'normal'; }
   function service(code) { return catalog?.services.find((row) => row.code === code); }
   function pickupPath(orderNumber) { return `/sistema/orders/${encodeURIComponent(orderNumber)}/pickup-order`; }
+
+  function displayOrderNumber(order) {
+    const value = String(order?.order_number || '').trim();
+    const legacyDate = /^HIST-(\d{4})(\d{2})(\d{2})-(\d+)$/i.exec(value);
+    if (legacyDate) return `Histórico · ${legacyDate[3]}/${legacyDate[2]}/${legacyDate[1]} · ${Number(legacyDate[4])}`;
+    if (/^HIST-STRIPE-/i.test(value)) {
+      const date = order?.accepted_at ? shortDate(order.accepted_at) : '';
+      return date && date !== '—' ? `Histórico · ${date}` : 'Pedido histórico';
+    }
+    const oldOperational = /^A7-ORL-(\d+)$/i.exec(value);
+    if (oldOperational) return `MCO ${Number(oldOperational[1])}`;
+    return value;
+  }
 
   function refreshCommercial() {
     if (!catalog) return;
@@ -329,7 +342,7 @@
 
   function showOrder(order, target) {
     target.className = 'lookup-result';
-    target.innerHTML = `<strong>${escapeText(order.order_number)}</strong><p>${escapeText(order.customer_name || 'Customer')} · ${escapeText(order.property || 'Property')} · ${escapeText((order.service_tier || '').toUpperCase())}</p><small>Next action: ${escapeText(order.next_action || order.order_status)}</small><a class="pickup-inline-link" href="${pickupPath(order.order_number)}" target="_blank" rel="noopener">Abrir Pickup Order</a>`;
+    target.innerHTML = `<strong>${escapeText(displayOrderNumber(order))}</strong><p>${escapeText(order.customer_name || 'Customer')} · ${escapeText(order.property || 'Property')} · ${escapeText((order.service_tier || '').toUpperCase())}</p><small>Next action: ${escapeText(order.next_action || order.order_status)}</small><a class="pickup-inline-link" href="${pickupPath(order.order_number)}" target="_blank" rel="noopener">Abrir Pickup Order</a>`;
   }
 
   function node(tag, className, text) {
@@ -362,6 +375,7 @@
     item_weight_corrected:'Peso do item corrigido',
     invoice_issued:'Invoice emitida', invoice_voided:'Invoice anulada',
     order_ready_for_delivery:'Pronto para entrega', order_delivered:'Pedido entregue', schedule_pickup:'Coleta agendada',
+    initialize_legacy_order:'Controle operacional iniciado',
     confirm_pickup:'Coleta confirmada', receive_at_laundry:'Recebido na lavanderia', start_processing:'Processamento iniciado',
     mark_ready:'Marcado como pronto', start_delivery:'Saiu para entrega', leave_bell_desk:'Deixado no Bell Desk',
     complete_delivery:'Entrega concluída', set_promised_by:'Prazo Express definido',
@@ -394,7 +408,7 @@
     const button = node('button', `operation-card sla-${visualSla}${order.is_qa ? ' qa' : ''}`);
     button.type = 'button';
     const top = node('span', 'operation-card-top');
-    top.append(node('strong', '', order.order_number), node('span', 'tier-badge', String(order.service_tier || '').toUpperCase()));
+    top.append(node('strong', '', displayOrderNumber(order)), node('span', 'tier-badge', String(order.service_tier || '').toUpperCase()));
     const who = node('span', 'operation-card-who');
     who.append(node('strong', '', order.customer_name), node('small', '', [order.property, order.room ? `Room ${order.room}` : null].filter(Boolean).join(' · ') || 'Local não informado'));
     const facts = node('span', 'operation-card-facts');
@@ -435,7 +449,10 @@
       method:'POST', body:JSON.stringify({ action:'list', queue, query,
         custody_state:$('custodyFilter').value, production_state:$('productionFilter').value })
     });
-    renderOperationList($('ordersResults'), payload.orders);
+    const empty = query
+      ? `Nenhum pedido encontrado para “${query}”. Limpe a busca ou tente nome, hotel, telefone ou MCO.`
+      : 'Nenhum pedido nesta fila.';
+    renderOperationList($('ordersResults'), payload.orders, empty);
     for (const button of $('queueFilters').querySelectorAll('button')) button.classList.toggle('active', button.dataset.queue === queue);
     return payload.orders;
   }
@@ -475,7 +492,7 @@
     for (const action of actions) {
       const button = node('button', `operation-card${action.sla_status ? ` sla-${action.sla_status}` : ' lead-card'}`); button.type = 'button';
       const top = node('span', 'operation-card-top');
-      top.append(node('strong', '', action.kind === 'order' ? action.order_number : 'ATENDIMENTO'),
+      top.append(node('strong', '', action.kind === 'order' ? displayOrderNumber(action) : 'ATENDIMENTO'),
         node('span', 'tier-badge', action.kind === 'order' ? String(action.service_tier || '').toUpperCase() : 'LEAD'));
       const who = node('span', 'operation-card-who'); who.append(node('strong', '', action.customer_name), node('small', '', action.property || 'Local não informado'));
       const facts = node('span', 'operation-card-facts');
@@ -612,7 +629,7 @@
     for (const order of customer.orders || []) {
       const row = node('div', 'customer-order');
       const summary = node('div');
-      summary.append(node('strong', '', order.order_number));
+      summary.append(node('strong', '', displayOrderNumber(order)));
       summary.append(node('small', '', `${String(order.service_tier || '').toUpperCase()} · ${confirmedMoney(order.confirmed_service_revenue)}${order.is_qa ? ' · QA excluído' : ''}`));
       const status = node('span', `customer-order-status${order.is_qa ? ' qa' : ''}`, order.is_qa ? 'QA' : (order.order_status || 'unknown'));
       const link = node('a', 'pickup-inline-link', 'Pickup Order');
@@ -1123,7 +1140,7 @@
   }
 
   function renderOperationalDetail(order) {
-    $('detailNumber').textContent = order.order_number;
+    $('detailNumber').textContent = displayOrderNumber(order);
     $('detailHeadline').textContent = [order.customer_name, order.property || 'Local não informado',
       order.room ? `Room ${order.room}` : null, String(order.service_tier || '').toUpperCase(), stateLabel(order.order_status)]
       .filter(Boolean).join(' · ');
@@ -1211,6 +1228,19 @@
     if (order.next_action?.blocked_by) actionBox.append(node('small', '', `Disponível em ${order.next_action.blocked_by}`));
     if (order.next_action?.code === 'record_weight' && order.next_action.enabled) {
       actionBox.append(node('small', 'weight-action-hint', 'Registre o peso real em cada item acima. O pedido avança automaticamente quando todos estiverem confirmados.'));
+    } else if (order.next_action?.code === 'initialize_legacy_order' && order.next_action.enabled) {
+      const form = node('form', 'legacy-initialization-form');
+      const explanation = node('p', 'legacy-initialization-help',
+        'Este pedido foi criado antes do controle operacional. A ação inicia o acompanhamento em “com o cliente”, sem registrar coleta, peso, pagamento ou entrega retroativamente.');
+      const reasonLabel = node('label', '', 'Motivo da inicialização');
+      const reason = node('input'); reason.name = 'reason'; reason.maxLength = 240; reason.required = true;
+      reason.placeholder = 'Ex.: Pedido ativo confirmado antes da implantação do fluxo'; reasonLabel.append(reason);
+      const confirmLabel = node('label', 'legacy-initialization-confirm');
+      const confirm = node('input'); confirm.type = 'checkbox'; confirm.required = true;
+      confirmLabel.append(confirm, document.createTextNode(' Confirmo que o pedido continua ativo e deve iniciar o controle operacional agora.'));
+      const submit = node('button', 'primary', 'Iniciar controle operacional'); submit.type = 'submit';
+      form.append(explanation, reasonLabel, confirmLabel, submit);
+      form.addEventListener('submit', (event) => runOperationalTransition(event, order)); actionBox.append(form);
     } else if (order.next_action?.code === 'set_promised_by' && order.next_action.enabled) {
       const form = node('form', 'promise-form'); form.id = 'promiseForm';
       const promiseLabel = node('label', '', order.promised_by ? 'Corrigir prazo Express (horário de Orlando)' : 'Prazo Express (horário de Orlando)');
@@ -1319,7 +1349,7 @@
   }
 
   function showSuccess(order) {
-    $('successNumber').textContent = order.order_number;
+    $('successNumber').textContent = displayOrderNumber(order);
     $('successDetails').innerHTML = `<dl><div><dt>Cliente</dt><dd>${escapeText(order.customer_name)}</dd></div><div><dt>Local</dt><dd>${escapeText(order.property)}</dd></div><div><dt>Serviço</dt><dd>${escapeText(order.service_tier.toUpperCase())}</dd></div><div><dt>Coleta</dt><dd>${new Date(order.pickup_window_start).toLocaleString()}</dd></div></dl>`;
     $('successNext').textContent = order.next_action;
     const path = order.pickup_order_path || pickupPath(order.order_number);
@@ -1433,6 +1463,7 @@
     try { await loadOperationalOrders(activeQueue, query); }
     catch (error) { $('ordersError').textContent = error.message; }
   });
+  $('operationalSearchForm').elements.query.addEventListener('focus', (event) => event.currentTarget.select());
   for (const id of ['custodyFilter', 'productionFilter']) $(id).addEventListener('change', () => {
     const query = new FormData($('operationalSearchForm')).get('query');
     loadOperationalOrders(activeQueue, query).catch((error) => { $('ordersError').textContent = error.message; });

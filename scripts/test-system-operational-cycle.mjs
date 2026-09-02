@@ -274,6 +274,19 @@ test('independent-review SQL repairs are fail-closed and rollbacks preserve evid
   assert.match(stripeRollback, /payment composition evidence exists/);
 });
 
+test('legacy recovery migration is Owner-only, reason-required, idempotent and rollback-safe', () => {
+  const migration = fs.readFileSync(new URL('../supabase/migrations/20260902017000_orlando_legacy_operational_recovery.sql', import.meta.url), 'utf8');
+  const rollback = fs.readFileSync(new URL('../supabase/rollbacks/20260902017000_orlando_legacy_operational_recovery.rollback.sql', import.meta.url), 'utf8');
+  assert.match(migration, /p_actor_role <> 'owner'/);
+  assert.match(migration, /v_reason is null/);
+  assert.match(migration, /order_status <> 'accepted'[\s\S]*custody_state is not null[\s\S]*production_state is not null/);
+  assert.match(migration, /custody_state = 'with_customer'[\s\S]*production_state = 'awaiting_intake'/);
+  assert.match(migration, /v_existing\.reason is distinct from v_reason/);
+  assert.match(migration, /'reason_present', true/);
+  assert.doesNotMatch(migration, /pickup_completed|order_weighed|invoice_created|order_delivered/);
+  assert.match(rollback, /Rollback blocked: legacy initialization evidence exists/);
+});
+
 test('driver and payment APIs enforce session, role, origin and signed submission boundaries', async () => {
   const previous = { secret:process.env.A7_SYSTEM_SESSION_SECRET, mode:process.env.A7_SYSTEM_ACCESS_MODE };
   process.env.A7_SYSTEM_SESSION_SECRET = 'cycle-api-session-secret-at-least-32-bytes';

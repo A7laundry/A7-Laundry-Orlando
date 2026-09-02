@@ -262,6 +262,14 @@ test('public /order lead is accepted once with its original analytics identity a
   assert.equal(store.leads.get(leadId).status, 'order_accepted');
 });
 
+test('Supabase public-lead acceptance uses the canonical MCO wrapper', () => {
+  const source = fs.readFileSync(new URL('../lib/operational-store.js', import.meta.url), 'utf8');
+  const migration = fs.readFileSync(new URL('../supabase/migrations/20260902016000_orlando_unified_mco_order_numbers.sql', import.meta.url), 'utf8');
+  assert.match(source, /rpc\('a7_orlando_accept_existing_lead_order_v2'/);
+  assert.match(migration, /v_order_number := 'MCO ' \|\| nextval\('public\.a7_orlando_mco_order_number_seq'\)/);
+  assert.doesNotMatch(migration, /update public\.a7_orlando_orders[\s\S]*where order_number like 'HIST/i);
+});
+
 test('actionable lead endpoint is private, same-origin and never returns the durable lead UUID', async () => {
   const env = authEnv();
   const prior = { secret:process.env.A7_SYSTEM_SESSION_SECRET, users:process.env.A7_SYSTEM_USERS_JSON };
@@ -318,11 +326,33 @@ test('W1A.1 lookup accepts the human number directly and preserves canonical ide
   }
 });
 
+test('legacy A7-ORL numbers remain reachable through their friendly MCO alias', async () => {
+  const store = new MemoryOperationalStore();
+  const service = systemOrderService({ operationalStore:store,
+    attributionStore:{ async get() { return null; }, async getByShortRef() { return null; } } });
+  await service.createManualOrder(input(), { actor_id:'actor_owner', role:'owner' });
+  const order = [...store.orders.values()][0];
+  order.order_number = 'A7-ORL-1002';
+  const lookup = await service.getByOrderNumber('1002');
+  const pickup = await service.getPickupOrderByNumber('MCO 1002');
+  assert.equal(lookup.order_number, 'A7-ORL-1002');
+  assert.equal(pickup.order_number, 'A7-ORL-1002');
+});
+
 test('W1A.2 browser lookup keeps a stable form reference across the asynchronous request', () => {
   const js = fs.readFileSync(new URL('../sistema.js', import.meta.url), 'utf8');
   assert.match(js, /const form = event\.currentTarget;[\s\S]{0,180}new FormData\(form\)/);
   assert.match(js, /form\.elements\.order_number\.value = result\.order\.order_number/);
   assert.doesNotMatch(js, /event\.currentTarget\.elements\.order_number/);
+});
+
+test('operator routes and repeated search remain friendly for MCO identifiers', () => {
+  const js = fs.readFileSync(new URL('../sistema.js', import.meta.url), 'utf8');
+  const pickup = fs.readFileSync(new URL('../sistema-pickup-order.js', import.meta.url), 'utf8');
+  assert.match(js, /MCO\[ -\]\(\?:\\d\{4,12\}\)/);
+  assert.match(js, /elements\.query\.addEventListener\('focus',[\s\S]*\.select\(\)/);
+  assert.match(js, /Nenhum pedido encontrado para “\$\{query\}”/);
+  assert.match(pickup, /\^MCO-\\d\{4,12\}\$/);
 });
 
 test('W1A.3 normalizes bounded customer search and fails closed for short input', () => {
