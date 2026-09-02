@@ -29,6 +29,7 @@ test('W3-D validates minimal route and stop identities', () => {
     { route_date:'2026-09-02', driver_id:uuidA, request_id:request });
   assert.deepEqual(addStopInput({ route_id:uuidA, order_number:'MCO 1003', stop_type:'PICKUP', request_id:request }),
     { route_id:uuidA, order_number:'MCO 1003', stop_type:'pickup', eta_at:null, request_id:request });
+  assert.throws(() => createRouteInput({ route_date:'2026-02-31', driver_id:uuidA, request_id:request }), /date/);
 });
 test('W3-D reorder requires a complete unique versioned sequence', () => {
   assert.deepEqual(reorderInput({ route_id:uuidA, stop_ids:[uuidA, uuidB], version:2, request_id:request }).stop_ids, [uuidA, uuidB]);
@@ -110,6 +111,20 @@ test('W3-D service sends validated commands and actor evidence to the store', as
   assert.match(seen[1][1].idempotency_key, /^route-start:/);
 });
 
+test('W3-D validates route filters before storage reads', async () => {
+  const seen = [];
+  const routeStore = {
+    listRoutes:async (input) => { seen.push(['list', input]); return []; },
+    listEligibleStops:async (input) => { seen.push(['eligible', input]); return { pickup:[], delivery:[] }; }
+  };
+  const service = systemRouteService({ routeStore });
+  await service.list({ route_date:'2026-09-02' }, owner);
+  await service.eligible({ route_id:uuidA }, manager);
+  assert.deepEqual(seen, [['list', { route_date:'2026-09-02' }], ['eligible', { route_id:uuidA }]]);
+  await assert.rejects(() => service.list({ route_date:'2026-02-31' }, owner), /date/);
+  await assert.rejects(() => service.eligible({ route_id:'not-a-route' }, manager), /identity/);
+});
+
 test('W3-D API and UI remain private and menu-gated during development', async () => {
   const fs = await import('node:fs/promises');
   const [api, html, js, css, sql] = await Promise.all([
@@ -126,6 +141,7 @@ test('W3-D API and UI remain private and menu-gated during development', async (
   assert.match(js, /operation-draft/);
   assert.match(css, /@media\(max-width:700px\)/);
   assert.match(sql, /a7_orlando_operational_cycle_transition_v2/);
+  assert.match(sql, /public\.a7_orlando_order_is_qa\(o\.id\)/);
   assert.match(sql, /p_command = 'set_eta'/);
   assert.match(sql, /p_command = 'cancel'/);
   assert.match(js, /ETA indisponível/);

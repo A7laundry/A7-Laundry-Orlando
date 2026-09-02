@@ -178,6 +178,8 @@ begin
         and a.superseded_at is null
       where s.route_id=v_route.id and s.status='pending'
         and (
+          public.a7_orlando_order_is_qa(o.id)
+          or
           a.driver_id is distinct from v_route.driver_id
           or (s.stop_type='pickup' and (o.order_status<>'pickup_scheduled' or o.custody_state<>'awaiting_pickup'))
           or (s.stop_type='delivery' and (o.order_status not in ('invoice_created','ready_for_delivery')

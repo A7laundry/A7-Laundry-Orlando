@@ -12,7 +12,7 @@ declare
   v_delivery_order uuid := '10000000-0000-4000-8000-000000000006';
   v_bell_order uuid := '10000000-0000-4000-8000-000000000008';
   v_exception_order uuid := '10000000-0000-4000-8000-000000000010';
-  v_route jsonb; v_result jsonb; v_route_id uuid; v_route2_id uuid; v_pickup_stop uuid; v_delivery_stop uuid;
+  v_route jsonb; v_result jsonb; v_route_id uuid; v_route2_id uuid; v_route3_id uuid; v_pickup_stop uuid; v_delivery_stop uuid;
   v_bell_stop uuid; v_exception_stop uuid; v_version integer; v_blocked boolean := false;
 begin
   insert into public.a7_wa_contacts(id,unit_key,wa_id,profile_name) values(v_contact,'orlando','15550000001','Route Fixture');
@@ -80,6 +80,14 @@ begin
   exception when others then v_blocked:=true;
   end;
   if not v_blocked then raise exception 'start did not revalidate stop eligibility'; end if;
+  v_blocked:=false;
+  begin
+    update public.a7_orlando_orders set is_qa=true where id=v_pickup_order;
+    perform public.a7_orlando_route_command('start',v_route_id,jsonb_build_object('version',v_version),
+      'owner','manager','route-fixture:qa-start',now());
+  exception when others then v_blocked:=true;
+  end;
+  if not v_blocked then raise exception 'start accepted a route that became QA'; end if;
   v_result:=public.a7_orlando_route_command('start',v_route_id,jsonb_build_object('version',v_version),
     'owner','manager','route-fixture:start',now());
   v_result:=public.a7_orlando_route_command('execute_stop',v_route_id,jsonb_build_object('stop_id',v_pickup_stop,'action','confirm_pickup'),
@@ -105,6 +113,18 @@ begin
   if (select custody_state from public.a7_orlando_orders where id=v_exception_order) <> 'awaiting_pickup'
     or (select order_status from public.a7_orlando_orders where id=v_exception_order) <> 'pickup_scheduled' then
     raise exception 'route exception mutated order truth'; end if;
+  v_result:=public.a7_orlando_route_command('create',null,jsonb_build_object('route_date',current_date+1,'driver_id',v_driver),
+    'owner','owner','route-fixture:create-retry-route',now());
+  v_route3_id:=(v_result->'route'->>'route_id')::uuid;
+  v_result:=public.a7_orlando_route_command('add_stop',v_route3_id,
+    jsonb_build_object('order_number','MCO-99004','stop_type','pickup'),
+    'owner','owner','route-fixture:requeue-exception',now());
+  if not exists (select 1 from public.a7_orlando_route_stops
+    where route_id=v_route3_id and order_id=v_exception_order and stop_type='pickup' and assignment_active) then
+    raise exception 'exception order did not return to future route eligibility'; end if;
+  v_result:=public.a7_orlando_route_command('cancel',v_route3_id,
+    jsonb_build_object('version',(v_result->'route'->>'version')::integer),
+    'owner','owner','route-fixture:cancel-retry-route',now());
   v_route:=public.a7_orlando_route_payload(v_route_id); v_version:=(v_route->>'version')::integer;
   v_result:=public.a7_orlando_route_command('complete',v_route_id,jsonb_build_object('version',v_version),
     'owner','owner','route-fixture:complete',now());

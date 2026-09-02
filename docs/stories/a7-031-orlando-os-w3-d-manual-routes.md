@@ -340,13 +340,15 @@ destructive rollback. No CRITICAL finding may remain open before release.
   RPC, API or hidden UI implementation exists; the canonical driver/order/Bell Desk base is present.
 - Packet W3-D.1 focused contract suite: `8/8 PASS`; `node --check lib/system-route-service.js` and
   `git diff --check`: PASS.
-- Packets W3-D.2–D.6 focused route suite: `15/15 PASS`; protected API, explicit unauthenticated `401`, Operator
+- Packets W3-D.2–D.6 focused route suite: `16/16 PASS`; protected API, explicit unauthenticated `401`, Operator
   `403`, Owner/Manager RBAC, canonical transition delegation, optional versioned ETA, cancellation, history, CLI
-  read/write coverage with `--execute` guarding and menu gating verified.
+  read/write coverage with `--execute` guarding and menu gating verified. Read filters now reject malformed route IDs
+  and impossible calendar dates before storage access.
 - Disposable PostgreSQL replay used the 2026-09-02 read-only Orlando Production schema dump, then applied only
   `20260902018000` and `20260902018001`. Transactional fixtures proved create/retry, duplicate-leg rejection,
-  reorder, start-time revalidation, pickup, direct delivery, Bell Desk intermediate custody, exception without order
-  mutation, completion and draft cancellation; fixture transaction ended in `ROLLBACK`.
+  reorder, start-time state/assignment/QA revalidation, pickup, direct delivery, Bell Desk intermediate custody,
+  exception without order mutation, future-route re-eligibility after exception, completion and draft cancellation;
+  fixture transaction ended in `ROLLBACK`.
 - A second disposable PostgreSQL replay ran simultaneous Owner and Manager sessions against the same pending pickup.
   One session succeeded, the other failed closed with `Pending route stop required`; verification found exactly one
   `pickup_completed` route event, one canonical `confirm_pickup` order event, stop `completed` and custody
@@ -356,7 +358,8 @@ destructive rollback. No CRITICAL finding may remain open before release.
   `a7_orlando_orders` base remained present. The disposable rollback database was removed immediately afterward.
 - Exact 390 px browser QA: `innerWidth=390`, document `scrollWidth=375`, no horizontal document overflow; next-stop,
   pickup, delivery, Bell Desk, exception and optional ETA controls remain legible and reachable.
-- Full repository gates after W3-D: lint PASS; typecheck PASS; pretest `95/95 PASS`; MOS `67/67 PASS`; build PASS.
+- Full repository gates after final W3-D hardening: lint PASS; typecheck PASS; `npm test` PASS; MOS `67/67 PASS`;
+  build PASS; `git diff --check` PASS.
 - Dedicated Staging target guard: `NOT READY`. `expected_staging_ref`,
   `linked_ref_is_not_production_or_foreign` and `linked_ref_matches_expected` all failed closed because no approved
   W3-D Staging Supabase ref is configured or linked. No foreign or Production database was substituted.
