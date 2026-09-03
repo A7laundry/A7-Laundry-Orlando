@@ -1,9 +1,8 @@
 # A7 Orlando OS — W3-D Rotas Lite Release Readiness
 
 **Date:** 2026-09-02  
-**Verdict:** `NOT READY` — local candidate complete; required remote gates are not authorized or available  
-**Candidate commit:** `a6302a5963d7a402809685e7faeb24b31c02aebe`  
-**Candidate tree:** `8d4f2df769104e016e2e175ec218d58b778683a8`
+**Verdict:** `PRE-GO READY` — controlled Production procedure prepared; no remote mutation authorized
+**Candidate commit/tree:** to be frozen after the Production probe hardening commit
 
 ## Authoritative state
 
@@ -12,7 +11,8 @@
 - The published `/sistema.html` does not contain the W3-D route navigation or stylesheet markers. Rotas is not live.
 - Supabase project `wiwawtpaxnrueugppasi` is the linked Orlando Production database.
 - Project `zquefoznqwkfbnnfalmt` belongs to another system and remains forbidden.
-- No dedicated A7 Orlando Staging Supabase project exists in the current account inventory.
+- The Owner explicitly replaced the dedicated Staging gate with a controlled Production pilot. No cloud test
+  database will be created or reused.
 - W3-B remains Draft. It is not a W3-D runtime dependency, but the documented release order requires an explicit
   Owner/architecture exception before W3-D can precede it.
 
@@ -28,10 +28,11 @@
 | Idempotency/concurrency | PASS (local) | Exact retry is duplicate-safe; competing Owner/Manager pickup produced one success and one updated-state rejection. |
 | RBAC/privacy | PASS (local) | Owner/Manager allowed, unauthenticated 401, Operator 403; no route secret or protected value in public logs/URLs. |
 | Desktop/exact 390 px | PASS (local) | No horizontal document overflow; next stop and stop actions are reachable. |
-| Repository gates | PASS | Lint, typecheck, `npm test`, MOS 67/67, build and diff check pass. |
-| Staging E2E | BLOCKED | Dedicated Orlando Staging target is absent; Production and the foreign Staging project are forbidden substitutions under the current goal. |
+| Repository gates | PASS | Lint, typecheck, all 169 OS tests, full repository suite, MOS 67/67, build and diff check pass. |
+| Controlled Production plan | PASS (prepared) | Owner-only, same-origin, submission-bound transactional probe covers canonical route actions and deletes all synthetic rows before commit. |
+| Production-schema replay | PASS | Exact Production schema was replayed without data locally; both W3-D migrations and the transactional probe passed with `residue_count=0`; the disposable database and dump were removed. |
 | W3-B → W3-D order | BLOCKED | W3-B is still Draft and no explicit release-order exception is recorded. |
-| Immutable remote artifact / smoke / PR / merge | PENDING | These follow the environment and sequencing decisions; no remote mutation has occurred. |
+| Immutable remote artifact / smoke / PR / merge | PENDING | Requires final gates and a separate exact GO; no remote mutation has occurred. |
 
 ## Final audit — current evidence
 
@@ -41,7 +42,7 @@
 4. Bell Desk/delivery duplicated? **NO, canonical W1C-B3 transition reused.**
 5. Order operable without route? **YES in code/regression tests; remote post-cutover proof pending.**
 6. Retry idempotent? **YES, proven locally.**
-7. Mobile operable? **YES locally at exact 390 px; remote device smoke pending.**
+7. Mobile operable? **YES locally at exact 390 px; controlled Production read smoke pending.**
 8. Owner authorized? **YES, server-side.**
 9. Manager authorized? **YES, server-side.**
 10. Unauthorized user blocked? **YES, 401/403 proven.**
@@ -50,12 +51,6 @@
 
 ## Required decision before any mutation
 
-Choose one release path:
-
-1. provide a dedicated A7 Orlando Staging project and retain the original Staging E2E gate; or
-2. explicitly amend the goal to replace Staging E2E with a controlled Production pilot and authorize W3-D before
-   W3-B because W3-B is not a runtime dependency.
-
-Neither choice itself authorizes a Production migration or deploy. After the decision, the exact migration list,
-artifact, authenticated smoke and rollback deployment must receive a separate GO.
-
+The environment decision is complete: controlled Production replaces Staging. The remaining sequencing decision is
+an explicit Owner exception allowing W3-D before Draft W3-B. After the final repository gates and immutable artifact
+are recorded, the exact migration list, probe, deployment and rollback target require a separate GO.

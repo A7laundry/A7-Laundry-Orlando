@@ -249,13 +249,294 @@ begin
 end;
 $$;
 
+-- Owner-only Production pilot probe. The fixture is intentionally not marked QA
+-- because the route authority must reject persistent QA orders. Every synthetic
+-- row is removed before this transaction commits; any failed assertion rolls the
+-- complete function call back automatically.
+create or replace function public.a7_orlando_w3d_transactional_smoke(
+  p_actor_id text,
+  p_actor_role text,
+  p_request_id uuid
+) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare
+  v_driver_id uuid := gen_random_uuid();
+  v_contact_id uuid := gen_random_uuid();
+  v_pickup_lead_id uuid := gen_random_uuid();
+  v_delivery_lead_id uuid := gen_random_uuid();
+  v_bell_lead_id uuid := gen_random_uuid();
+  v_exception_lead_id uuid := gen_random_uuid();
+  v_pickup_order_id uuid := gen_random_uuid();
+  v_delivery_order_id uuid := gen_random_uuid();
+  v_bell_order_id uuid := gen_random_uuid();
+  v_exception_order_id uuid := gen_random_uuid();
+  v_prefix text := 'w3d-smoke:' || p_request_id::text;
+  v_pickup_number text := 'W3D-SMOKE-P-' || left(replace(p_request_id::text, '-', ''), 12);
+  v_delivery_number text := 'W3D-SMOKE-D-' || left(replace(p_request_id::text, '-', ''), 12);
+  v_bell_number text := 'W3D-SMOKE-B-' || left(replace(p_request_id::text, '-', ''), 12);
+  v_exception_number text := 'W3D-SMOKE-X-' || left(replace(p_request_id::text, '-', ''), 12);
+  v_phone text := '15559' || lpad((abs(hashtext(p_request_id::text)::bigint) % 1000000)::text, 6, '0');
+  v_result jsonb;
+  v_route jsonb;
+  v_route_id uuid;
+  v_retry_route_id uuid;
+  v_pickup_stop_id uuid;
+  v_delivery_stop_id uuid;
+  v_bell_stop_id uuid;
+  v_exception_stop_id uuid;
+  v_version integer;
+  v_pickup_event_count integer;
+  v_exception_event_count integer;
+  v_residue integer;
+begin
+  if nullif(btrim(coalesce(p_actor_id, '')), '') is null
+    or p_actor_role <> 'owner'
+    or p_request_id is null then
+    raise exception 'Invalid Owner route smoke contract';
+  end if;
+
+  perform pg_advisory_xact_lock(hashtext('a7-orlando-w3d-transactional-smoke'));
+
+  insert into public.a7_wa_contacts(id, unit_key, wa_id, profile_name)
+  values(v_contact_id, 'orlando', 'system-route-smoke-' || p_request_id::text, 'System Route Smoke Fixture');
+
+  insert into public.a7_orlando_leads(
+    id, unit_key, idempotency_key, customer_id, attribution_resolution, status,
+    lead_origin, service_type, customer_type, language, accommodation_type,
+    service_area_accepted, timing_accepted, minimum_basis_accepted, operational_data
+  ) values
+    (v_pickup_lead_id, 'orlando', v_prefix || ':lead-pickup', v_contact_id, 'unknown',
+      'order_accepted', 'manual', 'guest_laundry', 'guest', 'en', 'hotel', true, true, true,
+      jsonb_build_object('property', 'System Route Smoke Fixture')),
+    (v_delivery_lead_id, 'orlando', v_prefix || ':lead-delivery', v_contact_id, 'unknown',
+      'order_accepted', 'manual', 'guest_laundry', 'guest', 'en', 'hotel', true, true, true,
+      jsonb_build_object('property', 'System Route Smoke Fixture')),
+    (v_bell_lead_id, 'orlando', v_prefix || ':lead-bell', v_contact_id, 'unknown',
+      'order_accepted', 'manual', 'guest_laundry', 'guest', 'en', 'hotel', true, true, true,
+      jsonb_build_object('property', 'System Route Smoke Fixture')),
+    (v_exception_lead_id, 'orlando', v_prefix || ':lead-exception', v_contact_id, 'unknown',
+      'order_accepted', 'manual', 'guest_laundry', 'guest', 'en', 'hotel', true, true, true,
+      jsonb_build_object('property', 'System Route Smoke Fixture'));
+
+  insert into public.a7_orlando_orders(
+    id, unit_key, lead_id, customer_id, order_number, service_type, customer_type,
+    service_tier, pricing_model, order_status, payment_status, accepted_at,
+    pickup_window_start, pickup_window_end, attribution_confidence,
+    custody_state, production_state, is_qa, payment_id, service_amount, currency, paid_at
+  ) values
+    (v_pickup_order_id, 'orlando', v_pickup_lead_id, v_contact_id, v_pickup_number,
+      'guest_laundry', 'guest', 'normal', 'per_lb', 'pickup_scheduled', 'pending', now(),
+      now(), now() + interval '1 hour', 'unattributed', 'awaiting_pickup', 'awaiting_intake',
+      false, null, null, null, null),
+    (v_delivery_order_id, 'orlando', v_delivery_lead_id, v_contact_id, v_delivery_number,
+      'guest_laundry', 'guest', 'normal', 'per_lb', 'ready_for_delivery', 'paid', now(),
+      now(), now() + interval '1 hour', 'unattributed', 'at_laundry', 'ready',
+      false, v_prefix || ':payment-delivery', 60, 'USD', now()),
+    (v_bell_order_id, 'orlando', v_bell_lead_id, v_contact_id, v_bell_number,
+      'guest_laundry', 'guest', 'normal', 'per_lb', 'ready_for_delivery', 'paid', now(),
+      now(), now() + interval '1 hour', 'unattributed', 'at_laundry', 'ready',
+      false, v_prefix || ':payment-bell', 60, 'USD', now()),
+    (v_exception_order_id, 'orlando', v_exception_lead_id, v_contact_id, v_exception_number,
+      'guest_laundry', 'guest', 'normal', 'per_lb', 'pickup_scheduled', 'pending', now(),
+      now(), now() + interval '1 hour', 'unattributed', 'awaiting_pickup', 'awaiting_intake',
+      false, null, null, null, null);
+
+  insert into public.a7_orlando_drivers(id, full_name, phone, active, created_by, updated_by)
+  values(v_driver_id, 'System Route Smoke Driver', v_phone, true, p_actor_id, p_actor_id);
+
+  v_result := public.a7_orlando_route_command(
+    'create', null, jsonb_build_object('route_date', current_date, 'driver_id', v_driver_id),
+    p_actor_id, 'owner', v_prefix || ':create', now());
+  v_route_id := (v_result->'route'->>'route_id')::uuid;
+  if v_route_id is null or coalesce((v_result->>'duplicate')::boolean, true) then
+    raise exception 'W3-D route creation assertion failed';
+  end if;
+
+  v_result := public.a7_orlando_route_command(
+    'create', null, jsonb_build_object('route_date', current_date, 'driver_id', v_driver_id),
+    p_actor_id, 'owner', v_prefix || ':create', now());
+  if not coalesce((v_result->>'duplicate')::boolean, false)
+    or (v_result->'route'->>'route_id')::uuid <> v_route_id then
+    raise exception 'W3-D route idempotency assertion failed';
+  end if;
+
+  v_result := public.a7_orlando_route_command('add_stop', v_route_id,
+    jsonb_build_object('order_number', v_pickup_number, 'stop_type', 'pickup'),
+    p_actor_id, 'owner', v_prefix || ':add-pickup', now());
+  v_result := public.a7_orlando_route_command('add_stop', v_route_id,
+    jsonb_build_object('order_number', v_delivery_number, 'stop_type', 'delivery'),
+    p_actor_id, 'owner', v_prefix || ':add-delivery', now());
+  v_result := public.a7_orlando_route_command('add_stop', v_route_id,
+    jsonb_build_object('order_number', v_bell_number, 'stop_type', 'delivery'),
+    p_actor_id, 'owner', v_prefix || ':add-bell', now());
+  v_result := public.a7_orlando_route_command('add_stop', v_route_id,
+    jsonb_build_object('order_number', v_exception_number, 'stop_type', 'pickup'),
+    p_actor_id, 'owner', v_prefix || ':add-exception', now());
+
+  v_route := public.a7_orlando_route_payload(v_route_id);
+  select (value->>'stop_id')::uuid into v_pickup_stop_id
+    from jsonb_array_elements(v_route->'stops') where value->'order'->>'order_number' = v_pickup_number;
+  select (value->>'stop_id')::uuid into v_delivery_stop_id
+    from jsonb_array_elements(v_route->'stops') where value->'order'->>'order_number' = v_delivery_number;
+  select (value->>'stop_id')::uuid into v_bell_stop_id
+    from jsonb_array_elements(v_route->'stops') where value->'order'->>'order_number' = v_bell_number;
+  select (value->>'stop_id')::uuid into v_exception_stop_id
+    from jsonb_array_elements(v_route->'stops') where value->'order'->>'order_number' = v_exception_number;
+  v_version := (v_route->>'version')::integer;
+
+  v_result := public.a7_orlando_route_command('reorder', v_route_id,
+    jsonb_build_object('version', v_version, 'stop_ids',
+      jsonb_build_array(v_delivery_stop_id, v_pickup_stop_id, v_bell_stop_id, v_exception_stop_id)),
+    p_actor_id, 'owner', v_prefix || ':reorder', now());
+  v_version := (v_result->'route'->>'version')::integer;
+  v_result := public.a7_orlando_route_command('set_eta', v_route_id,
+    jsonb_build_object('version', v_version, 'stop_id', v_pickup_stop_id,
+      'eta_at', now() + interval '30 minutes'),
+    p_actor_id, 'owner', v_prefix || ':eta', now());
+  v_version := (v_result->'route'->>'version')::integer;
+
+  v_result := public.a7_orlando_route_command('start', v_route_id,
+    jsonb_build_object('version', v_version), p_actor_id, 'owner', v_prefix || ':start', now());
+  if v_result->'route'->>'status' <> 'active' then raise exception 'W3-D start assertion failed'; end if;
+
+  v_result := public.a7_orlando_route_command('execute_stop', v_route_id,
+    jsonb_build_object('stop_id', v_pickup_stop_id, 'action', 'confirm_pickup'),
+    p_actor_id, 'owner', v_prefix || ':pickup', now());
+  v_result := public.a7_orlando_route_command('execute_stop', v_route_id,
+    jsonb_build_object('stop_id', v_pickup_stop_id, 'action', 'confirm_pickup'),
+    p_actor_id, 'owner', v_prefix || ':pickup', now());
+  if not coalesce((v_result->>'duplicate')::boolean, false)
+    or (select custody_state from public.a7_orlando_orders where id = v_pickup_order_id) <> 'with_driver_pickup' then
+    raise exception 'W3-D pickup/idempotency assertion failed';
+  end if;
+
+  v_result := public.a7_orlando_route_command('execute_stop', v_route_id,
+    jsonb_build_object('stop_id', v_delivery_stop_id, 'action', 'start_delivery'),
+    p_actor_id, 'owner', v_prefix || ':delivery-start', now());
+  v_result := public.a7_orlando_route_command('execute_stop', v_route_id,
+    jsonb_build_object('stop_id', v_delivery_stop_id, 'action', 'complete_delivery',
+      'handoff_point', 'guest'),
+    p_actor_id, 'owner', v_prefix || ':delivery-complete', now());
+  if (select order_status from public.a7_orlando_orders where id = v_delivery_order_id) <> 'delivered' then
+    raise exception 'W3-D delivery assertion failed';
+  end if;
+
+  v_result := public.a7_orlando_route_command('execute_stop', v_route_id,
+    jsonb_build_object('stop_id', v_bell_stop_id, 'action', 'start_delivery'),
+    p_actor_id, 'owner', v_prefix || ':bell-start', now());
+  v_result := public.a7_orlando_route_command('execute_stop', v_route_id,
+    jsonb_build_object('stop_id', v_bell_stop_id, 'action', 'leave_bell_desk',
+      'handoff_point', 'bell_desk', 'handoff_note', 'Controlled transactional smoke'),
+    p_actor_id, 'owner', v_prefix || ':bell-handoff', now());
+  if (select custody_state from public.a7_orlando_orders where id = v_bell_order_id) <> 'bell_desk'
+    or (select order_status from public.a7_orlando_orders where id = v_bell_order_id) <> 'ready_for_delivery' then
+    raise exception 'W3-D Bell Desk assertion failed';
+  end if;
+
+  v_result := public.a7_orlando_route_command('exception', v_route_id,
+    jsonb_build_object('stop_id', v_exception_stop_id, 'reason', 'guest_unavailable'),
+    p_actor_id, 'owner', v_prefix || ':exception', now());
+  if (select custody_state from public.a7_orlando_orders where id = v_exception_order_id) <> 'awaiting_pickup'
+    or (select order_status from public.a7_orlando_orders where id = v_exception_order_id) <> 'pickup_scheduled' then
+    raise exception 'W3-D exception changed canonical order truth';
+  end if;
+
+  v_result := public.a7_orlando_route_command('create', null,
+    jsonb_build_object('route_date', current_date + 1, 'driver_id', v_driver_id),
+    p_actor_id, 'owner', v_prefix || ':retry-create', now());
+  v_retry_route_id := (v_result->'route'->>'route_id')::uuid;
+  v_result := public.a7_orlando_route_command('add_stop', v_retry_route_id,
+    jsonb_build_object('order_number', v_exception_number, 'stop_type', 'pickup'),
+    p_actor_id, 'owner', v_prefix || ':retry-add', now());
+  if not exists (select 1 from public.a7_orlando_route_stops
+      where route_id = v_retry_route_id and order_id = v_exception_order_id and assignment_active) then
+    raise exception 'W3-D exception order did not return to route eligibility';
+  end if;
+  v_result := public.a7_orlando_route_command('cancel', v_retry_route_id,
+    jsonb_build_object('version', (v_result->'route'->>'version')::integer),
+    p_actor_id, 'owner', v_prefix || ':retry-cancel', now());
+
+  v_route := public.a7_orlando_route_payload(v_route_id);
+  v_result := public.a7_orlando_route_command('complete', v_route_id,
+    jsonb_build_object('version', (v_route->>'version')::integer),
+    p_actor_id, 'owner', v_prefix || ':complete', now());
+  if v_result->'route'->>'status' <> 'completed' then raise exception 'W3-D completion assertion failed'; end if;
+
+  select count(*) into v_pickup_event_count from public.a7_orlando_route_events
+    where route_id = v_route_id and action = 'pickup_completed';
+  select count(*) into v_exception_event_count from public.a7_orlando_route_events
+    where route_id = v_route_id and action = 'stop_exception';
+  if v_pickup_event_count <> 1 or v_exception_event_count <> 1 then
+    raise exception 'W3-D append-only route evidence assertion failed';
+  end if;
+
+  delete from public.a7_orlando_route_events where route_id in (v_route_id, v_retry_route_id);
+  delete from public.a7_orlando_route_stops where route_id in (v_route_id, v_retry_route_id);
+  delete from public.a7_orlando_routes where id in (v_route_id, v_retry_route_id);
+  delete from public.a7_orlando_driver_assignments
+    where order_id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id);
+  delete from public.a7_orlando_operator_audit
+    where entity_id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id, v_driver_id);
+  delete from public.a7_orlando_operational_events
+    where order_id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id);
+  delete from public.a7_orlando_order_events
+    where order_id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id);
+  delete from public.a7_orlando_orders
+    where id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id);
+  delete from public.a7_orlando_leads
+    where id in (v_pickup_lead_id, v_delivery_lead_id, v_bell_lead_id, v_exception_lead_id);
+  delete from public.a7_wa_contacts where id = v_contact_id;
+  delete from public.a7_orlando_drivers where id = v_driver_id;
+
+  select
+    (select count(*) from public.a7_orlando_routes where id in (v_route_id, v_retry_route_id))
+    + (select count(*) from public.a7_orlando_route_stops where route_id in (v_route_id, v_retry_route_id))
+    + (select count(*) from public.a7_orlando_route_events where route_id in (v_route_id, v_retry_route_id))
+    + (select count(*) from public.a7_orlando_driver_assignments
+        where order_id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id))
+    + (select count(*) from public.a7_orlando_operational_events
+        where order_id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id))
+    + (select count(*) from public.a7_orlando_order_events
+        where order_id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id))
+    + (select count(*) from public.a7_orlando_orders
+        where id in (v_pickup_order_id, v_delivery_order_id, v_bell_order_id, v_exception_order_id))
+    + (select count(*) from public.a7_orlando_leads
+        where id in (v_pickup_lead_id, v_delivery_lead_id, v_bell_lead_id, v_exception_lead_id))
+    + (select count(*) from public.a7_wa_contacts where id = v_contact_id)
+    + (select count(*) from public.a7_orlando_drivers where id = v_driver_id)
+  into v_residue;
+
+  if v_residue <> 0 then raise exception 'W3-D transactional smoke cleanup failed'; end if;
+
+  return jsonb_build_object(
+    'passed', true,
+    'create_retry_duplicate', true,
+    'pickup_retry_duplicate', true,
+    'route_completed', true,
+    'pickup_event_count', v_pickup_event_count,
+    'delivery_completed', true,
+    'bell_desk_intermediate', true,
+    'exception_preserved_order', true,
+    'exception_requeued', true,
+    'residue_count', v_residue
+  );
+end;
+$$;
+
 revoke all on function public.a7_orlando_route_order_payload(uuid) from public, anon, authenticated;
 revoke all on function public.a7_orlando_route_payload(uuid) from public, anon, authenticated;
 revoke all on function public.a7_orlando_list_routes(date) from public, anon, authenticated;
 revoke all on function public.a7_orlando_route_eligible_stops(uuid) from public, anon, authenticated;
 revoke all on function public.a7_orlando_route_command(text,uuid,jsonb,text,text,text,timestamptz) from public, anon, authenticated;
+revoke all on function public.a7_orlando_w3d_transactional_smoke(text,text,uuid) from public, anon, authenticated;
 grant execute on function public.a7_orlando_route_order_payload(uuid) to service_role;
 grant execute on function public.a7_orlando_route_payload(uuid) to service_role;
 grant execute on function public.a7_orlando_list_routes(date) to service_role;
 grant execute on function public.a7_orlando_route_eligible_stops(uuid) to service_role;
 grant execute on function public.a7_orlando_route_command(text,uuid,jsonb,text,text,text,timestamptz) to service_role;
+grant execute on function public.a7_orlando_w3d_transactional_smoke(text,text,uuid) to service_role;
+
+comment on function public.a7_orlando_w3d_transactional_smoke(text,text,uuid) is
+  'Owner-bound W3-D route/canonical-transition probe; all synthetic rows are removed in the same transaction.';
+
+notify pgrst, 'reload schema';

@@ -1,6 +1,6 @@
 # Story A7-031 — A7 Orlando OS W3-D Manual Routes
 
-**Status:** In Progress — W3-D.0–D.6 implemented and proven locally; staging E2E and release remain blocked
+**Status:** In Progress — W3-D.0–D.6 and controlled-Production probe implemented; final GO and cutover pending
 
 **Created:** 2026-08-31
 
@@ -224,6 +224,8 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
   - [x] Prove no route code writes custody/delivery directly and no financial/WhatsApp adapter is invoked.
   - [x] Run lint, typecheck, focused/full tests, build, privacy/secret scan, migration/rollback rehearsal and local
         desktop/exact-390-px visual QA.
+  - [x] Replace the Staging-only rehearsal with the Owner-approved controlled Production plan; prove its
+        Owner-only transactional smoke against a no-data replay of the exact Production schema with zero residue.
   - [ ] Prepare an isolated immutable artifact, authenticated Owner smoke and separately authorized Production GO.
 
 ## Dependencies and release gates
@@ -263,6 +265,8 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
 - authenticated Owner smoke covers assignment, reorder, departure, pickup, direct delivery and the approved Bell Desk
   behavior without real payment, message or customer action;
 - Production requires a separate exact GO and immediate application rollback on a failed or unproven gate.
+- The Owner decision of 2026-09-02 replaces the Staging E2E with the controlled Production pilot in
+  `docs/runbooks/A7-ORLANDO-W3D-ROUTES-PRODUCTION-PILOT-2026-09-02.md`; it does not itself authorize mutation.
 
 ## CodeRabbit integration and specialist review
 
@@ -314,10 +318,13 @@ destructive rollback. No CRITICAL finding may remain open before release.
 - `docs/audits/2026-09-02-orlando-os-w3-d-routes-lite-forensic.md`
 - `docs/audits/2026-09-02-orlando-os-w3-d-release-readiness.md`
 - `docs/runbooks/A7-ORLANDO-W3D-ROUTES-STAGING-E2E-2026-09-02.md`
+- `docs/runbooks/A7-ORLANDO-W3D-ROUTES-PRODUCTION-PILOT-2026-09-02.md`
 - `lib/system-rbac.js`
 - `lib/system-route-service.js`
+- `lib/system-w3d-smoke-service.js`
 - `lib/operational-store.js`
 - `api/system/routes.js`
+- `api/system/w3d-smoke.js`
 - `sistema.html`
 - `sistema.js`
 - `sistema-routes.css`
@@ -341,7 +348,7 @@ destructive rollback. No CRITICAL finding may remain open before release.
   RPC, API or hidden UI implementation exists; the canonical driver/order/Bell Desk base is present.
 - Packet W3-D.1 focused contract suite: `8/8 PASS`; `node --check lib/system-route-service.js` and
   `git diff --check`: PASS.
-- Packets W3-D.2–D.6 focused route suite: `16/16 PASS`; protected API, explicit unauthenticated `401`, Operator
+- Packets W3-D.2–D.6 focused route suite: `18/18 PASS`; protected API, explicit unauthenticated `401`, Operator
   `403`, Owner/Manager RBAC, canonical transition delegation, optional versioned ETA, cancellation, history, CLI
   read/write coverage with `--execute` guarding and menu gating verified. Read filters now reject malformed route IDs
   and impossible calendar dates before storage access.
@@ -361,9 +368,10 @@ destructive rollback. No CRITICAL finding may remain open before release.
   pickup, delivery, Bell Desk, exception and optional ETA controls remain legible and reachable.
 - Full repository gates after final W3-D hardening: lint PASS; typecheck PASS; `npm test` PASS; MOS `67/67 PASS`;
   build PASS; `git diff --check` PASS.
-- Dedicated Staging target guard: `NOT READY`. `expected_staging_ref`,
-  `linked_ref_is_not_production_or_foreign` and `linked_ref_matches_expected` all failed closed because no approved
-  W3-D Staging Supabase ref is configured or linked. No foreign or Production database was substituted.
+- The Owner decision of 2026-09-02 superseded the dedicated Staging rehearsal with a controlled Production pilot.
+  A new Owner-only, same-origin and submission-bound transactional probe passed against a no-data replay of the exact
+  Production schema: route create/retry, pickup/retry, direct delivery, Bell Desk, exception/requeue and completion
+  all passed with `residue_count=0`. The disposable local database and temporary dump were removed immediately.
 - Read-only account inventory reconfirmed that `wiwawtpaxnrueugppasi` is the linked A7 Orlando Production project
   and `zquefoznqwkfbnnfalmt` is the pre-existing Staging project for another system. It was not relinked or mutated.
 - Read-only Vercel inspection reconfirmed `a7laundry.com` on ready Production deployment

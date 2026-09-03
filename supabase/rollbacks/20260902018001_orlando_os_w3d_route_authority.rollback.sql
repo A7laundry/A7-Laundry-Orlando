@@ -12,6 +12,7 @@ begin
 end;
 $$;
 
+drop function if exists public.a7_orlando_w3d_transactional_smoke(text,text,uuid);
 drop function if exists public.a7_orlando_route_command(text,uuid,jsonb,text,text,text,timestamptz);
 drop function if exists public.a7_orlando_route_eligible_stops(uuid);
 drop function if exists public.a7_orlando_list_routes(date);

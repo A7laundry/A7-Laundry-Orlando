@@ -1,6 +1,10 @@
 # A7 Orlando OS — W3-D Rotas Lite Staging E2E
 
-**Status:** BLOCKED — no approved dedicated Orlando Staging Supabase project is configured
+**Status:** SUPERSEDED — Owner replaced this gate with the controlled Production pilot on 2026-09-02
+
+The historical Staging procedure below is retained for audit only. It must not be executed and it does not authorize
+use of `zquefoznqwkfbnnfalmt`. The active release procedure is
+`docs/runbooks/A7-ORLANDO-W3D-ROUTES-PRODUCTION-PILOT-2026-09-02.md`.
 
 ## Scope
 
