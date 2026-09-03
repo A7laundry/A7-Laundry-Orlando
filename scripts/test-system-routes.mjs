@@ -128,7 +128,7 @@ test('W3-D validates route filters before storage reads', async () => {
   await assert.rejects(() => service.eligible({ route_id:'not-a-route' }, manager), /identity/);
 });
 
-test('W3-D API and UI remain private and menu-gated during development', async () => {
+test('W3-D API and UI remain private and expose the approved Owner/Manager menu', async () => {
   const fs = await import('node:fs/promises');
   const [api, html, js, css, sql] = await Promise.all([
     fs.readFile(new URL('../api/system/routes.js', import.meta.url), 'utf8'),
@@ -140,7 +140,8 @@ test('W3-D API and UI remain private and menu-gated during development', async (
   assert.match(api, /requireSession\(req, res, \['owner', 'manager'\]\)/);
   assert.match(api, /allowedOrigin\(req\)/);
   assert.match(api, /submissionFromRequest\(req\)/);
-  assert.match(html, /id="routesNav"[^>]+disabled[^>]+data-permanent-disabled/);
+  assert.match(html, /id="routesNav" class="manager-access" type="button">Rotas/);
+  assert.doesNotMatch(html, /id="routesNav"[^>]+(?:disabled|data-permanent-disabled)/);
   assert.match(js, /operation-draft/);
   assert.match(css, /@media\(max-width:700px\)/);
   assert.match(sql, /a7_orlando_operational_cycle_transition_v2/);
