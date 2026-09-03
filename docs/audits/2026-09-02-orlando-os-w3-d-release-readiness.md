@@ -1,20 +1,19 @@
 # A7 Orlando OS — W3-D Rotas Lite Release Readiness
 
 **Date:** 2026-09-02  
-**Verdict:** `PRE-GO READY` — controlled Production procedure prepared; no remote mutation authorized
-**Candidate commit/tree:** to be frozen after the Production probe hardening commit
+**Verdict:** `PRODUCTION READY` — controlled Production pilot passed; rollback not required
+**Preflight / activation:** `24a8099` / `bbae7c6`
 
 ## Authoritative state
 
-- Branch `feat/orlando-w3d-routes-lite` is clean at the candidate commit above.
-- `a7laundry.com` resolves to ready Production deployment `dpl_142ZWVsbZm9zDvBN2sqDqBQATWGq`.
-- The published `/sistema.html` does not contain the W3-D route navigation or stylesheet markers. Rotas is not live.
+- Branch `feat/orlando-w3d-routes-lite` contains the exact released activation commit `bbae7c6`.
+- `a7laundry.com` resolves to ready Production deployment `dpl_E6piJ19UEuHd3C2GLfxYQj9R6cY1`.
+- The private Owner/Manager `Rotas` area is live; unauthenticated route reads fail with HTTP 401.
 - Supabase project `wiwawtpaxnrueugppasi` is the linked Orlando Production database.
 - Project `zquefoznqwkfbnnfalmt` belongs to another system and remains forbidden.
 - The Owner explicitly replaced the dedicated Staging gate with a controlled Production pilot. No cloud test
   database will be created or reused.
-- W3-B remains Draft. It is not a W3-D runtime dependency, but the documented release order requires an explicit
-  Owner/architecture exception before W3-D can precede it.
+- W3-B remains Draft. The Owner explicitly authorized the W3-D-before-W3-B sequencing exception for this release.
 
 ## Gate evidence
 
@@ -29,10 +28,10 @@
 | RBAC/privacy | PASS (local) | Owner/Manager allowed, unauthenticated 401, Operator 403; no route secret or protected value in public logs/URLs. |
 | Desktop/exact 390 px | PASS (local) | No horizontal document overflow; next stop and stop actions are reachable. |
 | Repository gates | PASS | Lint, typecheck, all 169 OS tests, full repository suite, MOS 67/67, build and diff check pass. |
-| Controlled Production plan | PASS (prepared) | Owner-only, same-origin, submission-bound transactional probe covers canonical route actions and deletes all synthetic rows before commit. |
+| Controlled Production plan | PASS | Owner-only, same-origin, submission-bound transactional probe returned `ok=true`; all required assertions and `residue_count=0` are mandatory before that response. |
 | Production-schema replay | PASS | Exact Production schema was replayed without data locally; both W3-D migrations and the transactional probe passed with `residue_count=0`; the disposable database and dump were removed. |
-| W3-B → W3-D order | BLOCKED | W3-B is still Draft and no explicit release-order exception is recorded. |
-| Immutable remote artifact / smoke / PR / merge | PENDING | Requires final gates and a separate exact GO; no remote mutation has occurred. |
+| W3-B → W3-D order | PASS BY EXCEPTION | Owner explicitly authorized W3-D before W3-B without expanding either scope. |
+| Immutable remote artifact / smoke | PASS | Preflight `24a8099` → `dpl_5DD7TwBFH6c5jK2fkgdFnNVECZyM`; activation `bbae7c6` → `dpl_E6piJ19UEuHd3C2GLfxYQj9R6cY1`; Owner and public-boundary smokes passed. |
 
 ## Final audit — current evidence
 
@@ -40,17 +39,19 @@
 2. Driver system duplicated? **NO, canonical driver directory/assignment reused.**
 3. Pickup confirmation duplicated? **NO, canonical transition reused and concurrency probe passed.**
 4. Bell Desk/delivery duplicated? **NO, canonical W1C-B3 transition reused.**
-5. Order operable without route? **YES in code/regression tests; remote post-cutover proof pending.**
+5. Order operable without route? **YES; `/order` remained HTTP 200 and no route was required or created.**
 6. Retry idempotent? **YES, proven locally.**
-7. Mobile operable? **YES locally at exact 390 px; controlled Production read smoke pending.**
+7. Mobile operable? **YES; Production returned `innerWidth=390` and `scrollWidth=390` with the route state visible.**
 8. Owner authorized? **YES, server-side.**
 9. Manager authorized? **YES, server-side.**
 10. Unauthorized user blocked? **YES, 401/403 proven.**
 11. History contains actor/timestamp? **YES, database audit rows; UI shows role/time.**
-12. Regression in prior flows? **None in the full local suite; remote post-cutover smoke pending.**
+12. Regression in prior flows? **None found; `/order` and `/sistema` returned 200 and no external adapter was invoked.**
 
-## Required decision before any mutation
+## Release outcome
 
-The environment decision is complete: controlled Production replaces Staging. The remaining sequencing decision is
-an explicit Owner exception allowing W3-D before Draft W3-B. After the final repository gates and immutable artifact
-are recorded, the exact migration list, probe, deployment and rollback target require a separate GO.
+The exact Owner GO authorized the Production-only pilot, the W3-D-before-W3-B exception, migrations
+`20260902018000` and `20260902018001`, preflight `24a8099`, activation `bbae7c6` and rollback
+`dpl_142ZWVsbZm9zDvBN2sqDqBQATWGq`. The remote ledger, authenticated transactional probe, private UI, 390 px layout
+and public authorization boundary passed. No real order, charge, refund, message, Stripe or advertising mutation was
+performed; rollback was not required.

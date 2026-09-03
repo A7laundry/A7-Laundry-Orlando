@@ -1,6 +1,6 @@
 # Story A7-031 — A7 Orlando OS W3-D Manual Routes
 
-**Status:** In Progress — W3-D.0–D.6 and controlled-Production probe implemented; final GO and cutover pending
+**Status:** Completed — W3-D.0–D.6 released through the Owner-approved controlled Production pilot
 
 **Created:** 2026-08-31
 
@@ -144,40 +144,40 @@ directly. A failed order transition leaves the route stop unchanged and visibly 
 
 ## Acceptance criteria
 
-- [ ] The approved initial driver list is the only source of selectable drivers; inactive/unknown drivers cannot
+- [x] The approved initial driver list is the only source of selectable drivers; inactive/unknown drivers cannot
       receive a route and past route evidence is preserved.
-- [ ] The approved role matrix is enforced server-side for route creation, assignment, stop changes, reordering,
+- [x] The approved role matrix is enforced server-side for route creation, assignment, stop changes, reordering,
       departure and outcomes; unauthenticated returns 401 and unauthorized returns 403.
-- [ ] One eligible real non-QA pickup or delivery leg can be assigned once; QA, cancelled, already completed,
+- [x] One eligible real non-QA pickup or delivery leg can be assigned once; QA, cancelled, already completed,
       incompatible and already-routed legs fail closed without mutation.
-- [ ] A route shows one approved driver and a deterministic list of pending/completed stops using safe human order
+- [x] A route shows one approved driver and a deterministic list of pending/completed stops using safe human order
       references rather than UUIDs.
-- [ ] Manual reorder persists the exact submitted pending-stop order and one append-only before/after record.
-- [ ] Missing, duplicate, completed, foreign or stale stop references and simultaneous conflicting reorders are
+- [x] Manual reorder persists the exact submitted pending-stop order and one append-only before/after record.
+- [x] Missing, duplicate, completed, foreign or stale stop references and simultaneous conflicting reorders are
       rejected; exact retry returns the original result without another audit row.
-- [ ] Marking route departure records the server time and actor but does not change any order state or infer a stop
+- [x] Marking route departure records the server time and actor but does not change any order state or infer a stop
       outcome.
-- [ ] A pickup stop advances only after the accepted W1B pickup/custody transition succeeds exactly once.
-- [ ] A delivery stop cannot start unless W1C-B3 accepts the order as paid, production-ready, lifecycle-ready and in
+- [x] A pickup stop advances only after the accepted W1B pickup/custody transition succeeds exactly once.
+- [x] A delivery stop cannot start unless W1C-B3 accepts the order as paid, production-ready, lifecycle-ready and in
       the correct custody state.
-- [ ] Direct delivery and Bell Desk outcomes use the same server-owned W1C-B3 `delivery_job_id`; route retries or
+- [x] Direct delivery and Bell Desk outcomes use the same server-owned W1C-B3 `delivery_job_id`; route retries or
       concurrency produce no second delivery job or `order_delivered` event.
-- [ ] Bell Desk follows the approved live rule. When it is intermediate, the route does not mark the order delivered
+- [x] Bell Desk follows the approved live rule. When it is intermediate, the route does not mark the order delivered
       or emit `order_delivered` before authorized final confirmation.
-- [ ] A missing ETA is displayed as unavailable, not zero or “on time”; a human ETA and correction are audited and do
+- [x] A missing ETA is displayed as unavailable, not zero or “on time”; a human ETA and correction are audited and do
       not change W1B `promised_by` or SLA.
-- [ ] A failed route or order transition leaves both projections mutually truthful: no completed route stop without
+- [x] A failed route or order transition leaves both projections mutually truthful: no completed route stop without
       its required authoritative order event and no route-owned direct custody write.
-- [ ] Route completion cannot infer pickup, delivery, Bell Desk confirmation, customer receipt or financial state.
-- [ ] Customer/driver PII, exact address/room, technical IDs, idempotency values and secrets remain absent from URL,
+- [x] Route completion cannot infer pickup, delivery, Bell Desk confirmation, customer receipt or financial state.
+- [x] Customer/driver PII, exact address/room, technical IDs, idempotency values and secrets remain absent from URL,
       analytics, logs, errors, static bundles and public responses.
-- [ ] `Rotas` is keyboard-usable and passes desktop and exact 390 px QA for empty, planned, departed, partially
+- [x] `Rotas` is keyboard-usable and passes desktop and exact 390 px QA for empty, planned, departed, partially
       completed, Bell Desk, completed, blocked and unavailable states without horizontal document overflow.
-- [ ] Focused service/API/UI tests, isolated PostgreSQL fixtures, delayed retry, concurrency, authorization, privacy
+- [x] Focused service/API/UI tests, isolated PostgreSQL fixtures, delayed retry, concurrency, authorization, privacy
       scan, lint, typecheck, full tests, build and existing Orlando OS regressions pass.
-- [ ] `/order`, W1B, W1C-A/B1/B2/B3, Stripe/webhook, attribution, GA4, Google Ads, WhatsApp and customer facts remain
+- [x] `/order`, W1B, W1C-A/B1/B2/B3, Stripe/webhook, attribution, GA4, Google Ads, WhatsApp and customer facts remain
       unchanged except for the already-authorized W1B/W1C-B3 operational transitions invoked by a stop action.
-- [ ] Exact-artifact Owner smoke uses clearly marked synthetic route data, invokes no financial/message action and
+- [x] Exact-artifact Owner smoke uses clearly marked synthetic route data, invokes no financial/message action and
       proves zero removable test residue without deleting append-only real operational history.
 
 ## Minimum Owner experience
@@ -215,7 +215,7 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
 - [x] Add the minimum `Rotas` UI (AC: 4, 12, 16)
   - [x] Show one driver, manual sequence, stop state, optional ETA and one valid next action.
   - [x] Support keyboard, 390 px and desktop without maps, graphs or secondary dashboards.
-- [ ] Prove release safety (AC: all)
+- [x] Prove release safety (AC: all)
   - [x] Add focused memory/service/API tests and isolated PostgreSQL fixtures for pickup, direct delivery and the
         approved Bell Desk flow.
   - [x] Exercise duplicate assignment, delayed retry, conflicting reorder and stale-version controls locally.
@@ -226,7 +226,7 @@ hard-coded people, a map, automatic ETA or customer-facing tracking.
         desktop/exact-390-px visual QA.
   - [x] Replace the Staging-only rehearsal with the Owner-approved controlled Production plan; prove its
         Owner-only transactional smoke against a no-data replay of the exact Production schema with zero residue.
-  - [ ] Prepare an isolated immutable artifact, authenticated Owner smoke and separately authorized Production GO.
+  - [x] Prepare an isolated immutable artifact, authenticated Owner smoke and separately authorized Production GO.
 
 ## Dependencies and release gates
 
@@ -374,8 +374,18 @@ destructive rollback. No CRITICAL finding may remain open before release.
   all passed with `residue_count=0`. The disposable local database and temporary dump were removed immediately.
 - Read-only account inventory reconfirmed that `wiwawtpaxnrueugppasi` is the linked A7 Orlando Production project
   and `zquefoznqwkfbnnfalmt` is the pre-existing Staging project for another system. It was not relinked or mutated.
-- Read-only Vercel inspection reconfirmed `a7laundry.com` on ready Production deployment
-  `dpl_142ZWVsbZm9zDvBN2sqDqBQATWGq`; a public HTML check found no W3-D route markers, and no W3-D deployment or
-  alias mutation occurred.
-- Both migrations remain local-only and have not been applied to any remote database. Production and its disabled
-  `Rotas` menu remain unchanged.
+- The Owner explicitly authorized W3-D before W3-B, the exact Production project, migrations, preflight/activation
+  commits and rollback deployment. Only `20260902018000` and `20260902018001` were applied to
+  `wiwawtpaxnrueugppasi`; both versions, the route table and the protected smoke function were verified remotely.
+- Preflight commit `24a8099` was published as `dpl_5DD7TwBFH6c5jK2fkgdFnNVECZyM`; `Rotas` remained disabled. The
+  authenticated Owner probe returned `ok=true`. The service can emit that response only when create/pickup retry,
+  route completion, one pickup event, direct delivery, Bell Desk intermediate handoff, exception preservation,
+  requeue and `residue_count=0` all pass.
+- Activation commit `bbae7c6` was published as ready Production deployment
+  `dpl_E6piJ19UEuHd3C2GLfxYQj9R6cY1` and owns `a7laundry.com`. Authenticated Owner smoke opened
+  `/sistema/routes`, loaded the truthful empty state and new-route form without client errors, survived reload and
+  passed exact 390 px with `innerWidth=390` and `scrollWidth=390`.
+- Post-cutover checks: `/order` and `/sistema` returned HTTP 200; `/api/system/routes` and `/api/system/w3d-smoke`
+  returned HTTP 401 without a session; focused W3-D service/API/UI tests passed 18/18 including Operator 403.
+  No route, payment, message or real-order mutation was executed. Rollback deployment
+  `dpl_142ZWVsbZm9zDvBN2sqDqBQATWGq` remains recorded and was not required.
