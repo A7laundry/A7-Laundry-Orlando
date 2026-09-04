@@ -8,6 +8,8 @@ const DEFAULT_API_VERSION = 'v25';
 const DEFAULT_ACCOUNT_TIME_ZONE = 'America/Sao_Paulo';
 const DEFAULT_RETRY_ATTEMPTS = 3;
 const DEFAULT_RETRY_DELAY_MS = 250;
+const DEFAULT_REQUEST_TIMEOUT_MS = 6_000;
+const DEFAULT_COLLECTION_TIMEOUT_MS = 14_000;
 const RETRYABLE_HTTP_STATUS = new Set([429, 500, 502, 503, 504]);
 
 function digits(value) {
@@ -257,6 +259,8 @@ async function requestRows(authClient, config, query, retryOptions = {}) {
   const attempts = Math.max(1, Number(retryOptions.attempts) || DEFAULT_RETRY_ATTEMPTS);
   const requestedDelay = Number(retryOptions.delayMs);
   const delayMs = Math.max(0, Number.isFinite(requestedDelay) ? requestedDelay : DEFAULT_RETRY_DELAY_MS);
+  const requestedTimeout = Number(retryOptions.requestTimeoutMs);
+  const timeout = Math.max(1, Number.isFinite(requestedTimeout) ? requestedTimeout : DEFAULT_REQUEST_TIMEOUT_MS);
   const requestWithRetry = async (url, data) => {
     let lastError;
     for (let attempt = 0; attempt < attempts; attempt += 1) {
@@ -265,7 +269,8 @@ async function requestRows(authClient, config, query, retryOptions = {}) {
           url,
           method: 'POST',
           headers,
-          data
+          data,
+          timeout
         });
       } catch (error) {
         lastError = error;
@@ -529,23 +534,49 @@ function normalizeConversions(rows) {
 }
 
 export async function collectGoogleAdsKpis(authClient, config, options = {}) {
+  const requestedCollectionTimeout = Number(options.collectionTimeoutMs);
+  const collectionTimeoutMs = Math.max(
+    1,
+    Number.isFinite(requestedCollectionTimeout)
+      ? requestedCollectionTimeout
+      : DEFAULT_COLLECTION_TIMEOUT_MS
+  );
+  let timeoutId;
+  const collection = collectGoogleAdsKpisWithinDeadline(authClient, config, options);
+  const deadline = new Promise((resolve) => {
+    timeoutId = setTimeout(() => resolve({
+      status: 'unavailable',
+      source: 'Google Ads API',
+      customerId: config.customerId,
+      requestedPeriod: options.period || requestedPaidMediaPeriod(options.now || new Date(), config.accountTimeZone),
+      fetchedAt: (options.now || new Date()).toISOString(),
+      errors: [{
+        report: 'collection',
+        code: 'UPSTREAM_TIMEOUT',
+        message: 'A coleta nativa do Google Ads excedeu o limite seguro e foi isolada das demais fontes.'
+      }]
+    }), collectionTimeoutMs);
+  });
+  try {
+    return await Promise.race([collection, deadline]);
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function collectGoogleAdsKpisWithinDeadline(authClient, config, options = {}) {
   const now = options.now || new Date();
   const period = options.period || requestedPaidMediaPeriod(now, config.accountTimeZone);
   const fetchedAt = now.toISOString();
   const queries = campaignQuery(period);
   const names = Object.keys(queries);
-  const settled = [];
-  for (const name of names) {
-    try {
-      const value = await requestRows(authClient, config, queries[name], {
+  const settled = await Promise.allSettled(names.map((name) => (
+    requestRows(authClient, config, queries[name], {
         attempts: options.retryAttempts,
-        delayMs: options.retryDelayMs
-      });
-      settled.push({ status: 'fulfilled', value });
-    } catch (reason) {
-      settled.push({ status: 'rejected', reason });
-    }
-  }
+        delayMs: options.retryDelayMs,
+        requestTimeoutMs: options.requestTimeoutMs
+      })
+  )));
   const reports = {};
   const errors = [];
   settled.forEach((result, index) => {

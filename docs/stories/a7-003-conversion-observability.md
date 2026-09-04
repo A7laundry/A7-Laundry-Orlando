@@ -996,3 +996,18 @@ Make the production conversion funnel observable from acquisition CTA through St
   remain live. Final native validation is still open: the Google Ads API Center requires owner
   reauthentication to compare the encrypted Vercel token, and Google Cloud access for the owning
   `a7laundry.usa@gmail.com` account is blocked until that account completes Google's mandatory 2SV.
+- Sep 4 follow-up completed mandatory 2SV for `a7laundry.usa@gmail.com` and restored authenticated
+  access to Google Cloud project `a7-laundry-mos`. The project now visibly reports the Google Ads
+  API as `Ativado`. The remaining release gate is narrower: Google Ads still requires an
+  unphishable owner reauthentication in the browser before the current developer token can be
+  compared with the encrypted Production value; an automated passkey attempt was rejected and no
+  token, campaign, budget, conversion or billing setting was changed.
+- Sep 4 v23 verification reproduced the same Google-owned `HTTP 500 / INTERNAL` result and exposed
+  a separate MOS availability defect: the seven native Ads reports were executed serially, so a
+  slow upstream failure could exhaust the protected route and hide otherwise healthy GA4, Search
+  Console and Meta results. The collector now runs read-only reports concurrently, bounds each
+  request and fails open after a safe collection deadline; Ads remains explicitly unavailable
+  without manufacturing zero while the other sources complete independently. Focused tests cover
+  a permanently stalled Ads client, and the repository gates pass with lint, typecheck, 169 system
+  tests, 95 root tests, 71 MOS tests and both MOS/repository builds. No campaign, budget,
+  conversion, billing or public-site setting changed.

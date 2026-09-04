@@ -69,7 +69,6 @@ export async function GET(request) {
   }
 
   try {
-    const googleAdsConfig = readGoogleAdsKpiConfig();
     const oidcToken = await getVercelOidcToken({
       team: 'dennis-a7s-projects',
       project: 'a7-laundry-mos',
@@ -77,7 +76,33 @@ export async function GET(request) {
     });
     const authClient = ExternalAccountClient.fromJSON(externalAccountOptions(config, oidcToken));
     if (!authClient) throw new Error('External account client unavailable');
-    const result = await collectGoogleKpis(authClient, config);
+    const googleAdsConfig = readGoogleAdsKpiConfig();
+    const metaConfig = readMetaKpiConfig();
+    const periods = {
+      googleAds: googleAdsConfig.ok
+        ? requestedPaidMediaPeriod(new Date(), googleAdsConfig.accountTimeZone)
+        : null,
+      metaAds: requestedPaidMediaPeriod(new Date(), 'America/Los_Angeles')
+    };
+    const googleAdsPromise = googleAdsConfig.ok
+      ? (() => {
+          const googleAdsAuthClient = ExternalAccountClient.fromJSON(externalAccountOptions(config, oidcToken, {
+            googleAdsOnly: true
+          }));
+          if (!googleAdsAuthClient) throw new Error('Google Ads external account client unavailable');
+          return collectGoogleAdsKpis(googleAdsAuthClient, googleAdsConfig, {
+            period: periods.googleAds
+          });
+        })()
+      : Promise.resolve(null);
+    const metaPromise = metaConfig.ok
+      ? collectMetaKpis(fetch, metaConfig, periods.metaAds)
+      : Promise.resolve(null);
+    const [result, nativeGoogleAds, meta] = await Promise.all([
+      collectGoogleKpis(authClient, config),
+      googleAdsPromise,
+      metaPromise
+    ]);
     result.growthRegistry = growthRegistry;
     if (observedFunnelDefinitions.length) {
       result.funnels = buildFunnelCatalog(
@@ -95,20 +120,10 @@ export async function GET(request) {
     result.periods = {
       googleOrganic: result.requestedPeriod,
       ga4CurrentDay: result.sources.ga4?.currentDay?.requestedPeriod || null,
-      googleAds: googleAdsConfig.ok
-        ? requestedPaidMediaPeriod(new Date(), googleAdsConfig.accountTimeZone)
-        : null,
-      metaAds: requestedPaidMediaPeriod(new Date(), 'America/Los_Angeles')
+      ...periods
     };
     if (googleAdsConfig.ok) {
-      const googleAdsAuthClient = ExternalAccountClient.fromJSON(externalAccountOptions(config, oidcToken, {
-        googleAdsOnly: true
-      }));
-      if (!googleAdsAuthClient) throw new Error('Google Ads external account client unavailable');
       const linkedFallback = result.sources.googleAds;
-      const nativeGoogleAds = await collectGoogleAdsKpis(googleAdsAuthClient, googleAdsConfig, {
-        period: result.periods.googleAds
-      });
       result.sources.googleAds = {
         ...nativeGoogleAds,
         linkedGa4Fallback: linkedFallback
@@ -126,9 +141,7 @@ export async function GET(request) {
       };
       result.funnels = attachGoogleAdsToFunnels(result.funnels, null);
     }
-    const metaConfig = readMetaKpiConfig();
     if (metaConfig.ok) {
-      const meta = await collectMetaKpis(fetch, metaConfig, result.periods.metaAds);
       result.sources.metaAds = meta;
       if (meta.graph) {
         const existingNodeIds = new Set(result.marketingGraph.nodes.map((node) => node.id));

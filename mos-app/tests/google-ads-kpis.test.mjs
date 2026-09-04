@@ -340,3 +340,23 @@ test('native Google Ads reports a safe accessible-customer probe when all report
     fields: ['query']
   }]);
 });
+
+test('a stalled native Google Ads collector fails open before blocking the dashboard', async () => {
+  const authClient = {
+    async request() {
+      return new Promise(() => {});
+    }
+  };
+
+  const startedAt = Date.now();
+  const result = await collectGoogleAdsKpis(authClient, config, {
+    now: new Date('2026-07-29T01:30:00.000Z'),
+    collectionTimeoutMs: 20,
+    requestTimeoutMs: 10
+  });
+
+  assert.equal(result.status, 'unavailable');
+  assert.equal(result.errors[0].code, 'UPSTREAM_TIMEOUT');
+  assert.equal('summary' in result, false);
+  assert.ok(Date.now() - startedAt < 500);
+});
