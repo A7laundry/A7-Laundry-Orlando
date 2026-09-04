@@ -986,3 +986,13 @@ Make the production conversion funnel observable from acquisition CTA through St
   and an unsigned synthetic POST was rejected with 400. No signed financial event, payment,
   refund, order mutation, Google Ads change or additional deployment was executed during
   activation; Production remains deployment `dpl_C5S8sFqPnNd9hA7NMGmDR4ys7doa`.
+- Sep 4 native Google Ads revalidation restored the missing Production
+  `GOOGLE_ADS_LOGIN_CUSTOMER_ID=6216541066`, added bounded `SearchStream` → paginated `Search`
+  fallback, separated the Ads OAuth exchange into a dedicated `adwords`-only temporary token and
+  exposed only sanitized API diagnostics. Both v25 and the still-supported v24 returned the same
+  Google-owned `HTTP 500 / INTERNAL` response, including for `listAccessibleCustomers`; request IDs
+  were captured without exposing the developer token. The service account remains `Somente leitura`
+  on both manager `621-654-1066` and advertiser `290-113-2891`, while GA4, Search Console and Meta
+  remain live. Final native validation is still open: the Google Ads API Center requires owner
+  reauthentication to compare the encrypted Vercel token, and Google Cloud access for the owning
+  `a7laundry.usa@gmail.com` account is blocked until that account completes Google's mandatory 2SV.

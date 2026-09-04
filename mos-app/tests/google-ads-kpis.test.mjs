@@ -252,3 +252,91 @@ test('native Google Ads retries transient internal errors before accepting a rep
   assert.equal(result.status, 'live');
   assert.equal(requests, 8);
 });
+
+test('native Google Ads falls back to paginated Search when SearchStream stays unavailable', async () => {
+  const requests = [];
+  const authClient = {
+    async request(request) {
+      requests.push(request);
+      if (request.url.endsWith('/googleAds:searchStream')) {
+        throw Object.assign(new Error('stream temporarily unavailable'), {
+          response: { status: 500, data: { error: { status: 'INTERNAL' } } }
+        });
+      }
+      assert.ok(request.url.endsWith('/googleAds:search'));
+      if (request.data.query.includes('FROM customer')) {
+        return { data: { results: [{ customer: {
+          id: '2901132891',
+          descriptiveName: 'A7 Laundry',
+          currencyCode: 'BRL',
+          timeZone: 'America/Sao_Paulo',
+          status: 'ENABLED',
+          manager: false,
+          testAccount: false
+        } }] } };
+      }
+      return { data: { results: [] } };
+    }
+  };
+
+  const result = await collectGoogleAdsKpis(authClient, config, {
+    now: new Date('2026-07-29T01:30:00.000Z'),
+    retryAttempts: 1
+  });
+
+  assert.equal(result.status, 'live');
+  assert.equal(result.account.id, '2901132891');
+  assert.ok(requests.some((request) => request.url.endsWith('/googleAds:searchStream')));
+  assert.ok(requests.some((request) => request.url.endsWith('/googleAds:search')));
+  assert.ok(requests.every((request) => /^\s*SELECT\b/i.test(request.data.query)));
+  assert.ok(requests.every((request) => !/\bMUTATE\b|:\s*mutate\b/i.test(request.data.query)));
+});
+
+test('native Google Ads reports a safe accessible-customer probe when all reports fail', async () => {
+  const authClient = {
+    async request(request) {
+      if (request.url.endsWith('/customers:listAccessibleCustomers')) {
+        return { data: { resourceNames: ['customers/2901132891'] } };
+      }
+      throw Object.assign(new Error('internal'), {
+        response: {
+          status: 500,
+          data: { error: {
+            status: 'INTERNAL',
+            message: 'Internal error encountered.',
+            details: [{
+              '@type': 'type.googleapis.com/google.rpc.DebugInfo',
+              detail: 'backend trace for owner@example.com with abcdefghijklmnopqrstuvwxyz123456'
+            }, {
+              '@type': 'type.googleapis.com/google.ads.googleads.v25.errors.GoogleAdsFailure',
+              errors: [{
+                errorCode: { internalError: 'INTERNAL_ERROR' },
+                message: 'request failed safely',
+                location: { fieldPathElements: [{ fieldName: 'query' }] }
+              }]
+            }]
+          } },
+          headers: { 'request-id': 'safe-request-id' }
+        }
+      });
+    }
+  };
+
+  const result = await collectGoogleAdsKpis(authClient, config, {
+    now: new Date('2026-07-29T01:30:00.000Z'),
+    retryAttempts: 1
+  });
+
+  assert.equal(result.status, 'unavailable');
+  assert.deepEqual(result.accessProbe, {
+    status: 'pass',
+    targetCustomerAccessible: true,
+    accessibleCustomerCount: 1
+  });
+  assert.equal(result.errors[0].diagnostic.requestId, 'safe-request-id');
+  assert.equal(result.errors[0].diagnostic.apiMessage, 'Internal error encountered.');
+  assert.deepEqual(result.errors[0].diagnostic.googleAdsErrors, [{
+    codes: ['internalError:INTERNAL_ERROR'],
+    fields: ['query']
+  }]);
+});

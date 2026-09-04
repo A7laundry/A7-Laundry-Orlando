@@ -75,9 +75,7 @@ export async function GET(request) {
       project: 'a7-laundry-mos',
       expirationBufferMs: 60_000
     });
-    const authClient = ExternalAccountClient.fromJSON(externalAccountOptions(config, oidcToken, {
-      includeGoogleAds: googleAdsConfig.ok
-    }));
+    const authClient = ExternalAccountClient.fromJSON(externalAccountOptions(config, oidcToken));
     if (!authClient) throw new Error('External account client unavailable');
     const result = await collectGoogleKpis(authClient, config);
     result.growthRegistry = growthRegistry;
@@ -103,8 +101,12 @@ export async function GET(request) {
       metaAds: requestedPaidMediaPeriod(new Date(), 'America/Los_Angeles')
     };
     if (googleAdsConfig.ok) {
+      const googleAdsAuthClient = ExternalAccountClient.fromJSON(externalAccountOptions(config, oidcToken, {
+        googleAdsOnly: true
+      }));
+      if (!googleAdsAuthClient) throw new Error('Google Ads external account client unavailable');
       const linkedFallback = result.sources.googleAds;
-      const nativeGoogleAds = await collectGoogleAdsKpis(authClient, googleAdsConfig, {
+      const nativeGoogleAds = await collectGoogleAdsKpis(googleAdsAuthClient, googleAdsConfig, {
         period: result.periods.googleAds
       });
       result.sources.googleAds = {

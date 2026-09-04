@@ -154,11 +154,15 @@ export function requestedGa4CurrentDay(now = new Date()) {
 }
 
 export function externalAccountOptions(config, subjectToken, options = {}) {
-  const scopes = [
-    'https://www.googleapis.com/auth/analytics.readonly',
-    'https://www.googleapis.com/auth/webmasters.readonly'
-  ];
-  if (options.includeGoogleAds) scopes.push('https://www.googleapis.com/auth/adwords');
+  const scopes = options.googleAdsOnly
+    ? ['https://www.googleapis.com/auth/adwords']
+    : [
+        'https://www.googleapis.com/auth/analytics.readonly',
+        'https://www.googleapis.com/auth/webmasters.readonly'
+      ];
+  if (options.includeGoogleAds && !options.googleAdsOnly) {
+    scopes.push('https://www.googleapis.com/auth/adwords');
+  }
   return {
     type: 'external_account',
     audience: `//iam.googleapis.com/projects/${config.projectNumber}/locations/global/workloadIdentityPools/${config.poolId}/providers/${config.providerId}`,

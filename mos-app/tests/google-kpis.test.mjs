@@ -93,6 +93,12 @@ test('Google Ads scope is added only when the native server credential is comple
   ]);
 });
 
+test('Google Ads can use a dedicated least-privilege temporary credential', () => {
+  const options = externalAccountOptions(config, 'oidc-token', { googleAdsOnly: true });
+
+  assert.deepEqual(options.scopes, ['https://www.googleapis.com/auth/adwords']);
+});
+
 test('live contract preserves source, period, freshness and numeric zero returned by APIs', async () => {
   const authClient = {
     async request(request) {

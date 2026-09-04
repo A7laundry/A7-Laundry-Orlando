@@ -124,6 +124,14 @@ function configuredAndDeliveryStatus(configuredStatus, primaryStatus, today) {
   return 'enabled_no_delivery_today';
 }
 
+function safeDiagnosticText(value) {
+  if (typeof value !== 'string') return null;
+  return value
+    .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, '[redacted-email]')
+    .replace(/\b[A-Za-z0-9_-]{32,}\b/g, '[redacted-token]')
+    .slice(0, 360);
+}
+
 function googleAdsError(report, error) {
   const status = error?.response?.status || error?.status || null;
   const apiError = error?.response?.data?.error || null;
@@ -135,7 +143,27 @@ function googleAdsError(report, error) {
   const diagnostic = {
     httpStatus: status,
     apiStatus: typeof apiError?.status === 'string' ? apiError.status : null,
-    googleAdsCode: enumEntry ? `${enumEntry[0]}:${enumEntry[1]}` : null
+    googleAdsCode: enumEntry ? `${enumEntry[0]}:${enumEntry[1]}` : null,
+    requestId: String(
+      error?.response?.headers?.['request-id']
+      || error?.response?.headers?.get?.('request-id')
+      || googleAdsFailure?.requestId
+      || ''
+    ).trim() || null,
+    apiMessage: typeof apiError?.message === 'string'
+      ? apiError.message.slice(0, 240)
+      : null,
+    apiDetails: Array.isArray(apiError?.details)
+      ? apiError.details.slice(0, 4).map((detail) => ({
+          type: String(detail?.['@type'] || '').split('/').pop() || null,
+          reason: safeDiagnosticText(detail?.reason),
+          detail: safeDiagnosticText(detail?.detail || detail?.message)
+        }))
+      : [],
+    googleAdsErrors: (googleAdsFailure?.errors || []).slice(0, 3).map((item) => ({
+      codes: Object.entries(item?.errorCode || {}).map(([key, value]) => `${key}:${String(value)}`),
+      fields: (item?.location?.fieldPathElements || []).map((field) => String(field?.fieldName || '')).filter(Boolean)
+    }))
   };
   const diagnosticText = [
     diagnostic.httpStatus ? `HTTP ${diagnostic.httpStatus}` : null,
@@ -150,6 +178,33 @@ function googleAdsError(report, error) {
       : `A Google Ads API não respondeu com dados válidos${diagnosticText ? ` (${diagnosticText})` : ''}.`,
     diagnostic
   };
+}
+
+async function probeAccessibleCustomers(authClient, config) {
+  try {
+    const response = await authClient.request({
+      url: `https://googleads.googleapis.com/${encodeURIComponent(config.apiVersion)}/customers:listAccessibleCustomers`,
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'developer-token': config.developerToken
+      }
+    });
+    const customerIds = (response.data?.resourceNames || [])
+      .map((resourceName) => digits(resourceName))
+      .filter(Boolean);
+    return {
+      status: customerIds.includes(config.customerId) ? 'pass' : 'target_not_listed',
+      targetCustomerAccessible: customerIds.includes(config.customerId),
+      accessibleCustomerCount: customerIds.length
+    };
+  } catch (error) {
+    return {
+      status: 'failed',
+      targetCustomerAccessible: false,
+      error: googleAdsError('accessibleCustomers', error)
+    };
+  }
 }
 
 export function readGoogleAdsKpiConfig(environment = process.env) {
@@ -190,7 +245,9 @@ async function requestRows(authClient, config, query, retryOptions = {}) {
   if (!/^\s*SELECT\b/i.test(query) || /\bMUTATE\b|:\s*mutate\b/i.test(query)) {
     throw new Error('Google Ads integration accepts read-only GAQL SELECT queries only.');
   }
-  const url = `https://googleads.googleapis.com/${encodeURIComponent(config.apiVersion)}/customers/${encodeURIComponent(config.customerId)}/googleAds:searchStream`;
+  const baseUrl = `https://googleads.googleapis.com/${encodeURIComponent(config.apiVersion)}/customers/${encodeURIComponent(config.customerId)}/googleAds`;
+  const streamUrl = `${baseUrl}:searchStream`;
+  const searchUrl = `${baseUrl}:search`;
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -200,28 +257,54 @@ async function requestRows(authClient, config, query, retryOptions = {}) {
   const attempts = Math.max(1, Number(retryOptions.attempts) || DEFAULT_RETRY_ATTEMPTS);
   const requestedDelay = Number(retryOptions.delayMs);
   const delayMs = Math.max(0, Number.isFinite(requestedDelay) ? requestedDelay : DEFAULT_RETRY_DELAY_MS);
-  let lastError;
-  for (let attempt = 0; attempt < attempts; attempt += 1) {
+  const requestWithRetry = async (url, data) => {
+    let lastError;
+    for (let attempt = 0; attempt < attempts; attempt += 1) {
+      try {
+        return await authClient.request({
+          url,
+          method: 'POST',
+          headers,
+          data
+        });
+      } catch (error) {
+        lastError = error;
+        const status = error?.response?.status || error?.status || null;
+        if (!RETRYABLE_HTTP_STATUS.has(status) || attempt === attempts - 1) throw error;
+        await wait(delayMs * (3 ** attempt));
+      }
+    }
+    throw lastError;
+  };
+
+  try {
+    const response = await requestWithRetry(streamUrl, { query });
+    const chunks = Array.isArray(response.data) ? response.data : [response.data || {}];
+    return {
+      rows: chunks.flatMap((chunk) => chunk?.results || []),
+      truncated: false,
+      transport: 'searchStream'
+    };
+  } catch (streamError) {
+    const status = streamError?.response?.status || streamError?.status || null;
+    if (!RETRYABLE_HTTP_STATUS.has(status)) throw streamError;
+  }
+
+  const rows = [];
+  let pageToken = null;
+  const maxPages = 100;
+  for (let page = 0; page < maxPages; page += 1) {
+    const data = pageToken ? { query, pageToken } : { query };
     try {
-      const response = await authClient.request({
-        url,
-        method: 'POST',
-        headers,
-        data: { query }
-      });
-      const chunks = Array.isArray(response.data) ? response.data : [response.data || {}];
-      return {
-        rows: chunks.flatMap((chunk) => chunk?.results || []),
-        truncated: false
-      };
-    } catch (error) {
-      lastError = error;
-      const status = error?.response?.status || error?.status || null;
-      if (!RETRYABLE_HTTP_STATUS.has(status) || attempt === attempts - 1) throw error;
-      await wait(delayMs * (3 ** attempt));
+      const response = await requestWithRetry(searchUrl, data);
+      rows.push(...(response.data?.results || []));
+      pageToken = response.data?.nextPageToken || null;
+      if (!pageToken) return { rows, truncated: false, transport: 'search' };
+    } catch (searchError) {
+      throw searchError;
     }
   }
-  throw lastError;
+  return { rows, truncated: Boolean(pageToken), transport: 'search' };
 }
 
 function campaignQuery(period) {
@@ -475,12 +558,14 @@ export async function collectGoogleAdsKpis(authClient, config, options = {}) {
   });
   const successful = settled.filter((result) => result.status === 'fulfilled').length;
   if (successful === 0) {
+    const accessProbe = await probeAccessibleCustomers(authClient, config);
     return {
       status: 'unavailable',
       source: 'Google Ads API',
       customerId: config.customerId,
       requestedPeriod: period,
       fetchedAt,
+      accessProbe,
       errors
     };
   }
