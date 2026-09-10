@@ -411,3 +411,12 @@ Ver **`ADS-SEO-DEEPDIVE-2026-09-10.md`** no mesmo diretório:
 - Google Ads Transparency = **0**
 - Cluster SEO / ZIPs doorway / duplicate `comforterwash.com`
 - Scorecard de forças e fragilidades **sem viés**
+
+## 12. Engenharia reversa A7 × WashFold
+
+Ver **`REVERSE-ENGINEERING-A7-x-WASHFOLD-2026-09-10.md`** (cruzamento com o Manual de Crescimento A7 09/set):
+
+- Scorecard atualizado
+- O que adaptar / superar / ignorar
+- Três motores vs fraquezas WashFold
+- Roadmap 90 dias com gatilho competitivo
