@@ -400,3 +400,14 @@ Quando chegar o pacote A7, montar matriz lado a lado:
 6. Onde A7 **preenche** as 10 brechas da §7 sem diluir premium  
 
 Arquivo pronto para receber a coluna A7 na próxima iteração.
+
+---
+
+## 11. Complemento 10/set — Ads + SEO deep dive
+
+Ver **`ADS-SEO-DEEPDIVE-2026-09-10.md`** no mesmo diretório:
+
+- Meta Ad Library revalidada (2 ativos confirmados vs ~6 no dossiê 09/set)
+- Google Ads Transparency = **0**
+- Cluster SEO / ZIPs doorway / duplicate `comforterwash.com`
+- Scorecard de forças e fragilidades **sem viés**
