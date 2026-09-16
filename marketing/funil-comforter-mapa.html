@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Funil Comforter — Money Model · A7 Laundry (interno)</title>
+<style>
+  :root{
+    --bg:#0a0e17; --panel:#111827; --panel2:#161f31; --line:#1f2b3f;
+    --ink:#e8edf5; --dim:#8b9ab1; --faint:#5a6a83;
+    --blue:#3b82f6; --blue-d:#1d4ed8; --blue-soft:rgba(59,130,246,.12);
+    --red:#f04a5e; --red-soft:rgba(240,74,94,.12);
+    --green:#25c07f; --green-soft:rgba(37,192,127,.12);
+    --amber:#f0a63a; --amber-soft:rgba(240,166,58,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+    padding:48px 24px 80px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:30px;letter-spacing:-.02em;font-weight:700;margin-bottom:6px}
+  .sub{color:var(--dim);font-size:14px;margin-bottom:8px}
+  .stamp{color:var(--faint);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  section{margin-top:52px}
+  h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);
+     font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  h2::after{content:"";flex:1;height:1px;background:var(--line)}
+  h3{font-size:16px;font-weight:650;margin-bottom:4px}
+  .note{color:var(--dim);font-size:13px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+
+  /* veredito */
+  .verdict{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .v{border-radius:14px;padding:22px;border:1px solid var(--line);background:var(--panel)}
+  .v.bad{border-color:rgba(240,74,94,.35);background:linear-gradient(180deg,var(--red-soft),transparent 70%)}
+  .v.good{border-color:rgba(37,192,127,.35);background:linear-gradient(180deg,var(--green-soft),transparent 70%)}
+  .v .lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+  .v .big{font-size:34px;font-weight:750;letter-spacing:-.03em;line-height:1.1}
+  .v.bad .big{color:var(--red)} .v.good .big{color:var(--green)}
+  .v .cap{font-size:13px;color:var(--dim);margin-top:8px}
+  .math{margin-top:16px;border-top:1px solid var(--line);padding-top:14px;font-size:13px}
+  .math div{display:flex;justify-content:space-between;padding:4px 0;color:var(--dim)}
+  .math div span:last-child{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:600}
+  .math div.tot{border-top:1px dashed var(--line);margin-top:6px;padding-top:8px;color:var(--ink);font-weight:650}
+
+  /* funil */
+  .funnel{display:grid;grid-template-columns:1fr 2.1fr 1fr;gap:20px;align-items:start}
+  .col-lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+           margin-bottom:12px;text-align:center}
+  .stage{position:relative;margin:0 auto 10px;padding:22px 26px;border:1px solid var(--line);
+         background:var(--panel);border-radius:12px}
+  .stage.s1{width:100%}
+  .stage.s2{width:84%}
+  .stage.s3{width:68%;border-color:rgba(59,130,246,.45);
+            background:linear-gradient(180deg,var(--blue-soft),var(--panel) 80%)}
+  .stage .tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:700}
+  .stage .obj{font-size:13px;color:var(--dim);margin-top:6px}
+  .stage .cost{position:absolute;top:18px;right:20px;font-size:11px;color:var(--faint)}
+  .arrowdown{text-align:center;color:var(--faint);font-size:16px;line-height:1;margin:2px 0 8px}
+  .side{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .side li{list-style:none;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line);color:var(--dim)}
+  .side li:last-child{border:0}
+  .side li b{color:var(--ink);font-weight:600}
+  .side li .hot{color:var(--red);font-size:11px;letter-spacing:.06em}
+  .side li .zero{color:var(--green);font-size:11px}
+
+  /* money model */
+  .mm{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;position:relative}
+  .step.hero{border-color:rgba(37,192,127,.45)}
+  .step .n{font-size:11px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
+  .step .price{font-size:24px;font-weight:750;letter-spacing:-.02em;margin:10px 0 2px}
+  .step.hero .price{color:var(--green)}
+  .step .what{font-size:13px;color:var(--dim);line-height:1.5;margin-top:8px}
+  .step .why{font-size:12px;color:var(--faint);margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  .chain{display:flex;align-items:center;justify-content:center;gap:14px;margin:22px 0 4px;
+         font-size:13px;color:var(--dim);flex-wrap:wrap}
+  .chain b{color:var(--ink)}
+  .chain .eq{color:var(--green);font-weight:700;font-size:17px}
+
+  /* gates */
+  .gates{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .gate{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;position:relative}
+  .gate::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);
+               color:var(--faint);font-size:14px}
+  .gate:last-child::after{content:""}
+  .gate .g{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);font-weight:700}
+  .gate .cond{font-size:14px;font-weight:600;margin:8px 0 6px}
+  .gate .st{font-size:12px;color:var(--dim)}
+  .pill{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+        padding:3px 8px;border-radius:99px;margin-top:10px;font-weight:700}
+  .pill.block{background:var(--red-soft);color:var(--red)}
+  .pill.open{background:var(--green-soft);color:var(--green)}
+
+  /* timeline */
+  .tl{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .tl .card{position:relative}
+  .tl .when{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:700}
+  .tl ol{margin:14px 0 0 18px;font-size:13.5px;color:var(--dim)}
+  .tl li{padding:5px 0}
+  .tl li b{color:var(--ink)}
+  .budget{position:absolute;top:20px;right:20px;font-size:12px;font-weight:700}
+  .budget.zero{color:var(--green)} .budget.on{color:var(--amber)}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+     color:var(--faint);font-weight:600;padding:0 12px 10px;border-bottom:1px solid var(--line)}
+  td{padding:11px 12px;border-bottom:1px solid var(--line);color:var(--dim)}
+  td:first-child{color:var(--ink);font-weight:600}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  tr.us td{background:var(--blue-soft)}
+  tr.us td:first-child{color:var(--blue)}
+
+  .warn{margin-top:20px;border-left:3px solid var(--red);background:var(--red-soft);
+        padding:16px 18px;border-radius:0 10px 10px 0;font-size:14px}
+  .warn b{color:var(--red)}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+         font-size:12px;color:var(--faint)}
+  @media(max-width:900px){
+    .verdict,.mm,.gates,.tl,.funnel{grid-template-columns:1fr}
+    .gate::after{content:""}
+    .stage.s2,.stage.s3{width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="stamp">Documento interno · não publicar</div>
+  <h1>Funil de Comforter &amp; Bedding — Money Model</h1>
+  <p class="sub">A7 Laundry Orlando · frameworks de Alex Hormozi aplicados aos números reais da operação · 08/set/2026</p>
+
+  <!-- 1. VEREDITO -->
+  <section>
+    <h2>1 · O gate aritmético</h2>
+    <p class="note" style="margin-bottom:18px">
+      Regra única: o lucro bruto dos primeiros 30 dias tem que superar o custo de adquirir e servir.
+      Tudo abaixo decorre disto.
+    </p>
+    <div class="verdict">
+      <div class="v bad">
+        <div class="lbl">Comforter avulso em mídia fria</div>
+        <div class="big">− US$ 67</div>
+        <div class="cap">por pedido, <b>com custo variável zero</b> — que é fisicamente impossível</div>
+        <div class="math">
+          <div><span>Receita (Queen)</span><span>US$ 37</span></div>
+          <div><span>Custo por conversa</span><span>US$ 20,09</span></div>
+          <div><span>Conversa → pedido</span><span>19,4%</span></div>
+          <div><span>Custo por pedido</span><span>US$ 104</span></div>
+          <div class="tot"><span>Resultado</span><span style="color:var(--red)">− US$ 67</span></div>
+        </div>
+      </div>
+      <div class="v good">
+        <div class="lbl">Bundle + upsell em canal de CAC ~zero</div>
+        <div class="big">US$ 171</div>
+        <div class="cap">receita por cliente quando o wash &amp; fold entra junto na mesma rota</div>
+        <div class="math">
+          <div><span>Bedding Reset</span><span>US$ 89</span></div>
+          <div><span>+ wash &amp; fold (ticket médio)</span><span>US$ 81,83</span></div>
+          <div><span>Custo de aquisição (warm/orgânico)</span><span>~US$ 0</span></div>
+          <div class="tot"><span>Receita do cliente</span><span style="color:var(--green)">US$ 170,83</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="warn">
+      <b>O que isso significa:</b> o edredom não é o produto que paga a mídia — é a porta de entrada.
+      Para o comforter avulso empatar só em receita bruta no canal pago, seria preciso 54% de fechamento
+      (hoje: 19,4%) ou US$ 7,18 por conversa (hoje: US$ 20,09). Nenhum criativo resolve isso.
+    </div>
+  </section>
+
+  <!-- 2. FUNIL -->
+  <section>
+    <h2>2 · As camadas e os momentos</h2>
+    <div class="funnel">
+
+      <div>
+        <div class="col-lbl">Momento / gatilho</div>
+        <div class="side">
+          <ul>
+            <li><b>Cheiro de mofo</b> após a chuva <span class="hot">◂ whitespace</span><br>jun–set · dor exclusiva da Flórida</li>
+            <li><b>Não coube na máquina</b><br>o ano todo · copy já existe</li>
+            <li><b>Alergia / ácaro</b><br>mar–mai</li>
+            <li><b>Troca de estação</b><br>mar–mai e ago–out</li>
+            <li><b>Derramou / pet / criança</b><br>urgência máxima</li>
+            <li><b>Turnover de vacation rental</b><br>recorrente por construção</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-lbl">Camada do funil</div>
+
+        <div class="stage s1">
+          <div class="cost">~US$ 0</div>
+          <div class="tag">Topo — não sabe que tem o problema</div>
+          <h3>Ser encontrado no instante do gatilho</h3>
+          <div class="obj">Conteúdo de busca por dor, não por keyword genérica.
+            “Why does my comforter smell musty in Florida?” · “It won’t fit in the washer”</div>
+        </div>
+        <div class="arrowdown">▼</div>
+
+        <div class="stage s2">
+          <div class="cost">~US$ 0</div>
+          <div class="tag">Meio — está escolhendo como resolver</div>
+          <h3>Matar as 3 objeções: preço, prazo, “vão estragar?”</h3>
+          <div class="obj">Página do bundle · comparativo honesto “levar você mesmo × A7” ·
+            antes/depois real · garantia visível · 5.0★/23</div>
+        </div>
+        <div class="arrowdown">▼</div>
+
+        <div class="stage s3">
+          <div class="cost">WhatsApp</div>
+          <div class="tag">Fundo — quer comprar agora</div>
+          <h3>Fechar em minutos, não em horas</h3>
+          <div class="obj">Resposta em &lt; 5 min · cotação · Stripe link · coleta agendada</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-lbl">Canal (Core Four)</div>
+        <div class="side">
+          <ul>
+            <li><b>Content</b> <span class="zero">CAC ~0</span><br>82 URLs no blog, comforter mal conectado</li>
+            <li><b>Warm outreach</b> <span class="zero">CAC ~0</span><br>base existente — <b>nunca usado</b></li>
+            <li><b>Cold outreach B2B</b> <span class="zero">CAC ~0</span><br>property managers Kissimmee/Osceola — <b>nunca usado</b></li>
+            <li><b>Paid</b> <span class="hot">US$ 20/conversa</span><br>só busca de alta intenção. Meta frio = zero venda</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <b>O gargalo real não é topo de funil.</b> Na auditoria de julho, <b>9 de 19 leads nunca receberam
+      resposta</b>. Responder em 5 min em vez de 30 vale ~21× mais qualificação, e ~78% compram de quem
+      responde primeiro. É a única alavanca do funil que custa US$ 0 — e ela vem antes de qualquer mídia.
+    </div>
+  </section>
+
+  <!-- 3. MONEY MODEL -->
+  <section>
+    <h2>3 · O Money Model — a sequência de ofertas</h2>
+    <div class="mm">
+      <div class="step">
+        <div class="n">1 · Attraction</div>
+        <div class="price">US$ 89</div>
+        <h3>Orlando Bedding Reset</h3>
+        <div class="what">Edredom + jogo de lençóis + 2 fronhas. Coleta e entrega em 24h. Garantia de refazer.</div>
+        <div class="why">Resolve o mínimo de US$ 50 e sai da comparação com o “US$ 33 qualquer tamanho” —
+          deixa de ser o mesmo produto.</div>
+      </div>
+      <div class="step hero">
+        <div class="n">2 · Upsell — onde está o dinheiro</div>
+        <div class="price">+ US$ 82</div>
+        <h3>Wash &amp; fold na mesma rota</h3>
+        <div class="what">Na coleta: <i>“Já que estou aqui — tem mais alguma coisa? Volta junto amanhã.”</i></div>
+        <div class="why">Custo marginal ~zero: o carro já está na porta e a rota já foi paga.
+          <b>O attach rate decide se o funil escala.</b></div>
+      </div>
+      <div class="step">
+        <div class="n">3 · Downsell</div>
+        <div class="price">US$ 33–45</div>
+        <h3>Recuperar o “não”</h3>
+        <div class="what">“É caro” → comforter avulso · “Prefiro levar” → drop-off ·
+          <b>“Vou pensar” → agenda a data, cobra depois</b></div>
+        <div class="why">O agendamento futuro é o mais subutilizado: em vez de perder o lead,
+          marca o próximo gatilho sazonal.</div>
+      </div>
+      <div class="step">
+        <div class="n">4 · Continuity</div>
+        <div class="price">3–4× / ano</div>
+        <h3>Seasonal Reset — sem assinatura</h3>
+        <div class="what">Edredom pede lavagem a cada 3–4 meses, mais em clima úmido. A7 manda
+          <b>uma mensagem</b> no mês certo. Sem cartão salvo, sem contrato.</div>
+        <div class="why">Recompra por WhatsApp custa ~US$ 0 contra ~US$ 104 de aquisição nova.
+          Compatível com o Princípio 1 do MANIFESTO.</div>
+      </div>
+    </div>
+    <div class="chain">
+      <span><b>US$ 89</b> entrada</span> <span>+</span>
+      <span><b>US$ 82</b> upsell</span> <span>=</span>
+      <span class="eq">US$ 171 no 1º pedido</span> <span>×</span>
+      <span><b>3–4</b> compras/ano de cadência natural</span>
+    </div>
+  </section>
+
+  <!-- 4. POSIÇÃO COMPETITIVA -->
+  <section>
+    <h2>4 · Por que o eixo não pode ser preço</h2>
+    <table>
+      <thead><tr><th>Concorrente</th><th class="num">Preço</th><th>Coleta</th><th>Prazo</th><th>Vantagem A7</th></tr></thead>
+      <tbody>
+        <tr><td>CD One Price Cleaners</td><td class="num">US$ 25 · qualquer tamanho</td><td>você leva</td><td>próximo dia</td><td>esforço zero</td></tr>
+        <tr><td>Express Wash &amp; Fold</td><td class="num">a partir de US$ 20</td><td>incluída</td><td>—</td><td>prazo</td></tr>
+        <tr><td>ZIPS</td><td class="num">~US$ 25 / un</td><td>você leva</td><td>—</td><td>esforço zero</td></tr>
+        <tr><td>WashFold Orlando <span style="color:var(--red);font-weight:400">← entrante direto</span></td>
+            <td class="num">US$ 33 · qualquer tamanho</td><td>incluída</td><td>72h</td><td><b style="color:var(--green)">24h vs 72h</b></td></tr>
+        <tr class="us"><td>A7 Laundry</td><td class="num">US$ 33 / 37 / 40 / 45</td><td>incluída</td><td><b>24h</b></td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:14px">
+      A A7 é a <b>mais cara por tamanho</b> e a <b>mais rápida</b>. O entrante já copiou o preço e o pickup.
+      A única vantagem que sobrou é <b>tempo e esforço</b> — exatamente o denominador da Value Equation
+      de Hormozi: <i>Valor = (Sonho × Probabilidade) ÷ (Tempo × Esforço)</i>.
+    </p>
+  </section>
+
+  <!-- 5. GATES -->
+  <section>
+    <h2>5 · Gates — nada avança sem o anterior</h2>
+    <div class="gates">
+      <div class="gate">
+        <div class="g">Gate 0</div>
+        <div class="cond">Custo variável do comforter</div>
+        <div class="st">Água, energia, detergente, tempo de máquina, embalagem, combustível.
+          Mensurável em uma tarde. <b>É o número mais valioso que a empresa não tem.</b></div>
+        <span class="pill block">Pendente — bloqueia tudo</span>
+      </div>
+      <div class="gate">
+        <div class="g">Gate 1</div>
+        <div class="cond">Speed-to-lead &lt; 5 min</div>
+        <div class="st">Zero lead sem resposta por uma semana. Hoje: 9 de 19 sem resposta.</div>
+        <span class="pill block">Falhando</span>
+      </div>
+      <div class="gate">
+        <div class="g">Gate 2</div>
+        <div class="cond">Attach rate ≥ 30%</div>
+        <div class="st">Pedidos de bedding que viram bedding + wash &amp; fold. Abaixo disso,
+          mídia paga não fecha em nenhum cenário.</div>
+        <span class="pill block">Não medido</span>
+      </div>
+      <div class="gate">
+        <div class="g">Gate 3</div>
+        <div class="cond">Teto de CAC</div>
+        <div class="st">Contribuição por pedido × 0,33. Só calculável depois do Gate 0.</div>
+        <span class="pill block">Sem orçamento novo até aqui</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TIMELINE -->
+  <section>
+    <h2>6 · Sequência — e por que o timing ajuda</h2>
+    <p class="note" style="margin-bottom:18px">
+      Fundo do ano medido em Orlando: <b>8–19 de setembro</b>. Virada real: <b>9 de outubro</b> (Fall Break).
+      Pico de demanda de bedding: <b>ago–out</b>. Ou seja: setembro constrói ativos de CAC zero, outubro liga a mídia.
+    </p>
+    <div class="tl">
+      <div class="card">
+        <div class="budget zero">US$ 0 em mídia</div>
+        <div class="when">Setembro — agora</div>
+        <ol>
+          <li><b>Gate 0:</b> medir o custo real de lavar um edredom</li>
+          <li><b>Warm outreach</b> para 100% da base: “quando foi a última vez que seu edredom foi lavado?”</li>
+          <li><b>Speed-to-lead:</b> quem responde, em quanto tempo, registro de cada lead</li>
+          <li><b>Reescrever a página</b> em cima do bundle e do ângulo de mofo</li>
+          <li><b>Cold outreach B2B:</b> 20 property managers por semana</li>
+          <li><b>3 artigos de gatilho</b> (mofo, não coube, com que frequência)</li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="budget on">só se os gates passarem</div>
+        <div class="when">Outubro — a partir de 5–9/out</div>
+        <ol>
+          <li><b>Google Ads</b> apenas em busca de alta intenção, teto vindo do Gate 3</li>
+          <li><b>Seasonal Reset</b> para quem comprou entre junho e setembro</li>
+          <li><b>Meta só retargeting</b> de quem visitou a página — nunca público frio</li>
+        </ol>
+        <p class="note" style="margin-top:16px;border-top:1px solid var(--line);padding-top:14px">
+          <b style="color:var(--red)">Não fazer:</b> anunciar comforter para público frio no Meta ·
+          competir em preço com o “US$ 33 qualquer tamanho” · criar assinatura ·
+          definir o preço do bundle antes do Gate 0 · escalar enquanto houver lead sem resposta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Números de CAC, conversão e ticket vêm de <code>marketing/OPERACAO-FUNIL.md</code> e da auditoria de
+    2026-07-30 — autorrelatados, não verificados por sistema. Custo variável segue <b>desconhecido</b>
+    (<code>marketing/data/custos-servico.csv</code> em branco). O preço de US$ 89 do bundle é uma
+    <b>hipótese</b>, travada atrás do Gate 0. · Detalhamento completo em
+    <code>marketing/FUNIL-COMFORTER-MONEY-MODEL-2026-09.md</code>
+  </footer>
+
+</div>
+</body>
+</html>
