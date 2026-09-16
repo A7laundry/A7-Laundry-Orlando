@@ -12,12 +12,16 @@ export function requestedOperationalPeriod(now = new Date()) {
 }
 
 export function readOperationalKpiConfig(env = process.env) {
-  const url = String(env.A7_OPERATIONS_SUPABASE_URL || env.WHATSAPP_SUPABASE_URL || '').replace(/\/$/, '');
-  const key = String(env.A7_OPERATIONS_SUPABASE_SERVICE_ROLE_KEY || env.WHATSAPP_SUPABASE_SERVICE_ROLE_KEY || '');
-  const missing = [];
-  if (!url) missing.push('A7_OPERATIONS_SUPABASE_URL');
-  if (!key) missing.push('A7_OPERATIONS_SUPABASE_SERVICE_ROLE_KEY');
-  return {ok: missing.length === 0, url, key, missing};
+  const pairs = [
+    ['A7_OPERATIONS_SUPABASE_URL', 'A7_OPERATIONS_SUPABASE_SERVICE_ROLE_KEY'],
+    ['WHATSAPP_SUPABASE_URL', 'WHATSAPP_SUPABASE_SERVICE_ROLE_KEY']
+  ];
+  for (const [urlName, keyName] of pairs) {
+    const url = String(env[urlName] || '').trim().replace(/\/$/, '');
+    const key = String(env[keyName] || '').trim();
+    if (url && key) return {ok: true, url, key, missing: []};
+  }
+  return {ok: false, url: '', key: '', missing: [...pairs[0]]};
 }
 
 function unavailable(period, code) {
