@@ -26,7 +26,7 @@ Guest laundry pickup & delivery for hotels, resorts and Airbnbs — per-pound wa
 
 ## Pricing (per-pound)
 
-Pay-per-use por libra — **sem assinatura, sem contrato**. Pickup & delivery sempre grátis.
+Pay-per-use por libra — **sem assinatura, sem contrato**. Pickup & delivery incluídos dentro da área de atendimento confirmada.
 
 | Service | Turnaround | Price |
 |---------|-----------|-------|
