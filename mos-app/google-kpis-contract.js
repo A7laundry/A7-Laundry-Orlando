@@ -84,7 +84,93 @@ function paidDestination(value) {
   }
 }
 
-function reportState(result) {
+export const GA4_POPULATION_RULE_VERSION = 'marked-source-medium-v1';
+
+export function ga4PopulationFilter(population) {
+  const regex = (value) => ({ filter: {
+    fieldName: 'sessionSourceMedium',
+    stringFilter: { matchType: 'FULL_REGEXP', value, caseSensitive: false }
+  } });
+  const technical = regex('\\s*(audit\\s*/\\s*test|qa\\s*/\\s*synthetic)\\s*');
+  const token = '[^/\\s](?:[^/]*[^/\\s])?';
+  const validPair = regex(`\\s*${token}\\s*/\\s*${token}\\s*`);
+  const undefinedPart = '\\s*\\((not set|not provided|other)\\)\\s*';
+  const unknown = { orGroup: { expressions: [
+    { filter: { fieldName: 'sessionSourceMedium', emptyFilter: {} } },
+    { notExpression: validPair },
+    regex(`(${undefinedPart}/.*|.*/${undefinedPart})`)
+  ] } };
+  if (population === 'total') return null;
+  if (population === 'technical_marked') return technical;
+  if (population === 'undetermined') return unknown;
+  if (population === 'commercial_candidate') return { andGroup: { expressions: [
+    { notExpression: unknown }, { notExpression: technical }
+  ] } };
+  throw new Error('Unsupported GA4 population');
+}
+
+function ga4ReportCompleteness(data, returnedRows) {
+  const rowCount = Number.isSafeInteger(data?.rowCount) && data.rowCount >= 0 ? data.rowCount : null;
+  const metadata = data?.metadata;
+  const metadataPresent = Boolean(metadata && typeof metadata === 'object' && !Array.isArray(metadata));
+  const limitations = [];
+  if (rowCount === null) limitations.push('row_count_unknown');
+  else if (rowCount > returnedRows) limitations.push('truncated');
+  else if (rowCount < returnedRows) limitations.push('invalid_row_count');
+  if (!metadataPresent || Object.keys(metadata).length === 0) limitations.push('metadata_unknown');
+  const dataLossFromOtherRow = typeof metadata?.dataLossFromOtherRow === 'boolean' ? metadata.dataLossFromOtherRow : null;
+  const subjectToThresholding = typeof metadata?.subjectToThresholding === 'boolean' ? metadata.subjectToThresholding : null;
+  if (dataLossFromOtherRow === null || subjectToThresholding === null) limitations.push('quality_flags_unknown');
+  if (metadata?.dataLossFromOtherRow === true) limitations.push('other_row_data_loss');
+  if (metadata?.subjectToThresholding === true) limitations.push('subject_to_thresholding');
+  if (metadata?.samplingMetadatas?.length) limitations.push('sampled');
+  const restrictions = metadata?.schemaRestrictionResponse?.activeMetricRestrictions;
+  const restrictedMetrics = (Array.isArray(restrictions) ? restrictions : [])
+    .map((item) => item?.metricName).filter((name) => typeof name === 'string' && /^[A-Za-z][A-Za-z0-9_]*$/.test(name));
+  if (restrictions !== undefined && (!Array.isArray(restrictions) || restrictedMetrics.length !== restrictions.length)) limitations.push('restriction_metadata_invalid');
+  if (restrictedMetrics.length) limitations.push('restricted_metrics');
+  if (metadata?.emptyReason) limitations.push('upstream_empty_reason');
+  let timeZone = null;
+  try {
+    if (typeof metadata?.timeZone === 'string') {
+      timeZone = new Intl.DateTimeFormat('en-US', { timeZone: metadata.timeZone }).resolvedOptions().timeZone;
+    }
+  } catch { /* Unknown property timezone remains null. */ }
+  const currencyCode = /^[A-Z]{3}$/.test(metadata?.currencyCode || '') ? metadata.currencyCode : null;
+  if (!timeZone) limitations.push('property_timezone_unknown');
+  if (!currencyCode) limitations.push('currency_unknown');
+  const integerString = (value) => typeof value === 'string' && /^\d+$/.test(value) ? value : null;
+  const samplingMetadatas = Array.isArray(metadata?.samplingMetadatas)
+    ? metadata.samplingMetadatas.map((item) => ({ samplesReadCount: integerString(item?.samplesReadCount), samplingSpaceSize: integerString(item?.samplingSpaceSize) }))
+    : null;
+  if (metadata?.samplingMetadatas !== undefined && (!samplingMetadatas
+    || samplingMetadatas.some((item) => item.samplesReadCount === null || item.samplingSpaceSize === null))) {
+    limitations.push('sampling_metadata_invalid');
+  }
+  return {
+    state: limitations.length ? 'partial_or_unknown' : 'complete',
+    returnedRows, rowCount, offset: 0, pagination: 'single_page',
+    timeZone, currencyCode, dataLossFromOtherRow, subjectToThresholding,
+    sampled: samplingMetadatas ? samplingMetadatas.length > 0 : null, samplingMetadatas,
+    restrictedMetrics, limitations
+  };
+}
+
+function validGa4DiagnosticReport(data) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
+  const headersValid = (headers) => Array.isArray(headers) && headers.every((header) =>
+    header && typeof header.name === 'string' && /^[A-Za-z][A-Za-z0-9_]*$/.test(header.name));
+  const dimensionHeaders = data.dimensionHeaders ?? [];
+  if (!headersValid(data.metricHeaders) || !headersValid(dimensionHeaders)) return false;
+  const valuesValid = (values, count) => Array.isArray(values) && values.length === count
+    && values.every((value) => value && typeof value === 'object' && !Array.isArray(value));
+  const rows = data.rows ?? [];
+  return Array.isArray(rows) && rows.every((row) => row && typeof row === 'object'
+    && valuesValid(row.metricValues, data.metricHeaders.length)
+    && valuesValid(row.dimensionValues ?? [], dimensionHeaders.length));
+}
+
+function reportState(result, diagnostic = false) {
   if (result.status === 'rejected') {
     return {
       status: 'unavailable',
@@ -92,7 +178,22 @@ function reportState(result) {
       error: sourceError('ga4_report', result.reason)
     };
   }
+  if (diagnostic && !validGa4DiagnosticReport(result.value?.data)) {
+    return { status: 'unavailable', rows: [], error: sourceError('ga4_report', null) };
+  }
   const rows = reportRows(result.value.data);
+  if (diagnostic) {
+    const completeness = ga4ReportCompleteness(result.value.data, rows.length);
+    for (const row of rows) {
+      for (const metric of completeness.restrictedMetrics) {
+        if (Object.hasOwn(row, metric)) row[metric] = null;
+      }
+    }
+    return {
+      status: completeness.state !== 'complete' ? 'partial' : rows.length ? 'live' : 'no_data',
+      rows, completeness
+    };
+  }
   return { status: rows.length ? 'live' : 'no_data', rows };
 }
 
@@ -178,12 +279,16 @@ export function externalAccountOptions(config, subjectToken, options = {}) {
   };
 }
 
-async function requestGa4(authClient, config, period, currentDay) {
+async function requestGa4(authClient, config, period, currentDay, population = null) {
+  const diagnostic = population !== null;
+  const dimensionFilter = diagnostic ? ga4PopulationFilter(population) : null;
+  const populationData = dimensionFilter ? { dimensionFilter } : {};
   const endpoint = `https://analyticsdata.googleapis.com/v1beta/properties/${encodeURIComponent(config.ga4PropertyId)}:runReport`;
   const query = (dimensions, metrics, limit = 50, reportPeriod = period) => authClient.request({
     url: endpoint,
     method: 'POST',
     data: {
+      ...populationData,
       dateRanges: [{ startDate: reportPeriod.startDate, endDate: reportPeriod.endDate }],
       dimensions: dimensions.map((name) => ({ name })),
       metrics: metrics.map((name) => ({ name })),
@@ -197,6 +302,7 @@ async function requestGa4(authClient, config, period, currentDay) {
       url: endpoint,
       method: 'POST',
       data: {
+        ...populationData,
         dateRanges: [{ startDate: period.startDate, endDate: period.endDate }],
         metrics: GA4_METRICS.map((name) => ({ name })),
         keepEmptyRows: false
@@ -243,34 +349,37 @@ async function requestGa4(authClient, config, period, currentDay) {
       ['eventCount', 'totalUsers', 'keyEvents'],
       2000
     ),
-    linkedGoogleAds: query(
+    ...(diagnostic ? {} : { linkedGoogleAds: query(
       ['sessionGoogleAdsCustomerId', 'sessionGoogleAdsCampaignId', 'sessionGoogleAdsCampaignName', 'sessionGoogleAdsCampaignType'],
       ['advertiserAdImpressions', 'advertiserAdClicks', 'advertiserAdCost', 'sessions', 'keyEvents'],
       100
-    )
+    ) })
   };
   const names = Object.keys(requests);
   const settled = await Promise.allSettled(Object.values(requests));
-  const reports = Object.fromEntries(names.map((name, index) => [name, reportState(settled[index])]));
+  const reports = Object.fromEntries(names.map((name, index) => [name, reportState(settled[index], diagnostic)]));
+  if (diagnostic) reports.linkedGoogleAds = { status: 'not_requested', rows: [] };
   const summary = reports.summary.rows[0] || Object.fromEntries(GA4_METRICS.map((name) => [name, null]));
   const primaryReportNames = names.filter((name) => name !== 'contentToday');
   const successfulReports = primaryReportNames.filter((name) => reports[name].status !== 'unavailable').length;
   const failedReports = primaryReportNames.filter((name) => reports[name].status === 'unavailable').length;
+  const incompleteReports = primaryReportNames.filter((name) => reports[name].status === 'partial').length;
   const linkedGoogleAdsRows = reports.linkedGoogleAds.rows.filter((row) => {
     const customerId = String(row.sessionGoogleAdsCustomerId || '');
     const campaignId = String(row.sessionGoogleAdsCampaignId || '');
     return /^\d+$/.test(customerId) && customerId !== '0' && /^\d+$/.test(campaignId) && campaignId !== '0';
   });
-  if (successfulReports === 0) throw settled[0].reason || new Error('GA4 reports unavailable');
+  if (successfulReports === 0 && !diagnostic) throw settled[0].reason || new Error('GA4 reports unavailable');
   return {
     status: successfulReports === 0
       ? 'unavailable'
-      : failedReports > 0
+      : failedReports > 0 || incompleteReports > 0
         ? 'partial'
         : Object.values(summary).some((value) => value !== null) ? 'live' : 'no_data',
     source: 'Google Analytics Data API',
     propertyId: config.ga4PropertyId,
     requestedPeriod: period,
+    ...(diagnostic ? { population, ruleVersion: GA4_POPULATION_RULE_VERSION } : {}),
     summary,
     channels: reports.channels.rows,
     acquisition: reports.acquisition.rows,
@@ -287,19 +396,42 @@ async function requestGa4(authClient, config, period, currentDay) {
     journeys: reports.journeys.rows.map((row) => ({ ...row, canonicalPath: canonicalPath(row.landingPage) })),
     interactions: reports.interactions.rows.map((row) => ({ ...row, canonicalPath: canonicalPath(row.pagePath) })),
     linkedGoogleAds: {
-      status: reports.linkedGoogleAds.status === 'unavailable'
+      status: diagnostic ? 'not_requested' : reports.linkedGoogleAds.status === 'unavailable'
         ? 'unavailable'
         : linkedGoogleAdsRows.length ? 'partial_live' : 'no_data',
       source: 'Google Analytics Data API — vínculo Google Ads',
-      limitation: linkedGoogleAdsRows.length
+      limitation: diagnostic ? 'Fora do diagnóstico de populações GA4; nenhuma consulta vinculada executada.' : linkedGoogleAdsRows.length
         ? 'Métricas recebidas pelo vínculo do GA4; não substituem a leitura nativa de campanhas, anúncios, orçamento e status na Google Ads API.'
         : 'O vínculo respondeu, mas nenhuma campanha Google Ads identificável recebeu atribuição no período. Linhas “(not set)” não são tratadas como campanhas.',
       rows: linkedGoogleAdsRows
     },
     reportStatus: Object.fromEntries(Object.entries(reports).map(([name, report]) => [
       name,
-      { status: report.status, error: report.error }
+      { status: report.status, error: report.error,
+        ...(diagnostic && name !== 'linkedGoogleAds' ? { completeness: report.completeness || null } : {}) }
     ]))
+  };
+}
+
+// Explicit diagnostic only. No route or dashboard calls this export. It performs
+// 4 x 9 reports without retries/pagination, preserving the normal total collector.
+export async function collectGa4PopulationDiagnostics(authClient, config, options = {}) {
+  const now = options.now || new Date();
+  const period = options.period || requestedGooglePeriod(now);
+  const currentDay = options.currentDay || requestedGa4CurrentDay(now);
+  const populations = {};
+  for (const population of ['total', 'technical_marked', 'commercial_candidate', 'undetermined']) {
+    populations[population] = {
+      ...await requestGa4(authClient, config, period, currentDay, population),
+      fetchedAt: now.toISOString()
+    };
+  }
+  return {
+    mode: 'diagnostic', ruleVersion: GA4_POPULATION_RULE_VERSION,
+    source: 'Google Analytics Data API', propertyId: config.ga4PropertyId,
+    requestedPeriod: period, currentDayPeriod: currentDay,
+    fetchedAt: now.toISOString(), populations,
+    limitation: 'Candidatos sem marcador conhecido não comprovam tráfego humano ou comercial. Receita permanece GA4, sem conciliação financeira. Usuários e taxas não são aditivos. Sem metadados completos, a decomposição não está comprovada. Intradia permanece separado; consumidores e outras plataformas não são alterados.'
   };
 }
 
