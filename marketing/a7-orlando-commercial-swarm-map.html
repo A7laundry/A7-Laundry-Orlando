@@ -1,0 +1,103 @@
+<div id="a7-commercial-swarm">
+  <style>
+    #a7-commercial-swarm{color:var(--foreground);display:grid;gap:1rem}
+    #a7-commercial-swarm .a7-title{display:flex;align-items:center;gap:.65rem}
+    #a7-commercial-swarm .a7-title i{color:var(--viz-series-1)}
+    #a7-commercial-swarm .a7-core{display:grid;grid-template-columns:minmax(0,1fr) auto 10rem;align-items:center;gap:.8rem}
+    #a7-commercial-swarm .a7-engine{display:grid;gap:.6rem}
+    #a7-commercial-swarm .a7-engine > div{display:grid;grid-template-columns:1.2rem 1fr;gap:.55rem;align-items:start;padding:.35rem 0}
+    #a7-commercial-swarm .a7-engine i{color:var(--viz-series-1);margin-top:.15rem}
+    #a7-commercial-swarm .a7-center{display:grid;place-items:center;gap:.2rem;width:10rem;aspect-ratio:1;border-radius:50%;background:var(--primary);color:var(--primary-foreground);text-align:center;padding:1rem}
+    #a7-commercial-swarm .a7-center strong{font-weight:500}
+    #a7-commercial-swarm .a7-arrow{color:var(--muted-foreground);text-align:center}
+    #a7-commercial-swarm .a7-flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.45rem;align-items:stretch}
+    #a7-commercial-swarm .a7-step{display:grid;align-content:start;gap:.25rem;padding:.5rem 0;border-top:3px solid var(--viz-series-1)}
+    #a7-commercial-swarm .a7-step:nth-child(n+5){border-top-color:var(--viz-series-2)}
+    #a7-commercial-swarm .a7-step span{color:var(--muted-foreground)}
+    #a7-commercial-swarm .a7-channels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem}
+    #a7-commercial-swarm .a7-channel{padding:.25rem 0}
+    #a7-commercial-swarm .a7-channel strong{display:block;margin-bottom:.3rem}
+    #a7-commercial-swarm .a7-channel span{display:block;color:var(--muted-foreground);margin:.18rem 0}
+    #a7-commercial-swarm [role="tabpanel"]{padding-top:.8rem}
+    #a7-commercial-swarm .a7-persona-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.55rem}
+    #a7-commercial-swarm .a7-persona-flow > div{padding:.5rem 0;border-top:2px solid var(--border)}
+    #a7-commercial-swarm .a7-persona-flow span{display:block;color:var(--muted-foreground);margin-top:.25rem}
+    @media(max-width:760px){
+      #a7-commercial-swarm .a7-core{grid-template-columns:1fr}
+      #a7-commercial-swarm .a7-arrow{transform:rotate(90deg)}
+      #a7-commercial-swarm .a7-center{justify-self:center;width:8rem}
+      #a7-commercial-swarm .a7-flow{grid-template-columns:1fr 1fr}
+      #a7-commercial-swarm .a7-channels{grid-template-columns:1fr}
+      #a7-commercial-swarm .a7-persona-flow{grid-template-columns:1fr}
+    }
+  </style>
+
+  <div class="a7-title">
+    <i data-lucide="radar" aria-hidden="true"></i>
+    <h2>A7 Orlando — mapa do enxame comercial</h2>
+  </div>
+
+  <div class="a7-core" aria-label="Motores comerciais ligados à verdade operacional">
+    <div class="a7-engine">
+      <div><i data-lucide="hotel" aria-hidden="true"></i><span><strong>Guest Rescue</strong><br><span class="text-muted">hotel, turista, família, urgência</span></span></div>
+      <div><i data-lucide="house" aria-hidden="true"></i><span><strong>Resident Care</strong><br><span class="text-muted">comforter, duvet, blanket, wash & fold</span></span></div>
+      <div><i data-lucide="key-round" aria-hidden="true"></i><span><strong>Host Reliability</strong><br><span class="text-muted">host, property manager, turnover</span></span></div>
+    </div>
+    <div class="a7-arrow" aria-hidden="true">→</div>
+    <div class="a7-center"><strong>A7 OS</strong><span class="text-small">pedido pago<br>+ prazo<br>+ margem</span></div>
+  </div>
+
+  <div class="a7-flow" aria-label="Jornada comercial completa">
+    <div class="a7-step"><strong>1. Momento</strong><span class="text-small">dor reconhecível</span></div>
+    <div class="a7-step"><strong>2. Alcance</strong><span class="text-small">Search, Maps, vídeo</span></div>
+    <div class="a7-step"><strong>3. Prova</strong><span class="text-small">reviews, processo, local</span></div>
+    <div class="a7-step"><strong>4. Captura</strong><span class="text-small">WhatsApp ou /order</span></div>
+    <div class="a7-step"><strong>5. Venda</strong><span class="text-small">pedido + invoice</span></div>
+    <div class="a7-step"><strong>6. Entrega</strong><span class="text-small">status + handoff</span></div>
+    <div class="a7-step"><strong>7. Flywheel</strong><span class="text-small">review, repeat, referral</span></div>
+  </div>
+
+  <hr>
+
+  <div class="nav nav-pills" role="tablist" aria-label="Persona">
+    <button class="nav-link active" id="guest-tab" role="tab" aria-controls="guest-panel" aria-selected="true" type="button">Hóspede</button>
+    <button class="nav-link" id="family-tab" role="tab" aria-controls="family-panel" aria-selected="false" type="button">Família</button>
+    <button class="nav-link" id="resident-tab" role="tab" aria-controls="resident-panel" aria-selected="false" type="button">Morador</button>
+    <button class="nav-link" id="host-tab" role="tab" aria-controls="host-panel" aria-selected="false" type="button">Host</button>
+    <button class="nav-link" id="partner-tab" role="tab" aria-controls="partner-panel" aria-selected="false" type="button">Hotel parceiro</button>
+  </div>
+
+  <div id="guest-panel" role="tabpanel" aria-labelledby="guest-tab">
+    <div class="a7-persona-flow">
+      <div><strong>Momento</strong><span>última roupa limpa / checkout</span></div><div><strong>Hook</strong><span>Vacation time is not laundry time</span></div><div><strong>Canais</strong><span>Google, Maps, Meta, hotel page</span></div><div><strong>CTA</strong><span>Check today’s pickup window</span></div><div><strong>Verdade</strong><span>pedido pago por hotel + on-time</span></div>
+    </div>
+  </div>
+  <div id="family-panel" role="tabpanel" aria-labelledby="family-tab" hidden>
+    <div class="a7-persona-flow">
+      <div><strong>Momento</strong><span>pilha após dias de parque</span></div><div><strong>Hook</strong><span>Pack less. Enjoy more.</span></div><div><strong>Canais</strong><span>Reels, Search, creators, host guide</span></div><div><strong>CTA</strong><span>Estimate my family load</span></div><div><strong>Verdade</strong><span>ticket, paid CAC, entrega</span></div>
+    </div>
+  </div>
+  <div id="resident-panel" role="tabpanel" aria-labelledby="resident-tab" hidden>
+    <div class="a7-persona-flow">
+      <div><strong>Momento</strong><span>comforter não cabe / umidade / pet</span></div><div><strong>Hook</strong><span>Too big for your washer</span></div><div><strong>Canais</strong><span>SEO, Maps, Nextdoor, Yelp, Meta</span></div><div><strong>CTA</strong><span>Get a bedding pickup quote</span></div><div><strong>Verdade</strong><span>bundle, margem, repeat 60/90</span></div>
+    </div>
+  </div>
+  <div id="host-panel" role="tabpanel" aria-labelledby="host-tab" hidden>
+    <div class="a7-persona-flow">
+      <div><strong>Momento</strong><span>turnover / próximo check-in</span></div><div><strong>Hook</strong><span>Your next guest should never wait</span></div><div><strong>Canais</strong><span>Search B2B, outreach, partners</span></div><div><strong>CTA</strong><span>Request a reliability plan</span></div><div><strong>Verdade</strong><span>receita por conta + SLA</span></div>
+    </div>
+  </div>
+  <div id="partner-panel" role="tabpanel" aria-labelledby="partner-tab" hidden>
+    <div class="a7-persona-flow">
+      <div><strong>Momento</strong><span>hóspede pede recomendação</span></div><div><strong>Hook</strong><span>Simple, trackable guest option</span></div><div><strong>Canais</strong><span>concierge, Bell Desk, QR, email</span></div><div><strong>CTA</strong><span>Open guest pickup link</span></div><div><strong>Verdade</strong><span>pedido por parceiro + incidente</span></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="a7-channels" aria-label="Papéis das plataformas">
+    <div class="a7-channel"><strong>Capturar agora</strong><span>Google Search</span><span>Google Maps / GBP</span><span>SEO de intenção</span></div>
+    <div class="a7-channel"><strong>Criar demanda e prova</strong><span>Instagram / Facebook / WhatsApp</span><span>YouTube Shorts</span><span>TikTok</span></div>
+    <div class="a7-channel"><strong>Ocupar confiança local</strong><span>Nextdoor / Yelp / Apple Maps</span><span>hotéis / hosts / creators</span><span>reviews / referrals</span></div>
+  </div>
+</div>
