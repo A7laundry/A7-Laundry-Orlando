@@ -60,6 +60,10 @@
       "destination": "/order.html"
     },
     {
+      "source": "/hotel-laundry",
+      "destination": "/hotel-laundry.html"
+    },
+    {
       "source": "/sistema",
       "destination": "/sistema.html"
     },

@@ -29,6 +29,7 @@ Modelo **pay-per-use por libra** — duas velocidades. **Não existe mais assina
 
 - **Pickup & delivery incluídos dentro da área de atendimento confirmada.** Não usar `free`/`grátis` como promessa universal.
 - **Pedido mínimo:** **$50 por pedido** (valor, não peso). À tarifa Standard, o mínimo matemático é atingido em aproximadamente **15,4 lbs** (`50 ÷ 3,25 = 15,38`).
+  - **Canal WhatsApp (decisão de 2026-09-17):** as artes e a landing `/hotel-laundry` anunciam **$60 mínimo**. Os $60 são intencionais — margem de negociação: se o cliente questionar, o atendimento concede desconto até o piso de **$50**. Não "corrigir" os $60 dessas peças para $50. O `/order` exibe $60 só quando aberto com `?min=60` (vindo da landing); nas demais entradas segue $50.
 - **Sem contrato, sem assinatura, sem taxas escondidas.**
 - **Preço final:** confirmado depois da pesagem; o estimador público é apenas uma ajuda de planejamento.
 - **Pagamento:** link seguro em USD hospedado pelo Stripe; Zelle, Venmo, Cash App ou cash podem ser confirmados para o pedido. Nunca solicitar dados de cartão por WhatsApp ou SMS.

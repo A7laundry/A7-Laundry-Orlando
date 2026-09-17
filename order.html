@@ -39,7 +39,7 @@
           <div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
         </div></div>
         <div class="step"><h3 class="step__title"><span>3</span>Confirm the request basis</h3><div class="checks">
-          <label class="check"><input name="minimum_acknowledged" type="checkbox" required><span>I understand the $50 minimum, Standard at $3.25/lb and Express at $3.95/lb only when availability is confirmed.</span></label>
+          <label class="check"><input name="minimum_acknowledged" type="checkbox" required><span>I understand the <span data-minimum>$50</span> minimum, Standard at $3.25/lb and Express at $3.95/lb only when availability is confirmed.</span></label>
           <label class="check"><input name="privacy_consent" type="checkbox" required><span>I agree that A7 may use these details to respond about this request, under the <a href="/privacy-policy" target="_blank">privacy policy</a>.</span></label>
         </div></div>
         <button class="submit" type="submit">Send availability request</button>
@@ -48,11 +48,13 @@
       </form>
       <div class="success" id="success" aria-hidden="true"><div class="success__mark">✓</div><h2 tabindex="-1">Request received.</h2><p>A7 still needs to confirm coverage, handoff, service pace and timing. Continue on WhatsApp so the team can respond in the same conversation.</p><a class="wa" id="success-wa" href="https://wa.me/14076708839" target="_blank" rel="noopener noreferrer">Continue on WhatsApp</a></div>
     </section>
-    <aside class="aside"><p class="eyebrow">Before you send</p><h2>What this request does</h2><p>It gives A7 the information needed to check availability. It does not charge you or guarantee a slot.</p><ul class="facts"><li><strong>$50 minimum</strong><span>Final service amount is based on actual weight.</span></li><li><strong>Standard · $3.25/lb</strong><span>Approximate 24-hour return after confirmation.</span></li><li><strong>Express · $3.95/lb</strong><span>Up to 8 hours only when capacity and timing are confirmed.</span></li><li><strong>No card details here</strong><span>A secure Stripe link is issued only after weighing and invoicing.</span></li></ul></aside>
+    <aside class="aside"><p class="eyebrow">Before you send</p><h2>What this request does</h2><p>It gives A7 the information needed to check availability. It does not charge you or guarantee a slot.</p><ul class="facts"><li><strong><b data-minimum>$50</b> minimum</strong><span>Final service amount is based on actual weight.</span></li><li><strong>Standard · $3.25/lb</strong><span>Approximate 24-hour return after confirmation.</span></li><li><strong>Express · $3.95/lb</strong><span>Up to 8 hours only when capacity and timing are confirmed.</span></li><li><strong>No card details here</strong><span>A secure Stripe link is issued only after weighing and invoicing.</span></li></ul></aside>
   </main>
   <script src="/a7-tracking.js" defer></script>
   <script>
   (function(){'use strict';
+    // WhatsApp campaign landing (/hotel-laundry) lists a $60 minimum; only allowlisted values change this copy.
+    var listedMinimum={'60':'$60'}[new URLSearchParams(location.search).get('min')];if(listedMinimum)Array.prototype.forEach.call(document.querySelectorAll('[data-minimum]'),function(el){el.textContent=listedMinimum});
     var form=document.getElementById('order-form');var status=document.getElementById('form-status');var success=document.getElementById('success');var wa=document.getElementById('success-wa');
     function attribution(){try{var key=window.A7_ATTRIBUTION&&window.A7_ATTRIBUTION.STORAGE_KEY||'a7_attribution_v2';var value=JSON.parse(sessionStorage.getItem(key)||'null');return value&&window.A7_ATTRIBUTION&&window.A7_ATTRIBUTION.validAttributionId(value.attribution_id)&&window.A7_ATTRIBUTION.validShortRef(value.short_ref)?value:null}catch(_){return null}}
     function attributionReady(){var ready=window.__A7_ATTRIBUTION_READY__;if(!ready||typeof ready.then!=='function')return Promise.resolve(attribution());return Promise.race([Promise.resolve(ready).catch(function(){return null}),new Promise(function(resolve){setTimeout(function(){resolve(null)},1500)})]).then(function(){return attribution()})}

@@ -2820,6 +2820,12 @@
       "sourceFile": "guest-payment-confirmation.html"
     },
     {
+      "exclusionClass": "whatsapp_campaign_landing",
+      "reason": "Landing reached from WhatsApp flyers; noindex so it does not compete with the Orlando money page.",
+      "route": "/hotel-laundry",
+      "sourceFile": "hotel-laundry.html"
+    },
+    {
       "exclusionClass": "structured_order_intake",
       "reason": "Protected conversion intake is transactional and intentionally noindex.",
       "route": "/order",

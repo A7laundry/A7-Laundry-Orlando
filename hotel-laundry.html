@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <!--
+    HOTEL LAUNDRY LANDING — traffic arrives from WhatsApp flyers.
+    Editable placeholders:
+      BOOKING_URL, WHATSAPP_NUMBER, WHATSAPP_MESSAGE -> PAGE CONFIG script at the end of <body>
+      A7_LOGO    -> search "A7_LOGO" (header, final section, footer)
+      HERO_IMAGE -> search "HERO_IMAGE" (preload, hero <img>, og:image)
+    Noindex on purpose: WhatsApp campaign page; /laundry-pickup-delivery-orlando owns the organic intent.
+  -->
+  <title>Orlando Hotel Laundry Pickup &amp; Delivery | A7 Laundry</title>
+  <meta name="description" content="Hotel pickup, professional wash &amp; fold and fresh delivery in Orlando. Standard $3.25/lb · Express $3.95/lb. Book online, no account needed.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://a7laundry.com/hotel-laundry">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="A7 Laundry Orlando">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://a7laundry.com/hotel-laundry">
+  <meta property="og:title" content="Leave the Laundry. Keep the Vacation. | A7 Laundry Orlando">
+  <meta property="og:description" content="Hotel pickup, professional wash &amp; fold and fresh delivery back to you. Standard $3.25/lb · Express $3.95/lb. No account needed.">
+  <!-- HERO_IMAGE (share card) -->
+  <meta property="og:image" content="https://a7laundry.com/public/hotel-laundry-og-v1.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A7 Laundry bag and freshly folded shirts on an Orlando hotel counter, with Standard $3.25/lb and Express $3.95/lb pricing">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Leave the Laundry. Keep the Vacation. | A7 Laundry Orlando">
+  <meta name="twitter:description" content="Hotel pickup, professional wash &amp; fold and fresh delivery back to you. No account needed.">
+  <meta name="twitter:image" content="https://a7laundry.com/public/hotel-laundry-og-v1.jpg">
+
+  <link rel="preload" href="/public/fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- HERO_IMAGE (preload) -->
+  <link rel="preload" as="image" href="/public/hotel-laundry-bell-desk-v1.webp" imagesrcset="/public/hotel-laundry-bell-desk-v1-480.webp 480w, /public/hotel-laundry-bell-desk-v1.webp 677w" imagesizes="(min-width: 900px) 520px, calc(100vw - 32px)" fetchpriority="high">
+
+  <script>document.documentElement.classList.add('js')</script>
+  <style>
+    @font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:800;font-display:swap;src:url(/public/fonts/barlow-condensed-latin-800-normal.woff2) format("woff2")}
+    :root{
+      --navy-950:#051634;--navy:#0a2a66;--blue:#1463e0;--blue-600:#0f53c2;--cyan:#38c6f4;
+      --sky-50:#f4f8fe;--sky-100:#e7f0fc;--sky-200:#cddff6;
+      --ink:#0b1a33;--body:#2c4260;--muted:#48607d;--line:#dbe5f2;--wa:#16a34a;
+      --display:"Barlow Condensed","Roboto Condensed","Arial Narrow",sans-serif-condensed,system-ui,sans-serif;
+      --sans:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+      --bar-h:76px
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+    @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+    body{margin:0;background:#fff;color:var(--ink);font:400 1rem/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+    img{display:block;max-width:100%;height:auto}
+    h1,h2,h3,p{margin:0}
+    a{color:inherit}
+    :focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+    .dark :focus-visible{outline-color:var(--cyan)}
+    .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+    .skip{position:absolute;left:16px;top:-80px;z-index:100;padding:12px 16px;border-radius:12px;background:var(--navy);color:#fff;font-weight:700;text-decoration:none}
+    .skip:focus{top:12px}
+    .wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+    [id]{scroll-margin-top:16px}
+
+    .ic{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 22px;border:2px solid transparent;border-radius:14px;font:700 1.0625rem/1.15 var(--sans);text-align:center;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .15s,border-color .15s,transform .1s}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--blue);color:#fff}
+    .btn-primary:hover{background:var(--blue-600)}
+    .btn-wa{background:#fff;color:var(--navy);border-color:var(--sky-200)}
+    .btn-wa .ic{color:var(--wa)}
+    .btn-wa:hover{border-color:var(--navy)}
+    .btn-light{background:#fff;color:var(--navy)}
+    .btn-light:hover{background:var(--sky-100)}
+    .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+    .btn-ghost .ic{color:#4ade80}
+    .btn-ghost:hover{border-color:#fff}
+    .btn-block{width:100%}
+    .cta-row{display:grid;gap:10px}
+    @media (min-width:560px){.cta-row{grid-template-columns:1fr 1fr}}
+
+    /* Header */
+    .top{background:#fff;border-bottom:1px solid var(--line)}
+    .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+    .logo{display:inline-flex;align-items:center;min-height:44px}
+    .logo img{width:140px}
+    .top nav{display:none}
+    @media (min-width:900px){
+      .top .wrap{min-height:76px}
+      .logo img{width:168px}
+      .top nav{display:flex;align-items:center;gap:28px}
+      .top nav a:not(.btn){padding:10px 0;color:var(--navy);font-weight:600;font-size:.95rem;text-decoration:none}
+      .top nav a:not(.btn):hover{color:var(--blue)}
+      .top nav .btn{min-height:46px;padding:0 18px;font-size:.95rem}
+    }
+
+    /* Hero */
+    .hero{padding:26px 0 44px}
+    .eyebrow{display:flex;align-items:center;gap:10px;color:var(--blue);font:700 .78rem/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:currentColor}
+    .h1{margin-top:14px;color:var(--navy);font:800 clamp(2.45rem,10.6vw,4.75rem)/.93 var(--display);letter-spacing:-.004em;text-transform:uppercase}
+    .h1 span{display:block;color:var(--blue)}
+    .lead{margin-top:14px;max-width:36ch;color:var(--body);font-size:1.0625rem;line-height:1.5}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none}
+    .chip{display:inline-flex;align-items:baseline;gap:6px;padding:7px 13px;border-radius:999px;background:var(--sky-100);color:var(--navy);font-size:.875rem;font-weight:600}
+    .chip b{color:var(--blue);font:800 1.1875rem/1 var(--display)}
+    .hero .cta-row{margin-top:20px}
+    .micro{display:flex;align-items:center;gap:7px;margin-top:12px;color:var(--muted);font-size:.9375rem}
+    .micro .ic{width:18px;height:18px;color:var(--blue);stroke-width:2.2}
+    .serving{display:flex;align-items:flex-start;gap:10px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line);color:var(--body);font-size:.9375rem;line-height:1.45}
+    .serving .ic{color:var(--blue)}
+    .hero-media{margin:28px 0 0}
+    .hero-media img{width:100%;aspect-ratio:677/492;object-fit:cover;border-radius:20px;background:var(--sky-100)}
+    @media (min-width:900px){
+      .hero{padding:56px 0 84px}
+      .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+      .h1{font-size:clamp(3rem,4.3vw,3.9rem)}
+      .hero-media{margin:0}
+      .hero-media img{border-radius:24px}
+    }
+
+    /* Sections */
+    .sec{padding:56px 0}
+    .sec-alt{background:var(--sky-50)}
+    .sec-head{margin-bottom:26px}
+    .h2{color:var(--navy);font:800 clamp(2.1rem,8.8vw,3.4rem)/.96 var(--display);letter-spacing:-.003em;text-transform:uppercase}
+    .h2 span{color:var(--blue)}
+    .sub{margin-top:12px;max-width:52ch;color:var(--body);font-size:1.0625rem}
+    @media (min-width:900px){.sec{padding:88px 0}.sec-head{margin-bottom:40px}}
+
+    /* Pricing */
+    .plans{display:grid;gap:14px}
+    .plan{border-radius:20px;padding:22px 22px 24px;background:var(--navy);color:#fff}
+    .plan-express{background:var(--blue)}
+    .plan-name{font:800 1.5rem/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+    .plan-price{display:flex;align-items:baseline;gap:6px;margin-top:10px;font-family:var(--display);font-weight:800}
+    .amt{color:var(--cyan);font-size:clamp(3.75rem,17vw,4.75rem);line-height:.9;letter-spacing:-.01em}
+    .plan-express .amt{color:#fff}
+    .unit{font-size:1.625rem;line-height:1}
+    .plan-time{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 15px;border-radius:999px;background:#fff;color:var(--navy);font-weight:700}
+    .plan-time .ic{width:20px;height:20px;color:var(--blue)}
+    .plan-note{margin-top:10px;font-size:.875rem}
+    .minimum{display:flex;align-items:center;gap:14px;margin-top:14px;padding:16px 18px;border-radius:18px;background:var(--sky-100);color:var(--navy)}
+    .tile{display:grid;place-items:center;width:50px;height:50px;flex:none;border-radius:14px;background:#fff;color:var(--navy)}
+    .tile .ic{width:26px;height:26px}
+    .minimum strong{display:block;font:800 1.5rem/1.05 var(--display);text-transform:uppercase}
+    .minimum p span{display:block;margin-top:2px;color:var(--body);font-size:.9375rem}
+    .after{margin-top:20px}
+    @media (min-width:640px){
+      .plans{grid-template-columns:1fr 1fr;gap:18px}
+      .after .btn{width:auto;min-width:300px}
+    }
+
+    /* How it works */
+    .steps{display:grid;margin:0;padding:0;list-style:none}
+    .step{position:relative;display:grid;grid-template-columns:48px 1fr;gap:16px;padding-bottom:30px}
+    .step:last-child{padding-bottom:0}
+    .step::before{content:"";position:absolute;left:23px;top:56px;bottom:6px;width:2px;background:repeating-linear-gradient(var(--sky-200) 0 6px,transparent 6px 12px)}
+    .step:last-child::before{display:none}
+    .num{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;font:800 1.625rem/1 var(--display)}
+    .step:nth-child(2) .num{background:var(--blue)}
+    .step h3{display:flex;align-items:center;gap:10px;margin-top:9px;color:var(--navy);font:800 1.75rem/1 var(--display);text-transform:uppercase}
+    .step h3 .ic{width:30px;height:30px;color:var(--blue)}
+    .step p{margin-top:8px;color:var(--body)}
+    @media (min-width:900px){
+      .steps{grid-template-columns:repeat(3,1fr);gap:32px}
+      .step{grid-template-columns:1fr;gap:14px;padding:0}
+      .step::before{left:64px;right:-20px;top:23px;bottom:auto;width:auto;height:2px;background:repeating-linear-gradient(90deg,var(--sky-200) 0 6px,transparent 6px 12px)}
+      .step h3{margin-top:4px}
+    }
+
+    /* Products */
+    .products{margin:0;padding:0;list-style:none;border:1px solid var(--line);border-radius:20px;background:#fff}
+    .product{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center;padding:18px}
+    .product+.product{border-top:1px solid var(--line)}
+    .product .tile{width:52px;height:52px;background:var(--sky-100);color:var(--blue)}
+    .product h3{color:var(--navy);font-size:1.0625rem;font-weight:700;line-height:1.3}
+    .product p{margin-top:2px;color:var(--muted);font-size:.9375rem;line-height:1.45}
+    .notice{display:flex;align-items:flex-start;gap:12px;margin-top:14px;padding:16px 18px;border-radius:16px;background:var(--navy);color:#fff;font-weight:600;line-height:1.45}
+    .notice .ic{color:var(--cyan)}
+    @media (min-width:760px){
+      .products{display:grid;grid-template-columns:repeat(3,1fr)}
+      .product{grid-template-columns:1fr;align-content:start;padding:26px}
+      .product+.product{border-top:0;border-left:1px solid var(--line)}
+    }
+
+    /* Why A7 */
+    .why{display:grid;margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+    .why li{display:flex;align-items:center;gap:14px;min-height:60px;padding:14px 2px;border-bottom:1px solid var(--line);color:var(--navy);font-size:1.0625rem;font-weight:600}
+    .why .ic{width:26px;height:26px;color:var(--blue)}
+    @media (min-width:560px){.why{grid-template-columns:1fr 1fr;column-gap:32px}}
+    @media (min-width:900px){.why{grid-template-columns:repeat(3,1fr)}}
+
+    /* FAQ */
+    .faq details{border-bottom:1px solid var(--line)}
+    .faq details:first-child{border-top:1px solid var(--line)}
+    .faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;padding:14px 2px;color:var(--navy);font-size:1.0625rem;font-weight:600;line-height:1.35;list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary .ic{width:22px;height:22px;color:var(--blue);transition:transform .2s}
+    .faq details[open] summary .ic{transform:rotate(45deg)}
+    .faq details p{max-width:65ch;padding:0 2px 18px;color:var(--body)}
+    @media (min-width:900px){.faq-grid{display:grid;grid-template-columns:340px 1fr;gap:64px;align-items:start}.faq-grid .sec-head{margin:0}}
+
+    /* Final CTA */
+    .final{position:relative;overflow:hidden;padding:64px 0;background:var(--navy);color:#fff;text-align:center}
+    .final::before{content:"";position:absolute;left:-20%;right:-20%;bottom:-70%;height:120%;background:radial-gradient(closest-side,rgba(56,198,244,.2),transparent);pointer-events:none}
+    .final .wrap{position:relative}
+    .final .logo-mark{width:150px;margin:0 auto 22px}
+    .final .h2{color:#fff}
+    .final .h2 span{display:block;color:var(--cyan)}
+    .final p{max-width:40ch;margin:14px auto 0;color:#d6e4f7;font-size:1.0625rem}
+    .final .cta-row{max-width:560px;margin:28px auto 0}
+    .final .micro{display:block;max-width:40ch;margin:14px auto 0;color:#c3d5ee}
+    .final .micro .ic{display:inline-block;margin-right:6px;vertical-align:-3px;color:var(--cyan)}
+    @media (min-width:900px){.final{padding:96px 0}}
+
+    /* Footer */
+    /* Extra bottom padding keeps the fixed mobile bar from covering the last lines. */
+    .foot{padding:40px 0 calc(30px + var(--bar-h) + env(safe-area-inset-bottom));background:var(--navy-950);color:#c3d5ee;font-size:.9375rem}
+    .foot-grid{display:grid;gap:24px}
+    .foot .logo img{width:150px}
+    .foot-name{margin-top:12px;color:#fff;font-weight:700}
+    .foot-label{margin-bottom:6px;color:#8fb0da;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    .foot ul{margin:0;padding:0;list-style:none}
+    .foot ul a{display:inline-flex;align-items:center;min-height:44px;color:#fff;text-decoration:none}
+    .foot ul a:hover{text-decoration:underline}
+    .legal{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);color:#8fb0da;font-size:.8125rem}
+    @media (min-width:760px){.foot-grid{grid-template-columns:1.4fr 1fr 1fr}}
+
+    /* Sticky mobile bar */
+    .bar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:grid;grid-template-columns:1.3fr 1fr;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff;box-shadow:0 -6px 20px rgba(10,42,102,.08);transition:transform .25s ease,visibility .25s}
+    .bar .btn{min-height:52px;padding:0 10px;font-size:1rem}
+    .js .bar:not(.is-shown){visibility:hidden;transform:translateY(110%)}
+    @media (min-width:900px){.foot{padding-bottom:30px}.bar{display:none}}
+    @media (prefers-reduced-motion:reduce){.btn,.bar,.faq summary .ic{transition:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4.1 20l1.2-4.1A8.4 8.4 0 1 1 8.4 19z"/><path style="fill:currentColor;stroke:none" d="M9.2 8.1c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.1.1-.1.3 0 .5a7 7 0 0 0 2.6 2.5c.2.1.3.1.5 0l.6-.7c.1-.2.3-.2.5-.1l1.7.8c.2.1.4.2.4.4 0 .6-.2 1.2-.7 1.5-.6.4-1.5.5-2.6.1a9.5 9.5 0 0 1-4.9-4.6c-.4-1-.4-2.1.1-3.3z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.5 6.5h11V16h-11zM13.5 9.5h4l3 3.4V16h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="17" height="12.5" rx="2.5"/><path d="M9 7.5v-2A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5v2M8 7.5V20M16 7.5V20"/></symbol>
+    <symbol id="i-fold" viewBox="0 0 24 24"><path d="M3.5 6.5h11a2 2 0 0 1 0 4h-11zM3.5 10.5h11a2 2 0 0 1 0 4h-11zM3.5 14.5h11a2 2 0 0 1 0 4h-11z"/><path d="M19.5 3v4M17.5 5h4"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.5s6 6.4 6 10.8a6 6 0 0 1-12 0C6 9.9 12 3.5 12 3.5z"/><path d="M9.2 14.5a2.9 2.9 0 0 0 2.8 2.7"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5.5-13.5 14-14 .3 8.5-5.2 14-13 14z"/><path d="M5 19l7.5-7.5"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5a4 4 0 0 1-.6-8A5.5 5.5 0 0 1 17 9.1a4.7 4.7 0 0 1 0 9.4z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-washer" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="13" r="4.5"/><path d="M7.5 6.5h.01M10.5 6.5h.01"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M5 16.5a7 7 0 0 1 14 0zM12 9.5V7M10 7h4M3 19.5h18"/></symbol>
+    <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8.5 4L4 6.6l1.8 3.9 2.2-1V20h8V9.5l2.2 1 1.8-3.9L15.5 4a3.5 3.5 0 0 1-7 0z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1 1 0 0 1 0 1.4l-7.7 7.7a1 1 0 0 1-1.4 0z"/><circle cx="8" cy="8" r="1.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="10" cy="8.5" r="3.5"/><path d="M3.5 20a6.5 6.5 0 0 1 11.2-4.5M15.5 18.5l2 2 3.5-4"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="#main" aria-label="A7 Laundry Orlando">
+        <!-- A7_LOGO (light background) -->
+        <img src="/public/a7-laundry-logo-light-480.webp" width="140" height="25" alt="A7 Laundry">
+      </a>
+      <nav aria-label="Page">
+        <a href="#pricing">Pricing</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn-primary" data-link="booking" href="/order?min=60">Book Online</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Orlando Hotel Laundry Service</p>
+          <h1 class="h1" id="hero-title">Leave the Laundry. <span>Keep the Vacation.</span></h1>
+          <p class="lead">Hotel pickup, professional wash &amp; fold, and fresh delivery back to you.</p>
+          <ul class="chips" aria-label="Prices">
+            <li class="chip">Standard <b>$3.25/lb</b></li>
+            <li class="chip">Express <b>$3.95/lb</b></li>
+          </ul>
+          <div class="cta-row" data-hide-bar>
+            <a class="btn btn-primary" data-link="booking" href="/order?min=60"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Book Online</a>
+            <a class="btn btn-wa" data-link="whatsapp" href="https://wa.me/14076708839?text=Hi%20A7%20Laundry!%20I%20have%20a%20question%20about%20hotel%20laundry%20pickup%20in%20Orlando." target="_blank" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>Chat on WhatsApp</a>
+          </div>
+          <p class="micro"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>No account needed.</p>
+          <p class="serving"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Serving hotels, resorts, Airbnbs, vacation homes and residences across Orlando.</p>
+        </div>
+        <figure class="hero-media">
+          <!-- HERO_IMAGE -->
+          <img src="/public/hotel-laundry-bell-desk-v1.webp" srcset="/public/hotel-laundry-bell-desk-v1-480.webp 480w, /public/hotel-laundry-bell-desk-v1.webp 677w" sizes="(min-width: 900px) 520px, calc(100vw - 32px)" width="677" height="492" alt="A7 Laundry bag next to freshly folded shirts on a hotel lobby counter with palm trees outside" fetchpriority="high" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+    <section class="sec sec-alt" id="pricing" aria-labelledby="pricing-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="h2" id="pricing-title">Simple, transparent pricing.</h2>
+        </div>
+        <div class="plans">
+          <article class="plan">
+            <h3 class="plan-name">Standard</h3>
+            <p class="plan-price"><span class="amt">$3.25</span><span class="unit" aria-hidden="true">/ LB</span><span class="sr">per pound</span></p>
+            <p class="plan-time"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Up to 24 hours</p>
+          </article>
+          <article class="plan plan-express">
+            <h3 class="plan-name">Express</h3>
+            <p class="plan-price"><span class="amt">$3.95</span><span class="unit" aria-hidden="true">/ LB</span><span class="sr">per pound</span></p>
+            <p class="plan-time"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Up to 8 hours*</p>
+            <p class="plan-note">*Subject to availability</p>
+          </article>
+        </div>
+        <div class="minimum">
+          <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg></span>
+          <p><strong>$60 minimum per pickup</strong><span>Pickup &amp; delivery included</span></p>
+        </div>
+        <div class="after">
+          <a class="btn btn-primary btn-block" data-link="booking" href="/order?min=60"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Book My Pickup</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="h2" id="how-title">Laundry handled from start to finish.</h2>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <span class="num" aria-hidden="true">1</span>
+            <div>
+              <h3><svg class="ic" aria-hidden="true"><use href="#i-case"/></svg><span class="sr">Step 1: </span>Leave it</h3>
+              <p>Drop your bag at the Front Desk or Bell Desk.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="num" aria-hidden="true">2</span>
+            <div>
+              <h3><svg class="ic" aria-hidden="true"><use href="#i-fold"/></svg><span class="sr">Step 2: </span>We clean it</h3>
+              <p>Washed separately, dried and folded with professional care.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="num" aria-hidden="true">3</span>
+            <div>
+              <h3><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg><span class="sr">Step 3: </span>We return it</h3>
+              <p>Fresh, folded and delivered back on time.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="sec sec-alt" id="care" aria-labelledby="care-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="h2" id="care-title">The products you know. <span>The care you expect.</span></h2>
+          <p class="sub">Your laundry is washed separately and handled professionally.</p>
+        </div>
+        <ul class="products">
+          <li class="product">
+            <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-drop"/></svg></span>
+            <div><h3>Tide Original</h3><p>Everyday detergent</p></div>
+          </li>
+          <li class="product">
+            <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+            <div><h3>Tide Free &amp; Gentle</h3><p>Hypoallergenic option available upon request</p></div>
+          </li>
+          <li class="product">
+            <span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-cloud"/></svg></span>
+            <div><h3>Downy</h3><p>Fabric softener</p></div>
+          </li>
+        </ul>
+        <p class="notice dark"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg>Please request the hypoallergenic option when booking.</p>
+      </div>
+    </section>
+
+    <section class="sec" id="why" aria-labelledby="why-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="h2" id="why-title">Designed for a smoother stay.</h2>
+        </div>
+        <ul class="why">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-washer"/></svg>Washed separately</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg>Hotel pickup and return</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-shirt"/></svg>Freshly folded</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-tag"/></svg>Transparent pricing</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>No account needed</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-card"/></svg>Card, Zelle and cash accepted</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec sec-alt" id="faq" aria-labelledby="faq-title">
+      <div class="wrap faq-grid">
+        <div class="sec-head">
+          <h2 class="h2" id="faq-title">Frequently asked questions</h2>
+        </div>
+        <div class="faq">
+          <details name="faq"><summary>How do I leave my laundry for pickup?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Leave your bag with the hotel Front Desk or Bell Desk. We coordinate pickup and return with your accommodation whenever available.</p></details>
+          <details name="faq"><summary>What is the minimum order?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>There is a $60 minimum per pickup. Pickup and delivery are included.</p></details>
+          <details name="faq"><summary>How long does it take?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Standard service is returned within up to 24 hours. Express service is returned within up to 8 hours, subject to availability.</p></details>
+          <details name="faq"><summary>Is Express service always available?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Express availability depends on the current schedule and capacity. Select Express while booking or contact us to confirm availability.</p></details>
+          <details name="faq"><summary>Are clothes washed separately?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. Your laundry is handled separately and professionally cared for.</p></details>
+          <details name="faq"><summary>Can I request hypoallergenic detergent?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. Tide Free &amp; Gentle is available upon request. Please add this request when booking.</p></details>
+          <details name="faq"><summary>Which payment methods do you accept?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>We accept card, Zelle and cash.</p></details>
+          <details name="faq"><summary>Which areas do you serve?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>We serve the Orlando area, including hotels, resorts, Airbnbs, vacation homes and residences.</p></details>
+          <details name="faq"><summary>Do I need to create an account?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. You can book online without creating an account.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final dark" aria-labelledby="final-title">
+      <div class="wrap">
+        <!-- A7_LOGO (dark background) -->
+        <img class="logo-mark" src="/public/a7-laundry-logo-dark-480.webp" width="150" height="27" alt="" loading="lazy" decoding="async">
+        <h2 class="h2" id="final-title">More vacation. <span>Less laundry.</span></h2>
+        <p>Book your pickup in minutes and let us take care of the rest.</p>
+        <div class="cta-row" data-hide-bar>
+          <a class="btn btn-light" data-link="booking" href="/order?min=60"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Book Online</a>
+          <a class="btn btn-ghost" data-link="whatsapp" href="https://wa.me/14076708839?text=Hi%20A7%20Laundry!%20I%20have%20a%20question%20about%20hotel%20laundry%20pickup%20in%20Orlando." target="_blank" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>Chat on WhatsApp</a>
+        </div>
+        <p class="micro"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>No account needed. Pickup and delivery included with qualifying orders.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot dark">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a class="logo" href="#main" aria-label="Back to top">
+            <!-- A7_LOGO (dark background) -->
+            <img src="/public/a7-laundry-logo-dark-480.webp" width="150" height="27" alt="A7 Laundry" loading="lazy" decoding="async">
+          </a>
+          <p class="foot-name">A7 Laundry Orlando</p>
+          <p>Serving the Orlando area</p>
+        </div>
+        <div>
+          <p class="foot-label">Get started</p>
+          <ul>
+            <li><a data-link="booking" href="/order?min=60">Book online</a></li>
+            <li><a data-link="whatsapp" href="https://wa.me/14076708839?text=Hi%20A7%20Laundry!%20I%20have%20a%20question%20about%20hotel%20laundry%20pickup%20in%20Orlando." target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="foot-label">Payment methods</p>
+          <p>Card, Zelle, Cash</p>
+        </div>
+      </div>
+      <p class="legal">© 2026 A7 Laundry Orlando</p>
+    </div>
+  </footer>
+
+  <div class="bar" id="sticky-cta">
+    <a class="btn btn-primary" data-link="booking" href="/order?min=60"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Book Online</a>
+    <a class="btn btn-wa wa-fab" data-link="whatsapp" href="https://wa.me/14076708839?text=Hi%20A7%20Laundry!%20I%20have%20a%20question%20about%20hotel%20laundry%20pickup%20in%20Orlando." target="_blank" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ================= PAGE CONFIG — edit here =================
+       BOOKING_URL      Official booking page. '/order?min=60' = no-account request form
+                        showing the $60 minimum listed on this page.
+       WHATSAPP_NUMBER  Digits only. Must match a7-business-config.js: the build guard
+                        rejects any other wa.me number and a7-tracking.js rebuilds
+                        wa.me links with that official number on click.
+       WHATSAPP_MESSAGE Prefilled chat text.
+       The hrefs in the HTML above are no-JS fallbacks with the same values. */
+    var CONFIG = {
+      BOOKING_URL: '/order?min=60',
+      WHATSAPP_NUMBER: '14076708839',
+      WHATSAPP_MESSAGE: 'Hi A7 Laundry! I have a question about hotel laundry pickup in Orlando.'
+    };
+
+    var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+    var number = String(CONFIG.WHATSAPP_NUMBER).replace(/\D/g, '');
+    var whatsappUrl = 'https://wa.me/' + number + (CONFIG.WHATSAPP_MESSAGE ? '?text=' + encodeURIComponent(CONFIG.WHATSAPP_MESSAGE) : '');
+    each(document.querySelectorAll('[data-link="booking"]'), function (link) { link.setAttribute('href', CONFIG.BOOKING_URL); });
+    each(document.querySelectorAll('[data-link="whatsapp"]'), function (link) { link.setAttribute('href', whatsappUrl); });
+
+    // Sticky bar stays out of the way while the hero or final CTAs are on screen.
+    var bar = document.getElementById('sticky-cta');
+    var watched = document.querySelectorAll('[data-hide-bar]');
+    if (bar) {
+      if (!('IntersectionObserver' in window) || !watched.length) {
+        bar.classList.add('is-shown');
+      } else {
+        var onScreen = [];
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            var index = onScreen.indexOf(entry.target);
+            if (entry.isIntersecting && index === -1) onScreen.push(entry.target);
+            if (!entry.isIntersecting && index > -1) onScreen.splice(index, 1);
+          });
+          bar.classList.toggle('is-shown', onScreen.length === 0);
+        });
+        each(watched, function (el) { observer.observe(el); });
+      }
+    }
+
+    // One FAQ answer at a time (native in browsers that support <details name>).
+    var faqs = document.querySelectorAll('.faq details');
+    each(faqs, function (item) {
+      item.addEventListener('toggle', function () {
+        if (!item.open) return;
+        each(faqs, function (other) { if (other !== item && other.open) other.open = false; });
+      });
+    });
+  }());
+  </script>
+  <script src="/a7-tracking.js" defer></script>
+</body>
+</html>
